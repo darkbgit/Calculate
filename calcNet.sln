@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30804.86
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "calcNet", "calcNet\calcNet.csproj", "{3ECD9EF6-E379-4998-B020-28B88DDBF8AF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3ECD9EF6-E379-4998-B020-28B88DDBF8AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3ECD9EF6-E379-4998-B020-28B88DDBF8AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3ECD9EF6-E379-4998-B020-28B88DDBF8AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3ECD9EF6-E379-4998-B020-28B88DDBF8AF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E1866EC8-4F5C-4F2E-B448-8AB6568438A6}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,683 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<data>
+	<sigma_list>
+		<steels>
+			<steel name ="Ст3">
+				<t temp="20" sigma="154.0" />
+				<t temp="100" sigma="149.0" />
+				<t temp="150" sigma="145.0" />
+				<t temp="200" sigma="142.0" />
+				<t temp="250" sigma="131.0" />
+				<t temp="300" sigma="115.0" />
+				<t temp="350" sigma="105.0" />
+				<t temp="375" sigma="93.0" />
+				<t temp="400" sigma="85.0" />
+				<t temp="410" sigma="81.0" />
+				<t temp="420" sigma="75.0" />
+				<t temp="430" sigma="71.0" />
+			</steel>
+			<steel name ="Ст3(-2)">
+				<t temp="20" sigma="154.0" />
+				<t temp="100" sigma="149.0" />
+				<t temp="150" sigma="145.0" />
+				<t temp="200" sigma="142.0" />
+				<t temp="250" sigma="131.0" />
+				<t temp="300" sigma="115.0" />
+				<t temp="350" sigma="105.0" />
+				<t temp="375" sigma="93.0" />
+				<t temp="400" sigma="68.0" />
+				<t temp="410" sigma="65.0" />
+				<t temp="420" sigma="60.0" />
+				<t temp="430" sigma="57.0" />
+			</steel>
+			<steel name ="Ст3(-b)">
+				<t temp="20" sigma="140.0" />
+				<t temp="100" sigma="134.0" />
+				<t temp="150" sigma="131.0" />
+				<t temp="200" sigma="126.0" />
+				<t temp="250" sigma="120.0" />
+				<t temp="300" sigma="108.0" />
+				<t temp="350" sigma="98.0" />
+				<t temp="375" sigma="93.0" />
+				<t temp="400" sigma="85.0" />
+				<t temp="410" sigma="81.0" />
+				<t temp="420" sigma="75.0" />
+				<t temp="430" sigma="71.0" />
+			</steel>
+			<steel name ="Ст3(-b-2)">
+				<t temp="20" sigma="140.0" />
+				<t temp="100" sigma="134.0" />
+				<t temp="150" sigma="131.0" />
+				<t temp="200" sigma="126.0" />
+				<t temp="250" sigma="120.0" />
+				<t temp="300" sigma="108.0" />
+				<t temp="350" sigma="98.0" />
+				<t temp="375" sigma="93.0" />
+				<t temp="400" sigma="68.0" />
+				<t temp="410" sigma="65.0" />
+				<t temp="420" sigma="60.0" />
+				<t temp="430" sigma="57.0" />
+			</steel>
+			<steel name="09Г2С">
+				<t temp="20" sigma="196.0" />
+				<t temp="100" sigma="177.0" />
+				<t temp="150" sigma="171.0" />
+				<t temp="200" sigma="165.0" />
+				<t temp="250" sigma="162.0" />
+				<t temp="300" sigma="151.0" />
+				<t temp="350" sigma="140.0" />
+				<t temp="375" sigma="133.0" />
+				<t temp="400" sigma="122.0" />
+				<t temp="410" sigma="104.0" />
+				<t temp="420" sigma="92.0" />
+				<t temp="430" sigma="86.0" />
+				<t temp="440" sigma="78.0" />
+				<t temp="450" sigma="71.0" />
+				<t temp="460" sigma="64.0" />
+				<t temp="470" sigma="56.0" />
+				<t temp="475" sigma="53.0" />
+			</steel>
+			<steel name="09Г2С(-2)">
+				<t temp="20" sigma="196.0" />
+				<t temp="100" sigma="177.0" />
+				<t temp="150" sigma="171.0" />
+				<t temp="200" sigma="165.0" />
+				<t temp="250" sigma="162.0" />
+				<t temp="300" sigma="151.0" />
+				<t temp="350" sigma="140.0" />
+				<t temp="375" sigma="133.0" />
+				<t temp="400" sigma="122.0" />
+				<t temp="410" sigma="104.0" />
+				<t temp="420" sigma="92.0" />
+				<t temp="430" sigma="73.0" />
+				<t temp="440" sigma="66.0" />
+				<t temp="450" sigma="53.0" />
+				<t temp="460" sigma="48.0" />
+				<t temp="470" sigma="42.0" />
+				<t temp="475" sigma="40.0" />
+			</steel>
+			<steel name="09Г2С(-b)">
+				<t temp="20" sigma="183.0" />
+				<t temp="100" sigma="160.0" />
+				<t temp="150" sigma="154.0" />
+				<t temp="200" sigma="148.0" />
+				<t temp="250" sigma="145.0" />
+				<t temp="300" sigma="134.0" />
+				<t temp="350" sigma="123.0" />
+				<t temp="375" sigma="116.0" />
+				<t temp="400" sigma="105.0" />
+				<t temp="410" sigma="104.0" />
+				<t temp="420" sigma="92.0" />
+				<t temp="430" sigma="86.0" />
+				<t temp="440" sigma="78.0" />
+				<t temp="450" sigma="71.0" />
+				<t temp="460" sigma="64.0" />
+				<t temp="470" sigma="56.0" />
+				<t temp="475" sigma="53.0" />
+			</steel>
+			<steel name="09Г2С(-b-2)">
+				<t temp="20" sigma="183.0" />
+				<t temp="100" sigma="160.0" />
+				<t temp="150" sigma="154.0" />
+				<t temp="200" sigma="148.0" />
+				<t temp="250" sigma="145.0" />
+				<t temp="300" sigma="134.0" />
+				<t temp="350" sigma="123.0" />
+				<t temp="375" sigma="116.0" />
+				<t temp="400" sigma="105.0" />
+				<t temp="410" sigma="104.0" />
+				<t temp="420" sigma="92.0" />
+				<t temp="430" sigma="73.0" />
+				<t temp="440" sigma="66.0" />
+				<t temp="450" sigma="53.0" />
+				<t temp="460" sigma="48.0" />
+				<t temp="470" sigma="42.0" />
+				<t temp="475" sigma="40.0" />
+			</steel>
+			<steel name="16ГС">
+				<t temp="20" sigma="196.0" />
+				<t temp="100" sigma="177.0" />
+				<t temp="150" sigma="171.0" />
+				<t temp="200" sigma="165.0" />
+				<t temp="250" sigma="162.0" />
+				<t temp="300" sigma="151.0" />
+				<t temp="350" sigma="140.0" />
+				<t temp="375" sigma="133.0" />
+				<t temp="400" sigma="122.0" />
+				<t temp="410" sigma="104.0" />
+				<t temp="420" sigma="92.0" />
+				<t temp="430" sigma="86.0" />
+				<t temp="440" sigma="78.0" />
+				<t temp="450" sigma="71.0" />
+				<t temp="460" sigma="64.0" />
+				<t temp="470" sigma="56.0" />
+				<t temp="475" sigma="53.0" />
+			</steel>
+			<steel name="16ГС(-2)">
+				<t temp="20" sigma="196.0" />
+				<t temp="100" sigma="177.0" />
+				<t temp="150" sigma="171.0" />
+				<t temp="200" sigma="165.0" />
+				<t temp="250" sigma="162.0" />
+				<t temp="300" sigma="151.0" />
+				<t temp="350" sigma="140.0" />
+				<t temp="375" sigma="133.0" />
+				<t temp="400" sigma="122.0" />
+				<t temp="410" sigma="104.0" />
+				<t temp="420" sigma="92.0" />
+				<t temp="430" sigma="73.0" />
+				<t temp="440" sigma="66.0" />
+				<t temp="450" sigma="53.0" />
+				<t temp="460" sigma="48.0" />
+				<t temp="470" sigma="42.0" />
+				<t temp="475" sigma="40.0" />
+			</steel>
+			<steel name="16ГС(-b)">
+				<t temp="20" sigma="183.0" />
+				<t temp="100" sigma="160.0" />
+				<t temp="150" sigma="154.0" />
+				<t temp="200" sigma="148.0" />
+				<t temp="250" sigma="145.0" />
+				<t temp="300" sigma="134.0" />
+				<t temp="350" sigma="123.0" />
+				<t temp="375" sigma="116.0" />
+				<t temp="400" sigma="105.0" />
+				<t temp="410" sigma="104.0" />
+				<t temp="420" sigma="92.0" />
+				<t temp="430" sigma="86.0" />
+				<t temp="440" sigma="78.0" />
+				<t temp="450" sigma="71.0" />
+				<t temp="460" sigma="64.0" />
+				<t temp="470" sigma="56.0" />
+				<t temp="475" sigma="53.0" />
+			</steel>
+			<steel name="16ГС(-b-2)">
+				<t temp="20" sigma="183.0" />
+				<t temp="100" sigma="160.0" />
+				<t temp="150" sigma="154.0" />
+				<t temp="200" sigma="148.0" />
+				<t temp="250" sigma="145.0" />
+				<t temp="300" sigma="134.0" />
+				<t temp="350" sigma="123.0" />
+				<t temp="375" sigma="116.0" />
+				<t temp="400" sigma="105.0" />
+				<t temp="410" sigma="104.0" />
+				<t temp="420" sigma="92.0" />
+				<t temp="430" sigma="73.0" />
+				<t temp="440" sigma="66.0" />
+				<t temp="450" sigma="53.0" />
+				<t temp="460" sigma="48.0" />
+				<t temp="470" sigma="42.0" />
+				<t temp="475" sigma="40.0" />
+			</steel>
+			<steel name="Сталь 20">
+				<t temp="20" sigma="147.0" />
+				<t temp="100" sigma="142.0" />
+				<t temp="150" sigma="139.0" />
+				<t temp="200" sigma="136.0" />
+				<t temp="250" sigma="132.0" />
+				<t temp="300" sigma="119.0" />
+				<t temp="350" sigma="106.0" />
+				<t temp="375" sigma="98.0" />
+				<t temp="400" sigma="92.0" />
+				<t temp="410" sigma="86.0" />
+				<t temp="420" sigma="80.0" />
+				<t temp="430" sigma="75.0" />
+				<t temp="440" sigma="67.0" />
+				<t temp="450" sigma="61.0" />
+				<t temp="460" sigma="55.0" />
+				<t temp="470" sigma="49.0" />
+				<t temp="475" sigma="46.0" />
+			</steel>
+			<steel name="Сталь 20(-2)">
+				<t temp="20" sigma="147.0" />
+				<t temp="100" sigma="142.0" />
+				<t temp="150" sigma="139.0" />
+				<t temp="200" sigma="136.0" />
+				<t temp="250" sigma="132.0" />
+				<t temp="300" sigma="119.0" />
+				<t temp="350" sigma="106.0" />
+				<t temp="375" sigma="98.0" />
+				<t temp="400" sigma="74.0" />
+				<t temp="410" sigma="69.0" />
+				<t temp="420" sigma="64.0" />
+				<t temp="430" sigma="60.0" />
+				<t temp="440" sigma="53.0" />
+				<t temp="450" sigma="49.0" />
+				<t temp="460" sigma="44.0" />
+				<t temp="470" sigma="39.0" />
+				<t temp="475" sigma="36.0" />
+			</steel>
+			<steel name="Сталь 20К">
+				<t temp="20" sigma="147.0" />
+				<t temp="100" sigma="142.0" />
+				<t temp="150" sigma="139.0" />
+				<t temp="200" sigma="136.0" />
+				<t temp="250" sigma="132.0" />
+				<t temp="300" sigma="119.0" />
+				<t temp="350" sigma="106.0" />
+				<t temp="375" sigma="98.0" />
+				<t temp="400" sigma="92.0" />
+				<t temp="410" sigma="86.0" />
+				<t temp="420" sigma="80.0" />
+				<t temp="430" sigma="75.0" />
+				<t temp="440" sigma="67.0" />
+				<t temp="450" sigma="61.0" />
+				<t temp="460" sigma="55.0" />
+				<t temp="470" sigma="49.0" />
+				<t temp="475" sigma="46.0" />
+			</steel>
+			<steel name="Сталь 20К(-2)">
+				<t temp="20" sigma="147.0" />
+				<t temp="100" sigma="142.0" />
+				<t temp="150" sigma="139.0" />
+				<t temp="200" sigma="136.0" />
+				<t temp="250" sigma="132.0" />
+				<t temp="300" sigma="119.0" />
+				<t temp="350" sigma="106.0" />
+				<t temp="375" sigma="98.0" />
+				<t temp="400" sigma="74.0" />
+				<t temp="410" sigma="69.0" />
+				<t temp="420" sigma="64.0" />
+				<t temp="430" sigma="60.0" />
+				<t temp="440" sigma="53.0" />
+				<t temp="450" sigma="49.0" />
+				<t temp="460" sigma="44.0" />
+				<t temp="470" sigma="39.0" />
+				<t temp="475" sigma="36.0" />
+			</steel>
+			<steel name="Сталь 10">
+				<t temp="20" sigma="130.0" />
+				<t temp="100" sigma="125.0" />
+				<t temp="150" sigma="122.0" />
+				<t temp="200" sigma="118.0" />
+				<t temp="250" sigma="112.0" />
+				<t temp="300" sigma="100.0" />
+				<t temp="350" sigma="88.0" />
+				<t temp="375" sigma="82.0" />
+				<t temp="400" sigma="77.0" />
+				<t temp="410" sigma="75.0" />
+				<t temp="420" sigma="72.0" />
+				<t temp="430" sigma="68.0" />
+				<t temp="440" sigma="60.0" />
+				<t temp="450" sigma="53.0" />
+				<t temp="460" sigma="47.0" />
+				<t temp="470" sigma="42.0" />
+				<t temp="475" sigma="37.0" />
+			</steel>
+			<steel name="Сталь 10(-2)">
+				<t temp="20" sigma="130.0" />
+				<t temp="100" sigma="125.0" />
+				<t temp="150" sigma="122.0" />
+				<t temp="200" sigma="118.0" />
+				<t temp="250" sigma="112.0" />
+				<t temp="300" sigma="100.0" />
+				<t temp="350" sigma="88.0" />
+				<t temp="375" sigma="82.0" />
+				<t temp="400" sigma="61.0" />
+				<t temp="410" sigma="60.0" />
+				<t temp="420" sigma="57.0" />
+				<t temp="430" sigma="54.0" />
+				<t temp="440" sigma="48.0" />
+				<t temp="450" sigma="42.0" />
+				<t temp="460" sigma="37.0" />
+				<t temp="470" sigma="33.0" />
+				<t temp="475" sigma="29.0" />
+			</steel>
+			<steel name="10Г2">
+				<t temp="20" sigma="180.0" />
+				<t temp="100" sigma="160.0" />
+				<t temp="150" sigma="154.0" />
+				<t temp="200" sigma="148.0" />
+				<t temp="250" sigma="145.0" />
+				<t temp="300" sigma="134.0" />
+				<t temp="350" sigma="123.0" />
+				<t temp="375" sigma="108.0" />
+				<t temp="400" sigma="92.0" />
+				<t temp="410" sigma="86.0" />
+				<t temp="420" sigma="80.0" />
+				<t temp="430" sigma="75.0" />
+				<t temp="440" sigma="67.0" />
+				<t temp="450" sigma="61.0" />
+				<t temp="460" sigma="55.0" />
+				<t temp="470" sigma="49.0" />
+				<t temp="475" sigma="46.0" />
+			</steel>
+			<steel name="10Г2(-2)">
+				<t temp="20" sigma="180.0" />
+				<t temp="100" sigma="160.0" />
+				<t temp="150" sigma="154.0" />
+				<t temp="200" sigma="148.0" />
+				<t temp="250" sigma="145.0" />
+				<t temp="300" sigma="134.0" />
+				<t temp="350" sigma="123.0" />
+				<t temp="375" sigma="108.0" />
+				<t temp="400" sigma="78.0" />
+				<t temp="410" sigma="73.0" />
+				<t temp="420" sigma="68.0" />
+				<t temp="430" sigma="64.0" />
+				<t temp="440" sigma="57.0" />
+				<t temp="450" sigma="46.0" />
+				<t temp="460" sigma="41.0" />
+				<t temp="470" sigma="37.0" />
+				<t temp="475" sigma="34.0" />
+			</steel>
+			<steel name="09Г2">
+				<t temp="20" sigma="180.0" />
+				<t temp="100" sigma="160.0" />
+				<t temp="150" sigma="154.0" />
+				<t temp="200" sigma="148.0" />
+				<t temp="250" sigma="145.0" />
+				<t temp="300" sigma="134.0" />
+				<t temp="350" sigma="123.0" />
+				<t temp="375" sigma="108.0" />
+				<t temp="400" sigma="92.0" />
+				<t temp="410" sigma="86.0" />
+				<t temp="420" sigma="80.0" />
+				<t temp="430" sigma="75.0" />
+				<t temp="440" sigma="67.0" />
+				<t temp="450" sigma="61.0" />
+				<t temp="460" sigma="55.0" />
+				<t temp="470" sigma="49.0" />
+				<t temp="475" sigma="46.0" />
+			</steel>
+			<steel name="09Г2(-2)">
+				<t temp="20" sigma="180.0" />
+				<t temp="100" sigma="160.0" />
+				<t temp="150" sigma="154.0" />
+				<t temp="200" sigma="148.0" />
+				<t temp="250" sigma="145.0" />
+				<t temp="300" sigma="134.0" />
+				<t temp="350" sigma="123.0" />
+				<t temp="375" sigma="108.0" />
+				<t temp="400" sigma="78.0" />
+				<t temp="410" sigma="73.0" />
+				<t temp="420" sigma="68.0" />
+				<t temp="430" sigma="64.0" />
+				<t temp="440" sigma="57.0" />
+				<t temp="450" sigma="46.0" />
+				<t temp="460" sigma="41.0" />
+				<t temp="470" sigma="37.0" />
+				<t temp="475" sigma="34.0" />
+			</steel>
+			<steel name="17ГС">
+				<t temp="20" sigma="183.0" />
+				<t temp="100" sigma="160.0" />
+				<t temp="150" sigma="154.0" />
+				<t temp="200" sigma="148.0" />
+				<t temp="250" sigma="145.0" />
+				<t temp="300" sigma="134.0" />
+				<t temp="350" sigma="123.0" />
+				<t temp="375" sigma="116.0" />
+				<t temp="400" sigma="105.0" />
+				<t temp="410" sigma="104.0" />
+				<t temp="420" sigma="92.0" />
+				<t temp="430" sigma="86.0" />
+				<t temp="440" sigma="78.0" />
+				<t temp="450" sigma="71.0" />
+				<t temp="460" sigma="64.0" />
+				<t temp="470" sigma="56.0" />
+				<t temp="475" sigma="53.0" />
+			</steel>
+			<steel name="17ГС(-2)">
+				<t temp="20" sigma="183.0" />
+				<t temp="100" sigma="160.0" />
+				<t temp="150" sigma="154.0" />
+				<t temp="200" sigma="148.0" />
+				<t temp="250" sigma="145.0" />
+				<t temp="300" sigma="134.0" />
+				<t temp="350" sigma="123.0" />
+				<t temp="375" sigma="116.0" />
+				<t temp="400" sigma="105.0" />
+				<t temp="410" sigma="104.0" />
+				<t temp="420" sigma="92.0" />
+				<t temp="430" sigma="73.0" />
+				<t temp="440" sigma="66.0" />
+				<t temp="450" sigma="53.0" />
+				<t temp="460" sigma="48.0" />
+				<t temp="470" sigma="42.0" />
+				<t temp="475" sigma="40.0" />
+			</steel>
+			<steel name="17Г1С">
+				<t temp="20" sigma="183.0" />
+				<t temp="100" sigma="160.0" />
+				<t temp="150" sigma="154.0" />
+				<t temp="200" sigma="148.0" />
+				<t temp="250" sigma="145.0" />
+				<t temp="300" sigma="134.0" />
+				<t temp="350" sigma="123.0" />
+				<t temp="375" sigma="116.0" />
+				<t temp="400" sigma="105.0" />
+				<t temp="410" sigma="104.0" />
+				<t temp="420" sigma="92.0" />
+				<t temp="430" sigma="86.0" />
+				<t temp="440" sigma="78.0" />
+				<t temp="450" sigma="71.0" />
+				<t temp="460" sigma="64.0" />
+				<t temp="470" sigma="56.0" />
+				<t temp="475" sigma="53.0" />
+			</steel>
+			<steel name="17Г1С(-2)">
+				<t temp="20" sigma="183.0" />
+				<t temp="100" sigma="160.0" />
+				<t temp="150" sigma="154.0" />
+				<t temp="200" sigma="148.0" />
+				<t temp="250" sigma="145.0" />
+				<t temp="300" sigma="134.0" />
+				<t temp="350" sigma="123.0" />
+				<t temp="375" sigma="116.0" />
+				<t temp="400" sigma="105.0" />
+				<t temp="410" sigma="104.0" />
+				<t temp="420" sigma="92.0" />
+				<t temp="430" sigma="73.0" />
+				<t temp="440" sigma="66.0" />
+				<t temp="450" sigma="53.0" />
+				<t temp="460" sigma="48.0" />
+				<t temp="470" sigma="42.0" />
+				<t temp="475" sigma="40.0" />
+			</steel>
+			<steel name="10Г2С1">
+				<t temp="20" sigma="183.0" />
+				<t temp="100" sigma="160.0" />
+				<t temp="150" sigma="154.0" />
+				<t temp="200" sigma="148.0" />
+				<t temp="250" sigma="145.0" />
+				<t temp="300" sigma="134.0" />
+				<t temp="350" sigma="123.0" />
+				<t temp="375" sigma="116.0" />
+				<t temp="400" sigma="105.0" />
+				<t temp="410" sigma="104.0" />
+				<t temp="420" sigma="92.0" />
+				<t temp="430" sigma="86.0" />
+				<t temp="440" sigma="78.0" />
+				<t temp="450" sigma="71.0" />
+				<t temp="460" sigma="64.0" />
+				<t temp="470" sigma="56.0" />
+				<t temp="475" sigma="53.0" />
+			</steel>
+			<steel name="10Г2С1(-2)">
+				<t temp="20" sigma="183.0" />
+				<t temp="100" sigma="160.0" />
+				<t temp="150" sigma="154.0" />
+				<t temp="200" sigma="148.0" />
+				<t temp="250" sigma="145.0" />
+				<t temp="300" sigma="134.0" />
+				<t temp="350" sigma="123.0" />
+				<t temp="375" sigma="116.0" />
+				<t temp="400" sigma="105.0" />
+				<t temp="410" sigma="104.0" />
+				<t temp="420" sigma="92.0" />
+				<t temp="430" sigma="73.0" />
+				<t temp="440" sigma="66.0" />
+				<t temp="450" sigma="53.0" />
+				<t temp="460" sigma="48.0" />
+				<t temp="470" sigma="42.0" />
+				<t temp="475" sigma="40.0" />
+			</steel>
+			<steel name="12Х18Н10Т">
+				<t temp="20" sigma="184.0" />
+				<t temp="100" sigma="174.0" />
+				<t temp="150" sigma="168.0" />
+				<t temp="200" sigma="160.0" />
+				<t temp="250" sigma="154.0" />
+				<t temp="300" sigma="148.0" />
+				<t temp="350" sigma="144.0" />
+				<t temp="375" sigma="140.0" />
+				<t temp="400" sigma="137.0" />
+				<t temp="410" sigma="136.0" />
+				<t temp="420" sigma="135.0" />
+				<t temp="430" sigma="134.0" />
+				<t temp="440" sigma="133.0" />
+				<t temp="450" sigma="132.0" />
+				<t temp="460" sigma="131.0" />
+				<t temp="470" sigma="130.0" />
+				<t temp="480" sigma="129.0" />
+				<t temp="490" sigma="128.0" />
+				<t temp="500" sigma="127.0" />
+				<t temp="510" sigma="126.0" />
+				<t temp="520" sigma="125.0" />
+				<t temp="530" sigma="124.0" />
+				<t temp="540" sigma="111.0" />
+				<t temp="550" sigma="111.0" />
+				<t temp="560" sigma="101.0" />
+				<t temp="570" sigma="97.0" />
+				<t temp="580" sigma="90.0" />
+				<t temp="590" sigma="81.0" />
+				<t temp="600" sigma="74.0" />
+				<t temp="610" sigma="68.0" />
+				<t temp="620" sigma="62.0" />
+				<t temp="630" sigma="57.0" />
+				<t temp="640" sigma="52.0" />
+				<t temp="650" sigma="48.0" />
+				<t temp="660" sigma="45.0" />
+				<t temp="670" sigma="42.0" />
+				<t temp="680" sigma="38.0" />
+				<t temp="690" sigma="34.0" />
+				<t temp="700" sigma="30.0" />
+			</steel>
+			<steel name="12Х18Н10Т(-2)">
+				<t temp="20" sigma="184.0" />
+				<t temp="100" sigma="174.0" />
+				<t temp="150" sigma="168.0" />
+				<t temp="200" sigma="160.0" />
+				<t temp="250" sigma="154.0" />
+				<t temp="300" sigma="148.0" />
+				<t temp="350" sigma="144.0" />
+				<t temp="375" sigma="140.0" />
+				<t temp="400" sigma="137.0" />
+				<t temp="410" sigma="136.0" />
+				<t temp="420" sigma="135.0" />
+				<t temp="430" sigma="134.0" />
+				<t temp="440" sigma="133.0" />
+				<t temp="450" sigma="132.0" />
+				<t temp="460" sigma="131.0" />
+				<t temp="470" sigma="130.0" />
+				<t temp="480" sigma="129.0" />
+				<t temp="490" sigma="128.0" />
+				<t temp="500" sigma="127.0" />
+				<t temp="510" sigma="126.0" />
+				<t temp="520" sigma="125.0" />
+				<t temp="530" sigma="111.0" />
+				<t temp="540" sigma="100.0" />
+				<t temp="550" sigma="99.0" />
+				<t temp="560" sigma="91.0" />
+				<t temp="570" sigma="87.0" />
+				<t temp="580" sigma="81.0" />
+				<t temp="590" sigma="73.0" />
+				<t temp="600" sigma="59.0" />
+				<t temp="610" sigma="54.0" />
+				<t temp="620" sigma="50.0" />
+				<t temp="630" sigma="45.0" />
+				<t temp="640" sigma="41.0" />
+				<t temp="650" sigma="38.0" />
+				<t temp="660" sigma="36.0" />
+				<t temp="670" sigma="33.0" />
+				<t temp="680" sigma="30.0" />
+				<t temp="690" sigma="27.0" />
+				<t temp="700" sigma="24.0" />
+			</steel>
+		</steels>
+	</sigma_list>
+	<E_list>
+		<classes>
+			<class name="Carbon">
+				<t temp="20" E="199000" />
+				<t temp="100" E="191000" />
+				<t temp="150" E="186000" />
+				<t temp="200" E="181000" />
+				<t temp="250" E="176000" />
+				<t temp="300" E="171000" />
+				<t temp="350" E="164000" />
+				<t temp="400" E="155000" />
+				<t temp="450" E="140000" />
+			</class>
+			<class name="Chrom">
+				<t temp="20" E="215000" />
+				<t temp="100" E="215000" />
+				<t temp="150" E="205000" />
+				<t temp="200" E="198000" />
+				<t temp="250" E="195000" />
+				<t temp="300" E="190000" />
+				<t temp="350" E="184000" />
+				<t temp="400" E="178000" />
+				<t temp="450" E="171000" />
+				<t temp="500" E="163000" />
+				<t temp="550" E="154000" />
+				<t temp="600" E="140000" />
+			</class>
+			<class name="Austenit">
+				<t temp="20" E="200000" />
+				<t temp="100" E="200000" />
+				<t temp="150" E="199000" />
+				<t temp="200" E="197000" />
+				<t temp="250" E="194000" />
+				<t temp="300" E="190000" />
+				<t temp="350" E="185000" />
+				<t temp="400" E="180000" />
+				<t temp="450" E="174000" />
+				<t temp="500" E="167000" />
+				<t temp="550" E="160000" />
+				<t temp="600" E="152000" />
+				<t temp="650" E="143000" />
+				<t temp="700" E="132000" />
+			</class>
+		</classes>
+	</E_list>
+	<class_list>
+		<Carbon>
+			<n name="Ст3" />
+			<n name="09Г2С" />
+			<n name="16ГС" />
+			<n name="20" />
+			<n name="20К" />
+			<n name="10" />
+			<n name="10Г2" />
+			<n name="09Г2" />
+			<n name="17ГС" />
+			<n name="17Г1С" />
+			<n name="10Г2С1" />
+		</Carbon>
+		<Austenit>
+			<n name="03Х21Н21М4ГБ" />
+			<n name="03Х18Н11" />
+			<n name="03Х17Н14М3" />
+			<n name="08Х18Н10Т" />
+			<n name="08Х18Н12Т" />
+			<n name="08Х17Н13М2Т" />
+			<n name="08Х17Н15М3Т" />
+			<n name="12Х18Н10Т" />
+			<n name="12Х18Н12Т" />
+			<n name="10Х17Н13М2Т" />
+			<n name="10Х17Н13М3Т" />
+			<n name="10Х14Г14Н4Т" />
+		</Austenit>
+		<Chrom>
+			<n name="12ХМ" />
+			<n name="12МХ" />
+			<n name="15ХМ" />
+			<n name="15Х5М" />
+			<n name="15Х5М-У" />
+			<n name="10Х2М1А-А" />
+		</Chrom>
+	</class_list>
+</data>
