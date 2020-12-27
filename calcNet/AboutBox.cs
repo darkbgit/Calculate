@@ -7,11 +7,11 @@ using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace calc
+namespace calcNet
 {
-    partial class AboutBox1 : Form
+    partial class AboutBox : Form
     {
-        public AboutBox1()
+        public AboutBox()
         {
             InitializeComponent();
             this.Text = String.Format("О программе {0}", AssemblyTitle);
@@ -37,7 +37,7 @@ namespace calc
                         return titleAttribute.Title;
                     }
                 }
-                return System.IO.Path.GetFileNameWithoutExtension(Assembly.GetExecutingAssembly().CodeBase);
+                return System.IO.Path.GetFileNameWithoutExtension(Assembly.GetExecutingAssembly().Location);
             }
         }
 
@@ -101,10 +101,5 @@ namespace calc
             }
         }
         #endregion
-
-        private void okButton_Click(object sender, EventArgs e)
-        {
-
-        }
     }
 }

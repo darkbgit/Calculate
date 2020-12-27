@@ -60,7 +60,7 @@
   <assembly alias="System.Drawing.Common" name="System.Drawing.Common, Version=5.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51" />
   <data name="f_pb.Image" type="System.Drawing.Bitmap, System.Drawing.Common" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        R0lGODlhqgBQAPYAAAAAAAAAABAQEBYWFggICBkZGQ0NDR0dHQ8PDxMTEwcHBx8fHxUVFQsLCwYGBgD/
+        R0lGODlhqgBQAIYAAAAAAAAAABAQEBYWFggICBkZGQ0NDR0dHQ8PDxMTEwcHBx8fHxUVFQsLCwYGBgD/
         /ysrKzc3NzIyMjk5OSQkJCAgICUlJS8vLz09PTExMT8/P09PT0dHR11dXVRUVENDQ0BAQE5OTlVVVVxc
         XElJSURERGtra25ubnl5eXJycnR0dGRkZHp6emhoaGJiYo6OjpycnICAgIeHh5KSkoyMjJWVlYaGhpiY
         mIODg56enpeXl4iIiKOjo7e3t729vaysrLm5uaqqqry8vLKysqSkpLGxsc/Pz9XV1cDAwNzc3MfHx8PD
@@ -94,7 +94,7 @@
   </data>
   <data name="f_pb.InitialImage" type="System.Drawing.Bitmap, System.Drawing.Common" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        R0lGODlhqgBQAPYAAAAAAAAAABAQEBYWFggICBkZGQ0NDR0dHQ8PDxMTEwcHBx8fHxUVFQsLCwYGBgD/
+        R0lGODlhqgBQAIYAAAAAAAAAABAQEBYWFggICBkZGQ0NDR0dHQ8PDxMTEwcHBx8fHxUVFQsLCwYGBgD/
         /ysrKzc3NzIyMjk5OSQkJCAgICUlJS8vLz09PTExMT8/P09PT0dHR11dXVRUVENDQ0BAQE5OTlVVVVxc
         XElJSURERGtra25ubnl5eXJycnR0dGRkZHp6emhoaGJiYo6OjpycnICAgIeHh5KSkoyMjJWVlYaGhpiY
         mIODg56enpeXl4iIiKOjo7e3t729vaysrLm5uaqqqry8vLKysqSkpLGxsc/Pz9XV1cDAwNzc3MfHx8PD
@@ -128,7 +128,7 @@
   </data>
   <data name="pictureBox1.Image" type="System.Drawing.Bitmap, System.Drawing.Common" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        R0lGODlhLAHIAPIAAAAAAAAAAAD//4CAgP///wECAwECAwECAyH+GlNvZnR3YXJlOiBNaWNyb3NvZnQg
+        R0lGODlhLAHIAIIAAAAAAAAAAAD//4CAgP///wECAwECAwECAyH+GlNvZnR3YXJlOiBNaWNyb3NvZnQg
         T2ZmaWNlACH/C05FVFNDQVBFMi4wAwEBAAAh+QQBAAAAACwAAAAALAHIAAAI/wABCBxIsKDBgwgTKlzI
         sKHDhxAjSpxIsaLFixgzatzIsaPHjyBDihxJsqTJkyhTqlzJsqXLlzBjypxJs6bNmzhz6tzJs6fPn0CD
         Ch26MwDRo0iTVjSqtKnTpwSZQp1KVajUqlizsgzAVSDXq1e1ih07kmlXAFLDkl3LFmNaswPVtp1L16HZ
@@ -163,7 +163,7 @@
   </data>
   <data name="pictureBox1.InitialImage" type="System.Drawing.Bitmap, System.Drawing.Common" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        R0lGODlhLAHIAPIAAAAAAAAAAAD//4CAgP///wECAwECAwECAyH+GlNvZnR3YXJlOiBNaWNyb3NvZnQg
+        R0lGODlhLAHIAIIAAAAAAAAAAAD//4CAgP///wECAwECAwECAyH+GlNvZnR3YXJlOiBNaWNyb3NvZnQg
         T2ZmaWNlACH/C05FVFNDQVBFMi4wAwEBAAAh+QQBAAAAACwAAAAALAHIAAAI/wABCBxIsKDBgwgTKlzI
         sKHDhxAjSpxIsaLFixgzatzIsaPHjyBDihxJsqTJkyhTqlzJsqXLlzBjypxJs6bNmzhz6tzJs6fPn0CD
         Ch26MwDRo0iTVjSqtKnTpwSZQp1KVajUqlizsgzAVSDXq1e1ih07kmlXAFLDkl3LFmNaswPVtp1L16HZ

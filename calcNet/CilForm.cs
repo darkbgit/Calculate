@@ -493,14 +493,20 @@ namespace calc
                     {
                         int i;
                         main.Word_lv.Items.Add($"{d_in.D} мм, {d_in.p} МПа, {d_in.temp} C, {d_in.met}");
+                        i = main.Word_lv.Items.Count - 1;
                         //DataWordOut.DataArr[0].  DataArr .DataOutArr[]. .Value = $"{d_in.D} мм, {d_in.p} МПа, {d_in.temp} C, {d_in.met}";
                         DataWordOut.DataOutArrEl el = new DataWordOut.DataOutArrEl();
                         el.Data_In = d_in;
                         el.Data_Out = d_out;
                         //i = DataWordOut.DataArr.Length;
-                        //el.id = i;
-
-                        DataWordOut.DataArr.Append(el);
+                        el.id = i+1;
+                        el.Typ = "cil";
+                        //int b = DataWordOut.DataArr.Length;
+                        DataWordOut.DataArr[i] = el;
+                        //DataWordOut.Num[i] = 10;
+                        //int l = DataWordOut.Num.Length;
+                        //DataWordOut.DataArr[b] = el;
+                        //int c = DataWordOut.DataArr.Length;
                         //i = DataWordOut.DataArr.Length;
                         //el.id = i;
                         //if (DataWordOut.DataArr != null)

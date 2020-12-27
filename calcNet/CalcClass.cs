@@ -59,7 +59,13 @@ namespace calc
 
     class DataNozzle_in
     {
-        internal int place; //1-Radial 2-Axial 3-Offset 4-Tilted
+        internal int place; //1(cil, kon, ell)-Ось штуцера совпадает с нормалью к поверхности в цунтре отверстия
+                            //2(cil, kon) - наклонный штуцер ось которого лежит в плоскости поперечного сечения
+                            //3(ell) - смещенный штуцер ось которого паралелльна оси днища
+                            //4(cil, kon) - наклонный штуцер максимальная ось симметрии отверстия некруглой формы составляет угол с образующей обечайки на плоскость продольного сечения обечайки
+                            //5(cil, kon, sfer, torosfer) - наклонный штуцер ось которого лежит в плоскости продольгного сечения
+                            //6(oval) - овальное отверстие штуцер перпендикулярно расположен к поверхности обечайки
+                            //7(otbort, torob) - перпендикулярно расположенного к поверхности обечайки или днища штуцера с круглым поперечным сечением при наличии отбортовки или торообразной вставки
         internal string name;
         internal string steel1;
         internal string steel2;
@@ -70,6 +76,9 @@ namespace calc
         internal double sigma_d3;
         internal double sigma_d4;
         internal int E1;
+        internal int E2;
+        internal int E3;
+        internal int E4;
         internal int D;
         internal double s0;
         internal double s1;
@@ -514,9 +523,9 @@ namespace calc
                     case 1: // #Radial
                         dN_out.dp = dN_in.D + 2 * dN_in.cs;
                         break;
-                    case 2:// #'Axial'
+                    case 2:// Axial'
                         break;
-                    case 3:// #'Offset'
+                    case 3:// Offset'
                         break;
                     case 4:// #'Tilted'
                         break;
