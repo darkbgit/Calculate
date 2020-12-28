@@ -19,30 +19,24 @@ namespace calc
             InitializeComponent();
         }
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
+        public CilForm cf = null;
+        
 
-        }
-
-        private void cil_b_Click(object sender, EventArgs e)
+        private void Cil_b_Click(object sender, EventArgs e)
         {
             //CilForm cf = (CilForm) Application.OpenForms["CilForm"]; // создаем
-            //if (cf == null)
-            //{
-            CilForm cf = new CilForm();
-            cf.Owner = this;
-            cf.ShowDialog();
-            //}
-            //else
-            //{
-              //  cf.Owner = this;
-                //cf.Activate();
-            //}
-        }
-
-        private void открытьРасчетToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
+            if (cf == null)
+            {
+                //cf.Dispose();
+                cf = new CilForm();
+                cf.Owner = this;
+                cf.ShowDialog();
+            }
+            else
+            {
+                cf.Owner = this;
+                cf.ShowDialog();
+            }
         }
 
         private void MakeWord_b_Click(object sender, EventArgs e)
@@ -68,7 +62,7 @@ namespace calc
                 {
                     System.IO.File.Copy("temp.docx", f);
                 }
-                MakeWord mw = new MakeWord();
+                //MakeWord mw = new MakeWord();
 
                 try
                 {
@@ -80,12 +74,12 @@ namespace calc
                             switch(DataWordOut.DataArr[i-1].Typ)
                             {
                                 case "cil":
-                                    mw.MakeWord_cil(DataWordOut.DataArr[i - 1].Data_In, DataWordOut.DataArr[i - 1].Data_Out, f);
+                                    MakeWord.MakeWord_cil(DataWordOut.DataArr[i - 1].Data_In, DataWordOut.DataArr[i - 1].Data_Out, f);
                                     break;
                                 case "kon":
                                     break;
                                 case "ell":
-                                    mw.MakeWord_ell(DataWordOut.DataArr[i - 1].Data_In, DataWordOut.DataArr[i - 1].Data_Out, f);
+                                    MakeWord.MakeWord_ell(DataWordOut.DataArr[i - 1].Data_In, DataWordOut.DataArr[i - 1].Data_Out, f);
                                     break;
                                 case "cilyk":
                                     break;
@@ -116,5 +110,6 @@ namespace calc
             
             
         }
+
     }
 }

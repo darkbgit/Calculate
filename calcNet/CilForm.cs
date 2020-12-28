@@ -18,15 +18,23 @@ namespace calc
             InitializeComponent();
         }
 
-        private void cancel_b_Click(object sender, EventArgs e)
+        public struct DataForm
+        {
+            internal Data_in Data_In;// { get; set; }
+            internal Data_out Data_Out;// { get; set; }
+            internal string Typ; // cil, ell, kon, cilyk, konyk, ellyk, saddle, heat
+        }
+        DataForm df = new DataForm();
+
+        private void Cancel_b_Click(object sender, EventArgs e)
         {
             //pictureBox1.Image.Dispose();
             //f_pb.Image.Dispose();
-            this.Close();
+            this.Hide();
         }
 
 
-        private void radioButton_CheckedChanged(object sender, EventArgs e)
+        private void RadioButton_CheckedChanged(object sender, EventArgs e)
         {
             // приводим отправителя к элементу типа RadioButton
             RadioButton rb = sender as RadioButton;
@@ -40,7 +48,7 @@ namespace calc
             }
         }
 
-        private void pressure_rb(object sender, EventArgs e)
+        private void Pressure_rb(object sender, EventArgs e)
         {
             RadioButton rb = sender as RadioButton;
             if (rb.Checked)
@@ -62,12 +70,12 @@ namespace calc
             }
         }
 
-        private void predCalc_b_Click(object sender, EventArgs e)
+        private void PredCalc_b_Click(object sender, EventArgs e)
         {
             Data_in d_in = new Data_in();
-            Data_out d_out = new Data_out();
+            //Data_out d_out = new Data_out();
 
-            CalcClass cc = new CalcClass();
+            //CalcClass cc = new CalcClass();
 
             string data_inerr = "";
 
@@ -92,7 +100,7 @@ namespace calc
             if (data_inerr == "")
             {
                 sigma_d_tb.ReadOnly = false;
-                sigma_d_tb.Text = Convert.ToString(cc.GetSigma(d_in.steel, d_in.temp));
+                sigma_d_tb.Text = Convert.ToString(CalcClass.GetSigma(d_in.steel, d_in.temp));
                 sigma_d_tb.ReadOnly = true;
 
                 try
@@ -119,7 +127,7 @@ namespace calc
                 {
                     d_in.dav = 1;
                     E_tb.ReadOnly = false;
-                    E_tb.Text = Convert.ToString(cc.GetE(d_in.steel, d_in.temp));
+                    E_tb.Text = Convert.ToString(CalcClass.GetE(d_in.steel, d_in.temp));
                     E_tb.ReadOnly = true;
 
                     try
@@ -258,7 +266,7 @@ namespace calc
 
             if (data_inerr == "")
             {
-                d_out = cc.CalcCil(d_in);
+                Data_out d_out = CalcClass.CalcCil(d_in);
                 if (d_out.err == "")
                 {
                     c_tb.Text = Convert.ToString(Math.Round(d_out.c, 2));
@@ -276,10 +284,10 @@ namespace calc
             }
         }
 
-        private void calc_b_Click(object sender, EventArgs e)
+        private void Calc_b_Click(object sender, EventArgs e)
         {
             Data_in d_in = new Data_in();
-            Data_out d_out = new Data_out();
+            //Data_out d_out = new Data_out();
 
             string data_inerr = "";
 
@@ -479,10 +487,10 @@ namespace calc
 
             if (data_inerr == "") // если данные введены правильно
             {
-                CalcClass cc = new CalcClass();
+                //CalcClass cc = new CalcClass();
                 string v = "";
                 
-                d_out = cc.CalcCil(d_in);
+                Data_out d_out = CalcClass.CalcCil(d_in);
                 if (d_out.err == "") // если нет ошибок расчета
                 {
                     p_d_l.Text = $"[p]={d_out.p_d:f2} МПа";
@@ -497,26 +505,14 @@ namespace calc
                         //DataWordOut.DataArr[0].  DataArr .DataOutArr[]. .Value = $"{d_in.D} мм, {d_in.p} МПа, {d_in.temp} C, {d_in.met}";
                         DataWordOut.DataOutArrEl el = new DataWordOut.DataOutArrEl();
                         el.Data_In = d_in;
+                        df.Data_In = d_in;
                         el.Data_Out = d_out;
-                        //i = DataWordOut.DataArr.Length;
+                        df.Data_Out = d_out;
                         el.id = i+1;
                         el.Typ = "cil";
-                        //int b = DataWordOut.DataArr.Length;
+                        df.Typ = "cil";
+
                         DataWordOut.DataArr[i] = el;
-                        //DataWordOut.Num[i] = 10;
-                        //int l = DataWordOut.Num.Length;
-                        //DataWordOut.DataArr[b] = el;
-                        //int c = DataWordOut.DataArr.Length;
-                        //i = DataWordOut.DataArr.Length;
-                        //el.id = i;
-                        //if (DataWordOut.DataArr != null)
-                        //{
-                        //    DataWordOut.DataArr[i] = el;
-                        //}
-                        //else
-                        //{
-                        //    DataWordOut.DataArr[0] = el;
-                        //}
 
                     }
                     else
@@ -539,6 +535,9 @@ namespace calc
                     {
                         System.Windows.Forms.MessageBox.Show(v);
                     }
+                    MessageBoxCheckBox mbcb = new MessageBoxCheckBox();
+                    mbcb.Owner = this.Owner;
+                    mbcb.ShowDialog();
                 }
                 else
                 {
@@ -585,18 +584,32 @@ namespace calc
             Gost_cb.SelectedIndex = 0;
         }
 
-        private void getE_b_Click(object sender, EventArgs e)
+        private void GetE_b_Click(object sender, EventArgs e)
         {
-            CalcClass cc = new CalcClass();
-            E_tb.Text = Convert.ToString(cc.GetE(steel_cb.Text, Convert.ToInt32(t_tb.Text)));
+            //CalcClass cc = new CalcClass();
+            E_tb.Text = Convert.ToString(CalcClass.GetE(steel_cb.Text, Convert.ToInt32(t_tb.Text)));
 
         }
 
-        private void getFi_b_Click(object sender, EventArgs e)
+        private void GetFi_b_Click(object sender, EventArgs e)
         {
             FiForm ff = new FiForm(); // создаем
             ff.Owner = this;
             ff.ShowDialog(); // показываем
+        }
+
+        private void CilForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (sender is Button)
+            {
+                if (this.Owner is MainForm main)
+                {
+                    if (main != null)
+                    {
+                        main.cf = null;
+                    }
+                }
+            }
         }
     }
 }

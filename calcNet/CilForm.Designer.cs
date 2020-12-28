@@ -213,7 +213,7 @@ namespace calc
             this.vn_rb.TabStop = true;
             this.vn_rb.Text = "внутреннее";
             this.vn_rb.UseVisualStyleBackColor = true;
-            this.vn_rb.CheckedChanged += new System.EventHandler(this.pressure_rb);
+            this.vn_rb.CheckedChanged += new System.EventHandler(this.Pressure_rb);
             // 
             // nar_rb
             // 
@@ -225,7 +225,7 @@ namespace calc
             this.nar_rb.TabIndex = 11;
             this.nar_rb.Text = "наружное";
             this.nar_rb.UseVisualStyleBackColor = true;
-            this.nar_rb.CheckedChanged += new System.EventHandler(this.pressure_rb);
+            this.nar_rb.CheckedChanged += new System.EventHandler(this.Pressure_rb);
             // 
             // p_tb
             // 
@@ -507,7 +507,7 @@ namespace calc
             this.getE_b.TabIndex = 39;
             this.getE_b.Text = ">>";
             this.getE_b.UseVisualStyleBackColor = true;
-            this.getE_b.Click += new System.EventHandler(this.getE_b_Click);
+            this.getE_b.Click += new System.EventHandler(this.GetE_b_Click);
             // 
             // getFi_b
             // 
@@ -518,7 +518,7 @@ namespace calc
             this.getFi_b.TabIndex = 40;
             this.getFi_b.Text = ">>";
             this.getFi_b.UseVisualStyleBackColor = true;
-            this.getFi_b.Click += new System.EventHandler(this.getFi_b_Click);
+            this.getFi_b.Click += new System.EventHandler(this.GetFi_b_Click);
             // 
             // getL_b
             // 
@@ -580,7 +580,7 @@ namespace calc
             this.groupBox2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.groupBox2.Size = new System.Drawing.Size(360, 52);
+            this.groupBox2.Size = new System.Drawing.Size(326, 52);
             this.groupBox2.TabIndex = 46;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Нагрузки";
@@ -624,7 +624,7 @@ namespace calc
             this.groupBox3.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.groupBox3.Size = new System.Drawing.Size(360, 173);
+            this.groupBox3.Size = new System.Drawing.Size(326, 173);
             this.groupBox3.TabIndex = 47;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Расчетное осевое усилие, F";
@@ -639,7 +639,7 @@ namespace calc
             this.rb7.TabIndex = 8;
             this.rb7.Text = "7";
             this.rb7.UseVisualStyleBackColor = true;
-            this.rb7.CheckedChanged += new System.EventHandler(this.radioButton_CheckedChanged);
+            this.rb7.CheckedChanged += new System.EventHandler(this.RadioButton_CheckedChanged);
             // 
             // rb6
             // 
@@ -651,7 +651,7 @@ namespace calc
             this.rb6.TabIndex = 7;
             this.rb6.Text = "6";
             this.rb6.UseVisualStyleBackColor = true;
-            this.rb6.CheckedChanged += new System.EventHandler(this.radioButton_CheckedChanged);
+            this.rb6.CheckedChanged += new System.EventHandler(this.RadioButton_CheckedChanged);
             // 
             // rb5
             // 
@@ -663,7 +663,7 @@ namespace calc
             this.rb5.TabIndex = 6;
             this.rb5.Text = "5";
             this.rb5.UseVisualStyleBackColor = true;
-            this.rb5.CheckedChanged += new System.EventHandler(this.radioButton_CheckedChanged);
+            this.rb5.CheckedChanged += new System.EventHandler(this.RadioButton_CheckedChanged);
             // 
             // rb4
             // 
@@ -675,7 +675,7 @@ namespace calc
             this.rb4.TabIndex = 5;
             this.rb4.Text = "4";
             this.rb4.UseVisualStyleBackColor = true;
-            this.rb4.CheckedChanged += new System.EventHandler(this.radioButton_CheckedChanged);
+            this.rb4.CheckedChanged += new System.EventHandler(this.RadioButton_CheckedChanged);
             // 
             // rb3
             // 
@@ -687,7 +687,7 @@ namespace calc
             this.rb3.TabIndex = 4;
             this.rb3.Text = "3";
             this.rb3.UseVisualStyleBackColor = true;
-            this.rb3.CheckedChanged += new System.EventHandler(this.radioButton_CheckedChanged);
+            this.rb3.CheckedChanged += new System.EventHandler(this.RadioButton_CheckedChanged);
             // 
             // rb2
             // 
@@ -699,7 +699,7 @@ namespace calc
             this.rb2.TabIndex = 3;
             this.rb2.Text = "2";
             this.rb2.UseVisualStyleBackColor = true;
-            this.rb2.CheckedChanged += new System.EventHandler(this.radioButton_CheckedChanged);
+            this.rb2.CheckedChanged += new System.EventHandler(this.RadioButton_CheckedChanged);
             // 
             // rb1
             // 
@@ -713,7 +713,7 @@ namespace calc
             this.rb1.TabStop = true;
             this.rb1.Text = "1";
             this.rb1.UseVisualStyleBackColor = true;
-            this.rb1.CheckedChanged += new System.EventHandler(this.radioButton_CheckedChanged);
+            this.rb1.CheckedChanged += new System.EventHandler(this.RadioButton_CheckedChanged);
             // 
             // f_pb
             // 
@@ -740,11 +740,11 @@ namespace calc
             // 
             this.groupBox4.Controls.Add(this.p_d_l);
             this.groupBox4.Controls.Add(this.scalc_l);
-            this.groupBox4.Location = new System.Drawing.Point(456, 562);
+            this.groupBox4.Location = new System.Drawing.Point(427, 562);
             this.groupBox4.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.groupBox4.Size = new System.Drawing.Size(275, 58);
+            this.groupBox4.Size = new System.Drawing.Size(270, 58);
             this.groupBox4.TabIndex = 48;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Результаты расчета";
@@ -778,7 +778,7 @@ namespace calc
             this.predCalc_b.TabIndex = 49;
             this.predCalc_b.Text = "Предварительный\r\nрасчет";
             this.predCalc_b.UseVisualStyleBackColor = true;
-            this.predCalc_b.Click += new System.EventHandler(this.predCalc_b_Click);
+            this.predCalc_b.Click += new System.EventHandler(this.PredCalc_b_Click);
             // 
             // calc_b
             // 
@@ -789,7 +789,7 @@ namespace calc
             this.calc_b.TabIndex = 50;
             this.calc_b.Text = "Расчет";
             this.calc_b.UseVisualStyleBackColor = true;
-            this.calc_b.Click += new System.EventHandler(this.calc_b_Click);
+            this.calc_b.Click += new System.EventHandler(this.Calc_b_Click);
             // 
             // cancel_b
             // 
@@ -800,7 +800,7 @@ namespace calc
             this.cancel_b.TabIndex = 51;
             this.cancel_b.Text = "Cancel";
             this.cancel_b.UseVisualStyleBackColor = true;
-            this.cancel_b.Click += new System.EventHandler(this.cancel_b_Click);
+            this.cancel_b.Click += new System.EventHandler(this.Cancel_b_Click);
             // 
             // pictureBox1
             // 
@@ -901,7 +901,7 @@ namespace calc
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(746, 630);
+            this.ClientSize = new System.Drawing.Size(714, 631);
             this.Controls.Add(this.label28);
             this.Controls.Add(this.label27);
             this.Controls.Add(this.label26);
@@ -960,8 +960,11 @@ namespace calc
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "CilForm";
             this.Text = "CilForm";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.CilForm_FormClosing);
             this.Load += new System.EventHandler(this.CilForm_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

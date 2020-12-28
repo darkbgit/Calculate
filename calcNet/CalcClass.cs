@@ -101,6 +101,9 @@ namespace calc
         //internal string dav; //0 - vn, 1-nar
         internal string met;
         internal double ny = 2.4;
+        internal double t;
+        internal double gamma;
+        internal double omega;
     }
 
     class DataNozzle_out
@@ -141,6 +144,9 @@ namespace calc
         internal double B1n;
         internal double pen;
         internal string err;
+        internal bool ypf;
+        internal double ypf1;
+        internal double ypf2;
     }
 
     class DataSaddle_in
@@ -249,7 +255,7 @@ namespace calc
 
     class CalcClass
     {
-        internal double GetSigma (string steel, int temp)
+        internal static double GetSigma (string steel, int temp)
         {
             double sigma;
             double sigma_l = 0;
@@ -287,14 +293,14 @@ namespace calc
             return sigma;
         }
 
-        internal int GetE(string steel, int temp)
+        internal static int GetE(string steel, int temp)
         {
             int E;
             int E_l = 0;
             int E_b = 0;
             int temp_l = 0;
             int temp_b = 0;
-            string steelf = "";
+            string steelf;
 
            
             Regex regex = new Regex(@"(.*)(?=\()");
@@ -342,7 +348,7 @@ namespace calc
             return E;
         }
 
-        internal Data_out CalcCil(Data_in d_in)
+        internal static Data_out CalcCil(Data_in d_in)
         {
             Data_out d_out = new Data_out();
 
@@ -413,7 +419,7 @@ namespace calc
             return d_out;
         }
 
-        internal Data_out CalcEll(Data_in d_in)
+        internal static Data_out CalcEll(Data_in d_in)
         {
             Data_out d_out = new Data_out();
             d_out.c = d_in.c1 + d_in.c2 + d_in.c3;
@@ -479,60 +485,95 @@ namespace calc
             return d_out;
         }
 
-        internal DataNozzle_out CalcNozzle(Data_in d_in, Data_out d_out, DataNozzle_in dN_in)
+        internal static DataNozzle_out CalcNozzle(Data_in d_in, Data_out d_out, DataNozzle_in dN_in)
         {
             DataNozzle_out dN_out = new DataNozzle_out();
-            
+
             // расчет Dp, dp
-            if (d_in.met == "obvn" | d_in.met == "obnar")
+            switch (d_in.met)
             {
-                dN_out.Dp = d_in.D;
-                switch (dN_in.place)
-                {
-                    case 1: //Radial
-                        dN_out.dp = dN_in.D + 2 * dN_in.cs;
+                case "obvn":
+                case "obnar":
+                    {
+                        dN_out.Dp = d_in.D;
                         break;
-                    case 2: //Axial
+                    }
+                case "konvn":
+                case "konnar":
+                    {
+                        dN_out.Dp = d_out.Dk/Math.Cos(Math.PI*100*d_in.alfa);
                         break;
-                    case 3: //Offset
+                    }
+                case "ellvn":
+                case "ellnar":
+                    {
+                        if (d_in.elH * 100 == d_in.D * 25)
+                        {
+                            dN_out.Dp = d_in.D * 2 * Math.Sqrt(1 - 3 * Math.Pow(dN_in.elx / d_in.D, 2));
+                        }
+                        else
+                        {
+                            dN_out.Dp = Math.Pow(d_in.D, 2) / (d_in.elH * 2) * Math.Sqrt(1 - (4 * (Math.Pow(d_in.D, 2) - 4 * Math.Pow(d_in.elH, 2)) * Math.Pow(dN_in.elx, 2)) / Math.Pow(d_in.D, 4));
+                        }
                         break;
-                    case 4: //Tilted
+                    }
+                case "sfer":
+                case "torosfer":
+                    {
+                        //dN_out.Dp = 2 * d_in.R;
                         break;
-                    default:
-                        dN_out.err = "Не определено место";
-                        break;
-                }
+                    }
             }
-            else if (d_in.met == "konvn" | d_in.met == "konnar")
+
+            if (d_in.met == "ellvn")
             {
-                dN_out.Dp = d_out.Dk / Math.Cos(Math.PI * d_in.alfa / 180);
+                dN_out.sp = d_in.p * dN_out.Dp / (4 * d_in.fi * d_in.sigma_d - d_in.p);
             }
-            else if (d_in.met == "elvn" | d_in.met == "elnar")
+            else
             {
-                if (d_in.elH == d_in.D * 0.25)
-                {
-                    dN_out.Dp = d_in.D * 2 * Math.Sqrt(1 - 3 * Math.Pow(dN_in.elx / d_in.D, 2));
-                }
-                else
-                {
-                    dN_out.Dp = Math.Pow(d_in.D, 2) / (d_in.elH * 2) * Math.Sqrt(1 - (4 * (Math.Pow(d_in.D, 2) - 4 * Math.Pow(d_in.elH, 2)) * Math.Pow(dN_in.elx, 2)) / Math.Pow(d_in.D, 4));
-                }
-                
-                switch (dN_in.place)
-                {
-                    case 1: // #Radial
-                        dN_out.dp = dN_in.D + 2 * dN_in.cs;
-                        break;
-                    case 2:// Axial'
-                        break;
-                    case 3:// Offset'
-                        break;
-                    case 4:// #'Tilted'
-                        break;
-                }
+                dN_out.sp = d_out.s_calcr;
             }
 
             dN_out.s1p = d_in.p * (dN_in.D + 2 * dN_in.cs) / (2 * dN_in.fi * dN_in.sigma_d1 - d_in.p);
+
+            switch (dN_in.place)
+            {
+                case 1:
+                    {
+                        dN_out.dp = dN_in.D + 2 * dN_in.cs;
+                        break;
+                    }
+                case 2:
+                    {
+                        dN_out.dp = Math.Max(dN_in.D, 0.5 * dN_in.t);
+                        break;
+                    }
+                case 3:
+                    {
+                        dN_out.dp = (dN_in.D + 2 * dN_in.cs) / Math.Sqrt(1 + Math.Pow(2 * dN_in.elx / dN_out.Dp, 2));
+                        break;
+                    }
+                case 4:
+                    {
+                        dN_out.dp = (dN_in.D + 2 * dN_in.cs) * (1 + Math.Pow(Math.Tan(Math.PI * 180 * dN_in.gamma), 2) * Math.Pow(Math.Cos(Math.PI * 180 * dN_in.omega), 2));
+                        break;
+                    }
+                case 5:
+                    {
+                        dN_out.dp = (dN_in.D + 2 * dN_in.cs) / Math.Pow(Math.Cos(Math.PI * 180 * dN_in.gamma), 2);
+                        break;
+                    }
+                case 6:
+                    {
+                        //dN_out.dp = (dN_in.D + 2 * dN_in.cs) * (Math.Pow(Math.Sin(Math.PI * 180 * dN_in.omega), 2) + (dN_in.d1 + 2 * dN_in.cs) * (dN_in.d1 + dN_in.d2 + 4 * dN_in.cs) / (2 * Math.Pow(dN_in.d2 + 2 * dN_in.cs, 2)) * Math.Pow(Math.Cos(Math.PI * 180 * dN_in.omega), 2));
+                        break;
+                    }
+                case 7:
+                    {
+                        //dN_out.dp = dN_in.D + 1.5*(dN_in.r-dN_out.sp) +2 * dN_in.cs;
+                        break;
+                    }
+            }
 
             // l1p, l3p, l2p
             dN_out.l1p2 = 1.25 * Math.Sqrt((dN_in.D + 2 * dN_in.cs) * (dN_in.s1 - dN_in.cs));
@@ -552,44 +593,26 @@ namespace calc
             switch (dN_in.vid)
             {
                 case 1:
+                case 2:
+                case 3:
+                case 4:
+                case 5:
+                case 6:
                     dN_out.lp = dN_out.L0;
                     break;
-                case 2:
-                    goto case 1;
-                case 3:
-                    goto case 1;
-                case 4:
-                    goto case 1;
-                case 5:
-                    goto case 1;
-                case 6:
-                    goto case 1;
                 case 7:
+                case 8:
                     dN_out.lp = Math.Min(dN_in.l, dN_out.L0);
                     break;
-                case 8:
-                    goto case 7;
             }
 
             dN_out.l2p2 = Math.Sqrt(dN_out.Dp * (dN_in.s2 + d_in.s - d_out.c));
             dN_out.l2p = Math.Min(dN_in.l2, dN_out.l2p2);
 
-            switch (dN_in.vid)
+            if ((new[] {1, 2, 3, 4, 5, 6 } ).Contains(dN_in.vid))
             {
-                case 1:
-                    dN_in.s0 = d_in.s;
-                    dN_in.steel4 = dN_in.steel1;
-                    break;
-                case 2:
-                    goto case 1;
-                case 3:
-                    goto case 1;
-                case 4:
-                    goto case 1;
-                case 5:
-                    goto case 1;
-                case 6:
-                    goto case 1;
+                dN_in.s0 = d_in.s;
+                dN_in.steel4 = dN_in.steel1;
             }
 
             dN_in.sigma_d2 = GetSigma(dN_in.steel2, d_in.temp);
@@ -605,53 +628,63 @@ namespace calc
 
             dN_out.b = Math.Sqrt(dN_out.Dp * (d_in.s - d_out.c)) + Math.Sqrt(dN_out.Dp * (d_in.s - d_out.c));
 
-
-            if (d_in.met == "obvn" | d_in.met == "obnar")
+            switch (d_in.met)
             {
-                dN_out.sp = d_out.s_calcr;
+                case "obvn":
+                case "obnar":
+                    {
+                        dN_out.dmax = d_in.D;
+                        break;
+                    }
+                case "konvn":
+                case "konnar":
+                    {
+                        dN_out.dmax = d_out.Dk;
+                        break;
+                    }
+                case "ellvn":
+                case "ellnar":
+                case "sfer":
+                case "torosfer":
+                    {
+                        dN_out.dmax = 0.6 * d_in.D;
+                        break;
+                    }
+            }
 
-                dN_out.dmax = d_in.D;
-                dN_out.K1 = 1;
-                if (d_in.dav == 0)
-                {
-                    dN_out.spn = d_out.s_calcr;
-                }
-                else if (d_in.dav == 1)
-                {
-                    dN_out.B1n = Math.Min(1, 9.45 * (d_in.D / d_out.l) * Math.Sqrt(d_in.D / (100 * (d_in.s - d_out.c))));
-                    dN_out.pen = 2.08 * 0.00001 * d_in.E / (dN_in.ny * dN_out.B1n) * (d_in.D / d_out.l) * Math.Pow(100 * (d_in.s - d_out.c) / d_in.D, 2.5);
-                    dN_out.ppn = d_in.p / Math.Sqrt(1 - Math.Pow(d_in.p / dN_out.pen, 2));
-                    dN_out.spn = dN_out.ppn * dN_out.Dp / (2 * dN_out.K1 * d_in.sigma_d - dN_out.ppn);
-                }
-            }
-            else if (d_in.met == "konvn" | d_in.met == "konnar")
-            {
 
-            }
-            else if (d_in.met == "elvn" | d_in.met == "elnar")
+            if (d_in.dav == 0)
             {
-                if (d_in.dav == 0)
-                {
-                    dN_out.sp = d_in.p * dN_out.Dp / (2 * dN_in.fi * d_in.sigma_d - d_in.p);
-                }
-                else if (d_in.dav == 1)
-                {
-                    dN_out.sp = d_out.s_calcr;
-                }
-                dN_out.dmax = 0.6 * d_in.D;
-                dN_out.K1 = 2;
-                if (d_in.dav == 0)
-                {
-                    dN_out.spn = dN_out.sp;
-                }
-                else if (d_in.dav == 1)
-                {
-                    dN_out.B1n = Math.Min(1, 9.45 * (d_in.D / d_out.l) * Math.Sqrt(d_in.D / (100 * (d_in.s - d_out.c))));
-                    dN_out.pen = 2.08 * 0.00001 * d_in.E / (dN_in.ny * dN_out.B1n) * (d_in.D / d_out.l) * Math.Pow(100 * (d_in.s - d_out.c) / d_in.D, 2.5);
-                    dN_out.ppn = d_in.p / Math.Sqrt(1 - Math.Pow(d_in.p / dN_out.pen, 2));
-                    dN_out.spn = dN_out.ppn * dN_out.Dp / (2 * dN_out.K1 * d_in.sigma_d - dN_out.ppn);
-                }
+                dN_out.spn = dN_out.sp;
             }
+            else if (d_in.dav == 1)
+            {
+                switch (d_in.met)
+                {
+                    case "obvn":
+                    case "obnar":
+                    case "konvn":
+                    case "konnar":
+                        {
+                            dN_out.K1 = 1;
+                            break;
+                        }
+                    case "ellvn":
+                    case "ellnar":
+                    case "sfer":
+                    case "torosfer":
+                        {
+                            dN_out.K1 = 2;
+                            break;
+                        }
+                }
+                //dN_out.B1n = Math.Min(1, 9.45 * (d_in.D / d_out.l) * Math.Sqrt(d_in.D / (100 * (d_in.s - d_out.c))));
+                //dN_out.pen = 2.08 * 0.00001 * d_in.E / (dN_in.ny * dN_out.B1n) * (d_in.D / d_out.l) * Math.Pow(100 * (d_in.s - d_out.c) / d_in.D, 2.5);
+                dN_out.pen = d_out.p_de;
+                dN_out.ppn = d_in.p / Math.Sqrt(1 - Math.Pow(d_in.p / dN_out.pen, 2));
+                dN_out.spn = dN_out.ppn * dN_out.Dp / (2 * dN_out.K1 * d_in.sigma_d - dN_out.ppn);
+            }
+
 
             dN_out.d01 = 2 * ((d_in.s - d_out.c) / dN_out.spn - 0.8) * Math.Sqrt(dN_out.Dp * (d_in.s - d_out.c));
             dN_out.d02 = dN_out.dmax + 2 * dN_in.cs;
@@ -674,15 +707,64 @@ namespace calc
             else if (d_in.dav == 1)
             {
                 dN_out.p_dp = 2 * dN_out.K1 * dN_in.fi * d_in.sigma_d * (d_in.s - d_out.c) * dN_out.V / (dN_out.Dp + (d_in.s - d_out.c) * dN_out.V);
-                dN_out.p_de = d_out.p_de;
+                dN_out.p_de = d_out.p_de; 
                 dN_out.p_d = dN_out.p_dp / Math.Sqrt(1 + Math.Pow(dN_out.p_dp / dN_out.p_de, 2));
             }
 
+            switch (d_in.met)
+            {
+                case "obvn":
+                case "obnar":
+                    {
+                        dN_out.ypf1 = (dN_out.dp - 2 * dN_in.cs) / d_in.D;
+                        dN_out.ypf2 = (d_in.s - d_out.c) / d_in.D;
+                        if (dN_out.ypf1 <= 1 & dN_out.ypf2 <= 0.1)
+                        {
+                            dN_out.ypf = true;
+                        }
+                        else
+                        {
+                            dN_out.ypf = false;
+                        }
+                        break;
+                    }
+                case "konvn":
+                case "konnar":
+                    {
+                        dN_out.ypf1 = (dN_out.dp - 2 * dN_in.cs) / d_out.Dk;
+                        dN_out.ypf2 = (d_in.s - d_out.c) / d_out.Dk;
+                        if (dN_out.ypf1 <= 1 & dN_out.ypf2 <= 0.1/Math.Cos(Math.PI*180*d_in.alfa))
+                        {
+                            dN_out.ypf = true;
+                        }
+                        else
+                        {
+                            dN_out.ypf = false;
+                        }
+                        break;
+                    }
+                case "ellvn":
+                case "ellnar":
+                case "sfer":
+                case "torosfer":
+                    {
+                        dN_out.ypf1 = (dN_out.dp - 2 * dN_in.cs) / d_in.D;
+                        dN_out.ypf2 = (d_in.s - d_out.c) / d_in.D;
+                        if (dN_out.ypf1 <= 0.6 & dN_out.ypf2 <= 0.1)
+                        {
+                            dN_out.ypf = true;
+                        }
+                        else
+                        {
+                            dN_out.ypf = false;
+                        }
+                        break;
+                    }
+            }
             return (dN_out);
-            
         }
 
-        internal DataSaddle_out CalcSaddle(DataSaddle_in d_in)
+        internal static DataSaddle_out CalcSaddle(DataSaddle_in d_in)
         {
             d_in.sigma_d = GetSigma(d_in.steel, d_in.temp);
             d_in.E = GetE(d_in.steel, d_in.temp);

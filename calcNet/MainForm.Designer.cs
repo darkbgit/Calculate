@@ -30,14 +30,14 @@ namespace calc
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.menuUp = new System.Windows.Forms.MenuStrip();
             this.FileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.OpenToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.SaveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.SpravkaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.AboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ExitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.cil_b = new System.Windows.Forms.Button();
+            this.Cil_b = new System.Windows.Forms.Button();
             this.Word_lv = new System.Windows.Forms.ListView();
             this.data_contextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.up_MenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -45,26 +45,26 @@ namespace calc
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.del_MenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.delall_MenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.kon_b = new System.Windows.Forms.Button();
-            this.ell_b = new System.Windows.Forms.Button();
+            this.Kon_b = new System.Windows.Forms.Button();
+            this.Ell_b = new System.Windows.Forms.Button();
             this.MakeWord_b = new System.Windows.Forms.Button();
             this.file_tb = new System.Windows.Forms.TextBox();
             this.proekt_tb = new System.Windows.Forms.TextBox();
-            this.menuStrip1.SuspendLayout();
+            this.menuUp.SuspendLayout();
             this.data_contextMenu.SuspendLayout();
             this.SuspendLayout();
             // 
-            // menuStrip1
+            // menuUp
             // 
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuUp.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.FileToolStripMenuItem,
             this.SpravkaToolStripMenuItem});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Padding = new System.Windows.Forms.Padding(7, 2, 0, 2);
-            this.menuStrip1.Size = new System.Drawing.Size(681, 24);
-            this.menuStrip1.TabIndex = 1;
-            this.menuStrip1.Text = "menuStrip1";
+            this.menuUp.Location = new System.Drawing.Point(0, 0);
+            this.menuUp.Name = "menuUp";
+            this.menuUp.Padding = new System.Windows.Forms.Padding(7, 2, 0, 2);
+            this.menuUp.Size = new System.Drawing.Size(681, 24);
+            this.menuUp.TabIndex = 1;
+            this.menuUp.Text = "menuUp";
             // 
             // FileToolStripMenuItem
             // 
@@ -108,16 +108,16 @@ namespace calc
             this.ExitToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.ExitToolStripMenuItem.Text = "Выход";
             // 
-            // cil_b
+            // Cil_b
             // 
-            this.cil_b.Location = new System.Drawing.Point(14, 31);
-            this.cil_b.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cil_b.Name = "cil_b";
-            this.cil_b.Size = new System.Drawing.Size(187, 27);
-            this.cil_b.TabIndex = 2;
-            this.cil_b.Text = "Цилиндрическая обечайка";
-            this.cil_b.UseVisualStyleBackColor = true;
-            this.cil_b.Click += new System.EventHandler(this.cil_b_Click);
+            this.Cil_b.Location = new System.Drawing.Point(14, 31);
+            this.Cil_b.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.Cil_b.Name = "Cil_b";
+            this.Cil_b.Size = new System.Drawing.Size(187, 27);
+            this.Cil_b.TabIndex = 2;
+            this.Cil_b.Text = "Цилиндрическая обечайка";
+            this.Cil_b.UseVisualStyleBackColor = true;
+            this.Cil_b.Click += new System.EventHandler(this.Cil_b_Click);
             // 
             // Word_lv
             // 
@@ -173,25 +173,25 @@ namespace calc
             this.delall_MenuItem.Size = new System.Drawing.Size(139, 22);
             this.delall_MenuItem.Text = "Удалить все";
             // 
-            // kon_b
+            // Kon_b
             // 
-            this.kon_b.Location = new System.Drawing.Point(15, 66);
-            this.kon_b.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.kon_b.Name = "kon_b";
-            this.kon_b.Size = new System.Drawing.Size(186, 27);
-            this.kon_b.TabIndex = 4;
-            this.kon_b.Text = "Коническая обечайка";
-            this.kon_b.UseVisualStyleBackColor = true;
+            this.Kon_b.Location = new System.Drawing.Point(15, 66);
+            this.Kon_b.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.Kon_b.Name = "Kon_b";
+            this.Kon_b.Size = new System.Drawing.Size(186, 27);
+            this.Kon_b.TabIndex = 4;
+            this.Kon_b.Text = "Коническая обечайка";
+            this.Kon_b.UseVisualStyleBackColor = true;
             // 
-            // ell_b
+            // Ell_b
             // 
-            this.ell_b.Location = new System.Drawing.Point(15, 100);
-            this.ell_b.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.ell_b.Name = "ell_b";
-            this.ell_b.Size = new System.Drawing.Size(186, 27);
-            this.ell_b.TabIndex = 5;
-            this.ell_b.Text = "Эллиптическое днище";
-            this.ell_b.UseVisualStyleBackColor = true;
+            this.Ell_b.Location = new System.Drawing.Point(15, 100);
+            this.Ell_b.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.Ell_b.Name = "Ell_b";
+            this.Ell_b.Size = new System.Drawing.Size(186, 27);
+            this.Ell_b.TabIndex = 5;
+            this.Ell_b.Text = "Эллиптическое днище";
+            this.Ell_b.UseVisualStyleBackColor = true;
             // 
             // MakeWord_b
             // 
@@ -226,19 +226,18 @@ namespace calc
             this.Controls.Add(this.proekt_tb);
             this.Controls.Add(this.file_tb);
             this.Controls.Add(this.MakeWord_b);
-            this.Controls.Add(this.ell_b);
-            this.Controls.Add(this.kon_b);
+            this.Controls.Add(this.Ell_b);
+            this.Controls.Add(this.Kon_b);
             this.Controls.Add(this.Word_lv);
-            this.Controls.Add(this.cil_b);
-            this.Controls.Add(this.menuStrip1);
+            this.Controls.Add(this.Cil_b);
+            this.Controls.Add(this.menuUp);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.MainMenuStrip = this.menuStrip1;
+            this.MainMenuStrip = this.menuUp;
             this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Name = "MainForm";
             this.Text = "Расчет на прочность";
-            this.Load += new System.EventHandler(this.Form1_Load);
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
+            this.menuUp.ResumeLayout(false);
+            this.menuUp.PerformLayout();
             this.data_contextMenu.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -246,16 +245,16 @@ namespace calc
         }
 
         #endregion
-        private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.Button cil_b;
+        private System.Windows.Forms.MenuStrip menuUp;
+        private System.Windows.Forms.Button Cil_b;
         private System.Windows.Forms.ToolStripMenuItem FileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem OpenToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem SaveToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem SpravkaToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem AboutToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ExitToolStripMenuItem;
-        private System.Windows.Forms.Button kon_b;
-        private System.Windows.Forms.Button ell_b;
+        private System.Windows.Forms.Button Kon_b;
+        private System.Windows.Forms.Button Ell_b;
         private System.Windows.Forms.Button MakeWord_b;
         internal System.Windows.Forms.ListView Word_lv;
         private System.Windows.Forms.TextBox file_tb;

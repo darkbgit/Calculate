@@ -36,17 +36,13 @@ namespace calc
             internal string Value;// { get; set; }
             internal Data_in Data_In;// { get; set; }
             internal Data_out Data_Out;// { get; set; }
+            internal DataNozzle_in DataN_In;
+            internal DataNozzle_out DataN_Out;
             internal string Typ; // cil, ell, kon, cilyk, konyk, ellyk, saddle, heat
         }
-        //public static DataOutArrEl[]
-        public static DataOutArrEl[] DataArr = new DataOutArrEl[10];
 
-        public static int[] Num = new int[10];
+        public static DataOutArrEl[] DataArr = new DataOutArrEl[20];
 
-        //public static int[] Num { get => num; set => num = value; }
-        //internal static DataOutArrEl[] DataArr { get => dataArr; set => dataArr = value; }
 
-        //public List<DataOutArrEl> DataArr = new List<DataOutArrEl>();// { get; set; }
-        //public static DataOutArrEl element = new DataOutArrEl();
     }
 }
