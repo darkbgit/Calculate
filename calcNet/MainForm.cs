@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
 
-namespace calc
+namespace calcNet
 {
     public partial class MainForm : Form
     {
@@ -20,6 +20,7 @@ namespace calc
         }
 
         public CilForm cf = null;
+        public NozzleForm nf = null;
         
 
         private void Cil_b_Click(object sender, EventArgs e)
@@ -28,14 +29,13 @@ namespace calc
             if (cf == null)
             {
                 //cf.Dispose();
-                cf = new CilForm();
-                cf.Owner = this;
-                cf.ShowDialog();
+                cf = new CilForm { Owner = this };
+                cf.Show();
             }
             else
             {
                 cf.Owner = this;
-                cf.ShowDialog();
+                cf.Show();
             }
         }
 
@@ -110,6 +110,22 @@ namespace calc
             
             
         }
+
+        private void Kon_b_Click(object sender, EventArgs e)
+        {
+            if (nf == null)
+            {
+                //cf.Dispose();
+                nf = new NozzleForm { Owner = this };
+                nf.Show();
+            }
+            else
+            {
+                nf.Owner = this;
+                nf.Show();
+            }
+        }
+
 
     }
 }

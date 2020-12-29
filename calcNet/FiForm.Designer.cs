@@ -1,5 +1,5 @@
 ﻿
-namespace calc
+namespace calcNet
 {
     partial class FiForm
     {
@@ -266,7 +266,7 @@ namespace calc
             this.linkLabel1.TabIndex = 19;
             this.linkLabel1.TabStop = true;
             this.linkLabel1.Text = "1.0";
-            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel_LinkClicked);
+            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinkLabel_LinkClicked);
             // 
             // linkLabel2
             // 
@@ -277,7 +277,7 @@ namespace calc
             this.linkLabel2.TabIndex = 20;
             this.linkLabel2.TabStop = true;
             this.linkLabel2.Text = "0.9";
-            this.linkLabel2.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel_LinkClicked);
+            this.linkLabel2.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinkLabel_LinkClicked);
             // 
             // linkLabel3
             // 
@@ -288,7 +288,7 @@ namespace calc
             this.linkLabel3.TabIndex = 22;
             this.linkLabel3.TabStop = true;
             this.linkLabel3.Text = "0.9";
-            this.linkLabel3.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel_LinkClicked);
+            this.linkLabel3.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinkLabel_LinkClicked);
             // 
             // linkLabel4
             // 
@@ -299,7 +299,7 @@ namespace calc
             this.linkLabel4.TabIndex = 21;
             this.linkLabel4.TabStop = true;
             this.linkLabel4.Text = "1.0";
-            this.linkLabel4.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel_LinkClicked);
+            this.linkLabel4.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinkLabel_LinkClicked);
             // 
             // linkLabel5
             // 
@@ -310,7 +310,7 @@ namespace calc
             this.linkLabel5.TabIndex = 24;
             this.linkLabel5.TabStop = true;
             this.linkLabel5.Text = "0.8";
-            this.linkLabel5.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel_LinkClicked);
+            this.linkLabel5.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinkLabel_LinkClicked);
             // 
             // linkLabel6
             // 
@@ -321,7 +321,7 @@ namespace calc
             this.linkLabel6.TabIndex = 23;
             this.linkLabel6.TabStop = true;
             this.linkLabel6.Text = "0.9";
-            this.linkLabel6.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel_LinkClicked);
+            this.linkLabel6.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinkLabel_LinkClicked);
             // 
             // linkLabel7
             // 
@@ -332,7 +332,7 @@ namespace calc
             this.linkLabel7.TabIndex = 26;
             this.linkLabel7.TabStop = true;
             this.linkLabel7.Text = "0.65";
-            this.linkLabel7.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel_LinkClicked);
+            this.linkLabel7.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinkLabel_LinkClicked);
             // 
             // linkLabel8
             // 
@@ -343,7 +343,7 @@ namespace calc
             this.linkLabel8.TabIndex = 25;
             this.linkLabel8.TabStop = true;
             this.linkLabel8.Text = "0.8";
-            this.linkLabel8.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel_LinkClicked);
+            this.linkLabel8.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinkLabel_LinkClicked);
             // 
             // linkLabel9
             // 
@@ -354,7 +354,7 @@ namespace calc
             this.linkLabel9.TabIndex = 28;
             this.linkLabel9.TabStop = true;
             this.linkLabel9.Text = "0.8";
-            this.linkLabel9.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel_LinkClicked);
+            this.linkLabel9.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinkLabel_LinkClicked);
             // 
             // linkLabel10
             // 
@@ -365,7 +365,7 @@ namespace calc
             this.linkLabel10.TabIndex = 27;
             this.linkLabel10.TabStop = true;
             this.linkLabel10.Text = "0.9";
-            this.linkLabel10.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel_LinkClicked);
+            this.linkLabel10.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinkLabel_LinkClicked);
             // 
             // linkLabel11
             // 
@@ -376,7 +376,7 @@ namespace calc
             this.linkLabel11.TabIndex = 30;
             this.linkLabel11.TabStop = true;
             this.linkLabel11.Text = "0.65";
-            this.linkLabel11.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel_LinkClicked);
+            this.linkLabel11.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinkLabel_LinkClicked);
             // 
             // linkLabel12
             // 
@@ -387,7 +387,7 @@ namespace calc
             this.linkLabel12.TabIndex = 29;
             this.linkLabel12.TabStop = true;
             this.linkLabel12.Text = "0.9";
-            this.linkLabel12.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel_LinkClicked);
+            this.linkLabel12.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinkLabel_LinkClicked);
             // 
             // FiForm
             // 

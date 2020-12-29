@@ -1,5 +1,5 @@
 ﻿
-namespace calc
+namespace calcNet
 {
     partial class MainForm
     {
@@ -182,6 +182,7 @@ namespace calc
             this.Kon_b.TabIndex = 4;
             this.Kon_b.Text = "Коническая обечайка";
             this.Kon_b.UseVisualStyleBackColor = true;
+            this.Kon_b.Click += new System.EventHandler(this.Kon_b_Click);
             // 
             // Ell_b
             // 

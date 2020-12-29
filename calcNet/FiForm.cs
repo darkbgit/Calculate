@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace calc
+namespace calcNet
 {
     public partial class FiForm : Form
     {
@@ -17,19 +17,16 @@ namespace calc
             InitializeComponent();
         }
 
-        private void linkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        private void LinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             // приводим отправителя к элементу типа LinkLabel
             LinkLabel ll = sender as LinkLabel;
             //MessageBox.Show(ll.Text);
-            CilForm main = this.Owner as CilForm;
-            if (main !=null)
+            if (this.Owner is CilForm main)
             {
                 main.fi_tb.Text = ll.Text;
             }
             this.Close();
         }
-
-        
     }
 }

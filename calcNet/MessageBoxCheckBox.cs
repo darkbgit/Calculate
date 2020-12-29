@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace calc
+namespace calcNet
 {
     public partial class MessageBoxCheckBox : Form
     {
@@ -19,9 +19,18 @@ namespace calc
 
         private void OK_b_Click(object sender, EventArgs e)
         {
-            //NozzleForm nf = new NozzleForm();
-            //nf.Owner = this.Owner;
-            //nf.ShowDialog();
+
+            //this.Close();
+            this.Owner.Hide();
+            this.Close();
+            if (nozzle_cb.Checked)
+            {
+                NozzleForm nf = new NozzleForm { Owner = this.Owner,
+                                                steel1_cb = };
+                nf.Show();
+            }
+            
+
         }
     }
 }

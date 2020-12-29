@@ -1,5 +1,5 @@
 ﻿
-namespace calc
+namespace calcNet
 {
     partial class CilForm
     {
@@ -180,6 +180,7 @@ namespace calc
             this.t_tb.Name = "t_tb";
             this.t_tb.Size = new System.Drawing.Size(46, 23);
             this.t_tb.TabIndex = 6;
+            this.t_tb.Text = "50";
             // 
             // label4
             // 
@@ -234,6 +235,7 @@ namespace calc
             this.p_tb.Name = "p_tb";
             this.p_tb.Size = new System.Drawing.Size(46, 23);
             this.p_tb.TabIndex = 12;
+            this.p_tb.Text = "1";
             // 
             // groupBox1
             // 
@@ -316,6 +318,7 @@ namespace calc
             this.fi_tb.Name = "fi_tb";
             this.fi_tb.Size = new System.Drawing.Size(46, 23);
             this.fi_tb.TabIndex = 19;
+            this.fi_tb.Text = "1";
             // 
             // D_tb
             // 
@@ -324,6 +327,7 @@ namespace calc
             this.D_tb.Name = "D_tb";
             this.D_tb.Size = new System.Drawing.Size(46, 23);
             this.D_tb.TabIndex = 20;
+            this.D_tb.Text = "1000";
             // 
             // l_tb
             // 
@@ -341,6 +345,7 @@ namespace calc
             this.c1_tb.Name = "c1_tb";
             this.c1_tb.Size = new System.Drawing.Size(46, 23);
             this.c1_tb.TabIndex = 22;
+            this.c1_tb.Text = "1";
             // 
             // c2_tb
             // 
@@ -349,6 +354,7 @@ namespace calc
             this.c2_tb.Name = "c2_tb";
             this.c2_tb.Size = new System.Drawing.Size(46, 23);
             this.c2_tb.TabIndex = 23;
+            this.c2_tb.Text = "1";
             // 
             // c3_tb
             // 
@@ -466,6 +472,7 @@ namespace calc
             this.s_tb.Name = "s_tb";
             this.s_tb.Size = new System.Drawing.Size(46, 23);
             this.s_tb.TabIndex = 35;
+            this.s_tb.Text = "6";
             // 
             // label18
             // 

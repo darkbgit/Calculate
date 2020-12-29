@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
 
-namespace calc
+namespace calcNet
 {
     public partial class CilForm : Form
     {
@@ -17,6 +17,8 @@ namespace calc
         {
             InitializeComponent();
         }
+
+        public string TypeEl = "Cil";
 
         public struct DataForm
         {
@@ -40,11 +42,7 @@ namespace calc
             RadioButton rb = sender as RadioButton;
             if (rb.Checked)
             {
-                
-                //var path = System.IO.Path.Combine(System.IO.Directory.GetCurrentDirectory(), @"pic\PC\PC" + rb.Text + ".gif");
-                //MessageBox.Show(path);
-                Bitmap img = new Bitmap(System.IO.Path.Combine(System.IO.Directory.GetCurrentDirectory(), @"pic\PC\PC" + rb.Text + ".gif"));
-                f_pb.Image = img;
+                f_pb.Image = (Bitmap)calcNet.Properties.Resources.ResourceManager.GetObject("PC" + rb.Text);
             }
         }
 
@@ -496,20 +494,23 @@ namespace calc
                     p_d_l.Text = $"[p]={d_out.p_d:f2} МПа";
                     scalc_l.Text = $"sp={d_out.s_calc:f3} мм";
                     //self.pbObToNozzle.setEnabled(True)
-                    MainForm main = this.Owner as MainForm;
-                    if (main != null)
+                    if (this.Owner is MainForm main)
                     {
                         int i;
                         main.Word_lv.Items.Add($"{d_in.D} мм, {d_in.p} МПа, {d_in.temp} C, {d_in.met}");
                         i = main.Word_lv.Items.Count - 1;
                         //DataWordOut.DataArr[0].  DataArr .DataOutArr[]. .Value = $"{d_in.D} мм, {d_in.p} МПа, {d_in.temp} C, {d_in.met}";
-                        DataWordOut.DataOutArrEl el = new DataWordOut.DataOutArrEl();
-                        el.Data_In = d_in;
+                        DataWordOut.DataOutArrEl el = new DataWordOut.DataOutArrEl
+                        {
+                            Data_In = d_in,
+                            Data_Out = d_out,
+                            id = i + 1,
+                            Typ = "cil"
+                        };
+
+
                         df.Data_In = d_in;
-                        el.Data_Out = d_out;
                         df.Data_Out = d_out;
-                        el.id = i+1;
-                        el.Typ = "cil";
                         df.Typ = "cil";
 
                         DataWordOut.DataArr[i] = el;
@@ -535,8 +536,7 @@ namespace calc
                     {
                         System.Windows.Forms.MessageBox.Show(v);
                     }
-                    MessageBoxCheckBox mbcb = new MessageBoxCheckBox();
-                    mbcb.Owner = this.Owner;
+                    MessageBoxCheckBox mbcb = new MessageBoxCheckBox { Owner = this };
                     mbcb.ShowDialog();
                 }
                 else
@@ -563,23 +563,11 @@ namespace calc
                 
         }
 
-        private void Set_steellist()
-        {
-            {
-                XmlDocument doc = new XmlDocument();
-                doc.Load(System.IO.Path.Combine(System.IO.Directory.GetCurrentDirectory(), @"data\data.xml"));
-                var root = doc.DocumentElement;
-                XmlNodeList steels = root.SelectNodes("sigma_list/steels/steel");
-                foreach (XmlNode steel in steels)
-                {
-                    steel_cb.Items.Add(steel.Attributes["name"].Value);
-                }
-            }
-        }
+
 
         private void CilForm_Load(object sender, EventArgs e)
         {
-            Set_steellist();
+            Set_steellist.Set_llist(steel_cb);
             steel_cb.SelectedIndex = 0;
             Gost_cb.SelectedIndex = 0;
         }
@@ -593,8 +581,7 @@ namespace calc
 
         private void GetFi_b_Click(object sender, EventArgs e)
         {
-            FiForm ff = new FiForm(); // создаем
-            ff.Owner = this;
+            FiForm ff = new FiForm { Owner = this };
             ff.ShowDialog(); // показываем
         }
 

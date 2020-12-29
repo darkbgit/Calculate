@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
 
-namespace calc
+namespace calcNet
 {
     static class Program
     {
@@ -44,5 +44,21 @@ namespace calc
         public static DataOutArrEl[] DataArr = new DataOutArrEl[20];
 
 
+    }
+
+    public class Set_steellist
+    {
+        public static void Set_llist(ComboBox cb)
+
+        {
+            XmlDocument doc = new XmlDocument();
+            doc.Load(System.IO.Path.Combine(System.IO.Directory.GetCurrentDirectory(), @"data\data.xml"));
+            var root = doc.DocumentElement;
+            XmlNodeList steels = root.SelectNodes("sigma_list/steels/steel");
+            foreach (XmlNode steel in steels)
+            {
+                cb.Items.Add(steel.Attributes["name"].Value);
+            }
+        }
     }
 }

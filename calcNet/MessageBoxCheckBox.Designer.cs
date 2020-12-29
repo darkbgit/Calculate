@@ -1,5 +1,5 @@
 ﻿
-namespace calc
+namespace calcNet
 {
     partial class MessageBoxCheckBox
     {
@@ -30,7 +30,7 @@ namespace calc
         private void InitializeComponent()
         {
             this.OK_b = new System.Windows.Forms.Button();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.nozzle_cb = new System.Windows.Forms.CheckBox();
             this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
@@ -45,15 +45,15 @@ namespace calc
             this.OK_b.UseVisualStyleBackColor = true;
             this.OK_b.Click += new System.EventHandler(this.OK_b_Click);
             // 
-            // checkBox1
+            // nozzle_cb
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(122, 9);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(114, 34);
-            this.checkBox1.TabIndex = 2;
-            this.checkBox1.Text = "Расчитать узел\r\nврезки штуцера";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.nozzle_cb.AutoSize = true;
+            this.nozzle_cb.Location = new System.Drawing.Point(122, 9);
+            this.nozzle_cb.Name = "nozzle_cb";
+            this.nozzle_cb.Size = new System.Drawing.Size(114, 34);
+            this.nozzle_cb.TabIndex = 2;
+            this.nozzle_cb.Text = "Расчитать узел\r\nврезки штуцера";
+            this.nozzle_cb.UseVisualStyleBackColor = true;
             // 
             // label1
             // 
@@ -70,7 +70,7 @@ namespace calc
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(234, 81);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.checkBox1);
+            this.Controls.Add(this.nozzle_cb);
             this.Controls.Add(this.OK_b);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
@@ -85,7 +85,7 @@ namespace calc
         #endregion
 
         private System.Windows.Forms.Button OK_b;
-        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.CheckBox nozzle_cb;
         private System.Windows.Forms.Label label1;
     }
 }

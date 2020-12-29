@@ -1,5 +1,5 @@
 ﻿
-namespace calc
+namespace calcNet
 {
     partial class NozzleForm
     {
@@ -30,8 +30,6 @@ namespace calc
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NozzleForm));
-            this.label28 = new System.Windows.Forms.Label();
-            this.label27 = new System.Windows.Forms.Label();
             this.label26 = new System.Windows.Forms.Label();
             this.label25 = new System.Windows.Forms.Label();
             this.label24 = new System.Windows.Forms.Label();
@@ -42,33 +40,19 @@ namespace calc
             this.calc_b = new System.Windows.Forms.Button();
             this.predCalc_b = new System.Windows.Forms.Button();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.b_l = new System.Windows.Forms.Label();
             this.p_d_l = new System.Windows.Forms.Label();
-            this.scalc_l = new System.Windows.Forms.Label();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.rb7 = new System.Windows.Forms.RadioButton();
-            this.rb6 = new System.Windows.Forms.RadioButton();
-            this.rb5 = new System.Windows.Forms.RadioButton();
-            this.rb4 = new System.Windows.Forms.RadioButton();
-            this.rb3 = new System.Windows.Forms.RadioButton();
-            this.rb2 = new System.Windows.Forms.RadioButton();
-            this.rb1 = new System.Windows.Forms.RadioButton();
-            this.f_pb = new System.Windows.Forms.PictureBox();
-            this.label20 = new System.Windows.Forms.Label();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.radioButton2 = new System.Windows.Forms.RadioButton();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
+            this.d0_l = new System.Windows.Forms.Label();
+            this.place_gb = new System.Windows.Forms.GroupBox();
+            this.place_pb = new System.Windows.Forms.PictureBox();
             this.button4 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.getL_b = new System.Windows.Forms.Button();
-            this.getFi_b = new System.Windows.Forms.Button();
             this.getE_b = new System.Windows.Forms.Button();
             this.label19 = new System.Windows.Forms.Label();
             this.grtSigma_b = new System.Windows.Forms.Button();
             this.label18 = new System.Windows.Forms.Label();
-            this.s_tb = new System.Windows.Forms.TextBox();
-            this.label17 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
@@ -77,15 +61,15 @@ namespace calc
             this.label11 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
-            this.c_tb = new System.Windows.Forms.TextBox();
-            this.c3_tb = new System.Windows.Forms.TextBox();
-            this.c2_tb = new System.Windows.Forms.TextBox();
-            this.c1_tb = new System.Windows.Forms.TextBox();
-            this.l_tb = new System.Windows.Forms.TextBox();
-            this.D_tb = new System.Windows.Forms.TextBox();
-            this.fi_tb = new System.Windows.Forms.TextBox();
+            this.s2_tb = new System.Windows.Forms.TextBox();
+            this.l2_tb = new System.Windows.Forms.TextBox();
+            this.l1_tb = new System.Windows.Forms.TextBox();
+            this.cs1_tb = new System.Windows.Forms.TextBox();
+            this.cs_tb = new System.Windows.Forms.TextBox();
+            this.s1_tb = new System.Windows.Forms.TextBox();
+            this.d_tb = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
-            this.steel_cb = new System.Windows.Forms.ComboBox();
+            this.steel1_cb = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label6 = new System.Windows.Forms.Label();
@@ -94,7 +78,7 @@ namespace calc
             this.p_tb = new System.Windows.Forms.TextBox();
             this.vn_rb = new System.Windows.Forms.RadioButton();
             this.label4 = new System.Windows.Forms.Label();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.vid_pictureBox = new System.Windows.Forms.PictureBox();
             this.t_tb = new System.Windows.Forms.TextBox();
             this.Gost_cb = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -106,44 +90,60 @@ namespace calc
             this.label30 = new System.Windows.Forms.Label();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.E_tb = new System.Windows.Forms.TextBox();
-            this.sigma_d_tb = new System.Windows.Forms.TextBox();
+            this.vid_rb8 = new System.Windows.Forms.RadioButton();
+            this.vid_rb7 = new System.Windows.Forms.RadioButton();
+            this.vid_rb6 = new System.Windows.Forms.RadioButton();
+            this.vid_rb5 = new System.Windows.Forms.RadioButton();
+            this.vid_rb4 = new System.Windows.Forms.RadioButton();
+            this.vid_rb3 = new System.Windows.Forms.RadioButton();
+            this.vid_rb2 = new System.Windows.Forms.RadioButton();
+            this.vid_rb1 = new System.Windows.Forms.RadioButton();
+            this.E1_tb = new System.Windows.Forms.TextBox();
+            this.sigma_d1_tb = new System.Windows.Forms.TextBox();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.steel2_cb = new System.Windows.Forms.ComboBox();
+            this.label31 = new System.Windows.Forms.Label();
+            this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.steel3_cb = new System.Windows.Forms.ComboBox();
+            this.label17 = new System.Windows.Forms.Label();
+            this.label27 = new System.Windows.Forms.Label();
+            this.l3_tb = new System.Windows.Forms.TextBox();
+            this.s3_tb = new System.Windows.Forms.TextBox();
+            this.label28 = new System.Windows.Forms.Label();
+            this.label32 = new System.Windows.Forms.Label();
+            this.label33 = new System.Windows.Forms.Label();
+            this.groupBox8 = new System.Windows.Forms.GroupBox();
+            this.label42 = new System.Windows.Forms.Label();
+            this.delta2_tb = new System.Windows.Forms.TextBox();
+            this.label43 = new System.Windows.Forms.Label();
+            this.label40 = new System.Windows.Forms.Label();
+            this.delta1_tb = new System.Windows.Forms.TextBox();
+            this.label41 = new System.Windows.Forms.Label();
+            this.label39 = new System.Windows.Forms.Label();
+            this.delta_tb = new System.Windows.Forms.TextBox();
+            this.getFi_b = new System.Windows.Forms.Button();
+            this.getFi1_b = new System.Windows.Forms.Button();
+            this.label34 = new System.Windows.Forms.Label();
+            this.label35 = new System.Windows.Forms.Label();
+            this.fi1_tb = new System.Windows.Forms.TextBox();
+            this.textBox6 = new System.Windows.Forms.TextBox();
+            this.label36 = new System.Windows.Forms.Label();
+            this.label37 = new System.Windows.Forms.Label();
             this.groupBox4.SuspendLayout();
-            this.groupBox3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.f_pb)).BeginInit();
-            this.groupBox2.SuspendLayout();
+            this.place_gb.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.place_pb)).BeginInit();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.vid_pictureBox)).BeginInit();
             this.groupBox5.SuspendLayout();
+            this.groupBox6.SuspendLayout();
+            this.groupBox7.SuspendLayout();
+            this.groupBox8.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // label28
-            // 
-            this.label28.AutoSize = true;
-            this.label28.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.label28.Location = new System.Drawing.Point(-1, 493);
-            this.label28.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label28.MaximumSize = new System.Drawing.Size(0, 1);
-            this.label28.MinimumSize = new System.Drawing.Size(350, 0);
-            this.label28.Name = "label28";
-            this.label28.Size = new System.Drawing.Size(350, 1);
-            this.label28.TabIndex = 115;
-            this.label28.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label27
-            // 
-            this.label27.AutoSize = true;
-            this.label27.Location = new System.Drawing.Point(277, 501);
-            this.label27.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(25, 15);
-            this.label27.TabIndex = 114;
-            this.label27.Text = "мм";
             // 
             // label26
             // 
             this.label26.AutoSize = true;
-            this.label26.Location = new System.Drawing.Point(277, 347);
+            this.label26.Location = new System.Drawing.Point(267, 330);
             this.label26.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label26.Name = "label26";
             this.label26.Size = new System.Drawing.Size(25, 15);
@@ -153,7 +153,7 @@ namespace calc
             // label25
             // 
             this.label25.AutoSize = true;
-            this.label25.Location = new System.Drawing.Point(277, 377);
+            this.label25.Location = new System.Drawing.Point(267, 359);
             this.label25.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label25.Name = "label25";
             this.label25.Size = new System.Drawing.Size(25, 15);
@@ -163,7 +163,7 @@ namespace calc
             // label24
             // 
             this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(277, 407);
+            this.label24.Location = new System.Drawing.Point(267, 388);
             this.label24.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label24.Name = "label24";
             this.label24.Size = new System.Drawing.Size(25, 15);
@@ -173,7 +173,7 @@ namespace calc
             // label23
             // 
             this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(277, 437);
+            this.label23.Location = new System.Drawing.Point(254, 55);
             this.label23.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label23.Name = "label23";
             this.label23.Size = new System.Drawing.Size(25, 15);
@@ -183,7 +183,7 @@ namespace calc
             // label22
             // 
             this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(277, 467);
+            this.label22.Location = new System.Drawing.Point(254, 85);
             this.label22.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label22.Name = "label22";
             this.label22.Size = new System.Drawing.Size(25, 15);
@@ -193,7 +193,7 @@ namespace calc
             // label21
             // 
             this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(278, 320);
+            this.label21.Location = new System.Drawing.Point(267, 301);
             this.label21.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(25, 15);
@@ -202,7 +202,7 @@ namespace calc
             // 
             // cancel_b
             // 
-            this.cancel_b.Location = new System.Drawing.Point(246, 590);
+            this.cancel_b.Location = new System.Drawing.Point(246, 818);
             this.cancel_b.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cancel_b.Name = "cancel_b";
             this.cancel_b.Size = new System.Drawing.Size(88, 27);
@@ -212,7 +212,7 @@ namespace calc
             // 
             // calc_b
             // 
-            this.calc_b.Location = new System.Drawing.Point(151, 591);
+            this.calc_b.Location = new System.Drawing.Point(151, 819);
             this.calc_b.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.calc_b.Name = "calc_b";
             this.calc_b.Size = new System.Drawing.Size(88, 27);
@@ -222,7 +222,7 @@ namespace calc
             // 
             // predCalc_b
             // 
-            this.predCalc_b.Location = new System.Drawing.Point(13, 578);
+            this.predCalc_b.Location = new System.Drawing.Point(13, 806);
             this.predCalc_b.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.predCalc_b.Name = "predCalc_b";
             this.predCalc_b.Size = new System.Drawing.Size(130, 42);
@@ -232,16 +232,26 @@ namespace calc
             // 
             // groupBox4
             // 
+            this.groupBox4.Controls.Add(this.b_l);
             this.groupBox4.Controls.Add(this.p_d_l);
-            this.groupBox4.Controls.Add(this.scalc_l);
-            this.groupBox4.Location = new System.Drawing.Point(426, 565);
+            this.groupBox4.Controls.Add(this.d0_l);
+            this.groupBox4.Location = new System.Drawing.Point(365, 737);
             this.groupBox4.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.groupBox4.Size = new System.Drawing.Size(270, 58);
+            this.groupBox4.Size = new System.Drawing.Size(270, 40);
             this.groupBox4.TabIndex = 104;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Результаты расчета";
+            // 
+            // b_l
+            // 
+            this.b_l.AutoSize = true;
+            this.b_l.Location = new System.Drawing.Point(212, 18);
+            this.b_l.Name = "b_l";
+            this.b_l.Size = new System.Drawing.Size(14, 15);
+            this.b_l.TabIndex = 2;
+            this.b_l.Text = "b";
             // 
             // p_d_l
             // 
@@ -253,176 +263,43 @@ namespace calc
             this.p_d_l.TabIndex = 1;
             this.p_d_l.Text = "[p]";
             // 
-            // scalc_l
+            // d0_l
             // 
-            this.scalc_l.AutoSize = true;
-            this.scalc_l.Location = new System.Drawing.Point(8, 18);
-            this.scalc_l.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.scalc_l.Name = "scalc_l";
-            this.scalc_l.Size = new System.Drawing.Size(12, 15);
-            this.scalc_l.TabIndex = 0;
-            this.scalc_l.Text = "s";
+            this.d0_l.AutoSize = true;
+            this.d0_l.Location = new System.Drawing.Point(8, 18);
+            this.d0_l.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.d0_l.Name = "d0_l";
+            this.d0_l.Size = new System.Drawing.Size(20, 15);
+            this.d0_l.TabIndex = 0;
+            this.d0_l.Text = "d0";
             // 
-            // groupBox3
+            // place_gb
             // 
-            this.groupBox3.Controls.Add(this.rb7);
-            this.groupBox3.Controls.Add(this.rb6);
-            this.groupBox3.Controls.Add(this.rb5);
-            this.groupBox3.Controls.Add(this.rb4);
-            this.groupBox3.Controls.Add(this.rb3);
-            this.groupBox3.Controls.Add(this.rb2);
-            this.groupBox3.Controls.Add(this.rb1);
-            this.groupBox3.Controls.Add(this.f_pb);
-            this.groupBox3.Controls.Add(this.label20);
-            this.groupBox3.Location = new System.Drawing.Point(370, 345);
-            this.groupBox3.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.groupBox3.Size = new System.Drawing.Size(326, 173);
-            this.groupBox3.TabIndex = 103;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Расчетное осевое усилие, F";
+            this.place_gb.Controls.Add(this.place_pb);
+            this.place_gb.Location = new System.Drawing.Point(365, 308);
+            this.place_gb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.place_gb.Name = "place_gb";
+            this.place_gb.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.place_gb.Size = new System.Drawing.Size(427, 335);
+            this.place_gb.TabIndex = 103;
+            this.place_gb.TabStop = false;
+            this.place_gb.Text = "Расположение";
             // 
-            // rb7
+            // place_pb
             // 
-            this.rb7.AutoSize = true;
-            this.rb7.Location = new System.Drawing.Point(260, 98);
-            this.rb7.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.rb7.Name = "rb7";
-            this.rb7.Size = new System.Drawing.Size(31, 19);
-            this.rb7.TabIndex = 8;
-            this.rb7.Text = "7";
-            this.rb7.UseVisualStyleBackColor = true;
-            // 
-            // rb6
-            // 
-            this.rb6.AutoSize = true;
-            this.rb6.Location = new System.Drawing.Point(260, 70);
-            this.rb6.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.rb6.Name = "rb6";
-            this.rb6.Size = new System.Drawing.Size(31, 19);
-            this.rb6.TabIndex = 7;
-            this.rb6.Text = "6";
-            this.rb6.UseVisualStyleBackColor = true;
-            // 
-            // rb5
-            // 
-            this.rb5.AutoSize = true;
-            this.rb5.Location = new System.Drawing.Point(259, 43);
-            this.rb5.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.rb5.Name = "rb5";
-            this.rb5.Size = new System.Drawing.Size(31, 19);
-            this.rb5.TabIndex = 6;
-            this.rb5.Text = "5";
-            this.rb5.UseVisualStyleBackColor = true;
-            // 
-            // rb4
-            // 
-            this.rb4.AutoSize = true;
-            this.rb4.Location = new System.Drawing.Point(216, 126);
-            this.rb4.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.rb4.Name = "rb4";
-            this.rb4.Size = new System.Drawing.Size(31, 19);
-            this.rb4.TabIndex = 5;
-            this.rb4.Text = "4";
-            this.rb4.UseVisualStyleBackColor = true;
-            // 
-            // rb3
-            // 
-            this.rb3.AutoSize = true;
-            this.rb3.Location = new System.Drawing.Point(216, 98);
-            this.rb3.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.rb3.Name = "rb3";
-            this.rb3.Size = new System.Drawing.Size(31, 19);
-            this.rb3.TabIndex = 4;
-            this.rb3.Text = "3";
-            this.rb3.UseVisualStyleBackColor = true;
-            // 
-            // rb2
-            // 
-            this.rb2.AutoSize = true;
-            this.rb2.Location = new System.Drawing.Point(216, 70);
-            this.rb2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.rb2.Name = "rb2";
-            this.rb2.Size = new System.Drawing.Size(31, 19);
-            this.rb2.TabIndex = 3;
-            this.rb2.Text = "2";
-            this.rb2.UseVisualStyleBackColor = true;
-            // 
-            // rb1
-            // 
-            this.rb1.AutoSize = true;
-            this.rb1.Checked = true;
-            this.rb1.Location = new System.Drawing.Point(215, 43);
-            this.rb1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.rb1.Name = "rb1";
-            this.rb1.Size = new System.Drawing.Size(31, 19);
-            this.rb1.TabIndex = 2;
-            this.rb1.TabStop = true;
-            this.rb1.Text = "1";
-            this.rb1.UseVisualStyleBackColor = true;
-            // 
-            // f_pb
-            // 
-            this.f_pb.Image = ((System.Drawing.Image)(resources.GetObject("f_pb.Image")));
-            this.f_pb.InitialImage = ((System.Drawing.Image)(resources.GetObject("f_pb.InitialImage")));
-            this.f_pb.Location = new System.Drawing.Point(8, 43);
-            this.f_pb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.f_pb.Name = "f_pb";
-            this.f_pb.Size = new System.Drawing.Size(198, 92);
-            this.f_pb.TabIndex = 1;
-            this.f_pb.TabStop = false;
-            // 
-            // label20
-            // 
-            this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(9, 23);
-            this.label20.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(44, 15);
-            this.label20.TabIndex = 0;
-            this.label20.Text = "label20";
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.radioButton2);
-            this.groupBox2.Controls.Add(this.radioButton1);
-            this.groupBox2.Location = new System.Drawing.Point(370, 285);
-            this.groupBox2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.groupBox2.Size = new System.Drawing.Size(326, 52);
-            this.groupBox2.TabIndex = 102;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Нагрузки";
-            // 
-            // radioButton2
-            // 
-            this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(192, 23);
-            this.radioButton2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(125, 19);
-            this.radioButton2.TabIndex = 1;
-            this.radioButton2.Text = "Задавать вручную";
-            this.radioButton2.UseVisualStyleBackColor = true;
-            // 
-            // radioButton1
-            // 
-            this.radioButton1.AutoSize = true;
-            this.radioButton1.Checked = true;
-            this.radioButton1.Location = new System.Drawing.Point(9, 23);
-            this.radioButton1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(160, 19);
-            this.radioButton1.TabIndex = 0;
-            this.radioButton1.TabStop = true;
-            this.radioButton1.Text = "Определять при расчете";
-            this.radioButton1.UseVisualStyleBackColor = true;
+            this.place_pb.Image = ((System.Drawing.Image)(resources.GetObject("place_pb.Image")));
+            this.place_pb.InitialImage = ((System.Drawing.Image)(resources.GetObject("place_pb.InitialImage")));
+            this.place_pb.Location = new System.Drawing.Point(165, 22);
+            this.place_pb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.place_pb.Name = "place_pb";
+            this.place_pb.Size = new System.Drawing.Size(255, 200);
+            this.place_pb.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.place_pb.TabIndex = 1;
+            this.place_pb.TabStop = false;
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(473, 528);
+            this.button4.Location = new System.Drawing.Point(589, 682);
             this.button4.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(187, 27);
@@ -432,7 +309,7 @@ namespace calc
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(289, 528);
+            this.button3.Location = new System.Drawing.Point(382, 682);
             this.button3.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(176, 27);
@@ -442,7 +319,7 @@ namespace calc
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(247, 528);
+            this.button2.Location = new System.Drawing.Point(599, 649);
             this.button2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(35, 27);
@@ -453,7 +330,7 @@ namespace calc
             // checkBox1
             // 
             this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(13, 533);
+            this.checkBox1.Location = new System.Drawing.Point(365, 654);
             this.checkBox1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(201, 19);
@@ -461,31 +338,10 @@ namespace calc
             this.checkBox1.Text = "Дефекты по ГОСТ 34233.11-2017";
             this.checkBox1.UseVisualStyleBackColor = true;
             // 
-            // getL_b
-            // 
-            this.getL_b.Enabled = false;
-            this.getL_b.Location = new System.Drawing.Point(320, 339);
-            this.getL_b.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.getL_b.Name = "getL_b";
-            this.getL_b.Size = new System.Drawing.Size(43, 23);
-            this.getL_b.TabIndex = 97;
-            this.getL_b.Text = ">>";
-            this.getL_b.UseVisualStyleBackColor = true;
-            // 
-            // getFi_b
-            // 
-            this.getFi_b.Location = new System.Drawing.Point(320, 283);
-            this.getFi_b.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.getFi_b.Name = "getFi_b";
-            this.getFi_b.Size = new System.Drawing.Size(43, 23);
-            this.getFi_b.TabIndex = 96;
-            this.getFi_b.Text = ">>";
-            this.getFi_b.UseVisualStyleBackColor = true;
-            // 
             // getE_b
             // 
             this.getE_b.Enabled = false;
-            this.getE_b.Location = new System.Drawing.Point(320, 253);
+            this.getE_b.Location = new System.Drawing.Point(308, 239);
             this.getE_b.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.getE_b.Name = "getE_b";
             this.getE_b.Size = new System.Drawing.Size(43, 23);
@@ -496,7 +352,7 @@ namespace calc
             // label19
             // 
             this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(277, 257);
+            this.label19.Location = new System.Drawing.Point(267, 243);
             this.label19.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(33, 15);
@@ -505,7 +361,7 @@ namespace calc
             // 
             // grtSigma_b
             // 
-            this.grtSigma_b.Location = new System.Drawing.Point(308, 224);
+            this.grtSigma_b.Location = new System.Drawing.Point(308, 212);
             this.grtSigma_b.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.grtSigma_b.Name = "grtSigma_b";
             this.grtSigma_b.Size = new System.Drawing.Size(43, 23);
@@ -516,199 +372,180 @@ namespace calc
             // label18
             // 
             this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(267, 227);
+            this.label18.Location = new System.Drawing.Point(267, 215);
             this.label18.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(33, 15);
             this.label18.TabIndex = 92;
             this.label18.Text = "МПа";
             // 
-            // s_tb
-            // 
-            this.s_tb.Location = new System.Drawing.Point(213, 498);
-            this.s_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.s_tb.Name = "s_tb";
-            this.s_tb.Size = new System.Drawing.Size(46, 23);
-            this.s_tb.TabIndex = 91;
-            // 
-            // label17
-            // 
-            this.label17.AutoSize = true;
-            this.label17.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.label17.Location = new System.Drawing.Point(72, 503);
-            this.label17.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(133, 13);
-            this.label17.TabIndex = 90;
-            this.label17.Text = "Принятая толщина, s";
-            // 
             // label16
             // 
             this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(92, 467);
+            this.label16.Location = new System.Drawing.Point(75, 85);
             this.label16.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(113, 15);
+            this.label16.Size = new System.Drawing.Size(120, 15);
             this.label16.TabIndex = 89;
-            this.label16.Text = "Общая прибавка, с";
+            this.label16.Text = "Толщина кольца, s2:";
             // 
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(30, 437);
+            this.label15.Location = new System.Drawing.Point(83, 55);
             this.label15.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(175, 15);
+            this.label15.Size = new System.Drawing.Size(112, 15);
             this.label15.TabIndex = 88;
-            this.label15.Text = "Технологическая прибавка, c3";
+            this.label15.Text = "Ширина кольца, l2:";
             // 
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(75, 407);
+            this.label14.Location = new System.Drawing.Point(4, 387);
             this.label14.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(130, 15);
+            this.label14.Size = new System.Drawing.Size(204, 15);
             this.label14.TabIndex = 87;
-            this.label14.Text = "Минусовой допуск, c2";
+            this.label14.Text = "Длина наружной части штуцера, l1:";
             // 
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label13.Location = new System.Drawing.Point(62, 377);
+            this.label13.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label13.Location = new System.Drawing.Point(46, 359);
             this.label13.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(143, 13);
+            this.label13.Size = new System.Drawing.Size(162, 15);
             this.label13.TabIndex = 86;
-            this.label13.Text = "Прибавка на коррозию, c1";
+            this.label13.Text = "Прибавка на коррозию, cs1:";
             // 
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(41, 347);
+            this.label12.Location = new System.Drawing.Point(29, 323);
             this.label12.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(164, 15);
+            this.label12.Size = new System.Drawing.Size(179, 30);
             this.label12.TabIndex = 85;
-            this.label12.Text = "Расчетная длина обечайки, l";
+            this.label12.Text = "Сумарная прибавка к толщине\r\nстенки штуцера, cs:";
             // 
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(13, 316);
+            this.label11.Location = new System.Drawing.Point(39, 301);
             this.label11.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(192, 15);
+            this.label11.Size = new System.Drawing.Size(169, 15);
             this.label11.TabIndex = 84;
-            this.label11.Text = "Внутренний диаметр обечайки, D";
+            this.label11.Text = "Толщина стенки штуцера, s1:";
             // 
             // label10
             // 
             this.label10.AutoSize = true;
             this.label10.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.label10.Location = new System.Drawing.Point(16, 287);
+            this.label10.Location = new System.Drawing.Point(19, 272);
             this.label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(189, 15);
             this.label10.TabIndex = 83;
-            this.label10.Text = "К-т прочности сварного шва, φp";
+            this.label10.Text = "Внутренний диаметр штуцера, d:";
             // 
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(13, 256);
+            this.label9.Location = new System.Drawing.Point(13, 243);
             this.label9.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(192, 15);
+            this.label9.Size = new System.Drawing.Size(195, 15);
             this.label9.TabIndex = 82;
-            this.label9.Text = "Модуль продольной упругости, E";
+            this.label9.Text = "Модуль продольной упругости, E:";
             // 
-            // c_tb
+            // s2_tb
             // 
-            this.c_tb.Location = new System.Drawing.Point(213, 463);
-            this.c_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.c_tb.Name = "c_tb";
-            this.c_tb.Size = new System.Drawing.Size(46, 23);
-            this.c_tb.TabIndex = 81;
+            this.s2_tb.Location = new System.Drawing.Point(200, 80);
+            this.s2_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.s2_tb.Name = "s2_tb";
+            this.s2_tb.Size = new System.Drawing.Size(46, 23);
+            this.s2_tb.TabIndex = 81;
             // 
-            // c3_tb
+            // l2_tb
             // 
-            this.c3_tb.Location = new System.Drawing.Point(213, 433);
-            this.c3_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.c3_tb.Name = "c3_tb";
-            this.c3_tb.Size = new System.Drawing.Size(46, 23);
-            this.c3_tb.TabIndex = 80;
+            this.l2_tb.Location = new System.Drawing.Point(200, 51);
+            this.l2_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.l2_tb.Name = "l2_tb";
+            this.l2_tb.Size = new System.Drawing.Size(46, 23);
+            this.l2_tb.TabIndex = 80;
             // 
-            // c2_tb
+            // l1_tb
             // 
-            this.c2_tb.Location = new System.Drawing.Point(213, 403);
-            this.c2_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.c2_tb.Name = "c2_tb";
-            this.c2_tb.Size = new System.Drawing.Size(46, 23);
-            this.c2_tb.TabIndex = 79;
+            this.l1_tb.Location = new System.Drawing.Point(213, 385);
+            this.l1_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.l1_tb.Name = "l1_tb";
+            this.l1_tb.Size = new System.Drawing.Size(46, 23);
+            this.l1_tb.TabIndex = 79;
             // 
-            // c1_tb
+            // cs1_tb
             // 
-            this.c1_tb.Location = new System.Drawing.Point(213, 373);
-            this.c1_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.c1_tb.Name = "c1_tb";
-            this.c1_tb.Size = new System.Drawing.Size(46, 23);
-            this.c1_tb.TabIndex = 78;
+            this.cs1_tb.Location = new System.Drawing.Point(213, 356);
+            this.cs1_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cs1_tb.Name = "cs1_tb";
+            this.cs1_tb.Size = new System.Drawing.Size(46, 23);
+            this.cs1_tb.TabIndex = 78;
             // 
-            // l_tb
+            // cs_tb
             // 
-            this.l_tb.Enabled = false;
-            this.l_tb.Location = new System.Drawing.Point(213, 343);
-            this.l_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.l_tb.Name = "l_tb";
-            this.l_tb.Size = new System.Drawing.Size(46, 23);
-            this.l_tb.TabIndex = 77;
+            this.cs_tb.Enabled = false;
+            this.cs_tb.Location = new System.Drawing.Point(213, 327);
+            this.cs_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cs_tb.Name = "cs_tb";
+            this.cs_tb.Size = new System.Drawing.Size(46, 23);
+            this.cs_tb.TabIndex = 77;
             // 
-            // D_tb
+            // s1_tb
             // 
-            this.D_tb.Location = new System.Drawing.Point(213, 313);
-            this.D_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.D_tb.Name = "D_tb";
-            this.D_tb.Size = new System.Drawing.Size(46, 23);
-            this.D_tb.TabIndex = 76;
+            this.s1_tb.Location = new System.Drawing.Point(213, 298);
+            this.s1_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.s1_tb.Name = "s1_tb";
+            this.s1_tb.Size = new System.Drawing.Size(46, 23);
+            this.s1_tb.TabIndex = 76;
             // 
-            // fi_tb
+            // d_tb
             // 
-            this.fi_tb.Location = new System.Drawing.Point(213, 283);
-            this.fi_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.fi_tb.Name = "fi_tb";
-            this.fi_tb.Size = new System.Drawing.Size(46, 23);
-            this.fi_tb.TabIndex = 75;
+            this.d_tb.Location = new System.Drawing.Point(213, 269);
+            this.d_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.d_tb.Name = "d_tb";
+            this.d_tb.Size = new System.Drawing.Size(46, 23);
+            this.d_tb.TabIndex = 75;
             // 
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(32, 227);
+            this.label8.Location = new System.Drawing.Point(32, 214);
             this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(173, 15);
+            this.label8.Size = new System.Drawing.Size(176, 15);
             this.label8.TabIndex = 72;
-            this.label8.Text = "Допускаемое напряжение, [σ]";
+            this.label8.Text = "Допускаемое напряжение, [σ]:";
             // 
-            // steel_cb
+            // steel1_cb
             // 
-            this.steel_cb.FormattingEnabled = true;
-            this.steel_cb.Location = new System.Drawing.Point(213, 185);
-            this.steel_cb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.steel_cb.Name = "steel_cb";
-            this.steel_cb.Size = new System.Drawing.Size(139, 23);
-            this.steel_cb.TabIndex = 71;
+            this.steel1_cb.FormattingEnabled = true;
+            this.steel1_cb.Location = new System.Drawing.Point(213, 182);
+            this.steel1_cb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.steel1_cb.Name = "steel1_cb";
+            this.steel1_cb.Size = new System.Drawing.Size(139, 23);
+            this.steel1_cb.TabIndex = 71;
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(97, 188);
+            this.label7.Location = new System.Drawing.Point(92, 185);
             this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(108, 15);
+            this.label7.Size = new System.Drawing.Size(116, 15);
             this.label7.TabIndex = 70;
-            this.label7.Text = "Марка материала:";
+            this.label7.Text = "Материал штуцера:";
             // 
             // groupBox1
             // 
@@ -717,11 +554,11 @@ namespace calc
             this.groupBox1.Controls.Add(this.nar_rb);
             this.groupBox1.Controls.Add(this.p_tb);
             this.groupBox1.Controls.Add(this.vn_rb);
-            this.groupBox1.Location = new System.Drawing.Point(13, 102);
+            this.groupBox1.Location = new System.Drawing.Point(13, 99);
             this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.groupBox1.Size = new System.Drawing.Size(350, 77);
+            this.groupBox1.Size = new System.Drawing.Size(339, 75);
             this.groupBox1.TabIndex = 69;
             this.groupBox1.TabStop = false;
             // 
@@ -787,17 +624,16 @@ namespace calc
             this.label4.TabIndex = 68;
             this.label4.Text = "°C";
             // 
-            // pictureBox1
+            // vid_pictureBox
             // 
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.InitialImage = ((System.Drawing.Image)(resources.GetObject("pictureBox1.InitialImage")));
-            this.pictureBox1.Location = new System.Drawing.Point(131, 22);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(255, 200);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.pictureBox1.TabIndex = 67;
-            this.pictureBox1.TabStop = false;
+            this.vid_pictureBox.Image = ((System.Drawing.Image)(resources.GetObject("vid_pictureBox.Image")));
+            this.vid_pictureBox.InitialImage = ((System.Drawing.Image)(resources.GetObject("vid_pictureBox.InitialImage")));
+            this.vid_pictureBox.Location = new System.Drawing.Point(176, 27);
+            this.vid_pictureBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.vid_pictureBox.Name = "vid_pictureBox";
+            this.vid_pictureBox.Size = new System.Drawing.Size(250, 200);
+            this.vid_pictureBox.TabIndex = 67;
+            this.vid_pictureBox.TabStop = false;
             // 
             // t_tb
             // 
@@ -892,89 +728,474 @@ namespace calc
             // 
             // groupBox5
             // 
-            this.groupBox5.Controls.Add(this.pictureBox1);
-            this.groupBox5.Location = new System.Drawing.Point(379, 46);
+            this.groupBox5.Controls.Add(this.vid_rb8);
+            this.groupBox5.Controls.Add(this.vid_rb7);
+            this.groupBox5.Controls.Add(this.vid_rb6);
+            this.groupBox5.Controls.Add(this.vid_rb5);
+            this.groupBox5.Controls.Add(this.vid_rb4);
+            this.groupBox5.Controls.Add(this.vid_rb3);
+            this.groupBox5.Controls.Add(this.vid_rb2);
+            this.groupBox5.Controls.Add(this.vid_rb1);
+            this.groupBox5.Controls.Add(this.vid_pictureBox);
+            this.groupBox5.Location = new System.Drawing.Point(359, 46);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(393, 233);
+            this.groupBox5.Size = new System.Drawing.Size(433, 256);
             this.groupBox5.TabIndex = 120;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Расчетные схемы штуцеров";
             // 
-            // E_tb
+            // vid_rb8
             // 
-            this.E_tb.Enabled = false;
-            this.E_tb.Location = new System.Drawing.Point(213, 253);
-            this.E_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.E_tb.Name = "E_tb";
-            this.E_tb.ReadOnly = true;
-            this.E_tb.Size = new System.Drawing.Size(46, 23);
-            this.E_tb.TabIndex = 74;
+            this.vid_rb8.AutoSize = true;
+            this.vid_rb8.Location = new System.Drawing.Point(6, 227);
+            this.vid_rb8.Name = "vid_rb8";
+            this.vid_rb8.Size = new System.Drawing.Size(155, 19);
+            this.vid_rb8.TabIndex = 75;
+            this.vid_rb8.Text = "8 - С вварным кольцом";
+            this.vid_rb8.UseVisualStyleBackColor = true;
+            this.vid_rb8.CheckedChanged += new System.EventHandler(this.Vid_rb_CheckedChanged);
             // 
-            // sigma_d_tb
+            // vid_rb7
             // 
-            this.sigma_d_tb.Enabled = false;
-            this.sigma_d_tb.Location = new System.Drawing.Point(213, 223);
-            this.sigma_d_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.sigma_d_tb.Name = "sigma_d_tb";
-            this.sigma_d_tb.ReadOnly = true;
-            this.sigma_d_tb.Size = new System.Drawing.Size(46, 23);
-            this.sigma_d_tb.TabIndex = 73;
+            this.vid_rb7.AutoSize = true;
+            this.vid_rb7.Location = new System.Drawing.Point(6, 202);
+            this.vid_rb7.Name = "vid_rb7";
+            this.vid_rb7.Size = new System.Drawing.Size(151, 19);
+            this.vid_rb7.TabIndex = 74;
+            this.vid_rb7.Text = "7 - С торовой вставкой";
+            this.vid_rb7.UseVisualStyleBackColor = true;
+            this.vid_rb7.CheckedChanged += new System.EventHandler(this.Vid_rb_CheckedChanged);
+            // 
+            // vid_rb6
+            // 
+            this.vid_rb6.AutoSize = true;
+            this.vid_rb6.Location = new System.Drawing.Point(6, 177);
+            this.vid_rb6.Name = "vid_rb6";
+            this.vid_rb6.Size = new System.Drawing.Size(124, 19);
+            this.vid_rb6.TabIndex = 73;
+            this.vid_rb6.Text = "6 - С отбортовкой";
+            this.vid_rb6.UseVisualStyleBackColor = true;
+            this.vid_rb6.CheckedChanged += new System.EventHandler(this.Vid_rb_CheckedChanged);
+            // 
+            // vid_rb5
+            // 
+            this.vid_rb5.AutoSize = true;
+            this.vid_rb5.Location = new System.Drawing.Point(6, 146);
+            this.vid_rb5.Name = "vid_rb5";
+            this.vid_rb5.Size = new System.Drawing.Size(168, 34);
+            this.vid_rb5.TabIndex = 72;
+            this.vid_rb5.Text = "5 - С накладным кольцом\r\nи внутренней частью";
+            this.vid_rb5.UseVisualStyleBackColor = true;
+            this.vid_rb5.CheckedChanged += new System.EventHandler(this.Vid_rb_CheckedChanged);
+            // 
+            // vid_rb4
+            // 
+            this.vid_rb4.AutoSize = true;
+            this.vid_rb4.Location = new System.Drawing.Point(6, 115);
+            this.vid_rb4.Name = "vid_rb4";
+            this.vid_rb4.Size = new System.Drawing.Size(140, 34);
+            this.vid_rb4.TabIndex = 71;
+            this.vid_rb4.Text = "4 - Проходящий с\r\nнакладным кольцом";
+            this.vid_rb4.UseVisualStyleBackColor = true;
+            this.vid_rb4.CheckedChanged += new System.EventHandler(this.Vid_rb_CheckedChanged);
+            // 
+            // vid_rb3
+            // 
+            this.vid_rb3.AutoSize = true;
+            this.vid_rb3.Location = new System.Drawing.Point(6, 84);
+            this.vid_rb3.Name = "vid_rb3";
+            this.vid_rb3.Size = new System.Drawing.Size(140, 34);
+            this.vid_rb3.TabIndex = 70;
+            this.vid_rb3.Text = "3 - Непроходящий с\r\nнакладным кольцом";
+            this.vid_rb3.UseVisualStyleBackColor = true;
+            this.vid_rb3.CheckedChanged += new System.EventHandler(this.Vid_rb_CheckedChanged);
+            // 
+            // vid_rb2
+            // 
+            this.vid_rb2.AutoSize = true;
+            this.vid_rb2.Location = new System.Drawing.Point(6, 53);
+            this.vid_rb2.Name = "vid_rb2";
+            this.vid_rb2.Size = new System.Drawing.Size(136, 34);
+            this.vid_rb2.TabIndex = 69;
+            this.vid_rb2.Text = "2 - Проходящий без\r\nукрепления";
+            this.vid_rb2.UseVisualStyleBackColor = true;
+            this.vid_rb2.CheckedChanged += new System.EventHandler(this.Vid_rb_CheckedChanged);
+            // 
+            // vid_rb1
+            // 
+            this.vid_rb1.AutoSize = true;
+            this.vid_rb1.Checked = true;
+            this.vid_rb1.Location = new System.Drawing.Point(6, 22);
+            this.vid_rb1.Name = "vid_rb1";
+            this.vid_rb1.Size = new System.Drawing.Size(149, 34);
+            this.vid_rb1.TabIndex = 68;
+            this.vid_rb1.TabStop = true;
+            this.vid_rb1.Text = "1 - Непроходящий без\r\nукрепления";
+            this.vid_rb1.UseVisualStyleBackColor = true;
+            this.vid_rb1.CheckedChanged += new System.EventHandler(this.Vid_rb_CheckedChanged);
+            // 
+            // E1_tb
+            // 
+            this.E1_tb.Enabled = false;
+            this.E1_tb.Location = new System.Drawing.Point(213, 240);
+            this.E1_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.E1_tb.Name = "E1_tb";
+            this.E1_tb.ReadOnly = true;
+            this.E1_tb.Size = new System.Drawing.Size(46, 23);
+            this.E1_tb.TabIndex = 74;
+            // 
+            // sigma_d1_tb
+            // 
+            this.sigma_d1_tb.Enabled = false;
+            this.sigma_d1_tb.Location = new System.Drawing.Point(213, 211);
+            this.sigma_d1_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.sigma_d1_tb.Name = "sigma_d1_tb";
+            this.sigma_d1_tb.ReadOnly = true;
+            this.sigma_d1_tb.Size = new System.Drawing.Size(46, 23);
+            this.sigma_d1_tb.TabIndex = 73;
+            // 
+            // groupBox6
+            // 
+            this.groupBox6.Controls.Add(this.steel2_cb);
+            this.groupBox6.Controls.Add(this.label31);
+            this.groupBox6.Controls.Add(this.label15);
+            this.groupBox6.Controls.Add(this.l2_tb);
+            this.groupBox6.Controls.Add(this.s2_tb);
+            this.groupBox6.Controls.Add(this.label16);
+            this.groupBox6.Controls.Add(this.label22);
+            this.groupBox6.Controls.Add(this.label23);
+            this.groupBox6.Location = new System.Drawing.Point(13, 414);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(339, 120);
+            this.groupBox6.TabIndex = 121;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "Накладное кольцо";
+            // 
+            // steel2_cb
+            // 
+            this.steel2_cb.FormattingEnabled = true;
+            this.steel2_cb.Location = new System.Drawing.Point(200, 22);
+            this.steel2_cb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.steel2_cb.Name = "steel2_cb";
+            this.steel2_cb.Size = new System.Drawing.Size(138, 23);
+            this.steel2_cb.TabIndex = 73;
+            // 
+            // label31
+            // 
+            this.label31.AutoSize = true;
+            this.label31.Location = new System.Drawing.Point(79, 25);
+            this.label31.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label31.Name = "label31";
+            this.label31.Size = new System.Drawing.Size(116, 15);
+            this.label31.TabIndex = 72;
+            this.label31.Text = "Материал штуцера:";
+            // 
+            // groupBox7
+            // 
+            this.groupBox7.Controls.Add(this.steel3_cb);
+            this.groupBox7.Controls.Add(this.label17);
+            this.groupBox7.Controls.Add(this.label27);
+            this.groupBox7.Controls.Add(this.l3_tb);
+            this.groupBox7.Controls.Add(this.s3_tb);
+            this.groupBox7.Controls.Add(this.label28);
+            this.groupBox7.Controls.Add(this.label32);
+            this.groupBox7.Controls.Add(this.label33);
+            this.groupBox7.Location = new System.Drawing.Point(13, 540);
+            this.groupBox7.Name = "groupBox7";
+            this.groupBox7.Size = new System.Drawing.Size(339, 120);
+            this.groupBox7.TabIndex = 122;
+            this.groupBox7.TabStop = false;
+            this.groupBox7.Text = "Накладное кольцо";
+            // 
+            // steel3_cb
+            // 
+            this.steel3_cb.FormattingEnabled = true;
+            this.steel3_cb.Location = new System.Drawing.Point(200, 22);
+            this.steel3_cb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.steel3_cb.Name = "steel3_cb";
+            this.steel3_cb.Size = new System.Drawing.Size(138, 23);
+            this.steel3_cb.TabIndex = 73;
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(29, 25);
+            this.label17.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(166, 15);
+            this.label17.TabIndex = 72;
+            this.label17.Text = "Материал внутренней части:";
+            // 
+            // label27
+            // 
+            this.label27.AutoSize = true;
+            this.label27.Location = new System.Drawing.Point(13, 55);
+            this.label27.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(182, 15);
+            this.label27.TabIndex = 88;
+            this.label27.Text = "Длина внутр. части штуцера, l3:";
+            // 
+            // l3_tb
+            // 
+            this.l3_tb.Location = new System.Drawing.Point(200, 51);
+            this.l3_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.l3_tb.Name = "l3_tb";
+            this.l3_tb.Size = new System.Drawing.Size(46, 23);
+            this.l3_tb.TabIndex = 80;
+            // 
+            // s3_tb
+            // 
+            this.s3_tb.Location = new System.Drawing.Point(200, 80);
+            this.s3_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.s3_tb.Name = "s3_tb";
+            this.s3_tb.Size = new System.Drawing.Size(46, 23);
+            this.s3_tb.TabIndex = 81;
+            // 
+            // label28
+            // 
+            this.label28.AutoSize = true;
+            this.label28.Location = new System.Drawing.Point(-5, 83);
+            this.label28.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label28.Name = "label28";
+            this.label28.Size = new System.Drawing.Size(200, 15);
+            this.label28.TabIndex = 89;
+            this.label28.Text = "Толщина внутр. части штуцера, s3:";
+            // 
+            // label32
+            // 
+            this.label32.AutoSize = true;
+            this.label32.Location = new System.Drawing.Point(254, 85);
+            this.label32.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label32.Name = "label32";
+            this.label32.Size = new System.Drawing.Size(25, 15);
+            this.label32.TabIndex = 109;
+            this.label32.Text = "мм";
+            // 
+            // label33
+            // 
+            this.label33.AutoSize = true;
+            this.label33.Location = new System.Drawing.Point(254, 55);
+            this.label33.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label33.Name = "label33";
+            this.label33.Size = new System.Drawing.Size(25, 15);
+            this.label33.TabIndex = 110;
+            this.label33.Text = "мм";
+            // 
+            // groupBox8
+            // 
+            this.groupBox8.Controls.Add(this.label42);
+            this.groupBox8.Controls.Add(this.delta2_tb);
+            this.groupBox8.Controls.Add(this.label43);
+            this.groupBox8.Controls.Add(this.label40);
+            this.groupBox8.Controls.Add(this.delta1_tb);
+            this.groupBox8.Controls.Add(this.label41);
+            this.groupBox8.Controls.Add(this.label39);
+            this.groupBox8.Controls.Add(this.delta_tb);
+            this.groupBox8.Controls.Add(this.getFi_b);
+            this.groupBox8.Controls.Add(this.getFi1_b);
+            this.groupBox8.Controls.Add(this.label34);
+            this.groupBox8.Controls.Add(this.label35);
+            this.groupBox8.Controls.Add(this.fi1_tb);
+            this.groupBox8.Controls.Add(this.textBox6);
+            this.groupBox8.Controls.Add(this.label36);
+            this.groupBox8.Controls.Add(this.label37);
+            this.groupBox8.Location = new System.Drawing.Point(13, 666);
+            this.groupBox8.Name = "groupBox8";
+            this.groupBox8.Size = new System.Drawing.Size(339, 130);
+            this.groupBox8.TabIndex = 123;
+            this.groupBox8.TabStop = false;
+            this.groupBox8.Text = "Сварные швы";
+            // 
+            // label42
+            // 
+            this.label42.AutoSize = true;
+            this.label42.Location = new System.Drawing.Point(229, 98);
+            this.label42.Name = "label42";
+            this.label42.Size = new System.Drawing.Size(43, 15);
+            this.label42.TabIndex = 120;
+            this.label42.Text = "Delta2:";
+            // 
+            // delta2_tb
+            // 
+            this.delta2_tb.Location = new System.Drawing.Point(272, 95);
+            this.delta2_tb.Name = "delta2_tb";
+            this.delta2_tb.Size = new System.Drawing.Size(30, 23);
+            this.delta2_tb.TabIndex = 119;
+            // 
+            // label43
+            // 
+            this.label43.AutoSize = true;
+            this.label43.Location = new System.Drawing.Point(309, 98);
+            this.label43.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label43.Name = "label43";
+            this.label43.Size = new System.Drawing.Size(25, 15);
+            this.label43.TabIndex = 118;
+            this.label43.Text = "мм";
+            // 
+            // label40
+            // 
+            this.label40.AutoSize = true;
+            this.label40.Location = new System.Drawing.Point(117, 98);
+            this.label40.Name = "label40";
+            this.label40.Size = new System.Drawing.Size(43, 15);
+            this.label40.TabIndex = 117;
+            this.label40.Text = "Delta1:";
+            // 
+            // delta1_tb
+            // 
+            this.delta1_tb.Location = new System.Drawing.Point(160, 95);
+            this.delta1_tb.Name = "delta1_tb";
+            this.delta1_tb.Size = new System.Drawing.Size(30, 23);
+            this.delta1_tb.TabIndex = 116;
+            // 
+            // label41
+            // 
+            this.label41.AutoSize = true;
+            this.label41.Location = new System.Drawing.Point(197, 98);
+            this.label41.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label41.Name = "label41";
+            this.label41.Size = new System.Drawing.Size(25, 15);
+            this.label41.TabIndex = 115;
+            this.label41.Text = "мм";
+            // 
+            // label39
+            // 
+            this.label39.AutoSize = true;
+            this.label39.Location = new System.Drawing.Point(5, 98);
+            this.label39.Name = "label39";
+            this.label39.Size = new System.Drawing.Size(37, 15);
+            this.label39.TabIndex = 114;
+            this.label39.Text = "Delta:";
+            // 
+            // delta_tb
+            // 
+            this.delta_tb.Location = new System.Drawing.Point(48, 95);
+            this.delta_tb.Name = "delta_tb";
+            this.delta_tb.Size = new System.Drawing.Size(30, 23);
+            this.delta_tb.TabIndex = 113;
+            // 
+            // getFi_b
+            // 
+            this.getFi_b.Location = new System.Drawing.Point(295, 51);
+            this.getFi_b.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.getFi_b.Name = "getFi_b";
+            this.getFi_b.Size = new System.Drawing.Size(43, 23);
+            this.getFi_b.TabIndex = 112;
+            this.getFi_b.Text = ">>";
+            this.getFi_b.UseVisualStyleBackColor = true;
+            // 
+            // getFi1_b
+            // 
+            this.getFi1_b.Location = new System.Drawing.Point(295, 22);
+            this.getFi1_b.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.getFi1_b.Name = "getFi1_b";
+            this.getFi1_b.Size = new System.Drawing.Size(43, 23);
+            this.getFi1_b.TabIndex = 111;
+            this.getFi1_b.Text = ">>";
+            this.getFi1_b.UseVisualStyleBackColor = true;
+            // 
+            // label34
+            // 
+            this.label34.AutoSize = true;
+            this.label34.Location = new System.Drawing.Point(7, 19);
+            this.label34.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label34.Name = "label34";
+            this.label34.Size = new System.Drawing.Size(223, 30);
+            this.label34.TabIndex = 72;
+            this.label34.Text = "Коэффициент прочности продольного\r\nсварного шва φ1:";
+            // 
+            // label35
+            // 
+            this.label35.AutoSize = true;
+            this.label35.Location = new System.Drawing.Point(3, 47);
+            this.label35.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label35.Name = "label35";
+            this.label35.Size = new System.Drawing.Size(227, 30);
+            this.label35.TabIndex = 88;
+            this.label35.Text = "Коэффициент прочности сварного шва\r\nв зоне врезки штуцера φ:\r\n";
+            // 
+            // fi1_tb
+            // 
+            this.fi1_tb.Location = new System.Drawing.Point(238, 22);
+            this.fi1_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.fi1_tb.Name = "fi1_tb";
+            this.fi1_tb.Size = new System.Drawing.Size(46, 23);
+            this.fi1_tb.TabIndex = 80;
+            // 
+            // textBox6
+            // 
+            this.textBox6.Location = new System.Drawing.Point(238, 51);
+            this.textBox6.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.textBox6.Name = "textBox6";
+            this.textBox6.Size = new System.Drawing.Size(46, 23);
+            this.textBox6.TabIndex = 81;
+            // 
+            // label36
+            // 
+            this.label36.AutoSize = true;
+            this.label36.Location = new System.Drawing.Point(37, 77);
+            this.label36.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label36.Name = "label36";
+            this.label36.Size = new System.Drawing.Size(227, 15);
+            this.label36.TabIndex = 89;
+            this.label36.Text = "Минимальные размеры сварных швов:";
+            // 
+            // label37
+            // 
+            this.label37.AutoSize = true;
+            this.label37.Location = new System.Drawing.Point(85, 98);
+            this.label37.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label37.Name = "label37";
+            this.label37.Size = new System.Drawing.Size(25, 15);
+            this.label37.TabIndex = 109;
+            this.label37.Text = "мм";
             // 
             // NozzleForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(784, 705);
+            this.ClientSize = new System.Drawing.Size(804, 860);
+            this.Controls.Add(this.groupBox8);
+            this.Controls.Add(this.groupBox7);
+            this.Controls.Add(this.groupBox6);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.textBox2);
             this.Controls.Add(this.label30);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.label29);
-            this.Controls.Add(this.label28);
-            this.Controls.Add(this.label27);
             this.Controls.Add(this.label26);
+            this.Controls.Add(this.place_gb);
             this.Controls.Add(this.label25);
             this.Controls.Add(this.label24);
-            this.Controls.Add(this.label23);
-            this.Controls.Add(this.label22);
             this.Controls.Add(this.label21);
             this.Controls.Add(this.cancel_b);
             this.Controls.Add(this.calc_b);
             this.Controls.Add(this.predCalc_b);
             this.Controls.Add(this.groupBox4);
-            this.Controls.Add(this.groupBox3);
-            this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.checkBox1);
-            this.Controls.Add(this.getL_b);
-            this.Controls.Add(this.getFi_b);
             this.Controls.Add(this.getE_b);
             this.Controls.Add(this.label19);
             this.Controls.Add(this.grtSigma_b);
             this.Controls.Add(this.label18);
-            this.Controls.Add(this.s_tb);
-            this.Controls.Add(this.label17);
-            this.Controls.Add(this.label16);
-            this.Controls.Add(this.label15);
             this.Controls.Add(this.label14);
             this.Controls.Add(this.label13);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.label11);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.label9);
-            this.Controls.Add(this.c_tb);
-            this.Controls.Add(this.c3_tb);
-            this.Controls.Add(this.c2_tb);
-            this.Controls.Add(this.c1_tb);
-            this.Controls.Add(this.l_tb);
-            this.Controls.Add(this.D_tb);
-            this.Controls.Add(this.fi_tb);
-            this.Controls.Add(this.E_tb);
-            this.Controls.Add(this.sigma_d_tb);
+            this.Controls.Add(this.l1_tb);
+            this.Controls.Add(this.cs1_tb);
+            this.Controls.Add(this.cs_tb);
+            this.Controls.Add(this.s1_tb);
+            this.Controls.Add(this.d_tb);
+            this.Controls.Add(this.E1_tb);
+            this.Controls.Add(this.sigma_d1_tb);
             this.Controls.Add(this.label8);
-            this.Controls.Add(this.steel_cb);
+            this.Controls.Add(this.steel1_cb);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.label4);
@@ -988,27 +1209,29 @@ namespace calc
             this.MinimizeBox = false;
             this.Name = "NozzleForm";
             this.Text = "Расчет узла врезки штуцера";
+            this.Load += new System.EventHandler(this.NozzleForm_Load);
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.f_pb)).EndInit();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
+            this.place_gb.ResumeLayout(false);
+            this.place_gb.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.place_pb)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.vid_pictureBox)).EndInit();
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
+            this.groupBox6.ResumeLayout(false);
+            this.groupBox6.PerformLayout();
+            this.groupBox7.ResumeLayout(false);
+            this.groupBox7.PerformLayout();
+            this.groupBox8.ResumeLayout(false);
+            this.groupBox8.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.Label label28;
-        private System.Windows.Forms.Label label27;
         private System.Windows.Forms.Label label26;
         private System.Windows.Forms.Label label25;
         private System.Windows.Forms.Label label24;
@@ -1020,32 +1243,17 @@ namespace calc
         private System.Windows.Forms.Button predCalc_b;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.Label p_d_l;
-        private System.Windows.Forms.Label scalc_l;
-        private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.RadioButton rb7;
-        private System.Windows.Forms.RadioButton rb6;
-        private System.Windows.Forms.RadioButton rb5;
-        private System.Windows.Forms.RadioButton rb4;
-        private System.Windows.Forms.RadioButton rb3;
-        private System.Windows.Forms.RadioButton rb2;
-        private System.Windows.Forms.RadioButton rb1;
-        private System.Windows.Forms.PictureBox f_pb;
-        private System.Windows.Forms.Label label20;
-        private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.RadioButton radioButton2;
-        private System.Windows.Forms.RadioButton radioButton1;
+        private System.Windows.Forms.Label d0_l;
+        private System.Windows.Forms.GroupBox place_gb;
+        private System.Windows.Forms.PictureBox place_pb;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.CheckBox checkBox1;
-        private System.Windows.Forms.Button getL_b;
-        private System.Windows.Forms.Button getFi_b;
         private System.Windows.Forms.Button getE_b;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.Button grtSigma_b;
         private System.Windows.Forms.Label label18;
-        private System.Windows.Forms.TextBox s_tb;
-        private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label label14;
@@ -1054,25 +1262,20 @@ namespace calc
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.TextBox c_tb;
-        private System.Windows.Forms.TextBox c3_tb;
-        private System.Windows.Forms.TextBox c2_tb;
-        private System.Windows.Forms.TextBox c1_tb;
-        private System.Windows.Forms.TextBox l_tb;
-        private System.Windows.Forms.TextBox D_tb;
-        internal System.Windows.Forms.TextBox fi_tb;
+        private System.Windows.Forms.TextBox s2_tb;
+        private System.Windows.Forms.TextBox l2_tb;
+        private System.Windows.Forms.TextBox l1_tb;
+        private System.Windows.Forms.TextBox cs1_tb;
+        private System.Windows.Forms.TextBox cs_tb;
+        private System.Windows.Forms.TextBox s1_tb;
+        internal System.Windows.Forms.TextBox d_tb;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.ComboBox steel_cb;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.RadioButton nar_rb;
-        private System.Windows.Forms.TextBox p_tb;
-        private System.Windows.Forms.RadioButton vn_rb;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.TextBox t_tb;
+        private System.Windows.Forms.PictureBox vid_pictureBox;
         private System.Windows.Forms.ComboBox Gost_cb;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
@@ -1083,7 +1286,50 @@ namespace calc
         private System.Windows.Forms.Label label30;
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.GroupBox groupBox5;
-        private System.Windows.Forms.TextBox E_tb;
-        private System.Windows.Forms.TextBox sigma_d_tb;
+        private System.Windows.Forms.TextBox E1_tb;
+        private System.Windows.Forms.TextBox sigma_d1_tb;
+        private System.Windows.Forms.RadioButton vid_rb8;
+        private System.Windows.Forms.RadioButton vid_rb7;
+        private System.Windows.Forms.RadioButton vid_rb6;
+        private System.Windows.Forms.RadioButton vid_rb5;
+        private System.Windows.Forms.RadioButton vid_rb4;
+        private System.Windows.Forms.RadioButton vid_rb3;
+        private System.Windows.Forms.RadioButton vid_rb2;
+        private System.Windows.Forms.RadioButton vid_rb1;
+        private System.Windows.Forms.GroupBox groupBox6;
+        private System.Windows.Forms.Label label31;
+        private System.Windows.Forms.GroupBox groupBox7;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.Label label27;
+        private System.Windows.Forms.TextBox l3_tb;
+        private System.Windows.Forms.TextBox s3_tb;
+        private System.Windows.Forms.Label label28;
+        private System.Windows.Forms.Label label32;
+        private System.Windows.Forms.Label label33;
+        private System.Windows.Forms.GroupBox groupBox8;
+        private System.Windows.Forms.Label label34;
+        private System.Windows.Forms.Label label35;
+        private System.Windows.Forms.TextBox fi1_tb;
+        private System.Windows.Forms.TextBox textBox6;
+        private System.Windows.Forms.Label label36;
+        private System.Windows.Forms.Label label37;
+        private System.Windows.Forms.Button getFi1_b;
+        private System.Windows.Forms.Label label42;
+        private System.Windows.Forms.TextBox delta2_tb;
+        private System.Windows.Forms.Label label43;
+        private System.Windows.Forms.Label label40;
+        private System.Windows.Forms.TextBox delta1_tb;
+        private System.Windows.Forms.Label label41;
+        private System.Windows.Forms.Label label39;
+        private System.Windows.Forms.TextBox delta_tb;
+        private System.Windows.Forms.Button getFi_b;
+        private System.Windows.Forms.Label b_l;
+        internal System.Windows.Forms.ComboBox steel1_cb;
+        internal System.Windows.Forms.RadioButton nar_rb;
+        internal System.Windows.Forms.TextBox p_tb;
+        internal System.Windows.Forms.RadioButton vn_rb;
+        internal System.Windows.Forms.TextBox t_tb;
+        internal System.Windows.Forms.ComboBox steel2_cb;
+        internal System.Windows.Forms.ComboBox steel3_cb;
     }
 }

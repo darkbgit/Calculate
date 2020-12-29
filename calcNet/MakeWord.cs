@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xceed.Document.NET;
 
-namespace calc
+namespace calcNet
 {
     class MakeWord
     {
