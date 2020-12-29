@@ -19,6 +19,7 @@ namespace calcNet
         }
 
         public string TypeEl = "Cil";
+        internal DataWordOut.DataOutArrEl dataArrEl;
 
         public struct DataForm
         {
@@ -500,20 +501,18 @@ namespace calcNet
                         main.Word_lv.Items.Add($"{d_in.D} мм, {d_in.p} МПа, {d_in.temp} C, {d_in.met}");
                         i = main.Word_lv.Items.Count - 1;
                         //DataWordOut.DataArr[0].  DataArr .DataOutArr[]. .Value = $"{d_in.D} мм, {d_in.p} МПа, {d_in.temp} C, {d_in.met}";
-                        DataWordOut.DataOutArrEl el = new DataWordOut.DataOutArrEl
-                        {
-                            Data_In = d_in,
-                            Data_Out = d_out,
-                            id = i + 1,
-                            Typ = "cil"
-                        };
+                        dataArrEl.Data_In = d_in;
+                        dataArrEl.Data_Out = d_out;
+                        dataArrEl.id = i + 1;
+                        dataArrEl.Typ = "cil";
+                        
 
 
                         df.Data_In = d_in;
                         df.Data_Out = d_out;
                         df.Typ = "cil";
 
-                        DataWordOut.DataArr[i] = el;
+                        DataWordOut.DataArr[i] = dataArrEl;
 
                     }
                     else

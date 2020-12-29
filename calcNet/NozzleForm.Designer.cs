@@ -89,7 +89,7 @@ namespace calcNet
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label30 = new System.Windows.Forms.Label();
             this.textBox2 = new System.Windows.Forms.TextBox();
-            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.vid_gb = new System.Windows.Forms.GroupBox();
             this.vid_rb8 = new System.Windows.Forms.RadioButton();
             this.vid_rb7 = new System.Windows.Forms.RadioButton();
             this.vid_rb6 = new System.Windows.Forms.RadioButton();
@@ -126,7 +126,7 @@ namespace calcNet
             this.label34 = new System.Windows.Forms.Label();
             this.label35 = new System.Windows.Forms.Label();
             this.fi1_tb = new System.Windows.Forms.TextBox();
-            this.textBox6 = new System.Windows.Forms.TextBox();
+            this.fi_tb = new System.Windows.Forms.TextBox();
             this.label36 = new System.Windows.Forms.Label();
             this.label37 = new System.Windows.Forms.Label();
             this.groupBox4.SuspendLayout();
@@ -134,7 +134,7 @@ namespace calcNet
             ((System.ComponentModel.ISupportInitialize)(this.place_pb)).BeginInit();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.vid_pictureBox)).BeginInit();
-            this.groupBox5.SuspendLayout();
+            this.vid_gb.SuspendLayout();
             this.groupBox6.SuspendLayout();
             this.groupBox7.SuspendLayout();
             this.groupBox8.SuspendLayout();
@@ -209,6 +209,7 @@ namespace calcNet
             this.cancel_b.TabIndex = 107;
             this.cancel_b.Text = "Cancel";
             this.cancel_b.UseVisualStyleBackColor = true;
+            this.cancel_b.Click += new System.EventHandler(this.Cancel_b_Click);
             // 
             // calc_b
             // 
@@ -219,6 +220,7 @@ namespace calcNet
             this.calc_b.TabIndex = 106;
             this.calc_b.Text = "Расчет";
             this.calc_b.UseVisualStyleBackColor = true;
+            this.calc_b.Click += new System.EventHandler(this.Calc_b_Click);
             // 
             // predCalc_b
             // 
@@ -229,6 +231,7 @@ namespace calcNet
             this.predCalc_b.TabIndex = 105;
             this.predCalc_b.Text = "Предварительный\r\nрасчет";
             this.predCalc_b.UseVisualStyleBackColor = true;
+            this.predCalc_b.Click += new System.EventHandler(this.PredCalc_b_Click);
             // 
             // groupBox4
             // 
@@ -468,6 +471,7 @@ namespace calcNet
             this.s2_tb.Name = "s2_tb";
             this.s2_tb.Size = new System.Drawing.Size(46, 23);
             this.s2_tb.TabIndex = 81;
+            this.s2_tb.Text = "6";
             // 
             // l2_tb
             // 
@@ -476,6 +480,7 @@ namespace calcNet
             this.l2_tb.Name = "l2_tb";
             this.l2_tb.Size = new System.Drawing.Size(46, 23);
             this.l2_tb.TabIndex = 80;
+            this.l2_tb.Text = "50";
             // 
             // l1_tb
             // 
@@ -484,6 +489,7 @@ namespace calcNet
             this.l1_tb.Name = "l1_tb";
             this.l1_tb.Size = new System.Drawing.Size(46, 23);
             this.l1_tb.TabIndex = 79;
+            this.l1_tb.Text = "150";
             // 
             // cs1_tb
             // 
@@ -492,6 +498,7 @@ namespace calcNet
             this.cs1_tb.Name = "cs1_tb";
             this.cs1_tb.Size = new System.Drawing.Size(46, 23);
             this.cs1_tb.TabIndex = 78;
+            this.cs1_tb.Text = "1";
             // 
             // cs_tb
             // 
@@ -501,6 +508,7 @@ namespace calcNet
             this.cs_tb.Name = "cs_tb";
             this.cs_tb.Size = new System.Drawing.Size(46, 23);
             this.cs_tb.TabIndex = 77;
+            this.cs_tb.Text = "2";
             // 
             // s1_tb
             // 
@@ -509,6 +517,7 @@ namespace calcNet
             this.s1_tb.Name = "s1_tb";
             this.s1_tb.Size = new System.Drawing.Size(46, 23);
             this.s1_tb.TabIndex = 76;
+            this.s1_tb.Text = "4.5";
             // 
             // d_tb
             // 
@@ -517,6 +526,7 @@ namespace calcNet
             this.d_tb.Name = "d_tb";
             this.d_tb.Size = new System.Drawing.Size(46, 23);
             this.d_tb.TabIndex = 75;
+            this.d_tb.Text = "80";
             // 
             // label8
             // 
@@ -726,23 +736,23 @@ namespace calcNet
             this.textBox2.Size = new System.Drawing.Size(110, 23);
             this.textBox2.TabIndex = 119;
             // 
-            // groupBox5
+            // vid_gb
             // 
-            this.groupBox5.Controls.Add(this.vid_rb8);
-            this.groupBox5.Controls.Add(this.vid_rb7);
-            this.groupBox5.Controls.Add(this.vid_rb6);
-            this.groupBox5.Controls.Add(this.vid_rb5);
-            this.groupBox5.Controls.Add(this.vid_rb4);
-            this.groupBox5.Controls.Add(this.vid_rb3);
-            this.groupBox5.Controls.Add(this.vid_rb2);
-            this.groupBox5.Controls.Add(this.vid_rb1);
-            this.groupBox5.Controls.Add(this.vid_pictureBox);
-            this.groupBox5.Location = new System.Drawing.Point(359, 46);
-            this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(433, 256);
-            this.groupBox5.TabIndex = 120;
-            this.groupBox5.TabStop = false;
-            this.groupBox5.Text = "Расчетные схемы штуцеров";
+            this.vid_gb.Controls.Add(this.vid_rb8);
+            this.vid_gb.Controls.Add(this.vid_rb7);
+            this.vid_gb.Controls.Add(this.vid_rb6);
+            this.vid_gb.Controls.Add(this.vid_rb5);
+            this.vid_gb.Controls.Add(this.vid_rb4);
+            this.vid_gb.Controls.Add(this.vid_rb3);
+            this.vid_gb.Controls.Add(this.vid_rb2);
+            this.vid_gb.Controls.Add(this.vid_rb1);
+            this.vid_gb.Controls.Add(this.vid_pictureBox);
+            this.vid_gb.Location = new System.Drawing.Point(359, 46);
+            this.vid_gb.Name = "vid_gb";
+            this.vid_gb.Size = new System.Drawing.Size(433, 256);
+            this.vid_gb.TabIndex = 120;
+            this.vid_gb.TabStop = false;
+            this.vid_gb.Text = "Расчетные схемы штуцеров";
             // 
             // vid_rb8
             // 
@@ -943,6 +953,7 @@ namespace calcNet
             this.l3_tb.Name = "l3_tb";
             this.l3_tb.Size = new System.Drawing.Size(46, 23);
             this.l3_tb.TabIndex = 80;
+            this.l3_tb.Text = "10";
             // 
             // s3_tb
             // 
@@ -951,6 +962,7 @@ namespace calcNet
             this.s3_tb.Name = "s3_tb";
             this.s3_tb.Size = new System.Drawing.Size(46, 23);
             this.s3_tb.TabIndex = 81;
+            this.s3_tb.Text = "4.5";
             // 
             // label28
             // 
@@ -997,7 +1009,7 @@ namespace calcNet
             this.groupBox8.Controls.Add(this.label34);
             this.groupBox8.Controls.Add(this.label35);
             this.groupBox8.Controls.Add(this.fi1_tb);
-            this.groupBox8.Controls.Add(this.textBox6);
+            this.groupBox8.Controls.Add(this.fi_tb);
             this.groupBox8.Controls.Add(this.label36);
             this.groupBox8.Controls.Add(this.label37);
             this.groupBox8.Location = new System.Drawing.Point(13, 666);
@@ -1022,6 +1034,7 @@ namespace calcNet
             this.delta2_tb.Name = "delta2_tb";
             this.delta2_tb.Size = new System.Drawing.Size(30, 23);
             this.delta2_tb.TabIndex = 119;
+            this.delta2_tb.Text = "5";
             // 
             // label43
             // 
@@ -1048,6 +1061,7 @@ namespace calcNet
             this.delta1_tb.Name = "delta1_tb";
             this.delta1_tb.Size = new System.Drawing.Size(30, 23);
             this.delta1_tb.TabIndex = 116;
+            this.delta1_tb.Text = "5";
             // 
             // label41
             // 
@@ -1074,6 +1088,7 @@ namespace calcNet
             this.delta_tb.Name = "delta_tb";
             this.delta_tb.Size = new System.Drawing.Size(30, 23);
             this.delta_tb.TabIndex = 113;
+            this.delta_tb.Text = "5";
             // 
             // getFi_b
             // 
@@ -1122,14 +1137,16 @@ namespace calcNet
             this.fi1_tb.Name = "fi1_tb";
             this.fi1_tb.Size = new System.Drawing.Size(46, 23);
             this.fi1_tb.TabIndex = 80;
+            this.fi1_tb.Text = "1";
             // 
-            // textBox6
+            // fi_tb
             // 
-            this.textBox6.Location = new System.Drawing.Point(238, 51);
-            this.textBox6.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.textBox6.Name = "textBox6";
-            this.textBox6.Size = new System.Drawing.Size(46, 23);
-            this.textBox6.TabIndex = 81;
+            this.fi_tb.Location = new System.Drawing.Point(238, 51);
+            this.fi_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.fi_tb.Name = "fi_tb";
+            this.fi_tb.Size = new System.Drawing.Size(46, 23);
+            this.fi_tb.TabIndex = 81;
+            this.fi_tb.Text = "1";
             // 
             // label36
             // 
@@ -1159,7 +1176,7 @@ namespace calcNet
             this.Controls.Add(this.groupBox8);
             this.Controls.Add(this.groupBox7);
             this.Controls.Add(this.groupBox6);
-            this.Controls.Add(this.groupBox5);
+            this.Controls.Add(this.vid_gb);
             this.Controls.Add(this.textBox2);
             this.Controls.Add(this.label30);
             this.Controls.Add(this.textBox1);
@@ -1218,8 +1235,8 @@ namespace calcNet
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.vid_pictureBox)).EndInit();
-            this.groupBox5.ResumeLayout(false);
-            this.groupBox5.PerformLayout();
+            this.vid_gb.ResumeLayout(false);
+            this.vid_gb.PerformLayout();
             this.groupBox6.ResumeLayout(false);
             this.groupBox6.PerformLayout();
             this.groupBox7.ResumeLayout(false);
@@ -1285,7 +1302,7 @@ namespace calcNet
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label label30;
         private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.GroupBox vid_gb;
         private System.Windows.Forms.TextBox E1_tb;
         private System.Windows.Forms.TextBox sigma_d1_tb;
         private System.Windows.Forms.RadioButton vid_rb8;
@@ -1310,7 +1327,7 @@ namespace calcNet
         private System.Windows.Forms.Label label34;
         private System.Windows.Forms.Label label35;
         private System.Windows.Forms.TextBox fi1_tb;
-        private System.Windows.Forms.TextBox textBox6;
+        private System.Windows.Forms.TextBox fi_tb;
         private System.Windows.Forms.Label label36;
         private System.Windows.Forms.Label label37;
         private System.Windows.Forms.Button getFi1_b;

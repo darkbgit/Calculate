@@ -21,12 +21,20 @@ namespace calcNet
         {
 
             //this.Close();
+            
             this.Owner.Hide();
             this.Close();
             if (nozzle_cb.Checked)
             {
-                NozzleForm nf = new NozzleForm { Owner = this.Owner,
-                                                steel1_cb = };
+                NozzleForm nf = new NozzleForm { Owner = this.Owner };
+                if (this.Owner is CilForm cf)
+                {
+                    nf.dataArrEl.Data_In = cf.dataArrEl.Data_In;
+                    nf.dataArrEl.Data_Out = cf.dataArrEl.Data_Out;
+                }
+                
+                
+                
                 nf.Show();
             }
             

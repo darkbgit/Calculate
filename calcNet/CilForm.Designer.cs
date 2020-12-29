@@ -42,7 +42,7 @@ namespace calcNet
             this.vn_rb = new System.Windows.Forms.RadioButton();
             this.nar_rb = new System.Windows.Forms.RadioButton();
             this.p_tb = new System.Windows.Forms.TextBox();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.dav_gb = new System.Windows.Forms.GroupBox();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.steel_cb = new System.Windows.Forms.ComboBox();
@@ -104,7 +104,7 @@ namespace calcNet
             this.label26 = new System.Windows.Forms.Label();
             this.label27 = new System.Windows.Forms.Label();
             this.label28 = new System.Windows.Forms.Label();
-            this.groupBox1.SuspendLayout();
+            this.dav_gb.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.f_pb)).BeginInit();
@@ -237,20 +237,20 @@ namespace calcNet
             this.p_tb.TabIndex = 12;
             this.p_tb.Text = "1";
             // 
-            // groupBox1
+            // dav_gb
             // 
-            this.groupBox1.Controls.Add(this.label6);
-            this.groupBox1.Controls.Add(this.label5);
-            this.groupBox1.Controls.Add(this.nar_rb);
-            this.groupBox1.Controls.Add(this.p_tb);
-            this.groupBox1.Controls.Add(this.vn_rb);
-            this.groupBox1.Location = new System.Drawing.Point(14, 104);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.groupBox1.Size = new System.Drawing.Size(350, 77);
-            this.groupBox1.TabIndex = 13;
-            this.groupBox1.TabStop = false;
+            this.dav_gb.Controls.Add(this.label6);
+            this.dav_gb.Controls.Add(this.label5);
+            this.dav_gb.Controls.Add(this.nar_rb);
+            this.dav_gb.Controls.Add(this.p_tb);
+            this.dav_gb.Controls.Add(this.vn_rb);
+            this.dav_gb.Location = new System.Drawing.Point(14, 104);
+            this.dav_gb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.dav_gb.Name = "dav_gb";
+            this.dav_gb.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.dav_gb.Size = new System.Drawing.Size(350, 77);
+            this.dav_gb.TabIndex = 13;
+            this.dav_gb.TabStop = false;
             // 
             // label6
             // 
@@ -955,7 +955,7 @@ namespace calcNet
             this.Controls.Add(this.label8);
             this.Controls.Add(this.steel_cb);
             this.Controls.Add(this.label7);
-            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.dav_gb);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.t_tb);
@@ -973,8 +973,8 @@ namespace calcNet
             this.Text = "CilForm";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.CilForm_FormClosing);
             this.Load += new System.EventHandler(this.CilForm_Load);
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            this.dav_gb.ResumeLayout(false);
+            this.dav_gb.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.groupBox3.ResumeLayout(false);
@@ -1003,7 +1003,7 @@ namespace calcNet
         private System.Windows.Forms.RadioButton vn_rb;
         private System.Windows.Forms.RadioButton nar_rb;
         private System.Windows.Forms.TextBox p_tb;
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox dav_gb;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.ComboBox steel_cb;
