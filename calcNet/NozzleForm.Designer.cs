@@ -86,9 +86,9 @@ namespace calcNet
             this.name_tb = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label29 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.oboz_tb = new System.Windows.Forms.TextBox();
             this.label30 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.nameEl_tb = new System.Windows.Forms.TextBox();
             this.vid_gb = new System.Windows.Forms.GroupBox();
             this.vid_rb8 = new System.Windows.Forms.RadioButton();
             this.vid_rb7 = new System.Windows.Forms.RadioButton();
@@ -242,7 +242,7 @@ namespace calcNet
             this.groupBox4.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.groupBox4.Size = new System.Drawing.Size(270, 40);
+            this.groupBox4.Size = new System.Drawing.Size(287, 40);
             this.groupBox4.TabIndex = 104;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Результаты расчета";
@@ -713,12 +713,13 @@ namespace calcNet
             this.label29.TabIndex = 116;
             this.label29.Text = "Условное обозначение";
             // 
-            // textBox1
+            // oboz_tb
             // 
-            this.textBox1.Location = new System.Drawing.Point(396, 17);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(110, 23);
-            this.textBox1.TabIndex = 117;
+            this.oboz_tb.Enabled = false;
+            this.oboz_tb.Location = new System.Drawing.Point(396, 17);
+            this.oboz_tb.Name = "oboz_tb";
+            this.oboz_tb.Size = new System.Drawing.Size(110, 23);
+            this.oboz_tb.TabIndex = 117;
             // 
             // label30
             // 
@@ -729,12 +730,12 @@ namespace calcNet
             this.label30.TabIndex = 118;
             this.label30.Text = "Присоединен к:";
             // 
-            // textBox2
+            // nameEl_tb
             // 
-            this.textBox2.Location = new System.Drawing.Point(612, 16);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(110, 23);
-            this.textBox2.TabIndex = 119;
+            this.nameEl_tb.Location = new System.Drawing.Point(612, 16);
+            this.nameEl_tb.Name = "nameEl_tb";
+            this.nameEl_tb.Size = new System.Drawing.Size(110, 23);
+            this.nameEl_tb.TabIndex = 119;
             // 
             // vid_gb
             // 
@@ -1177,9 +1178,9 @@ namespace calcNet
             this.Controls.Add(this.groupBox7);
             this.Controls.Add(this.groupBox6);
             this.Controls.Add(this.vid_gb);
-            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.nameEl_tb);
             this.Controls.Add(this.label30);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.oboz_tb);
             this.Controls.Add(this.label29);
             this.Controls.Add(this.label26);
             this.Controls.Add(this.place_gb);
@@ -1299,9 +1300,9 @@ namespace calcNet
         private System.Windows.Forms.TextBox name_tb;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label29;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox oboz_tb;
         private System.Windows.Forms.Label label30;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox nameEl_tb;
         private System.Windows.Forms.GroupBox vid_gb;
         private System.Windows.Forms.TextBox E1_tb;
         private System.Windows.Forms.TextBox sigma_d1_tb;

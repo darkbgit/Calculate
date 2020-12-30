@@ -27,7 +27,7 @@ namespace calcNet
         internal double l3_2;
         internal int E;
         internal double ny = 2.4;
-        internal string met; // "obvn", "obnar", "konvn", "konnar", "ellvn", "ellnar"
+        internal string met; // "cilvn", "cilnar", "konvn", "konnar", "ellvn", "ellnar"
         internal int elH;
         internal int elh1;
         internal int alfa;
@@ -350,7 +350,7 @@ namespace calcNet
 
         internal static Data_out CalcCil(Data_in d_in)
         {
-            Data_out d_out = new Data_out();
+            Data_out d_out = new Data_out { err = "" };
 
             d_out.c = d_in.c1 + d_in.c2 + d_in.c3;
             if ((d_in.D < 200) && ((d_in.s - d_out.c) / d_in.D <= 0.3))
@@ -364,6 +364,7 @@ namespace calcNet
             else
             {
                 d_out.ypf = false;
+                d_out.err += "Условие применения формул не выполняется\n";
             }
 
             if (d_in.dav == 0)
@@ -374,13 +375,13 @@ namespace calcNet
                 {
                     d_out.p_d = 2 * d_in.sigma_d * d_in.fi * (d_out.s_calc - d_out.c) / (d_in.D + d_out.s_calc - d_out.c);
                 }
-                else if (d_in.s > d_out.s_calc)
+                else if (d_in.s >= d_out.s_calc)
                 {
                     d_out.p_d = 2 * d_in.sigma_d * d_in.fi * (d_in.s - d_out.c) / (d_in.D + d_in.s - d_out.c);
                 }
                 else
                 {
-                    d_out.err = "Принятая толщина меньше расчетной\nрасчет не выполнен";
+                    d_out.err += "Принятая толщина меньше расчетной\nрасчет не выполнен";
                 }
             }
             else if (d_in.dav == 1)
@@ -399,7 +400,7 @@ namespace calcNet
                     d_out.b1 = Math.Min(1.0, d_out.b1_2);
                     d_out.p_de = ((2.08 * 0.00001 * d_in.E) / d_in.ny * d_out.b1) * (d_in.D / d_out.l) * Math.Pow(100 * (d_out.s_calc - d_out.c) / d_in.D, 2.5);
                 }
-                else if (d_in.s > d_out.s_calc)
+                else if (d_in.s >= d_out.s_calc)
                 {
                     d_out.p_dp = 2 * d_in.sigma_d * (d_in.s - d_out.c) / (d_in.D + d_in.s - d_out.c);
                     d_out.b1_2 = 9.45 * (d_in.D / d_out.l) * Math.Sqrt(d_in.D / (100 * (d_in.s - d_out.c)));
@@ -408,29 +409,30 @@ namespace calcNet
                 }
                 else
                 {
-                    d_out.err = "Принятая толщина меньше расчетной\nрасчет не выполнен";
+                    d_out.err += "Принятая толщина меньше расчетной\nрасчет не выполнен";
                 }
                 d_out.p_d = d_out.p_dp / Math.Sqrt(1 + Math.Pow(d_out.p_dp / d_out.p_de, 2));
             }
             else
             {
-                d_out.err = "Неверный тип давления\nрасчет не выполнен";
+                d_out.err += "Неверный тип давления\nрасчет не выполнен";
             }
             return d_out;
         }
 
         internal static Data_out CalcEll(Data_in d_in)
         {
-            Data_out d_out = new Data_out();
+            Data_out d_out = new Data_out { err = "" };
             d_out.c = d_in.c1 + d_in.c2 + d_in.c3;
 
-            if ((((d_in.s - d_out.c) / d_in.D <= 0.1) & ((d_in.s - d_out.c) / d_in.D >= 0.002)) & ((d_in.elH / d_in.D < 0.5) & (d_in.elH / d_in.D >= 0.2)))
+            if ((((d_in.s - d_out.c) / d_in.D <= 0.1) & ((d_in.s - d_out.c) / d_in.D >= 0.002) & (d_in.elH / d_in.D < 0.5) & (d_in.elH / d_in.D >= 0.2)) | d_in.s == 0)
             {
                 d_out.ypf = true;
             }
             else
             {
                 d_out.ypf = false;
+                d_out.err += "Условие применения формул не выполняется\n";
             }
             d_out.elR = Math.Pow(d_in.D, 2) / (4 * d_in.elH);
             if (d_in.dav == 0)
@@ -442,13 +444,13 @@ namespace calcNet
                 {
                     d_out.p_d = 2 * d_in.sigma_d * d_in.fi * (d_out.s_calc - d_out.c) / (d_out.elR + 0.5 * (d_out.s_calc - d_out.c));
                 }
-                else if (d_in.s > d_out.s_calc)
+                else if (d_in.s >= d_out.s_calc)
                 {
                     d_out.p_d = 2 * d_in.sigma_d * d_in.fi * (d_in.s - d_out.c) / (d_out.elR + 0.5 * (d_out.s_calc - d_out.c));
                 }
                 else
                 {
-                    d_out.err = "Принятая толщина меньше расчетной";
+                    d_out.err += "Принятая толщина меньше расчетной\n";
                 }
             }
             else if (d_in.dav == 1)
@@ -469,7 +471,7 @@ namespace calcNet
                     //#d_out.p_de = (2.6*0.00001*d_in.E)/d_in.ny*Math.Pow(100*(d_out.s-d_out.c)/(d_out.elke*d_out.elR,2))
                     //#d_out.p_d = d_out.p_dp/Math.Sqrt(1+Math.Pow(d_out.p_dp/d_out.p_de,2))
                 }
-                else if (d_in.s > d_out.s_calc)
+                else if (d_in.s >= d_out.s_calc)
                 {
                     d_out.p_dp = 2 * d_in.sigma_d * (d_in.s - d_out.c) / (d_out.elR + 0.5 * (d_in.s - d_out.c));
                     d_out.elx = 10 * ((d_in.s - d_out.c) / d_in.D) * (d_in.D / (2 * d_in.elH) - (2 * d_in.elH) / d_in.D);
@@ -479,7 +481,7 @@ namespace calcNet
                 }
                 else
                 {
-                    d_out.err = "Принятая толщина меньше расчетной";
+                    d_out.err += "Принятая толщина меньше расчетной\n";
                 }
             }
             return d_out;
@@ -487,13 +489,13 @@ namespace calcNet
 
         internal static DataNozzle_out CalcNozzle(Data_in d_in, Data_out d_out, DataNozzle_in dN_in)
         {
-            DataNozzle_out dN_out = new DataNozzle_out();
+            DataNozzle_out dN_out = new DataNozzle_out { err = "" };
 
             // расчет Dp, dp
             switch (d_in.met)
             {
-                case "obvn":
-                case "obnar":
+                case "cilvn":
+                case "cilnar":
                     {
                         dN_out.Dp = d_in.D;
                         break;
@@ -521,6 +523,11 @@ namespace calcNet
                 case "torosfer":
                     {
                         //dN_out.Dp = 2 * d_in.R;
+                        break;
+                    }
+                default:
+                    {
+                        dN_out.err += "Ошибка вида укрепляемого элемента\n";
                         break;
                     }
             }
@@ -571,6 +578,11 @@ namespace calcNet
                 case 7:
                     {
                         //dN_out.dp = dN_in.D + 1.5*(dN_in.r-dN_out.sp) +2 * dN_in.cs;
+                        break;
+                    }
+                default:
+                    {
+                        dN_out.err += "Ошибка места расположения штуцера\n";
                         break;
                     }
             }
@@ -630,8 +642,8 @@ namespace calcNet
 
             switch (d_in.met)
             {
-                case "obvn":
-                case "obnar":
+                case "cilvn":
+                case "cilnar":
                     {
                         dN_out.dmax = d_in.D;
                         break;
@@ -652,6 +664,25 @@ namespace calcNet
                     }
             }
 
+            switch (d_in.met)
+            {
+                case "cilvn":
+                case "cilnar":
+                case "konvn":
+                case "konnar":
+                    {
+                        dN_out.K1 = 1;
+                        break;
+                    }
+                case "ellvn":
+                case "ellnar":
+                case "sfer":
+                case "torosfer":
+                    {
+                        dN_out.K1 = 2;
+                        break;
+                    }
+            }
 
             if (d_in.dav == 0)
             {
@@ -659,25 +690,7 @@ namespace calcNet
             }
             else if (d_in.dav == 1)
             {
-                switch (d_in.met)
-                {
-                    case "obvn":
-                    case "obnar":
-                    case "konvn":
-                    case "konnar":
-                        {
-                            dN_out.K1 = 1;
-                            break;
-                        }
-                    case "ellvn":
-                    case "ellnar":
-                    case "sfer":
-                    case "torosfer":
-                        {
-                            dN_out.K1 = 2;
-                            break;
-                        }
-                }
+                
                 //dN_out.B1n = Math.Min(1, 9.45 * (d_in.D / d_out.l) * Math.Sqrt(d_in.D / (100 * (d_in.s - d_out.c))));
                 //dN_out.pen = 2.08 * 0.00001 * d_in.E / (dN_in.ny * dN_out.B1n) * (d_in.D / d_out.l) * Math.Pow(100 * (d_in.s - d_out.c) / d_in.D, 2.5);
                 dN_out.pen = d_out.p_de;
@@ -694,7 +707,13 @@ namespace calcNet
             {
                 dN_out.yslyk1 = dN_out.l1p * (dN_in.s1 - dN_out.s1p - dN_in.cs) * dN_out.psi1 + dN_out.l2p * dN_in.s2 * dN_out.psi2 + dN_out.l3p * (dN_in.s3 - dN_in.cs - dN_in.cs1) * dN_out.psi3 + dN_out.lp * (d_in.s - d_out.s_calcr - d_out.c) * dN_out.psi4;
                 dN_out.yslyk2 = 0.5 * (dN_out.dp - dN_out.d0p) * d_out.s_calcr;
+                if (dN_out.yslyk1 < dN_out.yslyk2)
+                {
+                    dN_out.err += "Условие укрепления одиночного отверстия не выполняется";
+                }
             }
+
+
 
             dN_out.V1 = (dN_in.s0 - d_out.c) / (d_in.s - d_out.c);
             dN_out.V2 = (dN_out.psi4 + (dN_out.l1p * (dN_in.s1 - dN_in.cs) * dN_out.psi1 + dN_out.l2p * dN_in.s2 * dN_out.psi2 + dN_out.l3p * (dN_in.s3 - dN_in.cs - dN_in.cs1) * dN_out.psi3) / dN_out.lp * (d_in.s - d_out.c)) / (1 + 0.5 * (dN_out.dp - dN_out.d0p) / dN_out.lp + dN_out.K1 * (dN_in.D + 2 * dN_in.cs) / dN_out.Dp * (dN_in.fi / dN_in.fi1) * (dN_out.l1p / dN_out.lp));
@@ -710,11 +729,15 @@ namespace calcNet
                 dN_out.p_de = d_out.p_de; 
                 dN_out.p_d = dN_out.p_dp / Math.Sqrt(1 + Math.Pow(dN_out.p_dp / dN_out.p_de, 2));
             }
+            if (dN_out.p_d < d_in.p)
+            {
+                dN_out.err += "Допускаемое давление меньше расчетного\n";
+            }
 
             switch (d_in.met)
             {
-                case "obvn":
-                case "obnar":
+                case "cilvn":
+                case "cilnar":
                     {
                         dN_out.ypf1 = (dN_out.dp - 2 * dN_in.cs) / d_in.D;
                         dN_out.ypf2 = (d_in.s - d_out.c) / d_in.D;
@@ -761,6 +784,11 @@ namespace calcNet
                         break;
                     }
             }
+            if (dN_out.ypf == false)
+            {
+                dN_out.err += "Условие применения формул не выполняется";
+            }
+
             return (dN_out);
         }
 

@@ -32,6 +32,11 @@ namespace calcNet
                     nf.dataArrEl.Data_In = cf.dataArrEl.Data_In;
                     nf.dataArrEl.Data_Out = cf.dataArrEl.Data_Out;
                 }
+                else if (this.Owner is EllForm ef)
+                {
+                    nf.dataArrEl.Data_In = ef.dataArrEl.Data_In;
+                    nf.dataArrEl.Data_Out = ef.dataArrEl.Data_Out;
+                }
                 
                 
                 

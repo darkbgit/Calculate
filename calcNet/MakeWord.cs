@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -379,8 +380,8 @@ namespace calcNet
             doc.InsertParagraph($"Расчет на прочность узла врезки штуцера {dN_in.name} в ").Heading(HeadingType.Heading1).Alignment = Alignment.center;
             switch (d_in.met)
             {
-                case "obvn":
-                case "obnar":
+                case "cilvn":
+                case "cilnar":
                     doc.Paragraphs.Last().Append($"обечайку {d_in.name}, нагруженную ");
                     break;
                 case "konvn":
@@ -411,14 +412,14 @@ namespace calcNet
             
             table.InsertRow();
             table.Rows[1].Cells[0].Paragraphs[0].Append("Элемент несущий штуцер:");
-            table.Rows[1].Cells[1].Paragraphs[0].Append($"{d_in.name} мм");
+            table.Rows[1].Cells[1].Paragraphs[0].Append($"{d_in.name}");
 
             table.InsertRow();
             table.Rows[2].Cells[0].Paragraphs[0].Append("Тип элемента, несущего штуцер:");
             switch (d_in.met)
             {
-                case "obvn":
-                case "obnar":
+                case "cilvn":
+                case "cilnar":
                     table.Rows[2].Cells[1].Paragraphs[0].Append("Обечайка цилиндрическая");
                     break;
                 case "konvn":
@@ -611,6 +612,7 @@ namespace calcNet
                     break;
             }
             doc.InsertParagraph().InsertTableAfterSelf(table1);
+            doc.InsertParagraph();
 
             doc.InsertParagraph("Коэффициенты прочности сварных швов:");
             doc.InsertParagraph("Продольный шов штуцера ").AppendEquation($"φ_1={dN_in.fi1}");
@@ -619,7 +621,7 @@ namespace calcNet
             doc.InsertParagraph();
             doc.InsertParagraph("Условия нагружения").Alignment = Alignment.center;
             var table2 = doc.AddTable(1, 2);
-            table1.SetWidths(new float[] { 300, 100 });
+            table2.SetWidths(new float[] { 300, 100 });
 
             table2.Rows[0].Cells[0].Paragraphs[0].Append("Расчетная температура, Т:");
             table2.Rows[0].Cells[1].Paragraphs[0].Append($"{d_in.temp} °С");
@@ -703,8 +705,8 @@ namespace calcNet
 
             switch (d_in.met)
             {
-                case "obvn":
-                case "obnar":
+                case "cilvn":
+                case "cilnar":
                     {
                         doc.Paragraphs.Last().Append("(для цилиндрической обечайки)");
                         doc.InsertParagraph().AppendEquation($"D_p=D={d_in.D} мм");
@@ -806,7 +808,7 @@ namespace calcNet
             }
             doc.InsertParagraph("Расчетная толщина стенки штуцера с круглым поперечным сечением");
             doc.InsertParagraph().AppendEquation("s_1p=(p(d+2∙c_s))/(2∙φ_1∙[σ]_1-p)");
-            doc.InsertParagraph().AppendEquation($"s_1p=({d_in.p}({dN_in.D}+2∙{dN_in.cs})/(2∙{dN_in.fi1}∙{dN_in.sigma_d1}-{d_in.p})={dN_out.s1p:f2} мм");
+            doc.InsertParagraph().AppendEquation($"s_1p=({d_in.p}({dN_in.D}+2∙{dN_in.cs}))/(2∙{dN_in.fi1}∙{dN_in.sigma_d1}-{d_in.p})={dN_out.s1p:f2} мм");
 
             doc.InsertParagraph("Расчетная длина внешней части штуцера");
             doc.InsertParagraph().AppendEquation("l_1p=min{l_1;1.25√((d+2∙c_s)(s_1-c_s))}");
@@ -874,22 +876,21 @@ namespace calcNet
             doc.InsertParagraph().AppendEquation("d_p≤d_0");
 
             doc.InsertParagraph().AppendEquation("d_0").Append(" - наибольший допустимый диаметр одиночного отверстия, не требующего дополнительного укрепления при наличии избыточной толщины стенки сосуда");
-            doc.InsertParagraph().AppendEquation("d_0=min{2∙((s-c)/s_pn-0.8)∙√(D_p∙(s-c));d_max+2∙c_s}");
-
-            doc.InsertParagraph("где ").AppendEquation("d_max").Append(" - максимальный диаметр отверстия ");
+            doc.InsertParagraph().AppendEquation("d_0=min{2∙((s-c)/s_pn-0.8)∙√(D_p∙(s-c));d_max+2∙c_s} ");
+            doc.InsertParagraph("где - ").AppendEquation("d_max").Append(" - максимальный диаметр отверстия ");
 
             switch (d_in.met)
             {
-                case "obvn":
-                case "obnar":
+                case "cilvn":
+                case "cilnar":
                     {
-                        doc.InsertParagraph().AppendEquation($"d_max=D={d_in.D} мм").Append(" - для отверстий в цилиндрических обечайках");
+                        doc.InsertParagraph().AppendEquation($"d_max=D={d_in.D} мм").AppendLine(" - для отверстий в цилиндрических обечайках");
                         break;
                     }
                 case "konvn":
                 case "konnar":
                     {
-                        doc.InsertParagraph().AppendEquation($"d_max=D_K={dN_out.dmax:f2} мм").Append(" - для отверстий в конических обечайках");
+                        doc.InsertParagraph().AppendEquation($"d_max=D_K={dN_out.dmax:f2} мм").AppendLine(" - для отверстий в конических обечайках");
                         break;
                     }
                 case "ellvn":
@@ -897,7 +898,7 @@ namespace calcNet
                 case "sfer":
                 case "torosfer":
                     {
-                        doc.InsertParagraph().AppendEquation($"d_max=0.6∙D={dN_out.dmax:f2} мм").Append(" - для отверстий в выпуклых днищах");
+                        doc.InsertParagraph().AppendEquation($"d_max=0.6∙D={dN_out.dmax:f2} мм").AppendLine(" - для отверстий в выпуклых днищах");
                         break;
                     }
             }
@@ -912,8 +913,8 @@ namespace calcNet
                 doc.InsertParagraph().AppendEquation("s_pn=(p_pn∙D_p)/(2∙K_1∙[σ]-p_pn)");
                 switch (d_in.met)
                 {
-                    case "obvn":
-                    case "obnar":
+                    case "cilvn":
+                    case "cilnar":
                     case "konvn":
                     case "konnar":
                         {
@@ -983,8 +984,8 @@ namespace calcNet
 
             switch (d_in.met)
             {
-                case "obvn":
-                case "obnar":
+                case "cilvn":
+                case "cilnar":
                 case "konvn":
                 case "konnar":
                     {
@@ -1027,7 +1028,7 @@ namespace calcNet
             doc.InsertParagraph().AppendEquation("(χ_4+(l_1p∙(s_1-c_s)∙χ_1+l_2p∙s_2∙χ_2+l_3p∙(s_3-c_s-c_s1)∙χ_3)/(l_p∙(s-c)))/(1+0.5∙(d_p-d_0p)/l_p+K_1∙(d+2∙c_s)/D_p∙(φ/φ_1)∙(l_1p/l_p))=");
             doc.InsertParagraph().AppendEquation($"({dN_out.psi4}+({dN_out.l1p:f2}∙({dN_in.s1}-{dN_in.cs})∙{dN_out.psi1}+{dN_out.l2p:f2}∙{dN_in.s2}∙{dN_out.psi2}+{dN_out.l3p:f2}∙({dN_in.s3}-{dN_in.cs}-{dN_in.cs1})∙{dN_out.psi3:f2})/({dN_out.lp:f2}∙({d_in.s}-{d_out.c:f2})))/(1+0.5∙({dN_out.dp:f2}-{dN_out.d0p:f2})/{dN_out.lp:f2}+{dN_out.K1}∙({dN_in.D}+2∙{dN_in.cs})/{dN_out.Dp}∙({dN_in.fi}/{dN_in.fi1})∙({dN_out.l1p:f2}/{dN_out.lp:f2}))={dN_out.V2:f2}");
 
-            doc.InsertParagraph().AppendEquation($"V=min({dN_out.V1:f2};{dN_out.V2:f2})={dN_out.V:f2} мм");
+            doc.InsertParagraph().AppendEquation($"V=min({dN_out.V1:f2};{dN_out.V2:f2})={dN_out.V:f2} ");
 
             if (d_in.dav == 0)
             {
@@ -1054,8 +1055,8 @@ namespace calcNet
             doc.InsertParagraph("Границы применения формул");
             switch (d_in.met)
             {
-                case "obvn":
-                case "obnar":
+                case "cilvn":
+                case "cilnar":
                     {
                         doc.InsertParagraph().AppendEquation("(d_p-2∙c_s)/D≤1");
                         doc.InsertParagraph().AppendEquation($"({dN_out.dp:f2}-2∙{dN_in.cs})/{d_in.D}={dN_out.ypf1:f2}≤1");

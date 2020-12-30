@@ -21,6 +21,7 @@ namespace calcNet
 
         public CilForm cf = null;
         public NozzleForm nf = null;
+        public EllForm ef = null;
         
 
         private void Cil_b_Click(object sender, EventArgs e)
@@ -82,10 +83,9 @@ namespace calcNet
                                     MakeWord.MakeWord_ell(DataWordOut.DataArr[i - 1].Data_In, DataWordOut.DataArr[i - 1].Data_Out, f);
                                     break;
                                 case "cilyk":
-                                    break;
                                 case "konyk":
-                                    break;
                                 case "ellyk":
+                                    MakeWord.MakeWord_nozzle(DataWordOut.DataArr[i - 1].Data_In, DataWordOut.DataArr[i - 1].Data_Out, DataWordOut.DataArr[i - 1].DataN_In, DataWordOut.DataArr[i - 1].DataN_Out, f);
                                     break;
                                 case "saddle":
                                     break;
@@ -126,6 +126,19 @@ namespace calcNet
             }
         }
 
-
+        private void Ell_b_Click(object sender, EventArgs e)
+        {
+            if (ef == null)
+            {
+                //cf.Dispose();
+                ef = new EllForm { Owner = this };
+                ef.Show();
+            }
+            else
+            {
+                ef.Owner = this;
+                ef.Show();
+            }
+        }
     }
 }

@@ -193,6 +193,7 @@ namespace calcNet
             this.Ell_b.TabIndex = 5;
             this.Ell_b.Text = "Эллиптическое днище";
             this.Ell_b.UseVisualStyleBackColor = true;
+            this.Ell_b.Click += new System.EventHandler(this.Ell_b_Click);
             // 
             // MakeWord_b
             // 

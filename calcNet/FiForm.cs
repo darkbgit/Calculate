@@ -22,9 +22,9 @@ namespace calcNet
             // приводим отправителя к элементу типа LinkLabel
             LinkLabel ll = sender as LinkLabel;
             //MessageBox.Show(ll.Text);
-            if (this.Owner is CilForm main)
+            if (this.Owner != null)
             {
-                main.fi_tb.Text = ll.Text;
+                (Owner.Controls["fi_tb"] as TextBox).Text = ll.Text;
             }
             this.Close();
         }

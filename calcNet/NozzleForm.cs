@@ -37,7 +37,7 @@ namespace calcNet
             {
                 switch (TypeElement)
                 {
-                    case "Cil":
+                    case "cil":
                         {
                             switch(rb.Text)
                             {
@@ -76,7 +76,7 @@ namespace calcNet
 
             switch (TypeElement)
             {
-                case "Cil":
+                case "cil":
                     {
                         if (rb == null || (rb.Checked & rb.Text == "Радиальный"))
                         {
@@ -404,11 +404,11 @@ namespace calcNet
 
                         break;
                     }
-                //case "Kon":
+                //case "kon":
                 //    {
 
                 //    }
-                //case "Ell":
+                //case "ell":
                 //    {
 
                 //    }
@@ -484,7 +484,7 @@ namespace calcNet
             if (this.Owner is CilForm)
             {
                 System.Windows.Forms.MessageBox.Show("Cil");
-                TypeElement = "Cil";
+                TypeElement = "cil";
                 
                 RadioButton placerb_1 = new RadioButton
                 {
@@ -545,15 +545,68 @@ namespace calcNet
                 place_gb.Controls.Add(placerb_3);
                 place_gb.Controls.Add(placerb_4);
                 place_gb.Controls.Add(pn);
+
+                place_pb.Image = (Bitmap)calcNet.Properties.Resources.ResourceManager.GetObject("CylRadial");
             }
             //else if (this.Owner is KonForm)
             //{
             //    TypeElement = "Kon";
             //}
-            //else if (this.Owner is EllForm)
-            //{
-            //    TypeElement = "Ell";
-            //}
+            else if (this.Owner is EllForm)
+            {
+                System.Windows.Forms.MessageBox.Show("ell");
+                TypeElement = "ell";
+
+                RadioButton placerb_1 = new RadioButton
+                {
+                    Text = "Радиальный",
+                    Checked = true,
+                    AutoSize = true,
+                    Location = new System.Drawing.Point(8, 22),
+                    Margin = new System.Windows.Forms.Padding(4, 3, 4, 3),
+                    Name = "placerb_1",
+                    UseVisualStyleBackColor = true,
+                };
+                placerb_1.CheckedChanged += new EventHandler(Place_rb_CheckedChanged);
+                //Size = new System.Drawing.Size(31, 19),
+
+                RadioButton placerb_3 = new RadioButton
+                {
+                    Text = "Смещенный",
+                    AutoSize = true,
+                    Location = new System.Drawing.Point(8, 76),
+                    Margin = new System.Windows.Forms.Padding(4, 3, 4, 3),
+                    Name = "placerb_3",
+                    UseVisualStyleBackColor = true
+                };
+                placerb_3.CheckedChanged += new EventHandler(Place_rb_CheckedChanged);
+                RadioButton placerb_4 = new RadioButton
+                {
+                    Text = "Наклонный",
+                    AutoSize = true,
+                    Location = new System.Drawing.Point(8, 103),
+                    Margin = new System.Windows.Forms.Padding(4, 3, 4, 3),
+                    Name = "placerb_4",
+                    UseVisualStyleBackColor = true
+                };
+                placerb_4.CheckedChanged += new EventHandler(Place_rb_CheckedChanged);
+
+                Panel pn = new Panel
+                {
+                    Name = "pn",
+                    Location = new Point(2, 15),
+                    Size = new Size(300, 310)
+                };
+
+                place_gb.Controls.Add(placerb_1);
+                //place_gb.Controls.Add(placerb_2);
+                place_gb.Controls.Add(placerb_3);
+                place_gb.Controls.Add(placerb_4);
+                place_gb.Controls.Add(pn);
+
+                place_pb.Image = (Bitmap)calcNet.Properties.Resources.ResourceManager.GetObject("EllRadial");
+
+            }
 
             if (this.Owner != null)
             {
@@ -562,6 +615,7 @@ namespace calcNet
                 steel3_cb.Text = Owner.Controls["steel_cb"].Text;
                 p_tb.Text = Owner.Controls["dav_gb"].Controls["p_tb"].Text;
                 t_tb.Text = Owner.Controls["t_tb"].Text;
+                nameEl_tb.Text = Owner.Controls["name_tb"].Text;
                 if (Owner.Controls["dav_gb"].Controls["vn_rb"] is RadioButton rb)
                 {
                     if (rb.Checked)
@@ -586,18 +640,11 @@ namespace calcNet
 
         private void PredCalc_b_Click(object sender, EventArgs e)
         {
-
-        }
-
-        private void Calc_b_Click(object sender, EventArgs e)
-        {
             dataArrEl.Data_In.yk = true;
             Data_in d_in = dataArrEl.Data_In;
             Data_out d_out = dataArrEl.Data_Out;
             DataNozzle_in dN_in = new DataNozzle_in();
-            DataNozzle_out dN_out = new DataNozzle_out();
 
-            //cc = CalcClass.CalcClass()
 
             string data_inerr = "";
 
@@ -658,7 +705,6 @@ namespace calcNet
                     }
                 }
             }
-
 
             //try
             //{
@@ -904,19 +950,19 @@ namespace calcNet
                 data_inerr += "delta2 должен быть в диапазоне 0 - 1\n";
             }
 
-            foreach(Control rb in Controls["vid_gb"].Controls)
+            foreach (Control rb in Controls["vid_gb"].Controls)
             {
                 if (rb is RadioButton && (rb as RadioButton).Checked)
                 {
-                    dN_in.vid = Convert.ToInt32(rb.Text[0]);
+                    dN_in.vid = Convert.ToInt32(rb.Text.First().ToString());
                 }
             }
 
-            foreach (Control rb in Controls["place_gb"].Controls["pn"].Controls)
+            foreach (Control rb in Controls["place_gb"].Controls)
             {
                 if (rb is RadioButton && (rb as RadioButton).Checked)
                 {
-                    dN_in.place = Convert.ToInt32(rb.Name[-1]);
+                    dN_in.place = Convert.ToInt32(rb.Name.Last().ToString());
                     switch (dN_in.place)
                     {
                         case 1:
@@ -930,7 +976,6 @@ namespace calcNet
                     }
                 }
             }
-            
 
             if ((dN_in.cs + dN_in.cs1 > dN_in.s3) & dN_in.s3 > 0)
             {
@@ -940,11 +985,16 @@ namespace calcNet
 
             if (data_inerr == "")
             {
-
-                dN_out = CalcClass.CalcNozzle(d_in, d_out, dN_in);
+                DataNozzle_out dN_out = CalcClass.CalcNozzle(d_in, d_out, dN_in);
+                dataArrEl.DataN_In = dN_in;
+                dataArrEl.DataN_Out = dN_out;
                 d0_l.Text = $"d0={dN_out.d0:f2} мм";
                 p_d_l.Text = $"[p]={dN_out.p_d:f2} МПа";
                 b_l.Text = $"b={dN_out.b:f2} мм";
+                if (dN_out.err != "")
+                {
+                    System.Windows.Forms.MessageBox.Show(dN_out.err);
+                }
                 //#globalvar.elementdatayk.append(dN_in)
                 //#globalvar.elementdatayk.append(data_nozzleout)
                 //globalvar.data_word.append([data_in, data_out, dN_in, data_nozzleout])
@@ -957,6 +1007,37 @@ namespace calcNet
             else
             {
                 System.Windows.Forms.MessageBox.Show(data_inerr);
+            }
+        }
+
+        private void Calc_b_Click(object sender, EventArgs e)
+        {
+            PredCalc_b_Click(sender, e);
+
+            dataArrEl.DataN_In.name = name_tb.Text;
+            
+       
+            if (this.Owner.Owner is MainForm main)
+            {
+                int i;
+                main.Word_lv.Items.Add($"{dataArrEl.Data_In.D} мм, {dataArrEl.Data_In.p} МПа, {dataArrEl.Data_In.temp} C, {dataArrEl.Data_In.met}, yk");
+                i = main.Word_lv.Items.Count - 1;
+                //DataWordOut.DataArr[0].  DataArr .DataOutArr[]. .Value = $"{d_in.D} мм, {d_in.p} МПа, {d_in.temp} C, {d_in.met}";
+                
+                dataArrEl.id = i + 1;
+
+                dataArrEl.Typ = TypeElement + "yk";
+
+             
+
+                DataWordOut.DataArr[i] = dataArrEl;
+                System.Windows.Forms.MessageBox.Show("Calculation complete");
+                this.Hide();
+
+            }
+            else
+            {
+                System.Windows.Forms.MessageBox.Show("MainForm Error");
             }
         }
     }
