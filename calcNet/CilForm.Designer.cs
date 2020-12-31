@@ -170,7 +170,7 @@ namespace calcNet
             this.Gost_cb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Gost_cb.Name = "Gost_cb";
             this.Gost_cb.Size = new System.Drawing.Size(139, 23);
-            this.Gost_cb.TabIndex = 5;
+            this.Gost_cb.TabIndex = 2;
             this.Gost_cb.Tag = "";
             // 
             // t_tb
@@ -179,7 +179,7 @@ namespace calcNet
             this.t_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.t_tb.Name = "t_tb";
             this.t_tb.Size = new System.Drawing.Size(46, 23);
-            this.t_tb.TabIndex = 6;
+            this.t_tb.TabIndex = 3;
             this.t_tb.Text = "50";
             // 
             // label4
@@ -210,7 +210,7 @@ namespace calcNet
             this.vn_rb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.vn_rb.Name = "vn_rb";
             this.vn_rb.Size = new System.Drawing.Size(88, 19);
-            this.vn_rb.TabIndex = 10;
+            this.vn_rb.TabIndex = 5;
             this.vn_rb.TabStop = true;
             this.vn_rb.Text = "внутреннее";
             this.vn_rb.UseVisualStyleBackColor = true;
@@ -223,7 +223,7 @@ namespace calcNet
             this.nar_rb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.nar_rb.Name = "nar_rb";
             this.nar_rb.Size = new System.Drawing.Size(80, 19);
-            this.nar_rb.TabIndex = 11;
+            this.nar_rb.TabIndex = 6;
             this.nar_rb.Text = "наружное";
             this.nar_rb.UseVisualStyleBackColor = true;
             this.nar_rb.CheckedChanged += new System.EventHandler(this.Pressure_rb);
@@ -234,7 +234,7 @@ namespace calcNet
             this.p_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.p_tb.Name = "p_tb";
             this.p_tb.Size = new System.Drawing.Size(46, 23);
-            this.p_tb.TabIndex = 12;
+            this.p_tb.TabIndex = 4;
             this.p_tb.Text = "1";
             // 
             // dav_gb
@@ -249,7 +249,7 @@ namespace calcNet
             this.dav_gb.Name = "dav_gb";
             this.dav_gb.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.dav_gb.Size = new System.Drawing.Size(350, 77);
-            this.dav_gb.TabIndex = 13;
+            this.dav_gb.TabIndex = 4;
             this.dav_gb.TabStop = false;
             // 
             // label6
@@ -279,7 +279,7 @@ namespace calcNet
             this.steel_cb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.steel_cb.Name = "steel_cb";
             this.steel_cb.Size = new System.Drawing.Size(139, 23);
-            this.steel_cb.TabIndex = 15;
+            this.steel_cb.TabIndex = 7;
             // 
             // label8
             // 
@@ -317,7 +317,7 @@ namespace calcNet
             this.fi_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.fi_tb.Name = "fi_tb";
             this.fi_tb.Size = new System.Drawing.Size(46, 23);
-            this.fi_tb.TabIndex = 19;
+            this.fi_tb.TabIndex = 8;
             this.fi_tb.Text = "1";
             // 
             // D_tb
@@ -326,7 +326,7 @@ namespace calcNet
             this.D_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.D_tb.Name = "D_tb";
             this.D_tb.Size = new System.Drawing.Size(46, 23);
-            this.D_tb.TabIndex = 20;
+            this.D_tb.TabIndex = 9;
             this.D_tb.Text = "1000";
             // 
             // l_tb
@@ -336,7 +336,7 @@ namespace calcNet
             this.l_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.l_tb.Name = "l_tb";
             this.l_tb.Size = new System.Drawing.Size(46, 23);
-            this.l_tb.TabIndex = 21;
+            this.l_tb.TabIndex = 10;
             // 
             // c1_tb
             // 
@@ -344,7 +344,7 @@ namespace calcNet
             this.c1_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.c1_tb.Name = "c1_tb";
             this.c1_tb.Size = new System.Drawing.Size(46, 23);
-            this.c1_tb.TabIndex = 22;
+            this.c1_tb.TabIndex = 11;
             this.c1_tb.Text = "1";
             // 
             // c2_tb
@@ -353,7 +353,7 @@ namespace calcNet
             this.c2_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.c2_tb.Name = "c2_tb";
             this.c2_tb.Size = new System.Drawing.Size(46, 23);
-            this.c2_tb.TabIndex = 23;
+            this.c2_tb.TabIndex = 12;
             this.c2_tb.Text = "1";
             // 
             // c3_tb
@@ -362,7 +362,7 @@ namespace calcNet
             this.c3_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.c3_tb.Name = "c3_tb";
             this.c3_tb.Size = new System.Drawing.Size(46, 23);
-            this.c3_tb.TabIndex = 24;
+            this.c3_tb.TabIndex = 13;
             // 
             // c_tb
             // 
@@ -370,7 +370,7 @@ namespace calcNet
             this.c_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.c_tb.Name = "c_tb";
             this.c_tb.Size = new System.Drawing.Size(46, 23);
-            this.c_tb.TabIndex = 25;
+            this.c_tb.TabIndex = 14;
             // 
             // label9
             // 
@@ -471,7 +471,7 @@ namespace calcNet
             this.s_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.s_tb.Name = "s_tb";
             this.s_tb.Size = new System.Drawing.Size(46, 23);
-            this.s_tb.TabIndex = 35;
+            this.s_tb.TabIndex = 15;
             this.s_tb.Text = "6";
             // 
             // label18
@@ -782,7 +782,7 @@ namespace calcNet
             this.predCalc_b.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.predCalc_b.Name = "predCalc_b";
             this.predCalc_b.Size = new System.Drawing.Size(130, 42);
-            this.predCalc_b.TabIndex = 49;
+            this.predCalc_b.TabIndex = 16;
             this.predCalc_b.Text = "Предварительный\r\nрасчет";
             this.predCalc_b.UseVisualStyleBackColor = true;
             this.predCalc_b.Click += new System.EventHandler(this.PredCalc_b_Click);
@@ -793,7 +793,7 @@ namespace calcNet
             this.calc_b.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.calc_b.Name = "calc_b";
             this.calc_b.Size = new System.Drawing.Size(88, 27);
-            this.calc_b.TabIndex = 50;
+            this.calc_b.TabIndex = 17;
             this.calc_b.Text = "Расчет";
             this.calc_b.UseVisualStyleBackColor = true;
             this.calc_b.Click += new System.EventHandler(this.Calc_b_Click);
@@ -804,7 +804,7 @@ namespace calcNet
             this.cancel_b.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cancel_b.Name = "cancel_b";
             this.cancel_b.Size = new System.Drawing.Size(88, 27);
-            this.cancel_b.TabIndex = 51;
+            this.cancel_b.TabIndex = 18;
             this.cancel_b.Text = "Cancel";
             this.cancel_b.UseVisualStyleBackColor = true;
             this.cancel_b.Click += new System.EventHandler(this.Cancel_b_Click);

@@ -813,6 +813,7 @@ namespace calcNet
             this.Controls.Add(this.label1);
             this.Name = "EllForm";
             this.Text = "EllForm";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.EllForm_FormClosing);
             this.Load += new System.EventHandler(this.EllForm_Load);
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
@@ -860,7 +861,6 @@ namespace calcNet
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TextBox c_tb;
-        private System.Windows.Forms.TextBox c3_tb;
         private System.Windows.Forms.TextBox c2_tb;
         private System.Windows.Forms.TextBox c1_tb;
         internal System.Windows.Forms.TextBox fi_tb;
@@ -890,5 +890,6 @@ namespace calcNet
         internal System.Windows.Forms.TextBox D_tb;
         internal System.Windows.Forms.TextBox h1_tb;
         internal System.Windows.Forms.TextBox s_tb;
+        internal System.Windows.Forms.TextBox c3_tb;
     }
 }

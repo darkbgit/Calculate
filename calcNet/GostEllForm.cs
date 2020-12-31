@@ -131,6 +131,7 @@ namespace calcNet
                 ef.H_tb.Text = H_tb.Text;
                 ef.h1_tb.Text = h1_tb.Text;
                 ef.s_tb.Text = s_cb.Text;
+                ef.c3_tb.Text = Convert.ToString(Convert.ToInt32(s_cb.Text) * 0.15);
             }
             this.Close();
         }

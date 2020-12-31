@@ -66,8 +66,453 @@ namespace calcNet
 
                             break;
                         }
+                    case "ell":
+                        {
+                            switch (rb.Text)
+                            {
+                                case "Радиальный":
+                                    {
+                                        if (Controls["place_gb"].Controls["corPn"] == null || (Controls["place_gb"].Controls["corPn"].Controls["placePolar_rb"] as RadioButton).Checked == true)
+                                        {
+                                            place_pb.Image = (Bitmap)calcNet.Properties.Resources.EllRadial;
+                                        }
+                                        else if ((Controls["place_gb"].Controls["corPn"].Controls["placeDekart_rb"] as RadioButton).Checked == true)
+                                        {
+                                            place_pb.Image = (Bitmap)calcNet.Properties.Resources.EllRadialDekart;
+                                        }
+                                            break;
+                                    }
+                                case "Смещенный":
+                                    {
+                                        if (Controls["place_gb"].Controls["corPn"] == null || (Controls["place_gb"].Controls["corPn"].Controls["placePolar_rb"] as RadioButton).Checked == true)
+                                        {
+                                            place_pb.Image = (Bitmap)calcNet.Properties.Resources.EllVert;
+                                        }
+                                        else if ((Controls["place_gb"].Controls["corPn"].Controls["placeDekart_rb"] as RadioButton).Checked == true)
+                                        {
+                                            place_pb.Image = (Bitmap)calcNet.Properties.Resources.EllVertDekart;
+                                        }
+                                        break;
+                                    }
+                                case "Наклонный":
+                                    {
+                                        if (Controls["place_gb"].Controls["corPn"] == null || (Controls["place_gb"].Controls["corPn"].Controls["placePolar_rb"] as RadioButton).Checked == true)
+                                        {
+                                            place_pb.Image = (Bitmap)calcNet.Properties.Resources.EllTilted;
+                                        }
+                                        else if ((Controls["place_gb"].Controls["corPn"].Controls["placeDekart_rb"] as RadioButton).Checked == true)
+                                        {
+                                            place_pb.Image = (Bitmap)calcNet.Properties.Resources.EllTiltedDekart;
+                                        }
+                                        break;
+                                    }
+                            }
+                            Place_Draw(sender);
+                            break;
+                        }
                 }
             }
+        }
+
+        private void PlaceCoordinat_rb_CheckedChanged(object sender, EventArgs e)
+        {
+            RadioButton rb = sender as RadioButton;
+            if (rb == null || (rb.Checked && rb.Text == "Полярная"))
+            {
+                place_pb.Image = (Bitmap)calcNet.Properties.Resources.EllRadial;
+            }
+
+            Place_Draw(sender);
+        }
+
+        private void EllRadialDraw()
+        {
+            place_gb.Controls["pn"].Dispose();
+            Panel pn = new Panel
+            {
+                Name = "pn",
+                Location = new Point(2, 15),
+                Size = new Size(300, 310)
+            };
+            
+             Label lab_1_1 = new Label
+            {
+                AutoSize = true,
+                Text = "Смещение, Rш:",
+                Location = new System.Drawing.Point(8, 130)
+            };
+            TextBox tb1 = new TextBox
+            {
+                Name = "Rsh_tb",
+                Size = new Size(100, 20),
+                Location = new System.Drawing.Point(8, 150)
+            };
+            Label lab_1_2 = new Label
+            {
+                Text = "мм",
+                Location = new System.Drawing.Point(115, 154)
+            };
+
+            Label lab_2_1 = new Label
+            {
+                AutoSize = true,
+                Text = "Угол смещения оси, θ:",
+                Location = new System.Drawing.Point(8, 175)
+            };
+            TextBox tb2 = new TextBox
+            {
+                Name = "theta_tb",
+                Size = new Size(100, 20),
+                Location = new System.Drawing.Point(8, 195)
+            };
+            Label lab_2_2 = new Label
+            {
+                Text = "°",
+                Location = new System.Drawing.Point(115, 199)
+            };
+            
+            place_pb.Image = (Bitmap)calcNet.Properties.Resources.EllRadial;
+          
+
+            place_gb.Controls.Add(pn);
+
+            place_gb.Controls["pn"].Controls.Add(lab_1_1);
+            place_gb.Controls["pn"].Controls.Add(tb1);
+            place_gb.Controls["pn"].Controls.Add(lab_1_2);
+            place_gb.Controls["pn"].Controls.Add(lab_2_1);
+            place_gb.Controls["pn"].Controls.Add(tb2);
+            place_gb.Controls["pn"].Controls.Add(lab_2_2);
+        }
+
+        private void EllRadialDekartDraw()
+        {
+            place_gb.Controls["pn"].Dispose();
+            Panel pn = new Panel
+            {
+                Name = "pn",
+                Location = new Point(2, 15),
+                Size = new Size(300, 310)
+            };
+
+            Label lab_1_1 = new Label
+            {
+                AutoSize = true,
+                Text = "Координата, x0:",
+                Location = new System.Drawing.Point(8, 130)
+            };
+            TextBox tb1 = new TextBox
+            {
+                Name = "x0_tb",
+                Size = new Size(100, 20),
+                Location = new System.Drawing.Point(8, 150)
+            };
+            Label lab_1_2 = new Label
+            {
+                Text = "мм",
+                Location = new System.Drawing.Point(115, 154)
+            };
+
+            Label lab_2_1 = new Label
+            {
+                AutoSize = true,
+                Text = "Координата, y0:",
+                Location = new System.Drawing.Point(8, 175)
+            };
+            TextBox tb2 = new TextBox
+            {
+                Name = "y0_tb",
+                Size = new Size(100, 20),
+                Location = new System.Drawing.Point(8, 195)
+            };
+            Label lab_2_2 = new Label
+            {
+                Text = "мм",
+                Location = new System.Drawing.Point(115, 199)
+            };
+            place_pb.Image = (Bitmap)calcNet.Properties.Resources.EllRadialDekart;
+        
+
+            place_gb.Controls.Add(pn);
+
+            place_gb.Controls["pn"].Controls.Add(lab_1_1);
+            place_gb.Controls["pn"].Controls.Add(tb1);
+            place_gb.Controls["pn"].Controls.Add(lab_1_2);
+            place_gb.Controls["pn"].Controls.Add(lab_2_1);
+            place_gb.Controls["pn"].Controls.Add(tb2);
+            place_gb.Controls["pn"].Controls.Add(lab_2_2);
+        }
+
+        private void EllVertDraw()
+        {
+            place_gb.Controls["pn"].Dispose();
+            Panel pn = new Panel
+            {
+                Name = "pn",
+                Location = new Point(2, 15),
+                Size = new Size(300, 310)
+            };
+
+            Label lab_1_1 = new Label
+            {
+                AutoSize = true,
+                Text = "Смещение, Rш:",
+                Location = new System.Drawing.Point(8, 130)
+            };
+            TextBox tb1 = new TextBox
+            {
+                Name = "Rsh_tb",
+                Size = new Size(100, 20),
+                Location = new System.Drawing.Point(8, 150)
+            };
+            Label lab_1_2 = new Label
+            {
+                Text = "мм",
+                Location = new System.Drawing.Point(115, 154)
+            };
+
+            Label lab_2_1 = new Label
+            {
+                AutoSize = true,
+                Text = "Угол смещения оси, θ:",
+                Location = new System.Drawing.Point(8, 175)
+            };
+            TextBox tb2 = new TextBox
+            {
+                Name = "theta_tb",
+                Size = new Size(100, 20),
+                Location = new System.Drawing.Point(8, 195)
+            };
+            Label lab_2_2 = new Label
+            {
+                Text = "°",
+                Location = new System.Drawing.Point(115, 199)
+            };
+            place_pb.Image = (Bitmap)calcNet.Properties.Resources.EllVert;
+
+            place_gb.Controls.Add(pn);
+
+            place_gb.Controls["pn"].Controls.Add(lab_1_1);
+            place_gb.Controls["pn"].Controls.Add(tb1);
+            place_gb.Controls["pn"].Controls.Add(lab_1_2);
+            place_gb.Controls["pn"].Controls.Add(lab_2_1);
+            place_gb.Controls["pn"].Controls.Add(tb2);
+            place_gb.Controls["pn"].Controls.Add(lab_2_2);
+        }
+
+        private void EllVertDekartDraw()
+        {
+            place_gb.Controls["pn"].Dispose();
+            Panel pn = new Panel
+            {
+                Name = "pn",
+                Location = new Point(2, 15),
+                Size = new Size(300, 310)
+            };
+
+            Label lab_1_1 = new Label
+            {
+                AutoSize = true,
+                Text = "Координата, x0:",
+                Location = new System.Drawing.Point(8, 130)
+            };
+            TextBox tb1 = new TextBox
+            {
+                Name = "x0_tb",
+                Size = new Size(100, 20),
+                Location = new System.Drawing.Point(8, 150)
+            };
+            Label lab_1_2 = new Label
+            {
+                Text = "мм",
+                Location = new System.Drawing.Point(115, 154)
+            };
+
+            Label lab_2_1 = new Label
+            {
+                AutoSize = true,
+                Text = "Координата, y0:",
+                Location = new System.Drawing.Point(8, 175)
+            };
+            TextBox tb2 = new TextBox
+            {
+                Name = "y0_tb",
+                Size = new Size(100, 20),
+                Location = new System.Drawing.Point(8, 195)
+            };
+            Label lab_2_2 = new Label
+            {
+                Text = "мм",
+                Location = new System.Drawing.Point(115, 199)
+            };
+            place_pb.Image = (Bitmap)calcNet.Properties.Resources.EllVertDekart;
+
+
+            place_gb.Controls.Add(pn);
+
+            place_gb.Controls["pn"].Controls.Add(lab_1_1);
+            place_gb.Controls["pn"].Controls.Add(tb1);
+            place_gb.Controls["pn"].Controls.Add(lab_1_2);
+            place_gb.Controls["pn"].Controls.Add(lab_2_1);
+            place_gb.Controls["pn"].Controls.Add(tb2);
+            place_gb.Controls["pn"].Controls.Add(lab_2_2);
+        }
+
+        private void EllTiltedDraw()
+        {
+            place_gb.Controls["pn"].Dispose();
+            Panel pn = new Panel
+            {
+                Name = "pn",
+                Location = new Point(2, 15),
+                Size = new Size(300, 310)
+            };
+
+            Label lab_1_1 = new Label
+            {
+                AutoSize = true,
+                Text = "Смещение, Rш:",
+                Location = new System.Drawing.Point(8, 130)
+            };
+            TextBox tb1 = new TextBox
+            {
+                Name = "Rsh_tb",
+                Size = new Size(100, 20),
+                Location = new System.Drawing.Point(8, 150)
+            };
+            Label lab_1_2 = new Label
+            {
+                Text = "мм",
+                Location = new System.Drawing.Point(115, 154)
+            };
+
+            Label lab_2_1 = new Label
+            {
+                AutoSize = true,
+                Text = "Угол смещения оси, θ:",
+                Location = new System.Drawing.Point(8, 175)
+            };
+            TextBox tb2 = new TextBox
+            {
+                Name = "theta_tb",
+                Size = new Size(100, 20),
+                Location = new System.Drawing.Point(8, 195)
+            };
+            Label lab_2_2 = new Label
+            {
+                Text = "°",
+                Location = new System.Drawing.Point(115, 199)
+            };
+
+            Label lab_3_1 = new Label
+            {
+                AutoSize = true,
+                Text = "Угол наклона оси, γ:",
+                Location = new System.Drawing.Point(8, 220)
+            };
+            TextBox tb3 = new TextBox
+            {
+                Name = "gamma_tb",
+                Size = new Size(100, 20),
+                Location = new System.Drawing.Point(8, 240)
+            };
+            Label lab_3_2 = new Label
+            {
+                Text = "°",
+                Location = new System.Drawing.Point(115, 244)
+            };
+
+            place_pb.Image = (Bitmap)calcNet.Properties.Resources.EllTilted;
+
+            place_gb.Controls.Add(pn);
+
+            place_gb.Controls["pn"].Controls.Add(lab_1_1);
+            place_gb.Controls["pn"].Controls.Add(tb1);
+            place_gb.Controls["pn"].Controls.Add(lab_1_2);
+            place_gb.Controls["pn"].Controls.Add(lab_2_1);
+            place_gb.Controls["pn"].Controls.Add(tb2);
+            place_gb.Controls["pn"].Controls.Add(lab_2_2);
+            place_gb.Controls["pn"].Controls.Add(lab_3_1);
+            place_gb.Controls["pn"].Controls.Add(tb3);
+            place_gb.Controls["pn"].Controls.Add(lab_3_2);
+        }
+
+        private void EllTiltedDekartDraw()
+        {
+            place_gb.Controls["pn"].Dispose();
+            Panel pn = new Panel
+            {
+                Name = "pn",
+                Location = new Point(2, 15),
+                Size = new Size(300, 310)
+            };
+
+            Label lab_1_1 = new Label
+            {
+                AutoSize = true,
+                Text = "Координата, x0:",
+                Location = new System.Drawing.Point(8, 130)
+            };
+            TextBox tb1 = new TextBox
+            {
+                Name = "x0_tb",
+                Size = new Size(100, 20),
+                Location = new System.Drawing.Point(8, 150)
+            };
+            Label lab_1_2 = new Label
+            {
+                Text = "мм",
+                Location = new System.Drawing.Point(115, 154)
+            };
+
+            Label lab_2_1 = new Label
+            {
+                AutoSize = true,
+                Text = "Координата, y0:",
+                Location = new System.Drawing.Point(8, 175)
+            };
+            TextBox tb2 = new TextBox
+            {
+                Name = "y0_tb",
+                Size = new Size(100, 20),
+                Location = new System.Drawing.Point(8, 195)
+            };
+            Label lab_2_2 = new Label
+            {
+                Text = "мм",
+                Location = new System.Drawing.Point(115, 199)
+            };
+
+            Label lab_3_1 = new Label
+            {
+                AutoSize = true,
+                Text = "Угол наклона оси, γ:",
+                Location = new System.Drawing.Point(8, 220)
+            };
+            TextBox tb3 = new TextBox
+            {
+                Name = "gamma_tb",
+                Size = new Size(100, 20),
+                Location = new System.Drawing.Point(8, 240)
+            };
+            Label lab_3_2 = new Label
+            {
+                Text = "°",
+                Location = new System.Drawing.Point(115, 244)
+            };
+            place_pb.Image = (Bitmap)calcNet.Properties.Resources.EllTiltedDekart;
+
+
+            place_gb.Controls.Add(pn);
+
+            place_gb.Controls["pn"].Controls.Add(lab_1_1);
+            place_gb.Controls["pn"].Controls.Add(tb1);
+            place_gb.Controls["pn"].Controls.Add(lab_1_2);
+            place_gb.Controls["pn"].Controls.Add(lab_2_1);
+            place_gb.Controls["pn"].Controls.Add(tb2);
+            place_gb.Controls["pn"].Controls.Add(lab_2_2);
+            place_gb.Controls["pn"].Controls.Add(lab_3_1);
+            place_gb.Controls["pn"].Controls.Add(tb3);
+            place_gb.Controls["pn"].Controls.Add(lab_3_2);
         }
 
         private void Place_Draw(object sender)
@@ -78,7 +523,7 @@ namespace calcNet
             {
                 case "cil":
                     {
-                        if (rb == null || (rb.Checked & rb.Text == "Радиальный"))
+                        if (rb == null || (rb.Checked && rb.Text == "Радиальный"))
                         {
                             place_gb.Controls["pn"].Dispose();
                             Panel pn = new Panel
@@ -131,9 +576,11 @@ namespace calcNet
                             place_gb.Controls["pn"].Controls.Add(lab_2_1);
                             place_gb.Controls["pn"].Controls.Add(tb2);
                             place_gb.Controls["pn"].Controls.Add(lab_2_2);
+
+
                         }
 
-                        else if (rb.Checked & rb.Text == "В плоскости\nпопер. сечения")
+                        else if (rb.Checked && rb.Text == "В плоскости\nпопер. сечения")
                         {
                             place_gb.Controls["pn"].Dispose();
                             Panel pn = new Panel
@@ -229,7 +676,7 @@ namespace calcNet
                             place_gb.Controls["pn"].Controls.Add(lab_4_2);
                         }
 
-                        else if (rb.Checked & rb.Text == "Смещенный")
+                        else if (rb.Checked && rb.Text == "Смещенный")
                         {
                             place_gb.Controls["pn"].Dispose();
                             Panel pn = new Panel
@@ -306,7 +753,7 @@ namespace calcNet
                             place_gb.Controls["pn"].Controls.Add(lab_3_2);
                         }
 
-                        else if (rb.Checked & rb.Text == "Наклонный")
+                        else if (rb.Checked && rb.Text == "Наклонный")
                         {
                             place_gb.Controls["pn"].Dispose();
                             Panel pn = new Panel
@@ -408,10 +855,78 @@ namespace calcNet
                 //    {
 
                 //    }
-                //case "ell":
-                //    {
+                case "ell":
+                    {
+                        if (rb == null || (rb.Checked && rb.Text == "Радиальный"))
+                        {
+                            if (Controls["place_gb"].Controls["corPn"] == null || (Controls["place_gb"].Controls["corPn"].Controls["placePolar_rb"] as RadioButton).Checked == true)
+                            {
+                                EllRadialDraw();
+                            }
+                            else if ((Controls["place_gb"].Controls["corPn"].Controls["placeDekart_rb"] as RadioButton).Checked == true)
+                            {
+                                EllRadialDekartDraw();
+                            }
+                        }
 
-                //    }
+                        else if (rb.Checked & rb.Text == "Смещенный")
+                        {
+                            if (Controls["place_gb"].Controls["corPn"] == null || (Controls["place_gb"].Controls["corPn"].Controls["placePolar_rb"] as RadioButton).Checked == true)
+                            {
+                                EllVertDraw();
+                            }
+                            else if ((Controls["place_gb"].Controls["corPn"].Controls["placeDekart_rb"] as RadioButton).Checked == true)
+                            {
+                                EllVertDekartDraw();
+                            }
+                        }
+
+                        else if (rb.Checked & rb.Text == "Наклонный")
+                        {
+                            if (Controls["place_gb"].Controls["corPn"] == null || (Controls["place_gb"].Controls["corPn"].Controls["placePolar_rb"] as RadioButton).Checked == true)
+                            {
+                                EllTiltedDraw();
+                            }
+                            else if ((Controls["place_gb"].Controls["corPn"].Controls["placeDekart_rb"] as RadioButton).Checked == true)
+                            {
+                                EllTiltedDekartDraw();
+                            }
+                        }
+                        
+                        else if (rb == null || (rb.Checked && rb.Text == "Полярная"))
+                        {
+                            if (Controls["place_gb"] == null || (Controls["place_gb"].Controls["placerb_1"] as RadioButton).Checked == true)
+                            {
+                                EllRadialDraw();
+                            }
+                            else if ((Controls["place_gb"].Controls["placerb_3"] as RadioButton).Checked == true)
+                            {
+                                EllVertDraw();
+                            }
+                            else if ((Controls["place_gb"].Controls["placerb_4"] as RadioButton).Checked == true)
+                            {
+                                EllTiltedDraw();
+                            }
+                        }
+
+                        else if (rb.Checked && rb.Text == "Декартова")
+                        {
+                            if (Controls["place_gb"] == null || (Controls["place_gb"].Controls["placerb_1"] as RadioButton).Checked == true)
+                            {
+                                EllRadialDekartDraw();
+                            }
+                            else if ((Controls["place_gb"].Controls["placerb_3"] as RadioButton).Checked == true)
+                            {
+                                EllVertDekartDraw();
+                            }
+                            else if ((Controls["place_gb"].Controls["placerb_4"] as RadioButton).Checked == true)
+                            {
+                                EllTiltedDekartDraw();
+                            }
+                        }
+
+                        break;
+                    }
 
 
 
@@ -562,7 +1077,7 @@ namespace calcNet
                     Text = "Радиальный",
                     Checked = true,
                     AutoSize = true,
-                    Location = new System.Drawing.Point(8, 22),
+                    Location = new System.Drawing.Point(8, 30),
                     Margin = new System.Windows.Forms.Padding(4, 3, 4, 3),
                     Name = "placerb_1",
                     UseVisualStyleBackColor = true,
@@ -574,7 +1089,7 @@ namespace calcNet
                 {
                     Text = "Смещенный",
                     AutoSize = true,
-                    Location = new System.Drawing.Point(8, 76),
+                    Location = new System.Drawing.Point(8, 50),
                     Margin = new System.Windows.Forms.Padding(4, 3, 4, 3),
                     Name = "placerb_3",
                     UseVisualStyleBackColor = true
@@ -584,7 +1099,7 @@ namespace calcNet
                 {
                     Text = "Наклонный",
                     AutoSize = true,
-                    Location = new System.Drawing.Point(8, 103),
+                    Location = new System.Drawing.Point(8, 70),
                     Margin = new System.Windows.Forms.Padding(4, 3, 4, 3),
                     Name = "placerb_4",
                     UseVisualStyleBackColor = true
@@ -595,7 +1110,7 @@ namespace calcNet
                 {
                     Name = "pn",
                     Location = new Point(2, 15),
-                    Size = new Size(300, 310)
+                    Size = new Size(400, 310)
                 };
 
                 place_gb.Controls.Add(placerb_1);
@@ -604,6 +1119,51 @@ namespace calcNet
                 place_gb.Controls.Add(placerb_4);
                 place_gb.Controls.Add(pn);
 
+                RadioButton placeDekart_rb = new RadioButton
+                {
+                    Text = "Декартова",
+                    AutoSize = true,
+                    Location = new System.Drawing.Point(210, 15),
+                    Margin = new System.Windows.Forms.Padding(4, 3, 4, 3),
+                    Name = "placeDekart_rb",
+                    UseVisualStyleBackColor = true
+                };
+                placeDekart_rb.CheckedChanged += new EventHandler(PlaceCoordinat_rb_CheckedChanged);
+                //Size = new System.Drawing.Size(31, 19),
+
+                RadioButton placePolar_rb = new RadioButton
+                {
+                    Text = "Полярная",
+                    Checked = true,
+                    AutoSize = true,
+                    Location = new System.Drawing.Point(125, 15),
+                    Margin = new System.Windows.Forms.Padding(4, 3, 4, 3),
+                    Name = "placePolar_rb",
+                    UseVisualStyleBackColor = true
+                };
+                placePolar_rb.CheckedChanged += new EventHandler(PlaceCoordinat_rb_CheckedChanged);
+
+                Label corL = new Label
+                {
+                    Text = "Система координат:",
+                    AutoSize = true,
+                    Location = new Point(0, 15)
+                };
+
+                Panel corPn = new Panel
+                {
+                    Name = "corPn",
+                    Location = new Point(110, 10),
+                    Size = new Size(300, 35)
+                };
+
+                corPn.Controls.Add(corL);
+                corPn.Controls.Add(placeDekart_rb);
+                corPn.Controls.Add(placePolar_rb);
+
+                place_gb.Controls.Add(corPn);
+
+                place_pb.Location = new Point(place_pb.Location.X, place_pb.Location.Y + 35);
                 place_pb.Image = (Bitmap)calcNet.Properties.Resources.ResourceManager.GetObject("EllRadial");
 
             }
