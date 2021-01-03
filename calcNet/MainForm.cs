@@ -22,23 +22,10 @@ namespace calcNet
         public CilForm cf = null;
         public NozzleForm nf = null;
         public EllForm ef = null;
+        // TODO: KonForm 
         
 
-        private void Cil_b_Click(object sender, EventArgs e)
-        {
-            //CilForm cf = (CilForm) Application.OpenForms["CilForm"]; // создаем
-            if (cf == null)
-            {
-                //cf.Dispose();
-                cf = new CilForm { Owner = this };
-                cf.Show();
-            }
-            else
-            {
-                cf.Owner = this;
-                cf.Show();
-            }
-        }
+
 
         private void MakeWord_b_Click(object sender, EventArgs e)
         {
@@ -63,7 +50,6 @@ namespace calcNet
                 {
                     System.IO.File.Copy("temp.docx", f);
                 }
-                //MakeWord mw = new MakeWord();
 
                 try
                 {
@@ -94,7 +80,6 @@ namespace calcNet
                             }
                         }
                     }
-                    //mw.MakeWord_cil(DataWordOut.Data_In, DataWordOut.Data_Out, "1.docx");
                     System.Windows.Forms.MessageBox.Show("OK");
                 }
                 catch
@@ -111,11 +96,26 @@ namespace calcNet
             
         }
 
+        private void Cil_b_Click(object sender, EventArgs e)
+        {
+            //CilForm cf = (CilForm) Application.OpenForms["CilForm"]; // создаем
+            if (cf == null)
+            {
+                //cf.Dispose();
+                cf = new CilForm { Owner = this };
+                cf.Show();
+            }
+            else
+            {
+                cf.Owner = this;
+                cf.Show();
+            }
+        }
+
         private void Kon_b_Click(object sender, EventArgs e)
         {
             if (nf == null)
             {
-                //cf.Dispose();
                 nf = new NozzleForm { Owner = this };
                 nf.Show();
             }
@@ -130,7 +130,6 @@ namespace calcNet
         {
             if (ef == null)
             {
-                //cf.Dispose();
                 ef = new EllForm { Owner = this };
                 ef.Show();
             }

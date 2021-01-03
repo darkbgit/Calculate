@@ -45,7 +45,7 @@ namespace calcNet
             table.InsertRow(i);
             table.Rows[i].Cells[0].Paragraphs[0].Append("Внутренний диаметр обечайки, D:");
             table.Rows[i].Cells[1].Paragraphs[0].Append($"{d_in.D} мм");
-            i += 1;
+            i++;
             if (d_in.dav == 1)
             {
                 table.InsertRow(i);
@@ -1087,5 +1087,7 @@ namespace calcNet
             }
             doc.Save();
         }
+
+
     }
 }

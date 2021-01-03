@@ -67,14 +67,8 @@ namespace calcNet
                             //6(oval) - овальное отверстие штуцер перпендикулярно расположен к поверхности обечайки
                             //7(otbort, torob) - перпендикулярно расположенного к поверхности обечайки или днища штуцера с круглым поперечным сечением при наличии отбортовки или торообразной вставки
         internal string name;
-        internal string steel1;
-        internal string steel2;
-        internal string steel3;
-        internal string steel4;
-        internal double sigma_d1;
-        internal double sigma_d2;
-        internal double sigma_d3;
-        internal double sigma_d4;
+        internal string steel1, steel2, steel3, steel4;
+        internal double sigma_d1, sigma_d2, sigma_d3, sigma_d4;
         internal int E1;
         internal int E2;
         internal int E3;
@@ -108,9 +102,7 @@ namespace calcNet
 
     class DataNozzle_out
     {
-        internal double p_d;
-        internal double p_dp;
-        internal double p_de;
+        internal double p_d, p_dp, p_de;
         internal double Dp;
         internal double dp;
         internal double d0p;
@@ -181,66 +173,8 @@ namespace calcNet
 
     class DataSaddle_out
     {
-        internal double q;
-        internal double M0;
-        internal double p_d;
-        internal double F1;
-        internal double F2;
-        internal double F_d;
-        internal double M1;
-        internal double M2;
-        internal double M12;
-        internal double M_d;
-        internal double Q1;
-        internal double Q2;
-        internal double Q_d;
-        internal double B1;
-        internal double B1_2;
-        internal double yslproch1_1;
-        internal double yslproch1_2;
-        internal double yslproch2;
-        internal double yslystoich1;
-        internal double yslystoich2;
-        internal double K9;
-        internal double K9_1;
-        internal double y;
-        internal double x;
-        internal double gamma;
-        internal double beta1;
-        internal double K10;
-        internal double K10_1;
-        internal double K11;
-        internal double K12;
-        internal double K13;
-        internal double K14;
-        internal double K15;
-        internal double K15_2;
-        internal double K16;
-        internal double K17;
-        internal double sigma_mx;
-        internal double F_d2;
-        internal double F_d3;
-        internal double v1_2;
-        internal double v1_3;
-        internal double v21_2;
-        internal double v21_3 = 0;
-        internal double v22_2;
-        internal double v22_3;
-        internal double K2;
-        internal double K1_2;
-        internal double K1_21;
-        internal double K1_22;
-        internal double K1_3;
-        internal double K1_31;
-        internal double K1_32;
-        internal double sigmai2;
-        internal double sigmai2_1;
-        internal double sigmai2_2;
-        internal double sigmai3;
-        internal double sigmai3_1;
-        internal double sigmai3_2;
-        internal double Fe;
-        internal double sef;
+        internal double q, M0, p_d, F1, F2, F_d, M1, M2, M12, M_d, Q1, Q2, Q_d, B1, B1_2, yslproch1_1, yslproch1_2, yslproch2, yslystoich1, yslystoich2, K9, K9_1, y, x, gamma, beta1, K10, K10_1, K11, K12, K13, K14, K15, K15_2, K16, K17, sigma_mx, F_d2, F_d3, v1_2, v1_3, v21_2, v21_3 = 0, v22_2, v22_3, K2, K1_2, K1_21, K1_22, K1_3, K1_31, K1_32, sigmai2, sigmai2_1, sigmai2_2, sigmai3, sigmai3_1, sigmai3_2, Fe, sef;
+        internal string err = "";
     }
 
     class DataHeat_in
@@ -799,7 +733,7 @@ namespace calcNet
             DataSaddle_out d_out = new DataSaddle_out();
 
             d_out.M_d = (0.0000089 * d_in.E) / d_in.ny * Math.Pow(d_in.D, 3) * Math.Pow((100 * (d_in.s - d_in.c)) / d_in.D, 2.5);
-            //проверить формулу для расчета [F]
+            // UNDONE: проверить формулу для расчета [F]
             d_out.F_d = (0.0000031 * d_in.E) / d_in.ny * Math.Pow(d_in.D, 2) * Math.Pow((100 * (d_in.s - d_in.c)) / d_in.D, 2.5);
             d_out.Q_d = (2.4 * d_in.E * Math.Pow(d_in.s - d_in.c, 2)) / d_in.ny * (0.18 + 3.3 * d_in.D * (d_in.s - d_in.c)) / Math.Pow(d_in.L, 2);
             d_out.B1_2 = 9.45 * (d_in.D / d_in.L) * Math.Sqrt(d_in.D / (100 * (d_in.s - d_in.c)));
@@ -824,6 +758,10 @@ namespace calcNet
                 d_out.K9 = Math.Max(d_out.K9_1, 1);
                 d_out.yslproch1_1 = d_in.p * d_in.D / (4 * (d_in.s - d_in.c)) + 4 * d_out.M12 * d_out.K9 / (Math.PI * Math.Pow(d_in.D, 2) * (d_in.s - d_in.c));
                 d_out.yslproch1_2 = d_in.sigma_d * d_in.fi;
+                if (d_out.yslproch1_1 > d_out.yslproch1_2)
+                {
+                    d_out.err += "Несущая способность обечайки в сечении между опорами. Условие прочности не выполняется\n";
+                }
                 if (d_in.dav == 0)
                 {
                     d_out.yslystoich1 = d_out.M12 / d_out.M_d;
@@ -831,6 +769,10 @@ namespace calcNet
                 else if (d_in.dav == 1)
                 {
                     d_out.yslystoich1 = d_in.p / d_out.p_d + d_out.M12 / d_out.M_d;
+                }
+                if (d_out.yslystoich1 >1)
+                {
+                    d_out.err += "Несущая способность обечайки в сечении между опорами. Условие устойчивости не выполняется\n";
                 }
             }
             switch (d_in.type)
@@ -855,7 +797,7 @@ namespace calcNet
                         d_out.v1_3 = -0.53 * d_out.K11 / (d_out.K14 * d_out.K16 * d_out.K17 * Math.Sin(0.5 * Math.PI * 180 * d_in.delta1));
 
 
-                        d_out.K2 = 1.25; //# добавить для условий монтажа
+                        d_out.K2 = 1.25; // TODO: добавить для условий монтажа
                         d_out.v21_2 = -d_out.sigma_mx / (d_out.K2 * d_in.sigma_d);
                         d_out.v21_3 = 0;
                         d_out.v22_2 = (d_in.p * d_in.D / (4 * (d_in.s - d_in.c)) - d_out.sigma_mx) / (d_out.K2 * d_in.sigma_d);
@@ -880,6 +822,14 @@ namespace calcNet
                         d_out.F_d2 = 0.7 * d_out.sigmai2 * (d_in.s - d_in.c) * Math.Sqrt(d_in.D * (d_in.s - d_in.c)) / (d_out.K10 * d_out.K12);
                         d_out.F_d3 = 0.9 * d_out.sigmai3 * (d_in.s - d_in.c) * Math.Sqrt(d_in.D * (d_in.s - d_in.c)) / (d_out.K14 * d_out.K16 * d_out.K17);
 
+                        d_out.yslproch2 = Math.Min(d_out.F_d2, d_out.F_d3);
+
+                        if (d_out.F1 > d_out.yslproch2)
+                        {
+                            d_out.err += "Несущая способность обечайки, не укрепленной кольцами жесткости в области опорного узла. Условие прочности не выполняется\n";
+                        }
+
+
                         d_out.Fe = d_out.F1 * (Math.PI / 4) * d_out.K13 * d_out.K15 * Math.Sqrt(d_in.D / (d_in.s - d_in.c));
 
                         if (d_in.dav == 0)
@@ -889,6 +839,10 @@ namespace calcNet
                         else if (d_in.dav == 1)
                         {
                             d_out.yslystoich2 = d_in.p / d_out.p_d + d_out.M1 / d_out.M_d + d_out.Fe / d_out.F_d + Math.Pow(d_out.Q1 / d_out.Q_d, 2);
+                        }
+                        if (d_out.yslystoich2 > 1)
+                        {
+                            d_out.err += "Несущая способность обечайки, не укрепленной кольцами жесткости в области опорного узла. Условие устойчивости не выполняется\n";
                         }
                         break;
                     }
@@ -913,7 +867,7 @@ namespace calcNet
                         d_out.v1_3 = -0.53 * d_out.K11 / (d_out.K14 * d_out.K16 * d_out.K17 * Math.Sin(0.5 * Math.PI * 180 * d_in.delta2));
 
 
-                        d_out.K2 = 1.25; //# добавить для условий монтажа
+                        d_out.K2 = 1.25; // TODO: добавить для условий монтажа
                         d_out.v21_2 = -d_out.sigma_mx / (d_out.K2 * d_in.sigma_d);
                         d_out.v21_3 = 0;
                         d_out.v22_2 = (d_in.p * d_in.D / (4 * d_out.sef) - d_out.sigma_mx) / (d_out.K2 * d_in.sigma_d);
@@ -938,6 +892,13 @@ namespace calcNet
                         d_out.F_d2 = 0.7 * d_out.sigmai2 * d_out.sef * Math.Sqrt(d_in.D * d_out.sef) / (d_out.K10 * d_out.K12);
                         d_out.F_d3 = 0.9 * d_out.sigmai3 * d_out.sef * Math.Sqrt(d_in.D * d_out.sef) / (d_out.K14 * d_out.K16 * d_out.K17);
 
+                        d_out.yslproch2 = Math.Min(d_out.F_d2, d_out.F_d3);
+
+                        if (d_out.F1 > d_out.yslproch2)
+                        {
+                            d_out.err += "Несущая способность обечайки, не укрепленной кольцами жесткости в области опорного узла. Условие прочности не выполняется\n";
+                        }
+
                         if (d_in.dav == 0)
                         {
                             d_out.yslystoich2 = d_out.M1 / d_out.M_d + d_out.Fe / d_out.F_d + Math.Pow(d_out.Q1 / d_out.Q_d, 2);
@@ -946,6 +907,15 @@ namespace calcNet
                         {
                             d_out.yslystoich2 = d_in.p / d_out.p_d + d_out.M1 / d_out.M_d + d_out.Fe / d_out.F_d + Math.Pow(d_out.Q1 / d_out.Q_d, 2);
                         }
+                        if (d_out.yslystoich2 > 1)
+                        {
+                            d_out.err += "Несущая способность обечайки, не укрепленной кольцами жесткости в области опорного узла. Условие устойчивости не выполняется\n";
+                        }
+                        break;
+                    }
+                case 3:
+                    {
+
                         break;
                     }
             }
