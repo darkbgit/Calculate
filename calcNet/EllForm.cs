@@ -17,7 +17,7 @@ namespace calcNet
             InitializeComponent();
         }
 
-        public string TypeEl = "cil";
+        public string TypeEl = "ell";
         internal DataWordOut.DataOutArrEl dataArrEl;
 
         private void EllForm_Load(object sender, EventArgs e)
@@ -189,7 +189,7 @@ namespace calcNet
             {
                 if (Convert.ToInt32(h1_tb.Text) > 0)
                 {
-                    d_in.elh1 = Convert.ToInt32(D_tb.Text);
+                    d_in.elh1 = Convert.ToInt32(h1_tb.Text);
                 }
                 else
                 {
@@ -336,10 +336,12 @@ namespace calcNet
                 if (vn_rb.Checked)
                 {
                     d_in.dav = 0;
+                    d_in.met = "ellvn";
                 }
                 else
                 {
                     d_in.dav = 1;
+                    d_in.met = "ellnar";
                     E_tb.ReadOnly = false;
                     E_tb.Text = Convert.ToString(CalcClass.GetE(d_in.steel, d_in.temp));
                     E_tb.ReadOnly = true;
@@ -430,7 +432,7 @@ namespace calcNet
             {
                 if (Convert.ToInt32(h1_tb.Text) > 0)
                 {
-                    d_in.elh1 = Convert.ToInt32(D_tb.Text);
+                    d_in.elh1 = Convert.ToInt32(h1_tb.Text);
                 }
                 else
                 {

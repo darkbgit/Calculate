@@ -50,7 +50,7 @@ namespace calcNet
                 {
                     System.IO.File.Copy("temp.docx", f);
                 }
-
+                List<int> lit = new List<int>();
                 try
                 {
                     foreach (DataWordOut.DataOutArrEl item in DataWordOut.DataArr)
@@ -62,24 +62,31 @@ namespace calcNet
                             {
                                 case "cil":
                                     MakeWord.MakeWord_cil(DataWordOut.DataArr[i - 1].Data_In, DataWordOut.DataArr[i - 1].Data_Out, f);
+                                    lit.Add(2);
                                     break;
                                 case "kon":
+                                    lit.Add(2);
                                     break;
                                 case "ell":
                                     MakeWord.MakeWord_ell(DataWordOut.DataArr[i - 1].Data_In, DataWordOut.DataArr[i - 1].Data_Out, f);
+                                    lit.Add(2);
                                     break;
                                 case "cilyk":
                                 case "konyk":
                                 case "ellyk":
-                                    MakeWord.MakeWord_nozzle(DataWordOut.DataArr[i - 1].Data_In, DataWordOut.DataArr[i - 1].Data_Out, DataWordOut.DataArr[i - 1].DataN_In, DataWordOut.DataArr[i - 1].DataN_Out, f);
+                                    MakeWord.MakeWord_nozzle(DataWordOut.DataArr[i - 1].Data_In, DataWordOut.DataArr[i - 1].Data_Out,       DataWordOut.DataArr[i - 1].DataN_In, DataWordOut.DataArr[i - 1].DataN_Out, f);
+                                    lit.Add(3);
                                     break;
                                 case "saddle":
+                                    lit.Add(5);
                                     break;
                                 case "heat":
+                                    lit.Add(7);
                                     break;
                             }
                         }
                     }
+                    MakeWord.MakeLit(lit, f);
                     System.Windows.Forms.MessageBox.Show("OK");
                 }
                 catch

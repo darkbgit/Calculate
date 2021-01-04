@@ -41,9 +41,9 @@ namespace calcNet
             internal string Typ; // cil, ell, kon, cilyk, konyk, ellyk, saddle, heat
         }
 
-        public static DataOutArrEl[] DataArr = new DataOutArrEl[20];
+        private static DataOutArrEl[] dataArr = new DataOutArrEl[20];
 
-
+        public static DataOutArrEl[] DataArr { get => dataArr; set => dataArr = value; }
     }
 
     public class Set_steellist

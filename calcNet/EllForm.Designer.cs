@@ -94,9 +94,13 @@ namespace calcNet
             this.label20 = new System.Windows.Forms.Label();
             this.h1_tb = new System.Windows.Forms.TextBox();
             this.label29 = new System.Windows.Forms.Label();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.ell_rb = new System.Windows.Forms.RadioButton();
+            this.polysfer_rb = new System.Windows.Forms.RadioButton();
             this.groupBox4.SuspendLayout();
             this.dav_gb.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // label28
@@ -612,7 +616,7 @@ namespace calcNet
             // 
             // p_tb
             // 
-            this.p_tb.Location = new System.Drawing.Point(212, 16);
+            this.p_tb.Location = new System.Drawing.Point(210, 16);
             this.p_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.p_tb.Name = "p_tb";
             this.p_tb.Size = new System.Drawing.Size(46, 23);
@@ -749,11 +753,45 @@ namespace calcNet
             this.label29.TabIndex = 118;
             this.label29.Text = "мм";
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.polysfer_rb);
+            this.groupBox1.Controls.Add(this.ell_rb);
+            this.groupBox1.Location = new System.Drawing.Point(361, 255);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(300, 49);
+            this.groupBox1.TabIndex = 119;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Вид днища";
+            // 
+            // ell_rb
+            // 
+            this.ell_rb.AutoSize = true;
+            this.ell_rb.Checked = true;
+            this.ell_rb.Location = new System.Drawing.Point(6, 22);
+            this.ell_rb.Name = "ell_rb";
+            this.ell_rb.Size = new System.Drawing.Size(110, 19);
+            this.ell_rb.TabIndex = 0;
+            this.ell_rb.TabStop = true;
+            this.ell_rb.Text = "Эллиптическое";
+            this.ell_rb.UseVisualStyleBackColor = true;
+            // 
+            // polysfer_rb
+            // 
+            this.polysfer_rb.AutoSize = true;
+            this.polysfer_rb.Location = new System.Drawing.Point(146, 22);
+            this.polysfer_rb.Name = "polysfer_rb";
+            this.polysfer_rb.Size = new System.Drawing.Size(127, 19);
+            this.polysfer_rb.TabIndex = 1;
+            this.polysfer_rb.Text = "Полусферическое";
+            this.polysfer_rb.UseVisualStyleBackColor = true;
+            // 
             // EllForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(664, 631);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.label29);
             this.Controls.Add(this.h1_tb);
             this.Controls.Add(this.label20);
@@ -820,6 +858,8 @@ namespace calcNet
             this.dav_gb.ResumeLayout(false);
             this.dav_gb.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -891,5 +931,8 @@ namespace calcNet
         internal System.Windows.Forms.TextBox h1_tb;
         internal System.Windows.Forms.TextBox s_tb;
         internal System.Windows.Forms.TextBox c3_tb;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.RadioButton polysfer_rb;
+        private System.Windows.Forms.RadioButton ell_rb;
     }
 }

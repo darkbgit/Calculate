@@ -27,7 +27,9 @@ namespace calcNet
             internal Data_out Data_Out;// { get; set; }
             internal string Typ; // cil, ell, kon, cilyk, konyk, ellyk, saddle, heat
         }
-        DataForm df = new DataForm();
+        public static DataForm Df;
+
+        //public static DataForm Df { get => df; set => df = value; }
 
         private void Cancel_b_Click(object sender, EventArgs e)
         {
@@ -72,9 +74,6 @@ namespace calcNet
         private void PredCalc_b_Click(object sender, EventArgs e)
         {
             Data_in d_in = new Data_in();
-            //Data_out d_out = new Data_out();
-
-            //CalcClass cc = new CalcClass();
 
             string data_inerr = "";
 
@@ -486,7 +485,6 @@ namespace calcNet
 
             if (data_inerr == "") // если данные введены правильно
             {
-                //CalcClass cc = new CalcClass();
                 string v = "";
                 
                 Data_out d_out = CalcClass.CalcCil(d_in);
@@ -508,9 +506,9 @@ namespace calcNet
                         
 
 
-                        df.Data_In = d_in;
-                        df.Data_Out = d_out;
-                        df.Typ = "cil";
+                        Df.Data_In = d_in;
+                        Df.Data_Out = d_out;
+                        Df.Typ = "cil";
 
                         DataWordOut.DataArr[i] = dataArrEl;
 

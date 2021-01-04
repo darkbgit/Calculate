@@ -502,7 +502,6 @@ namespace calcNet
             // 
             // cs_tb
             // 
-            this.cs_tb.Enabled = false;
             this.cs_tb.Location = new System.Drawing.Point(213, 327);
             this.cs_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cs_tb.Name = "cs_tb";

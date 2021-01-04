@@ -116,11 +116,11 @@ namespace calcNet
 
         private void PlaceCoordinat_rb_CheckedChanged(object sender, EventArgs e)
         {
-            RadioButton rb = sender as RadioButton;
-            if (rb == null || (rb.Checked && rb.Text == "Полярная"))
-            {
-                place_pb.Image = (Bitmap)calcNet.Properties.Resources.EllRadial;
-            }
+            //RadioButton rb = sender as RadioButton;
+            //if (rb == null || (rb.Checked && rb.Text == "Полярная"))
+            //{
+            //    place_pb.Image = (Bitmap)calcNet.Properties.Resources.EllRadial;
+            //}
 
             Place_Draw(sender);
         }

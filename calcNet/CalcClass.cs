@@ -32,6 +32,7 @@ namespace calcNet
         internal int elh1;
         internal int alfa;
         internal bool yk;
+        internal string ellType; //"ell", "polysfer"
     }
 
     class Data_out
@@ -173,8 +174,9 @@ namespace calcNet
 
     class DataSaddle_out
     {
-        internal double q, M0, p_d, F1, F2, F_d, M1, M2, M12, M_d, Q1, Q2, Q_d, B1, B1_2, yslproch1_1, yslproch1_2, yslproch2, yslystoich1, yslystoich2, K9, K9_1, y, x, gamma, beta1, K10, K10_1, K11, K12, K13, K14, K15, K15_2, K16, K17, sigma_mx, F_d2, F_d3, v1_2, v1_3, v21_2, v21_3 = 0, v22_2, v22_3, K2, K1_2, K1_21, K1_22, K1_3, K1_31, K1_32, sigmai2, sigmai2_1, sigmai2_2, sigmai3, sigmai3_1, sigmai3_2, Fe, sef;
+        internal double q, M0, p_d, F1, F2, F_d, M1, M2, M12, M_d, Q1, Q2, Q_d, B1, B1_2, yslproch1_1, yslproch1_2, yslproch2, yslystoich1, yslystoich2, K9, K9_1, y, x, gamma, beta1, K10, K10_1, K11, K12, K13, K14, K15, K15_2, K16, K17, sigma_mx, F_d2, F_d3, v1_2, v1_3, v21_2, v21_3 = 0, v22_2, v22_3, K2, K1_2, K1_21, K1_22, K1_3, K1_31, K1_32, sigmai2, sigmai2_1, sigmai2_2, sigmai3, sigmai3_1, sigmai3_2, Fe, sef, Ak, Akypf;
         internal string err = "";
+        internal bool ypf;
     }
 
     class DataHeat_in
@@ -420,6 +422,14 @@ namespace calcNet
             }
             return d_out;
         }
+
+        /*
+        internal static Data_out CalcKon(Data_in d_in) // TODO: добавить расчет конуса
+        {
+            Data_out d_out = new Data_out { err = "" };
+            return d_out;
+        }
+        */
 
         internal static DataNozzle_out CalcNozzle(Data_in d_in, Data_out d_out, DataNozzle_in dN_in)
         {
@@ -730,7 +740,7 @@ namespace calcNet
         {
             d_in.sigma_d = GetSigma(d_in.steel, d_in.temp);
             d_in.E = GetE(d_in.steel, d_in.temp);
-            DataSaddle_out d_out = new DataSaddle_out();
+            DataSaddle_out d_out = new DataSaddle_out { ypf = true };
 
             d_out.M_d = (0.0000089 * d_in.E) / d_in.ny * Math.Pow(d_in.D, 3) * Math.Pow((100 * (d_in.s - d_in.c)) / d_in.D, 2.5);
             // UNDONE: проверить формулу для расчета [F]
@@ -844,6 +854,7 @@ namespace calcNet
                         {
                             d_out.err += "Несущая способность обечайки, не укрепленной кольцами жесткости в области опорного узла. Условие устойчивости не выполняется\n";
                         }
+                        
                         break;
                     }
                 case 2:
@@ -911,15 +922,48 @@ namespace calcNet
                         {
                             d_out.err += "Несущая способность обечайки, не укрепленной кольцами жесткости в области опорного узла. Условие устойчивости не выполняется\n";
                         }
+
                         break;
                     }
                 case 3:
                     {
-
+                        //TODO: опора с укрепляющим кольцом
                         break;
                     }
             }
+
+            if (d_in.delta1 <= 60 || d_in.delta1 >= 180)
+            {
+                d_out.ypf = false;
+                d_out.err += "delta1 должно быть в пределах 60-180\n";
+            }
+            if ((d_in.s - d_in.c)/d_in.D >0.05)
+            {
+                d_out.ypf = false;
+                d_out.err += "Условие применения формул не выполняется\n";
+            }
+            if (d_in.type == 2)
+            {
+                if (d_in.delta2 < d_in.delta1 + 20)
+                {
+                    d_out.ypf = false;
+                    d_out.err += "Угол обхвата подкладного листа должен быть delta2>=delta1+20\n";
+                }
+                if (d_in.s2 < d_in.s)
+                {
+                    d_out.ypf = false;
+                    d_out.err += "Толщина подкладного листа должна быть s2>=s\n";
+                }
+                d_out.Ak = d_in.b2 * d_in.s2;
+                d_out.Akypf = (d_in.s - d_in.c) * Math.Sqrt(d_in.D * (d_in.s - d_in.c));
+                if (d_out.Ak < d_out.Akypf)
+                {
+                    d_out.ypf = false;
+                    d_out.err += "Условие применения формул не выполняется\n";
+                }
+            }
             return d_out;
         }
+
     }
 }
