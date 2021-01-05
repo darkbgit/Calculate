@@ -22,6 +22,8 @@ namespace calcNet
         public CilForm cf = null;
         public NozzleForm nf = null;
         public EllForm ef = null;
+
+        public PldnForm pdf = null;
         // TODO: KonForm 
         
 
@@ -29,75 +31,82 @@ namespace calcNet
 
         private void MakeWord_b_Click(object sender, EventArgs e)
         {
-            string f = file_tb.Text;
-            if (f != "")
+            if (Word_lv.Items.Count > 0)
             {
-                f += ".docx";
-                if (System.IO.File.Exists(f))
+                string f = file_tb.Text;
+                if (f != "")
                 {
+                    f += ".docx";
+                    if (System.IO.File.Exists(f))
+                    {
+                        try
+                        {
+                            var f1 = System.IO.File.Open(f, System.IO.FileMode.Append);
+                            f1.Close();
+                        }
+                        catch
+                        {
+                            System.Windows.Forms.MessageBox.Show("Закройте" + f + "и нажмите OK");
+                        }
+
+                    }
+                    else
+                    {
+                        System.IO.File.Copy("temp.docx", f);
+                    }
+                    List<int> lit = new List<int>();
                     try
                     {
-                        var f1 = System.IO.File.Open(f, System.IO.FileMode.Append);
-                        f1.Close();
+                        for (int i = 0; i < DataWordOut.DataArr.Count; i++)
+                        {
+                            //int inx = item.id;
+                            if (DataWordOut.DataArr[i].id != 0)
+                            {
+                                switch (DataWordOut.DataArr[i].Typ)
+                                {
+                                    case "cil":
+                                        MakeWord.MakeWord_cil(DataWordOut.DataArr[i].Data_In, DataWordOut.DataArr[i].Data_Out, f);
+                                        lit.Add(2);
+                                        break;
+                                    case "kon":
+                                        lit.Add(2);
+                                        break;
+                                    case "ell":
+                                        MakeWord.MakeWord_ell(DataWordOut.DataArr[i].Data_In, DataWordOut.DataArr[i].Data_Out, f);
+                                        lit.Add(2);
+                                        break;
+                                    case "cilyk":
+                                    case "konyk":
+                                    case "ellyk":
+                                        MakeWord.MakeWord_nozzle(DataWordOut.DataArr[i].Data_In, DataWordOut.DataArr[i].Data_Out, DataWordOut.DataArr[i].DataN_In, DataWordOut.DataArr[i].DataN_Out, f);
+                                        lit.Add(3);
+                                        break;
+                                    case "saddle":
+                                        lit.Add(5);
+                                        break;
+                                    case "heat":
+                                        lit.Add(7);
+                                        break;
+                                }
+                            }
+                        }
+                        MakeWord.MakeLit(lit, f);
+                        System.Windows.Forms.MessageBox.Show("OK");
                     }
                     catch
                     {
-                        System.Windows.Forms.MessageBox.Show("Закройте" + f + "и нажмите OK");
+                        System.Windows.Forms.MessageBox.Show("Error");
                     }
-                    
+
                 }
                 else
                 {
-                    System.IO.File.Copy("temp.docx", f);
+                    System.Windows.Forms.MessageBox.Show("Введите имя файла");
                 }
-                List<int> lit = new List<int>();
-                try
-                {
-                    foreach (DataWordOut.DataOutArrEl item in DataWordOut.DataArr)
-                    {
-                        int i = item.id;
-                        if (i != 0)
-                        {
-                            switch(DataWordOut.DataArr[i-1].Typ)
-                            {
-                                case "cil":
-                                    MakeWord.MakeWord_cil(DataWordOut.DataArr[i - 1].Data_In, DataWordOut.DataArr[i - 1].Data_Out, f);
-                                    lit.Add(2);
-                                    break;
-                                case "kon":
-                                    lit.Add(2);
-                                    break;
-                                case "ell":
-                                    MakeWord.MakeWord_ell(DataWordOut.DataArr[i - 1].Data_In, DataWordOut.DataArr[i - 1].Data_Out, f);
-                                    lit.Add(2);
-                                    break;
-                                case "cilyk":
-                                case "konyk":
-                                case "ellyk":
-                                    MakeWord.MakeWord_nozzle(DataWordOut.DataArr[i - 1].Data_In, DataWordOut.DataArr[i - 1].Data_Out,       DataWordOut.DataArr[i - 1].DataN_In, DataWordOut.DataArr[i - 1].DataN_Out, f);
-                                    lit.Add(3);
-                                    break;
-                                case "saddle":
-                                    lit.Add(5);
-                                    break;
-                                case "heat":
-                                    lit.Add(7);
-                                    break;
-                            }
-                        }
-                    }
-                    MakeWord.MakeLit(lit, f);
-                    System.Windows.Forms.MessageBox.Show("OK");
-                }
-                catch
-                {
-                    System.Windows.Forms.MessageBox.Show("Error");
-                }
-
             }
             else
             {
-                System.Windows.Forms.MessageBox.Show("Введите имя файла");
+                System.Windows.Forms.MessageBox.Show("Данных для вывода нет");
             }
             
             
@@ -144,6 +153,126 @@ namespace calcNet
             {
                 ef.Owner = this;
                 ef.Show();
+            }
+        }
+
+        private void Word_lv_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
+        {
+            if (e.IsSelected)
+            {
+                del_b.Enabled = true;
+                if (e.ItemIndex < Word_lv.Items.Count - 1)
+                {
+                    down_b.Enabled = true;
+                }
+                if (e.ItemIndex > 0)
+                {
+                    up_b.Enabled = true;
+                }
+
+            }
+            else
+            {
+                del_b.Enabled = false;
+                up_b.Enabled = false;
+                down_b.Enabled = false;
+            }
+        }
+
+        private static void MoveSelectedItemListView(System.Windows.Forms.ListView lv, int idx, bool moveUp)
+        {
+            if (lv.Items.Count > 1)
+            {
+                int offset = 0;
+                //int idx = lv.SelectedItems[0].Index;
+                if (idx >= 0)
+                {
+                    if (moveUp)
+                    {
+                        offset = -1;
+                    }
+                    else
+                    {
+                        offset = 1;
+                    }
+                }
+
+                if (offset != 0)
+                {
+                    lv.BeginUpdate();
+
+                    int selitem = idx + offset;
+                    for (int i = 0; i < lv.Items[idx].SubItems.Count; i++)
+                    {
+                        string cache = lv.Items[selitem].SubItems[i].Text;
+                        lv.Items[selitem].SubItems[i].Text = lv.Items[idx].SubItems[i].Text;
+                        lv.Items[idx].SubItems[i].Text = cache;
+                    }
+
+                    lv.Focus();
+                    lv.Items[selitem].Selected = true;
+                    lv.EnsureVisible(selitem);
+
+                    lv.EndUpdate();
+                }
+            }
+        }
+    
+
+        private void Up_b_Click(object sender, EventArgs e)
+        {
+            int idx = Word_lv.SelectedItems[0].Index;
+            MoveSelectedItemListView(Word_lv, idx,  true);
+            var temp = DataWordOut.DataArr[idx];
+            DataWordOut.DataArr[idx] = DataWordOut.DataArr[idx - 1];
+            DataWordOut.DataArr[idx - 1] = temp;
+
+        }
+
+        private void Down_b_Click(object sender, EventArgs e)
+        {
+            int idx = Word_lv.SelectedItems[0].Index;
+            MoveSelectedItemListView(Word_lv, idx, false);
+            var temp = DataWordOut.DataArr[idx];
+            DataWordOut.DataArr[idx] = DataWordOut.DataArr[idx + 1];
+            DataWordOut.DataArr[idx + 1] = temp;
+        }
+
+        private void Del_b_Click(object sender, EventArgs e)
+        {
+            int idx = Word_lv.SelectedItems[0].Index;
+            Word_lv.SelectedItems[0].Remove();
+            DataWordOut.DataArr.RemoveAt(idx);
+            //Word_lv.SelectedItems.Clear();
+
+        }
+
+        private void Word_lv_Leave(object sender, EventArgs e)
+        {
+            //up_b.Enabled = false;
+            //down_b.Enabled = false;
+            //del_b.Enabled = false;
+            //if (sender is System.Windows.Forms.ListView lv)
+            //{
+            //    if (lv.Items.Count > 1)
+            //    {
+            //        Word_lv.SelectedItems[0].Selected = false;
+            //    }
+            //}
+            
+        }
+
+        private void Pldn_b_Click(object sender, EventArgs e)
+        {
+            if (pdf == null)
+            {
+                pdf = new PldnForm { Owner = this };
+                pdf.Show();
+            }
+            else
+            {
+                pdf.Owner = this;
+                pdf.Show();
             }
         }
     }

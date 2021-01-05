@@ -30,10 +30,12 @@ namespace calcNet
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.menuUp = new System.Windows.Forms.MenuStrip();
             this.FileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.OpenToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.SaveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ToolsStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.SpravkaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.AboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ExitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -52,7 +54,7 @@ namespace calcNet
             this.proekt_tb = new System.Windows.Forms.TextBox();
             this.polysfer_b = new System.Windows.Forms.Button();
             this.torosfer_b = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.pldn_b = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
@@ -84,6 +86,9 @@ namespace calcNet
             this.button30 = new System.Windows.Forms.Button();
             this.button31 = new System.Windows.Forms.Button();
             this.button32 = new System.Windows.Forms.Button();
+            this.up_b = new System.Windows.Forms.Button();
+            this.down_b = new System.Windows.Forms.Button();
+            this.del_b = new System.Windows.Forms.Button();
             this.menuUp.SuspendLayout();
             this.data_contextMenu.SuspendLayout();
             this.SuspendLayout();
@@ -92,6 +97,7 @@ namespace calcNet
             // 
             this.menuUp.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.FileToolStripMenuItem,
+            this.ToolsStripMenuItem,
             this.SpravkaToolStripMenuItem});
             this.menuUp.Location = new System.Drawing.Point(0, 0);
             this.menuUp.Name = "menuUp";
@@ -120,6 +126,12 @@ namespace calcNet
             this.SaveToolStripMenuItem.Name = "SaveToolStripMenuItem";
             this.SaveToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
             this.SaveToolStripMenuItem.Text = "Сохранить расчет";
+            // 
+            // ToolsStripMenuItem
+            // 
+            this.ToolsStripMenuItem.Name = "ToolsStripMenuItem";
+            this.ToolsStripMenuItem.Size = new System.Drawing.Size(46, 20);
+            this.ToolsStripMenuItem.Text = "Tools";
             // 
             // SpravkaToolStripMenuItem
             // 
@@ -162,10 +174,12 @@ namespace calcNet
             this.Word_lv.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Word_lv.MultiSelect = false;
             this.Word_lv.Name = "Word_lv";
-            this.Word_lv.Size = new System.Drawing.Size(305, 381);
+            this.Word_lv.Size = new System.Drawing.Size(259, 381);
             this.Word_lv.TabIndex = 3;
             this.Word_lv.UseCompatibleStateImageBehavior = false;
             this.Word_lv.View = System.Windows.Forms.View.List;
+            this.Word_lv.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.Word_lv_ItemSelectionChanged);
+            this.Word_lv.Leave += new System.EventHandler(this.Word_lv_Leave);
             // 
             // data_contextMenu
             // 
@@ -275,15 +289,15 @@ namespace calcNet
             this.torosfer_b.Text = "Торосферическое днище";
             this.torosfer_b.UseVisualStyleBackColor = true;
             // 
-            // button1
+            // pldn_b
             // 
-            this.button1.Enabled = false;
-            this.button1.Location = new System.Drawing.Point(14, 196);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(186, 27);
-            this.button1.TabIndex = 11;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
+            this.pldn_b.Location = new System.Drawing.Point(14, 196);
+            this.pldn_b.Name = "pldn_b";
+            this.pldn_b.Size = new System.Drawing.Size(186, 27);
+            this.pldn_b.TabIndex = 11;
+            this.pldn_b.Text = "Плоское днище";
+            this.pldn_b.UseVisualStyleBackColor = true;
+            this.pldn_b.Click += new System.EventHandler(this.Pldn_b_Click);
             // 
             // button2
             // 
@@ -571,11 +585,47 @@ namespace calcNet
             this.button32.Text = "button32";
             this.button32.UseVisualStyleBackColor = true;
             // 
+            // up_b
+            // 
+            this.up_b.Enabled = false;
+            this.up_b.Image = ((System.Drawing.Image)(resources.GetObject("up_b.Image")));
+            this.up_b.Location = new System.Drawing.Point(870, 43);
+            this.up_b.Name = "up_b";
+            this.up_b.Size = new System.Drawing.Size(40, 25);
+            this.up_b.TabIndex = 43;
+            this.up_b.UseVisualStyleBackColor = true;
+            this.up_b.Click += new System.EventHandler(this.Up_b_Click);
+            // 
+            // down_b
+            // 
+            this.down_b.Enabled = false;
+            this.down_b.Image = ((System.Drawing.Image)(resources.GetObject("down_b.Image")));
+            this.down_b.Location = new System.Drawing.Point(870, 75);
+            this.down_b.Name = "down_b";
+            this.down_b.Size = new System.Drawing.Size(40, 25);
+            this.down_b.TabIndex = 44;
+            this.down_b.UseVisualStyleBackColor = true;
+            this.down_b.Click += new System.EventHandler(this.Down_b_Click);
+            // 
+            // del_b
+            // 
+            this.del_b.Enabled = false;
+            this.del_b.Image = ((System.Drawing.Image)(resources.GetObject("del_b.Image")));
+            this.del_b.Location = new System.Drawing.Point(870, 126);
+            this.del_b.Name = "del_b";
+            this.del_b.Size = new System.Drawing.Size(40, 25);
+            this.del_b.TabIndex = 45;
+            this.del_b.UseVisualStyleBackColor = true;
+            this.del_b.Click += new System.EventHandler(this.Del_b_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(922, 532);
+            this.Controls.Add(this.del_b);
+            this.Controls.Add(this.down_b);
+            this.Controls.Add(this.up_b);
             this.Controls.Add(this.button22);
             this.Controls.Add(this.button23);
             this.Controls.Add(this.button24);
@@ -607,7 +657,7 @@ namespace calcNet
             this.Controls.Add(this.button4);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.pldn_b);
             this.Controls.Add(this.torosfer_b);
             this.Controls.Add(this.polysfer_b);
             this.Controls.Add(this.proekt_tb);
@@ -654,7 +704,7 @@ namespace calcNet
         private System.Windows.Forms.ToolStripMenuItem delall_MenuItem;
         private System.Windows.Forms.Button polysfer_b;
         private System.Windows.Forms.Button torosfer_b;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button pldn_b;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button4;
@@ -686,6 +736,10 @@ namespace calcNet
         private System.Windows.Forms.Button button30;
         private System.Windows.Forms.Button button31;
         private System.Windows.Forms.Button button32;
+        private System.Windows.Forms.ToolStripMenuItem ToolsStripMenuItem;
+        private System.Windows.Forms.Button up_b;
+        private System.Windows.Forms.Button down_b;
+        private System.Windows.Forms.Button del_b;
     }
 }
 

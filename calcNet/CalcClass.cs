@@ -15,7 +15,7 @@ namespace calcNet
         internal double p;
         internal int temp;
         internal double sigma_d;
-        internal int D;
+        internal double D;
         internal double c1;
         internal double c2;
         internal double c3 = 0;
@@ -28,8 +28,8 @@ namespace calcNet
         internal int E;
         internal double ny = 2.4;
         internal string met; // "cilvn", "cilnar", "konvn", "konnar", "ellvn", "ellnar"
-        internal int elH;
-        internal int elh1;
+        internal double elH;
+        internal double elh1;
         internal int alfa;
         internal bool yk;
         internal string ellType; //"ell", "polysfer"

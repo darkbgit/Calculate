@@ -19,7 +19,9 @@ namespace calcNet
         }
 
         public string TypeEl = "cil";
-        internal DataWordOut.DataOutArrEl dataArrEl;
+        
+        private DataWordOut.DataOutArrEl dataArrEl;
+        internal DataWordOut.DataOutArrEl DataArrEl { get => dataArrEl; set => dataArrEl = value; }
 
         public struct DataForm
         {
@@ -27,7 +29,9 @@ namespace calcNet
             internal Data_out Data_Out;// { get; set; }
             internal string Typ; // cil, ell, kon, cilyk, konyk, ellyk, saddle, heat
         }
-        public static DataForm Df;
+        //public static DataForm Df;
+
+        
 
         //public static DataForm Df { get => df; set => df = value; }
 
@@ -265,16 +269,13 @@ namespace calcNet
             if (data_inerr == "")
             {
                 Data_out d_out = CalcClass.CalcCil(d_in);
-                if (d_out.err == "")
-                {
-                    c_tb.Text = Convert.ToString(Math.Round(d_out.c, 2));
-                    scalc_l.Text = $"sp={d_out.s_calc:f3} мм";
-                    calc_b.Enabled = true;
-                }
-                else
+                if (d_out.err != "")
                 {
                     System.Windows.Forms.MessageBox.Show(d_out.err);
                 }
+                c_tb.Text = Convert.ToString(Math.Round(d_out.c, 2));
+                scalc_l.Text = $"sp={d_out.s_calc:f3} мм";
+                calc_b.Enabled = true;
             }
             else
             {
@@ -499,6 +500,7 @@ namespace calcNet
                         main.Word_lv.Items.Add($"{d_in.D} мм, {d_in.p} МПа, {d_in.temp} C, {d_in.met}");
                         i = main.Word_lv.Items.Count - 1;
                         //DataWordOut.DataArr[0].  DataArr .DataOutArr[]. .Value = $"{d_in.D} мм, {d_in.p} МПа, {d_in.temp} C, {d_in.met}";
+
                         dataArrEl.Data_In = d_in;
                         dataArrEl.Data_Out = d_out;
                         dataArrEl.id = i + 1;
@@ -506,11 +508,11 @@ namespace calcNet
                         
 
 
-                        Df.Data_In = d_in;
-                        Df.Data_Out = d_out;
-                        Df.Typ = "cil";
+                        //Df.Data_In = d_in;
+                        //Df.Data_Out = d_out;
+                        //Df.Typ = "cil";
 
-                        DataWordOut.DataArr[i] = dataArrEl;
+                        DataWordOut.DataArr.Add(DataArrEl);
 
                     }
                     else

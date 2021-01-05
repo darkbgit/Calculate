@@ -18,7 +18,12 @@ namespace calcNet
         }
 
         private string TypeElement;
-        internal DataWordOut.DataOutArrEl dataArrEl;
+
+        private static DataWordOut.DataOutArrEl dataArrEl;
+
+        public DataWordOut.DataOutArrEl DataArrEl { get => dataArrEl; set => dataArrEl = value; }
+
+        //public static DataWordOut.DataOutArrEl DataArrEl(GetChildAtPointSkip; SettingsBindableAttribute;)
 
         private void Vid_rb_CheckedChanged(object sender, EventArgs e)
         {
@@ -1063,6 +1068,7 @@ namespace calcNet
 
                 place_pb.Image = (Bitmap)calcNet.Properties.Resources.ResourceManager.GetObject("CylRadial");
             }
+            // TODO: Добавить расчет конуса
             //else if (this.Owner is KonForm)
             //{
             //    TypeElement = "Kon";
@@ -1200,9 +1206,9 @@ namespace calcNet
 
         private void PredCalc_b_Click(object sender, EventArgs e)
         {
-            dataArrEl.Data_In.yk = true;
-            Data_in d_in = dataArrEl.Data_In;
-            Data_out d_out = dataArrEl.Data_Out;
+            DataArrEl.Data_In.yk = true;
+            Data_in d_in = DataArrEl.Data_In;
+            Data_out d_out = DataArrEl.Data_Out;
             DataNozzle_in dN_in = new DataNozzle_in();
 
 
@@ -1574,23 +1580,20 @@ namespace calcNet
         {
             PredCalc_b_Click(sender, e);
 
-            dataArrEl.DataN_In.name = name_tb.Text;
+            DataArrEl.DataN_In.name = name_tb.Text;
             
        
             if (this.Owner.Owner is MainForm main)
             {
                 int i;
-                main.Word_lv.Items.Add($"{dataArrEl.Data_In.D} мм, {dataArrEl.Data_In.p} МПа, {dataArrEl.Data_In.temp} C, {dataArrEl.Data_In.met}, yk");
+                main.Word_lv.Items.Add($"{DataArrEl.Data_In.D} мм, {DataArrEl.Data_In.p} МПа, {DataArrEl.Data_In.temp} C, {DataArrEl.Data_In.met}, yk");
                 i = main.Word_lv.Items.Count - 1;
                 //DataWordOut.DataArr[0].  DataArr .DataOutArr[]. .Value = $"{d_in.D} мм, {d_in.p} МПа, {d_in.temp} C, {d_in.met}";
                 
                 dataArrEl.id = i + 1;
-
                 dataArrEl.Typ = TypeElement + "yk";
-
-             
-
-                DataWordOut.DataArr[i] = dataArrEl;
+          
+                DataWordOut.DataArr.Add(DataArrEl);
                 System.Windows.Forms.MessageBox.Show("Calculation complete");
                 this.Hide();
 

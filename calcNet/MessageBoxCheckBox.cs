@@ -29,13 +29,21 @@ namespace calcNet
                 NozzleForm nf = new NozzleForm { Owner = this.Owner };
                 if (this.Owner is CilForm cf)
                 {
-                    nf.dataArrEl.Data_In = cf.dataArrEl.Data_In;
-                    nf.dataArrEl.Data_Out = cf.dataArrEl.Data_Out;
+                    DataWordOut.DataOutArrEl data_InOut = new DataWordOut.DataOutArrEl
+                    {
+                        Data_In = cf.DataArrEl.Data_In,
+                        Data_Out = cf.DataArrEl.Data_Out
+                    };
+                    nf.DataArrEl = data_InOut;
                 }
                 else if (this.Owner is EllForm ef)
                 {
-                    nf.dataArrEl.Data_In = ef.dataArrEl.Data_In;
-                    nf.dataArrEl.Data_Out = ef.dataArrEl.Data_Out;
+                    DataWordOut.DataOutArrEl data_InOut = new DataWordOut.DataOutArrEl
+                    {
+                        Data_In = ef.DataArrEl.Data_In,
+                        Data_Out = ef.DataArrEl.Data_Out
+                    };
+                    nf.DataArrEl = data_InOut;
                 }
                 
                 

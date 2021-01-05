@@ -34,16 +34,14 @@ namespace calcNet
         {
             internal int id;
             internal string Value;// { get; set; }
-            internal Data_in Data_In;// { get; set; }
-            internal Data_out Data_Out;// { get; set; }
+            internal Data_in Data_In; // { get; set; }
+            internal Data_out Data_Out; // { get; set; }
             internal DataNozzle_in DataN_In;
             internal DataNozzle_out DataN_Out;
             internal string Typ; // cil, ell, kon, cilyk, konyk, ellyk, saddle, heat
         }
 
-        private static DataOutArrEl[] dataArr = new DataOutArrEl[20];
-
-        public static DataOutArrEl[] DataArr { get => dataArr; set => dataArr = value; }
+        public static List<DataOutArrEl> DataArr { get; set; } = new List<DataOutArrEl>();
     }
 
     public class Set_steellist

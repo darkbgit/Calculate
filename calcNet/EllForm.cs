@@ -18,7 +18,9 @@ namespace calcNet
         }
 
         public string TypeEl = "ell";
+        
         internal DataWordOut.DataOutArrEl dataArrEl;
+        internal DataWordOut.DataOutArrEl DataArrEl { get => dataArrEl; set => dataArrEl = value; }
 
         private void EllForm_Load(object sender, EventArgs e)
         {
@@ -253,19 +255,25 @@ namespace calcNet
                 data_inerr += "c3 неверные данные\n";
             }
 
+            if (ell_rb.Checked)
+            {
+                d_in.ellType = "ell";
+            }
+            else
+            {
+                d_in.ellType = "polysfer";
+            }
+
             if (data_inerr == "")
             {
                 Data_out d_out = CalcClass.CalcEll(d_in);
-                if (d_out.err == "")
-                {
-                    c_tb.Text = $"{d_out.c:f2}";
-                    scalc_l.Text = $"sp={d_out.s_calc:f3} мм";
-                    calc_b.Enabled = true;
-                }
-                else
+                if (d_out.err != "")
                 {
                     System.Windows.Forms.MessageBox.Show(d_out.err);
                 }
+                c_tb.Text = $"{d_out.c:f2}";
+                scalc_l.Text = $"sp={d_out.s_calc:f3} мм";
+                calc_b.Enabled = true;
             }
             else
             {
@@ -512,12 +520,21 @@ namespace calcNet
                 data_inerr += "s неверные данные\n";
             }
 
+            if (ell_rb.Checked)
+            {
+                d_in.ellType = "ell";
+            }
+            else
+            {
+                d_in.ellType = "polysfer";
+            }
+
 
             if (data_inerr == "")
             {
                 string v = "";
 
-                Data_out d_out = CalcClass.CalcCil(d_in);
+                Data_out d_out = CalcClass.CalcEll(d_in);
                 if (d_out.err == "") // если нет ошибок расчета
                 {
                     p_d_l.Text = $"[p]={d_out.p_d:f2} МПа";
@@ -533,7 +550,7 @@ namespace calcNet
                         dataArrEl.id = i + 1;
                         dataArrEl.Typ = "ell";
 
-                        DataWordOut.DataArr[i] = dataArrEl;
+                        DataWordOut.DataArr.Add(DataArrEl);
                     }
                     else
                     {
@@ -566,6 +583,22 @@ namespace calcNet
             else
             {
                 System.Windows.Forms.MessageBox.Show(data_inerr);
+            }
+        }
+
+        private void Ell_Polysfer_rb_CheckedChanged(object sender, EventArgs e)
+        {
+            RadioButton rb = sender as RadioButton;
+            if (rb.Checked)
+            {
+                if (rb.Name == "ell_rb")
+                {
+                    pictureBox.Image = calcNet.Properties.Resources.Ell;
+                }
+                else if (rb.Name == "polysfer_rb")
+                {
+                    pictureBox.Image = calcNet.Properties.Resources.Sfer;
+                }
             }
         }
     }
