@@ -87,6 +87,9 @@ namespace calcNet
                                     case "heat":
                                         lit.Add(7);
                                         break;
+                                    case "pldn":
+                                        lit.Add(2);
+                                        break;
                                 }
                             }
                         }

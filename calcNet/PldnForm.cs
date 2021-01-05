@@ -32,5 +32,24 @@ namespace calcNet
             steel_cb.SelectedIndex = 0;
             Gost_cb.SelectedIndex = 0;
         }
+
+        private void PldnForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (sender is PldnForm)
+            {
+                if (this.Owner is MainForm main)
+                {
+                    if (main.pdf != null)
+                    {
+                        main.pdf = null;
+                    }
+                }
+            }
+        }
+
+        private void Cancel_b_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+        }
     }
 }

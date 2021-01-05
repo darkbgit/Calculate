@@ -208,6 +208,7 @@ namespace calcNet
             this.cancel_b.TabIndex = 84;
             this.cancel_b.Text = "Cancel";
             this.cancel_b.UseVisualStyleBackColor = true;
+            this.cancel_b.Click += new System.EventHandler(this.Cancel_b_Click);
             // 
             // calc_b
             // 
@@ -1037,6 +1038,7 @@ namespace calcNet
             this.Controls.Add(this.label1);
             this.Name = "PldnForm";
             this.Text = "Pldn";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.PldnForm_FormClosing);
             this.Load += new System.EventHandler(this.PldnForm_Load);
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
