@@ -32,12 +32,10 @@ namespace calcNet
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PldnForm));
             this.label28 = new System.Windows.Forms.Label();
             this.label27 = new System.Windows.Forms.Label();
-            this.label26 = new System.Windows.Forms.Label();
             this.label25 = new System.Windows.Forms.Label();
             this.label24 = new System.Windows.Forms.Label();
             this.label23 = new System.Windows.Forms.Label();
             this.label22 = new System.Windows.Forms.Label();
-            this.label21 = new System.Windows.Forms.Label();
             this.cancel_b = new System.Windows.Forms.Button();
             this.calc_b = new System.Windows.Forms.Button();
             this.predCalc_b = new System.Windows.Forms.Button();
@@ -65,7 +63,6 @@ namespace calcNet
             this.button3 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.getL_b = new System.Windows.Forms.Button();
             this.getFi_b = new System.Windows.Forms.Button();
             this.getE_b = new System.Windows.Forms.Button();
             this.label19 = new System.Windows.Forms.Label();
@@ -77,16 +74,12 @@ namespace calcNet
             this.label15 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.c_tb = new System.Windows.Forms.TextBox();
             this.c3_tb = new System.Windows.Forms.TextBox();
             this.c2_tb = new System.Windows.Forms.TextBox();
             this.c1_tb = new System.Windows.Forms.TextBox();
-            this.s_tb = new System.Windows.Forms.TextBox();
-            this.D_tb = new System.Windows.Forms.TextBox();
             this.fi_tb = new System.Windows.Forms.TextBox();
             this.E_tb = new System.Windows.Forms.TextBox();
             this.sigma_d_tb = new System.Windows.Forms.TextBox();
@@ -106,21 +99,25 @@ namespace calcNet
             this.label2 = new System.Windows.Forms.Label();
             this.name_tb = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.label20 = new System.Windows.Forms.Label();
-            this.label29 = new System.Windows.Forms.Label();
-            this.a_tb = new System.Windows.Forms.TextBox();
             this.otv_gb = new System.Windows.Forms.GroupBox();
+            this.manyotv_rb = new System.Windows.Forms.RadioButton();
+            this.oneotv_rb = new System.Windows.Forms.RadioButton();
+            this.label30 = new System.Windows.Forms.Label();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.otv_cb = new System.Windows.Forms.CheckBox();
+            this.typePanel = new System.Windows.Forms.Panel();
             this.groupBox4.SuspendLayout();
             this.type_gb.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.type_pb)).BeginInit();
             this.dav_gb.SuspendLayout();
+            this.otv_gb.SuspendLayout();
             this.SuspendLayout();
             // 
             // label28
             // 
             this.label28.AutoSize = true;
             this.label28.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.label28.Location = new System.Drawing.Point(0, 523);
+            this.label28.Location = new System.Drawing.Point(0, 427);
             this.label28.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label28.MaximumSize = new System.Drawing.Size(0, 1);
             this.label28.MinimumSize = new System.Drawing.Size(350, 0);
@@ -132,27 +129,17 @@ namespace calcNet
             // label27
             // 
             this.label27.AutoSize = true;
-            this.label27.Location = new System.Drawing.Point(278, 531);
+            this.label27.Location = new System.Drawing.Point(278, 435);
             this.label27.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label27.Name = "label27";
             this.label27.Size = new System.Drawing.Size(25, 15);
             this.label27.TabIndex = 114;
             this.label27.Text = "мм";
             // 
-            // label26
-            // 
-            this.label26.AutoSize = true;
-            this.label26.Location = new System.Drawing.Point(278, 344);
-            this.label26.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label26.Name = "label26";
-            this.label26.Size = new System.Drawing.Size(25, 15);
-            this.label26.TabIndex = 113;
-            this.label26.Text = "мм";
-            // 
             // label25
             // 
             this.label25.AutoSize = true;
-            this.label25.Location = new System.Drawing.Point(278, 374);
+            this.label25.Location = new System.Drawing.Point(278, 313);
             this.label25.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label25.Name = "label25";
             this.label25.Size = new System.Drawing.Size(25, 15);
@@ -162,7 +149,7 @@ namespace calcNet
             // label24
             // 
             this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(278, 404);
+            this.label24.Location = new System.Drawing.Point(278, 343);
             this.label24.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label24.Name = "label24";
             this.label24.Size = new System.Drawing.Size(25, 15);
@@ -172,7 +159,7 @@ namespace calcNet
             // label23
             // 
             this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(278, 434);
+            this.label23.Location = new System.Drawing.Point(278, 373);
             this.label23.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label23.Name = "label23";
             this.label23.Size = new System.Drawing.Size(25, 15);
@@ -182,26 +169,16 @@ namespace calcNet
             // label22
             // 
             this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(278, 464);
+            this.label22.Location = new System.Drawing.Point(278, 403);
             this.label22.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label22.Name = "label22";
             this.label22.Size = new System.Drawing.Size(25, 15);
             this.label22.TabIndex = 109;
             this.label22.Text = "мм";
             // 
-            // label21
-            // 
-            this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(279, 317);
-            this.label21.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(25, 15);
-            this.label21.TabIndex = 108;
-            this.label21.Text = "мм";
-            // 
             // cancel_b
             // 
-            this.cancel_b.Location = new System.Drawing.Point(246, 580);
+            this.cancel_b.Location = new System.Drawing.Point(247, 586);
             this.cancel_b.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cancel_b.Name = "cancel_b";
             this.cancel_b.Size = new System.Drawing.Size(88, 27);
@@ -212,7 +189,7 @@ namespace calcNet
             // 
             // calc_b
             // 
-            this.calc_b.Location = new System.Drawing.Point(151, 580);
+            this.calc_b.Location = new System.Drawing.Point(152, 586);
             this.calc_b.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.calc_b.Name = "calc_b";
             this.calc_b.Size = new System.Drawing.Size(88, 27);
@@ -222,7 +199,7 @@ namespace calcNet
             // 
             // predCalc_b
             // 
-            this.predCalc_b.Location = new System.Drawing.Point(13, 572);
+            this.predCalc_b.Location = new System.Drawing.Point(14, 578);
             this.predCalc_b.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.predCalc_b.Name = "predCalc_b";
             this.predCalc_b.Size = new System.Drawing.Size(130, 42);
@@ -234,7 +211,7 @@ namespace calcNet
             // 
             this.groupBox4.Controls.Add(this.p_d_l);
             this.groupBox4.Controls.Add(this.scalc_l);
-            this.groupBox4.Location = new System.Drawing.Point(427, 564);
+            this.groupBox4.Location = new System.Drawing.Point(427, 570);
             this.groupBox4.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -486,27 +463,27 @@ namespace calcNet
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(554, 531);
+            this.button4.Location = new System.Drawing.Point(192, 504);
             this.button4.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(187, 27);
+            this.button4.Size = new System.Drawing.Size(170, 27);
             this.button4.TabIndex = 104;
             this.button4.Text = "Малоцикловая прочность >>";
             this.button4.UseVisualStyleBackColor = true;
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(370, 531);
+            this.button3.Location = new System.Drawing.Point(14, 504);
             this.button3.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(176, 27);
+            this.button3.Size = new System.Drawing.Size(170, 27);
             this.button3.TabIndex = 103;
             this.button3.Text = "Изоляция и футеровка >>";
             this.button3.UseVisualStyleBackColor = true;
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(612, 498);
+            this.button2.Location = new System.Drawing.Point(252, 471);
             this.button2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(35, 27);
@@ -517,24 +494,13 @@ namespace calcNet
             // checkBox1
             // 
             this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(378, 503);
+            this.checkBox1.Location = new System.Drawing.Point(18, 476);
             this.checkBox1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(201, 19);
             this.checkBox1.TabIndex = 101;
             this.checkBox1.Text = "Дефекты по ГОСТ 34233.11-2017";
             this.checkBox1.UseVisualStyleBackColor = true;
-            // 
-            // getL_b
-            // 
-            this.getL_b.Enabled = false;
-            this.getL_b.Location = new System.Drawing.Point(321, 336);
-            this.getL_b.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.getL_b.Name = "getL_b";
-            this.getL_b.Size = new System.Drawing.Size(43, 23);
-            this.getL_b.TabIndex = 100;
-            this.getL_b.Text = ">>";
-            this.getL_b.UseVisualStyleBackColor = true;
             // 
             // getFi_b
             // 
@@ -589,7 +555,7 @@ namespace calcNet
             // 
             // s1_tb
             // 
-            this.s1_tb.Location = new System.Drawing.Point(224, 528);
+            this.s1_tb.Location = new System.Drawing.Point(224, 432);
             this.s1_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.s1_tb.Name = "s1_tb";
             this.s1_tb.Size = new System.Drawing.Size(46, 23);
@@ -600,7 +566,7 @@ namespace calcNet
             // 
             this.label17.AutoSize = true;
             this.label17.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.label17.Location = new System.Drawing.Point(38, 531);
+            this.label17.Location = new System.Drawing.Point(38, 435);
             this.label17.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(180, 15);
@@ -610,7 +576,7 @@ namespace calcNet
             // label16
             // 
             this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(102, 464);
+            this.label16.Location = new System.Drawing.Point(102, 403);
             this.label16.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(116, 15);
@@ -620,7 +586,7 @@ namespace calcNet
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(40, 434);
+            this.label15.Location = new System.Drawing.Point(40, 373);
             this.label15.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(178, 15);
@@ -630,7 +596,7 @@ namespace calcNet
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(85, 404);
+            this.label14.Location = new System.Drawing.Point(85, 343);
             this.label14.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(133, 15);
@@ -641,32 +607,12 @@ namespace calcNet
             // 
             this.label13.AutoSize = true;
             this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label13.Location = new System.Drawing.Point(72, 374);
+            this.label13.Location = new System.Drawing.Point(72, 313);
             this.label13.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(146, 13);
             this.label13.TabIndex = 90;
             this.label13.Text = "Прибавка на коррозию, c1:";
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(86, 340);
-            this.label12.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(132, 30);
-            this.label12.TabIndex = 89;
-            this.label12.Text = "Толщина стенки \r\nсмежного элемента, s:";
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(84, 307);
-            this.label11.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(134, 30);
-            this.label11.TabIndex = 88;
-            this.label11.Text = "Внутренний диаметр \r\nсмежнего элемента, D:";
             // 
             // label10
             // 
@@ -691,7 +637,7 @@ namespace calcNet
             // 
             // c_tb
             // 
-            this.c_tb.Location = new System.Drawing.Point(224, 460);
+            this.c_tb.Location = new System.Drawing.Point(224, 399);
             this.c_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.c_tb.Name = "c_tb";
             this.c_tb.Size = new System.Drawing.Size(46, 23);
@@ -699,7 +645,7 @@ namespace calcNet
             // 
             // c3_tb
             // 
-            this.c3_tb.Location = new System.Drawing.Point(224, 430);
+            this.c3_tb.Location = new System.Drawing.Point(224, 369);
             this.c3_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.c3_tb.Name = "c3_tb";
             this.c3_tb.Size = new System.Drawing.Size(46, 23);
@@ -707,7 +653,7 @@ namespace calcNet
             // 
             // c2_tb
             // 
-            this.c2_tb.Location = new System.Drawing.Point(224, 400);
+            this.c2_tb.Location = new System.Drawing.Point(224, 339);
             this.c2_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.c2_tb.Name = "c2_tb";
             this.c2_tb.Size = new System.Drawing.Size(46, 23);
@@ -716,30 +662,12 @@ namespace calcNet
             // 
             // c1_tb
             // 
-            this.c1_tb.Location = new System.Drawing.Point(224, 370);
+            this.c1_tb.Location = new System.Drawing.Point(224, 309);
             this.c1_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.c1_tb.Name = "c1_tb";
             this.c1_tb.Size = new System.Drawing.Size(46, 23);
             this.c1_tb.TabIndex = 74;
             this.c1_tb.Text = "1";
-            // 
-            // s_tb
-            // 
-            this.s_tb.Enabled = false;
-            this.s_tb.Location = new System.Drawing.Point(224, 340);
-            this.s_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.s_tb.Name = "s_tb";
-            this.s_tb.Size = new System.Drawing.Size(46, 23);
-            this.s_tb.TabIndex = 73;
-            // 
-            // D_tb
-            // 
-            this.D_tb.Location = new System.Drawing.Point(224, 310);
-            this.D_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.D_tb.Name = "D_tb";
-            this.D_tb.Size = new System.Drawing.Size(46, 23);
-            this.D_tb.TabIndex = 72;
-            this.D_tb.Text = "1000";
             // 
             // fi_tb
             // 
@@ -937,60 +865,89 @@ namespace calcNet
             this.label1.TabIndex = 60;
             this.label1.Text = "Название элемента:";
             // 
-            // label20
-            // 
-            this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(278, 493);
-            this.label20.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(25, 15);
-            this.label20.TabIndex = 118;
-            this.label20.Text = "мм";
-            // 
-            // label29
-            // 
-            this.label29.AutoSize = true;
-            this.label29.Location = new System.Drawing.Point(87, 493);
-            this.label29.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label29.Name = "label29";
-            this.label29.Size = new System.Drawing.Size(131, 15);
-            this.label29.TabIndex = 117;
-            this.label29.Text = "Катет сварного шва, а:";
-            // 
-            // a_tb
-            // 
-            this.a_tb.Location = new System.Drawing.Point(224, 489);
-            this.a_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.a_tb.Name = "a_tb";
-            this.a_tb.Size = new System.Drawing.Size(46, 23);
-            this.a_tb.TabIndex = 116;
-            // 
             // otv_gb
             // 
+            this.otv_gb.Controls.Add(this.manyotv_rb);
+            this.otv_gb.Controls.Add(this.oneotv_rb);
+            this.otv_gb.Controls.Add(this.label30);
+            this.otv_gb.Controls.Add(this.textBox1);
+            this.otv_gb.Enabled = false;
             this.otv_gb.Location = new System.Drawing.Point(372, 263);
             this.otv_gb.Name = "otv_gb";
-            this.otv_gb.Size = new System.Drawing.Size(370, 100);
+            this.otv_gb.Size = new System.Drawing.Size(370, 98);
             this.otv_gb.TabIndex = 119;
             this.otv_gb.TabStop = false;
-            this.otv_gb.Text = "Отверстия";
+            // 
+            // manyotv_rb
+            // 
+            this.manyotv_rb.AutoSize = true;
+            this.manyotv_rb.Location = new System.Drawing.Point(181, 25);
+            this.manyotv_rb.Name = "manyotv_rb";
+            this.manyotv_rb.Size = new System.Drawing.Size(144, 19);
+            this.manyotv_rb.TabIndex = 4;
+            this.manyotv_rb.Text = "Несколько отверстий";
+            this.manyotv_rb.UseVisualStyleBackColor = true;
+            // 
+            // oneotv_rb
+            // 
+            this.oneotv_rb.AutoSize = true;
+            this.oneotv_rb.Checked = true;
+            this.oneotv_rb.Location = new System.Drawing.Point(13, 25);
+            this.oneotv_rb.Name = "oneotv_rb";
+            this.oneotv_rb.Size = new System.Drawing.Size(112, 19);
+            this.oneotv_rb.TabIndex = 3;
+            this.oneotv_rb.TabStop = true;
+            this.oneotv_rb.Text = "Одно отверстие";
+            this.oneotv_rb.UseVisualStyleBackColor = true;
+            // 
+            // label30
+            // 
+            this.label30.AutoSize = true;
+            this.label30.Location = new System.Drawing.Point(13, 52);
+            this.label30.Name = "label30";
+            this.label30.Size = new System.Drawing.Size(150, 30);
+            this.label30.TabIndex = 2;
+            this.label30.Text = "Диаметр отверстия\r\nили сумма длин хорд, мм";
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(169, 56);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(100, 23);
+            this.textBox1.TabIndex = 1;
+            // 
+            // otv_cb
+            // 
+            this.otv_cb.AutoSize = true;
+            this.otv_cb.Location = new System.Drawing.Point(385, 262);
+            this.otv_cb.Name = "otv_cb";
+            this.otv_cb.Size = new System.Drawing.Size(83, 19);
+            this.otv_cb.TabIndex = 0;
+            this.otv_cb.Text = "Отверстия";
+            this.otv_cb.UseVisualStyleBackColor = true;
+            this.otv_cb.CheckedChanged += new System.EventHandler(this.Otv_cb_CheckedChanged);
+            // 
+            // typePanel
+            // 
+            this.typePanel.Location = new System.Drawing.Point(372, 368);
+            this.typePanel.Name = "typePanel";
+            this.typePanel.Size = new System.Drawing.Size(369, 196);
+            this.typePanel.TabIndex = 120;
             // 
             // PldnForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(754, 638);
+            this.ClientSize = new System.Drawing.Size(754, 636);
+            this.Controls.Add(this.typePanel);
+            this.Controls.Add(this.otv_cb);
             this.Controls.Add(this.otv_gb);
-            this.Controls.Add(this.label20);
-            this.Controls.Add(this.label29);
-            this.Controls.Add(this.a_tb);
             this.Controls.Add(this.label28);
             this.Controls.Add(this.label27);
-            this.Controls.Add(this.label26);
             this.Controls.Add(this.label25);
             this.Controls.Add(this.label24);
             this.Controls.Add(this.label23);
             this.Controls.Add(this.label22);
-            this.Controls.Add(this.label21);
             this.Controls.Add(this.cancel_b);
             this.Controls.Add(this.calc_b);
             this.Controls.Add(this.predCalc_b);
@@ -1000,7 +957,6 @@ namespace calcNet
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.checkBox1);
-            this.Controls.Add(this.getL_b);
             this.Controls.Add(this.getFi_b);
             this.Controls.Add(this.getE_b);
             this.Controls.Add(this.label19);
@@ -1012,16 +968,12 @@ namespace calcNet
             this.Controls.Add(this.label15);
             this.Controls.Add(this.label14);
             this.Controls.Add(this.label13);
-            this.Controls.Add(this.label12);
-            this.Controls.Add(this.label11);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.c_tb);
             this.Controls.Add(this.c3_tb);
             this.Controls.Add(this.c2_tb);
             this.Controls.Add(this.c1_tb);
-            this.Controls.Add(this.s_tb);
-            this.Controls.Add(this.D_tb);
             this.Controls.Add(this.fi_tb);
             this.Controls.Add(this.E_tb);
             this.Controls.Add(this.sigma_d_tb);
@@ -1036,6 +988,7 @@ namespace calcNet
             this.Controls.Add(this.label2);
             this.Controls.Add(this.name_tb);
             this.Controls.Add(this.label1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "PldnForm";
             this.Text = "Pldn";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.PldnForm_FormClosing);
@@ -1047,6 +1000,8 @@ namespace calcNet
             ((System.ComponentModel.ISupportInitialize)(this.type_pb)).EndInit();
             this.dav_gb.ResumeLayout(false);
             this.dav_gb.PerformLayout();
+            this.otv_gb.ResumeLayout(false);
+            this.otv_gb.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1056,12 +1011,10 @@ namespace calcNet
 
         private System.Windows.Forms.Label label28;
         private System.Windows.Forms.Label label27;
-        private System.Windows.Forms.Label label26;
         private System.Windows.Forms.Label label25;
         private System.Windows.Forms.Label label24;
         private System.Windows.Forms.Label label23;
         private System.Windows.Forms.Label label22;
-        private System.Windows.Forms.Label label21;
         private System.Windows.Forms.Button cancel_b;
         private System.Windows.Forms.Button calc_b;
         private System.Windows.Forms.Button predCalc_b;
@@ -1081,7 +1034,6 @@ namespace calcNet
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.CheckBox checkBox1;
-        private System.Windows.Forms.Button getL_b;
         private System.Windows.Forms.Button getFi_b;
         private System.Windows.Forms.Button getE_b;
         private System.Windows.Forms.Label label19;
@@ -1093,16 +1045,12 @@ namespace calcNet
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TextBox c_tb;
         private System.Windows.Forms.TextBox c3_tb;
         private System.Windows.Forms.TextBox c2_tb;
         private System.Windows.Forms.TextBox c1_tb;
-        private System.Windows.Forms.TextBox s_tb;
-        private System.Windows.Forms.TextBox D_tb;
         internal System.Windows.Forms.TextBox fi_tb;
         private System.Windows.Forms.TextBox E_tb;
         private System.Windows.Forms.TextBox sigma_d_tb;
@@ -1130,9 +1078,12 @@ namespace calcNet
         private System.Windows.Forms.RadioButton rb9;
         private System.Windows.Forms.RadioButton rb8;
         private System.Windows.Forms.RadioButton rb15;
-        private System.Windows.Forms.Label label20;
-        private System.Windows.Forms.Label label29;
-        private System.Windows.Forms.TextBox a_tb;
         private System.Windows.Forms.GroupBox otv_gb;
+        private System.Windows.Forms.CheckBox otv_cb;
+        private System.Windows.Forms.Label label30;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.RadioButton manyotv_rb;
+        private System.Windows.Forms.RadioButton oneotv_rb;
+        private System.Windows.Forms.Panel typePanel;
     }
 }

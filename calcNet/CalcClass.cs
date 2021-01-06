@@ -179,9 +179,25 @@ namespace calcNet
         internal bool ypf;
     }
 
+    struct DataPldn_in
+    {
+        internal string name, steel;
+        internal double D, D2, D3, Dsp, s, s1, s2, s3, s4, a, r, h1, gamma, c1, c2, c3, d, di, sigma_d, p, fi;
+        internal int type; // 1 - 15
+        internal int dav; // 0 - vn, 1 - nar
+        internal int otv; // 0 - 0 , 1 - 1, 2 - >1
+    }
+
+    struct DataPldn_out
+    {
+        internal string err;
+        internal double c, Dp, ypfzn, K, K_1, K0, s1_calcr, s1_calc, psi1, Qd, Pbp, K6;
+        internal bool ypf;
+    }
+
     class DataHeat_in
     {
-
+        
     }
 
     class DataHeat_out
@@ -962,6 +978,142 @@ namespace calcNet
                     d_out.err += "Условие применения формул не выполняется\n";
                 }
             }
+            return d_out;
+        }
+
+        internal static DataPldn_out CalcPldn(DataPldn_in d_in)
+        {
+            DataPldn_out d_out = new DataPldn_out { err = "" };
+
+            d_out.c = d_in.c1 + d_in.c2 + d_in.c3;
+
+            switch (d_in.type)
+            {
+                case 1:
+                    d_out.K = 0.53;
+                    d_out.Dp = d_in.D;
+                    if (d_in.a < 1.7 * d_in.s)
+                    {
+                        d_out.err += "Условие закрепления не выполняется a>=1.7s\n";
+                    }
+                    break;
+                case 2:
+                    d_out.K = 0.50;
+                    d_out.Dp = d_in.D;
+                    if (d_in.a < 0.85 * d_in.s)
+                    {
+                        d_out.err += "Условие закрепления не выполняется a>=0.85s\n";
+                    }
+                    break;
+                case 3:
+                    d_out.Dp = d_in.D;
+                    if ((d_in.s - d_out.c)/(d_in.s1-d_out.c) < 0.25)
+                    {
+                        d_out.K = 0.45;
+                    }
+                    else
+                    {
+                        d_out.K = 0.41;
+                    }
+                    break;
+                case 4:
+                    d_out.Dp = d_in.D;
+                    if ((d_in.s - d_out.c) / (d_in.s1 - d_out.c) < 0.5)
+                    {
+                        d_out.K = 0.41;
+                    }
+                    else
+                    {
+                        d_out.K = 0.38;
+                    }
+                    break;
+                case 5:
+                    goto case 3;
+                case 6:
+                    d_out.K = 0.50;
+                    d_out.Dp = d_in.D;
+                    if (d_in.a < 0.85 * d_in.s)
+                    {
+                        d_out.err += "Условие закрепления не выполняется a>=0.85s\n";
+                    }
+                    break;
+                case 7:
+                case 8:
+                    goto case 4;
+                case 9:
+                    d_out.Dp = d_in.D - 2 * d_in.r;
+                    if (d_in.h1 < d_in.r || d_in.r < Math.Min(d_in.s, 025 * d_in.s1) || d_in.r > Math.Min(d_in.s1, 0.1 * d_in.D))
+                    {
+                        d_out.err += "Условие закрепления не выполняется\n";
+                    }
+                    d_out.K_1 = 0.41 * (1 - 0.23 * ((d_in.s - d_out.c) / (d_in.s1 - d_out.c)));
+                    d_out.K = Math.Max(d_out.K_1, 0.35);
+                    break;
+                case 10:
+                    if(d_in.gamma < 30 || d_in.gamma > 90 || d_in.r < 0.25 * d_in.s1 || d_in.r > (d_in.s1 - d_in.s2))
+                    {
+                        d_out.err += "Условие закрепления не выполняется\n";
+                    }
+                    goto case 4;
+                case 11:
+                    goto case 4;
+                case 12:
+                    d_out.K = 0.4;
+                    d_out.Dp = d_in.D3;
+                    break;
+                case 13:
+                    d_out.K = 0.41;
+                    d_out.Dp = d_in.Dsp;
+                    break;
+                case 14:
+                case 15:
+                    d_out.Dp = d_in.Dsp;
+                    //d_out.Pbp = 
+                    d_out.Qd = 0.785 * d_in.p * Math.Pow(d_in.Dsp, 2);
+                    d_out.psi1 = d_out.Pbp / d_out.Qd;
+                    d_out.K6 = 0.41 * Math.Sqrt((1 + 3 * d_out.psi1 * (d_in.D3 / d_in.Dsp - 1)) / (d_in.D3 / d_in.Dsp));
+                    break;
+            }
+            // UNDONE: доделать расчет плоского днища
+            switch (d_in.otv)
+            {
+                case 0:
+                    d_out.K0 = 1;
+                    break;
+                
+                case 1:
+                    d_out.K0 = Math.Sqrt(1 + d_in.d / d_out.Dp + Math.Pow(d_in.d / d_out.Dp, 2));
+                    break;
+                
+                case 2:
+                    if (d_in.di > 0.7 * d_out.Dp)
+                    {
+                        d_out.err += "Слишком много отверстий\n";
+                    }
+                    d_out.K0 = Math.Sqrt((1 - Math.Pow(d_in.di / d_out.Dp, 3)) / (1 - d_in.di / d_out.Dp));
+                    break;
+            }
+
+            d_out.s1_calcr = d_out.K * d_out.K0 * d_out.Dp * Math.Sqrt(d_in.p / (d_in.fi * d_in.sigma_d));
+            d_out.s1_calc = d_out.s1_calcr + d_out.c;
+
+            
+
+            if (d_in.s1 != 0 && d_in.s1 >= d_out.s1_calc)
+            {
+                d_out.ypfzn = (d_in.s1 - d_out.c) / d_out.Dp;
+                if (d_out.ypfzn <=0.11)
+                {
+                    d_out.ypf = true;
+
+                }
+            }
+            else if (d_in.s1 != 0 && d_in.s1 < d_out.s1_calc)
+            {
+                d_out.err += "Принятая толщина меньше расчетной\n";
+            }
+
+            
             return d_out;
         }
 

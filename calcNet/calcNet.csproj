@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Iae.Windows.Forms.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="DocX" Version="1.7.1" />
   </ItemGroup>
 
