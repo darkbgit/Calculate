@@ -5,6 +5,11 @@
     <TargetFramework>net5.0-windows</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms>
     <ApplicationIcon>pic\ico\calc.ico</ApplicationIcon>
+    <AssemblyVersion>1.0.0.1</AssemblyVersion>
+	<FileVersion>1.0.0.0</FileVersion>
+	<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+	<Company>DBSoft</Company>
+	<Authors>Alex</Authors>
   </PropertyGroup>
 
   <ItemGroup>
@@ -13,6 +18,7 @@
 
   <ItemGroup>
     <PackageReference Include="DocX" Version="1.7.1" />
+    <PackageReference Include="MSBuild.Version.Target" Version="3.0.60" />
   </ItemGroup>
 
   <ItemGroup>

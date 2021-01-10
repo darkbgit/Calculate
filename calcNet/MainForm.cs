@@ -278,5 +278,23 @@ namespace calcNet
                 pdf.Show();
             }
         }
+
+        private void menuUp_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+            //if (e.ClickedItem.Name == "AboutToolStripMenuItem")
+            //{
+            //    AboutBox abf = new AboutBox();
+            //    abf.ShowDialog();
+            //}
+        }
+
+        private void AboutToolStripMenuItem_Click(object sender, System.EventArgs e)
+        {
+            if (sender is ToolStripItem it && it.Name == "AboutToolStripMenuItem")
+            {
+                AboutBox abf = new AboutBox();
+                abf.ShowDialog();
+            }
+        }
     }
 }

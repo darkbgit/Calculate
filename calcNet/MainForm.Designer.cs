@@ -105,6 +105,7 @@ namespace calcNet
             this.menuUp.Size = new System.Drawing.Size(922, 24);
             this.menuUp.TabIndex = 1;
             this.menuUp.Text = "menuUp";
+            this.menuUp.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuUp_ItemClicked);
             // 
             // FileToolStripMenuItem
             // 
@@ -147,6 +148,7 @@ namespace calcNet
             this.AboutToolStripMenuItem.Name = "AboutToolStripMenuItem";
             this.AboutToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.AboutToolStripMenuItem.Text = "О программе";
+            this.AboutToolStripMenuItem.Click += new System.EventHandler(this.AboutToolStripMenuItem_Click);
             // 
             // ExitToolStripMenuItem
             // 
@@ -680,6 +682,7 @@ namespace calcNet
             this.PerformLayout();
 
         }
+
 
         #endregion
         private System.Windows.Forms.MenuStrip menuUp;

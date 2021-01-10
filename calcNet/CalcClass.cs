@@ -35,25 +35,12 @@ namespace calcNet
         internal string ellType; //"ell", "polysfer"
     }
 
-    class Data_out
+    internal struct Data_out
     {
-        internal double s_calcr;
-        internal double s_calc;
-        internal double s_calcr1;
-        internal double s_calcr2;
-        internal double p_d;
-        internal double c;
-        internal double l;
-        internal double b;
-        internal double b_2;
-        internal double b1;
-        internal double b1_2;
-        internal double p_dp;
-        internal double p_de;
-        internal double elR;
+        internal double s_calcr, s_calc, s_calcr1, s_calcr2, p_d, c, l, b, b_2, b1, b1_2, p_dp, p_de, elR;
         internal double elke;
         internal double elx;
-        internal string err = "";
+        internal string err;
         internal bool ypf;
         internal double Dk;
     }
