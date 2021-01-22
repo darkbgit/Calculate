@@ -8,41 +8,102 @@ using System.Xml;
 
 namespace calcNet
 {
+    
     class Data_in
     {
-        internal string name;
-        internal string steel;
-        internal double p;
+        internal string name,
+                        steel,
+                        met, // "cilvn", "cilnar", "konvn", "konnar", "ellvn", "ellnar"
+                        ellType; //"ell", "polysfer"
+
         internal int temp;
-        internal double sigma_d;
-        internal double D;
-        internal double c1;
-        internal double c2;
-        internal double c3 = 0;
-        internal double fi;
-        internal double s;
+
+        public double p,
+                        E,
+                        F,
+                        M,
+                        Q,
+                        sigma_d,
+                        D,
+                        c1,
+                        c2,
+                        c3 = 0,
+                        fi,
+                        fit, // кольцевого сварного шва
+                        s,
+                        l,
+                        l3_1,
+                        l3_2,
+                        ny = 2.4,
+                        elH,
+                        elh1,
+                        q,
+                        f,
+                        alfa;
+
         internal int dav; //0 - vn, 1 - nar
-        internal double l;
-        internal double l3_1;
-        internal double l3_2;
-        internal int E;
-        internal double ny = 2.4;
-        internal string met; // "cilvn", "cilnar", "konvn", "konnar", "ellvn", "ellnar"
-        internal double elH;
-        internal double elh1;
-        internal int alfa;
-        internal bool yk;
-        internal string ellType; //"ell", "polysfer"
+
+        internal int FCalcSchema; //1-7
+        
+        internal bool yk,
+                    isNeedpCalculate,
+                    isPressureIn,
+                    isNeedFCalculate,
+                    isFTensile, 
+                    isNeedMCalculate,
+                    isNeedQCalculate;
+                      
+        
+        internal int bibliography;
+
+        public void SetValue(string name, double value)
+        {
+            var field = typeof(Data_in).GetField(name);
+            field.SetValue(this, value);
+        }
     }
 
     internal struct Data_out
     {
-        internal double s_calcr, s_calc, s_calcr1, s_calcr2, p_d, c, l, b, b_2, b1, b1_2, p_dp, p_de, elR;
-        internal double elke;
-        internal double elx;
+        internal double s_calcr,
+                        s_calc,
+                        s_calcr1,
+                        s_calcr2,
+                        s_calcrf,
+                        s_calcf,
+                        p_d,
+                        c,
+                        l,
+                        b,
+                        b_2,
+                        b1,
+                        b1_2,
+                        p_dp,
+                        p_de,
+                        F_d,
+                        F_dp,
+                        F_de,
+                        F_de1,
+                        F_de2,
+                        lamda,
+                        M_d,
+                        M_dp,
+                        M_de,
+                        Q_d,
+                        Q_dp,
+                        Q_de,
+                        elR,
+                        elke,
+                        elx,
+                        Dk,
+                        lpr,
+                        F,
+                        conditionYstoich;
+
         internal string err;
-        internal bool ypf;
-        internal double Dk;
+        internal bool isConditionUseFormuls,
+                        isCriticalError,
+                        isError;
     }
 
     class DataNozzle_in
@@ -54,11 +115,18 @@ namespace calcNet
                             //5(cil, kon, sfer, torosfer) - наклонный штуцер ось которого лежит в плоскости продольного сечения
                             //6(oval) - овальное отверстие штуцер перпендикулярно расположен к поверхности обечайки
                             //7(otbort, torob) - перпендикулярно расположенного к поверхности обечайки или днища штуцера с круглым поперечным сечением при наличии отбортовки или торообразной вставки
-        internal string name;
-        internal string steel1, steel2, steel3, steel4;
-        internal double sigma_d1, sigma_d2, sigma_d3, sigma_d4;
-        internal int E1;
-        internal int E2;
+        internal string name,
+                        steel1,
+                        steel2,
+                        steel3,
+                        steel4;
+        
+        internal double sigma_d1,
+                        sigma_d2,
+                        sigma_d3,
+                        sigma_d4,
+                        E1,
+                        E2;
         internal int E3;
         internal int E4;
         internal int D;
@@ -80,7 +148,7 @@ namespace calcNet
         internal int elx;
         internal double b;
         internal int vid; //1 - 8
-        //internal string dav; //0 - vn, 1-nar
+        
         internal string met;
         internal double ny = 2.4;
         internal double t;
@@ -156,20 +224,103 @@ namespace calcNet
         internal int temp;
         internal int l0;
         internal string steel;
-        internal int dav; //0 - vn, 1 - nar
+
+        internal bool isPressureIn;
     }
 
     class DataSaddle_out
     {
-        internal double q, M0, p_d, F1, F2, F_d, M1, M2, M12, M_d, Q1, Q2, Q_d, B1, B1_2, yslproch1_1, yslproch1_2, yslproch2, yslystoich1, yslystoich2, K9, K9_1, y, x, gamma, beta1, K10, K10_1, K11, K12, K13, K14, K15, K15_2, K16, K17, sigma_mx, F_d2, F_d3, v1_2, v1_3, v21_2, v21_3 = 0, v22_2, v22_3, K2, K1_2, K1_21, K1_22, K1_3, K1_31, K1_32, sigmai2, sigmai2_1, sigmai2_2, sigmai3, sigmai3_1, sigmai3_2, Fe, sef, Ak, Akypf;
+        internal double q,
+                        M0,
+                        p_d,
+                        F1,
+                        F2,
+                        F_d,
+                        M1,
+                        M2,
+                        M12,
+                        M_d,
+                        Q1,
+                        Q2,
+                        Q_d,
+                        B1,
+                        B1_2,
+                        yslproch1_1,
+                        yslproch1_2,
+                        yslproch2,
+                        yslystoich1,
+                        yslystoich2,
+                        K9,
+                        K9_1,
+                        y,
+                        x,
+                        gamma,
+                        beta1,
+                        K10,
+                        K10_1,
+                        K11,
+                        K12,
+                        K13,
+                        K14,
+                        K15,
+                        K15_2,
+                        K16,
+                        K17,
+                        sigma_mx,
+                        F_d2,
+                        F_d3,
+                        v1_2,
+                        v1_3,
+                        v21_2,
+                        v21_3 = 0,
+                        v22_2,
+                        v22_3,
+                        K2,
+                        K1_2,
+                        K1_21,
+                        K1_22,
+                        K1_3,
+                        K1_31,
+                        K1_32,
+                        sigmai2,
+                        sigmai2_1,
+                        sigmai2_2,
+                        sigmai3,
+                        sigmai3_1,
+                        sigmai3_2,
+                        Fe,
+                        sef,
+                        Ak,
+                        Akypf;
         internal string err = "";
-        internal bool ypf;
+        internal bool isConditionUseFormuls;
     }
 
     struct DataPldn_in
     {
-        internal string name, steel;
-        internal double D, D2, D3, Dsp, s, s1, s2, s3, s4, a, r, h1, gamma, c1, c2, c3, d, di, sigma_d, p, fi;
+        internal string name,
+                        steel;
+        internal double D,
+            D2,
+            D3,
+            Dsp,
+            s,
+            s1,
+            s2,
+            s3,
+            s4,
+            a,
+            r,
+            h1,
+            gamma,
+            c1,
+            c2,
+            c3,
+            d,
+            di,
+            sigma_d,
+            p,
+            fi;
         internal int type; // 1 - 15
         internal int dav; // 0 - vn, 1 - nar
         internal int otv; // 0 - 0 , 1 - 1, 2 - >1
@@ -178,7 +329,18 @@ namespace calcNet
     struct DataPldn_out
     {
         internal string err;
-        internal double c, Dp, ypfzn, K, K_1, K0, s1_calcr, s1_calc, psi1, Qd, Pbp, K6;
+        internal double c,
+            Dp,
+            ypfzn,
+            K,
+            K_1,
+            K0,
+            s1_calcr,
+            s1_calc,
+            psi1,
+            Qd,
+            Pbp,
+            K6;
         internal bool ypf;
     }
 
@@ -196,35 +358,42 @@ namespace calcNet
     {
         internal static double GetSigma (string steel, int temp)
         {
-            double sigma;
-            double sigma_l = 0;
-            double sigma_b = 0;
-            int temp_l = 0;
-            int temp_b = 0;
             XmlDocument doc = new XmlDocument();
             doc.Load(System.IO.Path.Combine(System.IO.Directory.GetCurrentDirectory(), @"data\data.xml"));
             var root = doc.DocumentElement;
-            XmlNode steel1 = root.SelectSingleNode("sigma_list").SelectSingleNode("steels").SelectSingleNode("//steel[@name='" + steel +"']");
-            foreach (XmlNode temps in steel1.ChildNodes)
+            XmlNode steelTempNodes = root.SelectSingleNode("sigma_list").SelectSingleNode("steels").SelectSingleNode("//steel[@name='" + steel +"']");
+
+            double sigma, sigmaLittle = 0, sigmaBig = 0;
+            int tempLittle = 0, tempBig = 0;
+
+            for (int i = 0; i < steelTempNodes.ChildNodes.Count; i++)
             {
-                if (Convert.ToInt32(temps.Attributes["temp"].Value) == temp)
+                if ((i == 0 && Convert.ToInt32(steelTempNodes.ChildNodes.Item(i).Attributes["temp"].Value) > temp) ||
+                        Convert.ToInt32(steelTempNodes.ChildNodes.Item(i).Attributes["temp"].Value) == temp)
                 {
-                    sigma = Convert.ToDouble(temps.Attributes["sigma"].Value);
+                    sigma = Convert.ToDouble(steelTempNodes.ChildNodes.Item(i).Attributes["sigma"].Value,
+                                            System.Globalization.CultureInfo.InvariantCulture);
                     return sigma;
                 }
-                else if (Convert.ToInt32(temps.Attributes["temp"].Value) > temp)
+                else if (Convert.ToInt32(steelTempNodes.ChildNodes.Item(i).Attributes["temp"].Value) > temp)
                 {
-                    temp_l = Convert.ToInt32(temps.Attributes["temp"].Value);
-                    sigma_b = Convert.ToDouble(temps.Attributes["sigma"].Value);
+                    tempLittle = Convert.ToInt32(steelTempNodes.ChildNodes.Item(i).Attributes["temp"].Value);
+                    sigmaBig = Convert.ToDouble(steelTempNodes.ChildNodes.Item(i).Attributes["sigma"].Value,
+                                                System.Globalization.CultureInfo.InvariantCulture);
                     break;
+                }
+                else if (i == steelTempNodes.ChildNodes.Count - 1)
+                {
+                    return -1;
                 }
                 else
                 {
-                    temp_b = Convert.ToInt32(temps.Attributes["temp"].Value);
-                    sigma_l = Convert.ToDouble(temps.Attributes["sigma"].Value);
+                    tempBig = Convert.ToInt32(steelTempNodes.ChildNodes.Item(i).Attributes["temp"].Value);
+                    sigmaLittle = double.Parse(steelTempNodes.ChildNodes.Item(i).Attributes["sigma"].Value,
+                                                System.Globalization.CultureInfo.InvariantCulture);
                 }
             }
-            sigma = sigma_b - ((sigma_b - sigma_l) * (temp - temp_l) / (temp_b - temp_l));
+            sigma = sigmaBig - ((sigmaBig - sigmaLittle) * (temp - tempLittle) / (tempBig - tempLittle));
             sigma *= 10;
             sigma = Math.Truncate(sigma / 5);
             sigma *= 0.5;
@@ -234,33 +403,31 @@ namespace calcNet
 
         internal static int GetE(string steel, int temp)
         {
-            int E;
-            int E_l = 0;
-            int E_b = 0;
-            int temp_l = 0;
-            int temp_b = 0;
-            string steelf;
-
-           
             Regex regex = new Regex(@"(.*)(?=\()");
             MatchCollection matches = regex.Matches(steel);
+
+            string steelName;
+
             if (matches.Count > 0)
             {
-                steelf = matches[0].Groups[0].Value; 
+                steelName = matches[0].Groups[0].Value;
             }
             else
             {
-                steelf = steel;
+                steelName = steel;
             }
             
             XmlDocument doc = new XmlDocument();
             doc.Load(System.IO.Path.Combine(System.IO.Directory.GetCurrentDirectory(), @"data\data.xml"));
             var root = doc.DocumentElement;
-            XmlNode cl = root.SelectSingleNode("//n[@name='" + steelf +"']");
-            var clsteel = cl.ParentNode.Name;
-            XmlNode Elist = root.SelectSingleNode("E_list").SelectSingleNode("//class[@name='" + clsteel + "']");
+            XmlNode classListNode = root.SelectSingleNode("//n[@name='" + steelName + "']");
+            var steelClass = classListNode.ParentNode.Name;
+            XmlNode Elist = root.SelectSingleNode("E_list").SelectSingleNode("//class[@name='" + steelClass + "']");
 
-            foreach (XmlNode temps in Elist.ChildNodes)
+            int E, ELittle = 0, EBig = 0;
+            int tempLittle = 0, tempBig = 0;
+
+            /*foreach (XmlNode temps in Elist.ChildNodes)
             {
                 if (Convert.ToInt32(temps.Attributes["temp"].Value) == temp)
                 {
@@ -269,20 +436,44 @@ namespace calcNet
                 }
                 else if (Convert.ToInt32(temps.Attributes["temp"].Value) > temp)
                 {
-                    temp_l = Convert.ToInt32(temps.Attributes["temp"].Value);
-                    E_b = Convert.ToInt32(temps.Attributes["E"].Value);
+                    tempLittle = Convert.ToInt32(temps.Attributes["temp"].Value);
+                    EBig = Convert.ToInt32(temps.Attributes["E"].Value);
                     break;
                 }
                 else
                 {
-                    temp_b = Convert.ToInt32(temps.Attributes["temp"].Value);
-                    E_l = Convert.ToInt32(temps.Attributes["E"].Value);
+                    tempBig = Convert.ToInt32(temps.Attributes["temp"].Value);
+                    ELittle = Convert.ToInt32(temps.Attributes["E"].Value);
+                }
+            }*/
+
+            for (int i=0; i < Elist.ChildNodes.Count; i++)
+            {
+                if ((i == 0 && Convert.ToInt32(Elist.ChildNodes.Item(i).Attributes["temp"].Value) > temp) ||
+                    Convert.ToInt32(Elist.ChildNodes.Item(i).Attributes["temp"].Value) == temp)
+                {
+                    E = Convert.ToInt32(Elist.ChildNodes.Item(i).Attributes["E"].Value);
+                    return E;
+                }
+                else if (Convert.ToInt32(Elist.ChildNodes.Item(i).Attributes["temp"].Value) > temp)
+                {
+                    tempLittle = Convert.ToInt32(Elist.ChildNodes.Item(i).Attributes["temp"].Value);
+                    EBig = Convert.ToInt32(Elist.ChildNodes.Item(i).Attributes["E"].Value);
+                    break;
+                }
+                else if (i == Elist.ChildNodes.Count - 1)//temperature greater then max in data.xml
+                {
+                    return -1;
+                }
+                else
+                {
+                    tempBig = Convert.ToInt32(Elist.ChildNodes.Item(i).Attributes["temp"].Value);
+                    ELittle = Convert.ToInt32(Elist.ChildNodes.Item(i).Attributes["E"].Value);
                 }
             }
-            E = Convert.ToInt32(E_b - ((E_b - E_l) * (temp - temp_l) / (temp_b - temp_l)));
-            //sigma *= 10;
-            //sigma = Math.Truncate(sigma / 5);
-            //sigma *= 0.5;
+
+
+            E = Convert.ToInt32(EBig - ((EBig - ELittle) * (temp - tempLittle) / (tempBig - tempLittle)));
 
             return E;
         }
@@ -292,70 +483,219 @@ namespace calcNet
             Data_out d_out = new Data_out { err = "" };
 
             d_out.c = d_in.c1 + d_in.c2 + d_in.c3;
-            if ((d_in.D < 200) && ((d_in.s - d_out.c) / d_in.D <= 0.3))
+
+            // Condition use formuls
             {
-                d_out.ypf = true;
-            }
-            else if ((d_in.D >= 200) && ((d_in.s - d_out.c) / d_in.D <= 0.3))
-            {
-                d_out.ypf = true;
-            }
-            else
-            {
-                d_out.ypf = false;
-                d_out.err += "Условие применения формул не выполняется\n";
+                const int DIAMETR_BIG_LITTLE_BORDER = 200;
+                bool isDiametrBig = DIAMETR_BIG_LITTLE_BORDER < d_in.D;
+
+                //bool isConditionUseFormuls;
+
+                if (isDiametrBig)
+                {
+                    const double CONDITION_USE_FORMULS_BIG_DIAMETR = 0.1;
+                    d_out.isConditionUseFormuls = ((d_in.s - d_out.c) / d_in.D) <= CONDITION_USE_FORMULS_BIG_DIAMETR;
+                }
+                else
+                {
+                    const double CONDITION_USE_FORMULS_LITTLE_DIAMETR = 0.3;
+                    d_out.isConditionUseFormuls = ((d_in.s - d_out.c) / d_in.D) <= CONDITION_USE_FORMULS_LITTLE_DIAMETR;
+                }
+
+                if (!d_out.isConditionUseFormuls)
+                {
+                    d_out.isError = true;
+                    d_out.err += "Условие применения формул не выполняется\n";
+                }
+
             }
 
-            if (d_in.dav == 0)
+            if (d_in.isNeedpCalculate)
             {
-                d_out.s_calcr = d_in.p * d_in.D / ((2 * d_in.sigma_d * d_in.fi) - d_in.p);
-                d_out.s_calc = d_out.s_calcr + d_out.c;
-                if (d_in.s == 0.0)
+                if (d_in.isPressureIn)
                 {
-                    d_out.p_d = 2 * d_in.sigma_d * d_in.fi * (d_out.s_calc - d_out.c) / (d_in.D + d_out.s_calc - d_out.c);
-                }
-                else if (d_in.s >= d_out.s_calc)
-                {
-                    d_out.p_d = 2 * d_in.sigma_d * d_in.fi * (d_in.s - d_out.c) / (d_in.D + d_in.s - d_out.c);
+
+                    d_out.s_calcr = d_in.p * d_in.D / (2 * d_in.sigma_d * d_in.fi - d_in.p);
+                    d_out.s_calc = d_out.s_calcr + d_out.c;
+                    if (d_in.s == 0.0)
+                    {
+                        d_out.p_d = 2 * d_in.sigma_d * d_in.fi * (d_out.s_calc - d_out.c) / (d_in.D + d_out.s_calc - d_out.c);
+                    }
+                    else if (d_in.s >= d_out.s_calc)
+                    {
+                        d_out.p_d = 2 * d_in.sigma_d * d_in.fi * (d_in.s - d_out.c) / (d_in.D + d_in.s - d_out.c);
+                    }
+                    else
+                    {
+                        d_out.isCriticalError = true;
+                        d_out.err += "Принятая толщина меньше расчетной\nрасчет не выполнен";
+                    }
                 }
                 else
                 {
-                    d_out.err += "Принятая толщина меньше расчетной\nрасчет не выполнен";
+                    d_out.l = d_in.l + d_in.l3_1 + d_in.l3_2;
+                    d_out.b_2 = 0.47 * Math.Pow(d_in.p / (0.00001 * d_in.E), 0.067) * Math.Pow(d_out.l / d_in.D, 0.4);
+                    d_out.b = Math.Max(1.0, d_out.b_2);
+                    d_out.s_calcr1 = 1.06 * (0.01 * d_in.D / d_out.b) * Math.Pow(d_in.p / (0.00001 * d_in.E) * (d_out.l / d_in.D), 0.4);
+                    d_out.s_calcr2 = 1.2 * d_in.p * d_in.D / (2 * d_in.sigma_d - d_in.p);
+                    d_out.s_calcr = Math.Max(d_out.s_calcr1, d_out.s_calcr2);
+                    d_out.s_calc = d_out.s_calcr + d_out.c;
+                    if (d_in.s == 0.0)
+                    {
+                        d_out.p_dp = 2 * d_in.sigma_d * (d_out.s_calc - d_out.c) / (d_in.D + d_out.s_calc - d_out.c);
+                        d_out.b1_2 = 9.45 * (d_in.D / d_out.l) * Math.Sqrt(d_in.D / (100 * (d_out.s_calc - d_out.c)));
+                        d_out.b1 = Math.Min(1.0, d_out.b1_2);
+                        d_out.p_de = 2.08 * 0.00001 * d_in.E / d_in.ny * d_out.b1 * (d_in.D / d_out.l) * Math.Pow(100 * (d_out.s_calc - d_out.c) / d_in.D, 2.5);
+                    }
+                    else if (d_in.s >= d_out.s_calc)
+                    {
+                        d_out.p_dp = 2 * d_in.sigma_d * (d_in.s - d_out.c) / (d_in.D + d_in.s - d_out.c);
+                        d_out.b1_2 = 9.45 * (d_in.D / d_out.l) * Math.Sqrt(d_in.D / (100 * (d_in.s - d_out.c)));
+                        d_out.b1 = Math.Min(1.0, d_out.b1_2);
+                        d_out.p_de = 2.08 * 0.00001 * d_in.E / d_in.ny * d_out.b1 * (d_in.D / d_out.l) * Math.Pow(100 * (d_in.s - d_out.c) / d_in.D, 2.5);
+                    }
+                    else
+                    {
+                        d_out.isCriticalError = true;
+                        d_out.err += "Принятая толщина меньше расчетной\nрасчет не выполнен";
+                    }
+                    d_out.p_d = d_out.p_dp / Math.Sqrt(1 + Math.Pow(d_out.p_dp / d_out.p_de, 2));
+                }
+                if (d_out.p_d < d_in.p)
+                {
+                    d_out.isError = true;
+                    d_out.err += "[p] меньше p";
                 }
             }
-            else if (d_in.dav == 1)
+
+            if (d_in.isNeedFCalculate)
             {
-                d_out.l = d_in.l + d_in.l3_1 + d_in.l3_2;
-                d_out.b_2 = 0.47 * Math.Pow(d_in.p / (0.00001 * d_in.E), 0.067) * Math.Pow(d_out.l / d_in.D, 0.4);
-                d_out.b = Math.Max(1.0, d_out.b_2);
-                d_out.s_calcr1 = 1.06 * (0.01 * d_in.D / d_out.b) * Math.Pow(d_in.p / (0.00001 * d_in.E) * (d_out.l / d_in.D), 0.4);
-                d_out.s_calcr2 = 1.2 * d_in.p * d_in.D / (2 * d_in.sigma_d - d_in.p);
-                d_out.s_calcr = Math.Max(d_out.s_calcr1, d_out.s_calcr2);
-                d_out.s_calc = d_out.s_calcr + d_out.c;
-                if (d_in.s == 0.0)
+                d_out.s_calcrf = d_in.F / (Math.PI * d_in.D * d_in.sigma_d * d_in.fit);
+                d_out.s_calcf = d_out.s_calcrf + d_out.c;
+                if (d_in.isFTensile)
                 {
-                    d_out.p_dp = 2 * d_in.sigma_d * (d_out.s_calc - d_out.c) / (d_in.D + d_out.s_calc - d_out.c);
-                    d_out.b1_2 = 9.45 * (d_in.D / d_out.l) * Math.Sqrt(d_in.D / (100 * (d_out.s_calc - d_out.c)));
-                    d_out.b1 = Math.Min(1.0, d_out.b1_2);
-                    d_out.p_de = ((2.08 * 0.00001 * d_in.E) / d_in.ny * d_out.b1) * (d_in.D / d_out.l) * Math.Pow(100 * (d_out.s_calc - d_out.c) / d_in.D, 2.5);
-                }
-                else if (d_in.s >= d_out.s_calc)
-                {
-                    d_out.p_dp = 2 * d_in.sigma_d * (d_in.s - d_out.c) / (d_in.D + d_in.s - d_out.c);
-                    d_out.b1_2 = 9.45 * (d_in.D / d_out.l) * Math.Sqrt(d_in.D / (100 * (d_in.s - d_out.c)));
-                    d_out.b1 = Math.Min(1.0, d_out.b1_2);
-                    d_out.p_de = 2.08 * 0.00001 * d_in.E / d_in.ny * d_out.b1 * (d_in.D / d_out.l) * Math.Pow(100 * (d_in.s - d_out.c) / d_in.D, 2.5);
+                    d_out.F_d = Math.PI * (d_in.D + d_in.s - d_out.c) * (d_in.s - d_out.c) * d_in.sigma_d * d_in.fit;
                 }
                 else
                 {
-                    d_out.err += "Принятая толщина меньше расчетной\nрасчет не выполнен";
+                    d_out.F_dp = Math.PI * (d_in.D + d_in.s - d_out.c) * (d_in.s - d_out.c) * d_in.sigma_d;
+                    d_out.F_de1 = 0.000031 * d_in.E / d_in.ny * Math.Pow(d_in.D, 2) * Math.Pow(100 * (d_in.s - d_out.c) / d_in.D, 2.5);
+
+                    const int L_MORE_THEN_D = 10;
+                    bool isLMoreThenD = d_in.l / d_in.D > L_MORE_THEN_D;
+
+                    if (isLMoreThenD)
+                    {
+                        switch(d_in.FCalcSchema)
+                        {
+                            case 1:
+                                d_out.lpr = d_in.l;
+                                break;
+                            case 2:
+                                d_out.lpr = 2 * d_in.l;
+                                break;
+                            case 3:
+                                d_out.lpr = 0.7 * d_in.l;
+                                break;
+                            case 4:
+                                d_out.lpr = 0.5 * d_in.l;
+                                break;
+                            case 5:
+                                d_out.F = d_in.q * d_in.l;
+                                d_out.lpr = 1.12 * d_in.l;
+                                break;
+                            case 6:
+                                double fDivl6 = d_in.f / d_in.l;
+                                fDivl6 *= 10;
+                                fDivl6 = Math.Round(fDivl6 / 2);
+                                fDivl6 *= 0.2;
+                                switch(fDivl6)
+                                {
+                                    case 0:
+                                        d_out.lpr = 2 * d_in.l;
+                                        break;
+                                    case 0.2:
+                                        d_out.lpr = 1.73 * d_in.l;
+                                        break;
+                                    case 0.4:
+                                        d_out.lpr = 1.47 * d_in.l;
+                                        break;
+                                    case 0.6:
+                                        d_out.lpr = 1.23 * d_in.l;
+                                        break;
+                                    case 0.8:
+                                        d_out.lpr = 1.06 * d_in.l;
+                                        break;
+                                    case 1:
+                                        d_out.lpr = d_in.l;
+                                        break;
+                                }
+                                break;
+                            case 7:
+                                double fDivl7 = d_in.f / d_in.l;
+                                fDivl7 *= 10;
+                                fDivl7 = Math.Round(fDivl7 / 2);
+                                fDivl7 *= 0.2;
+                                switch (fDivl7)
+                                {
+                                    case 0:
+                                        d_out.lpr = 2 * d_in.l;
+                                        break;
+                                    case 0.2:
+                                        d_out.lpr = 1.7 * d_in.l;
+                                        break;
+                                    case 0.4:
+                                        d_out.lpr = 1.4 * d_in.l;
+                                        break;
+                                    case 0.6:
+                                        d_out.lpr = 1.11 * d_in.l;
+                                        break;
+                                    case 0.8:
+                                        d_out.lpr = 0.85 * d_in.l;
+                                        break;
+                                    case 1:
+                                        d_out.lpr = 0.7 * d_in.l;
+                                        break;
+                                }
+                                break;
+
+                        }
+                        d_out.lamda = 2.83 * d_out.lpr / (d_in.D + d_in.s - d_out.c);
+                        d_out.F_de2 = Math.PI * (d_in.D + d_in.s - d_out.c) * (d_in.s - d_out.c) * d_in.E / d_in.ny *
+                                        Math.Pow(Math.PI / d_out.lamda, 2);
+                        d_out.F_de = Math.Min(d_out.F_de1, d_out.F_de2);
+                    }
+                    else
+                    {
+                        d_out.F_de = d_out.F_de1;
+                    }
+
+                    d_out.F_d = d_out.F_dp / Math.Sqrt(1 + Math.Pow(d_out.F_dp / d_out.F_de, 2));
                 }
-                d_out.p_d = d_out.p_dp / Math.Sqrt(1 + Math.Pow(d_out.p_dp / d_out.p_de, 2));
             }
-            else
+
+            if (d_in.isNeedMCalculate)
             {
-                d_out.err += "Неверный тип давления\nрасчет не выполнен";
+                d_out.M_dp = Math.PI / 4 * d_in.D * (d_in.D + d_in.s - d_out.c) * (d_in.s - d_out.c) * d_in.sigma_d;
+                d_out.M_de = 0.000089 * d_in.E / d_in.ny * Math.Pow(d_in.D, 3) * Math.Pow(100 * (d_in.s - d_out.c) / d_in.D, 2.5);
+                d_out.M_d = d_out.M_dp / Math.Sqrt(1 + Math.Pow(d_out.M_dp / d_out.M_de, 2));
             }
+
+            if (d_in.isNeedQCalculate)
+            {
+                d_out.Q_dp = 0.25 * d_in.sigma_d * Math.PI * d_in.D * (d_in.s - d_out.c);
+                d_out.Q_de = 2.4 * d_in.E * Math.Pow(d_in.s - d_out.c, 2) / d_in.ny *
+                    (0.18 + 3.3 * d_in.D * (d_in.s - d_out.c) / Math.Pow(d_in.l, 2));
+                d_out.Q_d = d_out.Q_dp / Math.Sqrt(1 + Math.Pow(d_out.Q_dp / d_out.Q_de, 2));
+            }
+
+            if ((d_in.isNeedpCalculate || d_in.isNeedFCalculate) && 
+                (d_in.isNeedMCalculate || d_in.isNeedQCalculate))
+            {
+                d_out.conditionYstoich = d_in.p / d_out.p_d + d_in.F / d_out.F_d + d_in.M / d_out.M_d +
+                                        Math.Pow(d_in.Q / d_out.Q_d, 2);
+            }
+            // TODO: Проверка F для FCalcSchema == 6 F расчитывается и записывается в d_out, а не берется из d_in
             return d_out;
         }
 
@@ -366,11 +706,11 @@ namespace calcNet
 
             if ((((d_in.s - d_out.c) / d_in.D <= 0.1) & ((d_in.s - d_out.c) / d_in.D >= 0.002) & (d_in.elH / d_in.D < 0.5) & (d_in.elH / d_in.D >= 0.2)) | d_in.s == 0)
             {
-                d_out.ypf = true;
+                d_out.isConditionUseFormuls = true;
             }
             else
             {
-                d_out.ypf = false;
+                d_out.isConditionUseFormuls = false;
                 d_out.err += "Условие применения формул не выполняется\n";
             }
             d_out.elR = Math.Pow(d_in.D, 2) / (4 * d_in.elH);
@@ -743,7 +1083,7 @@ namespace calcNet
         {
             d_in.sigma_d = GetSigma(d_in.steel, d_in.temp);
             d_in.E = GetE(d_in.steel, d_in.temp);
-            DataSaddle_out d_out = new DataSaddle_out { ypf = true };
+            DataSaddle_out d_out = new DataSaddle_out { isConditionUseFormuls = true };
 
             d_out.M_d = (0.0000089 * d_in.E) / d_in.ny * Math.Pow(d_in.D, 3) * Math.Pow((100 * (d_in.s - d_in.c)) / d_in.D, 2.5);
             // UNDONE: проверить формулу для расчета [F]
@@ -775,11 +1115,11 @@ namespace calcNet
                 {
                     d_out.err += "Несущая способность обечайки в сечении между опорами. Условие прочности не выполняется\n";
                 }
-                if (d_in.dav == 0)
+                if (d_in.isPressureIn)
                 {
                     d_out.yslystoich1 = d_out.M12 / d_out.M_d;
                 }
-                else if (d_in.dav == 1)
+                else
                 {
                     d_out.yslystoich1 = d_in.p / d_out.p_d + d_out.M12 / d_out.M_d;
                 }
@@ -845,11 +1185,11 @@ namespace calcNet
 
                         d_out.Fe = d_out.F1 * (Math.PI / 4) * d_out.K13 * d_out.K15 * Math.Sqrt(d_in.D / (d_in.s - d_in.c));
 
-                        if (d_in.dav == 0)
+                        if (d_in.isPressureIn)
                         {
                             d_out.yslystoich2 = d_out.M1 / d_out.M_d + d_out.Fe / d_out.F_d + Math.Pow(d_out.Q1 / d_out.Q_d, 2);
                         }
-                        else if (d_in.dav == 1)
+                        else
                         {
                             d_out.yslystoich2 = d_in.p / d_out.p_d + d_out.M1 / d_out.M_d + d_out.Fe / d_out.F_d + Math.Pow(d_out.Q1 / d_out.Q_d, 2);
                         }
@@ -913,11 +1253,11 @@ namespace calcNet
                             d_out.err += "Несущая способность обечайки, не укрепленной кольцами жесткости в области опорного узла. Условие прочности не выполняется\n";
                         }
 
-                        if (d_in.dav == 0)
+                        if (d_in.isPressureIn)
                         {
                             d_out.yslystoich2 = d_out.M1 / d_out.M_d + d_out.Fe / d_out.F_d + Math.Pow(d_out.Q1 / d_out.Q_d, 2);
                         }
-                        else if (d_in.dav == 1)
+                        else
                         {
                             d_out.yslystoich2 = d_in.p / d_out.p_d + d_out.M1 / d_out.M_d + d_out.Fe / d_out.F_d + Math.Pow(d_out.Q1 / d_out.Q_d, 2);
                         }
@@ -937,31 +1277,31 @@ namespace calcNet
 
             if (d_in.delta1 <= 60 || d_in.delta1 >= 180)
             {
-                d_out.ypf = false;
+                d_out.isConditionUseFormuls = false;
                 d_out.err += "delta1 должно быть в пределах 60-180\n";
             }
             if ((d_in.s - d_in.c)/d_in.D >0.05)
             {
-                d_out.ypf = false;
+                d_out.isConditionUseFormuls = false;
                 d_out.err += "Условие применения формул не выполняется\n";
             }
             if (d_in.type == 2)
             {
                 if (d_in.delta2 < d_in.delta1 + 20)
                 {
-                    d_out.ypf = false;
+                    d_out.isConditionUseFormuls = false;
                     d_out.err += "Угол обхвата подкладного листа должен быть delta2>=delta1+20\n";
                 }
                 if (d_in.s2 < d_in.s)
                 {
-                    d_out.ypf = false;
+                    d_out.isConditionUseFormuls = false;
                     d_out.err += "Толщина подкладного листа должна быть s2>=s\n";
                 }
                 d_out.Ak = d_in.b2 * d_in.s2;
                 d_out.Akypf = (d_in.s - d_in.c) * Math.Sqrt(d_in.D * (d_in.s - d_in.c));
                 if (d_out.Ak < d_out.Akypf)
                 {
-                    d_out.ypf = false;
+                    d_out.isConditionUseFormuls = false;
                     d_out.err += "Условие применения формул не выполняется\n";
                 }
             }

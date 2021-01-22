@@ -932,62 +932,6 @@ namespace calcNet
 
                         break;
                     }
-
-
-
-
-
-                    
-
-                    //elif parent().typeElement == "el":
-                    //    labsis = QtWidgets.QLabel("Система координат:")
-                    //    placepolar_rb = QtWidgets.QRadioButton("Полярная")
-                    //    placepolar_rb.setChecked(True)
-                    //    placedekart_rb = QtWidgets.QRadioButton("Декартова")
-                    //    rb_group1 = QtWidgets.QButtonGroup()
-                    //    rb_group1.addButton(placepolar_rb)
-                    //    rb_group1.addButton(placedekart_rb)
-
-
-
-                    //    placerb_1 = QtWidgets.QRadioButton("Радиальный")
-                    //    placerb_1.setChecked(True)
-                    //    placerb_1.toggled[bool].emit(False)
-                    //    placerb_2 = QtWidgets.QRadioButton("Вдоль оси")
-                    //    placerb_3 = QtWidgets.QRadioButton("Наклонный")
-                    //    placerb_group = QtWidgets.QButtonGroup()
-                    //    placerb_group.addButton(placerb_1, 1)
-                    //    placerb_group.addButton(placerb_2, 2)
-                    //    placerb_group.addButton(placerb_3, 3)
-
-
-                    //    pic = QtWidgets.QLabel()
-                    //    pic.setScaledContents(True)
-                    //    grid = QtWidgets.QGridLayout()
-                    //    fr = QtWidgets.QFrame()
-                    //    grid.addWidget(labsis, 0, 1)
-                    //    grid.addWidget(placepolar_rb, 0, 2)
-                    //    grid.addWidget(placedekart_rb, 0, 3)
-
-                    //    grid.addWidget(placerb_1, 1, 0)
-                    //    grid.addWidget(placerb_2, 2, 0)
-                    //    grid.addWidget(placerb_3, 3, 0)
-                    //    grid.addWidget(fr, 4, 0)
-                    //    grid.addWidget(pic, 1, 1, 6, 3)
-                    //    grid1 = QtWidgets.QGridLayout()
-                    //    place_gb.setLayout(grid)
-
-
-                    //    grid.addLayout(grid1, 5, 0)
-
-                    //    # placerb_group.buttonToggled.connect(place)
-                    //    placerb_1.toggled.connect(place)
-                    //    placerb_2.toggled.connect(place)
-                    //    placerb_3.toggled.connect(place)
-
-                    //    placepolar_rb.toggled.connect(place)
-                    //    placedekart_rb.toggled.connect(place)
-                    //        }
             }
         }
 
@@ -1001,7 +945,12 @@ namespace calcNet
             steel3_cb.SelectedIndex = 0;
             Gost_cb.SelectedIndex = 0;
 
-            if (this.Owner is CilForm)
+            
+            //var field = (string)typeof(Owner.GetType()).GetField("TypeElement").GetValue(null);
+            //object value = field.GetValue();
+            //var c = field;
+
+            if (this.Owner is CilForm cf)
             {
                 System.Windows.Forms.MessageBox.Show("Cil");
                 TypeElement = "cil";

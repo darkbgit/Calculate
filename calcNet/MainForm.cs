@@ -54,7 +54,7 @@ namespace calcNet
                     {
                         System.IO.File.Copy("temp.docx", f);
                     }
-                    List<int> lit = new List<int>();
+                    List<int> bibliography = new List<int>();
                     try
                     {
                         for (int i = 0; i < DataWordOut.DataArr.Count; i++)
@@ -66,34 +66,34 @@ namespace calcNet
                                 {
                                     case "cil":
                                         MakeWord.MakeWord_cil(DataWordOut.DataArr[i].Data_In, DataWordOut.DataArr[i].Data_Out, f);
-                                        lit.Add(2);
+                                        bibliography.Add(2);
                                         break;
                                     case "kon":
-                                        lit.Add(2);
+                                        bibliography.Add(2);
                                         break;
                                     case "ell":
                                         MakeWord.MakeWord_ell(DataWordOut.DataArr[i].Data_In, DataWordOut.DataArr[i].Data_Out, f);
-                                        lit.Add(2);
+                                        bibliography.Add(2);
                                         break;
                                     case "cilyk":
                                     case "konyk":
                                     case "ellyk":
                                         MakeWord.MakeWord_nozzle(DataWordOut.DataArr[i].Data_In, DataWordOut.DataArr[i].Data_Out, DataWordOut.DataArr[i].DataN_In, DataWordOut.DataArr[i].DataN_Out, f);
-                                        lit.Add(3);
+                                        bibliography.Add(3);
                                         break;
                                     case "saddle":
-                                        lit.Add(5);
+                                        bibliography.Add(5);
                                         break;
                                     case "heat":
-                                        lit.Add(7);
+                                        bibliography.Add(7);
                                         break;
                                     case "pldn":
-                                        lit.Add(2);
+                                        bibliography.Add(2);
                                         break;
                                 }
                             }
                         }
-                        MakeWord.MakeLit(lit, f);
+                        MakeWord.MakeLit(bibliography, f);
                         System.Windows.Forms.MessageBox.Show("OK");
                     }
                     catch
@@ -279,7 +279,7 @@ namespace calcNet
             }
         }
 
-        private void menuUp_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        private void MenuUp_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
             //if (e.ClickedItem.Name == "AboutToolStripMenuItem")
             //{

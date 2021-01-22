@@ -105,7 +105,7 @@ namespace calcNet
             this.menuUp.Size = new System.Drawing.Size(922, 24);
             this.menuUp.TabIndex = 1;
             this.menuUp.Text = "menuUp";
-            this.menuUp.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuUp_ItemClicked);
+            this.menuUp.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.MenuUp_ItemClicked);
             // 
             // FileToolStripMenuItem
             // 

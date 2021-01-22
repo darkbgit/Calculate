@@ -19,7 +19,6 @@ namespace calcNet
 
         private void OK_b_Click(object sender, EventArgs e)
         {
-
             //this.Close();
             
             this.Owner.Hide();
@@ -45,8 +44,6 @@ namespace calcNet
                     };
                     nf.DataArrEl = data_InOut;
                 }
-                
-                
                 
                 nf.Show();
             }

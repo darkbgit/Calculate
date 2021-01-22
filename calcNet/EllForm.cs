@@ -556,7 +556,7 @@ namespace calcNet
                     {
                         System.Windows.Forms.MessageBox.Show("MainForm Error");
                     }
-                    if (d_out.ypf == false)
+                    if (d_out.isConditionUseFormuls == false)
                     {
                         v = "Условия применения формул не выполняется";
                     }

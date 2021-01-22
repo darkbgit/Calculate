@@ -10,20 +10,37 @@ namespace calcNet
 {
     class MakeWord
     {
+        
+        //enum Gosts
+        //{
+        //    GOST_34233_1 = 1,
+        //    GOST_34233_2 = 2,
+        //    GOST_34233_3 = 3,
+        //    GOST_34233_4 = 4,
+        //    GOST_34233_5 = 5,
+        //    GOST_34233_6 = 6,
+        //    GOST_34233_7 = 7,
+        //    GOST_34233_8 = 8,
+        //    GOST_34233_9 = 9,
+        //    GOST_34233_10 = 10,
+        //    GOST_34233_11 = 11
+        //}
+
+
         internal static void MakeWord_cil(Data_in d_in, Data_out d_out, string Docum = null)
         {
             if (Docum == null)
             {
                 Docum = "temp.docx";
             }
-            
+
             var doc = Xceed.Words.NET.DocX.Load(Docum);
 
-            
+
 
             doc.InsertParagraph().InsertPageBreakAfterSelf();
             doc.InsertParagraph($"Расчет на прочность обечайки {d_in.name}, нагруженной ").Heading(HeadingType.Heading1).Alignment = Alignment.center;
-            if (d_in.dav == 0)
+            if (d_in.isPressureIn)
             {
                 doc.Paragraphs.Last().Append("внутренним избыточным давлением");
             }
@@ -32,82 +49,93 @@ namespace calcNet
                 doc.Paragraphs.Last().Append("наружным давлением");
             }
             doc.InsertParagraph().Alignment = Alignment.center;
+            
             var image = doc.AddImage("pic/ObCil.gif");
             var picture = image.CreatePicture();
             doc.InsertParagraph().AppendPicture(picture);
             doc.InsertParagraph("Исходные данные").Alignment = Alignment.center;
 
-            var table = doc.AddTable(1, 2);
-            table.SetWidths(new float[] { 300, 100 });
-            //int i = 0;
-            //table.InsertRow(i);
-            table.Rows[0].Cells[0].Paragraphs[0].Append("Материал обечайки");
-            table.Rows[0].Cells[1].Paragraphs[0].Append($"{d_in.steel}");
-            int i = 1;
-            table.InsertRow(i);
-            table.Rows[i].Cells[0].Paragraphs[0].Append("Внутренний диаметр обечайки, D:");
-            table.Rows[i].Cells[1].Paragraphs[0].Append($"{d_in.D} мм");
-            i++;
-            if (d_in.dav == 1)
+            //table
             {
-                table.InsertRow(i);
-                table.Rows[i].Cells[0].Paragraphs[0].Append("Длина обечайки, l:");
-                table.Rows[i].Cells[1].Paragraphs[0].Append($"{d_in.l} мм");
-                i += 1;
-            }
-            table.InsertRow(i);
-            table.Rows[i].Cells[0].Paragraphs[0].Append("Прибавка на коррозию, ").AppendEquation("c_1").Append(":");
-            table.Rows[i].Cells[1].Paragraphs[0].Append($"{d_in.c1} мм");
-            i += 1;
-            table.InsertRow(i);
-            table.Rows[i].Cells[0].Paragraphs[0].Append("Прибавка для компенсации минусового допуска, ").AppendEquation("c_2").Append(":");
-            table.Rows[i].Cells[1].Paragraphs[0].Append($"{d_in.c2} мм");
-            i += 1;
-            if (d_in.c3 > 0)
-            {
-                table.InsertRow(i);
-                table.Rows[i].Cells[0].Paragraphs[0].Append("Технологическая прибавка, ").AppendEquation("c_3").Append(":");
-                table.Rows[i].Cells[1].Paragraphs[0].Append($"{d_in.c3} мм");
-                i += 1;
-            }
-            table.InsertRow(i);
-            table.Rows[i].Cells[0].Paragraphs[0].Append("Коэффициент прочности сварного шва, ").AppendEquation("φ_p").Append(":");
-            table.Rows[i].Cells[1].Paragraphs[0].Append($"{d_in.fi} мм");
+                var table = doc.AddTable(1, 2);
+                table.SetWidths(new float[] { 300, 100 });
+                int i = 0;
+                //table.InsertRow(i);
+                table.Rows[i].Cells[0].Paragraphs[0].Append("Материал обечайки");
+                table.Rows[i].Cells[1].Paragraphs[0].Append($"{d_in.steel}");
 
-            doc.InsertParagraph().InsertTableAfterSelf(table);
-            
+                table.InsertRow(++i);
+                table.Rows[i].Cells[0].Paragraphs[0].Append("Внутренний диаметр обечайки, D:");
+                table.Rows[i].Cells[1].Paragraphs[0].Append($"{d_in.D} мм");
+
+                if (d_in.isPressureIn)
+                {
+                    table.InsertRow(++i);
+                    table.Rows[i].Cells[0].Paragraphs[0].Append("Длина обечайки, l:");
+                    table.Rows[i].Cells[1].Paragraphs[0].Append($"{d_in.l} мм");
+                }
+                table.InsertRow(++i);
+                table.Rows[i].Cells[0].Paragraphs[0].Append("Прибавка на коррозию, ")
+                                                    .AppendEquation("c_1")
+                                                    .Append(":");
+                table.Rows[i].Cells[1].Paragraphs[0].Append($"{d_in.c1} мм");
+
+                table.InsertRow(++i);
+                table.Rows[i].Cells[0].Paragraphs[0].Append("Прибавка для компенсации минусового допуска, ")
+                                                    .AppendEquation("c_2")
+                                                    .Append(":");
+                table.Rows[i].Cells[1].Paragraphs[0].Append($"{d_in.c2} мм");
+
+                if (d_in.c3 > 0)
+                {
+                    table.InsertRow(++i);
+                    table.Rows[i].Cells[0].Paragraphs[0].Append("Технологическая прибавка, ")
+                                                        .AppendEquation("c_3")
+                                                        .Append(":");
+                    table.Rows[i].Cells[1].Paragraphs[0].Append($"{d_in.c3} мм");
+                }
+                table.InsertRow(++i);
+                table.Rows[i].Cells[0].Paragraphs[0].Append("Коэффициент прочности сварного шва, ")
+                                                    .AppendEquation("φ_p")
+                                                    .Append(":");
+                table.Rows[i].Cells[1].Paragraphs[0].Append($"{d_in.fi} мм");
+
+                doc.InsertParagraph().InsertTableAfterSelf(table);
+            }
 
             doc.InsertParagraph();
             doc.InsertParagraph("Условия нагружения").Alignment = Alignment.center;
-            var table1 = doc.AddTable(1, 2);
-            table1.SetWidths(new float[] { 300, 100 });
 
-            table1.Rows[0].Cells[0].Paragraphs[0].Append("Расчетная температура, Т:");
-            table1.Rows[0].Cells[1].Paragraphs[0].Append($"{d_in.temp} °С");
-            i = 1;
-            table1.InsertRow(i);
-            if (d_in.dav == 0)
+            //table
             {
-                table1.Rows[i].Cells[0].Paragraphs[0].Append("Расчетное внутреннее избыточное давление, p:");
-            }
-            else
-            {
-                table1.Rows[i].Cells[0].Paragraphs[0].Append("Расчетное наружное давление, p:");
-            }
-            table1.Rows[i].Cells[1].Paragraphs[0].Append($"{d_in.p} МПа");
-            i += 1;
-            table1.InsertRow(i);
-            table1.Rows[i].Cells[0].Paragraphs[0].Append($"Допускаемое напряжение для материала {d_in.steel} при расчетной температуре, [σ]:");
-            table1.Rows[i].Cells[1].Paragraphs[0].Append($"{d_in.sigma_d} МПа");
-            i += 1;
-            if (d_in.dav == 1)
-            {
-                table1.InsertRow(i);
-                table1.Rows[i].Cells[0].Paragraphs[0].Append("Модуль продольной упругости при расчетной температуре, E:");
-                table1.Rows[i].Cells[1].Paragraphs[0].Append($"{d_in.E} МПа");
-            }
+                var table = doc.AddTable(1, 2);
+                table.SetWidths(new float[] { 300, 100 });
+                int i = 0;
+                table.Rows[i].Cells[0].Paragraphs[0].Append("Расчетная температура, Т:");
+                table.Rows[i].Cells[1].Paragraphs[0].Append($"{d_in.temp} °С");
 
-            doc.InsertParagraph().InsertTableAfterSelf(table1);
+                table.InsertRow(++i);
+                if (d_in.isPressureIn)
+                {
+                    table.Rows[i].Cells[0].Paragraphs[0].Append("Расчетное внутреннее избыточное давление, p:");
+                }
+                else
+                {
+                    table.Rows[i].Cells[0].Paragraphs[0].Append("Расчетное наружное давление, p:");
+                }
+                table.Rows[i].Cells[1].Paragraphs[0].Append($"{d_in.p} МПа");
+
+                table.InsertRow(++i);
+                table.Rows[i].Cells[0].Paragraphs[0].Append($"Допускаемое напряжение для материала {d_in.steel} при расчетной температуре, [σ]:");
+                table.Rows[i].Cells[1].Paragraphs[0].Append($"{d_in.sigma_d} МПа");
+                if (!d_in.isPressureIn)
+                {
+                    table.InsertRow(++i);
+                    table.Rows[i].Cells[0].Paragraphs[0].Append("Модуль продольной упругости при расчетной температуре, E:");
+                    table.Rows[i].Cells[1].Paragraphs[0].Append($"{d_in.E} МПа");
+                }
+                doc.InsertParagraph().InsertTableAfterSelf(table);
+            }
 
             doc.InsertParagraph("");
             doc.InsertParagraph("Результаты расчета").Alignment = Alignment.center;
@@ -115,12 +143,13 @@ namespace calcNet
             doc.InsertParagraph("Толщину стенки вычисляют по формуле:");
             doc.InsertParagraph().AppendEquation("s≥s_p+c");
             doc.InsertParagraph("где ").AppendEquation("s_p").Append(" - расчетная толщина стенки обечайки");
-            if (d_in.dav == 0)
+            if (d_in.isPressureIn)
             {
                 doc.InsertParagraph().AppendEquation("s_p=(p∙D)/(2∙[σ]∙φ_p-p)");
-                doc.InsertParagraph().AppendEquation($"s_p=({d_in.p}∙{d_in.D})/(2∙{d_in.sigma_d}∙{d_in.fi}-{d_in.p})={d_out.s_calcr:f2} мм");
+                doc.InsertParagraph().AppendEquation($"s_p=({d_in.p}∙{d_in.D})/(2∙{d_in.sigma_d}∙{d_in.fi}-{d_in.p})=" +
+                                                    "{d_out.s_calcr:f2} мм");
             }
-            else if (d_in.dav == 1)
+            else
             {
                 doc.InsertParagraph().AppendEquation("s_p=max{1.06∙(10^-2∙D)/(B)∙(p/(10^-5∙E)∙l/D)^0.4;(1.2∙p∙D)/(2∙[σ]-p)}");
                 doc.InsertParagraph("Коэффициент B вычисляют по формуле:");
@@ -145,26 +174,30 @@ namespace calcNet
             {
                 doc.InsertParagraph($"Принятая толщина s={d_in.s} мм").Bold().Color(System.Drawing.Color.Red);
             }
-            if (d_in.dav == 0)
+            if (d_in.isPressureIn)
             {
                 doc.InsertParagraph("Допускаемое внутреннее избыточное давление вычисляют по формуле:");
                 doc.InsertParagraph().AppendEquation("[p]=(2∙[σ]∙φ_p∙(s-c))/(D+s-c)");
-                doc.InsertParagraph().AppendEquation($"[p]=(2∙{d_in.sigma_d}∙{d_in.fi}∙({d_in.s}-{d_out.c:f2}))/({d_in.D}+{d_in.s}-{d_out.c:f2})={d_out.p_d:f2} МПа");
+                doc.InsertParagraph().AppendEquation($"[p]=(2∙{d_in.sigma_d}∙{d_in.fi}∙({d_in.s}-{d_out.c:f2}))/" +
+                                                    "({d_in.D}+{d_in.s}-{d_out.c:f2})={d_out.p_d:f2} МПа");
             }
-            else if (d_in.dav == 1)
+            else
             {
                 doc.InsertParagraph("Допускаемое наружное давление вычисляют по формуле:");
                 doc.InsertParagraph().AppendEquation("[p]=[p]_П/√(1+([p]_П/[p]_E)^2)");
                 doc.InsertParagraph("допускаемое давление из условия прочности вычисляют по формуле:");
                 doc.InsertParagraph().AppendEquation("[p]_П=(2∙[σ]∙(s-c))/(D+s-c)");
-                doc.InsertParagraph().AppendEquation($"[p]_П=(2∙{d_in.sigma_d}∙({d_in.s}-{d_out.c:f2}))/({d_in.D}+{d_in.s}-{d_out.c:f2})={d_out.p_dp:f2} МПа");
+                doc.InsertParagraph().AppendEquation($"[p]_П=(2∙{d_in.sigma_d}∙({d_in.s}-{d_out.c:f2}))/" +
+                                                    "({d_in.D}+{d_in.s}-{d_out.c:f2})={d_out.p_dp:f2} МПа");
                 doc.InsertParagraph("допускаемое давление из условия устойчивости в пределах упругости вычисляют по формуле:");
                 doc.InsertParagraph().AppendEquation("[p]_E=(2.08∙10^-5∙E)/(n_y∙B_1)∙D/l∙[(100∙(s-c))/D]^2.5");
                 doc.InsertParagraph("коэффициент ").AppendEquation("B_1").Append(" вычисляют по формуле");
                 doc.InsertParagraph().AppendEquation("B_1=min{1;9.45∙D/l∙√(D/(100∙(s-c)))}");
-                doc.InsertParagraph().AppendEquation($"9.45∙{d_in.D}/{d_out.l}∙√({d_in.D}/(100∙({d_in.s}-{d_out.c:f2})))={d_out.b1_2:f2}");
+                doc.InsertParagraph().AppendEquation($"9.45∙{d_in.D}/{d_out.l}∙√({d_in.D}/(100∙({d_in.s}-{d_out.c:f2})))=" +
+                                                    "{d_out.b1_2:f2}");
                 doc.InsertParagraph().AppendEquation($"B_1=min(1;{d_out.b1_2:f2})={d_out.b1:f1}");
-                doc.InsertParagraph().AppendEquation($"[p]_E=(2.08∙10^-5∙{d_in.E})/({d_in.ny}∙{d_out.b1:f2})∙{d_in.D}/{d_out.l}∙[(100∙({d_in.s}-{d_out.c:f2}))/{d_in.D}]^2.5={d_out.p_de:f2} МПа");
+                doc.InsertParagraph().AppendEquation($"[p]_E=(2.08∙10^-5∙{d_in.E})/({d_in.ny}∙{d_out.b1:f2})∙{d_in.D}/" +
+                                                    "{d_out.l}∙[(100∙({d_in.s}-{d_out.c:f2}))/{d_in.D}]^2.5={d_out.p_de:f2} МПа");
                 doc.InsertParagraph().AppendEquation($"[p]={d_out.p_dp:f2}/√(1+({d_out.p_dp:f2}/{d_out.p_de:f2})^2)={d_out.p_d:f2} МПа");
             }
 
@@ -178,15 +211,16 @@ namespace calcNet
             {
                 doc.InsertParagraph("Условие прочности не выполняется").Bold().Color(System.Drawing.Color.Red);
             }
-            if (d_out.ypf)
+            if (d_out.isConditionUseFormuls)
             {
                 doc.InsertParagraph("Границы применения формул ");
             }
             else
             {
-                doc.InsertParagraph("Границы применения формул. ловие не выполняется ").Bold().Color(System.Drawing.Color.Red);
+                doc.InsertParagraph("Границы применения формул. Условие не выполняется ").Bold().Color(System.Drawing.Color.Red);
             }
-            if (d_in.D >= 200)
+            const int DIAMETR_BIG_LITTLE_BORDER = 200;
+            if (d_in.D >= DIAMETR_BIG_LITTLE_BORDER)
             {
                 doc.Paragraphs.Last().Append("при D ≥ 200 мм");
                 doc.InsertParagraph().AppendEquation("(s-c)/(D)≤0.1");
@@ -209,7 +243,7 @@ namespace calcNet
 
             doc.InsertParagraph().InsertPageBreakAfterSelf();
             doc.InsertParagraph($"Расчет на прочность эллиптического днища {d_in.name}, нагруженного ").Heading(HeadingType.Heading1).Alignment = Alignment.center;
-            if (d_in.dav == 0)
+            if (d_in.isPressureIn)
             {
                 doc.Paragraphs.Last().Append("внутренним избыточным давлением");
             }
@@ -223,76 +257,85 @@ namespace calcNet
             doc.InsertParagraph().AppendPicture(picture);
             doc.InsertParagraph("Исходные данные").Alignment = Alignment.center;
 
-            var table = doc.AddTable(1, 2);
-            table.SetWidths(new float[] { 300, 100 });
-            //int i = 0;
-            //table.InsertRow(i);
-            table.Rows[0].Cells[0].Paragraphs[0].Append("Материал днища");
-            table.Rows[0].Cells[1].Paragraphs[0].Append($"{d_in.steel}");
-            int i = 1;
-            table.InsertRow(i);
-            table.Rows[i].Cells[0].Paragraphs[0].Append("Внутренний диаметр днища, D:");
-            table.Rows[i].Cells[1].Paragraphs[0].Append($"{d_in.D} мм");
-            i += 1;
-            table.InsertRow(i);
-            table.Rows[i].Cells[0].Paragraphs[0].Append("Высота выпуклой части, H:");
-            table.Rows[i].Cells[1].Paragraphs[0].Append($"{d_in.elH} мм");
-            i += 1;
-            table.InsertRow(i);
-            table.Rows[i].Cells[0].Paragraphs[0].Append("Длина отбортовки ").AppendEquation("h_1").Append(":");
-            table.Rows[i].Cells[1].Paragraphs[0].Append($"{d_in.elh1}");
-            i += 1;
-            table.InsertRow(i);
-            table.Rows[i].Cells[0].Paragraphs[0].Append("Прибавка на коррозию, ").AppendEquation("c_1").Append(":");
-            table.Rows[i].Cells[1].Paragraphs[0].Append($"{d_in.c1} мм");
-            i += 1;
-            table.InsertRow(i);
-            table.Rows[i].Cells[0].Paragraphs[0].Append("Прибавка для компенсации минусового допуска, ").AppendEquation("c_2").Append(":");
-            table.Rows[i].Cells[1].Paragraphs[0].Append($"{d_in.c2} мм");
-            i += 1;
-            if (d_in.c3 > 0)
+            //table
             {
-                table.InsertRow(i);
-                table.Rows[i].Cells[0].Paragraphs[0].Append("Технологическая прибавка, ").AppendEquation("c_3").Append(":");
-                table.Rows[i].Cells[1].Paragraphs[0].Append($"{d_in.c3}");
-                i += 1;
+                var table = doc.AddTable(1, 2);
+                table.SetWidths(new float[] { 300, 100 });
+                int i = 0;
+                //table.InsertRow(i);
+                table.Rows[i].Cells[0].Paragraphs[0].Append("Материал днища");
+                table.Rows[i].Cells[1].Paragraphs[0].Append($"{d_in.steel}");
+                
+                table.InsertRow(++i);
+                table.Rows[i].Cells[0].Paragraphs[0].Append("Внутренний диаметр днища, D:");
+                table.Rows[i].Cells[1].Paragraphs[0].Append($"{d_in.D} мм");
+
+                table.InsertRow(++i);
+                table.Rows[i].Cells[0].Paragraphs[0].Append("Высота выпуклой части, H:");
+                table.Rows[i].Cells[1].Paragraphs[0].Append($"{d_in.elH} мм");
+
+                table.InsertRow(++i);
+                table.Rows[i].Cells[0].Paragraphs[0].Append("Длина отбортовки ").AppendEquation("h_1").Append(":");
+                table.Rows[i].Cells[1].Paragraphs[0].Append($"{d_in.elh1}");
+
+                table.InsertRow(++i);
+                table.Rows[i].Cells[0].Paragraphs[0].Append("Прибавка на коррозию, ").AppendEquation("c_1").Append(":");
+                table.Rows[i].Cells[1].Paragraphs[0].Append($"{d_in.c1} мм");
+
+                table.InsertRow(++i);
+                table.Rows[i].Cells[0].Paragraphs[0].Append("Прибавка для компенсации минусового допуска, ")
+                                                    .AppendEquation("c_2")
+                                                    .Append(":");
+                table.Rows[i].Cells[1].Paragraphs[0].Append($"{d_in.c2} мм");
+
+                if (d_in.c3 > 0)
+                {
+                    table.InsertRow(++i);
+                    table.Rows[i].Cells[0].Paragraphs[0].Append("Технологическая прибавка, ").AppendEquation("c_3").Append(":");
+                    table.Rows[i].Cells[1].Paragraphs[0].Append($"{d_in.c3}");
+                }
+                table.InsertRow(++i);
+                table.Rows[i].Cells[0].Paragraphs[0].Append("Коэффициент прочности сварного шва, ").AppendEquation("φ_p");
+                table.Rows[i].Cells[1].Paragraphs[0].Append($"{d_in.fi}");
+                doc.InsertParagraph().InsertTableAfterSelf(table);
             }
-            table.InsertRow(i);
-            table.Rows[i].Cells[0].Paragraphs[0].Append("Коэффициент прочности сварного шва, ").AppendEquation("φ_p");
-            table.Rows[i].Cells[1].Paragraphs[0].Append($"{d_in.fi}");
-            doc.InsertParagraph().InsertTableAfterSelf(table);
 
             doc.InsertParagraph();
             doc.InsertParagraph("Условия нагружения").Alignment = Alignment.center;
-            var table1 = doc.AddTable(1, 2);
-            table1.SetWidths(new float[] { 300, 100 });
 
-            table1.Rows[0].Cells[0].Paragraphs[0].Append("Расчетная температура, Т:");
-            table1.Rows[0].Cells[1].Paragraphs[0].Append($"{d_in.temp} °С");
-            i = 1;
-            table1.InsertRow(i);
-            if (d_in.dav == 0)
+            //table
             {
-                table1.Rows[i].Cells[0].Paragraphs[0].Append("Расчетное внутреннее избыточное давление, p:");
-            }
-            else
-            {
-                table1.Rows[i].Cells[0].Paragraphs[0].Append("Расчетное наружное давление, p:");
-            }
-            table1.Rows[i].Cells[1].Paragraphs[0].Append($"{d_in.p} МПа");
-            i += 1;
-            table1.InsertRow(i);
-            table1.Rows[i].Cells[0].Paragraphs[0].Append($"Допускаемое напряжение для материала {d_in.steel} при расчетной температуре, [σ]:");
-            table1.Rows[i].Cells[1].Paragraphs[0].Append($"{d_in.sigma_d} МПа");
-            i += 1;
-            if (d_in.dav == 1)
-            {
-                table1.InsertRow(i);
-                table1.Rows[i].Cells[0].Paragraphs[0].Append("Модуль продольной упругости при расчетной температуре, E:");
-                table1.Rows[i].Cells[1].Paragraphs[0].Append($"{d_in.E} МПа");
-            }
+                var table = doc.AddTable(1, 2);
+                table.SetWidths(new float[] { 300, 100 });
+                int i = 0;
+                table.Rows[i].Cells[0].Paragraphs[0].Append("Расчетная температура, Т:");
+                table.Rows[i].Cells[1].Paragraphs[0].Append($"{d_in.temp} °С");
 
-            doc.InsertParagraph().InsertTableAfterSelf(table1);
+                table.InsertRow(++i);
+                if (d_in.isPressureIn)
+                {
+                    table.Rows[i].Cells[0].Paragraphs[0].Append("Расчетное внутреннее избыточное давление, p:");
+                }
+                else
+                {
+                    table.Rows[i].Cells[0].Paragraphs[0].Append("Расчетное наружное давление, p:");
+                }
+                table.Rows[i].Cells[1].Paragraphs[0].Append($"{d_in.p} МПа");
+
+                table.InsertRow(++i);
+                table.Rows[i].Cells[0].Paragraphs[0].Append($"Допускаемое напряжение для материала {d_in.steel} " +
+                                                            "при расчетной температуре, [σ]:");
+                table.Rows[i].Cells[1].Paragraphs[0].Append($"{d_in.sigma_d} МПа");
+
+                if (!d_in.isPressureIn)
+                {
+                    table.InsertRow(++i);
+                    table.Rows[i].Cells[0].Paragraphs[0].Append("Модуль продольной упругости при расчетной температуре, E:");
+                    table.Rows[i].Cells[1].Paragraphs[0].Append($"{d_in.E} МПа");
+                }
+
+                doc.InsertParagraph().InsertTableAfterSelf(table);
+            }
 
             doc.InsertParagraph();
             doc.InsertParagraph("Результаты расчета").Alignment = Alignment.center;
@@ -300,11 +343,11 @@ namespace calcNet
             doc.InsertParagraph("Толщину стенки вычисляют по формуле:");
             doc.InsertParagraph().AppendEquation("s_1≥s_1p+c");
             doc.InsertParagraph("где ").AppendEquation("s_1p").Append(" - расчетная толщина стенки днища");
-            if (d_in.dav == 0)
+            if (d_in.isPressureIn)
             {
                 doc.InsertParagraph().AppendEquation("s_1p=(p∙R)/(2∙[σ]∙φ-0.5∙p)");
             }
-            else if (d_in.dav == 1)
+            else
             {
                 doc.InsertParagraph().AppendEquation("s_1p=max{(K_Э∙R)/(161)∙√((n_y∙p)/(10^-5∙E));(1.2∙p∙R)/(2∙[σ])}");
             }
@@ -319,14 +362,15 @@ namespace calcNet
                 doc.InsertParagraph().AppendEquation("R=D^2/(4∙H)");
                 doc.InsertParagraph().AppendEquation($"R={d_in.D}^2/(4∙{d_in.elH})={d_out.elR} мм");
             }
-            if (d_in.dav == 0)
+            if (d_in.isPressureIn)
             {
                 doc.InsertParagraph().AppendEquation($"s_p=({d_in.p}∙{d_out.elR})/(2∙{d_in.sigma_d}∙{d_in.fi}-0.5{d_in.p})={d_out.s_calcr:f2} мм");
             }
-            else if (d_in.dav == 1)
+            else
             {
                 doc.InsertParagraph("Для предварительного расчета ").AppendEquation("К_Э=0.9").Append(" для эллиптических днищ");
-                doc.InsertParagraph().AppendEquation($"(0.9∙{d_out.elR})/(161)∙√(({d_in.ny}∙{d_in.p})/(10^-5∙{d_in.E}))={d_out.s_calcr1:f2}");
+                doc.InsertParagraph().AppendEquation($"(0.9∙{d_out.elR})/(161)∙√(({d_in.ny}∙{d_in.p})/(10^-5∙{d_in.E}))=" +
+                                                    "{d_out.s_calcr1:f2}");
                 doc.InsertParagraph().AppendEquation($"(1.2∙{d_in.p}∙{d_out.elR})/(2∙{d_in.sigma_d})={d_out.s_calcr2:f2}");
                 doc.InsertParagraph().AppendEquation($"s_1p=max({d_out.s_calcr1:f2};{d_out.s_calcr2:f2})={d_out.s_calcr:f2} мм");
             }
@@ -346,7 +390,8 @@ namespace calcNet
             }
             doc.InsertParagraph("Допускаемое внутреннее избыточное давление вычисляют по формуле:");
             doc.InsertParagraph().AppendEquation("[p]=(2∙[σ]∙φ∙(s_1-c))/(R+0.5∙(s-c))");
-            doc.InsertParagraph().AppendEquation($"[p]=(2∙{d_in.sigma_d}∙{d_in.fi}∙({d_in.s}-{d_out.c:f2}))/({d_out.elR}+0.5∙({d_in.s}-{d_out.c:f2}))={d_out.p_d:f2} МПа");
+            doc.InsertParagraph().AppendEquation($"[p]=(2∙{d_in.sigma_d}∙{d_in.fi}∙({d_in.s}-{d_out.c:f2}))/" +
+                                                "({d_out.elR}+0.5∙({d_in.s}-{d_out.c:f2}))={d_out.p_d:f2} МПа");
             doc.InsertParagraph().AppendEquation("[p]≥p");
             doc.InsertParagraph().AppendEquation($"{d_out.p_d:f2}≥{d_in.p}");
             if (d_out.p_d > d_in.p)
@@ -357,7 +402,7 @@ namespace calcNet
             {
                 doc.InsertParagraph("Условие прочности не выполняется").Bold().Color(System.Drawing.Color.Red);
             }
-            if (d_out.ypf)
+            if (d_out.isConditionUseFormuls)
             {
                 doc.InsertParagraph("Границы применения формул ");
             }
@@ -367,9 +412,9 @@ namespace calcNet
             }
             //# эллептические днища
             doc.InsertParagraph().AppendEquation("0.002≤(s_1-c)/(D)≤0.1");
-            doc.InsertParagraph().AppendEquation($"0.002≤({d_in.s}-{d_out.c:f2})/({d_in.D})={(d_in.s-d_out.c)/d_in.D:f3}≤0.1");
+            doc.InsertParagraph().AppendEquation($"0.002≤({d_in.s}-{d_out.c:f2})/({d_in.D})={(d_in.s - d_out.c) / d_in.D:f3}≤0.1");
             doc.InsertParagraph().AppendEquation("0.2≤H/D≤0.5");
-            doc.InsertParagraph().AppendEquation($"0.2≤{d_in.elH}/{d_in.D}={d_in.elH/d_in.D:f3}<0.5");
+            doc.InsertParagraph().AppendEquation($"0.2≤{d_in.elH}/{d_in.D}={d_in.elH / d_in.D:f3}<0.5");
 
 
             doc.Save();
@@ -395,11 +440,11 @@ namespace calcNet
                     doc.Paragraphs.Last().Append($"эллиптическое днище {d_in.name}, нагруженное ");
                     break;
             }
-            if (d_in.dav == 0)
+            if (d_in.isPressureIn)
             {
                 doc.Paragraphs.Last().Append("внутренним избыточным давлением");
             }
-            else if (d_in.dav == 1)
+            else if (!d_in.isPressureIn)
             {
                 doc.Paragraphs.Last().Append("наружным давлением");
             }
@@ -408,10 +453,10 @@ namespace calcNet
 
             var table = doc.AddTable(1, 2);
             table.SetWidths(new float[] { 200, 200 });
-            
+
             table.Rows[0].Cells[0].Paragraphs[0].Append("Элемент:");
             table.Rows[0].Cells[1].Paragraphs[0].Append($"Штуцер {dN_in.name}");
-            
+
             table.InsertRow();
             table.Rows[1].Cells[0].Paragraphs[0].Append("Элемент несущий штуцер:");
             table.Rows[1].Cells[1].Paragraphs[0].Append($"{d_in.name}");
@@ -629,7 +674,7 @@ namespace calcNet
             table2.Rows[0].Cells[1].Paragraphs[0].Append($"{d_in.temp} °С");
             i = 1;
             table2.InsertRow(i);
-            if (d_in.dav == 0)
+            if (d_in.isPressureIn)
             {
                 table2.Rows[i].Cells[0].Paragraphs[0].Append("Расчетное внутреннее избыточное давление, p:");
             }
@@ -643,7 +688,7 @@ namespace calcNet
             table2.Rows[i].Cells[0].Paragraphs[0].Append($"Допускаемое напряжение для материала {dN_in.steel1} при расчетной температуре, ").AppendEquation("[σ]_1").Append(":");
             table2.Rows[i].Cells[1].Paragraphs[0].Append($"{dN_in.sigma_d1} МПа");
             i += 1;
-            if (d_in.dav == 1)
+            if (!d_in.isPressureIn)
             {
                 table2.InsertRow(i);
                 table2.Rows[i].Cells[0].Paragraphs[0].Append("Модуль продольной упругости при расчетной температуре, ").AppendEquation("E_1").Append(":");
@@ -656,7 +701,7 @@ namespace calcNet
                 table2.Rows[i].Cells[0].Paragraphs[0].Append($"Допускаемое напряжение для материала {dN_in.steel2} при расчетной температуре, ").AppendEquation("[σ]_2").Append(":");
                 table2.Rows[i].Cells[1].Paragraphs[0].Append($"{dN_in.sigma_d2} МПа");
                 i += 1;
-                if (d_in.dav == 1)
+                if (!d_in.isPressureIn)
                 {
                     table2.InsertRow(i);
                     table2.Rows[i].Cells[0].Paragraphs[0].Append("Модуль продольной упругости при расчетной температуре, ").AppendEquation("E_2").Append(":");
@@ -670,7 +715,7 @@ namespace calcNet
                 table2.Rows[i].Cells[0].Paragraphs[0].Append($"Допускаемое напряжение для материала {dN_in.steel3} при расчетной температуре, ").AppendEquation("[σ]_3").Append(":");
                 table2.Rows[i].Cells[1].Paragraphs[0].Append($"{dN_in.sigma_d3} МПа");
                 i += 1;
-                if (d_in.dav == 1)
+                if (!d_in.isPressureIn)
                 {
                     table2.InsertRow(i);
                     table2.Rows[i].Cells[0].Paragraphs[0].Append("Модуль продольной упругости при расчетной температуре, ").AppendEquation("E_3").Append(":");
@@ -684,7 +729,7 @@ namespace calcNet
                 table2.Rows[i].Cells[0].Paragraphs[0].Append($"Допускаемое напряжение для материала {dN_in.steel4} при расчетной температуре, ").AppendEquation("[σ]_4").Append(":");
                 table2.Rows[i].Cells[1].Paragraphs[0].Append($"{dN_in.sigma_d4} МПа");
                 i += 1;
-                if (d_in.dav == 1)
+                if (!d_in.isPressureIn)
                 {
                     table2.InsertRow(i);
                     table2.Rows[i].Cells[0].Paragraphs[0].Append("Модуль продольной упругости при расчетной температуре, ").AppendEquation("E_4").Append(":");
@@ -906,11 +951,11 @@ namespace calcNet
             }
 
 
-            if (d_in.dav == 0)
+            if (d_in.isPressureIn)
             {
                 doc.InsertParagraph().AppendEquation($"s_pn=s_p={dN_out.sp:f2} мм").AppendEquation(" - в случае внутреннего давления");
             }
-            else if (d_in.dav == 1)
+            else if (!d_in.isPressureIn)
             {
                 doc.InsertParagraph().AppendEquation("s_pn=(p_pn∙D_p)/(2∙K_1∙[σ]-p_pn)");
                 switch (d_in.met)
@@ -969,14 +1014,14 @@ namespace calcNet
             }
 
             doc.InsertParagraph();
-            
-            
-            if (d_in.dav == 0)
+
+
+            if (d_in.isPressureIn)
             {
                 doc.InsertParagraph("Допускаемое внутреннее избыточное давление элемента сосуда с учетом ослабления стенки отверстием вычисляют по формуле");
                 doc.InsertParagraph().AppendEquation("[p]=(2∙K_1∙φ∙[σ]∙(s-c)∙V)/(D_p+(s-c)∙V)");
             }
-            else if (d_in.dav == 1)
+            else if (!d_in.isPressureIn)
             {
                 doc.InsertParagraph("Допускаемое наружное давление элемента сосуда с учетом ослабления стенки отверстием вычисляют по формуле");
                 doc.InsertParagraph().AppendEquation("[p]=[p]_П/√(1+([p]_П/[p]_E)^2)");
@@ -1032,11 +1077,11 @@ namespace calcNet
 
             doc.InsertParagraph().AppendEquation($"V=min({dN_out.V1:f2};{dN_out.V2:f2})={dN_out.V:f2} ");
 
-            if (d_in.dav == 0)
+            if (d_in.isPressureIn)
             {
                 doc.InsertParagraph().AppendEquation($"[p]=(2∙{dN_out.K1}∙{dN_in.fi}∙{d_in.sigma_d}∙({d_in.s}-{d_out.c:f2})∙{dN_out.V:f2})/({dN_out.Dp}+({d_in.s}-{d_out.c:f2})∙{dN_out.V:f2})={dN_out.p_d:f2} МПа");
             }
-            else if (d_in.dav == 1)
+            else if (!d_in.isPressureIn)
             {
                 doc.InsertParagraph().AppendEquation($"[p]_p=(2∙{dN_out.K1}∙{dN_in.fi}∙{d_in.sigma_d}∙({d_in.s}-{d_out.c:f2})∙{dN_out.V:f2})/({dN_out.Dp}+({d_in.s}-{d_out.c:f2})∙{dN_out.V:f2})={dN_out.p_dp:f2} МПа");
                 doc.InsertParagraph().AppendEquation("[p]_E").Append(" - допускаемое наружное давление из условия устойчивости в пределах упругости, определяемое по ГОСТ 34233.2 для соответствующих обечайки и днища без отверстий");
@@ -1096,8 +1141,8 @@ namespace calcNet
             doc.InsertParagraph().InsertPageBreakAfterSelf();
             doc.InsertParagraph($"Расчет на прочность обечайки {d_in.nameob} от воздействия опорных нагрузок").Heading(HeadingType.Heading1).Alignment = Alignment.center;
             doc.InsertParagraph();
-            
-            
+
+
             Xceed.Document.NET.Image image;
             Xceed.Document.NET.Picture picture;
 
@@ -1193,7 +1238,7 @@ namespace calcNet
             table1.Rows[0].Cells[1].Paragraphs[0].Append($"{d_in.temp} °С");
             i = 1;
             table1.InsertRow(i);
-            if (d_in.dav == 0)
+            if (d_in.isPressureIn)
             {
                 table1.Rows[i].Cells[0].Paragraphs[0].Append("Расчетное внутреннее избыточное давление, p:");
             }
@@ -1202,12 +1247,12 @@ namespace calcNet
                 table1.Rows[i].Cells[0].Paragraphs[0].Append("Расчетное наружное давление, p:");
             }
             table1.Rows[i].Cells[1].Paragraphs[0].Append($"{d_in.p} МПа");
-            i ++;
+            i++;
             table1.InsertRow(i);
             table1.Rows[i].Cells[0].Paragraphs[0].Append($"Допускаемое напряжение для материала {d_in.steel} при расчетной температуре, [σ]:");
             table1.Rows[i].Cells[1].Paragraphs[0].Append($"{d_in.sigma_d} МПа");
-            i ++;
-            if (d_in.dav == 1)
+            i++;
+            if (!d_in.isPressureIn)
             {
                 table1.InsertRow(i);
                 table1.Rows[i].Cells[0].Paragraphs[0].Append("Модуль продольной упругости при расчетной температуре, E:");
@@ -1583,7 +1628,7 @@ namespace calcNet
                 }
             }
 
-            if (d_out.ypf == true)
+            if (d_out.isConditionUseFormuls)
             {
                 doc.InsertParagraph("Условия применения формул");
             }
@@ -1594,13 +1639,13 @@ namespace calcNet
             doc.InsertParagraph().AppendEquation("60°≤δ_1≤180°");
             doc.InsertParagraph($"60°≤{d_in.delta1}°≤180°");
             doc.InsertParagraph().AppendEquation("(s-c)/D≤0.05");
-            doc.InsertParagraph().AppendEquation($"({d_in.s}-{d_in.c})/{d_in.D}={(d_in.s-d_in.c)/d_in.D:f2}≤0.05");
+            doc.InsertParagraph().AppendEquation($"({d_in.s}-{d_in.c})/{d_in.D}={(d_in.s - d_in.c) / d_in.D:f2}≤0.05");
             if (d_in.type == 2)
             {
                 doc.InsertParagraph().AppendEquation("s_2≥s");
                 doc.InsertParagraph().AppendEquation($"{d_in.s2} мм ≥ {d_in.s} мм");
                 doc.InsertParagraph().AppendEquation("δ_2≥δ_1+20°");
-                doc.InsertParagraph().AppendEquation($"{d_in.delta2}°≥{d_in.delta1}°+20°={d_in.delta1+20}°");
+                doc.InsertParagraph().AppendEquation($"{d_in.delta2}°≥{d_in.delta1}°+20°={d_in.delta1 + 20}°");
                 doc.InsertParagraph().AppendEquation("A_k≥(s-c)√(D∙(s-c))");
                 doc.InsertParagraph().AppendEquation($"{d_out.Ak:f2}≥({d_in.s}-{d_in.c})√({d_in.D}∙({d_in.s}-{d_in.c}))={d_out.Akypf:f2}");
             }
@@ -1608,53 +1653,94 @@ namespace calcNet
             doc.Save();
         }
 
-        internal static void MakeLit(List<int> lit, string Docum = null)
+        internal static void MakeLit(List<int> bibliography, string Docum = null)
         {
-            if (lit != null)
+            
+                
+
+            const string GOST_34233_1 = "ГОСТ 34233.1-2017 Сосуды и аппараты. Нормы и методы расчета на прочность. Общие требования";
+            const string GOST_34233_2 = "ГОСТ 34233.2-2017 Сосуды и аппараты. Нормы и методы расчета на прочность. " +
+                                        "Расчет цилиндрических и конических обечаек, выпуклых и плоских днищ и крышек";
+            const string GOST_34233_3 = "ГОСТ 34233.3-2017 Сосуды и аппараты. Нормы и методы расчета на прочность. " +
+                                        "Укрепление отверстий в обечайках и днищах при внутреннем и наружном давлениях. " +
+                                        "Расчет на прочность обечаек и днищ при внешних статических нагрузках на штуцер";
+            const string GOST_34233_4 = "ГОСТ 34233.4-2017 Сосуды и аппараты. Нормы и методы расчета на прочность. " +
+                                        "Расчет на прочность и герметичность фланцевых соединений";
+            const string GOST_34233_5 = "ГОСТ 34233.5-2017 Сосуды и аппараты. Нормы и методы расчета на прочность. " +
+                                        "Расчет  обечаек и днищ от воздействия опорных нагрузок";
+            const string GOST_34233_6 = "ГОСТ 34233.6-2017 Сосуды и аппараты. Нормы и методы расчета на прочность. " +
+                                        "Расчет на прочность при малоцикловых нагрузках";
+            const string GOST_34233_7 = "ГОСТ 34233.7-2017 Сосуды и аппараты. Нормы и методы расчета на прочность. " +
+                                        "Теплообменные аппараты";
+            const string GOST_34233_8 = "ГОСТ 34233.8-2017 Сосуды и аппараты. Нормы и методы расчета на прочность. " +
+                                        "Сосуды и аппараты с рубашками";
+            const string GOST_34233_9 = "ГОСТ 34233.9-2017 Сосуды и аппараты. Нормы и методы расчета на прочность. " +
+                                        "Аппараты колонного типа";
+            const string GOST_34233_10 = "ГОСТ 34233.10-2017 Сосуды и аппараты. Нормы и методы расчета на прочность. " +
+                                        "Сосуды и аппараты работающие с сероводородными средами";
+            const string GOST_34233_11 = "ГОСТ 34233.11-2017 Сосуды и аппараты. Нормы и методы расчета на прочность. " +
+                                        "Метод расчета на прочность обечаек и днищ с учетом смещения кромок сварных соединений, " +
+                                        "угловатости и некруглости обечаек";
+
+            
+
+            if (bibliography != null)
             {
                 var doc = Xceed.Words.NET.DocX.Load(Docum);
                 doc.InsertParagraph().InsertPageBreakAfterSelf();
-                doc.InsertParagraph("Литература").Heading(HeadingType.Heading1).Color(System.Drawing.Color.Black).Alignment = Alignment.center;
-                doc.InsertParagraph("1. ГОСТ 34233.1-2017 Сосуды и аппараты. Нормы и методы расчета на прочность. Общие требования");
-                int[] lit1 = lit.Distinct().ToArray();
-                Array.Sort(lit1);
-                int c = 2;
-                foreach (int i in lit1)
+                doc.InsertParagraph("Литература")
+                   .Heading(HeadingType.Heading1)
+                   .Color(System.Drawing.Color.Black).Alignment = Alignment.center;
+                doc.InsertParagraph("1. " + GOST_34233_1);
+
+                List<int> bibliographySort = bibliography.Distinct()
+                                                         .ToList();
+                bibliographySort.Sort();
+
+                string[] Gosts = new string[] { "", GOST_34233_1, GOST_34233_2, GOST_34233_3, GOST_34233_4, GOST_34233_5,
+                                            GOST_34233_6, GOST_34233_7, GOST_34233_8, GOST_34233_9, GOST_34233_10,
+                                            GOST_34233_11 };
+
+                for (int i = 0; i < bibliographySort.Count; i++)
                 {
-                    switch (i)
-                    {
-                        case 2:
-                            doc.InsertParagraph($"{c}. ГОСТ 34233.2-2017 Сосуды и аппараты. Нормы и методы расчета на прочность. Расчет цилиндрических и конических обечаек, выпуклых и плоских днищ и крышек");
-                            break;
-                        case 3:
-                            doc.InsertParagraph($"{c}. ГОСТ 34233.3-2017 Сосуды и аппараты. Нормы и методы расчета на прочность. Укрепление отверстий в обечайках и днищах при внутреннем и наружном давлениях. Расчет на прочность обечаек и днищ при внешних статических нагрузках на штуцер");
-                            break;
-                        case 4:
-                            doc.InsertParagraph($"{c}. ГОСТ 34233.4-2017 Сосуды и аппараты. Нормы и методы расчета на прочность. Расчет на прочность и герметичность фланцевых соединений");
-                            break;
-                        case 5:
-                            doc.InsertParagraph($"{c}. ГОСТ 34233.5-2017 Сосуды и аппараты. Нормы и методы расчета на прочность. Расчет  обечаек и днищ от воздействия опорных нагрузок");
-                            break;
-                        case 6:
-                            doc.InsertParagraph($"{c}. ГОСТ 34233.6-2017 Сосуды и аппараты. Нормы и методы расчета на прочность. Расчет на прочность при малоцикловых нагрузках");
-                            break;
-                        case 7:
-                            doc.InsertParagraph($"{c}. ГОСТ 34233.7-2017 Сосуды и аппараты. Нормы и методы расчета на прочность. Теплообменные аппараты");
-                            break;
-                        case 8:
-                            doc.InsertParagraph($"{c}. ГОСТ 34233.8-2017 Сосуды и аппараты. Нормы и методы расчета на прочность. Сосуды и аппараты с рубашками");
-                            break;
-                        case 9:
-                            doc.InsertParagraph($"{c}. ГОСТ 34233.9-2017 Сосуды и аппараты. Нормы и методы расчета на прочность. Аппараты колонного типа");
-                            break;
-                        case 10:
-                            doc.InsertParagraph($"{c}. ГОСТ 34233.10-2017 Сосуды и аппараты. Нормы и методы расчета на прочность. Сосуды и аппараты работающие с сероводородными средами");
-                            break;
-                        case 11:
-                            doc.InsertParagraph($"{c}. ГОСТ 34233.11-2017 Сосуды и аппараты. Нормы и методы расчета на прочность. Метод расчета на прочность обечаек и днищ с учетом смещения кромок сварных соединений, угловатости и некруглости обечаек");
-                            break;
-                    }
-                    c++;
+                    doc.InsertParagraph($"{i + 1}. " + Gosts[bibliographySort[i]]);
+
+                    //switch (bibliographySort[i])
+                    //{
+                    //    case 1:
+                    //        doc.InsertParagraph($"{i + 1}. " + GOST_34233_1);
+                    //        break;
+                    //    case 2:
+                    //        doc.InsertParagraph($"{i + 1}. " + GOST_34233_2);
+                    //        break;
+                    //    case 3:
+                    //        doc.InsertParagraph($"{i + 1}. " + GOST_34233_3);
+                    //        break;
+                    //    case 4:
+                    //        doc.InsertParagraph($"{i + 1}. " + GOST_34233_4);
+                    //        break;
+                    //    case 5:
+                    //        doc.InsertParagraph($"{i + 1}. " + GOST_34233_5);
+                    //        break;
+                    //    case 6:
+                    //        doc.InsertParagraph($"{i + 1}. " + GOST_34233_6);
+                    //        break;
+                    //    case 7:
+                    //        doc.InsertParagraph($"{i + 1}. " + GOST_34233_7);
+                    //        break;
+                    //    case 8:
+                    //        doc.InsertParagraph($"{i + 1}. " + GOST_34233_8);
+                    //        break;
+                    //    case 9:
+                    //        doc.InsertParagraph($"{i + 1}. " + GOST_34233_9);
+                    //        break;
+                    //    case 10:
+                    //        doc.InsertParagraph($"{i + 1}. " + GOST_34233_10);
+                    //        break;
+                    //    case 11:
+                    //        doc.InsertParagraph($"{i + 1}. " + GOST_34233_11);
+                    //        break;
+                    //}
                 }
 
                 doc.Save();
