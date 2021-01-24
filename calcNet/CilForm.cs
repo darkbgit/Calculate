@@ -18,7 +18,7 @@ namespace calcNet
             InitializeComponent();
         }
 
-        public static string TypeElement => "cil";
+        internal const string TypeElement = "cil";
 
         private DataWordOut.DataOutArrEl dataArrEl;
         internal DataWordOut.DataOutArrEl DataArrEl { get => dataArrEl; set => dataArrEl = value; }
@@ -43,7 +43,7 @@ namespace calcNet
         }
 
 
-        private void RadioButton_CheckedChanged(object sender, EventArgs e)
+        private void Force_rb_CheckedChanged(object sender, EventArgs e)
         {
             // приводим отправителя к элементу типа RadioButton
             RadioButton rb = sender as RadioButton;
@@ -58,123 +58,137 @@ namespace calcNet
             RadioButton rb = sender as RadioButton;
             if (rb.Checked)
             {
-                if (rb.Name == "vn_rb")
-                {
-                    l_tb.Enabled = false;
-                    l_tb.ReadOnly = true;
-                    getE_b.Enabled = false;
-                    getL_b.Enabled = false;
-                }
-                else if (rb.Name == "nar_rb")
-                {
-                    l_tb.Enabled = true;
-                    l_tb.ReadOnly = false;
-                    getE_b.Enabled = true;
-                    getL_b.Enabled = true;
-                }
+                bool isPressureOut = nar_rb.Checked;
+                l_tb.Enabled = isPressureOut;
+                //l_tb.ReadOnly = isPressureIn;
+                getE_b.Enabled = isPressureOut;
+                getL_b.Enabled = isPressureOut;
+                f_pb.Visible = isPressureOut;
             }
         }
 
-        
 
-
-        private void PredCalc_b_Click(object sender, EventArgs e)
+        private void GetInput_t(ref Data_in d_in, ref string dataInErr)
         {
-            Data_in d_in = new Data_in();
-
-            string data_inerr = "";
-
-            //foreach (Control control in Controls)
-            //{
-            //    if (control is TextBox)
-            //    {
-            //        string name;
-            //        double value;
-            //        name = (control as TextBox).Name;
-            //        name = name.Remove(name.Length - 3, 3);
-            //        try
-            //        {
-            //            value = Convert.ToDouble((control as TextBox).Text.Replace(',', '.'),
-            //                                            System.Globalization.CultureInfo.InvariantCulture);
-            //        }
-            //        catch (FormatException)
-            //        {
-            //            value = 0;
-            //            data_inerr += $"{name} неверный ввод\n";
-            //        }
-            //        if (value > 0)
-            //        {
-            //            d_in.SetValue(name, value);
-            //        }
-            //        else
-            //        {
-            //            data_inerr += $"{name} должно быть больше 0";
-            //        }
-            //    }
-            //}
-
-
-            //t
+            if (int.TryParse(t_tb.Text, out int t))
             {
-                int t;
-                try
-                {
-                    t = Convert.ToInt32(t_tb.Text);
-                }
-                catch (FormatException)
-                {
-                    t = 0;
-                    data_inerr += "T неверный ввод\n";
-                }
                 const int MIN_TEMPERATURE = 20,
-                            MAX_TEMPERATURE = 1000;
+                        MAX_TEMPERATURE = 1000;
                 if (t >= MIN_TEMPERATURE && t < MAX_TEMPERATURE)
                 {
                     d_in.temp = t;
                 }
                 else
                 {
-                    data_inerr += "T должна быть в диапазоне 20 - 1000\n";
+                    dataInErr += "T должна быть в диапазоне 20 - 1000\n";
                 }
             }
-            
-            d_in.steel = steel_cb.Text;
-
-            bool isNotError = data_inerr == "";
-            if (isNotError)
+            else
             {
-                //[σ]
+                dataInErr += "T неверный ввод\n";
+            }
+        }
+
+        private void GetInput_sigma_d(ref Data_in d_in, ref string dataInErr)
+        {
+            double sigma_d = 0;
+            if (!sigma_d_tb.ReadOnly)
+            {
+                if (double.TryParse(sigma_d_tb.Text.Replace(',', '.'), System.Globalization.NumberStyles.None,
+                    System.Globalization.CultureInfo.InvariantCulture, out sigma_d))
                 {
-                    double sigma_d;
-                    if (!sigma_d_tb.ReadOnly)
-                    {
-                        try
-                        {
-                            sigma_d = Convert.ToDouble(sigma_d_tb.Text.Replace(',', '.'),
-                                                        System.Globalization.CultureInfo.InvariantCulture);
-                        }
-                        catch (FormatException)
-                        {
-                            sigma_d = 0;
-                            data_inerr += "[σ] неверный ввод\n";
-                        }
-                    }
-                    else
-                    {
-                        sigma_d = CalcClass.GetSigma(d_in.steel, d_in.temp);
-                        sigma_d_tb.ReadOnly = false;
-                        sigma_d_tb.Text = sigma_d.ToString();
-                        sigma_d_tb.ReadOnly = true;
-                    }
                     if (sigma_d > 0)
                     {
                         d_in.sigma_d = sigma_d;
                     }
                     else
                     {
-                        data_inerr += "[σ] должно быть больше 0\n";
+                        dataInErr += "[σ] должно быть больше 0\n";
                     }
                 }
+                else
+                {
+                    dataInErr += "[σ] неверный ввод\n";
+                }
+            }
+            else
+            {
+                if (CalcClass.GetSigma(d_in.steel, d_in.temp, ref sigma_d, ref dataInErr))
+                {
+                    //sigma_d = CalcClass.GetSigma(d_in.steel, d_in.temp);
+                    sigma_d_tb.ReadOnly = false;
+                    sigma_d_tb.Text = sigma_d.ToString();
+                    sigma_d_tb.ReadOnly = true;
+                }
+            }
+        }
+
+        private void GetInput_l(ref Data_in d_in, ref string dataInErr)
+        {
+            if (double.TryParse(l_tb.Text.Replace(',', '.'), System.Globalization.NumberStyles.None,
+                    System.Globalization.CultureInfo.InvariantCulture, out double l))
+            {
+                if (l > 0)
+                {
+                    d_in.l = l;
+                }
+                else
+                {
+                    dataInErr += "l должно быть больше 0\n";
+                }
+            }
+            else
+            {
+                dataInErr += "l неверный ввод\n";
+            }
+        }
+
+        private void PredCalc_b_Click(object sender, EventArgs e)
+        {
+            Data_in d_in = new Data_in();
+
+            string dataInErr = "";
+
+            /*
+            foreach (Control control in Controls)
+            {
+                if (control is TextBox)
+                {
+                    string name;
+                    double value;
+                    name = (control as TextBox).Name;
+                    name = name.Remove(name.Length - 3, 3);
+                    try
+                    {
+                        value = Convert.ToDouble((control as TextBox).Text.Replace(',', '.'),
+                                                        System.Globalization.CultureInfo.InvariantCulture);
+                    }
+                    catch (FormatException)
+                    {
+                        value = 0;
+                        data_inerr += $"{name} неверный ввод\n";
+                    }
+                    if (value > 0)
+                    {
+                        d_in.SetValue(name, value);
+                    }
+                    else
+                    {
+                        data_inerr += $"{name} должно быть больше 0";
+                    }
+                }
+            }
+            */
+
+            //t
+            GetInput_t(ref d_in, ref dataInErr);
+
+            d_in.steel = steel_cb.Text;
+
+            bool isNotError = dataInErr == "";
+            if (isNotError)
+            {
+                GetInput_sigma_d(ref d_in, ref dataInErr); //[σ]
 
                 d_in.isPressureIn = vn_rb.Checked;
 
@@ -193,7 +207,7 @@ namespace calcNet
                             catch (FormatException)
                             {
                                 E = 0;
-                                data_inerr += "E неверный ввод\n";
+                                dataInErr += "E неверный ввод\n";
                             }
                         }
                         else
@@ -209,57 +223,34 @@ namespace calcNet
                         }
                         else
                         {
-                            data_inerr += "E должно быть больше 0\n";
+                            dataInErr += "E должно быть больше 0\n";
                         }
                     }
-
-                    //l
-                    {
-                        double l;
-                        try
-                        {
-                            l = Convert.ToDouble(l_tb.Text.Replace(',', '.'),
-                                System.Globalization.CultureInfo.InvariantCulture);
-                        }
-                        catch (FormatException)
-                        {
-                            l = 0;
-                            data_inerr += "l неверный ввод\n";
-                        }
-                        if (l > 0)
-                        {
-                            d_in.l = l;
-                        }
-                        else
-                        {
-                            data_inerr += "l должно быть больше 0\n";
-                        }
-                    }
+                    
+                    GetInput_l(ref d_in, ref dataInErr);//l
                 }
 
                 //p
                 {
                     double p;
-                    try
+                    if (double.TryParse(p_tb.Text.Replace(',', '.'), System.Globalization.NumberStyles.AllowDecimalPoint,
+                        System.Globalization.CultureInfo.InvariantCulture, out p))
                     {
-                        p = Convert.ToDouble(p_tb.Text.Replace(',', '.'),
-                                            System.Globalization.CultureInfo.InvariantCulture);
-                    }
-                    catch (FormatException)
-                    {
-                        p = 0;
-                        data_inerr += "p неверный ввод\n";
-                    }
-                    const int NO_PRESSURE = 0,
-                                MAX_PRESSURE = 200;
-                    if (p > NO_PRESSURE && p < MAX_PRESSURE)
-                    {
-                        d_in.isNeedpCalculate = true;
-                        d_in.p = p;
+                        const int NO_PRESSURE = 0,
+                                    MAX_PRESSURE = 200;
+                        if (p > NO_PRESSURE && p < MAX_PRESSURE)
+                        {
+                            d_in.isNeedpCalculate = true;
+                            d_in.p = p;
+                        }
+                        else
+                        {
+                            dataInErr += $"p должно быть в диапазоне {NO_PRESSURE} - {MAX_PRESSURE}\n";
+                        }
                     }
                     else
                     {
-                        data_inerr += "p должно быть в диапазоне 0 - 200\n";
+                        dataInErr += "p неверный ввод\n";
                     }
                 }
 
@@ -274,7 +265,7 @@ namespace calcNet
                     catch (FormatException)
                     {
                         fi = 0;
-                        data_inerr += "fi неверный ввод\n";
+                        dataInErr += "fi неверный ввод\n";
                     }
                     const int MIN_FI = 0,
                             MAX_FI = 1;
@@ -284,7 +275,7 @@ namespace calcNet
                     }
                     else
                     {
-                        data_inerr += "fi должен быть в диапазоне 0 - 1\n";
+                        dataInErr += "fi должен быть в диапазоне 0 - 1\n";
                     }
                 }
 
@@ -299,7 +290,7 @@ namespace calcNet
                     catch (FormatException)
                     {
                         D = 0;
-                        data_inerr += "D неверный ввод\n";
+                        dataInErr += "D неверный ввод\n";
                     }
                     if (D > 0)
                     {
@@ -307,7 +298,7 @@ namespace calcNet
                     }
                     else
                     {
-                        data_inerr += "D должно быть больше 0\n";
+                        dataInErr += "D должно быть больше 0\n";
                     }
                 }
 
@@ -322,7 +313,7 @@ namespace calcNet
                     catch (FormatException)
                     {
                         c1 = -1;
-                        data_inerr += "c1 неверный ввод\n";
+                        dataInErr += "c1 неверный ввод\n";
                     }
                     if (c1 >= 0)
                     {
@@ -330,7 +321,7 @@ namespace calcNet
                     }
                     else
                     {
-                        data_inerr += "c1 должно быть больше 0\n";
+                        dataInErr += "c1 должно быть больше 0\n";
                     }
                 }
 
@@ -345,7 +336,7 @@ namespace calcNet
                     catch (FormatException)
                     {
                         c2 = -1;
-                        data_inerr += "c2 неверный ввод\n";
+                        dataInErr += "c2 неверный ввод\n";
                     }
                     if (c2 >= 0)
                     {
@@ -353,7 +344,7 @@ namespace calcNet
                     }
                     else
                     {
-                        data_inerr += "c2 должно быть больше 0\n";
+                        dataInErr += "c2 должно быть больше 0\n";
                     }
                 }
 
@@ -374,7 +365,7 @@ namespace calcNet
                         catch (FormatException)
                         {
                             c3 = -1;
-                            data_inerr += "c3 неверный ввод\n";
+                            dataInErr += "c3 неверный ввод\n";
                         }
                         if (c3 >= 0)
                         {
@@ -382,16 +373,16 @@ namespace calcNet
                         }
                         else
                         {
-                            data_inerr += "должно быть >= 0\n";
+                            dataInErr += "должно быть >= 0\n";
                         }
                     }
                 }
 
 
-                isNotError = data_inerr == "";
+                isNotError = dataInErr == "";
                 if (isNotError)
                 {
-                    Data_out d_out = CalcClass.CalcCil(d_in);
+                    Data_out d_out = CalcClass.CalculateCilindricalShell(in d_in);
                     if (d_out.err != "")
                     {
                         System.Windows.Forms.MessageBox.Show(d_out.err);
@@ -402,8 +393,12 @@ namespace calcNet
                 }
                 else
                 {
-                    System.Windows.Forms.MessageBox.Show(data_inerr);
+                    System.Windows.Forms.MessageBox.Show(dataInErr);
                 }
+            }
+            else
+            {
+                System.Windows.Forms.MessageBox.Show(dataInErr);
             }
         }
 
@@ -465,14 +460,14 @@ namespace calcNet
                     }
                     else
                     {
-                        sigma_d = CalcClass.GetSigma(d_in.steel, d_in.temp);
+                        //sigma_d = CalcClass.GetSigma(d_in.steel, d_in.temp);
                         sigma_d_tb.ReadOnly = false;
-                        sigma_d_tb.Text = sigma_d.ToString();
+                        // sigma_d_tb.Text = sigma_d.ToString();
                         sigma_d_tb.ReadOnly = true;
                     }
-                    if (sigma_d > 0)
+                    if (true)// if (sigma_d > 0)
                     {
-                        d_in.sigma_d = sigma_d;
+                        // d_in.sigma_d = sigma_d;
                     }
                     else
                     {
@@ -722,12 +717,12 @@ namespace calcNet
                 isNotError = data_inerr == "";
                 if (isNotError) // если данные введены правильно
                 {
-                    Data_out d_out = CalcClass.CalcCil(d_in);
+                    Data_out d_out = CalcClass.CalculateCilindricalShell(in d_in);
                     if (!d_out.isCriticalError) // если нет ошибок расчета
                     {
                         p_d_l.Text = $"[p]={d_out.p_d:f2} МПа";
                         scalc_l.Text = $"sp={d_out.s_calc:f3} мм";
-                        
+
                         if (this.Owner is MainForm main)
                         {
                             main.Word_lv.Items.Add($"{d_in.D} мм, {d_in.p} МПа, {d_in.temp} C, {d_in.met}");
@@ -752,11 +747,12 @@ namespace calcNet
                         {
                             System.Windows.Forms.MessageBox.Show("MainForm Error");
                         }
-                        
+
                         if (d_out.isError)
                         {
                             System.Windows.Forms.MessageBox.Show(d_out.err);
                         }
+                        
                         System.Windows.Forms.MessageBox.Show("Calculation complete");
 
                         MessageBoxCheckBox mbcb = new MessageBoxCheckBox { Owner = this };
@@ -777,13 +773,11 @@ namespace calcNet
         private void CilForm_Load(object sender, EventArgs e)
         {
             Set_steellist.Set_llist(steel_cb);
-            steel_cb.SelectedIndex = 0;
             Gost_cb.SelectedIndex = 0;
         }
 
         private void GetE_b_Click(object sender, EventArgs e)
         {
-            //CalcClass cc = new CalcClass();
             E_tb.Text = CalcClass.GetE(steel_cb.Text, Convert.ToInt32(t_tb.Text)).ToString();
         }
 
@@ -804,6 +798,39 @@ namespace calcNet
                         main.cf = null;
                     }
                 }
+            }
+        }
+
+        private void Stress_rb_CheckedChanged(object sender, EventArgs e)
+        {
+            RadioButton rb = sender as RadioButton;
+            if (rb.Checked)
+            {
+                bool isForceHand = stressHand_rb.Checked;
+                force_gb.Enabled = isForceHand;
+                M_gb.Enabled = isForceHand;
+                Q_gb.Enabled = isForceHand;
+            }
+        }
+
+        private void Defect_chb_CheckedChanged(object sender, EventArgs e)
+        {
+            defect_b.Enabled = defect_chb.Checked;
+        }
+
+        private void ForceStretchCompress_rb_CheckedChanged(object sender, EventArgs e)
+        {
+            RadioButton rb = sender as RadioButton;
+            if (rb.Checked)
+            {
+                bool isCompress = forceCompress_rb.Checked;
+                rb1.Enabled = isCompress;
+                rb2.Enabled = isCompress;
+                rb3.Enabled = isCompress;
+                rb4.Enabled = isCompress;
+                rb5.Enabled = isCompress;
+                rb6.Enabled = isCompress;
+                rb7.Enabled = isCompress;
             }
         }
     }

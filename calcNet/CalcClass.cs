@@ -45,7 +45,7 @@ namespace calcNet
 
         internal int FCalcSchema; //1-7
         
-        internal bool yk,
+        internal bool isNeedMakeCalcNozzle,
                     isNeedpCalculate,
                     isPressureIn,
                     isNeedFCalculate,
@@ -356,7 +356,71 @@ namespace calcNet
 
     class CalcClass
     {
-        internal static double GetSigma (string steel, int temp)
+        class DataShell
+        {
+            struct In
+            {
+                internal string name,
+                                steel,
+                                met, // "cilvn", "cilnar", "konvn", "konnar", "ellvn", "ellnar"
+                                ellType; //"ell", "polysfer"
+
+                internal int temp;
+
+                public double p,
+                                E,
+                                F,
+                                M,
+                                Q,
+                                sigma_d,
+                                D,
+                                c1,
+                                c2,
+                                c3,
+                                fi,
+                                fit, // кольцевого сварного шва
+                                s,
+                                l,
+                                l3_1,
+                                l3_2,
+                                ny, // = 2.4,
+                                elH,
+                                elh1,
+                                q,
+                                f,
+                                alfa;
+
+                internal int dav; //0 - vn, 1 - nar
+
+                internal int FCalcSchema; //1-7
+
+                internal bool isNeedMakeCalcNozzle,
+                            isNeedpCalculate,
+                            isPressureIn,
+                            isNeedFCalculate,
+                            isFTensile,
+                            isNeedMCalculate,
+                            isNeedQCalculate;
+
+
+                internal int bibliography;
+
+                public void SetValue(string name, double value)
+                {
+                    var field = typeof(Data_in).GetField(name);
+                    field.SetValue(this, value);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Get [σ] 
+        /// </summary>
+        /// <param name="steel">Steel name</param>
+        /// <param name="temp">Calculation temperature</param>
+        /// <param name="sigma_d">Reference on </param>
+        /// <returns>true - Ok, false - Error (Input temperature bigger then the biggest temperature for [σ] in GOST for input steel) </returns>
+        internal static bool GetSigma (string steel, int temp, ref double sigma_d, ref string dataInErr)
         {
             XmlDocument doc = new XmlDocument();
             doc.Load(System.IO.Path.Combine(System.IO.Directory.GetCurrentDirectory(), @"data\data.xml"));
@@ -371,9 +435,9 @@ namespace calcNet
                 if ((i == 0 && Convert.ToInt32(steelTempNodes.ChildNodes.Item(i).Attributes["temp"].Value) > temp) ||
                         Convert.ToInt32(steelTempNodes.ChildNodes.Item(i).Attributes["temp"].Value) == temp)
                 {
-                    sigma = Convert.ToDouble(steelTempNodes.ChildNodes.Item(i).Attributes["sigma"].Value,
+                    sigma_d = Convert.ToDouble(steelTempNodes.ChildNodes.Item(i).Attributes["sigma"].Value,
                                             System.Globalization.CultureInfo.InvariantCulture);
-                    return sigma;
+                    return true;
                 }
                 else if (Convert.ToInt32(steelTempNodes.ChildNodes.Item(i).Attributes["temp"].Value) > temp)
                 {
@@ -384,7 +448,8 @@ namespace calcNet
                 }
                 else if (i == steelTempNodes.ChildNodes.Count - 1)
                 {
-                    return -1;
+                    dataInErr += $"Температура {temp} °С, больше чем максимальная температура {tempBig} °С для стали {steel} при которой определяется допускаемое напряжение по ГОСТ 34233.1-2017";
+                    return false;
                 }
                 else
                 {
@@ -397,8 +462,8 @@ namespace calcNet
             sigma *= 10;
             sigma = Math.Truncate(sigma / 5);
             sigma *= 0.5;
-            
-            return sigma;
+            sigma_d = sigma;
+            return true;
         }
 
         internal static int GetE(string steel, int temp)
@@ -478,7 +543,12 @@ namespace calcNet
             return E;
         }
 
-        internal static Data_out CalcCil(Data_in d_in)
+        /// <summary>
+        /// Strength calculation of a cylindrical shell
+        /// </summary>
+        /// <param name="d_in"></param>
+        /// <returns></returns>
+        internal static Data_out CalculateCilindricalShell(in Data_in d_in)
         {
             Data_out d_out = new Data_out { err = "" };
 
@@ -914,9 +984,9 @@ namespace calcNet
                 dN_in.steel4 = dN_in.steel1;
             }
 
-            dN_in.sigma_d2 = GetSigma(dN_in.steel2, d_in.temp);
-            dN_in.sigma_d3 = GetSigma(dN_in.steel3, d_in.temp);
-            dN_in.sigma_d4 = GetSigma(dN_in.steel4, d_in.temp);
+            //dN_in.sigma_d2 = GetSigma(dN_in.steel2, d_in.temp);
+            //dN_in.sigma_d3 = GetSigma(dN_in.steel3, d_in.temp);
+            //dN_in.sigma_d4 = GetSigma(dN_in.steel4, d_in.temp);
 
             dN_out.psi1 = Math.Min(1, dN_in.sigma_d1 / d_in.sigma_d);
             dN_out.psi2 = Math.Min(1, dN_in.sigma_d2 / d_in.sigma_d);
@@ -1081,7 +1151,7 @@ namespace calcNet
 
         internal static DataSaddle_out CalcSaddle(DataSaddle_in d_in)
         {
-            d_in.sigma_d = GetSigma(d_in.steel, d_in.temp);
+            //d_in.sigma_d = GetSigma(d_in.steel, d_in.temp);
             d_in.E = GetE(d_in.steel, d_in.temp);
             DataSaddle_out d_out = new DataSaddle_out { isConditionUseFormuls = true };
 

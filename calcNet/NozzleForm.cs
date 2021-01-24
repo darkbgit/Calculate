@@ -1155,7 +1155,7 @@ namespace calcNet
 
         private void PredCalc_b_Click(object sender, EventArgs e)
         {
-            DataArrEl.Data_In.yk = true;
+            DataArrEl.Data_In.isNeedMakeCalcNozzle = true;
             Data_in d_in = DataArrEl.Data_In;
             Data_out d_out = DataArrEl.Data_Out;
             DataNozzle_in dN_in = new DataNozzle_in();
@@ -1186,7 +1186,7 @@ namespace calcNet
                 if (sigma_d1_tb.ReadOnly)
                 {
                     sigma_d1_tb.ReadOnly = false;
-                    sigma_d1_tb.Text = Convert.ToString(CalcClass.GetSigma(dN_in.steel1, d_in.temp));
+                    //sigma_d1_tb.Text = Convert.ToString(CalcClass.GetSigma(dN_in.steel1, d_in.temp));
                     sigma_d1_tb.ReadOnly = true;
                 }
                 try

@@ -47,7 +47,6 @@ namespace calcNet
     public class Set_steellist
     {
         public static void Set_llist(ComboBox cb)
-
         {
             XmlDocument doc = new XmlDocument();
             doc.Load(System.IO.Path.Combine(System.IO.Directory.GetCurrentDirectory(), @"data\data.xml"));
@@ -57,6 +56,7 @@ namespace calcNet
             {
                 cb.Items.Add(steel.Attributes["name"].Value);
             }
+            cb.SelectedIndex = 0;
         }
     }
 }

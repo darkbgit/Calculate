@@ -75,7 +75,7 @@ namespace calcNet
             if (data_inerr == "")
             {
                 sigma_d_tb.ReadOnly = false;
-                sigma_d_tb.Text = Convert.ToString(CalcClass.GetSigma(d_in.steel, d_in.temp));
+                //sigma_d_tb.Text = Convert.ToString(CalcClass.GetSigma(d_in.steel, d_in.temp));
                 sigma_d_tb.ReadOnly = true;
 
                 try
@@ -322,7 +322,7 @@ namespace calcNet
             if (data_inerr == "")
             {
                 sigma_d_tb.ReadOnly = false;
-                sigma_d_tb.Text = Convert.ToString(CalcClass.GetSigma(d_in.steel, d_in.temp));
+               // sigma_d_tb.Text = Convert.ToString(CalcClass.GetSigma(d_in.steel, d_in.temp));
                 sigma_d_tb.ReadOnly = true;
 
                 try

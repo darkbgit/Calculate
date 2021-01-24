@@ -72,14 +72,18 @@ namespace calcNet
             this.getE_b = new System.Windows.Forms.Button();
             this.getFi_b = new System.Windows.Forms.Button();
             this.getL_b = new System.Windows.Forms.Button();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.button2 = new System.Windows.Forms.Button();
+            this.defect_chb = new System.Windows.Forms.CheckBox();
+            this.defect_b = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.radioButton2 = new System.Windows.Forms.RadioButton();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.stressHand_rb = new System.Windows.Forms.RadioButton();
+            this.stressCalc_rb = new System.Windows.Forms.RadioButton();
+            this.force_gb = new System.Windows.Forms.GroupBox();
+            this.F_tb = new System.Windows.Forms.TextBox();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.forceCompress_rb = new System.Windows.Forms.RadioButton();
+            this.forceStretch_rb = new System.Windows.Forms.RadioButton();
             this.rb7 = new System.Windows.Forms.RadioButton();
             this.rb6 = new System.Windows.Forms.RadioButton();
             this.rb5 = new System.Windows.Forms.RadioButton();
@@ -104,12 +108,21 @@ namespace calcNet
             this.label26 = new System.Windows.Forms.Label();
             this.label27 = new System.Windows.Forms.Label();
             this.label28 = new System.Windows.Forms.Label();
+            this.M_gb = new System.Windows.Forms.GroupBox();
+            this.label29 = new System.Windows.Forms.Label();
+            this.M_tb = new System.Windows.Forms.TextBox();
+            this.Q_gb = new System.Windows.Forms.GroupBox();
+            this.label30 = new System.Windows.Forms.Label();
+            this.Q_tb = new System.Windows.Forms.TextBox();
             this.dav_gb.SuspendLayout();
             this.groupBox2.SuspendLayout();
-            this.groupBox3.SuspendLayout();
+            this.force_gb.SuspendLayout();
+            this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.f_pb)).BeginInit();
             this.groupBox4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.M_gb.SuspendLayout();
+            this.Q_gb.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -538,52 +551,56 @@ namespace calcNet
             this.getL_b.Text = ">>";
             this.getL_b.UseVisualStyleBackColor = true;
             // 
-            // checkBox1
+            // defect_chb
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(14, 530);
-            this.checkBox1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(201, 19);
-            this.checkBox1.TabIndex = 42;
-            this.checkBox1.Text = "Дефекты по ГОСТ 34233.11-2017";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.defect_chb.AutoSize = true;
+            this.defect_chb.Location = new System.Drawing.Point(14, 530);
+            this.defect_chb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.defect_chb.Name = "defect_chb";
+            this.defect_chb.Size = new System.Drawing.Size(201, 19);
+            this.defect_chb.TabIndex = 42;
+            this.defect_chb.Text = "Дефекты по ГОСТ 34233.11-2017";
+            this.defect_chb.UseVisualStyleBackColor = true;
+            this.defect_chb.CheckedChanged += new System.EventHandler(this.Defect_chb_CheckedChanged);
             // 
-            // button2
+            // defect_b
             // 
-            this.button2.Location = new System.Drawing.Point(248, 525);
-            this.button2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(35, 27);
-            this.button2.TabIndex = 43;
-            this.button2.Text = ">>";
-            this.button2.UseVisualStyleBackColor = true;
+            this.defect_b.Enabled = false;
+            this.defect_b.Location = new System.Drawing.Point(248, 525);
+            this.defect_b.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.defect_b.Name = "defect_b";
+            this.defect_b.Size = new System.Drawing.Size(35, 27);
+            this.defect_b.TabIndex = 43;
+            this.defect_b.Text = ">>";
+            this.defect_b.UseVisualStyleBackColor = true;
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(290, 525);
+            this.button3.Enabled = false;
+            this.button3.Location = new System.Drawing.Point(13, 568);
             this.button3.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(176, 27);
+            this.button3.Size = new System.Drawing.Size(168, 27);
             this.button3.TabIndex = 44;
             this.button3.Text = "Изоляция и футеровка >>";
             this.button3.UseVisualStyleBackColor = true;
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(474, 525);
+            this.button4.Enabled = false;
+            this.button4.Location = new System.Drawing.Point(189, 568);
             this.button4.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(187, 27);
+            this.button4.Size = new System.Drawing.Size(175, 27);
             this.button4.TabIndex = 45;
             this.button4.Text = "Малоцикловая прочность >>";
             this.button4.UseVisualStyleBackColor = true;
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.radioButton2);
-            this.groupBox2.Controls.Add(this.radioButton1);
-            this.groupBox2.Location = new System.Drawing.Point(371, 282);
+            this.groupBox2.Controls.Add(this.stressHand_rb);
+            this.groupBox2.Controls.Add(this.stressCalc_rb);
+            this.groupBox2.Location = new System.Drawing.Point(371, 254);
             this.groupBox2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -592,127 +609,179 @@ namespace calcNet
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Нагрузки";
             // 
-            // radioButton2
+            // stressHand_rb
             // 
-            this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(191, 23);
-            this.radioButton2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(125, 19);
-            this.radioButton2.TabIndex = 1;
-            this.radioButton2.Text = "Задавать вручную";
-            this.radioButton2.UseVisualStyleBackColor = true;
+            this.stressHand_rb.AutoSize = true;
+            this.stressHand_rb.Location = new System.Drawing.Point(191, 23);
+            this.stressHand_rb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.stressHand_rb.Name = "stressHand_rb";
+            this.stressHand_rb.Size = new System.Drawing.Size(125, 19);
+            this.stressHand_rb.TabIndex = 1;
+            this.stressHand_rb.Text = "Задавать вручную";
+            this.stressHand_rb.UseVisualStyleBackColor = true;
+            this.stressHand_rb.CheckedChanged += new System.EventHandler(this.Stress_rb_CheckedChanged);
             // 
-            // radioButton1
+            // stressCalc_rb
             // 
-            this.radioButton1.AutoSize = true;
-            this.radioButton1.Checked = true;
-            this.radioButton1.Location = new System.Drawing.Point(8, 23);
-            this.radioButton1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(160, 19);
-            this.radioButton1.TabIndex = 0;
-            this.radioButton1.TabStop = true;
-            this.radioButton1.Text = "Определять при расчете";
-            this.radioButton1.UseVisualStyleBackColor = true;
+            this.stressCalc_rb.AutoSize = true;
+            this.stressCalc_rb.Checked = true;
+            this.stressCalc_rb.Location = new System.Drawing.Point(8, 23);
+            this.stressCalc_rb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.stressCalc_rb.Name = "stressCalc_rb";
+            this.stressCalc_rb.Size = new System.Drawing.Size(160, 19);
+            this.stressCalc_rb.TabIndex = 0;
+            this.stressCalc_rb.TabStop = true;
+            this.stressCalc_rb.Text = "Определять при расчете";
+            this.stressCalc_rb.UseVisualStyleBackColor = true;
+            this.stressCalc_rb.CheckedChanged += new System.EventHandler(this.Stress_rb_CheckedChanged);
             // 
-            // groupBox3
+            // force_gb
             // 
-            this.groupBox3.Controls.Add(this.rb7);
-            this.groupBox3.Controls.Add(this.rb6);
-            this.groupBox3.Controls.Add(this.rb5);
-            this.groupBox3.Controls.Add(this.rb4);
-            this.groupBox3.Controls.Add(this.rb3);
-            this.groupBox3.Controls.Add(this.rb2);
-            this.groupBox3.Controls.Add(this.rb1);
-            this.groupBox3.Controls.Add(this.f_pb);
-            this.groupBox3.Controls.Add(this.label20);
-            this.groupBox3.Location = new System.Drawing.Point(371, 342);
-            this.groupBox3.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.groupBox3.Size = new System.Drawing.Size(326, 173);
-            this.groupBox3.TabIndex = 47;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Расчетное осевое усилие, F";
+            this.force_gb.Controls.Add(this.F_tb);
+            this.force_gb.Controls.Add(this.panel1);
+            this.force_gb.Controls.Add(this.rb7);
+            this.force_gb.Controls.Add(this.rb6);
+            this.force_gb.Controls.Add(this.rb5);
+            this.force_gb.Controls.Add(this.rb4);
+            this.force_gb.Controls.Add(this.rb3);
+            this.force_gb.Controls.Add(this.rb2);
+            this.force_gb.Controls.Add(this.rb1);
+            this.force_gb.Controls.Add(this.f_pb);
+            this.force_gb.Controls.Add(this.label20);
+            this.force_gb.Enabled = false;
+            this.force_gb.Location = new System.Drawing.Point(371, 312);
+            this.force_gb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.force_gb.Name = "force_gb";
+            this.force_gb.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.force_gb.Size = new System.Drawing.Size(326, 179);
+            this.force_gb.TabIndex = 47;
+            this.force_gb.TabStop = false;
+            this.force_gb.Text = "Расчетное осевое усилие, F";
+            // 
+            // F_tb
+            // 
+            this.F_tb.Location = new System.Drawing.Point(8, 147);
+            this.F_tb.Name = "F_tb";
+            this.F_tb.Size = new System.Drawing.Size(100, 23);
+            this.F_tb.TabIndex = 10;
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.forceCompress_rb);
+            this.panel1.Controls.Add(this.forceStretch_rb);
+            this.panel1.Location = new System.Drawing.Point(8, 22);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(308, 25);
+            this.panel1.TabIndex = 9;
+            // 
+            // forceCompress_rb
+            // 
+            this.forceCompress_rb.AutoSize = true;
+            this.forceCompress_rb.Location = new System.Drawing.Point(138, 2);
+            this.forceCompress_rb.Name = "forceCompress_rb";
+            this.forceCompress_rb.Size = new System.Drawing.Size(98, 19);
+            this.forceCompress_rb.TabIndex = 1;
+            this.forceCompress_rb.Text = "Сжимающие";
+            this.forceCompress_rb.UseVisualStyleBackColor = true;
+            this.forceCompress_rb.CheckedChanged += new System.EventHandler(this.ForceStretchCompress_rb_CheckedChanged);
+            // 
+            // forceStretch_rb
+            // 
+            this.forceStretch_rb.AutoSize = true;
+            this.forceStretch_rb.Checked = true;
+            this.forceStretch_rb.Location = new System.Drawing.Point(19, 2);
+            this.forceStretch_rb.Name = "forceStretch_rb";
+            this.forceStretch_rb.Size = new System.Drawing.Size(113, 19);
+            this.forceStretch_rb.TabIndex = 0;
+            this.forceStretch_rb.TabStop = true;
+            this.forceStretch_rb.Text = "Растягивающие";
+            this.forceStretch_rb.UseVisualStyleBackColor = true;
+            this.forceStretch_rb.CheckedChanged += new System.EventHandler(this.ForceStretchCompress_rb_CheckedChanged);
             // 
             // rb7
             // 
             this.rb7.AutoSize = true;
-            this.rb7.Location = new System.Drawing.Point(259, 98);
+            this.rb7.Enabled = false;
+            this.rb7.Location = new System.Drawing.Point(259, 104);
             this.rb7.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.rb7.Name = "rb7";
             this.rb7.Size = new System.Drawing.Size(31, 19);
             this.rb7.TabIndex = 8;
             this.rb7.Text = "7";
             this.rb7.UseVisualStyleBackColor = true;
-            this.rb7.CheckedChanged += new System.EventHandler(this.RadioButton_CheckedChanged);
+            this.rb7.CheckedChanged += new System.EventHandler(this.Force_rb_CheckedChanged);
             // 
             // rb6
             // 
             this.rb6.AutoSize = true;
-            this.rb6.Location = new System.Drawing.Point(259, 70);
+            this.rb6.Enabled = false;
+            this.rb6.Location = new System.Drawing.Point(259, 76);
             this.rb6.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.rb6.Name = "rb6";
             this.rb6.Size = new System.Drawing.Size(31, 19);
             this.rb6.TabIndex = 7;
             this.rb6.Text = "6";
             this.rb6.UseVisualStyleBackColor = true;
-            this.rb6.CheckedChanged += new System.EventHandler(this.RadioButton_CheckedChanged);
+            this.rb6.CheckedChanged += new System.EventHandler(this.Force_rb_CheckedChanged);
             // 
             // rb5
             // 
             this.rb5.AutoSize = true;
-            this.rb5.Location = new System.Drawing.Point(258, 43);
+            this.rb5.Enabled = false;
+            this.rb5.Location = new System.Drawing.Point(258, 49);
             this.rb5.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.rb5.Name = "rb5";
             this.rb5.Size = new System.Drawing.Size(31, 19);
             this.rb5.TabIndex = 6;
             this.rb5.Text = "5";
             this.rb5.UseVisualStyleBackColor = true;
-            this.rb5.CheckedChanged += new System.EventHandler(this.RadioButton_CheckedChanged);
+            this.rb5.CheckedChanged += new System.EventHandler(this.Force_rb_CheckedChanged);
             // 
             // rb4
             // 
             this.rb4.AutoSize = true;
-            this.rb4.Location = new System.Drawing.Point(215, 126);
+            this.rb4.Enabled = false;
+            this.rb4.Location = new System.Drawing.Point(215, 132);
             this.rb4.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.rb4.Name = "rb4";
             this.rb4.Size = new System.Drawing.Size(31, 19);
             this.rb4.TabIndex = 5;
             this.rb4.Text = "4";
             this.rb4.UseVisualStyleBackColor = true;
-            this.rb4.CheckedChanged += new System.EventHandler(this.RadioButton_CheckedChanged);
+            this.rb4.CheckedChanged += new System.EventHandler(this.Force_rb_CheckedChanged);
             // 
             // rb3
             // 
             this.rb3.AutoSize = true;
-            this.rb3.Location = new System.Drawing.Point(215, 98);
+            this.rb3.Enabled = false;
+            this.rb3.Location = new System.Drawing.Point(215, 104);
             this.rb3.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.rb3.Name = "rb3";
             this.rb3.Size = new System.Drawing.Size(31, 19);
             this.rb3.TabIndex = 4;
             this.rb3.Text = "3";
             this.rb3.UseVisualStyleBackColor = true;
-            this.rb3.CheckedChanged += new System.EventHandler(this.RadioButton_CheckedChanged);
+            this.rb3.CheckedChanged += new System.EventHandler(this.Force_rb_CheckedChanged);
             // 
             // rb2
             // 
             this.rb2.AutoSize = true;
-            this.rb2.Location = new System.Drawing.Point(215, 70);
+            this.rb2.Enabled = false;
+            this.rb2.Location = new System.Drawing.Point(215, 76);
             this.rb2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.rb2.Name = "rb2";
             this.rb2.Size = new System.Drawing.Size(31, 19);
             this.rb2.TabIndex = 3;
             this.rb2.Text = "2";
             this.rb2.UseVisualStyleBackColor = true;
-            this.rb2.CheckedChanged += new System.EventHandler(this.RadioButton_CheckedChanged);
+            this.rb2.CheckedChanged += new System.EventHandler(this.Force_rb_CheckedChanged);
             // 
             // rb1
             // 
             this.rb1.AutoSize = true;
             this.rb1.Checked = true;
-            this.rb1.Location = new System.Drawing.Point(214, 43);
+            this.rb1.Enabled = false;
+            this.rb1.Location = new System.Drawing.Point(214, 49);
             this.rb1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.rb1.Name = "rb1";
             this.rb1.Size = new System.Drawing.Size(31, 19);
@@ -720,13 +789,13 @@ namespace calcNet
             this.rb1.TabStop = true;
             this.rb1.Text = "1";
             this.rb1.UseVisualStyleBackColor = true;
-            this.rb1.CheckedChanged += new System.EventHandler(this.RadioButton_CheckedChanged);
+            this.rb1.CheckedChanged += new System.EventHandler(this.Force_rb_CheckedChanged);
             // 
             // f_pb
             // 
             this.f_pb.Image = ((System.Drawing.Image)(resources.GetObject("f_pb.Image")));
             this.f_pb.InitialImage = ((System.Drawing.Image)(resources.GetObject("f_pb.InitialImage")));
-            this.f_pb.Location = new System.Drawing.Point(8, 43);
+            this.f_pb.Location = new System.Drawing.Point(8, 49);
             this.f_pb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.f_pb.Name = "f_pb";
             this.f_pb.Size = new System.Drawing.Size(198, 92);
@@ -736,22 +805,22 @@ namespace calcNet
             // label20
             // 
             this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(8, 23);
+            this.label20.Location = new System.Drawing.Point(115, 150);
             this.label20.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(44, 15);
+            this.label20.Size = new System.Drawing.Size(16, 15);
             this.label20.TabIndex = 0;
-            this.label20.Text = "label20";
+            this.label20.Text = "H";
             // 
             // groupBox4
             // 
             this.groupBox4.Controls.Add(this.p_d_l);
             this.groupBox4.Controls.Add(this.scalc_l);
-            this.groupBox4.Location = new System.Drawing.Point(427, 562);
+            this.groupBox4.Location = new System.Drawing.Point(371, 619);
             this.groupBox4.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.groupBox4.Size = new System.Drawing.Size(270, 58);
+            this.groupBox4.Size = new System.Drawing.Size(270, 45);
             this.groupBox4.TabIndex = 48;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Результаты расчета";
@@ -778,7 +847,7 @@ namespace calcNet
             // 
             // predCalc_b
             // 
-            this.predCalc_b.Location = new System.Drawing.Point(14, 575);
+            this.predCalc_b.Location = new System.Drawing.Point(14, 623);
             this.predCalc_b.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.predCalc_b.Name = "predCalc_b";
             this.predCalc_b.Size = new System.Drawing.Size(130, 42);
@@ -789,7 +858,7 @@ namespace calcNet
             // 
             // calc_b
             // 
-            this.calc_b.Location = new System.Drawing.Point(152, 588);
+            this.calc_b.Location = new System.Drawing.Point(152, 636);
             this.calc_b.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.calc_b.Name = "calc_b";
             this.calc_b.Size = new System.Drawing.Size(88, 27);
@@ -800,7 +869,7 @@ namespace calcNet
             // 
             // cancel_b
             // 
-            this.cancel_b.Location = new System.Drawing.Point(247, 587);
+            this.cancel_b.Location = new System.Drawing.Point(247, 635);
             this.cancel_b.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cancel_b.Name = "cancel_b";
             this.cancel_b.Size = new System.Drawing.Size(88, 27);
@@ -904,11 +973,69 @@ namespace calcNet
             this.label28.TabIndex = 59;
             this.label28.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // M_gb
+            // 
+            this.M_gb.Controls.Add(this.label29);
+            this.M_gb.Controls.Add(this.M_tb);
+            this.M_gb.Enabled = false;
+            this.M_gb.Location = new System.Drawing.Point(371, 498);
+            this.M_gb.Name = "M_gb";
+            this.M_gb.Size = new System.Drawing.Size(326, 54);
+            this.M_gb.TabIndex = 60;
+            this.M_gb.TabStop = false;
+            this.M_gb.Text = "Расчетный изгибающий момент, М";
+            // 
+            // label29
+            // 
+            this.label29.AutoSize = true;
+            this.label29.Location = new System.Drawing.Point(115, 27);
+            this.label29.Name = "label29";
+            this.label29.Size = new System.Drawing.Size(37, 15);
+            this.label29.TabIndex = 1;
+            this.label29.Text = "Н мм";
+            // 
+            // M_tb
+            // 
+            this.M_tb.Location = new System.Drawing.Point(8, 23);
+            this.M_tb.Name = "M_tb";
+            this.M_tb.Size = new System.Drawing.Size(100, 23);
+            this.M_tb.TabIndex = 0;
+            // 
+            // Q_gb
+            // 
+            this.Q_gb.Controls.Add(this.label30);
+            this.Q_gb.Controls.Add(this.Q_tb);
+            this.Q_gb.Enabled = false;
+            this.Q_gb.Location = new System.Drawing.Point(371, 559);
+            this.Q_gb.Name = "Q_gb";
+            this.Q_gb.Size = new System.Drawing.Size(326, 54);
+            this.Q_gb.TabIndex = 61;
+            this.Q_gb.TabStop = false;
+            this.Q_gb.Text = "Расчетное поперечное усилие, Q";
+            // 
+            // label30
+            // 
+            this.label30.AutoSize = true;
+            this.label30.Location = new System.Drawing.Point(115, 26);
+            this.label30.Name = "label30";
+            this.label30.Size = new System.Drawing.Size(16, 15);
+            this.label30.TabIndex = 3;
+            this.label30.Text = "Н";
+            // 
+            // Q_tb
+            // 
+            this.Q_tb.Location = new System.Drawing.Point(8, 22);
+            this.Q_tb.Name = "Q_tb";
+            this.Q_tb.Size = new System.Drawing.Size(100, 23);
+            this.Q_tb.TabIndex = 2;
+            // 
             // CilForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(714, 631);
+            this.ClientSize = new System.Drawing.Size(714, 674);
+            this.Controls.Add(this.Q_gb);
+            this.Controls.Add(this.M_gb);
             this.Controls.Add(this.label28);
             this.Controls.Add(this.label27);
             this.Controls.Add(this.label26);
@@ -921,12 +1048,12 @@ namespace calcNet
             this.Controls.Add(this.calc_b);
             this.Controls.Add(this.predCalc_b);
             this.Controls.Add(this.groupBox4);
-            this.Controls.Add(this.groupBox3);
+            this.Controls.Add(this.force_gb);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.button3);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.checkBox1);
+            this.Controls.Add(this.defect_b);
+            this.Controls.Add(this.defect_chb);
             this.Controls.Add(this.getL_b);
             this.Controls.Add(this.getFi_b);
             this.Controls.Add(this.getE_b);
@@ -977,12 +1104,18 @@ namespace calcNet
             this.dav_gb.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox3.PerformLayout();
+            this.force_gb.ResumeLayout(false);
+            this.force_gb.PerformLayout();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.f_pb)).EndInit();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.M_gb.ResumeLayout(false);
+            this.M_gb.PerformLayout();
+            this.Q_gb.ResumeLayout(false);
+            this.Q_gb.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1033,14 +1166,14 @@ namespace calcNet
         private System.Windows.Forms.Button getE_b;
         private System.Windows.Forms.Button getFi_b;
         private System.Windows.Forms.Button getL_b;
-        private System.Windows.Forms.CheckBox checkBox1;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.CheckBox defect_chb;
+        private System.Windows.Forms.Button defect_b;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.RadioButton radioButton2;
-        private System.Windows.Forms.RadioButton radioButton1;
-        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.RadioButton stressHand_rb;
+        private System.Windows.Forms.RadioButton stressCalc_rb;
+        private System.Windows.Forms.GroupBox force_gb;
         private System.Windows.Forms.RadioButton rb1;
         private System.Windows.Forms.PictureBox f_pb;
         private System.Windows.Forms.Label label20;
@@ -1064,5 +1197,15 @@ namespace calcNet
         private System.Windows.Forms.Label label26;
         private System.Windows.Forms.Label label27;
         private System.Windows.Forms.Label label28;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.RadioButton forceCompress_rb;
+        private System.Windows.Forms.RadioButton forceStretch_rb;
+        private System.Windows.Forms.TextBox F_tb;
+        private System.Windows.Forms.GroupBox M_gb;
+        private System.Windows.Forms.Label label29;
+        private System.Windows.Forms.TextBox M_tb;
+        private System.Windows.Forms.GroupBox Q_gb;
+        private System.Windows.Forms.Label label30;
+        private System.Windows.Forms.TextBox Q_tb;
     }
 }
