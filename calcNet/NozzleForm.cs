@@ -17,13 +17,9 @@ namespace calcNet
             InitializeComponent();
         }
 
-        private string TypeElement;
-
         private static DataWordOut.DataOutArrEl dataArrEl;
 
-        public DataWordOut.DataOutArrEl DataArrEl { get => dataArrEl; set => dataArrEl = value; }
-
-        //public static DataWordOut.DataOutArrEl DataArrEl(GetChildAtPointSkip; SettingsBindableAttribute;)
+        public DataWordOut.DataOutArrEl DataInOutShellWithNozzle { get => dataArrEl; set => dataArrEl = value; }
 
         private void Vid_rb_CheckedChanged(object sender, EventArgs e)
         {
@@ -40,30 +36,31 @@ namespace calcNet
             RadioButton rb = sender as RadioButton;
             if (rb.Checked)
             {
-                switch (TypeElement)
+                switch (DataInOutShellWithNozzle.Data_In.shellType)
                 {
-                    case "cil":
+                    case ShellType.Cylindrical:
                         {
                             switch(rb.Text)
                             {
-                                case "Радиальный":
+                                case "Перпендикулярно\n поверхности":
                                     {
-                                        place_pb.Image = (Bitmap)calcNet.Properties.Resources.ResourceManager.GetObject("CylRadial");
+                                        place_pb.Image = Properties.Resources.CylRadial;
                                         break;
                                     }
                                 case "В плоскости\nпопер. сечения":
                                     {
-                                        place_pb.Image = (Bitmap)calcNet.Properties.Resources.ResourceManager.GetObject("CylAxial");
+                                        place_pb.Image = Properties.Resources.CylAxial;
                                         break;
                                     }
-                                case "Смещенный":
-                                    {
-                                        place_pb.Image = (Bitmap)calcNet.Properties.Resources.ResourceManager.GetObject("CylOffset");
-                                        break;
-                                    }
+                                //case "Смещенный":
+                                //    {
+                                //        place_pb.Image =
+                                //            (Bitmap)Properties.Resources.ResourceManager.GetObject("CylOffset");
+                                //        break;
+                                //    }
                                 case "Наклонный":
                                     {
-                                        place_pb.Image = (Bitmap)calcNet.Properties.Resources.ResourceManager.GetObject("CylTilted");
+                                        place_pb.Image = Properties.Resources.CylTilted;
                                         break;
                                     }
                             }
@@ -71,46 +68,52 @@ namespace calcNet
 
                             break;
                         }
-                    case "ell":
+                    case ShellType.Elliptical:
                         {
                             switch (rb.Text)
                             {
-                                case "Радиальный":
+                                case "Перпендикулярно\n поверхности":
                                     {
-                                        if (Controls["place_gb"].Controls["corPn"] == null || (Controls["place_gb"].Controls["corPn"].Controls["placePolar_rb"] as RadioButton).Checked == true)
+                                        if (Controls["place_gb"].Controls["corPn"] == null ||
+                                            (Controls["place_gb"].Controls["corPn"]
+                                                                 .Controls["placePolar_rb"] as RadioButton).Checked == true)
                                         {
-                                            place_pb.Image = (Bitmap)calcNet.Properties.Resources.EllRadial;
+                                            place_pb.Image = Properties.Resources.EllRadial;
                                         }
                                         else if ((Controls["place_gb"].Controls["corPn"].Controls["placeDekart_rb"] as RadioButton).Checked == true)
                                         {
-                                            place_pb.Image = (Bitmap)calcNet.Properties.Resources.EllRadialDekart;
+                                            place_pb.Image = Properties.Resources.EllRadialDekart;
                                         }
                                             break;
                                     }
                                 case "Смещенный":
                                     {
-                                        if (Controls["place_gb"].Controls["corPn"] == null || (Controls["place_gb"].Controls["corPn"].Controls["placePolar_rb"] as RadioButton).Checked == true)
+                                        if (Controls["place_gb"].Controls["corPn"] == null ||
+                                            (Controls["place_gb"].Controls["corPn"]
+                                                                .Controls["placePolar_rb"] as RadioButton).Checked == true)
                                         {
-                                            place_pb.Image = (Bitmap)calcNet.Properties.Resources.EllVert;
+                                            place_pb.Image = Properties.Resources.EllVert;
                                         }
                                         else if ((Controls["place_gb"].Controls["corPn"].Controls["placeDekart_rb"] as RadioButton).Checked == true)
                                         {
-                                            place_pb.Image = (Bitmap)calcNet.Properties.Resources.EllVertDekart;
+                                            place_pb.Image = Properties.Resources.EllVertDekart;
                                         }
                                         break;
                                     }
-                                case "Наклонный":
-                                    {
-                                        if (Controls["place_gb"].Controls["corPn"] == null || (Controls["place_gb"].Controls["corPn"].Controls["placePolar_rb"] as RadioButton).Checked == true)
-                                        {
-                                            place_pb.Image = (Bitmap)calcNet.Properties.Resources.EllTilted;
-                                        }
-                                        else if ((Controls["place_gb"].Controls["corPn"].Controls["placeDekart_rb"] as RadioButton).Checked == true)
-                                        {
-                                            place_pb.Image = (Bitmap)calcNet.Properties.Resources.EllTiltedDekart;
-                                        }
-                                        break;
-                                    }
+                                //case "Наклонный":
+                                //    {
+                                //        if (Controls["place_gb"].Controls["corPn"] == null ||
+                                //            (Controls["place_gb"].Controls["corPn"]
+                                //                                .Controls["placePolar_rb"] as RadioButton).Checked == true)
+                                //        {
+                                //            place_pb.Image = Properties.Resources.EllTilted;
+                                //        }
+                                //        else if ((Controls["place_gb"].Controls["corPn"].Controls["placeDekart_rb"] as RadioButton).Checked == true)
+                                //        {
+                                //            place_pb.Image = Properties.Resources.EllTiltedDekart;
+                                //        }
+                                //        break;
+                                //    }
                             }
                             Place_Draw(sender);
                             break;
@@ -176,7 +179,7 @@ namespace calcNet
                 Location = new System.Drawing.Point(115, 199)
             };
             
-            place_pb.Image = (Bitmap)calcNet.Properties.Resources.EllRadial;
+            place_pb.Image = calcNet.Properties.Resources.EllRadial;
           
 
             place_gb.Controls.Add(pn);
@@ -426,7 +429,7 @@ namespace calcNet
                 Location = new System.Drawing.Point(115, 244)
             };
 
-            place_pb.Image = (Bitmap)calcNet.Properties.Resources.EllTilted;
+            place_pb.Image = Properties.Resources.EllTilted;
 
             place_gb.Controls.Add(pn);
 
@@ -524,11 +527,11 @@ namespace calcNet
         {
             RadioButton rb = sender as RadioButton;
 
-            switch (TypeElement)
+            switch (DataInOutShellWithNozzle.Data_In.shellType)
             {
-                case "cil":
+                case ShellType.Cylindrical:
                     {
-                        if (rb == null || (rb.Checked && rb.Text == "Радиальный"))
+                        if (rb == null || (rb.Checked && rb.Text == "Перпендикулярно\n поверхности"))
                         {
                             place_gb.Controls["pn"].Dispose();
                             Panel pn = new Panel
@@ -681,82 +684,84 @@ namespace calcNet
                             place_gb.Controls["pn"].Controls.Add(lab_4_2);
                         }
 
-                        else if (rb.Checked && rb.Text == "Смещенный")
-                        {
-                            place_gb.Controls["pn"].Dispose();
-                            Panel pn = new Panel
-                            {
-                                Name = "pn",
-                                Location = new Point(2, 15),
-                                Size = new Size(300, 310)
-                            };
-                            Label lab_1_1 = new Label
-                            {
-                                AutoSize = true,
-                                Text = "Смещение, Lш:",
-                                Location = new System.Drawing.Point(8, 130)
-                            };
-                            TextBox tb1 = new TextBox
-                            {
-                                Name = "Lsh_tb",
-                                Size = new Size(100, 20),
-                                Location = new System.Drawing.Point(8, 150)
-                            };
-                            Label lab_1_2 = new Label
-                            {
-                                Text = "м",
-                                Location = new System.Drawing.Point(115, 154)
-                            };
+                        /*
+                        //else if (rb.Checked && rb.Text == "Смещенный")
+                        //{
+                        //    place_gb.Controls["pn"].Dispose();
+                        //    Panel pn = new Panel
+                        //    {
+                        //        Name = "pn",
+                        //        Location = new Point(2, 15),
+                        //        Size = new Size(300, 310)
+                        //    };
+                        //    Label lab_1_1 = new Label
+                        //    {
+                        //        AutoSize = true,
+                        //        Text = "Смещение, Lш:",
+                        //        Location = new System.Drawing.Point(8, 130)
+                        //    };
+                        //    TextBox tb1 = new TextBox
+                        //    {
+                        //        Name = "Lsh_tb",
+                        //        Size = new Size(100, 20),
+                        //        Location = new System.Drawing.Point(8, 150)
+                        //    };
+                        //    Label lab_1_2 = new Label
+                        //    {
+                        //        Text = "м",
+                        //        Location = new System.Drawing.Point(115, 154)
+                        //    };
 
-                            Label lab_2_1 = new Label
-                            {
-                                AutoSize = true,
-                                Text = "Угол смещения оси, θ:",
-                                Location = new System.Drawing.Point(8, 175)
-                            };
-                            TextBox tb2 = new TextBox
-                            {
-                                Name = "theta_tb",
-                                Size = new Size(100, 20),
-                                Location = new System.Drawing.Point(8, 195)
-                            };
-                            Label lab_2_2 = new Label
-                            {
-                                Text = "°",
-                                Location = new System.Drawing.Point(115, 199)
-                            };
+                        //    Label lab_2_1 = new Label
+                        //    {
+                        //        AutoSize = true,
+                        //        Text = "Угол смещения оси, θ:",
+                        //        Location = new System.Drawing.Point(8, 175)
+                        //    };
+                        //    TextBox tb2 = new TextBox
+                        //    {
+                        //        Name = "theta_tb",
+                        //        Size = new Size(100, 20),
+                        //        Location = new System.Drawing.Point(8, 195)
+                        //    };
+                        //    Label lab_2_2 = new Label
+                        //    {
+                        //        Text = "°",
+                        //        Location = new System.Drawing.Point(115, 199)
+                        //    };
 
-                            Label lab_3_1 = new Label
-                            {
-                                AutoSize = true,
-                                Text = "Смещение, lсм:",
-                                Location = new System.Drawing.Point(8, 220)
-                            };
-                            TextBox tb3 = new TextBox
-                            {
-                                Name = "lsm_tb",
-                                Size = new Size(100, 20),
-                                Location = new System.Drawing.Point(8, 240)
-                            };
-                            Label lab_3_2 = new Label
-                            {
-                                Text = "мм",
-                                Location = new System.Drawing.Point(115, 244)
-                            };
+                        //    Label lab_3_1 = new Label
+                        //    {
+                        //        AutoSize = true,
+                        //        Text = "Смещение, lсм:",
+                        //        Location = new System.Drawing.Point(8, 220)
+                        //    };
+                        //    TextBox tb3 = new TextBox
+                        //    {
+                        //        Name = "lsm_tb",
+                        //        Size = new Size(100, 20),
+                        //        Location = new System.Drawing.Point(8, 240)
+                        //    };
+                        //    Label lab_3_2 = new Label
+                        //    {
+                        //        Text = "мм",
+                        //        Location = new System.Drawing.Point(115, 244)
+                        //    };
 
 
-                            place_gb.Controls.Add(pn);
+                        //    place_gb.Controls.Add(pn);
 
-                            place_gb.Controls["pn"].Controls.Add(lab_1_1);
-                            place_gb.Controls["pn"].Controls.Add(tb1);
-                            place_gb.Controls["pn"].Controls.Add(lab_1_2);
-                            place_gb.Controls["pn"].Controls.Add(lab_2_1);
-                            place_gb.Controls["pn"].Controls.Add(tb2);
-                            place_gb.Controls["pn"].Controls.Add(lab_2_2);
-                            place_gb.Controls["pn"].Controls.Add(lab_3_1);
-                            place_gb.Controls["pn"].Controls.Add(tb3);
-                            place_gb.Controls["pn"].Controls.Add(lab_3_2);
-                        }
+                        //    place_gb.Controls["pn"].Controls.Add(lab_1_1);
+                        //    place_gb.Controls["pn"].Controls.Add(tb1);
+                        //    place_gb.Controls["pn"].Controls.Add(lab_1_2);
+                        //    place_gb.Controls["pn"].Controls.Add(lab_2_1);
+                        //    place_gb.Controls["pn"].Controls.Add(tb2);
+                        //    place_gb.Controls["pn"].Controls.Add(lab_2_2);
+                        //    place_gb.Controls["pn"].Controls.Add(lab_3_1);
+                        //    place_gb.Controls["pn"].Controls.Add(tb3);
+                        //    place_gb.Controls["pn"].Controls.Add(lab_3_2);
+                        //}
+                        */
 
                         else if (rb.Checked && rb.Text == "Наклонный")
                         {
@@ -860,11 +865,12 @@ namespace calcNet
                 //    {
 
                 //    }
-                case "ell":
+                case ShellType.Elliptical:
                     {
-                        if (rb == null || (rb.Checked && rb.Text == "Радиальный"))
+                        if (rb == null || (rb.Checked && rb.Text == "Перпендикулярно\n поверхности"))
                         {
-                            if (Controls["place_gb"].Controls["corPn"] == null || (Controls["place_gb"].Controls["corPn"].Controls["placePolar_rb"] as RadioButton).Checked == true)
+                            if (Controls["place_gb"].Controls["corPn"] == null ||
+                                (Controls["place_gb"].Controls["corPn"].Controls["placePolar_rb"] as RadioButton).Checked == true)
                             {
                                 EllRadialDraw();
                             }
@@ -876,7 +882,8 @@ namespace calcNet
 
                         else if (rb.Checked & rb.Text == "Смещенный")
                         {
-                            if (Controls["place_gb"].Controls["corPn"] == null || (Controls["place_gb"].Controls["corPn"].Controls["placePolar_rb"] as RadioButton).Checked == true)
+                            if (Controls["place_gb"].Controls["corPn"] == null ||
+                                (Controls["place_gb"].Controls["corPn"].Controls["placePolar_rb"] as RadioButton).Checked == true)
                             {
                                 EllVertDraw();
                             }
@@ -886,21 +893,23 @@ namespace calcNet
                             }
                         }
 
-                        else if (rb.Checked & rb.Text == "Наклонный")
-                        {
-                            if (Controls["place_gb"].Controls["corPn"] == null || (Controls["place_gb"].Controls["corPn"].Controls["placePolar_rb"] as RadioButton).Checked == true)
-                            {
-                                EllTiltedDraw();
-                            }
-                            else if ((Controls["place_gb"].Controls["corPn"].Controls["placeDekart_rb"] as RadioButton).Checked == true)
-                            {
-                                EllTiltedDekartDraw();
-                            }
-                        }
+                        //else if (rb.Checked & rb.Text == "Наклонный")
+                        //{
+                        //    if (Controls["place_gb"].Controls["corPn"] == null ||
+                        //        (Controls["place_gb"].Controls["corPn"].Controls["placePolar_rb"] as RadioButton).Checked == true)
+                        //    {
+                        //        EllTiltedDraw();
+                        //    }
+                        //    else if ((Controls["place_gb"].Controls["corPn"].Controls["placeDekart_rb"] as RadioButton).Checked == true)
+                        //    {
+                        //        EllTiltedDekartDraw();
+                        //    }
+                        //}
                         
                         else if (rb == null || (rb.Checked && rb.Text == "Полярная"))
                         {
-                            if (Controls["place_gb"] == null || (Controls["place_gb"].Controls["placerb_1"] as RadioButton).Checked == true)
+                            if (Controls["place_gb"] == null ||
+                                (Controls["place_gb"].Controls["placerb_1"] as RadioButton).Checked == true)
                             {
                                 EllRadialDraw();
                             }
@@ -916,7 +925,8 @@ namespace calcNet
 
                         else if (rb.Checked && rb.Text == "Декартова")
                         {
-                            if (Controls["place_gb"] == null || (Controls["place_gb"].Controls["placerb_1"] as RadioButton).Checked == true)
+                            if (Controls["place_gb"] == null ||
+                                (Controls["place_gb"].Controls["placerb_1"] as RadioButton).Checked == true)
                             {
                                 EllRadialDekartDraw();
                             }
@@ -945,182 +955,186 @@ namespace calcNet
             steel3_cb.SelectedIndex = 0;
             Gost_cb.SelectedIndex = 0;
 
-            
+
             //var field = (string)typeof(Owner.GetType()).GetField("TypeElement").GetValue(null);
             //object value = field.GetValue();
             //var c = field;
 
-            if (this.Owner is CilForm cf)
+            switch (DataInOutShellWithNozzle.Data_In.shellType)
             {
-                System.Windows.Forms.MessageBox.Show("Cil");
-                TypeElement = "cil";
-                
-                RadioButton placerb_1 = new RadioButton
-                {
-                    Text = "Радиальный",
-                    Checked = true,
-                    AutoSize = true,
-                    Location = new System.Drawing.Point(8, 22),
-                    Margin = new System.Windows.Forms.Padding(4, 3, 4, 3),
-                    Name = "placerb_1",
-                    UseVisualStyleBackColor = true,
-                };
-                placerb_1.CheckedChanged += new EventHandler(Place_rb_CheckedChanged);
-                //Size = new System.Drawing.Size(31, 19),
+                case ShellType.Cylindrical:
+                    {
+                        System.Windows.Forms.MessageBox.Show(DataInOutShellWithNozzle.Data_In.shellType.ToString());
 
-                //placerb_1.toggled[bool].emit(False)
+                        RadioButton placerb_1 = new RadioButton
+                        {
+                            Text = "Перпендикулярно\n поверхности",
+                            Checked = true,
+                            AutoSize = true,
+                            Location = new System.Drawing.Point(8, 22),
+                            Margin = new System.Windows.Forms.Padding(4, 3, 4, 3),
+                            Name = "placerb_1",
+                            UseVisualStyleBackColor = true,
+                        };
+                        placerb_1.CheckedChanged += new EventHandler(Place_rb_CheckedChanged);
+                        //Size = new System.Drawing.Size(31, 19),
 
-                RadioButton placerb_2 = new RadioButton
-                {
-                    Text = "В плоскости\nпопер. сечения",
-                    AutoSize = true,
-                    Location = new System.Drawing.Point(8, 40),
-                    Margin = new System.Windows.Forms.Padding(4, 3, 4, 3),
-                    Name = "placerb_2",
-                    UseVisualStyleBackColor = true
-                };
-                placerb_2.CheckedChanged += new EventHandler(Place_rb_CheckedChanged);
+                        //placerb_1.toggled[bool].emit(False)
 
-                RadioButton placerb_3 = new RadioButton
-                {
-                    Text = "Смещенный",
-                    AutoSize = true,
-                    Location = new System.Drawing.Point(8, 76),
-                    Margin = new System.Windows.Forms.Padding(4, 3, 4, 3),
-                    Name = "placerb_3",
-                    UseVisualStyleBackColor = true
-                };
-                placerb_3.CheckedChanged += new EventHandler(Place_rb_CheckedChanged);
-                RadioButton placerb_4 = new RadioButton
-                {
-                    Text = "Наклонный",
-                    AutoSize = true,
-                    Location = new System.Drawing.Point(8, 103),
-                    Margin = new System.Windows.Forms.Padding(4, 3, 4, 3),
-                    Name = "placerb_4",
-                    UseVisualStyleBackColor = true
-                };
-                placerb_4.CheckedChanged += new EventHandler(Place_rb_CheckedChanged);
+                        RadioButton placerb_2 = new RadioButton
+                        {
+                            Text = "В плоскости\nпопер. сечения",
+                            AutoSize = true,
+                            Location = new System.Drawing.Point(8, 62),
+                            Margin = new System.Windows.Forms.Padding(4, 3, 4, 3),
+                            Name = "placerb_2",
+                            UseVisualStyleBackColor = true
+                        };
+                        placerb_2.CheckedChanged += new EventHandler(Place_rb_CheckedChanged);
 
-                Panel pn = new Panel
-                {
-                    Name = "pn",
-                    Location = new Point(2, 15),
-                    Size = new Size(300, 310)
-                };
+                        //RadioButton placerb_3 = new RadioButton
+                        //{
+                        //    Text = "Смещенный",
+                        //    AutoSize = true,
+                        //    Location = new System.Drawing.Point(8, 76),
+                        //    Margin = new System.Windows.Forms.Padding(4, 3, 4, 3),
+                        //    Name = "placerb_3",
+                        //    UseVisualStyleBackColor = true
+                        //};
+                        //placerb_3.CheckedChanged += new EventHandler(Place_rb_CheckedChanged);
+                        RadioButton placerb_3 = new RadioButton
+                        {
+                            Text = "Наклонный",
+                            AutoSize = true,
+                            Location = new System.Drawing.Point(8, 102),
+                            Margin = new System.Windows.Forms.Padding(4, 3, 4, 3),
+                            Name = "placerb_3",
+                            UseVisualStyleBackColor = true
+                        };
+                        placerb_3.CheckedChanged += new EventHandler(Place_rb_CheckedChanged);
 
-                place_gb.Controls.Add(placerb_1);
-                place_gb.Controls.Add(placerb_2);
-                place_gb.Controls.Add(placerb_3);
-                place_gb.Controls.Add(placerb_4);
-                place_gb.Controls.Add(pn);
+                        Panel pn = new Panel
+                        {
+                            Name = "pn",
+                            Location = new Point(2, 15),
+                            Size = new Size(300, 310)
+                        };
 
-                place_pb.Image = (Bitmap)calcNet.Properties.Resources.ResourceManager.GetObject("CylRadial");
-            }
-            // TODO: Добавить расчет конуса
-            //else if (this.Owner is KonForm)
-            //{
-            //    TypeElement = "Kon";
-            //}
-            else if (this.Owner is EllForm)
-            {
-                System.Windows.Forms.MessageBox.Show("ell");
-                TypeElement = "ell";
+                        place_gb.Controls.Add(placerb_1);
+                        place_gb.Controls.Add(placerb_2);
+                        place_gb.Controls.Add(placerb_3);
+                        //place_gb.Controls.Add(placerb_4);
+                        place_gb.Controls.Add(pn);
 
-                RadioButton placerb_1 = new RadioButton
-                {
-                    Text = "Радиальный",
-                    Checked = true,
-                    AutoSize = true,
-                    Location = new System.Drawing.Point(8, 30),
-                    Margin = new System.Windows.Forms.Padding(4, 3, 4, 3),
-                    Name = "placerb_1",
-                    UseVisualStyleBackColor = true,
-                };
-                placerb_1.CheckedChanged += new EventHandler(Place_rb_CheckedChanged);
-                //Size = new System.Drawing.Size(31, 19),
+                        place_pb.Image = (Bitmap)calcNet.Properties.Resources.ResourceManager.GetObject("CylRadial");
+                    }
+                    break;
+                // TODO: Добавить расчет конуса
+                //else if (this.Owner is KonForm)
+                //{
+                //    TypeElement = "Kon";
+                //}
 
-                RadioButton placerb_3 = new RadioButton
-                {
-                    Text = "Смещенный",
-                    AutoSize = true,
-                    Location = new System.Drawing.Point(8, 50),
-                    Margin = new System.Windows.Forms.Padding(4, 3, 4, 3),
-                    Name = "placerb_3",
-                    UseVisualStyleBackColor = true
-                };
-                placerb_3.CheckedChanged += new EventHandler(Place_rb_CheckedChanged);
-                RadioButton placerb_4 = new RadioButton
-                {
-                    Text = "Наклонный",
-                    AutoSize = true,
-                    Location = new System.Drawing.Point(8, 70),
-                    Margin = new System.Windows.Forms.Padding(4, 3, 4, 3),
-                    Name = "placerb_4",
-                    UseVisualStyleBackColor = true
-                };
-                placerb_4.CheckedChanged += new EventHandler(Place_rb_CheckedChanged);
+                case ShellType.Elliptical:
+                    {
+                        System.Windows.Forms.MessageBox.Show(DataInOutShellWithNozzle.Data_In.shellType.ToString());
 
-                Panel pn = new Panel
-                {
-                    Name = "pn",
-                    Location = new Point(2, 15),
-                    Size = new Size(400, 310)
-                };
+                        RadioButton placerb_1 = new RadioButton
+                        {
+                            Text = "Перпендикулярно\n поверхности",
+                            Checked = true,
+                            AutoSize = true,
+                            Location = new System.Drawing.Point(8, 30),
+                            Margin = new System.Windows.Forms.Padding(4, 3, 4, 3),
+                            Name = "placerb_1",
+                            UseVisualStyleBackColor = true,
+                        };
+                        placerb_1.CheckedChanged += new EventHandler(Place_rb_CheckedChanged);
+                        //Size = new System.Drawing.Size(31, 19),
 
-                place_gb.Controls.Add(placerb_1);
-                //place_gb.Controls.Add(placerb_2);
-                place_gb.Controls.Add(placerb_3);
-                place_gb.Controls.Add(placerb_4);
-                place_gb.Controls.Add(pn);
+                        RadioButton placerb_2 = new RadioButton
+                        {
+                            Text = "Смещенный",
+                            AutoSize = true,
+                            Location = new System.Drawing.Point(8, 70),
+                            Margin = new System.Windows.Forms.Padding(4, 3, 4, 3),
+                            Name = "placerb_2",
+                            UseVisualStyleBackColor = true
+                        };
+                        placerb_2.CheckedChanged += new EventHandler(Place_rb_CheckedChanged);
+                        //RadioButton placerb_4 = new RadioButton
+                        //{
+                        //    Text = "Наклонный",
+                        //    AutoSize = true,
+                        //    Location = new System.Drawing.Point(8, 70),
+                        //    Margin = new System.Windows.Forms.Padding(4, 3, 4, 3),
+                        //    Name = "placerb_4",
+                        //    UseVisualStyleBackColor = true
+                        //};
+                        //placerb_4.CheckedChanged += new EventHandler(Place_rb_CheckedChanged);
 
-                RadioButton placeDekart_rb = new RadioButton
-                {
-                    Text = "Декартова",
-                    AutoSize = true,
-                    Location = new System.Drawing.Point(210, 15),
-                    Margin = new System.Windows.Forms.Padding(4, 3, 4, 3),
-                    Name = "placeDekart_rb",
-                    UseVisualStyleBackColor = true
-                };
-                placeDekart_rb.CheckedChanged += new EventHandler(PlaceCoordinat_rb_CheckedChanged);
-                //Size = new System.Drawing.Size(31, 19),
+                        Panel pn = new Panel
+                        {
+                            Name = "pn",
+                            Location = new Point(2, 15),
+                            Size = new Size(400, 310)
+                        };
 
-                RadioButton placePolar_rb = new RadioButton
-                {
-                    Text = "Полярная",
-                    Checked = true,
-                    AutoSize = true,
-                    Location = new System.Drawing.Point(125, 15),
-                    Margin = new System.Windows.Forms.Padding(4, 3, 4, 3),
-                    Name = "placePolar_rb",
-                    UseVisualStyleBackColor = true
-                };
-                placePolar_rb.CheckedChanged += new EventHandler(PlaceCoordinat_rb_CheckedChanged);
+                        place_gb.Controls.Add(placerb_1);
+                        place_gb.Controls.Add(placerb_2);
+                        //place_gb.Controls.Add(placerb_3);
+                        //place_gb.Controls.Add(placerb_4);
+                        place_gb.Controls.Add(pn);
 
-                Label corL = new Label
-                {
-                    Text = "Система координат:",
-                    AutoSize = true,
-                    Location = new Point(0, 15)
-                };
+                        RadioButton placeDekart_rb = new RadioButton
+                        {
+                            Text = "Декартова",
+                            AutoSize = true,
+                            Location = new System.Drawing.Point(210, 15),
+                            Margin = new System.Windows.Forms.Padding(4, 3, 4, 3),
+                            Name = "placeDekart_rb",
+                            UseVisualStyleBackColor = true
+                        };
+                        placeDekart_rb.CheckedChanged += new EventHandler(PlaceCoordinat_rb_CheckedChanged);
+                        //Size = new System.Drawing.Size(31, 19),
 
-                Panel corPn = new Panel
-                {
-                    Name = "corPn",
-                    Location = new Point(110, 10),
-                    Size = new Size(300, 35)
-                };
+                        RadioButton placePolar_rb = new RadioButton
+                        {
+                            Text = "Полярная",
+                            Checked = true,
+                            AutoSize = true,
+                            Location = new System.Drawing.Point(125, 15),
+                            Margin = new System.Windows.Forms.Padding(4, 3, 4, 3),
+                            Name = "placePolar_rb",
+                            UseVisualStyleBackColor = true
+                        };
+                        placePolar_rb.CheckedChanged += new EventHandler(PlaceCoordinat_rb_CheckedChanged);
 
-                corPn.Controls.Add(corL);
-                corPn.Controls.Add(placeDekart_rb);
-                corPn.Controls.Add(placePolar_rb);
+                        Label corL = new Label
+                        {
+                            Text = "Система координат:",
+                            AutoSize = true,
+                            Location = new Point(0, 15)
+                        };
 
-                place_gb.Controls.Add(corPn);
+                        Panel corPn = new Panel
+                        {
+                            Name = "corPn",
+                            Location = new Point(110, 10),
+                            Size = new Size(300, 35)
+                        };
 
-                place_pb.Location = new Point(place_pb.Location.X, place_pb.Location.Y + 35);
-                place_pb.Image = (Bitmap)calcNet.Properties.Resources.ResourceManager.GetObject("EllRadial");
+                        corPn.Controls.Add(corL);
+                        corPn.Controls.Add(placeDekart_rb);
+                        corPn.Controls.Add(placePolar_rb);
 
+                        place_gb.Controls.Add(corPn);
+
+                        place_pb.Location = new Point(place_pb.Location.X, place_pb.Location.Y + 35);
+                        place_pb.Image = (Bitmap)calcNet.Properties.Resources.ResourceManager.GetObject("EllRadial");
+
+                    }
+                    break;
             }
 
             if (this.Owner != null)
@@ -1155,33 +1169,21 @@ namespace calcNet
 
         private void PredCalc_b_Click(object sender, EventArgs e)
         {
-            DataArrEl.Data_In.isNeedMakeCalcNozzle = true;
-            Data_in d_in = DataArrEl.Data_In;
-            Data_out d_out = DataArrEl.Data_Out;
+            DataInOutShellWithNozzle.Data_In.isNeedMakeCalcNozzle = true;
+            Data_in d_in = DataInOutShellWithNozzle.Data_In;
+            Data_out d_out = DataInOutShellWithNozzle.Data_Out;
             DataNozzle_in dN_in = new DataNozzle_in();
 
 
-            string data_inerr = "";
+            string dataInErr = "";
 
-            try
-            {
-                if ((Convert.ToInt32(t_tb.Text) >= 20) && (Convert.ToInt32(t_tb.Text) < 1000))
-                {
-                    d_in.temp = Convert.ToInt32(t_tb.Text);
-                }
-                else
-                {
-                    data_inerr += "T должна быть в диапазоне 20 - 1000\n";
-                }
-            }
-            catch (FormatException)
-            {
-                data_inerr += "T должна быть в диапазоне 20 - 1000\n";
-            }
+            //t
+            InputClass.GetInput_t(t_tb, ref dN_in, ref dataInErr);
 
+            //steel1
             dN_in.steel1 = steel1_cb.Text;
 
-            if (data_inerr == "")
+            if (dataInErr == "")
             {
                 if (sigma_d1_tb.ReadOnly)
                 {
@@ -1195,29 +1197,13 @@ namespace calcNet
                 }
                 catch
                 {
-                    data_inerr += "[σ] неверные данные\n";
+                    dataInErr += "[σ] неверные данные\n";
                 }
 
-                if (vn_rb.Checked)
+                if (!vn_rb.Checked)
                 {
-                    //dN_in.dav = "vn";
-                }
-                else
-                {
-                    //dN_in.dav = "nar";
-
-                    E1_tb.ReadOnly = false;
-                    E1_tb.Text = Convert.ToString(CalcClass.GetE(dN_in.steel1, d_in.temp));
-                    E1_tb.ReadOnly = true;
-
-                    try
-                    {
-                        dN_in.E1 = Convert.ToInt32(E1_tb.Text);
-                    }
-                    catch
-                    {
-                        data_inerr += "E неверные данные\n";
-                    }
+                    //E1
+                    InputClass.GetInput_E(E1_tb, ref dN_in,  ref dataInErr, 1);
                 }
             }
 
@@ -1245,12 +1231,12 @@ namespace calcNet
                 }
                 else
                 {
-                    data_inerr += "d неверные данные\n";
+                    dataInErr += "d неверные данные\n";
                 }
             }
             catch
             {
-                data_inerr += "d неверные данные\n";
+                dataInErr += "d неверные данные\n";
             }
 
             try
@@ -1261,12 +1247,12 @@ namespace calcNet
                 }
                 else
                 {
-                    data_inerr += "s1 неверные данные\n";
+                    dataInErr += "s1 неверные данные\n";
                 }
             }
             catch
             {
-                data_inerr += "s1 неверные данные\n";
+                dataInErr += "s1 неверные данные\n";
             }
 
             try
@@ -1277,12 +1263,12 @@ namespace calcNet
                 }
                 else
                 {
-                    data_inerr += "cs неверные данные\n";
+                    dataInErr += "cs неверные данные\n";
                 }
             }
             catch
             {
-                data_inerr += "cs неверные данные\n";
+                dataInErr += "cs неверные данные\n";
             }
 
             try
@@ -1293,12 +1279,12 @@ namespace calcNet
                 }
                 else
                 {
-                    data_inerr += "cs1 неверные данные\n";
+                    dataInErr += "cs1 неверные данные\n";
                 }
             }
             catch
             {
-                data_inerr += "cs1 неверные данные\n";
+                dataInErr += "cs1 неверные данные\n";
             }
 
             try
@@ -1309,12 +1295,12 @@ namespace calcNet
                 }
                 else
                 {
-                    data_inerr += "l1 неверные данные\n";
+                    dataInErr += "l1 неверные данные\n";
                 }
             }
             catch
             {
-                data_inerr += "l1 неверные данные\n";
+                dataInErr += "l1 неверные данные\n";
             }
 
             dN_in.steel2 = steel2_cb.Text;
@@ -1327,12 +1313,12 @@ namespace calcNet
                 }
                 else
                 {
-                    data_inerr += "l2 неверные данные\n";
+                    dataInErr += "l2 неверные данные\n";
                 }
             }
             catch
             {
-                data_inerr += "l2 неверные данные\n";
+                dataInErr += "l2 неверные данные\n";
             }
 
             try
@@ -1343,12 +1329,12 @@ namespace calcNet
                 }
                 else
                 {
-                    data_inerr += "s2 неверные данные\n";
+                    dataInErr += "s2 неверные данные\n";
                 }
             }
             catch
             {
-                data_inerr += "s2 неверные данные\n";
+                dataInErr += "s2 неверные данные\n";
             }
 
             dN_in.steel3 = steel3_cb.Text;
@@ -1361,12 +1347,12 @@ namespace calcNet
                 }
                 else
                 {
-                    data_inerr += "l3 неверные данные\n";
+                    dataInErr += "l3 неверные данные\n";
                 }
             }
             catch
             {
-                data_inerr += "l3 неверные данные\n";
+                dataInErr += "l3 неверные данные\n";
             }
 
             try
@@ -1377,12 +1363,12 @@ namespace calcNet
                 }
                 else
                 {
-                    data_inerr += "s3 неверные данные\n";
+                    dataInErr += "s3 неверные данные\n";
                 }
             }
             catch
             {
-                data_inerr += "s3 неверные данные\n";
+                dataInErr += "s3 неверные данные\n";
             }
 
             try
@@ -1393,12 +1379,12 @@ namespace calcNet
                 }
                 else
                 {
-                    data_inerr += "φ должен быть в диапазоне 0 - 1\n";
+                    dataInErr += "φ должен быть в диапазоне 0 - 1\n";
                 }
             }
             catch
             {
-                data_inerr += "φ должен быть в диапазоне 0 - 1\n";
+                dataInErr += "φ должен быть в диапазоне 0 - 1\n";
             }
 
             try
@@ -1409,12 +1395,12 @@ namespace calcNet
                 }
                 else
                 {
-                    data_inerr += "φ1 должен быть в диапазоне 0 - 1\n";
+                    dataInErr += "φ1 должен быть в диапазоне 0 - 1\n";
                 }
             }
             catch
             {
-                data_inerr += "φ1 должен быть в диапазоне 0 - 1\n";
+                dataInErr += "φ1 должен быть в диапазоне 0 - 1\n";
             }
 
             try
@@ -1425,12 +1411,12 @@ namespace calcNet
                 }
                 else
                 {
-                    data_inerr += "delta должен быть в диапазоне 0 - \n";
+                    dataInErr += "delta должен быть в диапазоне 0 - \n";
                 }
             }
             catch
             {
-                data_inerr += "delta должен быть в диапазоне 0 - 1\n";
+                dataInErr += "delta должен быть в диапазоне 0 - 1\n";
             }
 
             try
@@ -1441,12 +1427,12 @@ namespace calcNet
                 }
                 else
                 {
-                    data_inerr += "delta1 должен быть в диапазоне 0 - \n";
+                    dataInErr += "delta1 должен быть в диапазоне 0 - \n";
                 }
             }
             catch
             {
-                data_inerr += "delta1 должен быть в диапазоне 0 - 1\n";
+                dataInErr += "delta1 должен быть в диапазоне 0 - 1\n";
             }
 
             try
@@ -1457,19 +1443,19 @@ namespace calcNet
                 }
                 else
                 {
-                    data_inerr += "delta2 должен быть в диапазоне 0 - \n";
+                    dataInErr += "delta2 должен быть в диапазоне 0 - \n";
                 }
             }
             catch
             {
-                data_inerr += "delta2 должен быть в диапазоне 0 - 1\n";
+                dataInErr += "delta2 должен быть в диапазоне 0 - 1\n";
             }
 
             foreach (Control rb in Controls["vid_gb"].Controls)
             {
                 if (rb is RadioButton && (rb as RadioButton).Checked)
                 {
-                    dN_in.vid = Convert.ToInt32(rb.Text.First().ToString());
+                    dN_in.nozzleKind = (NozzleKind)Convert.ToInt32(rb.Text.First().ToString());
                 }
             }
 
@@ -1477,30 +1463,95 @@ namespace calcNet
             {
                 if (rb is RadioButton && (rb as RadioButton).Checked)
                 {
-                    dN_in.place = Convert.ToInt32(rb.Name.Last().ToString());
-                    switch (dN_in.place)
+                    //dN_in.location = (NozzleLocation)(Convert.ToInt32(rb.Name.Last().ToString()) - 1);
+
+                    string chekedRadioButtonText;
+                    chekedRadioButtonText = rb.Text;
+                    switch (chekedRadioButtonText)
                     {
-                        case 1:
+                        case "Перпендикулярно\n поверхности":
+                            if (!dN_in.isOval)
+                            {
+                                if (dN_in.nozzleKind == NozzleKind.ImpassWithoutRing ||
+                                    dN_in.nozzleKind == NozzleKind.ImpassWithRing ||
+                                    dN_in.nozzleKind == NozzleKind.PassWithoutRing ||
+                                    dN_in.nozzleKind == NozzleKind.PassWithRing ||
+                                    dN_in.nozzleKind == NozzleKind.WithRingAndInPart ||
+                                    dN_in.nozzleKind == NozzleKind.WithWealdedRing)
+                                {
+                                    dN_in.location = NozzleLocation.LocationAccordingToParagraph_5_2_2_1;
+                                }
+                                else if (dN_in.nozzleKind == NozzleKind.WithFlanging ||
+                                        dN_in.nozzleKind == NozzleKind.WithTorusshapedInsert)
+                                {
+                                    dN_in.location = NozzleLocation.LocationAccordingToParagraph_5_2_2_7;
+                                }
+                            }
+                            else
+                            {
+                                dN_in.location = NozzleLocation.LocationAccordingToParagraph_5_2_2_6;
+                                if (d_in.shellType == ShellType.Elliptical ||
+                                    d_in.shellType == ShellType.Spherical ||
+                                    d_in.shellType == ShellType.Torospherical)
+                                {
+                                    dN_in.omega = 0;
+                                }
+                            }
                             break;
-                        case 2:
+                        case "В плоскости\nпопер. сечения":
+                            dN_in.location = NozzleLocation.LocationAccordingToParagraph_5_2_2_2;
+                            dN_in.t = Convert.ToDouble((place_gb.Controls["pn"].Controls["t_tb"] as TextBox).Text);
                             break;
-                        case 3:
+                        case "Смещенный":
+                            switch (d_in.shellType)
+                            {
+                                case ShellType.Elliptical:
+                                    dN_in.location = NozzleLocation.LocationAccordingToParagraph_5_2_2_3;
+                                    dN_in.elx = Convert.ToDouble((place_gb.Controls["pn"].Controls["Rsh_tb"] as TextBox).Text);
+                                    break;
+                                case ShellType.Cylindrical:
+                                    break;
+                            }
                             break;
-                        case 4:
+                        case "Наклонный":
+                            switch (d_in.shellType)
+                            {
+                                case ShellType.Elliptical:
+                                case ShellType.Conical:
+                                    dN_in.omega = Convert.ToDouble((place_gb.Controls["pn"].Controls["omega_tb"] as TextBox).Text);
+                                    dN_in.gamma = Convert.ToDouble((place_gb.Controls["pn"].Controls["gamma_tb"] as TextBox).Text);
+                                    if (dN_in.omega == 0)
+                                    {
+                                        dN_in.location = NozzleLocation.LocationAccordingToParagraph_5_2_2_5;
+                                    }
+                                    else
+                                    {
+                                        dN_in.location = NozzleLocation.LocationAccordingToParagraph_5_2_2_4;
+                                    }
+                                    break;
+                                case ShellType.Spherical:
+                                case ShellType.Torospherical:
+                                    dN_in.omega = 0;
+                                    dN_in.gamma = Convert.ToDouble((place_gb.Controls["pn"].Controls["gamma_tb"] as TextBox).Text);
+                                    dN_in.location = NozzleLocation.LocationAccordingToParagraph_5_2_2_5;
+                                    break;
+                            }
                             break;
                     }
                 }
+                break;
             }
 
             if ((dN_in.cs + dN_in.cs1 > dN_in.s3) & dN_in.s3 > 0)
             {
-                data_inerr += "cs+cs1 должно быть меньше s3";
+                dataInErr += "cs+cs1 должно быть меньше s3";
             }
 
 
-            if (data_inerr == "")
+            bool isNotError = dataInErr == "";
+            if (isNotError)
             {
-                DataNozzle_out dN_out = CalcClass.CalcNozzle(d_in, d_out, dN_in);
+                DataNozzle_out dN_out = CalcClass.CalculateNozzle(d_in, d_out, dN_in);
                 dataArrEl.DataN_In = dN_in;
                 dataArrEl.DataN_Out = dN_out;
                 d0_l.Text = $"d0={dN_out.d0:f2} мм";
@@ -1521,7 +1572,7 @@ namespace calcNet
             }
             else
             {
-                System.Windows.Forms.MessageBox.Show(data_inerr);
+                System.Windows.Forms.MessageBox.Show(dataInErr);
             }
         }
 
@@ -1529,20 +1580,31 @@ namespace calcNet
         {
             PredCalc_b_Click(sender, e);
 
-            DataArrEl.DataN_In.name = name_tb.Text;
+            DataInOutShellWithNozzle.DataN_In.name = name_tb.Text;
             
        
             if (this.Owner.Owner is MainForm main)
             {
                 int i;
-                main.Word_lv.Items.Add($"{DataArrEl.Data_In.D} мм, {DataArrEl.Data_In.p} МПа, {DataArrEl.Data_In.temp} C, {DataArrEl.Data_In.met}, yk");
+                main.Word_lv.Items.Add($"{DataInOutShellWithNozzle.Data_In.D} мм, {DataInOutShellWithNozzle.Data_In.p} МПа, {DataInOutShellWithNozzle.Data_In.temp} C, {DataInOutShellWithNozzle.Data_In.shellType}, yk");
                 i = main.Word_lv.Items.Count - 1;
                 //DataWordOut.DataArr[0].  DataArr .DataOutArr[]. .Value = $"{d_in.D} мм, {d_in.p} МПа, {d_in.temp} C, {d_in.met}";
                 
                 dataArrEl.id = i + 1;
-                dataArrEl.Typ = TypeElement + "yk";
+                switch (DataInOutShellWithNozzle.Data_In.shellType)
+                {
+                    case ShellType.Cylindrical:
+                        dataArrEl.calculatedElementType = CalculatedElementType.CylindricalWhithNozzle;
+                        break;
+                    case ShellType.Conical:
+                        dataArrEl.calculatedElementType = CalculatedElementType.ConicalWhithNozzle;
+                        break;
+                    case ShellType.Elliptical:
+                        dataArrEl.calculatedElementType = CalculatedElementType.EllipticalWhithNozzle;
+                        break;
+                }
           
-                DataWordOut.DataArr.Add(DataArrEl);
+                DataWordOut.DataArr.Add(DataInOutShellWithNozzle);
                 System.Windows.Forms.MessageBox.Show("Calculation complete");
                 this.Hide();
 

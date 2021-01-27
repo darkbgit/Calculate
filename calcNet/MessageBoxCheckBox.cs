@@ -19,36 +19,37 @@ namespace calcNet
 
         private void OK_b_Click(object sender, EventArgs e)
         {
-            //this.Close();
-            
-            this.Owner.Hide();
-            this.Close();
+            Owner.Hide();
+            Close();
             if (nozzle_cb.Checked)
             {
-                NozzleForm nf = new NozzleForm { Owner = this.Owner };
-                if (this.Owner is CilForm cf)
+                NozzleForm nf = new NozzleForm
                 {
-                    DataWordOut.DataOutArrEl data_InOut = new DataWordOut.DataOutArrEl
-                    {
-                        Data_In = cf.DataArrEl.Data_In,
-                        Data_Out = cf.DataArrEl.Data_Out
-                    };
-                    nf.DataArrEl = data_InOut;
-                }
-                else if (this.Owner is EllForm ef)
-                {
-                    DataWordOut.DataOutArrEl data_InOut = new DataWordOut.DataOutArrEl
-                    {
-                        Data_In = ef.DataArrEl.Data_In,
-                        Data_Out = ef.DataArrEl.Data_Out
-                    };
-                    nf.DataArrEl = data_InOut;
-                }
+                    Owner = this.Owner,
+                    DataInOutShellWithNozzle = (Owner as FormShell).DataInOutShell
+                };
+                //Owner.DataArrEl
+                //if (this.Owner is CilForm cf)
+                //{
+                //    DataWordOut.DataOutArrEl data_InOut = new DataWordOut.DataOutArrEl
+                //    {
+                //        Data_In = cf.DataInOutShell.Data_In,
+                //        Data_Out = cf.DataInOutShell.Data_Out
+                //    };
+                //    nf.DataInOutShellWithNozzle = data_InOut;
+                //}
+                //else if (this.Owner is EllForm ef)
+                //{
+                //    DataWordOut.DataOutArrEl data_InOut = new DataWordOut.DataOutArrEl
+                //    {
+                //        Data_In = ef.DataArrEl.Data_In,
+                //        Data_Out = ef.DataArrEl.Data_Out
+                //    };
+                //    nf.DataInOutShellWithNozzle = data_InOut;
+                //}
                 
                 nf.Show();
             }
-            
-
         }
     }
 }

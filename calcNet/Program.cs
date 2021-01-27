@@ -38,7 +38,7 @@ namespace calcNet
             internal Data_out Data_Out; // { get; set; }
             internal DataNozzle_in DataN_In;
             internal DataNozzle_out DataN_Out;
-            internal string Typ; // cil, ell, kon, cilyk, konyk, ellyk, saddle, heat
+            internal CalculatedElementType calculatedElementType; // cil, ell, kon, cilyk, konyk, ellyk, saddle, heat
         }
 
         public static List<DataOutArrEl> DataArr { get; set; } = new List<DataOutArrEl>();
@@ -58,5 +58,24 @@ namespace calcNet
             }
             cb.SelectedIndex = 0;
         }
+    }
+
+    enum CalculatedElementType
+    {
+        Cylindrical,
+        CylindricalWhithNozzle,
+        Elliptical,
+        EllipticalWhithNozzle,
+        Conical,
+        ConicalWhithNozzle,
+        Saddle,
+        FlatBottom,
+        Heatexchenge
+    }
+
+    public partial class FormShell : Form
+    {
+        private DataWordOut.DataOutArrEl dataArrEl;
+        internal DataWordOut.DataOutArrEl DataInOutShell { get => dataArrEl; set => dataArrEl = value; }
     }
 }

@@ -39,7 +39,7 @@ namespace calcNet
 
 
             doc.InsertParagraph().InsertPageBreakAfterSelf();
-            doc.InsertParagraph($"Расчет на прочность обечайки {d_in.name}, нагруженной ").Heading(HeadingType.Heading1).Alignment = Alignment.center;
+            doc.InsertParagraph($"Расчет на прочность обечайки {d_in.Name}, нагруженной ").Heading(HeadingType.Heading1).Alignment = Alignment.center;
             if (d_in.isPressureIn)
             {
                 doc.Paragraphs.Last().Append("внутренним избыточным давлением");
@@ -62,7 +62,7 @@ namespace calcNet
                 int i = 0;
                 //table.InsertRow(i);
                 table.Rows[i].Cells[0].Paragraphs[0].Append("Материал обечайки");
-                table.Rows[i].Cells[1].Paragraphs[0].Append($"{d_in.steel}");
+                table.Rows[i].Cells[1].Paragraphs[0].Append($"{d_in.Steel}");
 
                 table.InsertRow(++i);
                 table.Rows[i].Cells[0].Paragraphs[0].Append("Внутренний диаметр обечайки, D:");
@@ -126,7 +126,7 @@ namespace calcNet
                 table.Rows[i].Cells[1].Paragraphs[0].Append($"{d_in.p} МПа");
 
                 table.InsertRow(++i);
-                table.Rows[i].Cells[0].Paragraphs[0].Append($"Допускаемое напряжение для материала {d_in.steel} при расчетной температуре, [σ]:");
+                table.Rows[i].Cells[0].Paragraphs[0].Append($"Допускаемое напряжение для материала {d_in.Steel} при расчетной температуре, [σ]:");
                 table.Rows[i].Cells[1].Paragraphs[0].Append($"{d_in.sigma_d} МПа");
                 if (!d_in.isPressureIn)
                 {
@@ -242,7 +242,7 @@ namespace calcNet
             // TODO: добавить полусферическое
 
             doc.InsertParagraph().InsertPageBreakAfterSelf();
-            doc.InsertParagraph($"Расчет на прочность эллиптического днища {d_in.name}, нагруженного ").Heading(HeadingType.Heading1).Alignment = Alignment.center;
+            doc.InsertParagraph($"Расчет на прочность эллиптического днища {d_in.Name}, нагруженного ").Heading(HeadingType.Heading1).Alignment = Alignment.center;
             if (d_in.isPressureIn)
             {
                 doc.Paragraphs.Last().Append("внутренним избыточным давлением");
@@ -264,7 +264,7 @@ namespace calcNet
                 int i = 0;
                 //table.InsertRow(i);
                 table.Rows[i].Cells[0].Paragraphs[0].Append("Материал днища");
-                table.Rows[i].Cells[1].Paragraphs[0].Append($"{d_in.steel}");
+                table.Rows[i].Cells[1].Paragraphs[0].Append($"{d_in.Steel}");
                 
                 table.InsertRow(++i);
                 table.Rows[i].Cells[0].Paragraphs[0].Append("Внутренний диаметр днища, D:");
@@ -323,7 +323,7 @@ namespace calcNet
                 table.Rows[i].Cells[1].Paragraphs[0].Append($"{d_in.p} МПа");
 
                 table.InsertRow(++i);
-                table.Rows[i].Cells[0].Paragraphs[0].Append($"Допускаемое напряжение для материала {d_in.steel} " +
+                table.Rows[i].Cells[0].Paragraphs[0].Append($"Допускаемое напряжение для материала {d_in.Steel} " +
                                                             "при расчетной температуре, [σ]:");
                 table.Rows[i].Cells[1].Paragraphs[0].Append($"{d_in.sigma_d} МПа");
 
@@ -425,19 +425,16 @@ namespace calcNet
             var doc = Xceed.Words.NET.DocX.Load(Docum);
             doc.InsertParagraph().InsertPageBreakAfterSelf();
             doc.InsertParagraph($"Расчет на прочность узла врезки штуцера {dN_in.name} в ").Heading(HeadingType.Heading1).Alignment = Alignment.center;
-            switch (d_in.met)
+            switch (d_in.shellType)
             {
-                case "cilvn":
-                case "cilnar":
-                    doc.Paragraphs.Last().Append($"обечайку {d_in.name}, нагруженную ");
+                case ShellType.Cylindrical:
+                    doc.Paragraphs.Last().Append($"обечайку {d_in.Name}, нагруженную ");
                     break;
-                case "konvn":
-                case "konnar":
-                    doc.Paragraphs.Last().Append($"коническую обечайку {d_in.name}, нагруженную ");
+                case ShellType.Conical:
+                    doc.Paragraphs.Last().Append($"коническую обечайку {d_in.Name}, нагруженную ");
                     break;
-                case "ellvn":
-                case "ellnar":
-                    doc.Paragraphs.Last().Append($"эллиптическое днище {d_in.name}, нагруженное ");
+                case ShellType.Elliptical:
+                    doc.Paragraphs.Last().Append($"эллиптическое днище {d_in.Name}, нагруженное ");
                     break;
             }
             if (d_in.isPressureIn)
@@ -451,214 +448,244 @@ namespace calcNet
             doc.InsertParagraph();
             doc.InsertParagraph("Исходные данные").Alignment = Alignment.center;
 
-            var table = doc.AddTable(1, 2);
-            table.SetWidths(new float[] { 200, 200 });
-
-            table.Rows[0].Cells[0].Paragraphs[0].Append("Элемент:");
-            table.Rows[0].Cells[1].Paragraphs[0].Append($"Штуцер {dN_in.name}");
-
-            table.InsertRow();
-            table.Rows[1].Cells[0].Paragraphs[0].Append("Элемент несущий штуцер:");
-            table.Rows[1].Cells[1].Paragraphs[0].Append($"{d_in.name}");
-
-            table.InsertRow();
-            table.Rows[2].Cells[0].Paragraphs[0].Append("Тип элемента, несущего штуцер:");
-            switch (d_in.met)
+            //table
             {
-                case "cilvn":
-                case "cilnar":
-                    table.Rows[2].Cells[1].Paragraphs[0].Append("Обечайка цилиндрическая");
-                    break;
-                case "konvn":
-                case "konnar":
-                    table.Rows[2].Cells[1].Paragraphs[0].Append("Обечайка коническая");
-                    break;
-                case "ellvn":
-                case "ellnar":
-                    table.Rows[2].Cells[1].Paragraphs[0].Append("Днище эллиптическое");
-                    break;
-            }
-            table.InsertRow();
-            table.Rows[3].Cells[0].Paragraphs[0].Append("Тип штуцера:");
-            switch (dN_in.vid)
-            {
-                case 1:
-                    table.Rows[3].Cells[1].Paragraphs[0].Append("Непроходящий без укрепления");
-                    break;
-                case 2:
-                    table.Rows[3].Cells[1].Paragraphs[0].Append("Проходящий без укрепления");
-                    break;
-                case 3:
-                    table.Rows[3].Cells[1].Paragraphs[0].Append("Непроходящий с накладным кольцом");
-                    break;
-                case 4:
-                    table.Rows[3].Cells[1].Paragraphs[0].Append("Проходящий с накладным кольцом");
-                    break;
-                case 5:
-                    table.Rows[3].Cells[1].Paragraphs[0].Append("С накладным кольцом и внутренней частью");
-                    break;
-                case 6:
-                    table.Rows[3].Cells[1].Paragraphs[0].Append("С отбортовкой");
-                    break;
-                case 7:
-                    table.Rows[3].Cells[1].Paragraphs[0].Append("С торовой вставкой");
-                    break;
-                case 8:
-                    table.Rows[3].Cells[1].Paragraphs[0].Append("С вварным кольцом");
-                    break;
-            }
-            doc.InsertParagraph().InsertTableAfterSelf(table);
+                var table = doc.AddTable(1, 2);
+                table.SetWidths(new float[] { 200, 200 });
 
-            var image = doc.AddImage($"pic/Nozzle/Nozzle{dN_in.vid}.gif");
+                table.Rows[0].Cells[0].Paragraphs[0].Append("Элемент:");
+                table.Rows[0].Cells[1].Paragraphs[0].Append($"Штуцер {dN_in.name}");
+
+                table.InsertRow();
+                table.Rows[1].Cells[0].Paragraphs[0].Append("Элемент несущий штуцер:");
+                table.Rows[1].Cells[1].Paragraphs[0].Append($"{d_in.Name}");
+
+                table.InsertRow();
+                table.Rows[2].Cells[0].Paragraphs[0].Append("Тип элемента, несущего штуцер:");
+                switch (d_in.shellType)
+                {
+                    case ShellType.Cylindrical:
+                        table.Rows[2].Cells[1].Paragraphs[0].Append("Обечайка цилиндрическая");
+                        break;
+                    case ShellType.Conical:
+                        table.Rows[2].Cells[1].Paragraphs[0].Append("Обечайка коническая");
+                        break;
+                    case ShellType.Elliptical:
+                        table.Rows[2].Cells[1].Paragraphs[0].Append("Днище эллиптическое");
+                        break;
+                }
+                table.InsertRow();
+                table.Rows[3].Cells[0].Paragraphs[0].Append("Тип штуцера:");
+                switch (dN_in.nozzleKind)
+                {
+                    case NozzleKind.ImpassWithoutRing:
+                        table.Rows[3].Cells[1].Paragraphs[0].Append("Непроходящий без укрепления");
+                        break;
+                    case NozzleKind.PassWithoutRing:
+                        table.Rows[3].Cells[1].Paragraphs[0].Append("Проходящий без укрепления");
+                        break;
+                    case NozzleKind.ImpassWithRing:
+                        table.Rows[3].Cells[1].Paragraphs[0].Append("Непроходящий с накладным кольцом");
+                        break;
+                    case NozzleKind.PassWithRing:
+                        table.Rows[3].Cells[1].Paragraphs[0].Append("Проходящий с накладным кольцом");
+                        break;
+                    case NozzleKind.WithRingAndInPart:
+                        table.Rows[3].Cells[1].Paragraphs[0].Append("С накладным кольцом и внутренней частью");
+                        break;
+                    case NozzleKind.WithFlanging:
+                        table.Rows[3].Cells[1].Paragraphs[0].Append("С отбортовкой");
+                        break;
+                    case NozzleKind.WithTorusshapedInsert:
+                        table.Rows[3].Cells[1].Paragraphs[0].Append("С торовой вставкой");
+                        break;
+                    case NozzleKind.WithWealdedRing:
+                        table.Rows[3].Cells[1].Paragraphs[0].Append("С вварным кольцом");
+                        break;
+                }
+                doc.InsertParagraph().InsertTableAfterSelf(table);
+            }
+
+            var image = doc.AddImage($"pic/Nozzle/Nozzle{dN_in.nozzleKind}.gif");
             var picture = image.CreatePicture();
             doc.InsertParagraph().AppendPicture(picture);
 
-            var table1 = doc.AddTable(1, 2);
-            table1.SetWidths(new float[] { 300, 100 });
-
-            table1.Rows[0].Cells[0].Paragraphs[0].Append("Материал несущего элемента:");
-            table1.Rows[0].Cells[1].Paragraphs[0].Append($"{d_in.steel}");
-            int i = 1;
-            table1.InsertRow(i);
-            table1.Rows[i].Cells[0].Paragraphs[0].Append("Толщина стенки несущего элемента, s:");
-            table1.Rows[i].Cells[1].Paragraphs[0].Append($"{d_in.s} мм");
-            i += 1;
-            table1.InsertRow(i);
-            table1.Rows[i].Cells[0].Paragraphs[0].Append("Сумма прибавок к стенке несущего элемента, c:");
-            table1.Rows[i].Cells[1].Paragraphs[0].Append($"{d_out.c:f2} мм");
-            i += 1;
-            table1.InsertRow(i);
-            table1.Rows[i].Cells[0].Paragraphs[0].Append("Материал штуцера");
-            table1.Rows[i].Cells[1].Paragraphs[0].Append($"{dN_in.steel1}");
-            i += 1;
-            table1.InsertRow(i);
-            table1.Rows[i].Cells[0].Paragraphs[0].Append("Внутренний диаметр штуцера, d:");
-            table1.Rows[i].Cells[1].Paragraphs[0].Append($"{dN_in.D} мм");
-            i += 1;
-            table1.InsertRow(i);
-            table1.Rows[i].Cells[0].Paragraphs[0].Append("Толщина стенки штуцера, ").AppendEquation("s_1").Append(":");
-            table1.Rows[i].Cells[1].Paragraphs[0].Append($"{dN_in.s1} мм");
-            i += 1;
-            table1.InsertRow(i);
-            table1.Rows[i].Cells[0].Paragraphs[0].Append("Длина наружной части штуцера, ").AppendEquation("s_1").Append(":");
-            table1.Rows[i].Cells[1].Paragraphs[0].Append($"{dN_in.l1} мм");
-            i += 1;
-            table1.InsertRow(i);
-            table1.Rows[i].Cells[0].Paragraphs[0].Append("Сумма прибавок к толщине стенки штуцера, ").AppendEquation("c_s").Append(":");
-            table1.Rows[i].Cells[1].Paragraphs[0].Append($"{dN_in.cs} мм");
-            i += 1;
-            table1.InsertRow(i);
-            table1.Rows[i].Cells[0].Paragraphs[0].Append("Прибавка на коррозию, ").AppendEquation("c_s1").Append(":");
-            table1.Rows[i].Cells[1].Paragraphs[0].Append($"{dN_in.cs1} мм");
-            i += 1;
-            switch (dN_in.vid)
+            //table
             {
-                case 1:
-                    {
-                        table1.InsertRow(i);
-                        table1.Rows[i].Cells[0].Paragraphs[0].Append("Минимальный размер сварного шва, Δ:");
-                        table1.Rows[i].Cells[1].Paragraphs[0].Append($"{dN_in.delta} мм");
-                        //i += 1;
+                var table = doc.AddTable(1, 2);
+                table.SetWidths(new float[] { 300, 100 });
+
+                int i = 0;
+                table.Rows[i].Cells[0].Paragraphs[0].Append("Материал несущего элемента:");
+                table.Rows[i].Cells[1].Paragraphs[0].Append($"{d_in.Steel}");
+                
+                table.InsertRow(++i);
+                table.Rows[i].Cells[0].Paragraphs[0].Append("Толщина стенки несущего элемента, s:");
+                table.Rows[i].Cells[1].Paragraphs[0].Append($"{d_in.s} мм");
+
+                table.InsertRow(++i);
+                table.Rows[i].Cells[0].Paragraphs[0].Append("Сумма прибавок к стенке несущего элемента, c:");
+                table.Rows[i].Cells[1].Paragraphs[0].Append($"{d_out.c:f2} мм");
+
+                table.InsertRow(++i);
+                table.Rows[i].Cells[0].Paragraphs[0].Append("Материал штуцера");
+                table.Rows[i].Cells[1].Paragraphs[0].Append($"{dN_in.steel1}");
+
+                table.InsertRow(++i);
+                table.Rows[i].Cells[0].Paragraphs[0].Append("Внутренний диаметр штуцера, d:");
+                table.Rows[i].Cells[1].Paragraphs[0].Append($"{dN_in.D} мм");
+
+                table.InsertRow(++i);
+                table.Rows[i].Cells[0].Paragraphs[0].Append("Толщина стенки штуцера, ")
+                                                    .AppendEquation("s_1")
+                                                    .Append(":");
+                table.Rows[i].Cells[1].Paragraphs[0].Append($"{dN_in.s1} мм");
+
+                table.InsertRow(++i);
+                table.Rows[i].Cells[0].Paragraphs[0].Append("Длина наружной части штуцера, ")
+                                                    .AppendEquation("s_1")
+                                                    .Append(":");
+                table.Rows[i].Cells[1].Paragraphs[0].Append($"{dN_in.l1} мм");
+
+                table.InsertRow(++i);
+                table.Rows[i].Cells[0].Paragraphs[0].Append("Сумма прибавок к толщине стенки штуцера, ")
+                                                    .AppendEquation("c_s")
+                                                    .Append(":");
+                table.Rows[i].Cells[1].Paragraphs[0].Append($"{dN_in.cs} мм");
+
+                table.InsertRow(++i);
+                table.Rows[i].Cells[0].Paragraphs[0].Append("Прибавка на коррозию, ")
+                                                    .AppendEquation("c_s1")
+                                                    .Append(":");
+                table.Rows[i].Cells[1].Paragraphs[0].Append($"{dN_in.cs1} мм");
+
+                switch (dN_in.nozzleKind)
+                {
+                    case NozzleKind.ImpassWithoutRing:
+                        {
+                            table.InsertRow(++i);
+                            table.Rows[i].Cells[0].Paragraphs[0].Append("Минимальный размер сварного шва, Δ:");
+                            table.Rows[i].Cells[1].Paragraphs[0].Append($"{dN_in.delta} мм");
+                            break;
+                        }
+                    case NozzleKind.PassWithoutRing:
+                        {
+                            table.InsertRow(++i);
+                            table.Rows[i].Cells[0].Paragraphs[0].Append("Длина внутренней части штуцера, ")
+                                                                .AppendEquation("l_3")
+                                                                .Append(":");
+                            table.Rows[i].Cells[1].Paragraphs[0].Append($"{dN_in.l3} мм");
+
+                            table.InsertRow(++i);
+                            table.Rows[i].Cells[0].Paragraphs[0].Append("Толщина внутренней части штуцера, ")
+                                                                .AppendEquation("s_3")
+                                                                .Append(":");
+                            table.Rows[i].Cells[1].Paragraphs[0].Append($"{dN_in.s3} мм");
+
+                            table.InsertRow(++i);
+                            table.Rows[i].Cells[0].Paragraphs[0].Append("Минимальный размер сварного шва, Δ:");
+                            table.Rows[i].Cells[1].Paragraphs[0].Append($"{dN_in.delta} мм");
+                            break;
+                        }
+                    case NozzleKind.ImpassWithRing:
+                        {
+                            table.InsertRow(++i);
+                            table.Rows[i].Cells[0].Paragraphs[0].Append("Ширина накладного кольца, ")
+                                                                .AppendEquation("l_2")
+                                                                .Append(":");
+                            table.Rows[i].Cells[1].Paragraphs[0].Append($"{dN_in.l2} мм");
+
+                            table.InsertRow(++i);
+                            table.Rows[i].Cells[0].Paragraphs[0].Append("Толщина накладного кольца, ")
+                                                                .AppendEquation("s_2")
+                                                                .Append(":");
+                            table.Rows[i].Cells[1].Paragraphs[0].Append($"{dN_in.s2} мм");
+
+                            table.InsertRow(++i);
+                            table.Rows[i].Cells[0].Paragraphs[0].Append("Минимальный размер сварного шва, Δ:");
+                            table.Rows[i].Cells[1].Paragraphs[0].Append($"{dN_in.delta} мм");
+                            break;
+                        }
+                    case NozzleKind.PassWithRing:
+                        {
+                            table.InsertRow(++i);
+                            table.Rows[i].Cells[0].Paragraphs[0].Append("Ширина накладного кольца, ")
+                                                                .AppendEquation("l_2")
+                                                                .Append(":");
+                            table.Rows[i].Cells[1].Paragraphs[0].Append($"{dN_in.l2} мм");
+
+                            table.InsertRow(++i);
+                            table.Rows[i].Cells[0].Paragraphs[0].Append("Толщина накладного кольца, ")
+                                                                .AppendEquation("s_2")
+                                                                .Append(":");
+                            table.Rows[i].Cells[1].Paragraphs[0].Append($"{dN_in.s2} мм");
+
+                            table.InsertRow(++i);
+                            table.Rows[i].Cells[0].Paragraphs[0].Append("Длина внутренней части штуцера, ")
+                                                                .AppendEquation("l_3")
+                                                                .Append(":");
+                            table.Rows[i].Cells[1].Paragraphs[0].Append($"{dN_in.l3} мм");
+
+                            table.InsertRow(++i);
+                            table.Rows[i].Cells[0].Paragraphs[0].Append("Толщина внутренней части штуцера, ")
+                                                                .AppendEquation("s_3")
+                                                                .Append(":");
+                            table.Rows[i].Cells[1].Paragraphs[0].Append($"{dN_in.s3} мм");
+
+                            table.InsertRow(++i);
+                            table.Rows[i].Cells[0].Paragraphs[0].Append("Минимальный размер сварного шва, Δ:");
+                            table.Rows[i].Cells[1].Paragraphs[0].Append($"{dN_in.delta} мм");
+                            break;
+                        }
+                    case NozzleKind.WithRingAndInPart:
+                        {
+                            table.InsertRow(++i);
+                            table.Rows[i].Cells[0].Paragraphs[0].Append("Ширина накладного кольца, ")
+                                                                .AppendEquation("l_2")
+                                                                .Append(":");
+                            table.Rows[i].Cells[1].Paragraphs[0].Append($"{dN_in.l2} мм");
+
+                            table.InsertRow(++i);
+                            table.Rows[i].Cells[0].Paragraphs[0].Append("Толщина накладного кольца, ")
+                                                                .AppendEquation("s_2")
+                                                                .Append(":");
+                            table.Rows[i].Cells[1].Paragraphs[0].Append($"{dN_in.s2} мм");
+
+                            table.InsertRow(++i);
+                            table.Rows[i].Cells[0].Paragraphs[0].Append("Длина внутренней части штуцера, ")
+                                                                .AppendEquation("l_3")
+                                                                .Append(":");
+                            table.Rows[i].Cells[1].Paragraphs[0].Append($"{dN_in.l3} мм");
+
+                            table.InsertRow(++i);
+                            table.Rows[i].Cells[0].Paragraphs[0].Append("Толщина внутренней части штуцера, ")
+                                                                .AppendEquation("s_3")
+                                                                .Append(":");
+                            table.Rows[i].Cells[1].Paragraphs[0].Append($"{dN_in.s3} мм");
+
+                            table.InsertRow(++i);
+                            table.Rows[i].Cells[0].Paragraphs[0].Append("Минимальный размер сварного шва, Δ:");
+                            table.Rows[i].Cells[1].Paragraphs[0].Append($"{dN_in.delta} мм");
+                            break;
+                        }
+                    case NozzleKind.WithFlanging:
+                        {
+                            table.InsertRow(++i);
+                            table.Rows[i].Cells[0].Paragraphs[0].Append("Радиус отбортовки, r:");
+                            table.Rows[i].Cells[1].Paragraphs[0].Append($"{dN_in.r} мм");
+
+                            table.InsertRow(++i);
+                            table.Rows[i].Cells[0].Paragraphs[0].Append("Минимальный размер сварного шва, Δ:");
+                            table.Rows[i].Cells[1].Paragraphs[0].Append($"{dN_in.delta} мм");
+                            break;
+                        }
+                    case NozzleKind.WithTorusshapedInsert: //UNDONE:
                         break;
-                    }
-                case 2:
-                    {
-                        table1.InsertRow(i);
-                        table1.Rows[i].Cells[0].Paragraphs[0].Append("Длина внутренней части штуцера, ").AppendEquation("l_3").Append(":");
-                        table1.Rows[i].Cells[1].Paragraphs[0].Append($"{dN_in.l3} мм");
-                        i += 1;
-                        table1.InsertRow(i);
-                        table1.Rows[i].Cells[0].Paragraphs[0].Append("Толщина внутренней части штуцера, ").AppendEquation("s_3").Append(":");
-                        table1.Rows[i].Cells[1].Paragraphs[0].Append($"{dN_in.s3} мм");
-                        i += 1;
-                        table1.InsertRow(i);
-                        table1.Rows[i].Cells[0].Paragraphs[0].Append("Минимальный размер сварного шва, Δ:");
-                        table1.Rows[i].Cells[1].Paragraphs[0].Append($"{dN_in.delta} мм");
-                        //i += 1;
+                    case NozzleKind.WithWealdedRing:
                         break;
-                    }
-                case 3:
-                    {
-                        table1.InsertRow(i);
-                        table1.Rows[i].Cells[0].Paragraphs[0].Append("Ширина накладного кольца, ").AppendEquation("l_2").Append(":");
-                        table1.Rows[i].Cells[1].Paragraphs[0].Append($"{dN_in.l2} мм");
-                        i += 1;
-                        table1.InsertRow(i);
-                        table1.Rows[i].Cells[0].Paragraphs[0].Append("Толщина накладного кольца, ").AppendEquation("s_2").Append(":");
-                        table1.Rows[i].Cells[1].Paragraphs[0].Append($"{dN_in.s2} мм");
-                        i += 1;
-                        table1.InsertRow(i);
-                        table1.Rows[i].Cells[0].Paragraphs[0].Append("Минимальный размер сварного шва, Δ:");
-                        table1.Rows[i].Cells[1].Paragraphs[0].Append($"{dN_in.delta} мм");
-                        //i += 1;
-                        break;
-                    }
-                case 4:
-                    {
-                        table1.InsertRow(i);
-                        table1.Rows[i].Cells[0].Paragraphs[0].Append("Ширина накладного кольца, ").AppendEquation("l_2").Append(":");
-                        table1.Rows[i].Cells[1].Paragraphs[0].Append($"{dN_in.l2} мм");
-                        i += 1;
-                        table1.InsertRow(i);
-                        table1.Rows[i].Cells[0].Paragraphs[0].Append("Толщина накладного кольца, ").AppendEquation("s_2").Append(":");
-                        table1.Rows[i].Cells[1].Paragraphs[0].Append($"{dN_in.s2} мм");
-                        i += 1;
-                        table1.InsertRow(i);
-                        table1.Rows[i].Cells[0].Paragraphs[0].Append("Длина внутренней части штуцера, ").AppendEquation("l_3").Append(":");
-                        table1.Rows[i].Cells[1].Paragraphs[0].Append($"{dN_in.l3} мм");
-                        i += 1;
-                        table1.InsertRow(i);
-                        table1.Rows[i].Cells[0].Paragraphs[0].Append("Толщина внутренней части штуцера, ").AppendEquation("s_3").Append(":");
-                        table1.Rows[i].Cells[1].Paragraphs[0].Append($"{dN_in.s3} мм");
-                        i += 1;
-                        table1.InsertRow(i);
-                        table1.Rows[i].Cells[0].Paragraphs[0].Append("Минимальный размер сварного шва, Δ:");
-                        table1.Rows[i].Cells[1].Paragraphs[0].Append($"{dN_in.delta} мм");
-                        //i += 1;
-                        break;
-                    }
-                case 5:
-                    {
-                        table1.InsertRow(i);
-                        table1.Rows[i].Cells[0].Paragraphs[0].Append("Ширина накладного кольца, ").AppendEquation("l_2").Append(":");
-                        table1.Rows[i].Cells[1].Paragraphs[0].Append($"{dN_in.l2} мм");
-                        i += 1;
-                        table1.InsertRow(i);
-                        table1.Rows[i].Cells[0].Paragraphs[0].Append("Толщина накладного кольца, ").AppendEquation("s_2").Append(":");
-                        table1.Rows[i].Cells[1].Paragraphs[0].Append($"{dN_in.s2} мм");
-                        i += 1;
-                        table1.InsertRow(i);
-                        table1.Rows[i].Cells[0].Paragraphs[0].Append("Длина внутренней части штуцера, ").AppendEquation("l_3").Append(":");
-                        table1.Rows[i].Cells[1].Paragraphs[0].Append($"{dN_in.l3} мм");
-                        i += 1;
-                        table1.InsertRow(i);
-                        table1.Rows[i].Cells[0].Paragraphs[0].Append("Толщина внутренней части штуцера, ").AppendEquation("s_3").Append(":");
-                        table1.Rows[i].Cells[1].Paragraphs[0].Append($"{dN_in.s3} мм");
-                        i += 1;
-                        table1.InsertRow(i);
-                        table1.Rows[i].Cells[0].Paragraphs[0].Append("Минимальный размер сварного шва, Δ:");
-                        table1.Rows[i].Cells[1].Paragraphs[0].Append($"{dN_in.delta} мм");
-                        //i += 1;
-                        break;
-                    }
-                case 6:
-                    {
-                        table1.InsertRow(i);
-                        table1.Rows[i].Cells[0].Paragraphs[0].Append("Радиус отбортовки, r:");
-                        //table1.Rows[i].Cells[1].Paragraphs[0].Append($"{dN_in.rotbort} мм");
-                        i += 1;
-                        table1.InsertRow(i);
-                        table1.Rows[i].Cells[0].Paragraphs[0].Append("Минимальный размер сварного шва, Δ:");
-                        table1.Rows[i].Cells[1].Paragraphs[0].Append($"{dN_in.delta} мм");
-                        //i += 1;
-                        break;
-                    }
-                case 7:
-                    break;
-                case 8:
-                    break;
+                }
+                doc.InsertParagraph().InsertTableAfterSelf(table);
             }
-            doc.InsertParagraph().InsertTableAfterSelf(table1);
             doc.InsertParagraph();
 
             doc.InsertParagraph("Коэффициенты прочности сварных швов:");
@@ -667,77 +694,94 @@ namespace calcNet
 
             doc.InsertParagraph();
             doc.InsertParagraph("Условия нагружения").Alignment = Alignment.center;
-            var table2 = doc.AddTable(1, 2);
-            table2.SetWidths(new float[] { 300, 100 });
 
-            table2.Rows[0].Cells[0].Paragraphs[0].Append("Расчетная температура, Т:");
-            table2.Rows[0].Cells[1].Paragraphs[0].Append($"{d_in.temp} °С");
-            i = 1;
-            table2.InsertRow(i);
-            if (d_in.isPressureIn)
+            //table
             {
-                table2.Rows[i].Cells[0].Paragraphs[0].Append("Расчетное внутреннее избыточное давление, p:");
-            }
-            else
-            {
-                table2.Rows[i].Cells[0].Paragraphs[0].Append("Расчетное наружное давление, p:");
-            }
-            table2.Rows[i].Cells[1].Paragraphs[0].Append($"{d_in.p} МПа");
-            i += 1;
-            table2.InsertRow(i);
-            table2.Rows[i].Cells[0].Paragraphs[0].Append($"Допускаемое напряжение для материала {dN_in.steel1} при расчетной температуре, ").AppendEquation("[σ]_1").Append(":");
-            table2.Rows[i].Cells[1].Paragraphs[0].Append($"{dN_in.sigma_d1} МПа");
-            i += 1;
-            if (!d_in.isPressureIn)
-            {
-                table2.InsertRow(i);
-                table2.Rows[i].Cells[0].Paragraphs[0].Append("Модуль продольной упругости при расчетной температуре, ").AppendEquation("E_1").Append(":");
-                table2.Rows[i].Cells[1].Paragraphs[0].Append($"{dN_in.E1} МПа");
-                i += 1;
-            }
-            if (dN_in.steel1 != dN_in.steel2)
-            {
-                table2.InsertRow(i);
-                table2.Rows[i].Cells[0].Paragraphs[0].Append($"Допускаемое напряжение для материала {dN_in.steel2} при расчетной температуре, ").AppendEquation("[σ]_2").Append(":");
-                table2.Rows[i].Cells[1].Paragraphs[0].Append($"{dN_in.sigma_d2} МПа");
-                i += 1;
+                var table = doc.AddTable(1, 2);
+                table.SetWidths(new float[] { 300, 100 });
+
+                int i = 0;
+                table.Rows[i].Cells[0].Paragraphs[0].Append("Расчетная температура, Т:");
+                table.Rows[i].Cells[1].Paragraphs[0].Append($"{d_in.temp} °С");
+
+                table.InsertRow(++i);
+                if (d_in.isPressureIn)
+                {
+                    table.Rows[i].Cells[0].Paragraphs[0].Append("Расчетное внутреннее избыточное давление, p:");
+                }
+                else
+                {
+                    table.Rows[i].Cells[0].Paragraphs[0].Append("Расчетное наружное давление, p:");
+                }
+                table.Rows[i].Cells[1].Paragraphs[0].Append($"{d_in.p} МПа");
+
+                table.InsertRow(++i);
+                table.Rows[i].Cells[0].Paragraphs[0].Append($"Допускаемое напряжение для материала {dN_in.steel1} при расчетной температуре, ")
+                                                    .AppendEquation("[σ]_1")
+                                                    .Append(":");
+                table.Rows[i].Cells[1].Paragraphs[0].Append($"{dN_in.sigma_d1} МПа");
+
                 if (!d_in.isPressureIn)
                 {
-                    table2.InsertRow(i);
-                    table2.Rows[i].Cells[0].Paragraphs[0].Append("Модуль продольной упругости при расчетной температуре, ").AppendEquation("E_2").Append(":");
-                    table2.Rows[i].Cells[1].Paragraphs[0].Append($"{dN_in.E2} МПа");
-                    i += 1;
+                    table.InsertRow(++i);
+                    table.Rows[i].Cells[0].Paragraphs[0].Append("Модуль продольной упругости при расчетной температуре, ")
+                                                        .AppendEquation("E_1")
+                                                        .Append(":");
+                    table.Rows[i].Cells[1].Paragraphs[0].Append($"{dN_in.E1} МПа");
                 }
-            }
-            if (dN_in.steel1 != dN_in.steel3)
-            {
-                table2.InsertRow(i);
-                table2.Rows[i].Cells[0].Paragraphs[0].Append($"Допускаемое напряжение для материала {dN_in.steel3} при расчетной температуре, ").AppendEquation("[σ]_3").Append(":");
-                table2.Rows[i].Cells[1].Paragraphs[0].Append($"{dN_in.sigma_d3} МПа");
-                i += 1;
-                if (!d_in.isPressureIn)
+                if (dN_in.steel1 != dN_in.steel2)
                 {
-                    table2.InsertRow(i);
-                    table2.Rows[i].Cells[0].Paragraphs[0].Append("Модуль продольной упругости при расчетной температуре, ").AppendEquation("E_3").Append(":");
-                    table2.Rows[i].Cells[1].Paragraphs[0].Append($"{dN_in.E3} МПа");
-                    i += 1;
+                    table.InsertRow(++i);
+                    table.Rows[i].Cells[0].Paragraphs[0].Append($"Допускаемое напряжение для материала {dN_in.steel2} при расчетной температуре, ")
+                                                        .AppendEquation("[σ]_2")
+                                                        .Append(":");
+                    table.Rows[i].Cells[1].Paragraphs[0].Append($"{dN_in.sigma_d2} МПа");
+
+                    if (!d_in.isPressureIn)
+                    {
+                        table.InsertRow(++i);
+                        table.Rows[i].Cells[0].Paragraphs[0].Append("Модуль продольной упругости при расчетной температуре, ")
+                                                            .AppendEquation("E_2")
+                                                            .Append(":");
+                        table.Rows[i].Cells[1].Paragraphs[0].Append($"{dN_in.E2} МПа");
+                    }
                 }
-            }
-            if (dN_in.steel1 != dN_in.steel4)
-            {
-                table2.InsertRow(i);
-                table2.Rows[i].Cells[0].Paragraphs[0].Append($"Допускаемое напряжение для материала {dN_in.steel4} при расчетной температуре, ").AppendEquation("[σ]_4").Append(":");
-                table2.Rows[i].Cells[1].Paragraphs[0].Append($"{dN_in.sigma_d4} МПа");
-                i += 1;
-                if (!d_in.isPressureIn)
+                if (dN_in.steel1 != dN_in.steel3)
                 {
-                    table2.InsertRow(i);
-                    table2.Rows[i].Cells[0].Paragraphs[0].Append("Модуль продольной упругости при расчетной температуре, ").AppendEquation("E_4").Append(":");
-                    table2.Rows[i].Cells[1].Paragraphs[0].Append($"{dN_in.E4} МПа");
-                    //i += 1;
+                    table.InsertRow(++i);
+                    table.Rows[i].Cells[0].Paragraphs[0].Append($"Допускаемое напряжение для материала {dN_in.steel3} при расчетной температуре, ")
+                                                        .AppendEquation("[σ]_3")
+                                                        .Append(":");
+                    table.Rows[i].Cells[1].Paragraphs[0].Append($"{dN_in.sigma_d3} МПа");
+
+                    if (!d_in.isPressureIn)
+                    {
+                        table.InsertRow(++i);
+                        table.Rows[i].Cells[0].Paragraphs[0].Append("Модуль продольной упругости при расчетной температуре, ")
+                                                            .AppendEquation("E_3")
+                                                            .Append(":");
+                        table.Rows[i].Cells[1].Paragraphs[0].Append($"{dN_in.E3} МПа");
+                    }
                 }
+                if (dN_in.steel1 != dN_in.steel4)
+                {
+                    table.InsertRow(++i);
+                    table.Rows[i].Cells[0].Paragraphs[0].Append($"Допускаемое напряжение для материала {dN_in.steel4} при расчетной температуре, ")
+                                                        .AppendEquation("[σ]_4")
+                                                        .Append(":");
+                    table.Rows[i].Cells[1].Paragraphs[0].Append($"{dN_in.sigma_d4} МПа");
+
+                    if (!d_in.isPressureIn)
+                    {
+                        table.InsertRow(++i);
+                        table.Rows[i].Cells[0].Paragraphs[0].Append("Модуль продольной упругости при расчетной температуре, ")
+                                                            .AppendEquation("E_4")
+                                                            .Append(":");
+                        table.Rows[i].Cells[1].Paragraphs[0].Append($"{dN_in.E4} МПа");
+                    }
+                }
+                doc.InsertParagraph().InsertTableAfterSelf(table);
             }
-            doc.InsertParagraph().InsertTableAfterSelf(table2);
 
             doc.InsertParagraph();
             doc.InsertParagraph("Результаты расчета").Alignment = Alignment.center;
@@ -750,25 +794,21 @@ namespace calcNet
 
             doc.InsertParagraph("Расчетный диаметр укрепляемого элемента ");
 
-            switch (d_in.met)
+            switch (d_in.shellType)
             {
-                case "cilvn":
-                case "cilnar":
+                case ShellType.Cylindrical:
                     {
                         doc.Paragraphs.Last().Append("(для цилиндрической обечайки)");
                         doc.InsertParagraph().AppendEquation($"D_p=D={d_in.D} мм");
                         break;
                     }
-                case "konvn":
-                case "konnar":
+                case ShellType.Conical:
                     {
                         doc.Paragraphs.Last().Append("(для конической обечайки, перехода или днища)");
                         doc.InsertParagraph().AppendEquation("D_p=D_k/cos(α)");
-                        //
                         break;
                     }
-                case "ellvn":
-                case "ellnar":
+                case ShellType.Elliptical:
                     {
                         if (d_in.elH * 100 == d_in.D * 25)
                         {
@@ -784,8 +824,8 @@ namespace calcNet
                         }
                         break;
                     }
-                case "sfer":
-                case "torosfer":
+                case ShellType.Spherical:
+                case ShellType.Torospherical:
                     {
                         doc.Paragraphs.Last().Append("(для сферических и торосферических днищ вне зоны отбортовки)");
                         doc.InsertParagraph().AppendEquation("D_p=2∙R");
@@ -793,47 +833,47 @@ namespace calcNet
                     }
             }
 
-            switch (dN_in.place)
+            switch (dN_in.location)
             {
-                case 1:
+                case NozzleLocation.LocationAccordingToParagraph_5_2_2_1:
                     {
                         doc.InsertParagraph("Расчетный диаметр отверстия в стенке цилиндрической обечайки, конического перехода или выпуклого днища при наличии штуцера с круглым поперечным сечением, ось которого совпадает с нормалью к поверхности в центре отверстия");
                         doc.InsertParagraph().AppendEquation("d_p=d+2∙c_s");
                         doc.InsertParagraph().AppendEquation($"d_p={dN_in.D}+2∙{dN_in.cs}={dN_out.dp:f2} мм");
                         break;
                     }
-                case 2:
+                case NozzleLocation.LocationAccordingToParagraph_5_2_2_2:
                     doc.InsertParagraph("Расчетный диаметр отверстия в стенке цилиндрической обечайки или конической обечайки при наличии наклонного штуцера, ось которого лежит в плоскости поперечного сечения укрепляемой обечайки");
                     doc.InsertParagraph().AppendEquation("d_p=max{d;0.5∙t}+2∙c_s");
                     //doc.InsertParagraph().AppendEquation($"d_p={dN_in.D}+2∙{dN_in.cs}={dN_out.dp:f2} мм");
                     break;
-                case 3:
+                case NozzleLocation.LocationAccordingToParagraph_5_2_2_3:
                     {
                         doc.InsertParagraph("Расчетный диаметр отверстия в стенке эллиптического днища при наличии смещенного штуцера, ось которого параллельна оси днища");
                         doc.InsertParagraph().AppendEquation("d_p=(d+2∙c_s)/√(1-((2∙x)/D_p)^2)");
                         //doc.InsertParagraph().AppendEquation($"d_p={dN_in.D}+2∙{dN_in.cs}={dN_out.dp:f2} мм");
                         break;
                     }
-                case 4:
+                case NozzleLocation.LocationAccordingToParagraph_5_2_2_4:
                     {
                         doc.InsertParagraph("Расчетный диаметр отверстия при наличии наклонного штуцера с круглым поперечным сечением, когда максимальная ось симметрии отверстия некруглой формы составляет угол ω с образующей цилиндрической обечайки или с проекцией образующей конической обечайки на плоскость продольного сечения обечайки");
                         doc.InsertParagraph().AppendEquation("d_p=(d+2∙c_s)(1+tg^2 γ∙cos^2 ω)");
                         //doc.InsertParagraph().AppendEquation($"d_p={dN_in.D}+2∙{dN_in.cs}={dN_out.dp:f2} мм");
                         break;
                     }
-                case 5:
+                case NozzleLocation.LocationAccordingToParagraph_5_2_2_5:
                     doc.InsertParagraph("Расчетный диаметр отверстия для цилиндрической и конической обечаек, когда ось наклонного штуцера лежит в плоскости продольного сечения обечайки, а также для всех отверстий в сферическом и торосферическом днищах при наличии смещенного штуцера");
                     doc.InsertParagraph().AppendEquation("d_p=(d+2∙c_s)/(cos^2 γ)");
                     //doc.InsertParagraph().AppendEquation($"d_p={dN_in.D}+2∙{dN_in.cs}={dN_out.dp:f2} мм");
                     break;
-                case 6:
+                case NozzleLocation.LocationAccordingToParagraph_5_2_2_6:
                     {
                         doc.InsertParagraph("Расчетный диаметр овального отверстия для перпендикулярно расположенного к поверхности обечайки штуцера с овальным поперечным сечением");
                         doc.InsertParagraph().AppendEquation("d_p=(d+2∙c_s)[sin^2 ω +((d_1+2∙c_s)(d_1+d_2+4∙c_s))/(2(d_2+2∙c_s)^2)cos^2 ω");
                         //doc.InsertParagraph().AppendEquation($"d_p={dN_in.D}+2∙{dN_in.cs}={dN_out.dp:f2} мм");
                         break;
                     }
-                case 7:
+                case NozzleLocation.LocationAccordingToParagraph_5_2_2_7:
                     {
                         doc.InsertParagraph("Расчетный диаметр отверстия для перпендикулярно расположенного к поверхности обечайки или днища штуцера с круглым поперечным сечением при наличии отбортовки или торообразной вставки");
                         doc.InsertParagraph().AppendEquation("d_p=в+1.5(r-s_p)+2∙c_s");
@@ -843,7 +883,7 @@ namespace calcNet
             }
 
             doc.InsertParagraph("Расчетная толщина стенки укрепляемого элемента");
-            if (d_in.met == "ellvn")
+            if (d_in.shellType == ShellType.Elliptical && d_in.isPressureIn)
             {
                 doc.InsertParagraph().AppendEquation("s_p=(p∙D_p)/(4∙φ∙[σ]-p)");
                 doc.InsertParagraph().AppendEquation($"s_p=({d_in.p}∙{dN_out.Dp:f2})/(4∙{d_in.fi}∙{d_in.sigma_d}-{d_in.p})={dN_out.sp:f2} мм");
@@ -875,14 +915,22 @@ namespace calcNet
             doc.InsertParagraph().AppendEquation($"L_0=√({dN_out.Dp}∙({d_in.s}-{d_out.c:f2}))={dN_out.L0:f2}");
 
             doc.InsertParagraph("Расчетная ширина зоны укрепления отверстия в стенке цилиндрической обечайки");
-            if ((new[] { 1, 2, 3, 4, 5, 6 }).Contains(dN_in.vid))
+
+            switch (dN_in.nozzleKind)
             {
-                doc.InsertParagraph().AppendEquation($"l_p=L_0={dN_out.lp:f2} мм");
-            }
-            else
-            {
-                doc.InsertParagraph().AppendEquation("l_p=min{l;L_0}");
-                doc.InsertParagraph().AppendEquation($"l_p=min({dN_in.l};{dN_out.L0:f2})={dN_out.lp:f2} мм");
+                case NozzleKind.ImpassWithoutRing:
+                case NozzleKind.PassWithoutRing:
+                case NozzleKind.ImpassWithRing:
+                case NozzleKind.PassWithRing:
+                case NozzleKind.WithRingAndInPart:
+                case NozzleKind.WithFlanging:
+                    doc.InsertParagraph().AppendEquation($"l_p=L_0={dN_out.lp:f2} мм");
+                    break;
+                case NozzleKind.WithTorusshapedInsert:
+                case NozzleKind.WithWealdedRing:
+                    doc.InsertParagraph().AppendEquation("l_p=min{l;L_0}");
+                    doc.InsertParagraph().AppendEquation($"l_p=min({dN_in.l};{dN_out.L0:f2})={dN_out.lp:f2} мм");
+                    break;
             }
 
             if (dN_in.l2 > 0)
@@ -897,19 +945,19 @@ namespace calcNet
             {
                 doc.InsertParagraph("Учет применения различного материального исполнения");
             }
-            if (d_in.steel != dN_in.steel1)
+            if (d_in.Steel != dN_in.steel1)
             {
                 doc.InsertParagraph("- для внешней части штуцера").AppendEquation($"χ_1=min(1;[σ]_1/[σ])=min(1;{dN_in.sigma_d1}/{d_in.sigma_d})={dN_out.psi1:f2}");
             }
-            if (d_in.steel != dN_in.steel2)
+            if (d_in.Steel != dN_in.steel2)
             {
                 doc.InsertParagraph("- для накладного кольца").AppendEquation($"χ_2=min(1;[σ]_2/[σ])=min(1;{dN_in.sigma_d2}/{d_in.sigma_d})={dN_out.psi2:f2}");
             }
-            if (d_in.steel != dN_in.steel3)
+            if (d_in.Steel != dN_in.steel3)
             {
                 doc.InsertParagraph("- для внутренней части штуцера").AppendEquation($"χ_3=min(1;[σ]_3/[σ])=min(1;{dN_in.sigma_d3}/{d_in.sigma_d})={dN_out.psi3:f2}");
             }
-            if (d_in.steel != dN_in.steel4)
+            if (d_in.Steel != dN_in.steel4)
             {
                 doc.InsertParagraph("- для торообразной вставки или вварного кольца").AppendEquation($"χ_4=min(1;[σ]_4/[σ])=min(1;{dN_in.sigma_d4}/{d_in.sigma_d})={dN_out.psi4:f2}");
             }
@@ -926,24 +974,21 @@ namespace calcNet
             doc.InsertParagraph().AppendEquation("d_0=min{2∙((s-c)/s_pn-0.8)∙√(D_p∙(s-c));d_max+2∙c_s} ");
             doc.InsertParagraph("где - ").AppendEquation("d_max").Append(" - максимальный диаметр отверстия ");
 
-            switch (d_in.met)
+            switch (d_in.shellType)
             {
-                case "cilvn":
-                case "cilnar":
+                case ShellType.Cylindrical:
                     {
                         doc.InsertParagraph().AppendEquation($"d_max=D={d_in.D} мм").AppendLine(" - для отверстий в цилиндрических обечайках");
                         break;
                     }
-                case "konvn":
-                case "konnar":
+                case ShellType.Conical:
                     {
                         doc.InsertParagraph().AppendEquation($"d_max=D_K={dN_out.dmax:f2} мм").AppendLine(" - для отверстий в конических обечайках");
                         break;
                     }
-                case "ellvn":
-                case "ellnar":
-                case "sfer":
-                case "torosfer":
+                case ShellType.Elliptical:
+                case ShellType.Spherical:
+                case ShellType.Torospherical:
                     {
                         doc.InsertParagraph().AppendEquation($"d_max=0.6∙D={dN_out.dmax:f2} мм").AppendLine(" - для отверстий в выпуклых днищах");
                         break;
@@ -958,20 +1003,17 @@ namespace calcNet
             else if (!d_in.isPressureIn)
             {
                 doc.InsertParagraph().AppendEquation("s_pn=(p_pn∙D_p)/(2∙K_1∙[σ]-p_pn)");
-                switch (d_in.met)
+                switch (d_in.shellType)
                 {
-                    case "cilvn":
-                    case "cilnar":
-                    case "konvn":
-                    case "konnar":
+                    case ShellType.Cylindrical:
+                    case ShellType.Conical:
                         {
                             doc.InsertParagraph().AppendEquation($"K_1={dN_out.K1}").Append(" - для цилиндрических и конических обечаек");
                             break;
                         }
-                    case "ellvn":
-                    case "ellnar":
-                    case "sfer":
-                    case "torosfer":
+                    case ShellType.Elliptical:
+                    case ShellType.Spherical:
+                    case ShellType.Torospherical:
                         {
                             doc.InsertParagraph().AppendEquation($"K_1={dN_out.K1}").Append(" - для отверстий в выпуклых днищах");
                             break;
@@ -1029,20 +1071,17 @@ namespace calcNet
                 doc.InsertParagraph().AppendEquation("[p]_П=(2∙K_1∙φ∙[σ]∙(s-c)∙V)/(D_p+(s-c)∙V)");
             }
 
-            switch (d_in.met)
+            switch (d_in.shellType)
             {
-                case "cilvn":
-                case "cilnar":
-                case "konvn":
-                case "konnar":
+                case ShellType.Cylindrical:
+                case ShellType.Conical:
                     {
                         doc.InsertParagraph().AppendEquation($"K_1={dN_out.K1}").Append(" - для цилиндрических и конических обечаек");
                         break;
                     }
-                case "ellvn":
-                case "ellnar":
-                case "sfer":
-                case "torosfer":
+                case ShellType.Elliptical:
+                case ShellType.Spherical:
+                case ShellType.Torospherical:
                     {
                         doc.InsertParagraph().AppendEquation($"K_1={dN_out.K1}").Append(" - для отверстий в выпуклых днищах");
                         break;
@@ -1052,23 +1091,22 @@ namespace calcNet
             doc.InsertParagraph("Коэффициент снижения прочности сосуда, ослабленного одиночным отверстием, вычисляют по формуле");
             doc.InsertParagraph().AppendEquation("V=min{(s_0-c)/(s-c);(χ_4+(l_1p∙(s_1-c_s)∙χ_1+l_2p∙s_2∙χ_2+l_3p∙(s_3-c_s-c_s1)∙χ_3)/(l_p∙(s-c)))/(1+0.5∙(d_p-d_0p)/l_p+K_1∙(d+2∙c_s)/D_p∙(φ/φ_1)∙(l_1p/l_p))}").Alignment = Alignment.center;
 
-            switch (dN_in.vid)
+            switch (dN_in.nozzleKind)
             {
-                case 1:
-                case 2:
-                case 6:
+                case NozzleKind.ImpassWithoutRing:
+                case NozzleKind.PassWithoutRing:
+                case NozzleKind.WithFlanging:
                     {
                         doc.InsertParagraph("При отсутствии накладного кольца и укреплении отверстия штуцером ").AppendEquation("s_2=0 , s_0=s , χ_4=1");
                         break;
                     }
-                case 3:
-                case 4:
-                case 5:
+                case NozzleKind.ImpassWithRing:
+                case NozzleKind.PassWithRing:
+                case NozzleKind.WithRingAndInPart:
                     {
                         doc.InsertParagraph("При отсутствии вварного кольца или торообразной вставки ").AppendEquation("s_0=s , χ_4=1");
                         break;
                     }
-
             }
 
             doc.InsertParagraph().AppendEquation($"(s_0-c)/(s-c)=({dN_in.s0}-{d_out.c:f2})/({d_in.s}-{d_out.c:f2})={dN_out.V1:f2}");
@@ -1100,10 +1138,9 @@ namespace calcNet
             }
 
             doc.InsertParagraph("Границы применения формул");
-            switch (d_in.met)
+            switch (d_in.shellType)
             {
-                case "cilvn":
-                case "cilnar":
+                case ShellType.Cylindrical:
                     {
                         doc.InsertParagraph().AppendEquation("(d_p-2∙c_s)/D≤1");
                         doc.InsertParagraph().AppendEquation($"({dN_out.dp:f2}-2∙{dN_in.cs})/{d_in.D}={dN_out.ypf1:f2}≤1");
@@ -1111,8 +1148,7 @@ namespace calcNet
                         doc.InsertParagraph().AppendEquation($"({d_in.s}-{d_out.c:f2})/({d_in.D})={dN_out.ypf2:f2}≤0.1");
                         break;
                     }
-                case "konvn":
-                case "konnar":
+                case ShellType.Conical:
                     {
                         doc.InsertParagraph().AppendEquation("(d_p-2∙c_s)/D_K≤1");
                         //doc.InsertParagraph().AppendEquation($"({dN_out.dp:f2}-2∙{dN_in.cs})/{d_in.DK}={dN_out.ypf1:f2}≤1");
@@ -1120,10 +1156,9 @@ namespace calcNet
                         //doc.InsertParagraph().AppendEquation($"({d_in.s}-{d_out.c:f2})/({d_in.DK})={dN_out.ypf2:f2}≤0.1/cos{d_in.alfa}");
                         break;
                     }
-                case "ellvn":
-                case "ellnar":
-                case "sfer":
-                case "torosfer":
+                case ShellType.Elliptical:
+                case ShellType.Spherical:
+                case ShellType.Torospherical:
                     {
                         doc.InsertParagraph().AppendEquation("(d_p-2∙c_s)/D≤0.6");
                         doc.InsertParagraph().AppendEquation($"({dN_out.dp:f2}-2∙{dN_in.cs})/{d_in.D}={dN_out.ypf1:f2}≤0.6");

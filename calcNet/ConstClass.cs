@@ -49,7 +49,16 @@ namespace calcNet
         static Dictionary<int, string> GostsNames = new Dictionary<int, string>()
         {
             {(int)Gosts.GOST_34233_1, GOST_34233_1 },
-            {(int)Gosts.GOST_34233_2, GOST_34233_2 }
+            {(int)Gosts.GOST_34233_2, GOST_34233_2 },
+            {(int)Gosts.GOST_34233_3, GOST_34233_3 },
+            {(int)Gosts.GOST_34233_4, GOST_34233_4 },
+            {(int)Gosts.GOST_34233_5, GOST_34233_5 },
+            {(int)Gosts.GOST_34233_6, GOST_34233_6 },
+            {(int)Gosts.GOST_34233_7, GOST_34233_7 },
+            {(int)Gosts.GOST_34233_8, GOST_34233_8 },
+            {(int)Gosts.GOST_34233_9, GOST_34233_9 },
+            {(int)Gosts.GOST_34233_10, GOST_34233_10 },
+            {(int)Gosts.GOST_34233_11, GOST_34233_11 },
         };
 
     }

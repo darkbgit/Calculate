@@ -62,32 +62,32 @@ namespace calcNet
                             //int inx = item.id;
                             if (DataWordOut.DataArr[i].id != 0)
                             {
-                                switch (DataWordOut.DataArr[i].Typ)
+                                switch (DataWordOut.DataArr[i].calculatedElementType)
                                 {
-                                    case "cil":
+                                    case CalculatedElementType.Cylindrical:
                                         MakeWord.MakeWord_cil(DataWordOut.DataArr[i].Data_In, DataWordOut.DataArr[i].Data_Out, f);
                                         bibliography.Add(2);
                                         break;
-                                    case "kon":
+                                    case CalculatedElementType.Conical:
                                         bibliography.Add(2);
                                         break;
-                                    case "ell":
+                                    case CalculatedElementType.Elliptical:
                                         MakeWord.MakeWord_ell(DataWordOut.DataArr[i].Data_In, DataWordOut.DataArr[i].Data_Out, f);
                                         bibliography.Add(2);
                                         break;
-                                    case "cilyk":
-                                    case "konyk":
-                                    case "ellyk":
+                                    case CalculatedElementType.CylindricalWhithNozzle:
+                                    case CalculatedElementType.ConicalWhithNozzle:
+                                    case CalculatedElementType.EllipticalWhithNozzle:
                                         MakeWord.MakeWord_nozzle(DataWordOut.DataArr[i].Data_In, DataWordOut.DataArr[i].Data_Out, DataWordOut.DataArr[i].DataN_In, DataWordOut.DataArr[i].DataN_Out, f);
                                         bibliography.Add(3);
                                         break;
-                                    case "saddle":
+                                    case CalculatedElementType.Saddle:
                                         bibliography.Add(5);
                                         break;
-                                    case "heat":
+                                    case CalculatedElementType.Heatexchenge:
                                         bibliography.Add(7);
                                         break;
-                                    case "pldn":
+                                    case CalculatedElementType.FlatBottom:
                                         bibliography.Add(2);
                                         break;
                                 }
