@@ -52,7 +52,7 @@ namespace calcNet
             string dataInErr = "";
 
             //t
-            InputClass.GetInput_t(t_tb, ref d_in, ref dataInErr);
+            //InputClass.GetInput_t(t_tb, ref d_in, ref dataInErr);
             
             //steel
             d_in.Steel = steel_cb.Text;
@@ -171,7 +171,7 @@ namespace calcNet
             d_in.Name = name_tb.Text;
 
             //t
-            InputClass.GetInput_t(t_tb, ref d_in, ref dataInErr);
+            //InputClass.GetInput_t(t_tb, ref d_in, ref dataInErr);
             
             //steel
             d_in.Steel = steel_cb.Text;

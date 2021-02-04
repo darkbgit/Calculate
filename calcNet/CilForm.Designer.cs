@@ -31,7 +31,7 @@ namespace calcNet
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CilForm));
             this.label1 = new System.Windows.Forms.Label();
-            this.name_tb = new System.Windows.Forms.TextBox();
+            this.Name_tb = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -45,7 +45,7 @@ namespace calcNet
             this.dav_gb = new System.Windows.Forms.GroupBox();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
-            this.steel_cb = new System.Windows.Forms.ComboBox();
+            this.Steel_cb = new System.Windows.Forms.ComboBox();
             this.label8 = new System.Windows.Forms.Label();
             this.sigma_d_tb = new System.Windows.Forms.TextBox();
             this.E_tb = new System.Windows.Forms.TextBox();
@@ -135,13 +135,13 @@ namespace calcNet
             this.label1.TabIndex = 0;
             this.label1.Text = "Название элемента:";
             // 
-            // name_tb
+            // Name_tb
             // 
-            this.name_tb.Location = new System.Drawing.Point(224, 12);
-            this.name_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.name_tb.Name = "name_tb";
-            this.name_tb.Size = new System.Drawing.Size(139, 23);
-            this.name_tb.TabIndex = 1;
+            this.Name_tb.Location = new System.Drawing.Point(224, 12);
+            this.Name_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.Name_tb.Name = "Name_tb";
+            this.Name_tb.Size = new System.Drawing.Size(139, 23);
+            this.Name_tb.TabIndex = 1;
             // 
             // button1
             // 
@@ -285,14 +285,14 @@ namespace calcNet
             this.label7.TabIndex = 14;
             this.label7.Text = "Марка материала:";
             // 
-            // steel_cb
+            // Steel_cb
             // 
-            this.steel_cb.FormattingEnabled = true;
-            this.steel_cb.Location = new System.Drawing.Point(224, 189);
-            this.steel_cb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.steel_cb.Name = "steel_cb";
-            this.steel_cb.Size = new System.Drawing.Size(139, 23);
-            this.steel_cb.TabIndex = 7;
+            this.Steel_cb.FormattingEnabled = true;
+            this.Steel_cb.Location = new System.Drawing.Point(224, 189);
+            this.Steel_cb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.Steel_cb.Name = "Steel_cb";
+            this.Steel_cb.Size = new System.Drawing.Size(139, 23);
+            this.Steel_cb.TabIndex = 7;
             // 
             // label8
             // 
@@ -1080,7 +1080,7 @@ namespace calcNet
             this.Controls.Add(this.E_tb);
             this.Controls.Add(this.sigma_d_tb);
             this.Controls.Add(this.label8);
-            this.Controls.Add(this.steel_cb);
+            this.Controls.Add(this.Steel_cb);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.dav_gb);
             this.Controls.Add(this.label4);
@@ -1090,7 +1090,7 @@ namespace calcNet
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.name_tb);
+            this.Controls.Add(this.Name_tb);
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -1124,7 +1124,7 @@ namespace calcNet
         #endregion
 
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox name_tb;
+        private System.Windows.Forms.TextBox Name_tb;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
@@ -1139,7 +1139,7 @@ namespace calcNet
         private System.Windows.Forms.GroupBox dav_gb;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.ComboBox steel_cb;
+        private System.Windows.Forms.ComboBox Steel_cb;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TextBox sigma_d_tb;
         private System.Windows.Forms.TextBox E_tb;

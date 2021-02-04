@@ -40,7 +40,6 @@ namespace calcNet
             this.Hide();
         }
 
-
         private void Force_rb_CheckedChanged(object sender, EventArgs e)
         {
             // приводим отправителя к элементу типа RadioButton
@@ -65,123 +64,210 @@ namespace calcNet
             }
         }
 
+        private static void TrySet(in string name, in double val, ref DataShellIn d_in, ref bool isNotError)
+        {
+            //try
+            //{
+                d_in.SetValue(name, val);
+            //}
+            //catch (ArgumentOutOfRangeException ex)
+            //{
+            //    isNotError = false;
+            //    MessageBox.Show(ex.Message);
+            //}
+        }
+
         private void PredCalc_b_Click(object sender, EventArgs e)
         {
-            Data_in d_in = new Data_in(ShellType.Cylindrical);
+            c_tb.Text = "";
+            scalc_l.Text = "";
+            calc_b.Enabled = false;
+
+            DataShellIn d_in = new DataShellIn();
+            //Data_in d_in = new Data_in(ShellType.Cylindrical);
 
             string dataInErr = "";
 
+            d_in.IsPressureIn = vn_rb.Checked;
+
+            //InputClass.GetInput_t(t_tb, ref d_in); 
+
+            bool isNotError = true;
             {
-                /*
-                foreach (Control control in Controls)
+                string[] TextBoxNames =
                 {
-                    if (control is TextBox)
+                    "Name_tb",
+                    "Gost_cb",
+                    "t_tb",
+                    "p_tb",
+                    "Steel_cb",
+                    "sigma_d_tb",
+                    "E_tb",
+                    "fi_tb",
+                    "D_tb",
+                    "l_tb",
+                    "c1_tb",
+                    "c2_tb",
+                    "c3_tb",
+                    "s_tb"
+                };
+                foreach (string tb in TextBoxNames)
+                {
+                    if (tb == "sigma_d_tb")
                     {
-                        string name;
-                        double value;
-                        name = (control as TextBox).Name;
-                        name = name.Remove(name.Length - 3, 3);
-                        try
+                        double sigma = 0;
+                        string str = "";
+                        if (CalcClass.GetSigma(d_in.Steel, d_in.t, ref sigma, ref str))
                         {
-                            value = Convert.ToDouble((control as TextBox).Text.Replace(',', '.'),
-                                                            System.Globalization.CultureInfo.InvariantCulture);
-                        }
-                        catch (FormatException)
-                        {
-                            value = 0;
-                            data_inerr += $"{name} неверный ввод\n";
-                        }
-                        if (value > 0)
-                        {
-                            d_in.SetValue(name, value);
+                            sigma_d_tb.Text = sigma.ToString();
                         }
                         else
                         {
-                            data_inerr += $"{name} должно быть больше 0";
+                            isNotError = false;
+                            MessageBox.Show(str);
+                            break;
                         }
                     }
+
+                    Control control = Controls[tb] ?? Controls["dav_gb"].Controls[tb];
+                    //if (control is TextBox || control is ComboBox)
+
+                    string name = control.Name;
+                    name = name.Remove(name.Length - 3, 3);
+
+
+                    var type = typeof(DataShellIn).GetProperty(name)?.PropertyType;
+
+                    double val = 0;
+                    if (type != null && type.Equals(typeof(double)))
+                    {
+                        if (control.Text == "")
+                        {
+                            //try
+                            //{
+                            //    d_in.SetValue(name, val);
+                            //}
+                            ////catch (ArgumentOutOfRangeException ex)
+                            ////{
+                            ////    isNotError = false;
+                            ////    MessageBox.Show(ex.Message);
+                            ////    break;
+                            ////}
+                            
+                        }
+                        else if (double.TryParse((control as TextBox).Text, System.Globalization.NumberStyles.AllowDecimalPoint,
+                                System.Globalization.CultureInfo.InvariantCulture, out val))
+                        {
+                            //InputClass.TrySetValue(in name, in val, ref d_in, ref isNotError);
+                            try
+                            {
+                                d_in.SetValue(name, val);
+                            }
+                            catch (ArgumentOutOfRangeException ex)
+                            {
+                                isNotError = false;
+                                MessageBox.Show(ex.Message);
+                                break;
+                            }
+                        }
+                        else
+                        {
+                            isNotError = false;
+                            MessageBox.Show($"{name} неверный формат");
+                            break;
+                        }
+                    }
+                    else if (type != null && type.Equals(typeof(string)))
+                    {
+                        d_in.SetValue(name, control.Text);
+                    }
+                    //MessageBox.Show($"{name} is {val} text {control.Text}");
                 }
-                */
+
             }
 
-            //t
-            InputClass.GetInput_t(t_tb, ref d_in, ref dataInErr);
+            {
+                //t
+                //InputClass.GetInput_t(t_tb, ref d1_in);
 
-            d_in.Steel = steel_cb.Text;
+                //d_in.Steel = steel_cb.Text;
 
-            bool isNotError = dataInErr == "";
+                //bool isNotError = dataInErr == "";
+                //if (!d1_in.IsInError)
+                //{
+                //    //[σ]
+                //    InputClass.GetInput_sigma_d(sigma_d_tb, ref d_in, ref dataInErr);
+
+
+
+                //    if (!d_in.isPressureIn)
+                //    {
+                //        //E
+                //        InputClass.GetInput_E(E_tb, ref d_in, ref dataInErr);
+
+                //        //l
+                //        InputClass.GetInput_l(l_tb, ref d_in, ref dataInErr);
+                //    }
+
+                //    //p
+                //    InputClass.GetInput_p(p_tb, ref d_in, ref dataInErr);
+
+                //    //fi
+                //    InputClass.GetInput_fi(fi_tb, ref d_in, ref dataInErr);
+
+                //    //D
+                //    InputClass.GetInput_D(D_tb, ref d_in, ref dataInErr);
+
+                //    //c1
+                //    InputClass.GetInput_c1(c1_tb, ref d_in, ref dataInErr);
+
+                //    //c2
+                //    InputClass.GetInput_c2(c2_tb, ref d_in, ref dataInErr);
+
+                //    //c3
+                //    InputClass.GetInput_c3(c3_tb, ref d_in, ref dataInErr);
+            }
+
+            
             if (isNotError)
             {
-                //[σ]
-                InputClass.GetInput_sigma_d(sigma_d_tb, ref d_in, ref dataInErr); 
-
-                d_in.isPressureIn = vn_rb.Checked;
-
-                if (!d_in.isPressureIn)
+                //Data_out d_out = new Data_out();
+                Cylinder cyl = new Cylinder(d_in);
+                if (cyl.IsError)
                 {
-                    //E
-                    InputClass.GetInput_E(E_tb, ref d_in, ref dataInErr);
-
-                    //l
-                    InputClass.GetInput_l(l_tb, ref d_in, ref dataInErr);
+                    System.Windows.Forms.MessageBox.Show(cyl.ErrorString);
                 }
-
-                //p
-                InputClass.GetInput_p(p_tb, ref d_in, ref dataInErr);
-
-                //fi
-                InputClass.GetInput_fi(fi_tb, ref d_in, ref dataInErr);
-
-                //D
-                InputClass.GetInput_D(D_tb, ref d_in, ref dataInErr);
-
-                //c1
-                InputClass.GetInput_c1(c1_tb, ref d_in, ref dataInErr);
-
-                //c2
-                InputClass.GetInput_c2(c2_tb, ref d_in, ref dataInErr);
-
-                //c3
-                InputClass.GetInput_c3(c3_tb, ref d_in, ref dataInErr);
-                
-                isNotError = dataInErr == "";
-                if (isNotError)
-                {
-                    Data_out d_out = new Data_out();
-                    CalcClass.CalculateShell(in d_in, ref d_out);
-                    if (d_out.err != null)
-                    {
-                        System.Windows.Forms.MessageBox.Show(d_out.err);
-                    }
-                    c_tb.Text = $"{d_out.c:f2}";
-                    scalc_l.Text = $"sp={d_out.s_calc:f3} мм";
-                    calc_b.Enabled = true;
-                }
-                else
-                {
-                    System.Windows.Forms.MessageBox.Show(dataInErr);
-                }
+                c_tb.Text = $"{cyl.c:f2}";
+                scalc_l.Text = $"sp={cyl.s_calc:f3} мм";
+                calc_b.Enabled = true;
             }
             else
             {
                 System.Windows.Forms.MessageBox.Show(dataInErr);
             }
+
+            //else
+            //{
+            //    System.Windows.Forms.MessageBox.Show(dataInErr);
+            //}
         }
+    
+        
 
         private void Calc_b_Click(object sender, EventArgs e)
         {
             Data_in d_in = new Data_in(ShellType.Cylindrical);
-            
+
             string dataInErr = "";
 
             //name
-            d_in.Name = name_tb.Text;
+            d_in.Name = Name_tb.Text;
 
             //t
-            InputClass.GetInput_t(t_tb, ref d_in, ref dataInErr);
+            //InputClass.GetInput_t(t_tb, ref d_in, ref dataInErr);
 
             //steel
-            d_in.Steel = steel_cb.Text;
+            d_in.Steel = Steel_cb.Text;
 
             bool isNotError = dataInErr == "";
             if (isNotError)
@@ -259,7 +345,7 @@ namespace calcNet
                         {
                             System.Windows.Forms.MessageBox.Show(d_out.err);
                         }
-                        
+
                         System.Windows.Forms.MessageBox.Show("Calculation complete");
 
                         MessageBoxCheckBox mbcb = new MessageBoxCheckBox { Owner = this };
@@ -277,11 +363,11 @@ namespace calcNet
             }
         }
 
-        
+
 
         private void CilForm_Load(object sender, EventArgs e)
         {
-            Set_steellist.Set_llist(steel_cb);
+            Set_steellist.Set_llist(Steel_cb);
             Gost_cb.SelectedIndex = 0;
         }
 
@@ -289,7 +375,7 @@ namespace calcNet
         {
             double E = 0;
             string dataInErr = "";
-            CalcClass.GetE(steel_cb.Text, Convert.ToInt32(t_tb.Text), ref E, ref dataInErr);
+            CalcClass.GetE(Steel_cb.Text, Convert.ToInt32(t_tb.Text), ref E, ref dataInErr);
             E_tb.Text = E.ToString();
         }
 
@@ -347,3 +433,4 @@ namespace calcNet
         }
     }
 }
+

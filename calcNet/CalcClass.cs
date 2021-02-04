@@ -465,7 +465,7 @@ namespace calcNet
         /// <param name="temp">Calculation temperature</param>
         /// <param name="sigma_d">Reference on </param>
         /// <returns>true - Ok, false - Error (Input temperature bigger then the biggest temperature for [σ] in GOST for input steel) </returns>
-        internal static bool GetSigma(string steel, int temp, ref double sigma_d, ref string dataInErr)
+        internal static bool GetSigma(string steel, double temp, ref double sigma_d, ref string dataInErr)
         {
             XmlDocument doc = new XmlDocument();
             doc.Load(System.IO.Path.Combine(System.IO.Directory.GetCurrentDirectory(), @"data\data.xml"));

@@ -9,24 +9,37 @@ namespace calcNet
 {
     class InputClass
     {
-        internal static void GetInput_t(TextBox t_tb, ref Data_in d_in, ref string dataInErr)
+        internal static void TrySetValue(in string name, in double val, ref DataShellIn d_in, ref bool isNotError)
         {
-            if (int.TryParse(t_tb.Text, out int t))
+            try
             {
-                const int MIN_TEMPERATURE = 20,
-                        MAX_TEMPERATURE = 1000;
-                if (t >= MIN_TEMPERATURE && t < MAX_TEMPERATURE)
+                d_in.SetValue(name, val);
+            }
+            catch (ArgumentOutOfRangeException ex)
+            {
+                isNotError = false;
+                MessageBox.Show(ex.Message);
+            }
+        }
+        internal static void GetInput_t(TextBox t_tb, ref DataShellIn d_in)
+        {
+            if (double.TryParse(t_tb.Text, System.Globalization.NumberStyles.Integer,
+                    System.Globalization.CultureInfo.InvariantCulture, out double t_in))
+            {
+                try
                 {
-                    d_in.temp = t;
+                    d_in.t = t_in;
                 }
-                else
+                catch (ArgumentOutOfRangeException ex)
                 {
-                    dataInErr += "T должна быть в диапазоне 20 - 1000\n";
+                    MessageBox.Show(ex.Message);
                 }
             }
             else
             {
-                dataInErr += "T неверный ввод\n";
+                d_in.IsInError = true;
+                MessageBox.Show("T неверный ввод\n");
+                //dataInErr += "T неверный ввод\n";
             }
         }
 
