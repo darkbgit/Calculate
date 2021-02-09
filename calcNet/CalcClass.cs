@@ -15,54 +15,13 @@ namespace calcNet
         Hemispherical
     }
 
-    enum ShellType
+    public enum ShellType
     {
         Cylindrical,
         Elliptical,
         Conical,
         Spherical,
         Torospherical
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    enum NozzleLocation
-    {
-        /// <summary>
-        /// 1(cil, kon, ell)-Ось штуцера совпадает с нормалью к поверхности в центре отверстия
-        /// </summary>
-        LocationAccordingToParagraph_5_2_2_1,
-
-        /// <summary>
-        /// 2(cil, kon) - наклонный штуцер ось которого лежит в плоскости поперечного сечения
-        /// </summary>
-        LocationAccordingToParagraph_5_2_2_2,
-
-        /// <summary>
-        /// 3(ell) - смещенный штуцер ось которого паралелльна оси днища
-        /// </summary>
-        LocationAccordingToParagraph_5_2_2_3,
-
-        /// <summary>
-        /// 4(cil, kon) - наклонный штуцер максимальная ось симметрии отверстия некруглой формы составляет угол с образующей обечайки на плоскость продольного сечения обечайки
-        /// </summary>
-        LocationAccordingToParagraph_5_2_2_4,
-
-        /// <summary>
-        /// 5(cil, kon, sfer, torosfer) - наклонный штуцер ось которого лежит в плоскости продольного сечения
-        /// </summary>
-        LocationAccordingToParagraph_5_2_2_5,
-
-        /// <summary>
-        /// 6(oval) - овальное отверстие штуцер перпендикулярно расположен к поверхности обечайки
-        /// </summary>
-        LocationAccordingToParagraph_5_2_2_6,
-
-        /// <summary>
-        /// 7(otbort, torob) - перпендикулярно расположенного к поверхности обечайки или днища штуцера с круглым поперечным сечением при наличии отбортовки или торообразной вставки
-        /// </summary>
-        LocationAccordingToParagraph_5_2_2_7
     }
 
     enum NozzleKind
@@ -465,7 +424,7 @@ namespace calcNet
         /// <param name="temp">Calculation temperature</param>
         /// <param name="sigma_d">Reference on </param>
         /// <returns>true - Ok, false - Error (Input temperature bigger then the biggest temperature for [σ] in GOST for input steel) </returns>
-        internal static bool GetSigma(string steel, double temp, ref double sigma_d, ref string dataInErr)
+        internal static bool GetSigma(string steel, double temp, ref double sigma_d, ref List<string> dataInErr)
         {
             XmlDocument doc = new XmlDocument();
             doc.Load(System.IO.Path.Combine(System.IO.Directory.GetCurrentDirectory(), @"data\data.xml"));
@@ -493,7 +452,7 @@ namespace calcNet
                 }
                 else if (i == steelTempNodes.ChildNodes.Count - 1)
                 {
-                    dataInErr += $"Температура {temp} °С, больше чем максимальная температура {tempBig} °С для стали {steel} при которой определяется допускаемое напряжение по ГОСТ 34233.1-2017";
+                    dataInErr.Add($"Температура {temp} °С, больше чем максимальная температура {tempBig} °С для стали {steel} при которой определяется допускаемое напряжение по ГОСТ 34233.1-2017");
                     return false;
                 }
                 else
@@ -1242,14 +1201,14 @@ namespace calcNet
             {
                 double sigma_d = 0;
                 string dataInErr = "";
-                if (GetSigma(d_in.steel, d_in.temp, ref sigma_d, ref dataInErr))
-                {
-                    d_in.sigma_d = sigma_d;
-                }
-                else
-                {
-                    d_out.err += dataInErr;
-                }
+                //if (GetSigma(d_in.steel, d_in.temp, ref sigma_d, ref dataInErr))
+                //{
+                //    d_in.sigma_d = sigma_d;
+                //}
+                //else
+                //{
+                //    d_out.err += dataInErr;
+                //}
             }
 
             //E

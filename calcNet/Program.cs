@@ -22,6 +22,11 @@ namespace calcNet
         }
     }
 
+    public static class Elements
+    {
+        public static List<IElement> ElementsList { get; set; } = new List<IElement>();
+    }
+
     public static class DataWordOut
     {
         //Dictionary<>
@@ -42,6 +47,8 @@ namespace calcNet
         }
 
         public static List<DataOutArrEl> DataArr { get; set; } = new List<DataOutArrEl>();
+
+        public static List<IElement> Elements { get; set; } = new List<IElement>();
     }
 
     public class Set_steellist

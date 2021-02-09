@@ -9,7 +9,7 @@ namespace calcNet
 {
     class InputClass
     {
-        internal static void TrySetValue(in string name, in double val, ref DataShellIn d_in, ref bool isNotError)
+        internal static void TrySetValue(in string name, in double val, ref ShellDataIn d_in, ref bool isNotError)
         {
             try
             {
@@ -21,7 +21,7 @@ namespace calcNet
                 MessageBox.Show(ex.Message);
             }
         }
-        internal static void GetInput_t(TextBox t_tb, ref DataShellIn d_in)
+        internal static void GetInput_t(TextBox t_tb, ref ShellDataIn d_in)
         {
             if (double.TryParse(t_tb.Text, System.Globalization.NumberStyles.Integer,
                     System.Globalization.CultureInfo.InvariantCulture, out double t_in))
@@ -88,14 +88,14 @@ namespace calcNet
             }
             else
             {
-                if (CalcClass.GetSigma(d_in.Steel, d_in.temp, ref sigma_d, ref dataInErr))
-                {
-                    d_in.sigma_d = sigma_d;
-                    //sigma_d = CalcClass.GetSigma(d_in.steel, d_in.temp);
-                    sigma_d_tb.ReadOnly = false;
-                    sigma_d_tb.Text = sigma_d.ToString();
-                    sigma_d_tb.ReadOnly = true;
-                }
+                //if (CalcClass.GetSigma(d_in.Steel, d_in.temp, ref sigma_d, ref dataInErr))
+                //{
+                //    d_in.sigma_d = sigma_d;
+                //    //sigma_d = CalcClass.GetSigma(d_in.steel, d_in.temp);
+                //    sigma_d_tb.ReadOnly = false;
+                //    sigma_d_tb.Text = sigma_d.ToString();
+                //    sigma_d_tb.ReadOnly = true;
+                //}
             }
         }
 
