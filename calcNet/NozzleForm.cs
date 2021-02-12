@@ -15,11 +15,10 @@ namespace calcNet
         public NozzleForm()
         {
             InitializeComponent();
+            element = Elements.ElementsList.Last();          
         }
 
-        private static DataWordOut.DataOutArrEl dataArrEl;
-
-        public DataWordOut.DataOutArrEl DataInOutShellWithNozzle { get => dataArrEl; set => dataArrEl = value; }
+        private readonly IElement element;
 
         private void Vid_rb_CheckedChanged(object sender, EventArgs e)
         {
@@ -36,7 +35,7 @@ namespace calcNet
             RadioButton rb = sender as RadioButton;
             if (rb.Checked)
             {
-                switch (DataInOutShellWithNozzle.Data_In.shellType)
+                switch ((element as Shell).ShellType)
                 {
                     case ShellType.Cylindrical:
                         {
@@ -527,7 +526,7 @@ namespace calcNet
         {
             RadioButton rb = sender as RadioButton;
 
-            switch (DataInOutShellWithNozzle.Data_In.shellType)
+            switch ((element as Shell).ShellType)
             {
                 case ShellType.Cylindrical:
                     {
@@ -960,11 +959,11 @@ namespace calcNet
             //object value = field.GetValue();
             //var c = field;
 
-            switch (DataInOutShellWithNozzle.Data_In.shellType)
+            switch ((element as Shell).ShellType) // DataInOutShellWithNozzle.Data_In.shellType)
             {
                 case ShellType.Cylindrical:
                     {
-                        System.Windows.Forms.MessageBox.Show(DataInOutShellWithNozzle.Data_In.shellType.ToString());
+                        MessageBox.Show((element as Shell).ShellType.ToString());
 
                         RadioButton placerb_1 = new RadioButton
                         {
@@ -1026,7 +1025,7 @@ namespace calcNet
                         //place_gb.Controls.Add(placerb_4);
                         place_gb.Controls.Add(pn);
 
-                        place_pb.Image = (Bitmap)calcNet.Properties.Resources.ResourceManager.GetObject("CylRadial");
+                        place_pb.Image = calcNet.Properties.Resources.CylRadial;
                     }
                     break;
                 // TODO: Добавить расчет конуса
@@ -1037,7 +1036,7 @@ namespace calcNet
 
                 case ShellType.Elliptical:
                     {
-                        System.Windows.Forms.MessageBox.Show(DataInOutShellWithNozzle.Data_In.shellType.ToString());
+                        System.Windows.Forms.MessageBox.Show((element as Shell).ShellType.ToString());
 
                         RadioButton placerb_1 = new RadioButton
                         {
@@ -1131,7 +1130,7 @@ namespace calcNet
                         place_gb.Controls.Add(corPn);
 
                         place_pb.Location = new Point(place_pb.Location.X, place_pb.Location.Y + 35);
-                        place_pb.Image = (Bitmap)calcNet.Properties.Resources.ResourceManager.GetObject("EllRadial");
+                        place_pb.Image = calcNet.Properties.Resources.EllRadial;
 
                     }
                     break;

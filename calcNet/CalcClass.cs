@@ -528,21 +528,21 @@ namespace calcNet
             return true;
         }
 
-        internal static void CalculateShell(in Data_in d_in, ref Data_out d_out)
-        {
-            switch (d_in.shellType)
-            {
-                case ShellType.Cylindrical:
-                    CalculateCylindricalShell(in d_in, ref d_out);
-                    break;
-                case ShellType.Elliptical:
-                    CalculateEllipticalShell(in d_in, ref d_out);
-                    break;
-                case ShellType.Conical:
-                    CalculateConicalShell(in d_in, ref d_out);
-                    break;
-            }
-        }
+        //internal static void CalculateShell(in Data_in d_in, ref Data_out d_out)
+        //{
+        //    switch (d_in.shellType)
+        //    {
+        //        case ShellType.Cylindrical:
+        //            CalculateCylindricalShell(in d_in, ref d_out);
+        //            break;
+        //        case ShellType.Elliptical:
+        //            CalculateEllipticalShell(in d_in, ref d_out);
+        //            break;
+        //        case ShellType.Conical:
+        //            CalculateConicalShell(in d_in, ref d_out);
+        //            break;
+        //    }
+        //}
 
 
 

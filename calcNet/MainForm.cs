@@ -57,42 +57,47 @@ namespace calcNet
                     List<int> bibliography = new List<int>();
                     try
                     {
-                        for (int i = 0; i < DataWordOut.DataArr.Count; i++)
+                        foreach (IElement element in Elements.ElementsList)
                         {
-                            //int inx = item.id;
-                            if (DataWordOut.DataArr[i].id != 0)
-                            {
-                                switch (DataWordOut.DataArr[i].calculatedElementType)
-                                {
-                                    case CalculatedElementType.Cylindrical:
-                                        MakeWord.MakeWord_cil(DataWordOut.DataArr[i].Data_In, DataWordOut.DataArr[i].Data_Out, f);
-                                        bibliography.Add(2);
-                                        break;
-                                    case CalculatedElementType.Conical:
-                                        bibliography.Add(2);
-                                        break;
-                                    case CalculatedElementType.Elliptical:
-                                        MakeWord.MakeWord_ell(DataWordOut.DataArr[i].Data_In, DataWordOut.DataArr[i].Data_Out, f);
-                                        bibliography.Add(2);
-                                        break;
-                                    case CalculatedElementType.CylindricalWhithNozzle:
-                                    case CalculatedElementType.ConicalWhithNozzle:
-                                    case CalculatedElementType.EllipticalWhithNozzle:
-                                        MakeWord.MakeWord_nozzle(DataWordOut.DataArr[i].Data_In, DataWordOut.DataArr[i].Data_Out, DataWordOut.DataArr[i].DataN_In, DataWordOut.DataArr[i].DataN_Out, f);
-                                        bibliography.Add(3);
-                                        break;
-                                    case CalculatedElementType.Saddle:
-                                        bibliography.Add(5);
-                                        break;
-                                    case CalculatedElementType.Heatexchenge:
-                                        bibliography.Add(7);
-                                        break;
-                                    case CalculatedElementType.FlatBottom:
-                                        bibliography.Add(2);
-                                        break;
-                                }
-                            }
+                            element.MakeWord(f);
                         }
+
+                        //for (int i = 0; i < DataWordOut.DataArr.Count; i++)
+                        //{
+                        //    //int inx = item.id;
+                        //    if (DataWordOut.DataArr[i].id != 0)
+                        //    {
+                        //        switch (DataWordOut.DataArr[i].calculatedElementType)
+                        //        {
+                        //            case CalculatedElementType.Cylindrical:
+                        //                MakeWord.MakeWord_cil(DataWordOut.DataArr[i].Data_In, DataWordOut.DataArr[i].Data_Out, f);
+                        //                bibliography.Add(2);
+                        //                break;
+                        //            case CalculatedElementType.Conical:
+                        //                bibliography.Add(2);
+                        //                break;
+                        //            case CalculatedElementType.Elliptical:
+                        //                MakeWord.MakeWord_ell(DataWordOut.DataArr[i].Data_In, DataWordOut.DataArr[i].Data_Out, f);
+                        //                bibliography.Add(2);
+                        //                break;
+                        //            case CalculatedElementType.CylindricalWhithNozzle:
+                        //            case CalculatedElementType.ConicalWhithNozzle:
+                        //            case CalculatedElementType.EllipticalWhithNozzle:
+                        //                MakeWord.MakeWord_nozzle(DataWordOut.DataArr[i].Data_In, DataWordOut.DataArr[i].Data_Out, DataWordOut.DataArr[i].DataN_In, DataWordOut.DataArr[i].DataN_Out, f);
+                        //                bibliography.Add(3);
+                        //                break;
+                        //            case CalculatedElementType.Saddle:
+                        //                bibliography.Add(5);
+                        //                break;
+                        //            case CalculatedElementType.Heatexchenge:
+                        //                bibliography.Add(7);
+                        //                break;
+                        //            case CalculatedElementType.FlatBottom:
+                        //                bibliography.Add(2);
+                        //                break;
+                        //        }
+                        //    }
+                        //}
                         MakeWord.MakeLit(bibliography, f);
                         System.Windows.Forms.MessageBox.Show("OK");
                     }
