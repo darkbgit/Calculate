@@ -5,45 +5,30 @@ using System.Text;
 using System.Threading.Tasks;
 using Xceed.Document.NET;
 
-namespace calcNet.Calculate
+namespace calcNet
 {
-    class Nozzle : IElement, IDataIn
+    class Nozzle : IElement
     {
-        public Nozzle (IElement shell)
+        public Nozzle (IElement shell, NozzleDataIn nozzleDataIn)
         {
+            this.nozzleDataIn = nozzleDataIn;
             this.shell = shell;
-        }
-        public void CheckData()
-        {
-            if (ErrorList?.Count > 0)
-            {
-                IsDataGood = false;
-            }
-            else
-            {
-                IsDataGood = true;
-            }
+            this.shellData = (shell as Shell).ShellDataIn;
         }
 
-        public bool IsDataGood { get; set; }
-        public List<string> ErrorStringList { get => err; }
-        public List<string> ErrorList { get => errorList; }
+        private readonly NozzleDataIn nozzleDataIn;
 
-        public string Error
-        {
-            get => error;
-            set
-            {
-                error += value;
-            }
-        }
+
+
+
+
+
 
         private readonly ShellType shellType;
         private readonly IElement shell;
         private ShellDataIn shellData; 
 
-        private string error;
-        private List<string> err = new List<string>();
+
         private List<string> errorList = new List<string>();
 
         private NozzleLocation location;
@@ -59,7 +44,10 @@ namespace calcNet.Calculate
         public string Steel2 { get => _steel2; set => _steel2 = value; }
         public string Steel3 { get => _steel3; set => _steel3 = value; }
         public string Steel4 { get => _steel4; set => _steel4 = value; }
-
+        
+        public bool IsCriticalError { get; }
+        public bool IsError { get; set; }
+        public List<string> ErrorList { get; set; }
 
 
         internal double sigma_d1,
@@ -148,7 +136,7 @@ namespace calcNet.Calculate
         internal double psi2;
         internal double psi3;
         internal double psi4 = 1;
-        internal double b;
+
         internal double V;
         internal double V1;
         internal double V2;
@@ -156,7 +144,7 @@ namespace calcNet.Calculate
         internal double yslyk2;
         internal double B1n;
         internal double pen;
-        //internal string err;
+
         internal bool ypf;
         internal double ypf1;
         internal double ypf2;
@@ -164,11 +152,11 @@ namespace calcNet.Calculate
         public void Calculate()
         {
             // расчет Dp, dp
-            switch ((shell as Shell).ShellType)
+            switch (nozzleDataIn.ShellDataIn.ShellType)
             {
                 case ShellType.Cylindrical:
                     {
-                        _Dp = (shell as CylindricalShell).ShellDataIn.D;
+                        _Dp = dataIn.D;
                         break;
                     }
                 case ShellType.Conical:
@@ -178,25 +166,25 @@ namespace calcNet.Calculate
                     }
                 case ShellType.Elliptical:
                     {
-                        if ((shell as Ellid_in.elH * 100 == d_in.D * 25)
-                        {
-                            dN_out.Dp = d_in.D * 2 * Math.Sqrt(1 - 3 * Math.Pow(dN_in.elx / d_in.D, 2));
-                        }
-                        else
-                        {
-                            dN_out.Dp = Math.Pow(d_in.D, 2) / (d_in.elH * 2) * Math.Sqrt(1 - (4 * (Math.Pow(d_in.D, 2) - 4 * Math.Pow(d_in.elH, 2)) * Math.Pow(dN_in.elx, 2)) / Math.Pow(d_in.D, 4));
-                        }
+                        //if ((shell as EllipticalShell)d_in.elH * 100 == d_in.D * 25)
+                        //{
+                        //    dN_out.Dp = d_in.D * 2 * Math.Sqrt(1 - 3 * Math.Pow(dN_in.elx / d_in.D, 2));
+                        //}
+                        //else
+                        //{
+                        //    dN_out.Dp = Math.Pow(d_in.D, 2) / (d_in.elH * 2) * Math.Sqrt(1 - (4 * (Math.Pow(d_in.D, 2) - 4 * Math.Pow(d_in.elH, 2)) * Math.Pow(dN_in.elx, 2)) / Math.Pow(d_in.D, 4));
+                        //}
                         break;
                     }
                 case ShellType.Spherical:
                 case ShellType.Torospherical:
                     {
-                        dN_out.Dp = 2 * d_in.R;
+                        //dN_out.Dp = 2 * d_in.R;
                         break;
                     }
                 default:
                     {
-                        dN_out.err += "Ошибка вида укрепляемого элемента\n";
+                        //dN_out.err += "Ошибка вида укрепляемого элемента\n";
                         break;
                     }
             }

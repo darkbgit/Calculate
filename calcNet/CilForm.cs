@@ -11,27 +11,14 @@ using System.Xml;
 
 namespace calcNet
 {
-    public partial class CilForm : FormShell
+    public partial class CilForm : Form
     {
         public CilForm()
         {
             InitializeComponent();
         }
 
-        //private DataWordOut.DataOutArrEl dataArrEl;
-        //internal DataWordOut.DataOutArrEl DataInOutShell { get => dataArrEl; set => dataArrEl = value; }
-
-        //public struct DataForm
-        //{
-        //    internal Data_in Data_In;// { get; set; }
-        //    internal Data_out Data_Out;// { get; set; }
-        //    internal string Typ; // cil, ell, kon, cilyk, konyk, ellyk, saddle, heat
-        //}
-        //public static DataForm Df;
-
-
-
-        //public static DataForm Df { get => df; set => df = value; }
+        private CylindricalShellDataIn cylindricalShellDataIn = new CylindricalShellDataIn();
 
         private void Cancel_b_Click(object sender, EventArgs e)
         {
@@ -70,9 +57,9 @@ namespace calcNet
             scalc_l.Text = "";
             calc_b.Enabled = false;
 
-            //ShellDataIn d_in = new ShellDataIn();
-            CylindricalShellDataIn cylindricalShellDataIn = new CylindricalShellDataIn();
-            //Data_in d_in = new Data_in(ShellType.Cylindrical);
+
+            cylindricalShellDataIn = new CylindricalShellDataIn();
+
 
             List<string> dataInErr = new List<string>();
 
@@ -89,7 +76,7 @@ namespace calcNet
                 }
             }
 
-            //stell
+            //steel
             cylindricalShellDataIn.Steel = steel_cb.Text;
 
             //
@@ -359,7 +346,7 @@ namespace calcNet
                     }
                     else
                     {
-                        MessageBox.Show(string.Join<string>(Environment.NewLine, cyl.ErrorStringList));
+                        MessageBox.Show(string.Join<string>(Environment.NewLine, cyl.ErrorList));
                     }
                 }
                 else
@@ -378,7 +365,7 @@ namespace calcNet
             c_tb.Text = "";
             scalc_l.Text = "";
 
-            CylindricalShellDataIn cylindricalShellDataIn = new CylindricalShellDataIn();
+            //CylindricalShellDataIn cylindricalShellDataIn = new CylindricalShellDataIn();
 
             List<string> dataInErr = new List<string>();
 
@@ -398,7 +385,7 @@ namespace calcNet
                 }
             }
 
-            //stell
+            //steel
             cylindricalShellDataIn.Steel = steel_cb.Text;
 
             //
@@ -585,19 +572,20 @@ namespace calcNet
                         {
                             System.Windows.Forms.MessageBox.Show("MainForm Error");
                         }
+
                         if (cyl.IsError)
                         {
-                            MessageBox.Show(string.Join<string>(Environment.NewLine, cyl.ErrorStringList));
+                            MessageBox.Show(string.Join<string>(Environment.NewLine, cyl.ErrorList));
                         }
 
                         System.Windows.Forms.MessageBox.Show("Calculation complete");
 
-                        MessageBoxCheckBox mbcb = new MessageBoxCheckBox { Owner = this };
+                        MessageBoxCheckBox mbcb = new MessageBoxCheckBox(cylindricalShellDataIn) {Owner = this};
                         mbcb.ShowDialog();
                     }
                     else
                     {
-                        MessageBox.Show(string.Join<string>(Environment.NewLine, cyl.ErrorStringList));
+                        MessageBox.Show(string.Join<string>(Environment.NewLine, cyl.ErrorList));
                     }
                 }
                 else
@@ -613,7 +601,7 @@ namespace calcNet
 
         private void CilForm_Load(object sender, EventArgs e)
         {
-            Set_steellist.Set_llist(steel_cb);
+            SetSteelList.SetList(steel_cb);
             Gost_cb.SelectedIndex = 0;
         }
 

@@ -21,7 +21,7 @@ namespace calcNet
 
         private void EllForm_Load(object sender, EventArgs e)
         {
-            Set_steellist.Set_llist(steel_cb);
+            SetSteelList.SetList(steel_cb);
             steel_cb.SelectedIndex = 0;
             Gost_cb.SelectedIndex = 0;
         }

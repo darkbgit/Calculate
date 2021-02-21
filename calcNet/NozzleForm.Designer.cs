@@ -71,7 +71,7 @@ namespace calcNet
             this.label8 = new System.Windows.Forms.Label();
             this.steel1_cb = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.pressure_gb = new System.Windows.Forms.GroupBox();
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.nar_rb = new System.Windows.Forms.RadioButton();
@@ -132,7 +132,7 @@ namespace calcNet
             this.groupBox4.SuspendLayout();
             this.place_gb.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.place_pb)).BeginInit();
-            this.groupBox1.SuspendLayout();
+            this.pressure_gb.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.vid_pictureBox)).BeginInit();
             this.vid_gb.SuspendLayout();
             this.groupBox6.SuspendLayout();
@@ -556,20 +556,20 @@ namespace calcNet
             this.label7.TabIndex = 70;
             this.label7.Text = "Материал штуцера:";
             // 
-            // groupBox1
+            // pressure_gb
             // 
-            this.groupBox1.Controls.Add(this.label6);
-            this.groupBox1.Controls.Add(this.label5);
-            this.groupBox1.Controls.Add(this.nar_rb);
-            this.groupBox1.Controls.Add(this.p_tb);
-            this.groupBox1.Controls.Add(this.vn_rb);
-            this.groupBox1.Location = new System.Drawing.Point(13, 99);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.groupBox1.Size = new System.Drawing.Size(339, 75);
-            this.groupBox1.TabIndex = 69;
-            this.groupBox1.TabStop = false;
+            this.pressure_gb.Controls.Add(this.label6);
+            this.pressure_gb.Controls.Add(this.label5);
+            this.pressure_gb.Controls.Add(this.nar_rb);
+            this.pressure_gb.Controls.Add(this.p_tb);
+            this.pressure_gb.Controls.Add(this.vn_rb);
+            this.pressure_gb.Location = new System.Drawing.Point(13, 99);
+            this.pressure_gb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.pressure_gb.Name = "pressure_gb";
+            this.pressure_gb.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.pressure_gb.Size = new System.Drawing.Size(339, 75);
+            this.pressure_gb.TabIndex = 69;
+            this.pressure_gb.TabStop = false;
             // 
             // label6
             // 
@@ -1214,7 +1214,7 @@ namespace calcNet
             this.Controls.Add(this.label8);
             this.Controls.Add(this.steel1_cb);
             this.Controls.Add(this.label7);
-            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.pressure_gb);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.t_tb);
             this.Controls.Add(this.Gost_cb);
@@ -1232,8 +1232,8 @@ namespace calcNet
             this.place_gb.ResumeLayout(false);
             this.place_gb.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.place_pb)).EndInit();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            this.pressure_gb.ResumeLayout(false);
+            this.pressure_gb.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.vid_pictureBox)).EndInit();
             this.vid_gb.ResumeLayout(false);
             this.vid_gb.PerformLayout();
@@ -1288,7 +1288,7 @@ namespace calcNet
         internal System.Windows.Forms.TextBox d_tb;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox pressure_gb;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;

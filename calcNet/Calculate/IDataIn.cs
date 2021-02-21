@@ -1,7 +1,9 @@
 ﻿namespace calcNet
 {
-    interface IDataIn
+    public interface IDataIn
     {
+        void CheckData();
+
         public bool IsDataGood { get;  }
 
         public string Error { get; }

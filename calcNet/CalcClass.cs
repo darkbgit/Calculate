@@ -24,18 +24,6 @@ namespace calcNet
         Torospherical
     }
 
-    enum NozzleKind
-    {
-        ImpassWithoutRing = 1,
-        PassWithoutRing = 2,
-        ImpassWithRing = 3,
-        PassWithRing = 4,
-        WithRingAndInPart = 5,
-        WithFlanging = 6,
-        WithTorusshapedInsert = 7,
-        WithWealdedRing = 8
-    }
-
     class Data_in
     {
         public Data_in(ShellType shellType)
@@ -429,7 +417,9 @@ namespace calcNet
             XmlDocument doc = new XmlDocument();
             doc.Load(System.IO.Path.Combine(System.IO.Directory.GetCurrentDirectory(), @"data\data.xml"));
             var root = doc.DocumentElement;
-            XmlNode steelTempNodes = root.SelectSingleNode("sigma_list").SelectSingleNode("steels").SelectSingleNode("//steel[@name='" + steel + "']");
+            XmlNode steelTempNodes = root.SelectSingleNode("sigma_list")
+                                         .SelectSingleNode("steels")
+                                         .SelectSingleNode("//steel[@name='" + steel + "']");
 
             double sigma, sigmaLittle = 0, sigmaBig = 0;
             int tempLittle = 0, tempBig = 0;

@@ -12,13 +12,23 @@ namespace calcNet
 {
     public partial class NozzleForm : Form
     {
-        public NozzleForm()
+        public NozzleForm(ShellDataIn shellDataIn)
         {
             InitializeComponent();
-            element = Elements.ElementsList.Last();          
+            this.shellDataIn = shellDataIn;
+            element = Elements.ElementsList.Last();
+            nozzleData = new NozzleDataIn(shellDataIn);
         }
 
+        private NozzleDataIn nozzleData;
+
+        private readonly ShellDataIn shellDataIn;
         private readonly IElement element;
+
+        private const string PERPENDICULAR = "Перпендикулярно\n поверхности";
+        private const string TRANSVERSELY = "В плоскости\nпопер. сечения";
+        private const string OFFSET = "Смещенный";
+        private const string SLANTED = "Наклонный";
 
         private void Vid_rb_CheckedChanged(object sender, EventArgs e)
         {
@@ -35,18 +45,18 @@ namespace calcNet
             RadioButton rb = sender as RadioButton;
             if (rb.Checked)
             {
-                switch ((element as Shell).ShellType)
+                switch (shellDataIn.ShellType)
                 {
                     case ShellType.Cylindrical:
                         {
                             switch(rb.Text)
                             {
-                                case "Перпендикулярно\n поверхности":
+                                case PERPENDICULAR:
                                     {
                                         place_pb.Image = Properties.Resources.CylRadial;
                                         break;
                                     }
-                                case "В плоскости\nпопер. сечения":
+                                case TRANSVERSELY:
                                     {
                                         place_pb.Image = Properties.Resources.CylAxial;
                                         break;
@@ -57,7 +67,7 @@ namespace calcNet
                                 //            (Bitmap)Properties.Resources.ResourceManager.GetObject("CylOffset");
                                 //        break;
                                 //    }
-                                case "Наклонный":
+                                case SLANTED:
                                     {
                                         place_pb.Image = Properties.Resources.CylTilted;
                                         break;
@@ -71,7 +81,7 @@ namespace calcNet
                         {
                             switch (rb.Text)
                             {
-                                case "Перпендикулярно\n поверхности":
+                                case PERPENDICULAR:
                                     {
                                         if (Controls["place_gb"].Controls["corPn"] == null ||
                                             (Controls["place_gb"].Controls["corPn"]
@@ -85,7 +95,7 @@ namespace calcNet
                                         }
                                             break;
                                     }
-                                case "Смещенный":
+                                case OFFSET:
                                     {
                                         if (Controls["place_gb"].Controls["corPn"] == null ||
                                             (Controls["place_gb"].Controls["corPn"]
@@ -526,11 +536,11 @@ namespace calcNet
         {
             RadioButton rb = sender as RadioButton;
 
-            switch ((element as Shell).ShellType)
+            switch (shellDataIn.ShellType)
             {
                 case ShellType.Cylindrical:
                     {
-                        if (rb == null || (rb.Checked && rb.Text == "Перпендикулярно\n поверхности"))
+                        if (rb == null || (rb.Checked && rb.Text == PERPENDICULAR))
                         {
                             place_gb.Controls["pn"].Dispose();
                             Panel pn = new Panel
@@ -587,7 +597,7 @@ namespace calcNet
 
                         }
 
-                        else if (rb.Checked && rb.Text == "В плоскости\nпопер. сечения")
+                        else if (rb.Checked && rb.Text == TRANSVERSELY)
                         {
                             place_gb.Controls["pn"].Dispose();
                             Panel pn = new Panel
@@ -762,7 +772,7 @@ namespace calcNet
                         //}
                         */
 
-                        else if (rb.Checked && rb.Text == "Наклонный")
+                        else if (rb.Checked && rb.Text == SLANTED)
                         {
                             place_gb.Controls["pn"].Dispose();
                             Panel pn = new Panel
@@ -866,7 +876,7 @@ namespace calcNet
                 //    }
                 case ShellType.Elliptical:
                     {
-                        if (rb == null || (rb.Checked && rb.Text == "Перпендикулярно\n поверхности"))
+                        if (rb == null || rb.Checked && rb.Text == PERPENDICULAR)
                         {
                             if (Controls["place_gb"].Controls["corPn"] == null ||
                                 (Controls["place_gb"].Controls["corPn"].Controls["placePolar_rb"] as RadioButton).Checked == true)
@@ -879,7 +889,7 @@ namespace calcNet
                             }
                         }
 
-                        else if (rb.Checked & rb.Text == "Смещенный")
+                        else if (rb.Checked & rb.Text == OFFSET)
                         {
                             if (Controls["place_gb"].Controls["corPn"] == null ||
                                 (Controls["place_gb"].Controls["corPn"].Controls["placePolar_rb"] as RadioButton).Checked == true)
@@ -946,11 +956,11 @@ namespace calcNet
 
         private void NozzleForm_Load(object sender, EventArgs e)
         {
-            Set_steellist.Set_llist(steel1_cb);
+            SetSteelList.SetList(steel1_cb);
             steel1_cb.SelectedIndex = 0;
-            Set_steellist.Set_llist(steel2_cb);
+            SetSteelList.SetList(steel2_cb);
             steel2_cb.SelectedIndex = 0;
-            Set_steellist.Set_llist(steel3_cb);
+            SetSteelList.SetList(steel3_cb);
             steel3_cb.SelectedIndex = 0;
             Gost_cb.SelectedIndex = 0;
 
@@ -959,15 +969,15 @@ namespace calcNet
             //object value = field.GetValue();
             //var c = field;
 
-            switch ((element as Shell).ShellType) // DataInOutShellWithNozzle.Data_In.shellType)
+            switch (shellDataIn.ShellType)
             {
                 case ShellType.Cylindrical:
                     {
-                        MessageBox.Show((element as Shell).ShellType.ToString());
+                        MessageBox.Show(shellDataIn.ShellType.ToString());
 
                         RadioButton placerb_1 = new RadioButton
                         {
-                            Text = "Перпендикулярно\n поверхности",
+                            Text = PERPENDICULAR,
                             Checked = true,
                             AutoSize = true,
                             Location = new System.Drawing.Point(8, 22),
@@ -982,7 +992,7 @@ namespace calcNet
 
                         RadioButton placerb_2 = new RadioButton
                         {
-                            Text = "В плоскости\nпопер. сечения",
+                            Text = TRANSVERSELY,
                             AutoSize = true,
                             Location = new System.Drawing.Point(8, 62),
                             Margin = new System.Windows.Forms.Padding(4, 3, 4, 3),
@@ -1003,7 +1013,7 @@ namespace calcNet
                         //placerb_3.CheckedChanged += new EventHandler(Place_rb_CheckedChanged);
                         RadioButton placerb_3 = new RadioButton
                         {
-                            Text = "Наклонный",
+                            Text = SLANTED,
                             AutoSize = true,
                             Location = new System.Drawing.Point(8, 102),
                             Margin = new System.Windows.Forms.Padding(4, 3, 4, 3),
@@ -1036,11 +1046,11 @@ namespace calcNet
 
                 case ShellType.Elliptical:
                     {
-                        System.Windows.Forms.MessageBox.Show((element as Shell).ShellType.ToString());
+                        System.Windows.Forms.MessageBox.Show(shellDataIn.ShellType.ToString());
 
                         RadioButton placerb_1 = new RadioButton
                         {
-                            Text = "Перпендикулярно\n поверхности",
+                            Text = PERPENDICULAR,
                             Checked = true,
                             AutoSize = true,
                             Location = new System.Drawing.Point(8, 30),
@@ -1053,7 +1063,7 @@ namespace calcNet
 
                         RadioButton placerb_2 = new RadioButton
                         {
-                            Text = "Смещенный",
+                            Text = OFFSET,
                             AutoSize = true,
                             Location = new System.Drawing.Point(8, 70),
                             Margin = new System.Windows.Forms.Padding(4, 3, 4, 3),
@@ -1138,23 +1148,16 @@ namespace calcNet
 
             if (this.Owner != null)
             {
-                steel1_cb.Text = Owner.Controls["steel_cb"].Text;
-                steel2_cb.Text = Owner.Controls["steel_cb"].Text;
-                steel3_cb.Text = Owner.Controls["steel_cb"].Text;
-                p_tb.Text = Owner.Controls["dav_gb"].Controls["p_tb"].Text;
-                t_tb.Text = Owner.Controls["t_tb"].Text;
-                nameEl_tb.Text = Owner.Controls["name_tb"].Text;
-                if (Owner.Controls["dav_gb"].Controls["vn_rb"] is RadioButton rb)
-                {
-                    if (rb.Checked)
-                    {
-                        vn_rb.Checked = true;
-                    }
-                    else
-                    {
-                        nar_rb.Checked = true;
-                    }
-                }
+                steel1_cb.Text = shellDataIn.Steel;
+                steel2_cb.Text = shellDataIn.Steel;
+                steel3_cb.Text = shellDataIn.Steel;
+                p_tb.Text = shellDataIn.p.ToString();
+                t_tb.Text = shellDataIn.t.ToString();
+                if (shellDataIn.Name != null) nameEl_tb.Text = shellDataIn.Name;
+
+                vn_rb.Checked = shellDataIn.IsPressureIn;
+
+                pressure_gb.Enabled = false;
             }
 
 
@@ -1168,418 +1171,406 @@ namespace calcNet
 
         private void PredCalc_b_Click(object sender, EventArgs e)
         {
-            DataInOutShellWithNozzle.Data_In.isNeedMakeCalcNozzle = true;
-            Data_in d_in = DataInOutShellWithNozzle.Data_In;
-            Data_out d_out = DataInOutShellWithNozzle.Data_Out;
-            DataNozzle_in dN_in = new DataNozzle_in();
+            const string WRONG_INPUT = " неверный ввод";
+            //NozzleDataIn nozzleData = new NozzleDataIn(shellDataIn);
 
+            List<string> dataInErr = new List<string>();
 
-            string dataInErr = "";
+            //NozzleKind
+            {
+                var checkedButton = vid_gb.Controls.OfType<RadioButton>().FirstOrDefault(rb => rb.Checked);
+                nozzleData.NozzleKind = (NozzleKind) Convert.ToInt32(checkedButton.Text.First().ToString());
+            }
 
             //t
-            InputClass.GetInput_t(t_tb, ref dN_in, ref dataInErr);
+            //InputClass.GetInput_t(t_tb, ref dN_in, ref dataInErr);
+            {
+                if (double.TryParse(t_tb.Text, System.Globalization.NumberStyles.Integer,
+                    System.Globalization.CultureInfo.InvariantCulture, out double t))
+                {
+                    nozzleData.t = t;
+                }
+                else
+                {
+                    dataInErr.Add(nameof(t) + WRONG_INPUT);
+                }
+            }
 
             //steel1
-            dN_in.steel1 = steel1_cb.Text;
+            nozzleData.steel1 = steel1_cb.Text;
 
-            if (dataInErr == "")
+            nozzleData.CheckData();
+
+
+
+            if (nozzleData.IsDataGood)
             {
-                if (sigma_d1_tb.ReadOnly)
                 {
-                    sigma_d1_tb.ReadOnly = false;
-                    //sigma_d1_tb.Text = Convert.ToString(CalcClass.GetSigma(dN_in.steel1, d_in.temp));
-                    sigma_d1_tb.ReadOnly = true;
-                }
-                try
-                {
-                    dN_in.sigma_d1 = Convert.ToDouble(sigma_d1_tb.Text);
-                }
-                catch
-                {
-                    dataInErr += "[σ] неверные данные\n";
+                    double sigma_d1 = 0;
+                    if (sigma_d1_tb.ReadOnly)
+                    {
+
+                        CalcClass.GetSigma(nozzleData.steel1,
+                            nozzleData.t,
+                            ref sigma_d1,
+                            ref dataInErr);
+                        sigma_d1_tb.ReadOnly = false;
+                        sigma_d1_tb.Text = sigma_d1.ToString();
+                        sigma_d1_tb.ReadOnly = true;
+                    }
+                    else
+                    {
+                        if (!double.TryParse(sigma_d1_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
+                            System.Globalization.CultureInfo.InvariantCulture, out sigma_d1))
+                        {
+                            dataInErr.Add("[σ]" + WRONG_INPUT);
+                        }
+                    }
+
+                    nozzleData.sigma_d1 = sigma_d1;
                 }
 
-                if (!vn_rb.Checked)
+
+                if (!nozzleData.ShellDataIn.IsPressureIn)
                 {
                     //E1
-                    InputClass.GetInput_E(E1_tb, ref dN_in,  ref dataInErr, 1);
-                }
-            }
-
-            //try
-            //{
-            //    if (Convert.ToDouble(p_tb.Text) > 0 && Convert.ToDouble(p_tb.Text) < 1000)
-            //    {
-            //        d_in.p = Convert.ToDouble(p_tb.Text);
-            //    }
-            //    else
-            //    {
-            //        data_inerr += "p должно быть в диапазоне 0 - 1000\n";
-            //    }
-            //}
-            //catch
-            //{
-            //    data_inerr += "p должно быть в диапазоне 0 - 1000\n";
-            //}
-
-            try
-            {
-                if (Convert.ToInt32(d_tb.Text) > 0)
-                {
-                    dN_in.D = Convert.ToInt32(d_tb.Text);
-                }
-                else
-                {
-                    dataInErr += "d неверные данные\n";
-                }
-            }
-            catch
-            {
-                dataInErr += "d неверные данные\n";
-            }
-
-            try
-            {
-                if (Convert.ToDouble(s1_tb.Text) > 0)
-                {
-                    dN_in.s1 = Convert.ToDouble(s1_tb.Text);
-                }
-                else
-                {
-                    dataInErr += "s1 неверные данные\n";
-                }
-            }
-            catch
-            {
-                dataInErr += "s1 неверные данные\n";
-            }
-
-            try
-            {
-                if (Convert.ToDouble(cs_tb.Text) >= 0)
-                {
-                    dN_in.cs = Convert.ToDouble(cs_tb.Text);
-                }
-                else
-                {
-                    dataInErr += "cs неверные данные\n";
-                }
-            }
-            catch
-            {
-                dataInErr += "cs неверные данные\n";
-            }
-
-            try
-            {
-                if (Convert.ToDouble(cs1_tb.Text) >= 0)
-                {
-                    dN_in.cs1 = Convert.ToDouble(cs1_tb.Text);
-                }
-                else
-                {
-                    dataInErr += "cs1 неверные данные\n";
-                }
-            }
-            catch
-            {
-                dataInErr += "cs1 неверные данные\n";
-            }
-
-            try
-            {
-                if (Convert.ToInt32(l1_tb.Text) >= 0)
-                {
-                    dN_in.l1 = Convert.ToInt32(l1_tb.Text);
-                }
-                else
-                {
-                    dataInErr += "l1 неверные данные\n";
-                }
-            }
-            catch
-            {
-                dataInErr += "l1 неверные данные\n";
-            }
-
-            dN_in.steel2 = steel2_cb.Text;
-
-            try
-            {
-                if (Convert.ToInt32(l2_tb.Text) >= 0)
-                {
-                    dN_in.l2 = Convert.ToInt32(l2_tb.Text);
-                }
-                else
-                {
-                    dataInErr += "l2 неверные данные\n";
-                }
-            }
-            catch
-            {
-                dataInErr += "l2 неверные данные\n";
-            }
-
-            try
-            {
-                if (Convert.ToDouble(s2_tb.Text) >= 0)
-                {
-                    dN_in.s2 = Convert.ToDouble(s2_tb.Text);
-                }
-                else
-                {
-                    dataInErr += "s2 неверные данные\n";
-                }
-            }
-            catch
-            {
-                dataInErr += "s2 неверные данные\n";
-            }
-
-            dN_in.steel3 = steel3_cb.Text;
-
-            try
-            {
-                if (Convert.ToInt32(l3_tb.Text) >= 0)
-                {
-                    dN_in.l3 = Convert.ToInt32(l3_tb.Text);
-                }
-                else
-                {
-                    dataInErr += "l3 неверные данные\n";
-                }
-            }
-            catch
-            {
-                dataInErr += "l3 неверные данные\n";
-            }
-
-            try
-            {
-                if (Convert.ToDouble(s3_tb.Text) >= 0)
-                {
-                    dN_in.s3 = Convert.ToDouble(s3_tb.Text);
-                }
-                else
-                {
-                    dataInErr += "s3 неверные данные\n";
-                }
-            }
-            catch
-            {
-                dataInErr += "s3 неверные данные\n";
-            }
-
-            try
-            {
-                if (Convert.ToDouble(fi_tb.Text) > 0 & Convert.ToDouble(fi_tb.Text) <= 1)
-                {
-                    dN_in.fi = Convert.ToDouble(fi_tb.Text);
-                }
-                else
-                {
-                    dataInErr += "φ должен быть в диапазоне 0 - 1\n";
-                }
-            }
-            catch
-            {
-                dataInErr += "φ должен быть в диапазоне 0 - 1\n";
-            }
-
-            try
-            {
-                if (Convert.ToDouble(fi1_tb.Text) > 0 & Convert.ToDouble(fi1_tb.Text) <= 1)
-                {
-                    dN_in.fi1 = Convert.ToDouble(fi1_tb.Text);
-                }
-                else
-                {
-                    dataInErr += "φ1 должен быть в диапазоне 0 - 1\n";
-                }
-            }
-            catch
-            {
-                dataInErr += "φ1 должен быть в диапазоне 0 - 1\n";
-            }
-
-            try
-            {
-                if (Convert.ToInt32(delta_tb.Text) >= 0)
-                {
-                    dN_in.delta = Convert.ToInt32(delta_tb.Text);
-                }
-                else
-                {
-                    dataInErr += "delta должен быть в диапазоне 0 - \n";
-                }
-            }
-            catch
-            {
-                dataInErr += "delta должен быть в диапазоне 0 - 1\n";
-            }
-
-            try
-            {
-                if (Convert.ToInt32(delta1_tb.Text) >= 0)
-                {
-                    dN_in.delta1 = Convert.ToInt32(delta1_tb.Text);
-                }
-                else
-                {
-                    dataInErr += "delta1 должен быть в диапазоне 0 - \n";
-                }
-            }
-            catch
-            {
-                dataInErr += "delta1 должен быть в диапазоне 0 - 1\n";
-            }
-
-            try
-            {
-                if (Convert.ToInt32(delta2_tb.Text) >= 0)
-                {
-                    dN_in.delta2 = Convert.ToInt32(delta2_tb.Text);
-                }
-                else
-                {
-                    dataInErr += "delta2 должен быть в диапазоне 0 - \n";
-                }
-            }
-            catch
-            {
-                dataInErr += "delta2 должен быть в диапазоне 0 - 1\n";
-            }
-
-            foreach (Control rb in Controls["vid_gb"].Controls)
-            {
-                if (rb is RadioButton && (rb as RadioButton).Checked)
-                {
-                    dN_in.nozzleKind = (NozzleKind)Convert.ToInt32(rb.Text.First().ToString());
-                }
-            }
-
-            foreach (Control rb in Controls["place_gb"].Controls)
-            {
-                if (rb is RadioButton && (rb as RadioButton).Checked)
-                {
-                    //dN_in.location = (NozzleLocation)(Convert.ToInt32(rb.Name.Last().ToString()) - 1);
-
-                    string chekedRadioButtonText;
-                    chekedRadioButtonText = rb.Text;
-                    switch (chekedRadioButtonText)
+                    //InputClass.GetInput_E(E1_tb, ref nozzleData,  ref dataInErr, 1);
+                    if (double.TryParse(E1_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
+                        System.Globalization.CultureInfo.InvariantCulture, out double E1))
                     {
-                        case "Перпендикулярно\n поверхности":
-                            if (!dN_in.isOval)
+                        nozzleData.E1 = E1;
+                    }
+                    else
+                    {
+                        dataInErr.Add(nameof(E1) + WRONG_INPUT);
+                    }
+
+                }
+            }
+
+            //d
+            {
+                if (double.TryParse(d_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
+                    System.Globalization.CultureInfo.InvariantCulture, out double d))
+                {
+                    nozzleData.d = d;
+                }
+                else
+                {
+                    dataInErr.Add(nameof(d) + WRONG_INPUT);
+                }
+            }
+
+            //s1
+            {
+                if (double.TryParse(s1_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
+                    System.Globalization.CultureInfo.InvariantCulture, out double s1))
+                {
+                    nozzleData.s1 = s1;
+                }
+                else
+                {
+                    dataInErr.Add(nameof(s1) + WRONG_INPUT);
+                }
+            }
+
+            //cs
+            {
+                if (double.TryParse(cs_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
+                    System.Globalization.CultureInfo.InvariantCulture, out double cs))
+                {
+                    nozzleData.cs = cs;
+                }
+                else
+                {
+                    dataInErr.Add(nameof(cs) + WRONG_INPUT);
+                }
+            }
+
+            //cs1
+            {
+                if (double.TryParse(cs1_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
+                    System.Globalization.CultureInfo.InvariantCulture, out double cs1))
+                {
+                    nozzleData.cs1 = cs1;
+                }
+                else
+                {
+                    dataInErr.Add(nameof(cs1) + WRONG_INPUT);
+                }
+            }
+
+            //l1
+            {
+                if (double.TryParse(l1_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
+                    System.Globalization.CultureInfo.InvariantCulture, out double l1))
+                {
+                    nozzleData.l1 = l1;
+                }
+                else
+                {
+                    dataInErr.Add(nameof(l1) + WRONG_INPUT);
+                }
+            }
+
+            //fi
+            {
+                if (double.TryParse(fi_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
+                    System.Globalization.CultureInfo.InvariantCulture, out double fi))
+                {
+                    nozzleData.fi = fi;
+                }
+                else
+                {
+                    dataInErr.Add("φ" + WRONG_INPUT);
+                }
+            }
+
+            //fi
+            {
+                if (double.TryParse(fi1_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
+                    System.Globalization.CultureInfo.InvariantCulture, out double fi1))
+                {
+                    nozzleData.fi1 = fi1;
+                }
+                else
+                {
+                    dataInErr.Add("φ1" + WRONG_INPUT);
+                }
+            }
+
+            //delta
+            {
+                if (double.TryParse(delta_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
+                    System.Globalization.CultureInfo.InvariantCulture, out double delta))
+                {
+                    nozzleData.delta = delta;
+                }
+                else
+                {
+                    dataInErr.Add(nameof(delta) + WRONG_INPUT);
+                }
+            }
+
+            //delta1
+            {
+                if (double.TryParse(delta1_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
+                    System.Globalization.CultureInfo.InvariantCulture, out double delta1))
+                {
+                    nozzleData.delta1 = delta1;
+                }
+                else
+                {
+                    dataInErr.Add(nameof(delta1) + WRONG_INPUT);
+                }
+            }
+
+            //delta2
+            {
+                if (double.TryParse(delta2_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
+                    System.Globalization.CultureInfo.InvariantCulture, out double delta2))
+                {
+                    nozzleData.delta2 = delta2;
+                }
+                else
+                {
+                    dataInErr.Add(nameof(delta2) + WRONG_INPUT);
+                }
+            }
+
+            if (nozzleData.NozzleKind == NozzleKind.ImpassWithRing ||
+                nozzleData.NozzleKind == NozzleKind.PassWithRing ||
+                nozzleData.NozzleKind == NozzleKind.WithRingAndInPart)
+            {
+                nozzleData.steel2 = steel2_cb.Text;
+
+                //l2
+                {
+                    if (double.TryParse(l2_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
+                        System.Globalization.CultureInfo.InvariantCulture, out double l2))
+                    {
+                        nozzleData.l2 = l2;
+                    }
+                    else
+                    {
+                        dataInErr.Add(nameof(l2) + WRONG_INPUT);
+                    }
+                }
+
+                //s2
+                {
+                    if (double.TryParse(s2_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
+                        System.Globalization.CultureInfo.InvariantCulture, out double s2))
+                    {
+                        nozzleData.s2 = s2;
+                    }
+                    else
+                    {
+                        dataInErr.Add(nameof(s2) + WRONG_INPUT);
+                    }
+                }
+            }
+
+            if (nozzleData.NozzleKind == NozzleKind.PassWithoutRing ||
+                nozzleData.NozzleKind == NozzleKind.PassWithRing ||
+                nozzleData.NozzleKind == NozzleKind.WithRingAndInPart)
+            {
+                nozzleData.steel3 = steel3_cb.Text;
+
+                //l3
+                {
+                    if (double.TryParse(l3_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
+                        System.Globalization.CultureInfo.InvariantCulture, out double l3))
+                    {
+                        nozzleData.l3 = l3;
+                    }
+                    else
+                    {
+                        dataInErr.Add(nameof(l3) + WRONG_INPUT);
+                    }
+                }
+
+                //s3
+                {
+                    if (double.TryParse(s3_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
+                        System.Globalization.CultureInfo.InvariantCulture, out double s3))
+                    {
+                        nozzleData.s3 = s3;
+                    }
+                    else
+                    {
+                        dataInErr.Add(nameof(s3) + WRONG_INPUT);
+                    }
+                }
+            }
+
+            var checkedPlaceButton = place_gb.Controls.OfType<RadioButton>().FirstOrDefault(rb => rb.Checked);
+
+            string chekedRadioButtonText;
+            chekedRadioButtonText = checkedPlaceButton.Text;
+            switch (chekedRadioButtonText)
+            {
+                case PERPENDICULAR:
+                    if (!nozzleData.IsOval)
+                    {
+                        if (nozzleData.NozzleKind == NozzleKind.ImpassWithoutRing ||
+                            nozzleData.NozzleKind == NozzleKind.ImpassWithRing ||
+                            nozzleData.NozzleKind == NozzleKind.PassWithoutRing ||
+                            nozzleData.NozzleKind == NozzleKind.PassWithRing ||
+                            nozzleData.NozzleKind == NozzleKind.WithRingAndInPart ||
+                            nozzleData.NozzleKind == NozzleKind.WithWealdedRing)
+                        {
+                            nozzleData.Location = NozzleLocation.LocationAccordingToParagraph_5_2_2_1;
+                        }
+                        else if (nozzleData.NozzleKind == NozzleKind.WithFlanging ||
+                                 nozzleData.NozzleKind == NozzleKind.WithTorusshapedInsert)
+                        {
+                            nozzleData.Location = NozzleLocation.LocationAccordingToParagraph_5_2_2_7;
+                        }
+                    }
+                    else
+                    {
+                        nozzleData.Location = NozzleLocation.LocationAccordingToParagraph_5_2_2_6;
+                        if (shellDataIn.ShellType == ShellType.Elliptical ||
+                            shellDataIn.ShellType == ShellType.Spherical ||
+                            shellDataIn.ShellType == ShellType.Torospherical)
+                        {
+                            nozzleData.omega = 0;
+                        }
+                    }
+
+                    break;
+                case TRANSVERSELY:
+                    nozzleData.Location = NozzleLocation.LocationAccordingToParagraph_5_2_2_2;
+                    nozzleData.tTransversely = Convert.ToDouble((place_gb.Controls["pn"].Controls["t_tb"] as TextBox).Text);
+                    break;
+                case OFFSET:
+                    switch (shellDataIn.ShellType)
+                    {
+                        case ShellType.Elliptical:
+                            nozzleData.Location = NozzleLocation.LocationAccordingToParagraph_5_2_2_3;
+                            nozzleData.ellx =
+                                Convert.ToDouble((place_gb.Controls["pn"].Controls["Rsh_tb"] as TextBox).Text);
+                            break;
+                        case ShellType.Cylindrical:
+                            break;
+                    }
+
+                    break;
+                case SLANTED:
+                    switch (shellDataIn.ShellType)
+                    {
+                        case ShellType.Elliptical:
+                        case ShellType.Conical:
+                            nozzleData.omega =
+                                Convert.ToDouble((place_gb.Controls["pn"].Controls["omega_tb"] as TextBox)
+                                    .Text);
+                            nozzleData.gamma =
+                                Convert.ToDouble((place_gb.Controls["pn"].Controls["gamma_tb"] as TextBox)
+                                    .Text);
+                            if (nozzleData.omega == 0)
                             {
-                                if (dN_in.nozzleKind == NozzleKind.ImpassWithoutRing ||
-                                    dN_in.nozzleKind == NozzleKind.ImpassWithRing ||
-                                    dN_in.nozzleKind == NozzleKind.PassWithoutRing ||
-                                    dN_in.nozzleKind == NozzleKind.PassWithRing ||
-                                    dN_in.nozzleKind == NozzleKind.WithRingAndInPart ||
-                                    dN_in.nozzleKind == NozzleKind.WithWealdedRing)
-                                {
-                                    dN_in.location = NozzleLocation.LocationAccordingToParagraph_5_2_2_1;
-                                }
-                                else if (dN_in.nozzleKind == NozzleKind.WithFlanging ||
-                                        dN_in.nozzleKind == NozzleKind.WithTorusshapedInsert)
-                                {
-                                    dN_in.location = NozzleLocation.LocationAccordingToParagraph_5_2_2_7;
-                                }
+                                nozzleData.Location = NozzleLocation.LocationAccordingToParagraph_5_2_2_5;
                             }
                             else
                             {
-                                dN_in.location = NozzleLocation.LocationAccordingToParagraph_5_2_2_6;
-                                if (d_in.shellType == ShellType.Elliptical ||
-                                    d_in.shellType == ShellType.Spherical ||
-                                    d_in.shellType == ShellType.Torospherical)
-                                {
-                                    dN_in.omega = 0;
-                                }
+                                nozzleData.Location = NozzleLocation.LocationAccordingToParagraph_5_2_2_4;
                             }
+
                             break;
-                        case "В плоскости\nпопер. сечения":
-                            dN_in.location = NozzleLocation.LocationAccordingToParagraph_5_2_2_2;
-                            dN_in.t = Convert.ToDouble((place_gb.Controls["pn"].Controls["t_tb"] as TextBox).Text);
-                            break;
-                        case "Смещенный":
-                            switch (d_in.shellType)
-                            {
-                                case ShellType.Elliptical:
-                                    dN_in.location = NozzleLocation.LocationAccordingToParagraph_5_2_2_3;
-                                    dN_in.elx = Convert.ToDouble((place_gb.Controls["pn"].Controls["Rsh_tb"] as TextBox).Text);
-                                    break;
-                                case ShellType.Cylindrical:
-                                    break;
-                            }
-                            break;
-                        case "Наклонный":
-                            switch (d_in.shellType)
-                            {
-                                case ShellType.Elliptical:
-                                case ShellType.Conical:
-                                    dN_in.omega = Convert.ToDouble((place_gb.Controls["pn"].Controls["omega_tb"] as TextBox).Text);
-                                    dN_in.gamma = Convert.ToDouble((place_gb.Controls["pn"].Controls["gamma_tb"] as TextBox).Text);
-                                    if (dN_in.omega == 0)
-                                    {
-                                        dN_in.location = NozzleLocation.LocationAccordingToParagraph_5_2_2_5;
-                                    }
-                                    else
-                                    {
-                                        dN_in.location = NozzleLocation.LocationAccordingToParagraph_5_2_2_4;
-                                    }
-                                    break;
-                                case ShellType.Spherical:
-                                case ShellType.Torospherical:
-                                    dN_in.omega = 0;
-                                    dN_in.gamma = Convert.ToDouble((place_gb.Controls["pn"].Controls["gamma_tb"] as TextBox).Text);
-                                    dN_in.location = NozzleLocation.LocationAccordingToParagraph_5_2_2_5;
-                                    break;
-                            }
+                        case ShellType.Spherical:
+                        case ShellType.Torospherical:
+                            nozzleData.omega = 0;
+                            nozzleData.gamma =
+                                Convert.ToDouble((place_gb.Controls["pn"].Controls["gamma_tb"] as TextBox)
+                                    .Text);
+                            nozzleData.Location = NozzleLocation.LocationAccordingToParagraph_5_2_2_5;
                             break;
                     }
-                }
-                break;
+
+                    break;
             }
 
-            if ((dN_in.cs + dN_in.cs1 > dN_in.s3) & dN_in.s3 > 0)
+            if ((nozzleData.cs + nozzleData.cs1 > nozzleData.s3) & nozzleData.s3 > 0)
             {
-                dataInErr += "cs+cs1 должно быть меньше s3";
+                dataInErr.Add("cs+cs1 должно быть меньше s3");
             }
 
+            nozzleData.CheckData();
+            bool isNotError = dataInErr.Count == 0 && nozzleData.IsDataGood;
 
-            bool isNotError = dataInErr == "";
             if (isNotError)
             {
-                DataNozzle_out dN_out = CalcClass.CalculateNozzle(d_in, d_out, dN_in);
-                dataArrEl.DataN_In = dN_in;
-                dataArrEl.DataN_Out = dN_out;
-                d0_l.Text = $"d0={dN_out.d0:f2} мм";
-                p_d_l.Text = $"[p]={dN_out.p_d:f2} МПа";
-                b_l.Text = $"b={dN_out.b:f2} мм";
-                if (dN_out.err != "")
+                Nozzle nozzle = new Nozzle(element, nozzleData);
+                nozzle.Calculate();
+                if (!nozzle.IsCriticalError)
                 {
-                    System.Windows.Forms.MessageBox.Show(dN_out.err);
+
+                    d0_l.Text = $"d0={nozzle.d0:f2} мм";
+                    p_d_l.Text = $"[p]={nozzle.p_d:f2} МПа";
+                    b_l.Text = $"b={nozzle.b:f2} мм";
+                    calc_b.Enabled = true;
+                    if (nozzle.IsError)
+                    {
+                        System.Windows.Forms.MessageBox.Show(string.Join<string>(Environment.NewLine, nozzle.ErrorList));
+                    }
                 }
-                //#globalvar.elementdatayk.append(dN_in)
-                //#globalvar.elementdatayk.append(data_nozzleout)
-                //globalvar.data_word.append([data_in, data_out, dN_in, data_nozzleout])
-                //i = globalvar.word_lv.rowCount()
-                //globalvar.word_lv.insertRow(i)
-                //globalvar.word_lv.setData(globalvar.word_lv.index(i), f"{data_in.dia} мм, {data_in.press} МПа, {data_in.temp} C, {data_in.met}, {data_in.yk}")
-                //parent().parent().lvCalc.setModel(globalvar.word_lv)
-                //pbCalc.setEnabled(True)
+                else
+                {
+                    System.Windows.Forms.MessageBox.Show(string.Join<string>(Environment.NewLine, nozzle.ErrorList));
+                }
+
             }
             else
             {
-                System.Windows.Forms.MessageBox.Show(dataInErr);
+                MessageBox.Show(string.Join<string>(Environment.NewLine, dataInErr.Union(nozzleData.ErrorList)));
             }
         }
 
         private void Calc_b_Click(object sender, EventArgs e)
         {
-            PredCalc_b_Click(sender, e);
 
-            DataInOutShellWithNozzle.DataN_In.name = name_tb.Text;
+            nozzleData.Name = name_tb.Text;
             
        
             if (this.Owner.Owner is MainForm main)

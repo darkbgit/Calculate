@@ -4,12 +4,12 @@ namespace calcNet
 {
     public abstract class Shell 
     {
-        public Shell(ShellType shellType)
+        public Shell()//ShellType shellType)
         {
-            this.shellType = shellType;
+            //this.shellType = shellType;
         }
 
-        private readonly ShellType shellType;
+        //private readonly ShellType shellType;
 
         internal ShellDataIn ShellDataIn;
 
@@ -17,7 +17,7 @@ namespace calcNet
         protected bool isError;
         protected List<string> err = new List<string>();
 
-        public ShellType ShellType { get => shellType; }
+        //public ShellType ShellType { get => shellType; }
     }
 
 }

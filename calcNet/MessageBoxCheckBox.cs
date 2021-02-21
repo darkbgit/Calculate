@@ -12,21 +12,24 @@ namespace calcNet
 {
     public partial class MessageBoxCheckBox : Form
     {
-        public MessageBoxCheckBox()
+        public MessageBoxCheckBox(IDataIn dataIn)
         {
             InitializeComponent();
+            this.dataIn = dataIn;
         }
 
+        private readonly IDataIn dataIn;
+        
         private void OK_b_Click(object sender, EventArgs e)
         {
             Owner.Hide();
             Close();
             if (nozzle_cb.Checked)
             {
-                NozzleForm nf = new NozzleForm
+                NozzleForm nf = new NozzleForm((ShellDataIn)dataIn)
                 {
                     Owner = this.Owner,
-                    DataInOutShellWithNozzle = (Owner as FormShell).DataInOutShell
+                    //DataInOutShellWithNozzle = (Owner as FormShell).DataInOutShell
                 };
                 //Owner.DataArrEl
                 //if (this.Owner is CilForm cf)

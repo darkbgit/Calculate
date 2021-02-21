@@ -21,9 +21,9 @@ namespace calcNet
     class CylindricalShell : Shell, IElement
     {
         public CylindricalShell(CylindricalShellDataIn cylindricalShellDataIn)
-            : base(ShellType.Cylindrical)
+            //: base(ShellType.Cylindrical)
         {
-            csdi = cylindricalShellDataIn;
+            _csdi = cylindricalShellDataIn;
             this.ShellDataIn = cylindricalShellDataIn;
         }
 
@@ -460,7 +460,7 @@ namespace calcNet
             //return d_out;
         }
 
-        private readonly CylindricalShellDataIn csdi;
+        private readonly CylindricalShellDataIn _csdi;
 
  
 
@@ -478,9 +478,11 @@ namespace calcNet
         
         internal double c { get => _c; }
         internal bool IsConditionUseFormuls { get => isConditionUseFormuls; }
-        
+
+        public bool IsCriticalError { get => isCriticalError; }
         public bool IsError { get => isError; }
-        public List <string> ErrorStringList { get => err; }
+        public List <string> ErrorList { get => err; }
+
         internal double s_calcr { get => _s_calcr; }
         
         internal double s_calc { get => _s_calc; }
@@ -518,9 +520,9 @@ namespace calcNet
         internal double F1 { get => _F1;  }
         internal double ConditionYstoich { get => conditionYstoich;  }
         internal double L { get => _l; }
-        public bool IsCriticalError { get => isCriticalError; }
+        
 
-        internal CylindricalShellDataIn Csdi => csdi;
+        internal CylindricalShellDataIn Csdi => _csdi;
 
         private EllipticalBottomType ellipticalBottomType;
 

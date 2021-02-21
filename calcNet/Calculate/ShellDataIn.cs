@@ -2,25 +2,27 @@
 
 namespace calcNet
 {
-    class ShellDataIn 
+    public class ShellDataIn 
     {
-        //public ShellDataIn()
-        //{
+        public ShellDataIn(ShellType shellType)
+        {
+            this.shellType = shellType;
+        }
 
-        //}
+        public ShellType Type { get; }
 
         private bool isError;
 
         private List<string> errorList = new List<string>();
 
-        private string name;
+        private string _name;
         private string steel;
         private ShellType shellType;
 
 
-        public string Name { get => name; set => name = value; }
+        public string Name { get => _name; set => _name = value; }
         public string Steel { get => steel; set => steel = value; }
-        public ShellType ShellType { get => shellType; set => shellType = value; }
+        public ShellType ShellType { get => shellType; }
         public double c1
         {
             get => _c1; 

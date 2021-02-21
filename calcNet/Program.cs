@@ -29,11 +29,6 @@ namespace calcNet
 
     public static class DataWordOut
     {
-        //Dictionary<>
-        //   object[] DataArr = new object();
-        //    //public static string Value { get; set; }
-        //    //public static Data_in Data_In { get; set; }
-        //    //public static Data_out Data_Out { get; set; }
 
         public struct DataOutArrEl
         {
@@ -51,9 +46,9 @@ namespace calcNet
         public static List<IElement> Elements { get; set; } = new List<IElement>();
     }
 
-    public class Set_steellist
+    internal static class SetSteelList
     {
-        public static void Set_llist(ComboBox cb)
+        internal static void SetList(ComboBox cb)
         {
             XmlDocument doc = new XmlDocument();
             doc.Load(System.IO.Path.Combine(System.IO.Directory.GetCurrentDirectory(), @"data\data.xml"));
