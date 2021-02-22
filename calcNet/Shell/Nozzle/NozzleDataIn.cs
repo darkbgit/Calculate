@@ -56,6 +56,10 @@ namespace calcNet
             set => _E1 = value;
         }
 
+        public double E2 { get; internal set; }
+        public double E3 { get; internal set; }
+        public double E4 { get; internal set; }
+
         public double d
         {
             get => _d;
@@ -119,18 +123,29 @@ namespace calcNet
         public double delta { get; set; }
         public double delta1 { get; set; }
         public double delta2 { get; set; }
+
         public string steel2 { get; set; }
-        public double l2 { get; set; }
         public string steel3 { get; set; }
+        public string steel4 { get; internal set; }
+
+        public double l2 { get; set; }
         public double l3 { get; set; }
-        public bool IsOval { get; set; }
+
         public NozzleLocation Location { get; set; }
         public double omega { get; set; }
         public double tTransversely { get; set; }
         public double ellx { get; set; }
         public double gamma { get; set; }
         public string Name { get; set; }
-
+        public bool IsOval { get => isOval; set => isOval = value; }
+        public double d1 { get; set; }
+        public double d2 { get; internal set; }
+        public double r { get; internal set; }
+        public double s0 { get; internal set; }
+        public double sigma_d2 { get; internal set; }
+        public double sigma_d3 { get; internal set; }
+        public double sigma_d4 { get; internal set; }
+        public byte l { get; internal set; }
 
         private string error;
         private List<string> errorList = new List<string>();
@@ -138,6 +153,7 @@ namespace calcNet
         private double _t;
         private string _steel1;
         private double _sigma_d1;
+
         private double _E1;
         private double _d;
         private double _s1;
@@ -149,6 +165,8 @@ namespace calcNet
         private NozzleKind _nozzleKind;
         private double _fi;
         private double _fi1;
+
+        private bool isOval;
 
     }
 }

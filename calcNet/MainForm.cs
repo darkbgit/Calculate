@@ -138,16 +138,16 @@ namespace calcNet
 
         private void Kon_b_Click(object sender, EventArgs e)
         {
-            if (nf == null)
-            {
-                nf = new NozzleForm { Owner = this };
-                nf.Show();
-            }
-            else
-            {
-                nf.Owner = this;
-                nf.Show();
-            }
+            //if (nf == null)
+            //{
+            //    nf = new NozzleForm { Owner = this };
+            //    nf.Show();
+            //}
+            //else
+            //{
+            //    nf.Owner = this;
+            //    nf.Show();
+            //}
         }
 
         private void Ell_b_Click(object sender, EventArgs e)

@@ -12,11 +12,11 @@ namespace calcNet
 {
     public partial class NozzleForm : Form
     {
-        public NozzleForm(ShellDataIn shellDataIn)
+        public NozzleForm(IElement element, ShellDataIn shellDataIn)
         {
             InitializeComponent();
             this.shellDataIn = shellDataIn;
-            element = Elements.ElementsList.Last();
+            this.element = element;
             nozzleData = new NozzleDataIn(shellDataIn);
         }
 
@@ -1234,17 +1234,27 @@ namespace calcNet
                 if (!nozzleData.ShellDataIn.IsPressureIn)
                 {
                     //E1
-                    //InputClass.GetInput_E(E1_tb, ref nozzleData,  ref dataInErr, 1);
-                    if (double.TryParse(E1_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
-                        System.Globalization.CultureInfo.InvariantCulture, out double E1))
+                    double E1 = 0;
+                    if (E1_tb.ReadOnly)
                     {
-                        nozzleData.E1 = E1;
+
+                        CalcClass.GetSigma(nozzleData.steel1,
+                            nozzleData.t,
+                            ref E1,
+                            ref dataInErr);
+                        E1_tb.ReadOnly = false;
+                        E1_tb.Text = E1.ToString();
+                        E1_tb.ReadOnly = true;
                     }
                     else
                     {
-                        dataInErr.Add(nameof(E1) + WRONG_INPUT);
+                        if (!double.TryParse(E1_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
+                            System.Globalization.CultureInfo.InvariantCulture, out E1))
+                        {
+                            dataInErr.Add("[σ]" + WRONG_INPUT);
+                        }
                     }
-
+                    nozzleData.E1 = E1;
                 }
             }
 
@@ -1409,6 +1419,25 @@ namespace calcNet
                         dataInErr.Add(nameof(s2) + WRONG_INPUT);
                     }
                 }
+
+                //sigma_d2
+                {
+                    double sigma_d2 = 0;
+                    CalcClass.GetSigma(nozzleData.steel2, nozzleData.t, ref sigma_d2, ref dataInErr);
+                    nozzleData.sigma_d2 = sigma_d2;
+                }
+
+                //E2
+                {
+                    double E2 = 0;
+                    CalcClass.GetSigma(nozzleData.steel2,
+                            nozzleData.t,
+                            ref E2,
+                            ref dataInErr);
+
+                    nozzleData.E2 = E2;
+
+                }
             }
 
             if (nozzleData.NozzleKind == NozzleKind.PassWithoutRing ||
@@ -1441,6 +1470,25 @@ namespace calcNet
                     {
                         dataInErr.Add(nameof(s3) + WRONG_INPUT);
                     }
+                }
+
+                //sigma_d3
+                {
+                    double sigma_d3 = 0;
+                    CalcClass.GetSigma(nozzleData.steel2, nozzleData.t, ref sigma_d3, ref dataInErr);
+                    nozzleData.sigma_d3 = sigma_d3;
+                }
+
+                //E3
+                {
+                    double E3 = 0;
+                    CalcClass.GetSigma(nozzleData.steel3,
+                            nozzleData.t,
+                            ref E3,
+                            ref dataInErr);
+
+                    nozzleData.E3 = E3;
+
                 }
             }
 
@@ -1559,7 +1607,6 @@ namespace calcNet
                 {
                     System.Windows.Forms.MessageBox.Show(string.Join<string>(Environment.NewLine, nozzle.ErrorList));
                 }
-
             }
             else
             {
@@ -1573,35 +1620,34 @@ namespace calcNet
             nozzleData.Name = name_tb.Text;
             
        
-            if (this.Owner.Owner is MainForm main)
-            {
-                int i;
-                main.Word_lv.Items.Add($"{DataInOutShellWithNozzle.Data_In.D} мм, {DataInOutShellWithNozzle.Data_In.p} МПа, {DataInOutShellWithNozzle.Data_In.temp} C, {DataInOutShellWithNozzle.Data_In.shellType}, yk");
-                i = main.Word_lv.Items.Count - 1;
-                //DataWordOut.DataArr[0].  DataArr .DataOutArr[]. .Value = $"{d_in.D} мм, {d_in.p} МПа, {d_in.temp} C, {d_in.met}";
-                
-                dataArrEl.id = i + 1;
-                switch (DataInOutShellWithNozzle.Data_In.shellType)
-                {
-                    case ShellType.Cylindrical:
-                        dataArrEl.calculatedElementType = CalculatedElementType.CylindricalWhithNozzle;
-                        break;
-                    case ShellType.Conical:
-                        dataArrEl.calculatedElementType = CalculatedElementType.ConicalWhithNozzle;
-                        break;
-                    case ShellType.Elliptical:
-                        dataArrEl.calculatedElementType = CalculatedElementType.EllipticalWhithNozzle;
-                        break;
-                }
-          
-                DataWordOut.DataArr.Add(DataInOutShellWithNozzle);
-                System.Windows.Forms.MessageBox.Show("Calculation complete");
-                this.Hide();
 
+                Nozzle nozzle = new Nozzle(element, nozzleData);
+                nozzle.Calculate();
+            if (!nozzle.IsCriticalError)
+            {
+
+                d0_l.Text = $"d0={nozzle.d0:f2} мм";
+                p_d_l.Text = $"[p]={nozzle.p_d:f2} МПа";
+                b_l.Text = $"b={nozzle.b:f2} мм";
+                if (this.Owner is MainForm main)
+                {
+                    main.Word_lv.Items.Add(nozzle.ToString());
+                    Elements.ElementsList.Add(nozzle);
+                    System.Windows.Forms.MessageBox.Show("Calculation complete");
+                    this.Hide();
+                }
+                else
+                {
+                    System.Windows.Forms.MessageBox.Show("MainForm Error");
+                }
+                if (nozzle.IsError)
+                {
+                    System.Windows.Forms.MessageBox.Show(string.Join<string>(Environment.NewLine, nozzle.ErrorList));
+                }
             }
             else
             {
-                System.Windows.Forms.MessageBox.Show("MainForm Error");
+                System.Windows.Forms.MessageBox.Show(string.Join<string>(Environment.NewLine, nozzle.ErrorList));
             }
         }
     }

@@ -133,15 +133,15 @@ namespace calcNet
 
             if (dataInErr == "")
             {
-                Data_out d_out = new Data_out();
-                CalcClass.CalculateShell(in d_in, ref d_out);
-                if (d_out.err != null)
-                {
-                    System.Windows.Forms.MessageBox.Show(d_out.err);
-                }
-                c_tb.Text = $"{d_out.c:f2}";
-                scalc_l.Text = $"sp={d_out.s_calc:f3} мм";
-                calc_b.Enabled = true;
+                //Data_out d_out = new Data_out();
+                //CalcClass.CalculateShell(in d_in, ref d_out);
+                //if (d_out.err != null)
+                //{
+                //    System.Windows.Forms.MessageBox.Show(d_out.err);
+                //}
+                //c_tb.Text = $"{d_out.c:f2}";
+                //scalc_l.Text = $"sp={d_out.s_calc:f3} мм";
+                //calc_b.Enabled = true;
             }
             else
             {
@@ -257,50 +257,50 @@ namespace calcNet
             isNotError = dataInErr == "";
             if (isNotError)
             {
-                Data_out d_out = new Data_out();
-                CalcClass.CalculateShell(in d_in, ref d_out);
-                if (!d_out.isCriticalError) // если нет ошибок расчета
-                {
-                    p_d_l.Text = $"[p]={d_out.p_d:f2} МПа";
-                    scalc_l.Text = $"sp={d_out.s_calc:f3} мм";
+                //Data_out d_out = new Data_out();
+                //CalcClass.Calculate(in d_in, ref d_out);
+                //if (!d_out.isCriticalError) // если нет ошибок расчета
+                //{
+                //    p_d_l.Text = $"[p]={d_out.p_d:f2} МПа";
+                //    scalc_l.Text = $"sp={d_out.s_calc:f3} мм";
 
-                    if (this.Owner is MainForm main)
-                    {
-                        int i;
-                        main.Word_lv.Items.Add($"{d_in.D} мм, {d_in.p} МПа, {d_in.temp} C, {d_in.shellType}");
-                        i = main.Word_lv.Items.Count;
+                //    if (this.Owner is MainForm main)
+                //    {
+                //        int i;
+                //        main.Word_lv.Items.Add($"{d_in.D} мм, {d_in.p} МПа, {d_in.temp} C, {d_in.shellType}");
+                //        i = main.Word_lv.Items.Count;
 
-                        DataWordOut.DataOutArrEl dataArrEl = new DataWordOut.DataOutArrEl
-                        {
-                            Data_In = d_in,
-                            Data_Out = d_out,
-                            id = i,
-                            calculatedElementType = CalculatedElementType.Elliptical
-                        };
+                //        DataWordOut.DataOutArrEl dataArrEl = new DataWordOut.DataOutArrEl
+                //        {
+                //            Data_In = d_in,
+                //            Data_Out = d_out,
+                //            id = i,
+                //            calculatedElementType = CalculatedElementType.Elliptical
+                //        };
 
-                        DataInOutShell = dataArrEl;
+                //        DataInOutShell = dataArrEl;
 
-                        DataWordOut.DataArr.Add(DataInOutShell);
-                    }
-                    else
-                    {
-                        System.Windows.Forms.MessageBox.Show("MainForm Error");
-                    }
+                //        DataWordOut.DataArr.Add(DataInOutShell);
+                //    }
+                //    else
+                //    {
+                //        System.Windows.Forms.MessageBox.Show("MainForm Error");
+                //    }
 
-                    if (d_out.isError)
-                    {
-                        System.Windows.Forms.MessageBox.Show(d_out.err);
-                    }
+                //    if (d_out.isError)
+                //    {
+                //        System.Windows.Forms.MessageBox.Show(d_out.err);
+                //    }
                     
-                    System.Windows.Forms.MessageBox.Show("Calculation complete");
+                //    System.Windows.Forms.MessageBox.Show("Calculation complete");
                     
-                    MessageBoxCheckBox mbcb = new MessageBoxCheckBox { Owner = this };
-                    mbcb.ShowDialog();
-                }
-                else
-                {
-                    System.Windows.Forms.MessageBox.Show(d_out.err);
-                }
+                //    MessageBoxCheckBox mbcb = new MessageBoxCheckBox { Owner = this };
+                //    mbcb.ShowDialog();
+                //}
+                //else
+                //{
+                //    System.Windows.Forms.MessageBox.Show(d_out.err);
+                //}
             }
             else
             {

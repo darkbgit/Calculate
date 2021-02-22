@@ -9,5 +9,12 @@ namespace calcNet
     class ConicalShell
     {
         internal readonly ConicalShellDataIn csdi;
+
+
+        private double _Dk;
+
+        internal double Dk { get => _Dk; }
     }
+
+    
 }

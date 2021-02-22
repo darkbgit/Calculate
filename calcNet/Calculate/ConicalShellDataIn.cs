@@ -6,7 +6,16 @@ using System.Threading.Tasks;
 
 namespace calcNet
 {
-    class ConicalShellDataIn
+    class ConicalShellDataIn : ShellDataIn
     {
+        public ConicalShellDataIn()
+            : base(ShellType.Conical)
+        {
+
+        }
+
+        public double alfa { get; set; }
+
+        
     }
 }

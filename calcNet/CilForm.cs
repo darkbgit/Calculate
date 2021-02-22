@@ -372,231 +372,62 @@ namespace calcNet
             //name
             cylindricalShellDataIn.Name = Name_tb.Text;
 
-            //t
+            //s
             {
-                if (double.TryParse(t_tb.Text, System.Globalization.NumberStyles.Integer,
-                    System.Globalization.CultureInfo.InvariantCulture, out double t))
+                if (double.TryParse(s_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
+                System.Globalization.CultureInfo.InvariantCulture, out double s))
                 {
-                    cylindricalShellDataIn.t = t;
+                    cylindricalShellDataIn.s = s;
                 }
                 else
                 {
-                    dataInErr.Add("t неверный ввод");
+                    dataInErr.Add("s неверный ввод");
                 }
             }
-
-            //steel
-            cylindricalShellDataIn.Steel = steel_cb.Text;
-
-            //
-            cylindricalShellDataIn.IsPressureIn = vn_rb.Checked;
-
-            cylindricalShellDataIn.CheckData();
-            if (cylindricalShellDataIn.IsDataGood)
-            {
-                //[σ]
-                {
-                    double sigma_d = 0;
-                    if (sigma_d_tb.ReadOnly)
-                    {
-
-                        CalcClass.GetSigma(cylindricalShellDataIn.Steel,
-                                            cylindricalShellDataIn.t,
-                                            ref sigma_d,
-                                            ref dataInErr);
-                        sigma_d_tb.ReadOnly = false;
-                        sigma_d_tb.Text = sigma_d.ToString();
-                        sigma_d_tb.ReadOnly = true;
-                    }
-                    else
-                    {
-                        if (double.TryParse(sigma_d_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
-                        System.Globalization.CultureInfo.InvariantCulture, out sigma_d))
-                        {
-                            cylindricalShellDataIn.sigma_d = sigma_d;
-                        }
-                        else
-                        {
-                            dataInErr.Add("[σ] неверный ввод");
-                        }
-                    }
-                    cylindricalShellDataIn.sigma_d = sigma_d;
-                }
-
-                if (!cylindricalShellDataIn.IsPressureIn)
-                {
-                    //E
-                    {
-                        if (double.TryParse(E_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
-                        System.Globalization.CultureInfo.InvariantCulture, out double E))
-                        {
-                            cylindricalShellDataIn.E = E;
-                        }
-                        else
-                        {
-                            dataInErr.Add("E неверный ввод");
-                        }
-                    }
-
-                    //l
-                    {
-                        if (double.TryParse(l_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
-                        System.Globalization.CultureInfo.InvariantCulture, out double l))
-                        {
-                            cylindricalShellDataIn.l = l;
-                        }
-                        else
-                        {
-                            dataInErr.Add("l неверный ввод");
-                        }
-                    }
-                }
-
-                //p
-                {
-                    if (double.TryParse(p_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
-                    System.Globalization.CultureInfo.InvariantCulture, out double p))
-                    {
-                        cylindricalShellDataIn.p = p;
-                    }
-                    else
-                    {
-                        dataInErr.Add("p неверный ввод");
-                    }
-                }
-
-                //fi
-                {
-                    if (double.TryParse(fi_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
-                    System.Globalization.CultureInfo.InvariantCulture, out double fi))
-                    {
-                        cylindricalShellDataIn.fi = fi;
-                    }
-                    else
-                    {
-                        dataInErr.Add("φ неверный ввод");
-                    }
-                }
-
-                //D
-                {
-                    if (double.TryParse(D_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
-                    System.Globalization.CultureInfo.InvariantCulture, out double D))
-                    {
-                        cylindricalShellDataIn.D = D;
-                    }
-                    else
-                    {
-                        dataInErr.Add("D неверный ввод");
-                    }
-                }
-
-                //c1
-                {
-                    if (double.TryParse(c1_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
-                    System.Globalization.CultureInfo.InvariantCulture, out double c1))
-                    {
-                        cylindricalShellDataIn.c1 = c1;
-                    }
-                    else
-                    {
-                        dataInErr.Add("c1 неверный ввод");
-                    }
-                }
-
-                //c2
-                {
-                    if (c2_tb.Text == "")
-                    {
-                        cylindricalShellDataIn.c2 = 0;
-                    }
-                    else if (double.TryParse(c2_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
-                    System.Globalization.CultureInfo.InvariantCulture, out double c2))
-                    {
-                        cylindricalShellDataIn.c2 = c2;
-                    }
-                    else
-                    {
-                        dataInErr.Add("c2 неверный ввод");
-                    }
-                }
-
-                //c3
-                {
-                    if (c3_tb.Text == "")
-                    {
-                        cylindricalShellDataIn.c3 = 0;
-                    }
-                    else if (double.TryParse(c3_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
-                    System.Globalization.CultureInfo.InvariantCulture, out double c3))
-                    {
-                        cylindricalShellDataIn.c3 = c3;
-                    }
-                    else
-                    {
-                        dataInErr.Add("c3 неверный ввод");
-                    }
-                }
-
-                //s
-                {
-                    if (double.TryParse(s_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
-                    System.Globalization.CultureInfo.InvariantCulture, out double s))
-                    {
-                        cylindricalShellDataIn.s = s;
-                    }
-                    else
-                    {
-                        dataInErr.Add("s неверный ввод");
-                    }
-                }
 
                 cylindricalShellDataIn.CheckData();
                 bool isNotError = dataInErr.Count == 0 && cylindricalShellDataIn.IsDataGood;
 
-                if (isNotError)
+            if (isNotError)
+            {
+                CylindricalShell cylindricalShell = new CylindricalShell(cylindricalShellDataIn);
+                cylindricalShell.Calculate();
+                if (!cylindricalShell.IsCriticalError)
                 {
-                    CylindricalShell cyl = new CylindricalShell(cylindricalShellDataIn);
-                    cyl.Calculate();
-                    if (!cyl.IsCriticalError)
+                    scalc_l.Text = $"sp={cylindricalShell.s_calc:f3} мм";
+                    p_d_l.Text = $"pd={cylindricalShell.p_d:f3} МПа";
+
+                    if (this.Owner is MainForm main)
                     {
-                        scalc_l.Text = $"sp={cyl.s_calc:f3} мм";
-                        p_d_l.Text = $"pd={cyl.p_d:f3} МПа";
-
-                        if (this.Owner is MainForm main)
-                        {
-                            main.Word_lv.Items.Add(cyl.ToString());
-                            Elements.ElementsList.Add(cyl);
-                        }
-                        else
-                        {
-                            System.Windows.Forms.MessageBox.Show("MainForm Error");
-                        }
-
-                        if (cyl.IsError)
-                        {
-                            MessageBox.Show(string.Join<string>(Environment.NewLine, cyl.ErrorList));
-                        }
-
-                        System.Windows.Forms.MessageBox.Show("Calculation complete");
-
-                        MessageBoxCheckBox mbcb = new MessageBoxCheckBox(cylindricalShellDataIn) {Owner = this};
-                        mbcb.ShowDialog();
+                        main.Word_lv.Items.Add(cylindricalShell.ToString());
+                        Elements.ElementsList.Add(cylindricalShell);
                     }
                     else
                     {
-                        MessageBox.Show(string.Join<string>(Environment.NewLine, cyl.ErrorList));
+                        System.Windows.Forms.MessageBox.Show("MainForm Error");
                     }
+
+                    if (cylindricalShell.IsError)
+                    {
+                        MessageBox.Show(string.Join<string>(Environment.NewLine, cylindricalShell.ErrorList));
+                    }
+
+                    System.Windows.Forms.MessageBox.Show("Calculation complete");
+
+                    MessageBoxCheckBox mbcb = new MessageBoxCheckBox(cylindricalShell, cylindricalShellDataIn) { Owner = this };
+                    mbcb.ShowDialog();
                 }
                 else
                 {
-                    MessageBox.Show(string.Join<string>(Environment.NewLine, dataInErr.Union(cylindricalShellDataIn.ErrorList)));
+                    MessageBox.Show(string.Join<string>(Environment.NewLine, cylindricalShell.ErrorList));
                 }
             }
             else
             {
-                MessageBox.Show(string.Join<string>(Environment.NewLine, dataInErr));
+                MessageBox.Show(string.Join<string>(Environment.NewLine, dataInErr.Union(cylindricalShellDataIn.ErrorList)));
             }
+
+
         }
 
         private void CilForm_Load(object sender, EventArgs e)

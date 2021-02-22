@@ -8,5 +8,9 @@ namespace calcNet
 {
     class EllipticalShell
     {
+
+        private double _ellH;
+
+        public double ellH { get => _ellH; }
     }
 }

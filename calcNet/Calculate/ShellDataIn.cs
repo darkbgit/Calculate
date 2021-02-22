@@ -187,6 +187,8 @@ namespace calcNet
         public bool IsInError { get => isInError; set => isInError = value; }
         public bool IsPressureIn { get => isPressureIn; set => isPressureIn = value; }
         public List<string> ErrorList { get => errorList; }
+        
+        
 
         internal EllipticalBottomType ellipticalBottomType;
 

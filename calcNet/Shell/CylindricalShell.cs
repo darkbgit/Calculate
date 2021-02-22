@@ -7,17 +7,6 @@ using Xceed.Document.NET;
 
 namespace calcNet
 {
-
-    interface ICheckedElement
-    {
-        void Calculate();
-    }
-
-    interface ICalculatedElement
-    {
-        void MakeWord();
-    }
-
     class CylindricalShell : Shell, IElement
     {
         public CylindricalShell(CylindricalShellDataIn cylindricalShellDataIn)
@@ -463,27 +452,15 @@ namespace calcNet
         private readonly CylindricalShellDataIn _csdi;
 
  
-
-
-
-        //internal string Name { get => _dataCylinderIn.Name; }
-        //internal string Steel { get => _dataCylinderIn.Steel; }
-        ////internal ShellType ShellType { get => shellType; }
-        //public double t { get => _dataCylinderIn.t; }
-        //public double L_in { get => _dataCylinderIn.L; }
-        //public double ny { get => _dataCylinderIn.ny; }
-        //public double F { get => _dataCylinderIn.F; }
-
-        //internal EllipticalBottomType EllipticalBottomType { get => ellipticalBottomType; set => ellipticalBottomType = value; }
         
-        internal double c { get => _c; }
+        //internal double c { get => _c; }
         internal bool IsConditionUseFormuls { get => isConditionUseFormuls; }
 
         public bool IsCriticalError { get => isCriticalError; }
         public bool IsError { get => isError; }
         public List <string> ErrorList { get => err; }
 
-        internal double s_calcr { get => _s_calcr; }
+        //internal double s_calcr { get => _s_calcr; }
         
         internal double s_calc { get => _s_calc; }
         
@@ -495,30 +472,30 @@ namespace calcNet
         internal double p_d { get => _p_d;  }
         
         internal double b { get => _b;  }
-        internal double b_2 { get => _b_2;  }
+        internal double b_2 { get => _b_2; }
         internal double b1 { get => _b1;  }
         internal double b1_2 { get => _b1_2; }
-        internal double p_dp { get => _p_dp;  }
-        internal double p_de { get => _p_de;  }
+        internal double p_dp { get => _p_dp; }
+        //internal double p_de { get => _p_de;  }
         internal double F_d { get => _F_d; }
         internal double F_dp { get => _F_dp; }
         internal double F_de { get => _F_de;  }
-        internal double F_de1 { get => _F_de1;  }
-        internal double F_de2 { get => _F_de2;  }
-        internal double Lamda { get => lamda;  }
+        internal double F_de1 { get => _F_de1; }
+        internal double F_de2 { get => _F_de2; }
+        internal double Lamda { get => lamda; }
         internal double M_d { get => _M_d; }
         internal double M_dp { get => _M_dp; }
-        internal double M_de { get => _M_de;  }
+        internal double M_de { get => _M_de; }
         internal double Q_d { get => _Q_d;  }
-        internal double Q_dp { get => _Q_dp;  }
-        internal double Q_de { get => _Q_de;  }
-        internal double ElR { get => _elR;  }
-        internal double Elke { get => _elke;  }
-        internal double Elx { get => _elx;  }
+        internal double Q_dp { get => _Q_dp; }
+        internal double Q_de { get => _Q_de; }
+        internal double ElR { get => _elR; }
+        internal double Elke { get => _elke; }
+        internal double Elx { get => _elx; }
         internal double Dk { get => _Dk; }
         internal double Lpr { get => _lpr; }
-        internal double F1 { get => _F1;  }
-        internal double ConditionYstoich { get => conditionYstoich;  }
+        internal double F1 { get => _F1; }
+        internal double ConditionYstoich { get => conditionYstoich; }
         internal double L { get => _l; }
         
 
@@ -575,10 +552,10 @@ namespace calcNet
 
 
         private double _l;
-        private double _c;
+        //private double _c;
         private bool isConditionUseFormuls;
 
-        private double _s_calcr;
+        //private double _s_calcr;
         private double _s_calc;
         private double _s_calcr1;
         private double _s_calcr2;
@@ -590,7 +567,7 @@ namespace calcNet
         private double _b1;
         private double _b1_2;
         private double _p_dp;
-        private double _p_de;
+        //private double _p_de;
         private double _F_d;
         private double _F_dp;
         private double _F_de;
