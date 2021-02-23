@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xceed.Document.NET;
 
 namespace calcNet
@@ -58,17 +56,17 @@ namespace calcNet
 
 
 
-        public void SetValue(string name, double value)
-        {
-            var field = typeof(DataNozzle_in).GetField(name);
-            field.SetValue(this, value);
-        }
+        //public void SetValue(string name, double value)
+        //{
+        //    var field = typeof(DataNozzle_in).GetField(name);
+        //    field.SetValue(this, value);
+        //}
 
-        public void GetValue(string name, ref string value)
-        {
-            var field = typeof(DataNozzle_in).GetField(name);
-            value = field.GetValue(this).ToString();
-        }
+        //public void GetValue(string name, ref string value)
+        //{
+        //    var field = typeof(DataNozzle_in).GetField(name);
+        //    value = field.GetValue(this).ToString();
+        //}
 
         private double _p_d;
         private double _p_dp;
@@ -450,14 +448,10 @@ namespace calcNet
                     doc.Paragraphs.Last().Append($"эллиптическое днище {nozzleDataIn.ShellDataIn.Name}, нагруженное ");
                     break;
             }
-            if (nozzleDataIn.ShellDataIn.IsPressureIn)
-            {
-                doc.Paragraphs.Last().Append("внутренним избыточным давлением");
-            }
-            else 
-            {
-                doc.Paragraphs.Last().Append("наружным давлением");
-            }
+
+            doc.Paragraphs.Last().Append(nozzleDataIn.ShellDataIn.IsPressureIn
+                ? "внутренним избыточным давлением"
+                : "наружным давлением");
             doc.InsertParagraph();
             doc.InsertParagraph("Исходные данные").Alignment = Alignment.center;
 
@@ -718,14 +712,9 @@ namespace calcNet
                 table.Rows[i].Cells[1].Paragraphs[0].Append($"{nozzleDataIn.ShellDataIn.t} °С");
 
                 table.InsertRow(++i);
-                if (nozzleDataIn.ShellDataIn.IsPressureIn)
-                {
-                    table.Rows[i].Cells[0].Paragraphs[0].Append("Расчетное внутреннее избыточное давление, p:");
-                }
-                else
-                {
-                    table.Rows[i].Cells[0].Paragraphs[0].Append("Расчетное наружное давление, p:");
-                }
+                table.Rows[i].Cells[0].Paragraphs[0].Append(nozzleDataIn.ShellDataIn.IsPressureIn
+                    ? "Расчетное внутреннее избыточное давление, p:"
+                    : "Расчетное наружное давление, p:");
                 table.Rows[i].Cells[1].Paragraphs[0].Append($"{nozzleDataIn.ShellDataIn.p} МПа");
 
                 table.InsertRow(++i);
@@ -1013,7 +1002,7 @@ namespace calcNet
             {
                 doc.InsertParagraph().AppendEquation($"s_pn=s_p={_sp:f2} мм").AppendEquation(" - в случае внутреннего давления");
             }
-            else if (!nozzleDataIn.ShellDataIn.IsPressureIn)
+            else
             {
                 doc.InsertParagraph().AppendEquation("s_pn=(p_pn∙D_p)/(2∙K_1∙[σ]-p_pn)");
                 switch (nozzleDataIn.ShellDataIn.ShellType)

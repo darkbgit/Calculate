@@ -13,7 +13,6 @@ namespace calcNet
             //: base(ShellType.Cylindrical)
         {
             _csdi = cylindricalShellDataIn;
-            this.ShellDataIn = cylindricalShellDataIn;
         }
 
         private const string FILENAME_CYLINDR_GIF = "pic/ObCil.gif";
@@ -232,24 +231,24 @@ namespace calcNet
         public void Calculate()
         {
 
-            _c = Csdi.c1 + Csdi.c2 + Csdi.c3;
+            _c = _csdi.c1 + _csdi.c2 + _csdi.c3;
 
             // Condition use formuls
             {
                 const int DIAMETR_BIG_LITTLE_BORDER = 200;
-                bool isDiametrBig = DIAMETR_BIG_LITTLE_BORDER < Csdi.D;
+                bool isDiametrBig = DIAMETR_BIG_LITTLE_BORDER < _csdi.D;
 
                 //bool isConditionUseFormuls;
 
                 if (isDiametrBig)
                 {
                     const double CONDITION_USE_FORMULS_BIG_DIAMETR = 0.1;
-                    isConditionUseFormuls = ((Csdi.s - _c) / Csdi.D) <= CONDITION_USE_FORMULS_BIG_DIAMETR;
+                    isConditionUseFormuls = ((_csdi.s - _c) / _csdi.D) <= CONDITION_USE_FORMULS_BIG_DIAMETR;
                 }
                 else
                 {
                     const double CONDITION_USE_FORMULS_LITTLE_DIAMETR = 0.3;
-                    isConditionUseFormuls = ((Csdi.s - _c) / Csdi.D) <= CONDITION_USE_FORMULS_LITTLE_DIAMETR;
+                    isConditionUseFormuls = ((_csdi.s - _c) / _csdi.D) <= CONDITION_USE_FORMULS_LITTLE_DIAMETR;
                 }
 
                 if (!isConditionUseFormuls)
@@ -260,20 +259,20 @@ namespace calcNet
 
             }
 
-            if (Csdi.p > 0)
+            if (_csdi.p > 0)
             {
-                if (Csdi.IsPressureIn)
+                if (_csdi.IsPressureIn)
                 {
 
-                    _s_calcr = Csdi.p * Csdi.D / (2 * Csdi.sigma_d * Csdi.fi - Csdi.p);
+                    _s_calcr = _csdi.p * _csdi.D / (2 * _csdi.sigma_d * _csdi.fi - _csdi.p);
                     _s_calc = _s_calcr + _c;
-                    if (Csdi.s == 0.0)
+                    if (_csdi.s == 0.0)
                     {
-                        _p_d = 2 * Csdi.sigma_d * Csdi.fi * (_s_calc - _c) / (Csdi.D + _s_calc - _c);
+                        _p_d = 2 * _csdi.sigma_d * _csdi.fi * (_s_calc - _c) / (_csdi.D + _s_calc - _c);
                     }
-                    else if (Csdi.s >= _s_calc)
+                    else if (_csdi.s >= _s_calc)
                     {
-                        _p_d = 2 * Csdi.sigma_d * Csdi.fi * (Csdi.s - _c) / (Csdi.D + Csdi.s - _c);
+                        _p_d = 2 * _csdi.sigma_d * _csdi.fi * (_csdi.s - _c) / (_csdi.D + _csdi.s - _c);
                     }
                     else
                     {
@@ -283,26 +282,26 @@ namespace calcNet
                 }
                 else
                 {
-                    _l = Csdi.l + Csdi.l3_1 + Csdi.l3_2;
-                    _b_2 = 0.47 * Math.Pow(Csdi.p / (0.00001 * Csdi.E), 0.067) * Math.Pow(_l / Csdi.D, 0.4);
+                    _l = _csdi.l + _csdi.l3_1 + _csdi.l3_2;
+                    _b_2 = 0.47 * Math.Pow(_csdi.p / (0.00001 * _csdi.E), 0.067) * Math.Pow(_l / _csdi.D, 0.4);
                     _b = Math.Max(1.0, _b_2);
-                    _s_calcr1 = 1.06 * (0.01 * Csdi.D / _b) * Math.Pow(Csdi.p / (0.00001 * Csdi.E) * (_l / Csdi.D), 0.4);
-                    _s_calcr2 = 1.2 * Csdi.p * Csdi.D / (2 * Csdi.sigma_d - Csdi.p);
+                    _s_calcr1 = 1.06 * (0.01 * _csdi.D / _b) * Math.Pow(_csdi.p / (0.00001 * _csdi.E) * (_l / _csdi.D), 0.4);
+                    _s_calcr2 = 1.2 * _csdi.p * _csdi.D / (2 * _csdi.sigma_d - _csdi.p);
                     _s_calcr = Math.Max(_s_calcr1, _s_calcr2);
                     _s_calc = _s_calcr + _c;
-                    if (Csdi.s == 0.0)
+                    if (_csdi.s == 0.0)
                     {
-                        _p_dp = 2 * Csdi.sigma_d * (_s_calc - _c) / (Csdi.D + _s_calc - _c);
-                        _b1_2 = 9.45 * (Csdi.D / _l) * Math.Sqrt(Csdi.D / (100 * (_s_calc - _c)));
+                        _p_dp = 2 * _csdi.sigma_d * (_s_calc - _c) / (_csdi.D + _s_calc - _c);
+                        _b1_2 = 9.45 * (_csdi.D / _l) * Math.Sqrt(_csdi.D / (100 * (_s_calc - _c)));
                         _b1 = Math.Min(1.0, _b1_2);
-                        _p_de = 2.08 * 0.00001 * Csdi.E / Csdi.ny * _b1 * (Csdi.D / _l) * Math.Pow(100 * (_s_calc - _c) / Csdi.D, 2.5);
+                        _p_de = 2.08 * 0.00001 * _csdi.E / _csdi.ny * _b1 * (_csdi.D / _l) * Math.Pow(100 * (_s_calc - _c) / _csdi.D, 2.5);
                     }
-                    else if (Csdi.s >= _s_calc)
+                    else if (_csdi.s >= _s_calc)
                     {
-                        _p_dp = 2 * Csdi.sigma_d * (Csdi.s - _c) / (Csdi.D + Csdi.s - _c);
-                        _b1_2 = 9.45 * (Csdi.D / _l) * Math.Sqrt(Csdi.D / (100 * (Csdi.s - _c)));
+                        _p_dp = 2 * _csdi.sigma_d * (_csdi.s - _c) / (_csdi.D + _csdi.s - _c);
+                        _b1_2 = 9.45 * (_csdi.D / _l) * Math.Sqrt(_csdi.D / (100 * (_csdi.s - _c)));
                         _b1 = Math.Min(1.0, _b1_2);
-                        _p_de = 2.08 * 0.00001 * Csdi.E / Csdi.ny * _b1 * (Csdi.D / _l) * Math.Pow(100 * (Csdi.s - _c) / Csdi.D, 2.5);
+                        _p_de = 2.08 * 0.00001 * _csdi.E / _csdi.ny * _b1 * (_csdi.D / _l) * Math.Pow(100 * (_csdi.s - _c) / _csdi.D, 2.5);
                     }
                     else
                     {
@@ -311,107 +310,107 @@ namespace calcNet
                     }
                     _p_d = _p_dp / Math.Sqrt(1 + Math.Pow(_p_dp / _p_de, 2));
                 }
-                if (_p_d < Csdi.p && Csdi.s != 0)
+                if (_p_d < _csdi.p && _csdi.s != 0)
                 {
                     isError = true;
                     err.Add("[p] меньше p");
                 }
             }
 
-            if (Csdi.F > 0)
+            if (_csdi.F > 0)
             {
-                _s_calcrf = Csdi.F / (Math.PI * Csdi.D * Csdi.sigma_d * Csdi.fit);
+                _s_calcrf = _csdi.F / (Math.PI * _csdi.D * _csdi.sigma_d * _csdi.fit);
                 _s_calcf = _s_calcrf + _c;
-                if (Csdi.isFTensile)
+                if (_csdi.isFTensile)
                 {
-                    _F_d = Math.PI * (Csdi.D + Csdi.s - _c) * (Csdi.s - _c) * Csdi.sigma_d * Csdi.fit;
+                    _F_d = Math.PI * (_csdi.D + _csdi.s - _c) * (_csdi.s - _c) * _csdi.sigma_d * _csdi.fit;
                 }
                 else
                 {
-                    _F_dp = Math.PI * (Csdi.D + Csdi.s - _c) * (Csdi.s - _c) * Csdi.sigma_d;
-                    _F_de1 = 0.000031 * Csdi.E / Csdi.ny * Math.Pow(Csdi.D, 2) * Math.Pow(100 * (Csdi.s - _c) / Csdi.D, 2.5);
+                    _F_dp = Math.PI * (_csdi.D + _csdi.s - _c) * (_csdi.s - _c) * _csdi.sigma_d;
+                    _F_de1 = 0.000031 * _csdi.E / _csdi.ny * Math.Pow(_csdi.D, 2) * Math.Pow(100 * (_csdi.s - _c) / _csdi.D, 2.5);
 
                     const int L_MORE_THEN_D = 10;
-                    bool isLMoreThenD = Csdi.l / Csdi.D > L_MORE_THEN_D;
+                    bool isLMoreThenD = _csdi.l / _csdi.D > L_MORE_THEN_D;
 
                     if (isLMoreThenD)
                     {
-                        switch (Csdi.FCalcSchema)
+                        switch (_csdi.FCalcSchema)
                         {
                             case 1:
-                                _lpr = Csdi.l;
+                                _lpr = _csdi.l;
                                 break;
                             case 2:
-                                _lpr = 2 * Csdi.l;
+                                _lpr = 2 * _csdi.l;
                                 break;
                             case 3:
-                                _lpr = 0.7 * Csdi.l;
+                                _lpr = 0.7 * _csdi.l;
                                 break;
                             case 4:
-                                _lpr = 0.5 * Csdi.l;
+                                _lpr = 0.5 * _csdi.l;
                                 break;
                             case 5:
-                                _F = Csdi.q * Csdi.l;
-                                _lpr = 1.12 * Csdi.l;
+                                _F = _csdi.q * _csdi.l;
+                                _lpr = 1.12 * _csdi.l;
                                 break;
                             case 6:
-                                double fDivl6 = Csdi.F / Csdi.l;
+                                double fDivl6 = _csdi.F / _csdi.l;
                                 fDivl6 *= 10;
                                 fDivl6 = Math.Round(fDivl6 / 2);
                                 fDivl6 *= 0.2;
                                 switch (fDivl6)
                                 {
                                     case 0:
-                                        _lpr = 2 * Csdi.l;
+                                        _lpr = 2 * _csdi.l;
                                         break;
                                     case 0.2:
-                                        _lpr = 1.73 * Csdi.l;
+                                        _lpr = 1.73 * _csdi.l;
                                         break;
                                     case 0.4:
-                                        _lpr = 1.47 * Csdi.l;
+                                        _lpr = 1.47 * _csdi.l;
                                         break;
                                     case 0.6:
-                                        _lpr = 1.23 * Csdi.l;
+                                        _lpr = 1.23 * _csdi.l;
                                         break;
                                     case 0.8:
-                                        _lpr = 1.06 * Csdi.l;
+                                        _lpr = 1.06 * _csdi.l;
                                         break;
                                     case 1:
-                                        _lpr = Csdi.l;
+                                        _lpr = _csdi.l;
                                         break;
                                 }
                                 break;
                             case 7:
-                                double fDivl7 = Csdi.F / Csdi.l;
+                                double fDivl7 = _csdi.F / _csdi.l;
                                 fDivl7 *= 10;
                                 fDivl7 = Math.Round(fDivl7 / 2);
                                 fDivl7 *= 0.2;
                                 switch (fDivl7)
                                 {
                                     case 0:
-                                        _lpr = 2 * Csdi.l;
+                                        _lpr = 2 * _csdi.l;
                                         break;
                                     case 0.2:
-                                        _lpr = 1.7 * Csdi.l;
+                                        _lpr = 1.7 * _csdi.l;
                                         break;
                                     case 0.4:
-                                        _lpr = 1.4 * Csdi.l;
+                                        _lpr = 1.4 * _csdi.l;
                                         break;
                                     case 0.6:
-                                        _lpr = 1.11 * Csdi.l;
+                                        _lpr = 1.11 * _csdi.l;
                                         break;
                                     case 0.8:
-                                        _lpr = 0.85 * Csdi.l;
+                                        _lpr = 0.85 * _csdi.l;
                                         break;
                                     case 1:
-                                        _lpr = 0.7 * Csdi.l;
+                                        _lpr = 0.7 * _csdi.l;
                                         break;
                                 }
                                 break;
 
                         }
-                        lamda = 2.83 * _lpr / (Csdi.D + Csdi.s - _c);
-                        _F_de2 = Math.PI * (Csdi.D + Csdi.s - _c) * (Csdi.s - _c) * Csdi.E / Csdi.ny *
+                        lamda = 2.83 * _lpr / (_csdi.D + _csdi.s - _c);
+                        _F_de2 = Math.PI * (_csdi.D + _csdi.s - _c) * (_csdi.s - _c) * _csdi.E / _csdi.ny *
                                         Math.Pow(Math.PI / lamda, 2);
                         _F_de = Math.Min(_F_de1, _F_de2);
                     }
@@ -424,28 +423,28 @@ namespace calcNet
                 }
             }
 
-            if (Csdi.M > 0)
+            if (_csdi.M > 0)
             {
-                _M_dp = Math.PI / 4 * Csdi.D * (Csdi.D + Csdi.s - _c) * (Csdi.s - _c) * Csdi.sigma_d;
-                _M_de = 0.000089 * Csdi.E / Csdi.ny * Math.Pow(Csdi.D, 3) * Math.Pow(100 * (Csdi.s - _c) / Csdi.D, 2.5);
+                _M_dp = Math.PI / 4 * _csdi.D * (_csdi.D + _csdi.s - _c) * (_csdi.s - _c) * _csdi.sigma_d;
+                _M_de = 0.000089 * _csdi.E / _csdi.ny * Math.Pow(_csdi.D, 3) * Math.Pow(100 * (_csdi.s - _c) / _csdi.D, 2.5);
                 _M_d = _M_dp / Math.Sqrt(1 + Math.Pow(_M_dp / _M_de, 2));
             }
 
-            if (Csdi.Q > 0)
+            if (_csdi.Q > 0)
             {
-                _Q_dp = 0.25 * Csdi.sigma_d * Math.PI * Csdi.D * (Csdi.s - _c);
-                _Q_de = 2.4 * Csdi.E * Math.Pow(Csdi.s - _c, 2) / Csdi.ny *
-                    (0.18 + 3.3 * Csdi.D * (Csdi.s - _c) / Math.Pow(Csdi.l, 2));
+                _Q_dp = 0.25 * _csdi.sigma_d * Math.PI * _csdi.D * (_csdi.s - _c);
+                _Q_de = 2.4 * _csdi.E * Math.Pow(_csdi.s - _c, 2) / _csdi.ny *
+                    (0.18 + 3.3 * _csdi.D * (_csdi.s - _c) / Math.Pow(_csdi.l, 2));
                 _Q_d = _Q_dp / Math.Sqrt(1 + Math.Pow(_Q_dp / _Q_de, 2));
             }
 
-            if ((Csdi.IsNeedpCalculate || Csdi.isNeedFCalculate) &&
-                (Csdi.isNeedMCalculate || Csdi.isNeedQCalculate))
+            if ((_csdi.IsNeedpCalculate || _csdi.isNeedFCalculate) &&
+                (_csdi.isNeedMCalculate || _csdi.isNeedQCalculate))
             {
-                conditionYstoich = Csdi.p / _p_d + Csdi.F / _F_d + Csdi.M / _M_d +
-                                        Math.Pow(Csdi.Q / _Q_d, 2);
+                conditionYstoich = _csdi.p / _p_d + _csdi.F / _F_d + _csdi.M / _M_d +
+                                        Math.Pow(_csdi.Q / _Q_d, 2);
             }
-            // TODO: Проверка F для FCalcSchema == 6 F расчитывается и записывается в d_out, а не берется из csdi
+            // TODO: Проверка F для FCalcSchema == 6 F расчитывается и записывается в d_out, а не берется из _csdi
             //return d_out;
         }
 
@@ -454,6 +453,7 @@ namespace calcNet
  
         
         //internal double c { get => _c; }
+
         internal bool IsConditionUseFormuls { get => isConditionUseFormuls; }
 
         public bool IsCriticalError { get => isCriticalError; }
@@ -501,8 +501,6 @@ namespace calcNet
 
         internal CylindricalShellDataIn Csdi => _csdi;
 
-        private EllipticalBottomType ellipticalBottomType;
-
 
         public double p,
                         E,
@@ -540,34 +538,22 @@ namespace calcNet
         internal int bibliography;
 
 
-        public void SetValue(string name, double value)
-        {
-            var field = typeof(Data_in).GetField(name);
-            field.SetValue(this, value);
-        }
-
-
-
-
-
 
         private double _l;
         //private double _c;
-        private bool isConditionUseFormuls;
+        
 
-        //private double _s_calcr;
-        private double _s_calc;
-        private double _s_calcr1;
-        private double _s_calcr2;
+
+
         private double _s_calcrf;
         private double _s_calcf;
-        private double _p_d;
+
         private double _b;
         private double _b_2;
         private double _b1;
         private double _b1_2;
-        private double _p_dp;
-        //private double _p_de;
+
+
         private double _F_d;
         private double _F_dp;
         private double _F_de;

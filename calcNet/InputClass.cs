@@ -43,26 +43,7 @@ namespace calcNet
             }
         }
 
-        internal static void GetInput_t(TextBox t_tb, ref DataNozzle_in dN_in, ref string dataInErr)
-        {
-            if (int.TryParse(t_tb.Text, out int t))
-            {
-                const int MIN_TEMPERATURE = 20,
-                        MAX_TEMPERATURE = 1000;
-                if (t >= MIN_TEMPERATURE && t < MAX_TEMPERATURE)
-                {
-                    dN_in.temp = t;
-                }
-                else
-                {
-                    dataInErr += "T должна быть в диапазоне 20 - 1000\n";
-                }
-            }
-            else
-            {
-                dataInErr += "T неверный ввод\n";
-            }
-        }
+
 
         internal static void GetInput_sigma_d(TextBox sigma_d_tb, ref Data_in d_in, ref string dataInErr)
         {
@@ -133,48 +114,8 @@ namespace calcNet
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="E_tb"></param>
-        /// <param name="dN_in"></param>
-        /// <param name="dataInErr"></param>
-        /// <param name="i"></param>
-        internal static void GetInput_E(TextBox E_tb, ref DataNozzle_in dN_in, ref string dataInErr, int i)
-        {
-            double E = 0;
-            if (!E_tb.ReadOnly)
-            {
-                if (double.TryParse(E_tb.Text.Replace(',', '.'), System.Globalization.NumberStyles.AllowDecimalPoint,
-                    System.Globalization.CultureInfo.InvariantCulture, out E))
-                {
-                    if (E > 0)
-                    {
-                        dN_in.SetValue("E" + i.ToString(), E);
-                    }
-                    else
-                    {
-                        dataInErr += "E должно быть больше 0\n";
-                    }
-                }
-                else
-                {
-                    dataInErr += "E неверный ввод\n";
-                }
-            }
-            else
-            {
-                string steel = "";
-                dN_in.GetValue("steel" + i.ToString(), ref steel);
-                if (CalcClass.GetE(steel, dN_in.temp, ref E, ref dataInErr))
-                {
-                    dN_in.SetValue("E" + i.ToString(), E);
-                    E_tb.ReadOnly = false;
-                    E_tb.Text = E.ToString();
-                    E_tb.ReadOnly = true;
-                }
-            }
-        }
+
+ 
 
 
         internal static void GetInput_l(TextBox l_tb, ref Data_in d_in, ref string dataInErr)

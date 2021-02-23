@@ -9,11 +9,7 @@ using System.Xml;
 namespace calcNet
 {
 
-    enum EllipticalBottomType
-    {
-        Elliptical,
-        Hemispherical
-    }
+    
 
     public enum ShellType
     {
@@ -134,76 +130,76 @@ namespace calcNet
                         isError;
     }
 
-    class DataNozzle_in
-    {
-        internal NozzleLocation location;
+    //class DataNozzle_in
+    //{
+    //    internal NozzleLocation location;
 
-        public string name,
-                        steel1,
-                        steel2,
-                        steel3,
-                        steel4;
+    //    public string name,
+    //                    steel1,
+    //                    steel2,
+    //                    steel3,
+    //                    steel4;
 
-        internal double sigma_d1,
-                        sigma_d2,
-                        sigma_d3,
-                        sigma_d4;
+    //    internal double sigma_d1,
+    //                    sigma_d2,
+    //                    sigma_d3,
+    //                    sigma_d4;
         
-        public double   E1,
-                        E2,
-                        E3,
-                        E4;
-        internal double D,
-                        d1,
-                        d2,
-                        r;
+    //    public double   E1,
+    //                    E2,
+    //                    E3,
+    //                    E4;
+    //    internal double D,
+    //                    d1,
+    //                    d2,
+    //                    r;
 
 
-        internal double s0,
-                        s1,
-                        s2,
-                        s3;
+    //    internal double s0,
+    //                    s1,
+    //                    s2,
+    //                    s3;
 
-        internal double cs;
-        internal double cs1;
+    //    internal double cs;
+    //    internal double cs1;
 
-        internal int l;
-        internal int l1;
-        internal int l2;
-        internal int l3;
+    //    internal int l;
+    //    internal int l1;
+    //    internal int l2;
+    //    internal int l3;
 
-        internal double fi,
-                        fi1;
+    //    internal double fi,
+    //                    fi1;
 
-        internal int delta;
-        internal int delta1;
-        internal int delta2;
-        internal double elx,
-                        b;
-        internal NozzleKind nozzleKind;
+    //    internal int delta;
+    //    internal int delta1;
+    //    internal int delta2;
+    //    internal double elx,
+    //                    b;
+    //    internal NozzleKind nozzleKind;
 
-        internal int temp;
+    //    internal int temp;
 
 
-        internal double ny = 2.4;
-        internal double t;
-        internal double gamma;
-        internal double omega;
+    //    internal double ny = 2.4;
+    //    internal double t;
+    //    internal double gamma;
+    //    internal double omega;
 
-        internal bool isOval;
+    //    internal bool isOval;
 
-        public void SetValue(string name, double value)
-        {
-            var field = typeof(DataNozzle_in).GetField(name);
-            field.SetValue(this, value);
-        }
+    //    public void SetValue(string name, double value)
+    //    {
+    //        var field = typeof(DataNozzle_in).GetField(name);
+    //        field.SetValue(this, value);
+    //    }
 
-        public void GetValue(string name, ref string value)
-        {
-            var field = typeof(DataNozzle_in).GetField(name);
-            value = field.GetValue(this).ToString();
-        }
-    }
+    //    public void GetValue(string name, ref string value)
+    //    {
+    //        var field = typeof(DataNozzle_in).GetField(name);
+    //        value = field.GetValue(this).ToString();
+    //    }
+    //}
 
     class DataNozzle_out
     {
@@ -518,251 +514,8 @@ namespace calcNet
             return true;
         }
 
-        //internal static void CalculateShell(in Data_in d_in, ref Data_out d_out)
-        //{
-        //    switch (d_in.shellType)
-        //    {
-        //        case ShellType.Cylindrical:
-        //            CalculateCylindricalShell(in d_in, ref d_out);
-        //            break;
-        //        case ShellType.Elliptical:
-        //            CalculateEllipticalShell(in d_in, ref d_out);
-        //            break;
-        //        case ShellType.Conical:
-        //            CalculateConicalShell(in d_in, ref d_out);
-        //            break;
-        //    }
-        //}
 
 
-
-
-
-        /// <summary>
-        /// Strength calculation of a cylindrical shell
-        /// </summary>
-        /// <param name="d_in"></param>
-        /// <returns></returns>
-        private static void CalculateCylindricalShell(in Data_in d_in, ref Data_out d_out)
-        {
-            //Data_out d_out = new Data_out { err = "" };
-
-            d_out.c = d_in.c1 + d_in.c2 + d_in.c3;
-
-            // Condition use formuls
-            {
-                const int DIAMETR_BIG_LITTLE_BORDER = 200;
-                bool isDiametrBig = DIAMETR_BIG_LITTLE_BORDER < d_in.D;
-
-                //bool isConditionUseFormuls;
-
-                if (isDiametrBig)
-                {
-                    const double CONDITION_USE_FORMULS_BIG_DIAMETR = 0.1;
-                    d_out.isConditionUseFormuls = ((d_in.s - d_out.c) / d_in.D) <= CONDITION_USE_FORMULS_BIG_DIAMETR;
-                }
-                else
-                {
-                    const double CONDITION_USE_FORMULS_LITTLE_DIAMETR = 0.3;
-                    d_out.isConditionUseFormuls = ((d_in.s - d_out.c) / d_in.D) <= CONDITION_USE_FORMULS_LITTLE_DIAMETR;
-                }
-
-                if (!d_out.isConditionUseFormuls)
-                {
-                    d_out.isError = true;
-                    d_out.err += "Условие применения формул не выполняется\n";
-                }
-
-            }
-
-            if (d_in.isNeedpCalculate)
-            {
-                if (d_in.isPressureIn)
-                {
-
-                    d_out.s_calcr = d_in.p * d_in.D / (2 * d_in.sigma_d * d_in.fi - d_in.p);
-                    d_out.s_calc = d_out.s_calcr + d_out.c;
-                    if (d_in.s == 0.0)
-                    {
-                        d_out.p_d = 2 * d_in.sigma_d * d_in.fi * (d_out.s_calc - d_out.c) / (d_in.D + d_out.s_calc - d_out.c);
-                    }
-                    else if (d_in.s >= d_out.s_calc)
-                    {
-                        d_out.p_d = 2 * d_in.sigma_d * d_in.fi * (d_in.s - d_out.c) / (d_in.D + d_in.s - d_out.c);
-                    }
-                    else
-                    {
-                        d_out.isCriticalError = true;
-                        d_out.err += "Принятая толщина меньше расчетной\nрасчет не выполнен";
-                    }
-                }
-                else
-                {
-                    d_out.l = d_in.l + d_in.l3_1 + d_in.l3_2;
-                    d_out.b_2 = 0.47 * Math.Pow(d_in.p / (0.00001 * d_in.E), 0.067) * Math.Pow(d_out.l / d_in.D, 0.4);
-                    d_out.b = Math.Max(1.0, d_out.b_2);
-                    d_out.s_calcr1 = 1.06 * (0.01 * d_in.D / d_out.b) * Math.Pow(d_in.p / (0.00001 * d_in.E) * (d_out.l / d_in.D), 0.4);
-                    d_out.s_calcr2 = 1.2 * d_in.p * d_in.D / (2 * d_in.sigma_d - d_in.p);
-                    d_out.s_calcr = Math.Max(d_out.s_calcr1, d_out.s_calcr2);
-                    d_out.s_calc = d_out.s_calcr + d_out.c;
-                    if (d_in.s == 0.0)
-                    {
-                        d_out.p_dp = 2 * d_in.sigma_d * (d_out.s_calc - d_out.c) / (d_in.D + d_out.s_calc - d_out.c);
-                        d_out.b1_2 = 9.45 * (d_in.D / d_out.l) * Math.Sqrt(d_in.D / (100 * (d_out.s_calc - d_out.c)));
-                        d_out.b1 = Math.Min(1.0, d_out.b1_2);
-                        d_out.p_de = 2.08 * 0.00001 * d_in.E / d_in.ny * d_out.b1 * (d_in.D / d_out.l) * Math.Pow(100 * (d_out.s_calc - d_out.c) / d_in.D, 2.5);
-                    }
-                    else if (d_in.s >= d_out.s_calc)
-                    {
-                        d_out.p_dp = 2 * d_in.sigma_d * (d_in.s - d_out.c) / (d_in.D + d_in.s - d_out.c);
-                        d_out.b1_2 = 9.45 * (d_in.D / d_out.l) * Math.Sqrt(d_in.D / (100 * (d_in.s - d_out.c)));
-                        d_out.b1 = Math.Min(1.0, d_out.b1_2);
-                        d_out.p_de = 2.08 * 0.00001 * d_in.E / d_in.ny * d_out.b1 * (d_in.D / d_out.l) * Math.Pow(100 * (d_in.s - d_out.c) / d_in.D, 2.5);
-                    }
-                    else
-                    {
-                        d_out.isCriticalError = true;
-                        d_out.err += "Принятая толщина меньше расчетной\nрасчет не выполнен";
-                    }
-                    d_out.p_d = d_out.p_dp / Math.Sqrt(1 + Math.Pow(d_out.p_dp / d_out.p_de, 2));
-                }
-                if (d_out.p_d < d_in.p && d_in.s != 0)
-                {
-                    d_out.isError = true;
-                    d_out.err += "[p] меньше p";
-                }
-            }
-
-            if (d_in.isNeedFCalculate)
-            {
-                d_out.s_calcrf = d_in.F / (Math.PI * d_in.D * d_in.sigma_d * d_in.fit);
-                d_out.s_calcf = d_out.s_calcrf + d_out.c;
-                if (d_in.isFTensile)
-                {
-                    d_out.F_d = Math.PI * (d_in.D + d_in.s - d_out.c) * (d_in.s - d_out.c) * d_in.sigma_d * d_in.fit;
-                }
-                else
-                {
-                    d_out.F_dp = Math.PI * (d_in.D + d_in.s - d_out.c) * (d_in.s - d_out.c) * d_in.sigma_d;
-                    d_out.F_de1 = 0.000031 * d_in.E / d_in.ny * Math.Pow(d_in.D, 2) * Math.Pow(100 * (d_in.s - d_out.c) / d_in.D, 2.5);
-
-                    const int L_MORE_THEN_D = 10;
-                    bool isLMoreThenD = d_in.l / d_in.D > L_MORE_THEN_D;
-
-                    if (isLMoreThenD)
-                    {
-                        switch (d_in.FCalcSchema)
-                        {
-                            case 1:
-                                d_out.lpr = d_in.l;
-                                break;
-                            case 2:
-                                d_out.lpr = 2 * d_in.l;
-                                break;
-                            case 3:
-                                d_out.lpr = 0.7 * d_in.l;
-                                break;
-                            case 4:
-                                d_out.lpr = 0.5 * d_in.l;
-                                break;
-                            case 5:
-                                d_out.F = d_in.q * d_in.l;
-                                d_out.lpr = 1.12 * d_in.l;
-                                break;
-                            case 6:
-                                double fDivl6 = d_in.f / d_in.l;
-                                fDivl6 *= 10;
-                                fDivl6 = Math.Round(fDivl6 / 2);
-                                fDivl6 *= 0.2;
-                                switch (fDivl6)
-                                {
-                                    case 0:
-                                        d_out.lpr = 2 * d_in.l;
-                                        break;
-                                    case 0.2:
-                                        d_out.lpr = 1.73 * d_in.l;
-                                        break;
-                                    case 0.4:
-                                        d_out.lpr = 1.47 * d_in.l;
-                                        break;
-                                    case 0.6:
-                                        d_out.lpr = 1.23 * d_in.l;
-                                        break;
-                                    case 0.8:
-                                        d_out.lpr = 1.06 * d_in.l;
-                                        break;
-                                    case 1:
-                                        d_out.lpr = d_in.l;
-                                        break;
-                                }
-                                break;
-                            case 7:
-                                double fDivl7 = d_in.f / d_in.l;
-                                fDivl7 *= 10;
-                                fDivl7 = Math.Round(fDivl7 / 2);
-                                fDivl7 *= 0.2;
-                                switch (fDivl7)
-                                {
-                                    case 0:
-                                        d_out.lpr = 2 * d_in.l;
-                                        break;
-                                    case 0.2:
-                                        d_out.lpr = 1.7 * d_in.l;
-                                        break;
-                                    case 0.4:
-                                        d_out.lpr = 1.4 * d_in.l;
-                                        break;
-                                    case 0.6:
-                                        d_out.lpr = 1.11 * d_in.l;
-                                        break;
-                                    case 0.8:
-                                        d_out.lpr = 0.85 * d_in.l;
-                                        break;
-                                    case 1:
-                                        d_out.lpr = 0.7 * d_in.l;
-                                        break;
-                                }
-                                break;
-
-                        }
-                        d_out.lamda = 2.83 * d_out.lpr / (d_in.D + d_in.s - d_out.c);
-                        d_out.F_de2 = Math.PI * (d_in.D + d_in.s - d_out.c) * (d_in.s - d_out.c) * d_in.E / d_in.ny *
-                                        Math.Pow(Math.PI / d_out.lamda, 2);
-                        d_out.F_de = Math.Min(d_out.F_de1, d_out.F_de2);
-                    }
-                    else
-                    {
-                        d_out.F_de = d_out.F_de1;
-                    }
-
-                    d_out.F_d = d_out.F_dp / Math.Sqrt(1 + Math.Pow(d_out.F_dp / d_out.F_de, 2));
-                }
-            }
-
-            if (d_in.isNeedMCalculate)
-            {
-                d_out.M_dp = Math.PI / 4 * d_in.D * (d_in.D + d_in.s - d_out.c) * (d_in.s - d_out.c) * d_in.sigma_d;
-                d_out.M_de = 0.000089 * d_in.E / d_in.ny * Math.Pow(d_in.D, 3) * Math.Pow(100 * (d_in.s - d_out.c) / d_in.D, 2.5);
-                d_out.M_d = d_out.M_dp / Math.Sqrt(1 + Math.Pow(d_out.M_dp / d_out.M_de, 2));
-            }
-
-            if (d_in.isNeedQCalculate)
-            {
-                d_out.Q_dp = 0.25 * d_in.sigma_d * Math.PI * d_in.D * (d_in.s - d_out.c);
-                d_out.Q_de = 2.4 * d_in.E * Math.Pow(d_in.s - d_out.c, 2) / d_in.ny *
-                    (0.18 + 3.3 * d_in.D * (d_in.s - d_out.c) / Math.Pow(d_in.l, 2));
-                d_out.Q_d = d_out.Q_dp / Math.Sqrt(1 + Math.Pow(d_out.Q_dp / d_out.Q_de, 2));
-            }
-
-            if ((d_in.isNeedpCalculate || d_in.isNeedFCalculate) &&
-                (d_in.isNeedMCalculate || d_in.isNeedQCalculate))
-            {
-                d_out.conditionYstoich = d_in.p / d_out.p_d + d_in.F / d_out.F_d + d_in.M / d_out.M_d +
-                                        Math.Pow(d_in.Q / d_out.Q_d, 2);
-            }
-            // TODO: Проверка F для FCalcSchema == 6 F расчитывается и записывается в d_out, а не берется из d_in
-            //return d_out;
-        }
 
         private static void CalculateEllipticalShell(in Data_in d_in, ref Data_out d_out)
         {
@@ -858,330 +611,7 @@ namespace calcNet
             //return d_out;
         }
 
-        internal static DataNozzle_out CalculateNozzle(in Data_in d_in, Data_out d_out, in DataNozzle_in dN_in)
-        {
-            DataNozzle_out dN_out = new DataNozzle_out { err = "" };
-
-            // расчет Dp, dp
-            switch (d_in.shellType)
-            {
-                case ShellType.Cylindrical:
-                    {
-                        dN_out.Dp = d_in.D;
-                        break;
-                    }
-                case ShellType.Conical:
-                    {
-                        dN_out.Dp = d_out.Dk / Math.Cos(Math.PI * 100 * d_in.alfa);
-                        break;
-                    }
-                case ShellType.Elliptical:
-                    {
-                        if (d_in.elH * 100 == d_in.D * 25)
-                        {
-                            dN_out.Dp = d_in.D * 2 * Math.Sqrt(1 - 3 * Math.Pow(dN_in.elx / d_in.D, 2));
-                        }
-                        else
-                        {
-                            dN_out.Dp = Math.Pow(d_in.D, 2) / (d_in.elH * 2) * Math.Sqrt(1 - (4 * (Math.Pow(d_in.D, 2) - 4 * Math.Pow(d_in.elH, 2)) * Math.Pow(dN_in.elx, 2)) / Math.Pow(d_in.D, 4));
-                        }
-                        break;
-                    }
-                case ShellType.Spherical:
-                case ShellType.Torospherical:
-                    {
-                        dN_out.Dp = 2 * d_in.R;
-                        break;
-                    }
-                default:
-                    {
-                        dN_out.err += "Ошибка вида укрепляемого элемента\n";
-                        break;
-                    }
-            }
-
-            if (d_in.shellType == ShellType.Elliptical && d_in.isPressureIn)
-            {
-                dN_out.sp = d_in.p * dN_out.Dp / (4 * d_in.fi * d_in.sigma_d - d_in.p);
-            }
-            else
-            {
-                dN_out.sp = d_out.s_calcr;
-            }
-
-            if (!dN_in.isOval)
-            {
-                dN_out.s1p = d_in.p * (dN_in.D + 2 * dN_in.cs) / (2 * dN_in.fi * dN_in.sigma_d1 - d_in.p);
-            }
-            else
-            {
-                dN_out.s1p = d_in.p * (dN_in.d1 + 2 * dN_in.cs) / (2 * dN_in.fi * dN_in.sigma_d1 - d_in.p);
-            }
-
-            switch (dN_in.location)
-            {
-                case NozzleLocation.LocationAccordingToParagraph_5_2_2_1:
-                    {
-                        dN_out.dp = dN_in.D + 2 * dN_in.cs; //dp = d + 2cs
-                        break;
-                    }
-                case NozzleLocation.LocationAccordingToParagraph_5_2_2_2:
-                    {
-                        dN_out.dp = Math.Max(dN_in.D, 0.5 * dN_in.t) + (2 * dN_in.cs); //dp =max{d; 0,5t} + 2cs
-                        break;
-                    }
-                case NozzleLocation.LocationAccordingToParagraph_5_2_2_3:
-                    {
-                        dN_out.dp = (dN_in.D + 2 * dN_in.cs) / Math.Sqrt(1 + Math.Pow(2 * dN_in.elx / dN_out.Dp, 2));
-                        break;
-                    }
-                case NozzleLocation.LocationAccordingToParagraph_5_2_2_4:
-                    {
-                        dN_out.dp = (dN_in.D + 2 * dN_in.cs) * (1 + Math.Pow(Math.Tan(Math.PI * 180 * dN_in.gamma), 2) *
-                            Math.Pow(Math.Cos(Math.PI * 180 * dN_in.omega), 2));
-                        break;
-                    }
-                case NozzleLocation.LocationAccordingToParagraph_5_2_2_5:
-                    {
-                        dN_out.dp = (dN_in.D + 2 * dN_in.cs) / Math.Pow(Math.Cos(Math.PI * 180 * dN_in.gamma), 2);
-                        break;
-                    }
-                case NozzleLocation.LocationAccordingToParagraph_5_2_2_6:
-                    {
-                        dN_out.dp = (dN_in.d2 + 2 * dN_in.cs) * 
-                            (Math.Pow(Math.Sin(Math.PI * 180 * dN_in.omega), 2) +
-                            (dN_in.d1 + 2 * dN_in.cs) *
-                            (dN_in.d1 + dN_in.d2 + 4 * dN_in.cs) /
-                            (2 * Math.Pow(dN_in.d2 + 2 * dN_in.cs, 2)) *
-                            Math.Pow(Math.Cos(Math.PI * 180 * dN_in.omega), 2));
-                        break;
-                    }
-                case NozzleLocation.LocationAccordingToParagraph_5_2_2_7:
-                    {
-                        dN_out.dp = dN_in.D + 1.5 * (dN_in.r - dN_out.sp) + (2 * dN_in.cs);
-                        break;
-                    }
-                default:
-                    {
-                        dN_out.err += "Ошибка места расположения штуцера\n";
-                        break;
-                    }
-            }
-
-            // l1p, l3p, l2p
-            {
-                double d;
-                if (!dN_in.isOval)
-                {
-                    d = dN_in.D;
-                }
-                else
-                {
-                    d = dN_in.d2;
-                }
-
-                dN_out.l1p2 = 1.25 * Math.Sqrt((d + 2 * dN_in.cs) * (dN_in.s1 - dN_in.cs));
-                dN_out.l1p = Math.Min(dN_in.l1, dN_out.l1p2);
-                if (dN_in.s3 == 0)
-                {
-                    dN_out.l3p = 0;
-                }
-                else
-                {
-                    dN_out.l3p2 = 0.5 * Math.Sqrt((d + 2 * dN_in.cs) * (dN_in.s3 - dN_in.cs - dN_in.cs1));
-                    dN_out.l3p = Math.Min(dN_in.l3, dN_out.l3p2);
-                }
-            }
-
-            dN_out.L0 = Math.Sqrt(dN_out.Dp * (d_in.s - d_out.c));
-
-            switch (dN_in.nozzleKind)
-            {
-                case NozzleKind.ImpassWithoutRing:
-                case NozzleKind.PassWithoutRing:
-                case NozzleKind.ImpassWithRing:
-                case NozzleKind.PassWithRing:
-                case NozzleKind.WithRingAndInPart:
-                case NozzleKind.WithFlanging:
-                    dN_out.lp = dN_out.L0;
-                    break;
-                case NozzleKind.WithTorusshapedInsert:
-                case NozzleKind.WithWealdedRing:
-                    dN_out.lp = Math.Min(dN_in.l, dN_out.L0);
-                    break;
-            }
-
-            dN_out.l2p2 = Math.Sqrt(dN_out.Dp * (dN_in.s2 + d_in.s - d_out.c));
-            dN_out.l2p = Math.Min(dN_in.l2, dN_out.l2p2);
-
-            switch (dN_in.nozzleKind)
-            {
-                case NozzleKind.ImpassWithoutRing:
-                case NozzleKind.PassWithoutRing:
-                case NozzleKind.ImpassWithRing:
-                case NozzleKind.PassWithRing:
-                case NozzleKind.WithRingAndInPart:
-                case NozzleKind.WithFlanging:
-                    dN_in.s0 = d_in.s;
-                    dN_in.steel4 = dN_in.steel1;
-                    break;
-            }
-
-            //dN_in.sigma_d2 = GetSigma(dN_in.steel2, d_in.temp);
-            //dN_in.sigma_d3 = GetSigma(dN_in.steel3, d_in.temp);
-            //dN_in.sigma_d4 = GetSigma(dN_in.steel4, d_in.temp);
-
-            dN_out.psi1 = Math.Min(1, dN_in.sigma_d1 / d_in.sigma_d);
-            dN_out.psi2 = Math.Min(1, dN_in.sigma_d2 / d_in.sigma_d);
-            dN_out.psi3 = Math.Min(1, dN_in.sigma_d3 / d_in.sigma_d);
-            dN_out.psi4 = Math.Min(1, dN_in.sigma_d4 / d_in.sigma_d);
-
-            dN_out.d0p = 0.4 * Math.Sqrt(dN_out.Dp * (d_in.s - d_out.c));
-
-            dN_out.b = Math.Sqrt(dN_out.Dp * (d_in.s - d_out.c)) + Math.Sqrt(dN_out.Dp * (d_in.s - d_out.c));
-
-            switch (d_in.shellType)
-            {
-                case ShellType.Cylindrical:
-                    {
-                        dN_out.dmax = d_in.D;
-                        break;
-                    }
-                case ShellType.Conical:
-                    {
-                        dN_out.dmax = d_out.Dk;
-                        break;
-                    }
-                case ShellType.Elliptical:
-                case ShellType.Spherical:
-                case ShellType.Torospherical:
-                    {
-                        dN_out.dmax = 0.6 * d_in.D;
-                        break;
-                    }
-            }
-
-            switch (d_in.shellType)
-            {
-                case ShellType.Cylindrical:
-                case ShellType.Conical:
-                    {
-                        dN_out.K1 = 1;
-                        break;
-                    }
-                case ShellType.Elliptical:
-                case ShellType.Spherical:
-                case ShellType.Torospherical:
-                    {
-                        dN_out.K1 = 2;
-                        break;
-                    }
-            }
-
-            if (d_in.isPressureIn)
-            {
-                dN_out.spn = dN_out.sp;
-            }
-            else
-            {
-
-                //dN_out.B1n = Math.Min(1, 9.45 * (d_in.D / d_out.l) * Math.Sqrt(d_in.D / (100 * (d_in.s - d_out.c))));
-                //dN_out.pen = 2.08 * 0.00001 * d_in.E / (dN_in.ny * dN_out.B1n) * (d_in.D / d_out.l) * Math.Pow(100 * (d_in.s - d_out.c) / d_in.D, 2.5);
-                dN_out.pen = d_out.p_de;
-                dN_out.ppn = d_in.p / Math.Sqrt(1 - Math.Pow(d_in.p / dN_out.pen, 2));
-                dN_out.spn = dN_out.ppn * dN_out.Dp / (2 * dN_out.K1 * d_in.sigma_d - dN_out.ppn);
-            }
-
-
-            dN_out.d01 = 2 * ((d_in.s - d_out.c) / dN_out.spn - 0.8) * Math.Sqrt(dN_out.Dp * (d_in.s - d_out.c));
-            dN_out.d02 = dN_out.dmax + 2 * dN_in.cs;
-            dN_out.d0 = Math.Min(dN_out.d01, dN_out.d02);
-
-            if (dN_out.dp > dN_out.d0)
-            {
-                dN_out.yslyk1 = dN_out.l1p * (dN_in.s1 - dN_out.s1p - dN_in.cs) * dN_out.psi1 + dN_out.l2p * dN_in.s2 * dN_out.psi2 + dN_out.l3p * (dN_in.s3 - dN_in.cs - dN_in.cs1) * dN_out.psi3 + dN_out.lp * (d_in.s - d_out.s_calcr - d_out.c) * dN_out.psi4;
-                dN_out.yslyk2 = 0.5 * (dN_out.dp - dN_out.d0p) * d_out.s_calcr;
-                if (dN_out.yslyk1 < dN_out.yslyk2)
-                {
-                    dN_out.err += "Условие укрепления одиночного отверстия не выполняется";
-                }
-            }
-
-
-
-            dN_out.V1 = (dN_in.s0 - d_out.c) / (d_in.s - d_out.c);
-            dN_out.V2 = (dN_out.psi4 + (dN_out.l1p * (dN_in.s1 - dN_in.cs) * dN_out.psi1 + dN_out.l2p * dN_in.s2 * dN_out.psi2 + dN_out.l3p * (dN_in.s3 - dN_in.cs - dN_in.cs1) * dN_out.psi3) / dN_out.lp * (d_in.s - d_out.c)) / (1 + 0.5 * (dN_out.dp - dN_out.d0p) / dN_out.lp + dN_out.K1 * (dN_in.D + 2 * dN_in.cs) / dN_out.Dp * (dN_in.fi / dN_in.fi1) * (dN_out.l1p / dN_out.lp));
-            dN_out.V = Math.Min(dN_out.V1, dN_out.V2);
-
-            if (d_in.isPressureIn)
-            {
-                dN_out.p_d = 2 * dN_out.K1 * dN_in.fi * d_in.sigma_d * (d_in.s - d_out.c) * dN_out.V / (dN_out.Dp + (d_in.s - d_out.c) * dN_out.V);
-            }
-            else
-            {
-                dN_out.p_dp = 2 * dN_out.K1 * dN_in.fi * d_in.sigma_d * (d_in.s - d_out.c) * dN_out.V / (dN_out.Dp + (d_in.s - d_out.c) * dN_out.V);
-                dN_out.p_de = d_out.p_de;
-                dN_out.p_d = dN_out.p_dp / Math.Sqrt(1 + Math.Pow(dN_out.p_dp / dN_out.p_de, 2));
-            }
-            if (dN_out.p_d < d_in.p)
-            {
-                dN_out.err += "Допускаемое давление меньше расчетного\n";
-            }
-
-            switch (d_in.shellType)
-            {
-                case ShellType.Cylindrical:
-                    {
-                        dN_out.ypf1 = (dN_out.dp - 2 * dN_in.cs) / d_in.D;
-                        dN_out.ypf2 = (d_in.s - d_out.c) / d_in.D;
-                        if (dN_out.ypf1 <= 1 & dN_out.ypf2 <= 0.1)
-                        {
-                            dN_out.ypf = true;
-                        }
-                        else
-                        {
-                            dN_out.ypf = false;
-                        }
-                        break;
-                    }
-                case ShellType.Conical:
-                    {
-                        dN_out.ypf1 = (dN_out.dp - 2 * dN_in.cs) / d_out.Dk;
-                        dN_out.ypf2 = (d_in.s - d_out.c) / d_out.Dk;
-                        if (dN_out.ypf1 <= 1 & dN_out.ypf2 <= 0.1 / Math.Cos(Math.PI * 180 * d_in.alfa))
-                        {
-                            dN_out.ypf = true;
-                        }
-                        else
-                        {
-                            dN_out.ypf = false;
-                        }
-                        break;
-                    }
-                case ShellType.Elliptical:
-                case ShellType.Spherical:
-                case ShellType.Torospherical:
-                    {
-                        dN_out.ypf1 = (dN_out.dp - 2 * dN_in.cs) / d_in.D;
-                        dN_out.ypf2 = (d_in.s - d_out.c) / d_in.D;
-                        if (dN_out.ypf1 <= 0.6 & dN_out.ypf2 <= 0.1)
-                        {
-                            dN_out.ypf = true;
-                        }
-                        else
-                        {
-                            dN_out.ypf = false;
-                        }
-                        break;
-                    }
-            }
-            if (dN_out.ypf == false)
-            {
-                dN_out.err += "Условие применения формул не выполняется";
-            }
-
-            return dN_out;
-        }
+        
 
         internal static DataSaddle_out CalcSaddle(in DataSaddle_in d_in)
         {

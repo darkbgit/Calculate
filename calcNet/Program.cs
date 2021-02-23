@@ -36,7 +36,7 @@ namespace calcNet
             internal string Value;// { get; set; }
             internal Data_in Data_In; // { get; set; }
             internal Data_out Data_Out; // { get; set; }
-            internal DataNozzle_in DataN_In;
+
             internal DataNozzle_out DataN_Out;
             internal CalculatedElementType calculatedElementType; // cil, ell, kon, cilyk, konyk, ellyk, saddle, heat
         }
