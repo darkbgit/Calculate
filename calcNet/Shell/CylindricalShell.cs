@@ -456,9 +456,9 @@ namespace calcNet
 
         internal bool IsConditionUseFormuls { get => isConditionUseFormuls; }
 
-        public bool IsCriticalError { get => isCriticalError; }
-        public bool IsError { get => isError; }
-        public List <string> ErrorList { get => err; }
+        //public bool IsCriticalError { get => isCriticalError; }
+        //public bool IsError { get => isError; }
+        //public List <string> ErrorList { get => err; }
 
         //internal double s_calcr { get => _s_calcr; }
         

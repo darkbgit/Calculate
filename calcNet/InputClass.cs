@@ -21,27 +21,7 @@ namespace calcNet
                 MessageBox.Show(ex.Message);
             }
         }
-        internal static void GetInput_t(TextBox t_tb, ref ShellDataIn d_in)
-        {
-            if (double.TryParse(t_tb.Text, System.Globalization.NumberStyles.Integer,
-                    System.Globalization.CultureInfo.InvariantCulture, out double t_in))
-            {
-                try
-                {
-                    d_in.t = t_in;
-                }
-                catch (ArgumentOutOfRangeException ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
-            }
-            else
-            {
-                d_in.IsInError = true;
-                MessageBox.Show("T неверный ввод\n");
-                //dataInErr += "T неверный ввод\n";
-            }
-        }
+
 
 
 

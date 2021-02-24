@@ -1,4 +1,6 @@
-﻿namespace calcNet
+﻿using System.Collections.Generic;
+
+namespace calcNet
 {
     public interface IDataIn
     {
@@ -6,7 +8,7 @@
 
         public bool IsDataGood { get;  }
 
-        public string Error { get; }
+        public List<string> ErrorList { get; }
     }
 
 }

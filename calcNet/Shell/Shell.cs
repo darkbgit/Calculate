@@ -17,7 +17,10 @@ namespace calcNet
         internal double s_calcr { get => _s_calcr; }
         internal double p_de { get => _p_de; }
 
-        
+        public bool IsCriticalError { get => isCriticalError; }
+        public bool IsError { get => isError; }
+        public List<string> ErrorList { get => err; }
+
 
         protected bool isCriticalError;
         protected bool isError;

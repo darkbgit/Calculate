@@ -2,23 +2,37 @@
 
 namespace calcNet
 {
-    public class ShellDataIn 
+    public abstract class ShellDataIn
     {
         public ShellDataIn(ShellType shellType)
         {
             this.shellType = shellType;
         }
 
+        public void CheckData()
+        {
+            isDataGood = !(ErrorList?.Count > 0);
+        }
+
+
+        
+
         public ShellType Type { get; }
 
-        private bool isError;
+        protected bool isError;
 
-        private List<string> errorList = new List<string>();
+        private bool isDataGood;
+
+
+
+        protected List<string> errorList = new List<string>();
 
         private string _name;
         private string steel;
         private ShellType shellType;
 
+
+        public bool IsDataGood { get => isDataGood; }
 
         public string Name { get => _name; set => _name = value; }
         public string Steel { get => steel; set => steel = value; }
@@ -123,7 +137,7 @@ namespace calcNet
             }
         }
         public double s { get => _s; set => _s = value; }
-        public bool IsNeedpCalculate { get => isNeedpCalculate; set => isNeedpCalculate = value; }
+        
         public double sigma_d
         {
             get => _sigma_d;
@@ -160,45 +174,19 @@ namespace calcNet
                 }
             }
         }
-        public double l 
-        {
-            get => _l;
-            set
-            {
-                if (value > 0)
-                {
-                    _l = value;
-                }
-                else
-                {
-                    isError = true;
-                    errorList.Add("l должно быть больше 0");
-                }
-            } 
-        }
-        public double l3_1 { get => _l3_1; set => _l3_1 = value; }
-        public double l3_2 { get => _l3_2; set => _l3_2 = value; }
+        
         public double ny { get => _ny; set => _ny = value; }
         public double fit { get => _fit; set => _fit = value; }
         public double F { get => _F; set => _F = value; }
         public double q { get => _q; set => _q = value; }
         public double M { get => _M; set => _M = value; }
         public double Q { get => _Q; set => _Q = value; }
-        public bool IsInError { get => isInError; set => isInError = value; }
+
         public bool IsPressureIn { get => isPressureIn; set => isPressureIn = value; }
         public List<string> ErrorList { get => errorList; }
         
         
 
-        internal EllipticalBottomType ellipticalBottomType;
-
-        
-
-        public double                                                                                                                         elH_f,
-                        elh1_f,
-                        f_f,
-                        alfa_f,
-                        R_f; //Spherical
 
         internal int FCalcSchema; //1-7
 
@@ -218,19 +206,17 @@ namespace calcNet
         private double _E;
         private double _t;
         private double _s;
-        private bool isNeedpCalculate;
+        
         private double _sigma_d;
         private double _fi;
-        private double _l;
-        private double _l3_1;
-        private double _l3_2;
+        
         private double _ny;
         private double _fit;
         private double _F;
         private double _q;
         private double _M;
         private double _Q;
-        private bool isInError;
+
         private bool isPressureIn;
 
         public void SetValue(string name, double value)

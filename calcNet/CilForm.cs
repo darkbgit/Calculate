@@ -18,7 +18,7 @@ namespace calcNet
             InitializeComponent();
         }
 
-        private CylindricalShellDataIn cylindricalShellDataIn = new CylindricalShellDataIn();
+        CylindricalShellDataIn cylindricalShellDataIn = new CylindricalShellDataIn();
 
         private void Cancel_b_Click(object sender, EventArgs e)
         {
@@ -58,7 +58,7 @@ namespace calcNet
             calc_b.Enabled = false;
 
 
-            cylindricalShellDataIn = new CylindricalShellDataIn();
+            //cylindricalShellDataIn = new CylindricalShellDataIn();
 
 
             List<string> dataInErr = new List<string>();

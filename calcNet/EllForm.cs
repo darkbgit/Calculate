@@ -10,14 +10,14 @@ using System.Windows.Forms;
 
 namespace calcNet
 {
-    public partial class EllForm : FormShell
+    public partial class EllForm : Form
     {
         public EllForm()
         {
             InitializeComponent();
         }
 
-        //internal DataWordOut.DataOutArrEl DataArrEl { get => dataArrEl; set => dataArrEl = value; }
+        EllipticalShellDataIn ellipticalShellDataIn = new EllipticalShellDataIn();
 
         private void EllForm_Load(object sender, EventArgs e)
         {
@@ -47,15 +47,14 @@ namespace calcNet
 
         private void PredCalc_b_Click(object sender, EventArgs e)
         {
-            Data_in d_in = new Data_in(ShellType.Elliptical);
+            private List<string> dataInErr = new List<string>();
 
-            string dataInErr = "";
+        //t
+        //InputClass.GetInput_t(t_tb, ref d_in, ref dataInErr);
 
-            //t
-            //InputClass.GetInput_t(t_tb, ref d_in, ref dataInErr);
-            
-            //steel
-            d_in.Steel = steel_cb.Text;
+        //steel
+    
+        ellipticalShellDataIn.Steel = steel_cb.Text;
 
             bool isNotError = dataInErr == "";
             if (isNotError)

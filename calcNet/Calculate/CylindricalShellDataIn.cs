@@ -8,21 +8,39 @@
 
         }
 
-        public void CheckData()
+        //public void CheckData()
+        //{
+        //    IsDataGood = !(ErrorList?.Count > 0);
+        //}
+
+        //public bool IsDataGood { get; set; }
+
+        public bool IsNeedpCalculate { get => isNeedpCalculate; set => isNeedpCalculate = value; }
+
+        public double l
         {
-            IsDataGood = !(ErrorList?.Count > 0);
+            get => _l;
+            set
+            {
+                if (value > 0)
+                {
+                    _l = value;
+                }
+                else
+                {
+                    isError = true;
+                    errorList.Add("l должно быть больше 0");
+                }
+            }
         }
+        public double l3_1 { get => _l3_1; set => _l3_1 = value; }
+        public double l3_2 { get => _l3_2; set => _l3_2 = value; }
 
-        public bool IsDataGood { get; set; }
+        private bool isNeedpCalculate;
 
-        public string Error
-        {
-            get => error; 
-            set => error += value;
-        }
-
-        private string error;
-
+        private double _l;
+        private double _l3_1;
+        private double _l3_2;
     }
 
 }
