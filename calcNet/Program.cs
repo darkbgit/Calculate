@@ -27,24 +27,7 @@ namespace calcNet
         public static List<IElement> ElementsList { get; set; } = new List<IElement>();
     }
 
-    public static class DataWordOut
-    {
 
-        public struct DataOutArrEl
-        {
-            internal int id;
-            internal string Value;// { get; set; }
-            internal Data_in Data_In; // { get; set; }
-            internal Data_out Data_Out; // { get; set; }
-
-            internal DataNozzle_out DataN_Out;
-            internal CalculatedElementType calculatedElementType; // cil, ell, kon, cilyk, konyk, ellyk, saddle, heat
-        }
-
-        public static List<DataOutArrEl> DataArr { get; set; } = new List<DataOutArrEl>();
-
-        public static List<IElement> Elements { get; set; } = new List<IElement>();
-    }
 
     internal static class SetSteelList
     {
@@ -73,11 +56,5 @@ namespace calcNet
         Saddle,
         FlatBottom,
         Heatexchenge
-    }
-
-    public partial class FormShell : Form
-    {
-        private DataWordOut.DataOutArrEl dataArrEl;
-        internal DataWordOut.DataOutArrEl DataInOutShell { get => dataArrEl; set => dataArrEl = value; }
     }
 }

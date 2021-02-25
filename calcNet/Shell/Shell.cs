@@ -11,7 +11,7 @@ namespace calcNet
 
         //private readonly ShellType shellType;
 
-        internal ShellDataIn ShellDataIn;
+        //internal ShellDataIn ShellDataIn;
 
         internal double c { get => _c; }
         internal double s_calcr { get => _s_calcr; }

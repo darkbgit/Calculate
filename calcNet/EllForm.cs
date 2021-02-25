@@ -64,6 +64,9 @@ namespace calcNet
             //steel
             ellipticalShellDataIn.Steel = steel_cb.Text;
 
+            //pressure
+            ellipticalShellDataIn.IsPressureIn = vn_rb.Checked;
+
             ellipticalShellDataIn.CheckData();
             if (ellipticalShellDataIn.IsDataGood)
             {

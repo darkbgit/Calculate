@@ -128,7 +128,7 @@ namespace calcNet
         {
             _c = (element as Shell).c;
             _s_calcr = (element as Shell).s_calcr;
-            _p_deShell = (element as Shell).p_de;
+            if (!nozzleDataIn.ShellDataIn.IsPressureIn) _p_deShell = (element as Shell).p_de;
             if (nozzleDataIn.ShellDataIn.ShellType == ShellType.Conical) _Dk = (element as ConicalShell).Dk;
 
             // расчет Dp, dp
@@ -146,14 +146,20 @@ namespace calcNet
                     }
                 case ShellType.Elliptical:
                     {
-                        //if ((shell as EllipticalShell)nozzleDataIn.ShellDataIn.elH * 100 == nozzleDataIn.ShellDataIn.D * 25)
-                        //{
-                        //    _Dp = nozzleDataIn.ShellDataIn.D * 2 * Math.Sqrt(1 - 3 * Math.Pow(nozzleDataIn.elx / nozzleDataIn.ShellDataIn.D, 2));
-                        //}
-                        //else
-                        //{
-                        //    _Dp = Math.Pow(nozzleDataIn.ShellDataIn.D, 2) / (nozzleDataIn.ShellDataIn.elH * 2) * Math.Sqrt(1 - (4 * (Math.Pow(nozzleDataIn.ShellDataIn.D, 2) - 4 * Math.Pow(nozzleDataIn.ShellDataIn.elH, 2)) * Math.Pow(nozzleDataIn.elx, 2)) / Math.Pow(nozzleDataIn.ShellDataIn.D, 4));
-                        //}
+                        if ((nozzleDataIn.ShellDataIn as EllipticalShellDataIn).ellH * 100 ==
+                            nozzleDataIn.ShellDataIn.D * 25)
+                        {
+                            _Dp = nozzleDataIn.ShellDataIn.D * 2 * Math.Sqrt(1 - 3 * Math.Pow(nozzleDataIn.ellx / nozzleDataIn.ShellDataIn.D, 2));
+                        }
+                        else
+                        {
+                            _Dp = Math.Pow(nozzleDataIn.ShellDataIn.D, 2) /
+                                ((nozzleDataIn.ShellDataIn as EllipticalShellDataIn).ellH * 2) *
+                                Math.Sqrt(1 - (4 * (Math.Pow(nozzleDataIn.ShellDataIn.D, 2) - 4 *
+                                Math.Pow((nozzleDataIn.ShellDataIn as EllipticalShellDataIn).ellH, 2)) *
+                                               Math.Pow(nozzleDataIn.ellx, 2)) /
+                                    Math.Pow(nozzleDataIn.ShellDataIn.D, 4));
+                        }
                         break;
                     }
                 case ShellType.Spherical:

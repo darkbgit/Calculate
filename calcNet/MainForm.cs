@@ -231,9 +231,9 @@ namespace calcNet
         {
             int idx = Word_lv.SelectedItems[0].Index;
             MoveSelectedItemListView(Word_lv, idx,  true);
-            var temp = DataWordOut.DataArr[idx];
-            DataWordOut.DataArr[idx] = DataWordOut.DataArr[idx - 1];
-            DataWordOut.DataArr[idx - 1] = temp;
+            var temp = Elements.ElementsList[idx];
+            Elements.ElementsList[idx] = Elements.ElementsList[idx - 1];
+            Elements.ElementsList[idx - 1] = temp;
 
         }
 
@@ -241,16 +241,16 @@ namespace calcNet
         {
             int idx = Word_lv.SelectedItems[0].Index;
             MoveSelectedItemListView(Word_lv, idx, false);
-            var temp = DataWordOut.DataArr[idx];
-            DataWordOut.DataArr[idx] = DataWordOut.DataArr[idx + 1];
-            DataWordOut.DataArr[idx + 1] = temp;
+            var temp = Elements.ElementsList[idx];
+            Elements.ElementsList[idx] = Elements.ElementsList[idx + 1];
+            Elements.ElementsList[idx + 1] = temp;
         }
 
         private void Del_b_Click(object sender, EventArgs e)
         {
             int idx = Word_lv.SelectedItems[0].Index;
             Word_lv.SelectedItems[0].Remove();
-            DataWordOut.DataArr.RemoveAt(idx);
+            Elements.ElementsList.RemoveAt(idx);
             //Word_lv.SelectedItems.Clear();
 
         }

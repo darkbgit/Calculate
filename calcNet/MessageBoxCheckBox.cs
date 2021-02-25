@@ -31,28 +31,8 @@ namespace calcNet
                 NozzleForm nf = new NozzleForm(element, (ShellDataIn)dataIn)
                 {
                     Owner = this.Owner,
-                    //DataInOutShellWithNozzle = (Owner as FormShell).DataInOutShell
                 };
-                //Owner.DataArrEl
-                //if (this.Owner is CilForm cf)
-                //{
-                //    DataWordOut.DataOutArrEl data_InOut = new DataWordOut.DataOutArrEl
-                //    {
-                //        Data_In = cf.DataInOutShell.Data_In,
-                //        Data_Out = cf.DataInOutShell.Data_Out
-                //    };
-                //    nf.DataInOutShellWithNozzle = data_InOut;
-                //}
-                //else if (this.Owner is EllForm ef)
-                //{
-                //    DataWordOut.DataOutArrEl data_InOut = new DataWordOut.DataOutArrEl
-                //    {
-                //        Data_In = ef.DataArrEl.Data_In,
-                //        Data_Out = ef.DataArrEl.Data_Out
-                //    };
-                //    nf.DataInOutShellWithNozzle = data_InOut;
-                //}
-                
+               
                 nf.Show();
             }
         }
