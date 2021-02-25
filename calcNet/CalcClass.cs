@@ -515,9 +515,12 @@ namespace calcNet
         }
 
 
-
-
-
+        
+        private static void CalculateConicalShell(in Data_in d_in, ref Data_out d_out) // TODO: добавить расчет конуса
+        {
+            //Data_out d_out = new Data_out { err = "" };
+            //return d_out;
+        }
 
         
 

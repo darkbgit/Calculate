@@ -1629,7 +1629,7 @@ namespace calcNet
                 d0_l.Text = $"d0={nozzle.d0:f2} мм";
                 p_d_l.Text = $"[p]={nozzle.p_d:f2} МПа";
                 b_l.Text = $"b={nozzle.b:f2} мм";
-                if (this.Owner is MainForm main)
+                if (this.Owner.Owner is MainForm main)
                 {
                     main.Word_lv.Items.Add(nozzle.ToString());
                     Elements.ElementsList.Add(nozzle);

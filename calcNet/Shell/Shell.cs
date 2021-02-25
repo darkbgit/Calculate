@@ -15,7 +15,9 @@ namespace calcNet
 
         internal double c { get => _c; }
         internal double s_calcr { get => _s_calcr; }
+        internal double s_calc { get => _s_calc; }
         internal double p_de { get => _p_de; }
+        internal double p_d { get => _p_d; }
 
         public bool IsCriticalError { get => isCriticalError; }
         public bool IsError { get => isError; }

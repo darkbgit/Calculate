@@ -33,118 +33,226 @@ namespace calcNet
 
         private void EllForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (sender is EllForm)
+            if (sender is EllForm && this.Owner is MainForm main)
             {
-                if (this.Owner is MainForm main)
+                if (main.ef != null)
                 {
-                    if (main.ef != null)
-                    {
-                        main.ef = null;
-                    }
+                    main.ef = null;
                 }
             }
+
         }
 
         private void PredCalc_b_Click(object sender, EventArgs e)
         {
-            private List<string> dataInErr = new List<string>();
+            const string WRONG_INPUT = " неверный ввод";
+            List<string> dataInErr = new List<string>();
 
-        //t
-        //InputClass.GetInput_t(t_tb, ref d_in, ref dataInErr);
+            //t
+            {
+                if (double.TryParse(t_tb.Text, System.Globalization.NumberStyles.Integer,
+                    System.Globalization.CultureInfo.InvariantCulture, out double t))
+                {
+                    ellipticalShellDataIn.t = t;
+                }
+                else
+                {
+                    dataInErr.Add(nameof(t) + WRONG_INPUT);
+                }
+            }
 
-        //steel
-    
-        ellipticalShellDataIn.Steel = steel_cb.Text;
+            //steel
+            ellipticalShellDataIn.Steel = steel_cb.Text;
 
-            bool isNotError = dataInErr == "";
-            if (isNotError)
+            ellipticalShellDataIn.CheckData();
+            if (ellipticalShellDataIn.IsDataGood)
             {
                 //[σ]
-                InputClass.GetInput_sigma_d(sigma_d_tb, ref d_in, ref dataInErr);
+                //InputClass.GetInput_sigma_d(sigma_d_tb, ref d_in, ref dataInErr);
+                {
+                    double sigma_d = 0;
+                    if (sigma_d_tb.ReadOnly)
+                    {
 
-                d_in.isPressureIn = vn_rb.Checked;
+                        CalcClass.GetSigma(ellipticalShellDataIn.Steel,
+                            ellipticalShellDataIn.t,
+                            ref sigma_d,
+                            ref dataInErr);
+                        sigma_d_tb.ReadOnly = false;
+                        sigma_d_tb.Text = sigma_d.ToString();
+                        sigma_d_tb.ReadOnly = true;
+                    }
+                    else
+                    {
+                        if (!double.TryParse(sigma_d_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
+                            System.Globalization.CultureInfo.InvariantCulture, out sigma_d))
+                        {
+                            dataInErr.Add("[σ]"+ WRONG_INPUT);
+                        }
+                    }
+                    ellipticalShellDataIn.sigma_d = sigma_d;
+                }
 
-                if (!d_in.isPressureIn)
+
+                if (!ellipticalShellDataIn.IsPressureIn)
                 {
                     //E
-                    InputClass.GetInput_E(E_tb, ref d_in, ref dataInErr);
+                    {
+                        if (double.TryParse(E_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
+                            System.Globalization.CultureInfo.InvariantCulture, out double E))
+                        {
+                            ellipticalShellDataIn.E = E;
+                        }
+                        else
+                        {
+                            dataInErr.Add(nameof(E) + WRONG_INPUT);
+                        }
+                    }
                 }
-            }
 
-            //p
-            InputClass.GetInput_p(p_tb, ref d_in, ref dataInErr);
-
-            //fi
-            InputClass.GetInput_fi(fi_tb, ref d_in, ref dataInErr);
-
-            //D
-            InputClass.GetInput_D(D_tb, ref d_in, ref dataInErr);
-
-            //H
-
-            try
-            {
-                if (Convert.ToInt32(H_tb.Text) > 0)
+                //p
                 {
-                    d_in.elH = Convert.ToInt32(H_tb.Text);
+                    if (double.TryParse(p_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
+                        System.Globalization.CultureInfo.InvariantCulture, out double p))
+                    {
+                        ellipticalShellDataIn.p = p;
+                    }
+                    else
+                    {
+                        dataInErr.Add(nameof(p) + WRONG_INPUT);
+                    }
+                }
+
+                //fi
+                {
+                    if (double.TryParse(fi_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
+                        System.Globalization.CultureInfo.InvariantCulture, out double fi))
+                    {
+                        ellipticalShellDataIn.fi = fi;
+                    }
+                    else
+                    {
+                        dataInErr.Add("φ" + WRONG_INPUT);
+                    }
+                }
+
+                //D
+                {
+                    if (double.TryParse(D_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
+                        System.Globalization.CultureInfo.InvariantCulture, out double D))
+                    {
+                        ellipticalShellDataIn.D = D;
+                    }
+                    else
+                    {
+                        dataInErr.Add(nameof(D) + WRONG_INPUT);
+                    }
+                }
+
+                //H
+                {
+                    if (double.TryParse(H_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
+                        System.Globalization.CultureInfo.InvariantCulture, out double H))
+                    {
+                        ellipticalShellDataIn.ellH = H;
+                    }
+                    else
+                    {
+                        dataInErr.Add(nameof(H) + WRONG_INPUT);
+                    }
+                }
+
+
+                //h1
+                {
+                    if (double.TryParse(h1_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
+                        System.Globalization.CultureInfo.InvariantCulture, out double h1))
+                    {
+                        ellipticalShellDataIn.ellh1 = h1;
+                    }
+                    else
+                    {
+                        dataInErr.Add(nameof(h1) + WRONG_INPUT);
+                    }
+                }
+
+                //c1
+                //    InputClass.GetInput_c1(c1_tb, ref d_in, ref dataInErr);
+                {
+                    if (double.TryParse(c1_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
+                        System.Globalization.CultureInfo.InvariantCulture, out double c1))
+                    {
+                        ellipticalShellDataIn.c1 = c1;
+                    }
+                    else
+                    {
+                        dataInErr.Add("c1 неверный ввод");
+                    }
+                }
+
+                //c2
+                //    InputClass.GetInput_c2(c2_tb, ref d_in, ref dataInErr);
+                {
+                    if (c2_tb.Text == "")
+                    {
+                        ellipticalShellDataIn.c2 = 0;
+                    }
+                    else if (double.TryParse(c2_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
+                        System.Globalization.CultureInfo.InvariantCulture, out double c2))
+                    {
+                        ellipticalShellDataIn.c2 = c2;
+                    }
+                    else
+                    {
+                        dataInErr.Add("c2 неверный ввод");
+                    }
+                }
+
+                //c3
+                {
+                    if (c3_tb.Text == "")
+                    {
+                        ellipticalShellDataIn.c3 = 0;
+                    }
+                    else if (double.TryParse(c3_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
+                        System.Globalization.CultureInfo.InvariantCulture, out double c3))
+                    {
+                        ellipticalShellDataIn.c3 = c3;
+                    }
+                    else
+                    {
+                        dataInErr.Add("c3 неверный ввод");
+                    }
+                }
+
+                ellipticalShellDataIn.EllipticalBottomType = ell_rb.Checked ? EllipticalBottomType.Elliptical : EllipticalBottomType.Hemispherical;
+
+                ellipticalShellDataIn.CheckData();
+                bool isNotError = dataInErr.Count == 0 && ellipticalShellDataIn.IsDataGood;
+
+                if (isNotError)
+                {
+                    EllipticalShell ell = new EllipticalShell(ellipticalShellDataIn);
+                    ell.Calculate();
+                    if (!ell.IsCriticalError)
+                    {
+                        c_tb.Text = $"{ell.c:f2}";
+                        scalc_l.Text = $"sp={ell.s_calc:f3} мм";
+                        calc_b.Enabled = true;
+                    }
+                    else
+                    {
+                        MessageBox.Show(string.Join<string>(Environment.NewLine, ell.ErrorList));
+                    }
                 }
                 else
                 {
-                    dataInErr += "H должно быть больше 0\n";
+                    MessageBox.Show(string.Join<string>(Environment.NewLine, dataInErr.Union(ellipticalShellDataIn.ErrorList)));
                 }
-            }
-            catch
-            {
-                dataInErr += "H неверные данные\n";
-            }
-
-            //h1
-            try
-            {
-                if (Convert.ToInt32(h1_tb.Text) > 0)
-                {
-                    d_in.elh1 = Convert.ToInt32(h1_tb.Text);
-                }
-                else
-                {
-                    dataInErr += "h1 должно быть больше 0\n";
-                }
-            }
-            catch
-            {
-                dataInErr += "h1 неверные данные\n";
-            }
-
-            //c1
-            InputClass.GetInput_c1(c1_tb, ref d_in, ref dataInErr);
-
-            //c2
-            InputClass.GetInput_c2(c2_tb, ref d_in, ref dataInErr);
-
-            //c3
-            InputClass.GetInput_c3(c3_tb, ref d_in, ref dataInErr);
-
-            if (ell_rb.Checked)
-                d_in.ellipticalBottomType = EllipticalBottomType.Elliptical;
-            else
-                d_in.ellipticalBottomType = EllipticalBottomType.Hemispherical;
-            
-
-            if (dataInErr == "")
-            {
-                //Data_out d_out = new Data_out();
-                //CalcClass.CalculateShell(in d_in, ref d_out);
-                //if (d_out.err != null)
-                //{
-                //    System.Windows.Forms.MessageBox.Show(d_out.err);
-                //}
-                //c_tb.Text = $"{d_out.c:f2}";
-                //scalc_l.Text = $"sp={d_out.s_calc:f3} мм";
-                //calc_b.Enabled = true;
             }
             else
             {
-                System.Windows.Forms.MessageBox.Show(dataInErr);
+                MessageBox.Show(string.Join<string>(Environment.NewLine, dataInErr));
             }
         }
 
@@ -162,149 +270,69 @@ namespace calcNet
 
         private void Calc_b_Click(object sender, EventArgs e)
         {
-            Data_in d_in = new Data_in(ShellType.Elliptical);
+            c_tb.Text = "";
+            scalc_l.Text = "";
 
-            string dataInErr = "";
+            List<string> dataInErr = new List<string>();
 
             //name
-            d_in.Name = name_tb.Text;
-
-            //t
-            //InputClass.GetInput_t(t_tb, ref d_in, ref dataInErr);
-            
-            //steel
-            d_in.Steel = steel_cb.Text;
-
-            bool isNotError = dataInErr == "";
-            if (isNotError)
-            {
-                //[σ]
-                InputClass.GetInput_sigma_d(sigma_d_tb, ref d_in, ref dataInErr);
-
-                d_in.isPressureIn = vn_rb.Checked;
-
-                if (!d_in.isPressureIn)
-                {
-                    //E
-                    InputClass.GetInput_E(E_tb, ref d_in, ref dataInErr);
-                }
-            }
-
-            //p
-            InputClass.GetInput_p(p_tb, ref d_in, ref dataInErr);
-
-            //fi
-            InputClass.GetInput_fi(fi_tb, ref d_in, ref dataInErr);
-
-            //D
-            InputClass.GetInput_D(D_tb, ref d_in, ref dataInErr);
-
-
-            try
-            {
-                if (Convert.ToInt32(H_tb.Text) > 0)
-                {
-                    d_in.elH = Convert.ToInt32(H_tb.Text);
-                }
-                else
-                {
-                    dataInErr += "H должно быть больше 0\n";
-                }
-            }
-            catch
-            {
-                dataInErr += "H неверные данные\n";
-            }
-
-            try
-            {
-                if (Convert.ToInt32(h1_tb.Text) > 0)
-                {
-                    d_in.elh1 = Convert.ToInt32(h1_tb.Text);
-                }
-                else
-                {
-                    dataInErr += "h1 должно быть больше 0\n";
-                }
-            }
-            catch
-            {
-                dataInErr += "h1 неверные данные\n";
-            }
-
-            //c1
-            InputClass.GetInput_c1(c1_tb, ref d_in, ref dataInErr);
-
-            //c2
-            InputClass.GetInput_c2(c2_tb, ref d_in, ref dataInErr);
-
-            //c3
-            InputClass.GetInput_c3(c3_tb, ref d_in, ref dataInErr);
+            ellipticalShellDataIn.Name = name_tb.Text;
 
             //s
-            InputClass.GetInput_s(s_tb, ref d_in, ref dataInErr);
-
-            if (ell_rb.Checked)
             {
-                d_in.ellipticalBottomType = EllipticalBottomType.Elliptical;
-            }
-            else
-            {
-                d_in.ellipticalBottomType = EllipticalBottomType.Hemispherical;
+                if (double.TryParse(s_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
+                System.Globalization.CultureInfo.InvariantCulture, out double s))
+                {
+                    ellipticalShellDataIn.s = s;
+                }
+                else
+                {
+                    dataInErr.Add(nameof(s) + " неверный ввод");
+                }
             }
 
-            isNotError = dataInErr == "";
+            ellipticalShellDataIn.CheckData();
+            bool isNotError = dataInErr.Count == 0 && ellipticalShellDataIn.IsDataGood;
+
             if (isNotError)
             {
-                //Data_out d_out = new Data_out();
-                //CalcClass.Calculate(in d_in, ref d_out);
-                //if (!d_out.isCriticalError) // если нет ошибок расчета
-                //{
-                //    p_d_l.Text = $"[p]={d_out.p_d:f2} МПа";
-                //    scalc_l.Text = $"sp={d_out.s_calc:f3} мм";
+                EllipticalShell ellipticalShell = new EllipticalShell(ellipticalShellDataIn);
+                ellipticalShell.Calculate();
+                if (!ellipticalShell.IsCriticalError)
+                {
+                    scalc_l.Text = $"sp={ellipticalShell.s_calc:f3} мм";
+                    p_d_l.Text = $"pd={ellipticalShell.p_d:f3} МПа";
 
-                //    if (this.Owner is MainForm main)
-                //    {
-                //        int i;
-                //        main.Word_lv.Items.Add($"{d_in.D} мм, {d_in.p} МПа, {d_in.temp} C, {d_in.shellType}");
-                //        i = main.Word_lv.Items.Count;
+                    if (this.Owner is MainForm main)
+                    {
+                        main.Word_lv.Items.Add(ellipticalShell.ToString());
+                        Elements.ElementsList.Add(ellipticalShell);
+                    }
+                    else
+                    {
+                        System.Windows.Forms.MessageBox.Show("MainForm Error");
+                    }
 
-                //        DataWordOut.DataOutArrEl dataArrEl = new DataWordOut.DataOutArrEl
-                //        {
-                //            Data_In = d_in,
-                //            Data_Out = d_out,
-                //            id = i,
-                //            calculatedElementType = CalculatedElementType.Elliptical
-                //        };
+                    if (ellipticalShell.IsError)
+                    {
+                        MessageBox.Show(string.Join<string>(Environment.NewLine, ellipticalShell.ErrorList));
+                    }
 
-                //        DataInOutShell = dataArrEl;
+                    System.Windows.Forms.MessageBox.Show("Calculation complete");
 
-                //        DataWordOut.DataArr.Add(DataInOutShell);
-                //    }
-                //    else
-                //    {
-                //        System.Windows.Forms.MessageBox.Show("MainForm Error");
-                //    }
-
-                //    if (d_out.isError)
-                //    {
-                //        System.Windows.Forms.MessageBox.Show(d_out.err);
-                //    }
-                    
-                //    System.Windows.Forms.MessageBox.Show("Calculation complete");
-                    
-                //    MessageBoxCheckBox mbcb = new MessageBoxCheckBox { Owner = this };
-                //    mbcb.ShowDialog();
-                //}
-                //else
-                //{
-                //    System.Windows.Forms.MessageBox.Show(d_out.err);
-                //}
+                    MessageBoxCheckBox mbcb = new MessageBoxCheckBox(ellipticalShell, ellipticalShellDataIn) { Owner = this };
+                    mbcb.ShowDialog();
+                }
+                else
+                {
+                    MessageBox.Show(string.Join<string>(Environment.NewLine, ellipticalShell.ErrorList));
+                }
             }
             else
             {
-                System.Windows.Forms.MessageBox.Show(dataInErr);
+                MessageBox.Show(string.Join<string>(Environment.NewLine, dataInErr.Union(ellipticalShellDataIn.ErrorList)));
             }
+            
         }
 
         private void Ell_Polysfer_rb_CheckedChanged(object sender, EventArgs e)

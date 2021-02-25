@@ -452,24 +452,20 @@ namespace calcNet
 
  
         
-        //internal double c { get => _c; }
+
 
         internal bool IsConditionUseFormuls { get => isConditionUseFormuls; }
 
-        //public bool IsCriticalError { get => isCriticalError; }
-        //public bool IsError { get => isError; }
-        //public List <string> ErrorList { get => err; }
 
-        //internal double s_calcr { get => _s_calcr; }
+       
         
-        internal double s_calc { get => _s_calc; }
         
         internal double s_calcr1 { get => _s_calcr1;  }
         internal double s_calcr2 { get => _s_calcr2;  }
         internal double s_calcrf { get => _s_calcrf;  }
         internal double s_calcf { get => _s_calcf;  }
         
-        internal double p_d { get => _p_d;  }
+        
         
         internal double b { get => _b;  }
         internal double b_2 { get => _b_2; }

@@ -22,9 +22,23 @@ namespace calcNet
 
 
         //public double ellx { get => _ellx; set => _ellx = value; }
-        public double ellH { get => _ellH; }
-        public double ellh1 { get => _ellh1; }
-        public EllipticalBottomType EllipticalBottomType { get => _ellipticalBottomType; }
+        public double ellH 
+        {
+            get => _ellH;
+            set => _ellH = value;
+        }
+
+        public double ellh1
+        {
+            get => _ellh1;
+            set => _ellh1 = value;
+        }
+
+        public EllipticalBottomType EllipticalBottomType
+        {
+            get => _ellipticalBottomType;
+            set => _ellipticalBottomType = value;
+        }
         
     }
 }
