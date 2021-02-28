@@ -324,13 +324,17 @@ namespace calcNet
             if (isNotError)
             {
 
-                d_out.M_d = (0.0000089 * d_in.E) / d_in.ny * Math.Pow(d_in.D, 3) * Math.Pow((100 * (d_in.s - d_in.c)) / d_in.D, 2.5);
+                d_out.M_d = (0.0000089 * d_in.E) / d_in.ny * Math.Pow(d_in.D, 3) *
+                            Math.Pow((100 * (d_in.s - d_in.c)) / d_in.D, 2.5);
                 // UNDONE: проверить формулу для расчета [F]
-                d_out.F_d = (0.0000031 * d_in.E) / d_in.ny * Math.Pow(d_in.D, 2) * Math.Pow((100 * (d_in.s - d_in.c)) / d_in.D, 2.5);
-                d_out.Q_d = (2.4 * d_in.E * Math.Pow(d_in.s - d_in.c, 2)) / d_in.ny * (0.18 + 3.3 * d_in.D * (d_in.s - d_in.c)) / Math.Pow(d_in.L, 2);
+                d_out.F_d = (0.0000031 * d_in.E) / d_in.ny * Math.Pow(d_in.D, 2) *
+                            Math.Pow((100 * (d_in.s - d_in.c)) / d_in.D, 2.5);
+                d_out.Q_d = (2.4 * d_in.E * Math.Pow(d_in.s - d_in.c, 2)) / d_in.ny *
+                    (0.18 + 3.3 * d_in.D * (d_in.s - d_in.c)) / Math.Pow(d_in.L, 2);
                 d_out.B1_2 = 9.45 * (d_in.D / d_in.L) * Math.Sqrt(d_in.D / (100 * (d_in.s - d_in.c)));
                 d_out.B1 = Math.Min(1, d_out.B1_2);
-                d_out.p_d = (0.00000208 * d_in.E) / (d_in.ny * d_out.B1) * (d_in.D / d_in.L) * Math.Pow(100 * (d_in.s - d_in.c) / d_in.D, 2.5);
+                d_out.p_d = (0.00000208 * d_in.E) / (d_in.ny * d_out.B1) * (d_in.D / d_in.L) *
+                            Math.Pow(100 * (d_in.s - d_in.c) / d_in.D, 2.5);
 
 
                 d_out.q = d_in.G / (d_in.L + (4 / 3) * d_in.H);

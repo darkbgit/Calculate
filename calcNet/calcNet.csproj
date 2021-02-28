@@ -40,9 +40,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="data.xml">
+    <None Update="data\data.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Saddle\" />
   </ItemGroup>
 
 </Project>

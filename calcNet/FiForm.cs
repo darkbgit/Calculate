@@ -12,6 +12,8 @@ namespace calcNet
 {
     public partial class FiForm : Form
     {
+
+
         public FiForm()
         {
             InitializeComponent();
