@@ -100,10 +100,10 @@ namespace calcNet
             this.vid_rb1 = new System.Windows.Forms.RadioButton();
             this.E1_tb = new System.Windows.Forms.TextBox();
             this.sigma_d1_tb = new System.Windows.Forms.TextBox();
-            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.ring_gb = new System.Windows.Forms.GroupBox();
             this.steel2_cb = new System.Windows.Forms.ComboBox();
             this.label31 = new System.Windows.Forms.Label();
-            this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.in_gb = new System.Windows.Forms.GroupBox();
             this.steel3_cb = new System.Windows.Forms.ComboBox();
             this.label17 = new System.Windows.Forms.Label();
             this.label27 = new System.Windows.Forms.Label();
@@ -135,8 +135,8 @@ namespace calcNet
             this.pressure_gb.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.vid_pictureBox)).BeginInit();
             this.vid_gb.SuspendLayout();
-            this.groupBox6.SuspendLayout();
-            this.groupBox7.SuspendLayout();
+            this.ring_gb.SuspendLayout();
+            this.in_gb.SuspendLayout();
             this.groupBox8.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -864,22 +864,23 @@ namespace calcNet
             this.sigma_d1_tb.Size = new System.Drawing.Size(46, 23);
             this.sigma_d1_tb.TabIndex = 73;
             // 
-            // groupBox6
+            // ring_gb
             // 
-            this.groupBox6.Controls.Add(this.steel2_cb);
-            this.groupBox6.Controls.Add(this.label31);
-            this.groupBox6.Controls.Add(this.label15);
-            this.groupBox6.Controls.Add(this.l2_tb);
-            this.groupBox6.Controls.Add(this.s2_tb);
-            this.groupBox6.Controls.Add(this.label16);
-            this.groupBox6.Controls.Add(this.label22);
-            this.groupBox6.Controls.Add(this.label23);
-            this.groupBox6.Location = new System.Drawing.Point(13, 414);
-            this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(339, 120);
-            this.groupBox6.TabIndex = 121;
-            this.groupBox6.TabStop = false;
-            this.groupBox6.Text = "Накладное кольцо";
+            this.ring_gb.Controls.Add(this.steel2_cb);
+            this.ring_gb.Controls.Add(this.label31);
+            this.ring_gb.Controls.Add(this.label15);
+            this.ring_gb.Controls.Add(this.l2_tb);
+            this.ring_gb.Controls.Add(this.s2_tb);
+            this.ring_gb.Controls.Add(this.label16);
+            this.ring_gb.Controls.Add(this.label22);
+            this.ring_gb.Controls.Add(this.label23);
+            this.ring_gb.Enabled = false;
+            this.ring_gb.Location = new System.Drawing.Point(13, 414);
+            this.ring_gb.Name = "ring_gb";
+            this.ring_gb.Size = new System.Drawing.Size(339, 120);
+            this.ring_gb.TabIndex = 121;
+            this.ring_gb.TabStop = false;
+            this.ring_gb.Text = "Накладное кольцо";
             // 
             // steel2_cb
             // 
@@ -893,29 +894,30 @@ namespace calcNet
             // label31
             // 
             this.label31.AutoSize = true;
-            this.label31.Location = new System.Drawing.Point(79, 25);
+            this.label31.Location = new System.Drawing.Point(18, 25);
             this.label31.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label31.Name = "label31";
-            this.label31.Size = new System.Drawing.Size(116, 15);
+            this.label31.Size = new System.Drawing.Size(174, 15);
             this.label31.TabIndex = 72;
-            this.label31.Text = "Материал штуцера:";
+            this.label31.Text = "Материал накладного кольца:";
             // 
-            // groupBox7
+            // in_gb
             // 
-            this.groupBox7.Controls.Add(this.steel3_cb);
-            this.groupBox7.Controls.Add(this.label17);
-            this.groupBox7.Controls.Add(this.label27);
-            this.groupBox7.Controls.Add(this.l3_tb);
-            this.groupBox7.Controls.Add(this.s3_tb);
-            this.groupBox7.Controls.Add(this.label28);
-            this.groupBox7.Controls.Add(this.label32);
-            this.groupBox7.Controls.Add(this.label33);
-            this.groupBox7.Location = new System.Drawing.Point(13, 540);
-            this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(339, 120);
-            this.groupBox7.TabIndex = 122;
-            this.groupBox7.TabStop = false;
-            this.groupBox7.Text = "Накладное кольцо";
+            this.in_gb.Controls.Add(this.steel3_cb);
+            this.in_gb.Controls.Add(this.label17);
+            this.in_gb.Controls.Add(this.label27);
+            this.in_gb.Controls.Add(this.l3_tb);
+            this.in_gb.Controls.Add(this.s3_tb);
+            this.in_gb.Controls.Add(this.label28);
+            this.in_gb.Controls.Add(this.label32);
+            this.in_gb.Controls.Add(this.label33);
+            this.in_gb.Enabled = false;
+            this.in_gb.Location = new System.Drawing.Point(13, 540);
+            this.in_gb.Name = "in_gb";
+            this.in_gb.Size = new System.Drawing.Size(339, 120);
+            this.in_gb.TabIndex = 122;
+            this.in_gb.TabStop = false;
+            this.in_gb.Text = "Внутренняя часть";
             // 
             // steel3_cb
             // 
@@ -1174,8 +1176,8 @@ namespace calcNet
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(804, 860);
             this.Controls.Add(this.groupBox8);
-            this.Controls.Add(this.groupBox7);
-            this.Controls.Add(this.groupBox6);
+            this.Controls.Add(this.in_gb);
+            this.Controls.Add(this.ring_gb);
             this.Controls.Add(this.vid_gb);
             this.Controls.Add(this.nameEl_tb);
             this.Controls.Add(this.label30);
@@ -1237,10 +1239,10 @@ namespace calcNet
             ((System.ComponentModel.ISupportInitialize)(this.vid_pictureBox)).EndInit();
             this.vid_gb.ResumeLayout(false);
             this.vid_gb.PerformLayout();
-            this.groupBox6.ResumeLayout(false);
-            this.groupBox6.PerformLayout();
-            this.groupBox7.ResumeLayout(false);
-            this.groupBox7.PerformLayout();
+            this.ring_gb.ResumeLayout(false);
+            this.ring_gb.PerformLayout();
+            this.in_gb.ResumeLayout(false);
+            this.in_gb.PerformLayout();
             this.groupBox8.ResumeLayout(false);
             this.groupBox8.PerformLayout();
             this.ResumeLayout(false);
@@ -1313,9 +1315,9 @@ namespace calcNet
         private System.Windows.Forms.RadioButton vid_rb3;
         private System.Windows.Forms.RadioButton vid_rb2;
         private System.Windows.Forms.RadioButton vid_rb1;
-        private System.Windows.Forms.GroupBox groupBox6;
+        private System.Windows.Forms.GroupBox ring_gb;
         private System.Windows.Forms.Label label31;
-        private System.Windows.Forms.GroupBox groupBox7;
+        private System.Windows.Forms.GroupBox in_gb;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Label label27;
         private System.Windows.Forms.TextBox l3_tb;

@@ -496,6 +496,7 @@ namespace calcNet
                 rb7.Enabled = isCompress;
             }
         }
+
     }
 }
 

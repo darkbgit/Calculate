@@ -193,7 +193,7 @@ namespace calcNet
             this.t_tb.Name = "t_tb";
             this.t_tb.Size = new System.Drawing.Size(46, 23);
             this.t_tb.TabIndex = 3;
-            this.t_tb.Text = "50";
+            this.t_tb.Text = "20";
             // 
             // label4
             // 
@@ -248,7 +248,7 @@ namespace calcNet
             this.p_tb.Name = "p_tb";
             this.p_tb.Size = new System.Drawing.Size(46, 23);
             this.p_tb.TabIndex = 4;
-            this.p_tb.Text = "1";
+            this.p_tb.Text = "3.1";
             // 
             // dav_gb
             // 
@@ -358,7 +358,7 @@ namespace calcNet
             this.c1_tb.Name = "c1_tb";
             this.c1_tb.Size = new System.Drawing.Size(46, 23);
             this.c1_tb.TabIndex = 11;
-            this.c1_tb.Text = "1";
+            this.c1_tb.Text = "2";
             // 
             // c2_tb
             // 
@@ -367,7 +367,7 @@ namespace calcNet
             this.c2_tb.Name = "c2_tb";
             this.c2_tb.Size = new System.Drawing.Size(46, 23);
             this.c2_tb.TabIndex = 12;
-            this.c2_tb.Text = "1";
+            this.c2_tb.Text = "0.8";
             // 
             // c3_tb
             // 
@@ -485,7 +485,7 @@ namespace calcNet
             this.s_tb.Name = "s_tb";
             this.s_tb.Size = new System.Drawing.Size(46, 23);
             this.s_tb.TabIndex = 15;
-            this.s_tb.Text = "6";
+            this.s_tb.Text = "12";
             // 
             // label18
             // 

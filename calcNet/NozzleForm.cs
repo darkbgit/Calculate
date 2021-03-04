@@ -32,11 +32,28 @@ namespace calcNet
 
         private void Vid_rb_CheckedChanged(object sender, EventArgs e)
         {
-            // приводим отправителя к элементу типа RadioButton
             RadioButton rb = sender as RadioButton;
             if (rb.Checked)
             {
-                vid_pictureBox.Image = (Bitmap)calcNet.Properties.Resources.ResourceManager.GetObject("Nozzle" + rb.Text[0]); 
+                int i = Convert.ToInt32(rb.Text[0].ToString());
+                vid_pictureBox.Image = (Bitmap)calcNet.Properties.Resources.ResourceManager.GetObject("Nozzle" + i.ToString());
+
+                ring_gb.Enabled = false;
+                in_gb.Enabled = false;
+                switch (i)
+                {
+                    case (int)NozzleKind.ImpassWithRing:
+                        ring_gb.Enabled = true;
+                        break;
+                    case (int)NozzleKind.PassWithoutRing:
+                        in_gb.Enabled = true;
+                        break;
+                    case (int)NozzleKind.PassWithRing:
+                    case (int)NozzleKind.WithRingAndInPart:
+                        ring_gb.Enabled = true;
+                        in_gb.Enabled = true;
+                        break;
+                 }
             }
         }
 
@@ -1494,9 +1511,8 @@ namespace calcNet
 
             var checkedPlaceButton = place_gb.Controls.OfType<RadioButton>().FirstOrDefault(rb => rb.Checked);
 
-            string chekedRadioButtonText;
-            chekedRadioButtonText = checkedPlaceButton.Text;
-            switch (chekedRadioButtonText)
+            var checkedRadioButtonText = checkedPlaceButton.Text;
+            switch (checkedRadioButtonText)
             {
                 case PERPENDICULAR:
                     if (!nozzleData.IsOval)
@@ -1556,14 +1572,7 @@ namespace calcNet
                             nozzleData.gamma =
                                 Convert.ToDouble((place_gb.Controls["pn"].Controls["gamma_tb"] as TextBox)
                                     .Text);
-                            if (nozzleData.omega == 0)
-                            {
-                                nozzleData.Location = NozzleLocation.LocationAccordingToParagraph_5_2_2_5;
-                            }
-                            else
-                            {
-                                nozzleData.Location = NozzleLocation.LocationAccordingToParagraph_5_2_2_4;
-                            }
+                            nozzleData.Location = nozzleData.omega == 0 ? NozzleLocation.LocationAccordingToParagraph_5_2_2_5 : NozzleLocation.LocationAccordingToParagraph_5_2_2_4;
 
                             break;
                         case ShellType.Spherical:

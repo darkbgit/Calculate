@@ -206,7 +206,7 @@ namespace calcNet
                 else if (i == steelTempNodes.ChildNodes.Count - 1)
                 {
                     dataInErr.Add($"Температура {temp} °С, больше чем максимальная температура {tempBig} °С " +
-                        $"для стали {steel} при которой определяется допускаемое напряжение по ГОСТ 34233.1-2017");
+                                  $"для стали {steel} при которой определяется допускаемое напряжение по ГОСТ 34233.1-2017");
                     return false;
                 }
                 else
@@ -267,7 +267,7 @@ namespace calcNet
                 else if (i == Elist.ChildNodes.Count - 1)//temperature greater then max in data.xml
                 {
                     dataInErr.Add($"Температура {temp} °С, больше чем максимальная температура {tempBig} °С " +
-                        $"для стали {steel} при которой определяется модуль  продольной упругости по ГОСТ 34233.1-2017");
+                                  $"для стали {steel} при которой определяется модуль  продольной упругости по ГОСТ 34233.1-2017");
                     return false;
                 }
                 else

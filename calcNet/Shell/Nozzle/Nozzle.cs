@@ -50,7 +50,7 @@ namespace calcNet
 
 
 
-        internal NozzleKind nozzleKind;
+        //internal NozzleKind nozzleKind;
 
 
 
@@ -246,15 +246,8 @@ namespace calcNet
 
             // l1p, l3p, l2p
             {
-                double d;
-                if (!nozzleDataIn.IsOval)
-                {
-                    d = nozzleDataIn.d;
-                }
-                else
-                {
-                    d = nozzleDataIn.d2;
-                }
+
+                var d = !nozzleDataIn.IsOval ? nozzleDataIn.d : nozzleDataIn.d2;
 
                 _l1p2 = 1.25 * Math.Sqrt((d + 2 * nozzleDataIn.cs) * (nozzleDataIn.s1 - nozzleDataIn.cs));
                 _l1p = Math.Min(nozzleDataIn.l1, _l1p2);
@@ -303,11 +296,25 @@ namespace calcNet
                     break;
             }
 
+            {
+
+            }
 
             _psi1 = Math.Min(1, nozzleDataIn.sigma_d1 / nozzleDataIn.ShellDataIn.sigma_d);
             _psi2 = Math.Min(1, nozzleDataIn.sigma_d2 / nozzleDataIn.ShellDataIn.sigma_d);
             _psi3 = Math.Min(1, nozzleDataIn.sigma_d3 / nozzleDataIn.ShellDataIn.sigma_d);
-            _psi4 = Math.Min(1, nozzleDataIn.sigma_d4 / nozzleDataIn.ShellDataIn.sigma_d);
+
+            switch (nozzleDataIn.NozzleKind)
+            {
+                case NozzleKind.WithTorusshapedInsert:
+                case NozzleKind.WithWealdedRing:
+                    _psi4 = Math.Min(1, nozzleDataIn.sigma_d4 / nozzleDataIn.ShellDataIn.sigma_d);
+                    break;
+                default:
+                    _psi4 = 1;
+                    break;
+            }
+            
 
             _d0p = 0.4 * Math.Sqrt(_Dp * (nozzleDataIn.ShellDataIn.s - _c));
 
