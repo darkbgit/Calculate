@@ -519,7 +519,7 @@ namespace calcNet
                 doc.InsertParagraph().InsertTableAfterSelf(table);
             }
 
-            var image = doc.AddImage($"pic/Nozzle/Nozzle{nozzleDataIn.NozzleKind}.gif");
+            var image = doc.AddImage($"pic/Nozzle/Nozzle{(int)nozzleDataIn.NozzleKind}.gif");
             var picture = image.CreatePicture();
             doc.InsertParagraph().AppendPicture(picture);
 

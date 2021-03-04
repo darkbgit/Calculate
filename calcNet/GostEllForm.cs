@@ -88,7 +88,9 @@ namespace calcNet
             XmlDocument doc = new XmlDocument();
             doc.Load(System.IO.Path.Combine(System.IO.Directory.GetCurrentDirectory(), @"data\data.xml"));
             var root = doc.DocumentElement;
-            XmlNode ell_list = root.SelectSingleNode("ell_list").SelectSingleNode(list).SelectSingleNode("//Dia[@D = '" + D_cb.Text + "']");
+            XmlNode ell_list = root.SelectSingleNode("ell_list")
+                .SelectSingleNode(list)
+                .SelectSingleNode("//Dia[@D = '" + D_cb.Text + "']");
             s_cb.Items.Clear();
             foreach (XmlNode s in ell_list.ChildNodes)
             {
@@ -116,7 +118,10 @@ namespace calcNet
             XmlDocument doc = new XmlDocument();
             doc.Load(System.IO.Path.Combine(System.IO.Directory.GetCurrentDirectory(), @"data\data.xml"));
             var root = doc.DocumentElement;
-            XmlNode s_list = root.SelectSingleNode("ell_list").SelectSingleNode(list).SelectSingleNode("//Dia[@D = '" + D_cb.Text + "']").SelectSingleNode("//el[@s ='" + s_cb.Text + "']");
+            XmlNode s_list = root.SelectSingleNode("ell_list")
+                .SelectSingleNode(list)
+                .SelectSingleNode("//Dia[@D = '" + D_cb.Text + "']")
+                .SelectSingleNode("el[@s ='" + s_cb.Text + "']");
             
             H_tb.Text = s_list.Attributes["H"].Value;
             h1_tb.Text = s_list.Attributes["h1"].Value;
@@ -131,7 +136,7 @@ namespace calcNet
                 ef.H_tb.Text = H_tb.Text;
                 ef.h1_tb.Text = h1_tb.Text;
                 ef.s_tb.Text = s_cb.Text;
-                ef.c3_tb.Text = Convert.ToString(Convert.ToInt32(s_cb.Text) * 0.15);
+                ef.c3_tb.Text = (Convert.ToInt32(s_cb.Text) * 0.15).ToString(System.Globalization.CultureInfo.InvariantCulture);
             }
             this.Close();
         }

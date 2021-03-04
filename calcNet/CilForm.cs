@@ -439,7 +439,7 @@ namespace calcNet
         private void GetE_b_Click(object sender, EventArgs e)
         {
             double E = 0;
-            string dataInErr = "";
+            List<string> dataInErr = new List<string>();
             CalcClass.GetE(steel_cb.Text, Convert.ToInt32(t_tb.Text), ref E, ref dataInErr);
             E_tb.Text = E.ToString();
         }

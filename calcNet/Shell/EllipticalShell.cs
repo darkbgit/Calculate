@@ -252,7 +252,7 @@ namespace calcNet
             {
                 doc.InsertParagraph("Для предварительного расчета ").AppendEquation("К_Э=0.9").Append(" для эллиптических днищ");
                 doc.InsertParagraph().AppendEquation($"(0.9∙{_ellR})/(161)∙√(({_esdi.ny}∙{_esdi.p})/(10^-5∙{_esdi.E}))=" +
-                                                    "{_s_calcr1:f2}");
+                                                    $"{_s_calcr1:f2}");
                 doc.InsertParagraph().AppendEquation($"(1.2∙{_esdi.p}∙{_ellR})/(2∙{_esdi.sigma_d})={_s_calcr2:f2}");
                 doc.InsertParagraph().AppendEquation($"s_1p=max({_s_calcr1:f2};{_s_calcr2:f2})={_s_calcr:f2} мм");
             }
@@ -273,7 +273,7 @@ namespace calcNet
             doc.InsertParagraph("Допускаемое внутреннее избыточное давление вычисляют по формуле:");
             doc.InsertParagraph().AppendEquation("[p]=(2∙[σ]∙φ∙(s_1-c))/(R+0.5∙(s-c))");
             doc.InsertParagraph().AppendEquation($"[p]=(2∙{_esdi.sigma_d}∙{_esdi.fi}∙({_esdi.s}-{_c:f2}))/" +
-                                                "({_elR}+0.5∙({_esdi.s}-{_c:f2}))={_p_d:f2} МПа");
+                                                $"({_ellR}+0.5∙({_esdi.s}-{_c:f2}))={_p_d:f2} МПа");
             doc.InsertParagraph().AppendEquation("[p]≥p");
             doc.InsertParagraph().AppendEquation($"{_p_d:f2}≥{_esdi.p}");
             if (_p_d > _esdi.p)

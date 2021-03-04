@@ -1238,7 +1238,7 @@ namespace calcNet
                     if (E1_tb.ReadOnly)
                     {
 
-                        CalcClass.GetSigma(nozzleData.steel1,
+                        CalcClass.GetE(nozzleData.steel1,
                             nozzleData.t,
                             ref E1,
                             ref dataInErr);
@@ -1430,7 +1430,7 @@ namespace calcNet
                 //E2
                 {
                     double E2 = 0;
-                    CalcClass.GetSigma(nozzleData.steel2,
+                    CalcClass.GetE(nozzleData.steel2,
                             nozzleData.t,
                             ref E2,
                             ref dataInErr);
@@ -1475,14 +1475,14 @@ namespace calcNet
                 //sigma_d3
                 {
                     double sigma_d3 = 0;
-                    CalcClass.GetSigma(nozzleData.steel2, nozzleData.t, ref sigma_d3, ref dataInErr);
+                    CalcClass.GetSigma(nozzleData.steel3, nozzleData.t, ref sigma_d3, ref dataInErr);
                     nozzleData.sigma_d3 = sigma_d3;
                 }
 
                 //E3
                 {
                     double E3 = 0;
-                    CalcClass.GetSigma(nozzleData.steel3,
+                    CalcClass.GetE(nozzleData.steel3,
                             nozzleData.t,
                             ref E3,
                             ref dataInErr);

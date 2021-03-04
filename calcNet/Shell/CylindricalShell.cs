@@ -64,7 +64,7 @@ namespace calcNet
                 table.Rows[i].Cells[0].Paragraphs[0].Append("Внутренний диаметр обечайки, D:");
                 table.Rows[i].Cells[1].Paragraphs[0].Append($"{Csdi.D} мм");
 
-                if (Csdi.IsPressureIn)
+                if (!Csdi.IsPressureIn)
                 {
                     table.InsertRow(++i);
                     table.Rows[i].Cells[0].Paragraphs[0].Append("Длина обечайки, l:");
@@ -175,7 +175,7 @@ namespace calcNet
                 doc.InsertParagraph("Допускаемое внутреннее избыточное давление вычисляют по формуле:");
                 doc.InsertParagraph().AppendEquation("[p]=(2∙[σ]∙φ_p∙(s-c))/(D+s-c)");
                 doc.InsertParagraph().AppendEquation($"[p]=(2∙{Csdi.sigma_d}∙{Csdi.fi}∙({Csdi.s}-{_c:f2}))/" +
-                                                    "({csdi.D}+{csdi.s}-{_c:f2})={_p_d:f2} МПа");
+                                                    $"({Csdi.D}+{Csdi.s}-{_c:f2})={_p_d:f2} МПа");
             }
             else
             {
@@ -184,16 +184,16 @@ namespace calcNet
                 doc.InsertParagraph("допускаемое давление из условия прочности вычисляют по формуле:");
                 doc.InsertParagraph().AppendEquation("[p]_П=(2∙[σ]∙(s-c))/(D+s-c)");
                 doc.InsertParagraph().AppendEquation($"[p]_П=(2∙{Csdi.sigma_d}∙({Csdi.s}-{_c:f2}))/" +
-                                                    "({csdi.D}+{csdi.s}-{_c:f2})={_p_dp:f2} МПа");
+                                                    $"({Csdi.D}+{Csdi.s}-{_c:f2})={_p_dp:f2} МПа");
                 doc.InsertParagraph("допускаемое давление из условия устойчивости в пределах упругости вычисляют по формуле:");
                 doc.InsertParagraph().AppendEquation("[p]_E=(2.08∙10^-5∙E)/(n_y∙B_1)∙D/l∙[(100∙(s-c))/D]^2.5");
                 doc.InsertParagraph("коэффициент ").AppendEquation("B_1").Append(" вычисляют по формуле");
                 doc.InsertParagraph().AppendEquation("B_1=min{1;9.45∙D/l∙√(D/(100∙(s-c)))}");
                 doc.InsertParagraph().AppendEquation($"9.45∙{Csdi.D}/{_l}∙√({Csdi.D}/(100∙({Csdi.s}-{_c:f2})))=" +
-                                                    "{_b1_2:f2}");
+                                                    $"{_b1_2:f2}");
                 doc.InsertParagraph().AppendEquation($"B_1=min(1;{_b1_2:f2})={_b1:f1}");
                 doc.InsertParagraph().AppendEquation($"[p]_E=(2.08∙10^-5∙{Csdi.E})/({Csdi.ny}∙{_b1:f2})∙{Csdi.D}/" +
-                                                    "{_l}∙[(100∙({csdi.s}-{_c:f2}))/{csdi.D}]^2.5={_p_de:f2} МПа");
+                                                    $"{_l}∙[(100∙({Csdi.s}-{_c:f2}))/{Csdi.D}]^2.5={_p_de:f2} МПа");
                 doc.InsertParagraph().AppendEquation($"[p]={_p_dp:f2}/√(1+({_p_dp:f2}/{_p_de:f2})^2)={_p_d:f2} МПа");
             }
 

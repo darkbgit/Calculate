@@ -205,7 +205,8 @@ namespace calcNet
                 }
                 else if (i == steelTempNodes.ChildNodes.Count - 1)
                 {
-                    dataInErr.Add($"Температура {temp} °С, больше чем максимальная температура {tempBig} °С для стали {steel} при которой определяется допускаемое напряжение по ГОСТ 34233.1-2017");
+                    dataInErr.Add($"Температура {temp} °С, больше чем максимальная температура {tempBig} °С " +
+                        $"для стали {steel} при которой определяется допускаемое напряжение по ГОСТ 34233.1-2017");
                     return false;
                 }
                 else
@@ -223,7 +224,7 @@ namespace calcNet
             return true;
         }
 
-        internal static bool GetE(string steel, int temp, ref double E, ref string dataInErr)
+        internal static bool GetE(string steel, double temp, ref double E, ref List<string> dataInErr)
         {
             Regex regex = new Regex(@"(.*)(?=\()");
             MatchCollection matches = regex.Matches(steel);
@@ -247,7 +248,7 @@ namespace calcNet
             XmlNode Elist = root.SelectSingleNode("E_list").SelectSingleNode("//class[@name='" + steelClass + "']");
 
             double ELittle = 0, EBig = 0;
-            int tempLittle = 0, tempBig = 0;
+            double tempLittle = 0, tempBig = 0;
 
             for (int i = 0; i < Elist.ChildNodes.Count; i++)
             {
@@ -265,7 +266,8 @@ namespace calcNet
                 }
                 else if (i == Elist.ChildNodes.Count - 1)//temperature greater then max in data.xml
                 {
-                    dataInErr += $"Температура {temp} °С, больше чем максимальная температура {tempBig} °С для стали {steel} при которой определяется модуль  продольной упругости по ГОСТ 34233.1-2017";
+                    dataInErr.Add($"Температура {temp} °С, больше чем максимальная температура {tempBig} °С " +
+                        $"для стали {steel} при которой определяется модуль  продольной упругости по ГОСТ 34233.1-2017");
                     return false;
                 }
                 else
@@ -307,16 +309,16 @@ namespace calcNet
 
             //E
             {
-                double E = 0;
-                string dataInErr = "";
-                if (GetE(d_in.steel, d_in.temp, ref E, ref dataInErr))
-                {
-                    d_in.E = E;
-                }
-                else
-                {
-                    d_out.err += dataInErr;
-                }
+                //double E = 0;
+                //string dataInErr = "";
+                //if (GetE(d_in.steel, d_in.temp, ref E, ref dataInErr))
+                //{
+                //    d_in.E = E;
+                //}
+                //else
+                //{
+                //    d_out.err += dataInErr;
+                //}
             }
 
             bool isNotError = d_out.err == null;
