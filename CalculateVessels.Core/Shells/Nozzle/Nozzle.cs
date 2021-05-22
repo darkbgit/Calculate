@@ -1,11 +1,15 @@
-﻿using System;
+﻿using CalculateVessels.Core.Interfaces;
+using CalculateVessels.Core.Shells.DataIn;
+using CalculateVessels.Core.Shells.Enums;
+using CalculateVessels.Core.Shells.Nozzle.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Xceed.Document.NET;
 
-namespace calcNet
+namespace CalculateVessels.Core.Shells.Nozzle
 {
-    class Nozzle : IElement
+    public class Nozzle : IElement
     {
         public Nozzle(IElement element, NozzleDataIn nozzleDataIn)
         {
@@ -105,7 +109,7 @@ namespace calcNet
         private double _yslyk1;
         private double _yslyk2;
         private double _B1n;
-        
+
 
         private bool isConditionUseFormuls;
         private double _ypf1;
@@ -141,7 +145,7 @@ namespace calcNet
                     }
                 case ShellType.Conical:
                     {
-                        _Dp = nozzleDataIn.ShellDataIn.D / Math.Cos(Math.PI * 100 * (nozzleDataIn.ShellDataIn as ConicalShellDataIn).alfa);
+                        _Dp = nozzleDataIn.ShellDataIn.D / Math.Cos(Math.PI * 100 * (nozzleDataIn.ShellDataIn as ConicalShellDataIn).alfa1);
                         break;
                     }
                 case ShellType.Elliptical:
@@ -155,9 +159,9 @@ namespace calcNet
                         {
                             _Dp = Math.Pow(nozzleDataIn.ShellDataIn.D, 2) /
                                 ((nozzleDataIn.ShellDataIn as EllipticalShellDataIn).ellH * 2) *
-                                Math.Sqrt(1 - (4 * (Math.Pow(nozzleDataIn.ShellDataIn.D, 2) - 4 *
+                                Math.Sqrt(1 - 4 * (Math.Pow(nozzleDataIn.ShellDataIn.D, 2) - 4 *
                                 Math.Pow((nozzleDataIn.ShellDataIn as EllipticalShellDataIn).ellH, 2)) *
-                                               Math.Pow(nozzleDataIn.ellx, 2)) /
+                                               Math.Pow(nozzleDataIn.ellx, 2) /
                                     Math.Pow(nozzleDataIn.ShellDataIn.D, 4));
                         }
                         break;
@@ -202,7 +206,7 @@ namespace calcNet
                     }
                 case NozzleLocation.LocationAccordingToParagraph_5_2_2_2:
                     {
-                        _dp = Math.Max(nozzleDataIn.d, 0.5 * nozzleDataIn.tTransversely) + (2 * nozzleDataIn.cs); //dp =max{d; 0,5t} + 2cs
+                        _dp = Math.Max(nozzleDataIn.d, 0.5 * nozzleDataIn.tTransversely) + 2 * nozzleDataIn.cs; //dp =max{d; 0,5t} + 2cs
                         break;
                     }
                 case NozzleLocation.LocationAccordingToParagraph_5_2_2_3:
@@ -233,7 +237,7 @@ namespace calcNet
                     }
                 case NozzleLocation.LocationAccordingToParagraph_5_2_2_7:
                     {
-                        _dp = nozzleDataIn.d + 1.5 * (nozzleDataIn.r - _sp) + (2 * nozzleDataIn.cs);
+                        _dp = nozzleDataIn.d + 1.5 * (nozzleDataIn.r - _sp) + 2 * nozzleDataIn.cs;
                         break;
                     }
                 default:
@@ -314,7 +318,7 @@ namespace calcNet
                     _psi4 = 1;
                     break;
             }
-            
+
 
             _d0p = 0.4 * Math.Sqrt(_Dp * (nozzleDataIn.ShellDataIn.s - _c));
 
@@ -423,8 +427,8 @@ namespace calcNet
                     {
                         _ypf1 = (_dp - 2 * nozzleDataIn.cs) / _Dk;
                         _ypf2 = (nozzleDataIn.ShellDataIn.s - _c) / _Dk;
-                        isConditionUseFormuls = _ypf1 <= 1 & _ypf2 <= 0.1 / Math.Cos(Math.PI * 180 * (nozzleDataIn.ShellDataIn as ConicalShellDataIn).alfa);
-                         break;
+                        isConditionUseFormuls = _ypf1 <= 1 & _ypf2 <= 0.1 / Math.Cos(Math.PI * 180 * (nozzleDataIn.ShellDataIn as ConicalShellDataIn).alfa1);
+                        break;
                     }
                 case ShellType.Elliptical:
                 case ShellType.Spherical:
@@ -439,7 +443,7 @@ namespace calcNet
             if (!isConditionUseFormuls)
             {
                 isError = true;
-                errorList.Add( "Условие применения формул не выполняется");
+                errorList.Add("Условие применения формул не выполняется");
             }
 
         }

@@ -1,6 +1,6 @@
-﻿namespace calcNet
+﻿namespace CalculateVessels.Core.Shells.Nozzle.Enums
 {
-    enum NozzleKind
+    public enum NozzleKind
     {
         ImpassWithoutRing = 1,
         PassWithoutRing = 2,

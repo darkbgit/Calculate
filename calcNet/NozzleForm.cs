@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CalculateVessels.Core.Interfaces;
+using CalculateVessels.Core.Shells.DataIn;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -18,6 +20,7 @@ namespace calcNet
             this.shellDataIn = shellDataIn;
             this.element = element;
             nozzleData = new NozzleDataIn(shellDataIn);
+            
         }
 
         private NozzleDataIn nozzleData;
@@ -1173,6 +1176,7 @@ namespace calcNet
                 if (shellDataIn.Name != null) nameEl_tb.Text = shellDataIn.Name;
 
                 vn_rb.Checked = shellDataIn.IsPressureIn;
+                nar_rb.Checked = !shellDataIn.IsPressureIn;
 
                 pressure_gb.Enabled = false;
             }

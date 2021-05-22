@@ -1,6 +1,9 @@
-﻿namespace calcNet
+﻿using CalculateVessels.Core.Interfaces;
+using CalculateVessels.Core.Shells.Enums;
+
+namespace CalculateVessels.Core.Shells.DataIn
 {
-    class CylindricalShellDataIn : ShellDataIn, IDataIn
+    public class CylindricalShellDataIn : ShellDataIn, IDataIn
     {
         public CylindricalShellDataIn()
             : base(ShellType.Cylindrical)

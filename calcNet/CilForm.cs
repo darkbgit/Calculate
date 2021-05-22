@@ -8,6 +8,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
+using CalculateVessels.Core.Shells.DataIn;
+using CalculateVessels.Core.Shells;
+
 
 namespace calcNet
 {
@@ -18,7 +21,7 @@ namespace calcNet
             InitializeComponent();
         }
 
-        CylindricalShellDataIn cylindricalShellDataIn = new CylindricalShellDataIn();
+        private CylindricalShellDataIn cylindricalShellDataIn = new();
 
         private void Cancel_b_Click(object sender, EventArgs e)
         {
@@ -117,8 +120,13 @@ namespace calcNet
                     //E
                     //InputClass.GetInput_E(E_tb, ref d_in, ref dataInErr);
                     {
+                        double E = 0;
+                        //List<string> dataInErr = new List<string>();
+                        CalcClass.GetE(steel_cb.Text, Convert.ToInt32(t_tb.Text), ref E, ref dataInErr);
+                        E_tb.Text = E.ToString();
+
                         if (double.TryParse(E_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
-                        System.Globalization.CultureInfo.InvariantCulture, out double E))
+                        System.Globalization.CultureInfo.InvariantCulture, out E))
                         {
                             cylindricalShellDataIn.E = E;
                         }

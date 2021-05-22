@@ -1,9 +1,9 @@
-﻿namespace calcNet
+﻿namespace CalculateVessels.Core.Shells.Nozzle.Enums
 {
     /// <summary>
     /// 
     /// </summary>
-    enum NozzleLocation
+    public enum NozzleLocation
     {
         /// <summary>
         /// 1(cil, kon, ell)-Ось штуцера совпадает с нормалью к поверхности в центре отверстия

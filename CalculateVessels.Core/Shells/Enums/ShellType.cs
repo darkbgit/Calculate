@@ -1,4 +1,4 @@
-﻿namespace calcNet
+﻿namespace CalculateVessels.Core.Shells.Enums
 {
     public enum ShellType
     {

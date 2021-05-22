@@ -1,4 +1,7 @@
-﻿using System;
+﻿using CalculateVessels.Core.Shells;
+using CalculateVessels.Core.Shells.DataIn;
+using CalculateVessels.Core.Shells.Enums;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -17,7 +20,7 @@ namespace calcNet
             InitializeComponent();
         }
 
-        EllipticalShellDataIn ellipticalShellDataIn = new EllipticalShellDataIn();
+        EllipticalShellDataIn ellipticalShellDataIn = new();
 
         private void EllForm_Load(object sender, EventArgs e)
         {

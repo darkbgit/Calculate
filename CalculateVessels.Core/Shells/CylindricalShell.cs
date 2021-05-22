@@ -1,49 +1,57 @@
-﻿using System;
+﻿using CalculateVessels.Core.Interfaces;
+using CalculateVessels.Core.Shells.DataIn;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xceed.Document.NET;
+using DocumentFormat.OpenXml.Wordprocessing;
+using DocumentFormat.OpenXml.Packaging;
 
 
 
 
-namespace calcNet
+namespace CalculateVessels.Core.Shells
 {
-    class CylindricalShell : Shell, IElement
+    public class CylindricalShell : Shell, IElement
     {
         public CylindricalShell(CylindricalShellDataIn cylindricalShellDataIn)
-            //: base(ShellType.Cylindrical)
+        //: base(ShellType.Cylindrical)
         {
             _csdi = cylindricalShellDataIn;
         }
+
+        private readonly CylindricalShellDataIn _csdi;
 
         private const string FILENAME_CYLINDR_GIF = "pic/ObCil.gif";
 
         public void MakeWord(string filename)
         {
-
-
             if (filename == null)
             {
                 const string DEFAULT_FILE_NAME = "temp.docx";
                 filename = DEFAULT_FILE_NAME;
             }
 
-            var doc = Xceed.Words.NET.DocX.Load(filename);
+            using (WordprocessingDocument package = WordprocessingDocument.Open(filename, true))
+            {
+
+            }
 
             doc.InsertParagraph().InsertPageBreakAfterSelf();
-            doc.InsertParagraph($"Расчет на прочность обечайки {Csdi.Name}, нагруженной ")
+            doc.InsertParagraph($"Расчет на прочность обечайки {Csdi.Name}, нагруженной " +
+                (Csdi.IsPressureIn ? "внутренним избыточным давлением" : "наружным давлением"))
                 .Heading(HeadingType.Heading1)
                 .Alignment = Alignment.center;
-            if (Csdi.IsPressureIn)
-            {
-                doc.Paragraphs.Last().Append("внутренним избыточным давлением");
-            }
-            else
-            {
-                doc.Paragraphs.Last().Append("наружным давлением");
-            }
+            //if (Csdi.IsPressureIn)
+            //{
+            //    doc.Paragraphs.Last().Append("внутренним избыточным давлением");
+            //}
+            //else
+            //{
+            //    doc.Paragraphs.Last().Append("наружным давлением");
+            //}
             doc.InsertParagraph().Alignment = Alignment.center;
 
             var image = doc.AddImage(FILENAME_CYLINDR_GIF);
@@ -94,9 +102,9 @@ namespace calcNet
                 table.Rows[i].Cells[0].Paragraphs[0].Append("Коэффициент прочности сварного шва, ")
                                                     .AppendEquation("φ_p")
                                                     .Append(":");
-                table.Rows[i].Cells[1].Paragraphs[0].Append($"{Csdi.fi} мм");
+                table.Rows[i].Cells[1].Paragraphs[0].Append($"{Csdi.fi}");
 
-                doc.InsertParagraph().InsertTableAfterSelf(table);
+                doc.InsertParagraph().InsertTableBeforeSelf(table);
             }
 
             doc.InsertParagraph();
@@ -111,14 +119,9 @@ namespace calcNet
                 table.Rows[i].Cells[1].Paragraphs[0].Append($"{Csdi.t} °С");
 
                 table.InsertRow(++i);
-                if (Csdi.IsPressureIn)
-                {
-                    table.Rows[i].Cells[0].Paragraphs[0].Append("Расчетное внутреннее избыточное давление, p:");
-                }
-                else
-                {
-                    table.Rows[i].Cells[0].Paragraphs[0].Append("Расчетное наружное давление, p:");
-                }
+                table.Rows[i].Cells[0].Paragraphs[0].Append("Расчетное "
+                    + (Csdi.IsPressureIn ? "внутреннее избыточное" : "наружное")
+                    + " давление, p:");
                 table.Rows[i].Cells[1].Paragraphs[0].Append($"{Csdi.p} МПа");
 
                 table.InsertRow(++i);
@@ -130,7 +133,7 @@ namespace calcNet
                     table.Rows[i].Cells[0].Paragraphs[0].Append("Модуль продольной упругости при расчетной температуре, E:");
                     table.Rows[i].Cells[1].Paragraphs[0].Append($"{Csdi.E} МПа");
                 }
-                doc.InsertParagraph().InsertTableAfterSelf(table);
+                doc.InsertParagraph().InsertTableBeforeSelf(table);
             }
 
             doc.InsertParagraph("");
@@ -141,9 +144,12 @@ namespace calcNet
             doc.InsertParagraph("где ").AppendEquation("s_p").Append(" - расчетная толщина стенки обечайки");
             if (Csdi.IsPressureIn)
             {
-                doc.InsertParagraph().AppendEquation("s_p=(p∙D)/(2∙[σ]∙φ_p-p)");
-                doc.InsertParagraph().AppendEquation($"s_p=({Csdi.p}∙{Csdi.D})/(2∙{Csdi.sigma_d}∙{Csdi.fi}-{Csdi.p})=" +
-                                                    $"{_s_calcr:f2} мм");
+                doc.InsertParagraph()
+                    .AppendEquation($"s_p=(p∙D)/(2∙[σ]∙φ_p-p)" +
+                    $"=({Csdi.p}∙{Csdi.D})/(2∙{Csdi.sigma_d}∙{Csdi.fi}-{Csdi.p})=" +
+                                                     $"{_s_calcr:f2} мм");
+                //doc.InsertParagraph().AppendEquation($"s_p=({Csdi.p}∙{Csdi.D})/(2∙{Csdi.sigma_d}∙{Csdi.fi}-{Csdi.p})=" +
+                //                                  $"{_s_calcr:f2} мм");
             }
             else
             {
@@ -158,8 +164,9 @@ namespace calcNet
             }
 
             doc.InsertParagraph("c - сумма прибавок к расчетной толщине");
-            doc.InsertParagraph().AppendEquation("c=c_1+c_2+c_3");
-            doc.InsertParagraph().AppendEquation($"c={Csdi.c1}+{Csdi.c2}+{Csdi.c3}={_c:f2} мм");
+            doc.InsertParagraph().AppendEquation("c=c_1+c_2+c_3"
+                + $"={Csdi.c1}+{Csdi.c2}+{Csdi.c3}={_c:f2} мм");
+            //doc.InsertParagraph().AppendEquation($"c={Csdi.c1}+{Csdi.c2}+{Csdi.c3}={_c:f2} мм");
 
             doc.InsertParagraph().AppendEquation($"s={_s_calcr:f2}+{_c:f2}={_s_calc:f2} мм");
             if (Csdi.s > _s_calc)
@@ -173,9 +180,11 @@ namespace calcNet
             if (Csdi.IsPressureIn)
             {
                 doc.InsertParagraph("Допускаемое внутреннее избыточное давление вычисляют по формуле:");
-                doc.InsertParagraph().AppendEquation("[p]=(2∙[σ]∙φ_p∙(s-c))/(D+s-c)");
-                doc.InsertParagraph().AppendEquation($"[p]=(2∙{Csdi.sigma_d}∙{Csdi.fi}∙({Csdi.s}-{_c:f2}))/" +
-                                                    $"({Csdi.D}+{Csdi.s}-{_c:f2})={_p_d:f2} МПа");
+                doc.InsertParagraph().AppendEquation("[p]=(2∙[σ]∙φ_p∙(s-c))/(D+s-c)"
+                    + $"=(2∙{Csdi.sigma_d}∙{Csdi.fi}∙({Csdi.s}-{_c:f2}))/"
+                    + $"({Csdi.D}+{Csdi.s}-{_c:f2})={_p_d:f2} МПа");
+                //doc.InsertParagraph().AppendEquation($"[p]=(2∙{Csdi.sigma_d}∙{Csdi.fi}∙({Csdi.s}-{_c:f2}))/" +
+                //                                    $"({Csdi.D}+{Csdi.s}-{_c:f2})={_p_d:f2} МПа");
             }
             else
             {
@@ -190,9 +199,9 @@ namespace calcNet
                 doc.InsertParagraph("коэффициент ").AppendEquation("B_1").Append(" вычисляют по формуле");
                 doc.InsertParagraph().AppendEquation("B_1=min{1;9.45∙D/l∙√(D/(100∙(s-c)))}");
                 doc.InsertParagraph().AppendEquation($"9.45∙{Csdi.D}/{_l}∙√({Csdi.D}/(100∙({Csdi.s}-{_c:f2})))=" +
-                                                    $"{_b1_2:f2}");
-                doc.InsertParagraph().AppendEquation($"B_1=min(1;{_b1_2:f2})={_b1:f1}");
-                doc.InsertParagraph().AppendEquation($"[p]_E=(2.08∙10^-5∙{Csdi.E})/({Csdi.ny}∙{_b1:f2})∙{Csdi.D}/" +
+                                                    $"{_B1_2:f2}");
+                doc.InsertParagraph().AppendEquation($"B_1=min(1;{_B1_2:f2})={_B1:f1}");
+                doc.InsertParagraph().AppendEquation($"[p]_E=(2.08∙10^-5∙{Csdi.E})/({Csdi.ny}∙{_B1:f2})∙{Csdi.D}/" +
                                                     $"{_l}∙[(100∙({Csdi.s}-{_c:f2}))/{Csdi.D}]^2.5={_p_de:f2} МПа");
                 doc.InsertParagraph().AppendEquation($"[p]={_p_dp:f2}/√(1+({_p_dp:f2}/{_p_de:f2})^2)={_p_d:f2} МПа");
             }
@@ -219,24 +228,24 @@ namespace calcNet
             if (Csdi.D >= DIAMETR_BIG_LITTLE_BORDER)
             {
                 doc.Paragraphs.Last().Append("при D ≥ 200 мм");
-                doc.InsertParagraph().AppendEquation("(s-c)/(D)≤0.1");
-                doc.InsertParagraph().AppendEquation($"({Csdi.s}-{_c:f2})/({Csdi.D})={(Csdi.s - _c) / Csdi.D:f3}≤0.1");
+                doc.InsertParagraph().AppendEquation("(s-c)/(D)"
+                    + $"=({ Csdi.s}-{ _c: f2})/({ Csdi.D})={(Csdi.s - _c) / Csdi.D:f3}≤0.1");
+                //doc.InsertParagraph().AppendEquation($"({Csdi.s}-{_c:f2})/({Csdi.D})={(Csdi.s - _c) / Csdi.D:f3}≤0.1");
             }
             else
             {
                 doc.Paragraphs.Last().Append("при D < 200 мм");
-                doc.InsertParagraph().AppendEquation("(s-c)/(D)≤0.3");
-                doc.InsertParagraph().AppendEquation($"({Csdi.s}-{_c:f2})/({Csdi.D})={(Csdi.s - _c) / Csdi.D:f3}≤0.3");
+                doc.InsertParagraph().AppendEquation("(s-c)/(D)"
+                    + $"({Csdi.s}-{_c:f2})/({Csdi.D})={(Csdi.s - _c) / Csdi.D:f3}≤0.3");
+                //    doc.InsertParagraph().AppendEquation($"({Csdi.s}-{_c:f2})/({Csdi.D})={(Csdi.s - _c) / Csdi.D:f3}≤0.3");
             }
 
             doc.SaveAs(filename);
-
         }
 
-        
+
         public void Calculate()
         {
-
             _c = _csdi.c1 + _csdi.c2 + _csdi.c3;
 
             // Condition use formuls
@@ -249,12 +258,12 @@ namespace calcNet
                 if (isDiametrBig)
                 {
                     const double CONDITION_USE_FORMULS_BIG_DIAMETR = 0.1;
-                    isConditionUseFormuls = ((_csdi.s - _c) / _csdi.D) <= CONDITION_USE_FORMULS_BIG_DIAMETR;
+                    isConditionUseFormuls = (_csdi.s - _c) / _csdi.D <= CONDITION_USE_FORMULS_BIG_DIAMETR;
                 }
                 else
                 {
                     const double CONDITION_USE_FORMULS_LITTLE_DIAMETR = 0.3;
-                    isConditionUseFormuls = ((_csdi.s - _c) / _csdi.D) <= CONDITION_USE_FORMULS_LITTLE_DIAMETR;
+                    isConditionUseFormuls = (_csdi.s - _c) / _csdi.D <= CONDITION_USE_FORMULS_LITTLE_DIAMETR;
                 }
 
                 if (!isConditionUseFormuls)
@@ -262,7 +271,6 @@ namespace calcNet
                     isError = true;
                     err.Add("Условие применения формул не выполняется");
                 }
-
             }
 
             if (_csdi.p > 0)
@@ -298,16 +306,16 @@ namespace calcNet
                     if (_csdi.s == 0.0)
                     {
                         _p_dp = 2 * _csdi.sigma_d * (_s_calc - _c) / (_csdi.D + _s_calc - _c);
-                        _b1_2 = 9.45 * (_csdi.D / _l) * Math.Sqrt(_csdi.D / (100 * (_s_calc - _c)));
-                        _b1 = Math.Min(1.0, _b1_2);
-                        _p_de = 2.08 * 0.00001 * _csdi.E / _csdi.ny * _b1 * (_csdi.D / _l) * Math.Pow(100 * (_s_calc - _c) / _csdi.D, 2.5);
+                        _B1_2 = 9.45 * (_csdi.D / _l) * Math.Sqrt(_csdi.D / (100 * (_s_calc - _c)));
+                        _B1 = Math.Min(1.0, _B1_2);
+                        _p_de = 2.08 * 0.00001 * _csdi.E / (_csdi.ny * _B1) * (_csdi.D / _l) * Math.Pow(100 * (_s_calc - _c) / _csdi.D, 2.5);
                     }
                     else if (_csdi.s >= _s_calc)
                     {
                         _p_dp = 2 * _csdi.sigma_d * (_csdi.s - _c) / (_csdi.D + _csdi.s - _c);
-                        _b1_2 = 9.45 * (_csdi.D / _l) * Math.Sqrt(_csdi.D / (100 * (_csdi.s - _c)));
-                        _b1 = Math.Min(1.0, _b1_2);
-                        _p_de = 2.08 * 0.00001 * _csdi.E / _csdi.ny * _b1 * (_csdi.D / _l) * Math.Pow(100 * (_csdi.s - _c) / _csdi.D, 2.5);
+                        _B1_2 = 9.45 * (_csdi.D / _l) * Math.Sqrt(_csdi.D / (100 * (_csdi.s - _c)));
+                        _B1 = Math.Min(1.0, _B1_2);
+                        _p_de = 2.08 * 0.00001 * _csdi.E / (_csdi.ny * _B1) * (_csdi.D / _l) * Math.Pow(100 * (_csdi.s - _c) / _csdi.D, 2.5);
                     }
                     else
                     {
@@ -454,37 +462,33 @@ namespace calcNet
             //return d_out;
         }
 
-        private readonly CylindricalShellDataIn _csdi;
-
- 
-        
 
 
         //internal bool IsConditionUseFormuls { get => isConditionUseFormuls; }
-                   
+
         //internal double s_calcr1 { get => _s_calcr1;  }
         //internal double s_calcr2 { get => _s_calcr2;  }
-        internal double s_calcrf { get => _s_calcrf;  }
-        internal double s_calcf { get => _s_calcf;  }
-        
-        
-        
-        internal double b { get => _b;  }
+        internal double s_calcrf { get => _s_calcrf; }
+        internal double s_calcf { get => _s_calcf; }
+
+
+
+        internal double b { get => _b; }
         internal double b_2 { get => _b_2; }
-        internal double b1 { get => _b1;  }
-        internal double b1_2 { get => _b1_2; }
+        internal double b1 { get => _B1; }
+        internal double b1_2 { get => _B1_2; }
         internal double p_dp { get => _p_dp; }
         //internal double p_de { get => _p_de;  }
         internal double F_d { get => _F_d; }
         internal double F_dp { get => _F_dp; }
-        internal double F_de { get => _F_de;  }
+        internal double F_de { get => _F_de; }
         internal double F_de1 { get => _F_de1; }
         internal double F_de2 { get => _F_de2; }
         internal double Lamda { get => lamda; }
         internal double M_d { get => _M_d; }
         internal double M_dp { get => _M_dp; }
         internal double M_de { get => _M_de; }
-        internal double Q_d { get => _Q_d;  }
+        internal double Q_d { get => _Q_d; }
         internal double Q_dp { get => _Q_dp; }
         internal double Q_de { get => _Q_de; }
         internal double ElR { get => _elR; }
@@ -495,13 +499,13 @@ namespace calcNet
         internal double F1 { get => _F1; }
         internal double ConditionYstoich { get => conditionYstoich; }
         internal double L { get => _l; }
-        
+
 
         internal CylindricalShellDataIn Csdi => _csdi;
 
 
 
-                        
+
 
         internal int FCalcSchema; //1-7
 
@@ -520,7 +524,7 @@ namespace calcNet
 
         private double _l;
         //private double _c;
-        
+
 
 
 
@@ -529,8 +533,8 @@ namespace calcNet
 
         private double _b;
         private double _b_2;
-        private double _b1;
-        private double _b1_2;
+        private double _B1;
+        private double _B1_2;
 
 
         private double _F_d;

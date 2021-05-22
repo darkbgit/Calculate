@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 
-namespace calcNet
+namespace CalculateVessels.Core.Interfaces
 {
     public interface IDataIn
     {
         void CheckData();
 
-        public bool IsDataGood { get;  }
+        public bool IsDataGood { get; }
 
         public List<string> ErrorList { get; }
     }

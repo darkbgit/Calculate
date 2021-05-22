@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace calcNet
+namespace CalculateVessels.Core.Shells
 {
-    public abstract class Shell 
+    public abstract class Shell
     {
         public Shell()//ShellType shellType)
         {
@@ -13,11 +13,11 @@ namespace calcNet
 
         //internal ShellDataIn ShellDataIn;
 
-        internal double c { get => _c; }
-        internal double s_calcr { get => _s_calcr; }
-        internal double s_calc { get => _s_calc; }
-        internal double p_de { get => _p_de; }
-        internal double p_d { get => _p_d; }
+        public double c { get => _c; }
+        public double s_calcr { get => _s_calcr; }
+        public double s_calc { get => _s_calc; }
+        public double p_de { get => _p_de; }
+        public double p_d { get => _p_d; }
 
         public bool IsCriticalError { get => isCriticalError; }
         public bool IsError { get => isError; }

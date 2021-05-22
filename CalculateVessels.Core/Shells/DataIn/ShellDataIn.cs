@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using CalculateVessels.Core.Interfaces;
+using CalculateVessels.Core.Shells.Enums;
+using System.Collections.Generic;
 
-namespace calcNet
+namespace CalculateVessels.Core.Shells.DataIn
 {
-    public abstract class ShellDataIn
+    public abstract class ShellDataIn : IDataIn
     {
         public ShellDataIn(ShellType shellType)
         {
@@ -15,7 +17,7 @@ namespace calcNet
         }
 
 
-        
+
 
         public ShellType Type { get; }
 
@@ -39,7 +41,7 @@ namespace calcNet
         public ShellType ShellType { get => shellType; }
         public double c1
         {
-            get => _c1; 
+            get => _c1;
             set
             {
                 if (value > 0)
@@ -88,7 +90,7 @@ namespace calcNet
         public double c3 { get => _c3; set => _c3 = value; }
         public double p
         {
-            get => _p; 
+            get => _p;
             set
             {
                 if (value > 0)
@@ -137,7 +139,7 @@ namespace calcNet
             }
         }
         public double s { get => _s; set => _s = value; }
-        
+
         public double sigma_d
         {
             get => _sigma_d;
@@ -174,7 +176,7 @@ namespace calcNet
                 }
             }
         }
-        
+
         public double ny { get => _ny; set => _ny = value; }
         public double fit { get => _fit; set => _fit = value; }
         public double F { get => _F; set => _F = value; }
@@ -184,13 +186,13 @@ namespace calcNet
 
         public bool IsPressureIn { get => isPressureIn; set => isPressureIn = value; }
         public List<string> ErrorList { get => errorList; }
-        
-        
+
+
 
 
         internal int FCalcSchema; //1-7
 
-        internal bool             isNeedMakeCalcNozzle,
+        internal bool isNeedMakeCalcNozzle,
                     isNeedFCalculate,
                     isFTensile,
                     isNeedMCalculate,
@@ -206,11 +208,11 @@ namespace calcNet
         private double _E;
         private double _t;
         private double _s;
-        
+
         private double _sigma_d;
         private double _fi;
-        
-        private double _ny;
+
+        private double _ny = 2.4;
         private double _fit;
         private double _F;
         private double _q;

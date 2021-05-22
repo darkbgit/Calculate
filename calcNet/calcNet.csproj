@@ -46,7 +46,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Utilites\" />
     <Folder Include="Saddle\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CalculateVessels.Core\CalculateVessels.Core.csproj" />
   </ItemGroup>
 
 </Project>

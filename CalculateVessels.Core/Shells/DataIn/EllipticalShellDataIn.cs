@@ -1,12 +1,14 @@
-﻿using System;
+﻿using CalculateVessels.Core.Interfaces;
+using CalculateVessels.Core.Shells.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace calcNet
+namespace CalculateVessels.Core.Shells.DataIn
 {
-    class EllipticalShellDataIn : ShellDataIn, IDataIn
+    public class EllipticalShellDataIn : ShellDataIn, IDataIn
     {
         public EllipticalShellDataIn()
             : base(ShellType.Elliptical)
@@ -22,7 +24,7 @@ namespace calcNet
 
 
         //public double ellx { get => _ellx; set => _ellx = value; }
-        public double ellH 
+        public double ellH
         {
             get => _ellH;
             set => _ellH = value;
@@ -39,6 +41,6 @@ namespace calcNet
             get => _ellipticalBottomType;
             set => _ellipticalBottomType = value;
         }
-        
+
     }
 }

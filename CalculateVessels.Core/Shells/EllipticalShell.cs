@@ -1,19 +1,17 @@
-﻿using System;
+﻿using CalculateVessels.Core.Interfaces;
+using CalculateVessels.Core.Shells.DataIn;
+using CalculateVessels.Core.Shells.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xceed.Document.NET;
 
-namespace calcNet
+namespace CalculateVessels.Core.Shells
 {
-    enum EllipticalBottomType
-    {
-        Elliptical,
-        Hemispherical
-    }
 
-    class EllipticalShell : Shell, IElement
+    public class EllipticalShell : Shell, IElement
     {
         public EllipticalShell(EllipticalShellDataIn ellipticalShellDataIn)
         {
@@ -40,10 +38,10 @@ namespace calcNet
                             CONDITION_USE_FORMULS_2_MIN = 0.2,
                             CONDITION_USE_FORMULS_2_MAX = 0.5;
 
-                if ((((_esdi.s - _c) / _esdi.D <= CONDITION_USE_FORMULS_1_MAX) &
-                    ((_esdi.s - _c) / _esdi.D >= CONDITION_USE_FORMULS_1_MIN) &
-                    (_esdi.ellH / _esdi.D < CONDITION_USE_FORMULS_2_MAX) &
-                    (_esdi.ellH / _esdi.D >= CONDITION_USE_FORMULS_2_MIN)) |
+                if ((_esdi.s - _c) / _esdi.D <= CONDITION_USE_FORMULS_1_MAX &
+                    (_esdi.s - _c) / _esdi.D >= CONDITION_USE_FORMULS_1_MIN &
+                    _esdi.ellH / _esdi.D < CONDITION_USE_FORMULS_2_MAX &
+                    _esdi.ellH / _esdi.D >= CONDITION_USE_FORMULS_2_MIN |
                     _esdi.s == 0)
                 {
                     isConditionUseFormuls = true;
@@ -58,7 +56,7 @@ namespace calcNet
             _ellR = Math.Pow(_esdi.D, 2) / (4 * _esdi.ellH);
             if (_esdi.IsPressureIn)
             {
-                _s_calcr = _esdi.p * _ellR / ((2 * _esdi.sigma_d * _esdi.fi) - 0.5 * _esdi.p);
+                _s_calcr = _esdi.p * _ellR / (2 * _esdi.sigma_d * _esdi.fi - 0.5 * _esdi.p);
                 _s_calc = _s_calcr + _c;
 
                 if (_esdi.s == 0.0)
@@ -94,7 +92,7 @@ namespace calcNet
                 if (_esdi.s == 0.0)
                 {
                     //_elke = 0.9; // # добавить ке для полусферических =1
-                    _s_calcr1 = (_ellKe * _ellR) / 161 * Math.Sqrt((_esdi.ny * _esdi.p) / (0.00001 * _esdi.E));
+                    _s_calcr1 = _ellKe * _ellR / 161 * Math.Sqrt(_esdi.ny * _esdi.p / (0.00001 * _esdi.E));
                     _s_calcr = Math.Max(_s_calcr1, _s_calcr2);
                     //#_p_dp = 2*_esdi.sigma_d*(_s_calc-_c)/(_elR + 0.5 * (_s_calc-_c))
                     //#_elx = 10 * ((_esdi.s-_c)/_esdi.D)*(_esdi.D/(2*_esdi.elH)-(2*_esdi.elH)/_esdi.D)
@@ -105,9 +103,9 @@ namespace calcNet
                 else if (_esdi.s >= _s_calc)
                 {
                     _p_dp = 2 * _esdi.sigma_d * (_esdi.s - _c) / (_ellR + 0.5 * (_esdi.s - _c));
-                    _ellx = 10 * ((_esdi.s - _c) / _esdi.D) * (_esdi.D / (2 * _esdi.ellH) - (2 * _esdi.ellH) / _esdi.D);
+                    _ellx = 10 * ((_esdi.s - _c) / _esdi.D) * (_esdi.D / (2 * _esdi.ellH) - 2 * _esdi.ellH / _esdi.D);
                     _ellKe = (1 + (2.4 + 8 * _ellx) * _ellx) / (1 + (3.0 + 10 * _ellx) * _ellx);
-                    _p_de = (2.6 * 0.00001 * _esdi.E) / _esdi.ny * Math.Pow(100 * (_esdi.s - _c) / (_ellKe * _ellR), 2);
+                    _p_de = 2.6 * 0.00001 * _esdi.E / _esdi.ny * Math.Pow(100 * (_esdi.s - _c) / (_ellKe * _ellR), 2);
                     _p_d = _p_dp / Math.Sqrt(1 + Math.Pow(_p_dp / _p_de, 2));
                 }
                 else
@@ -199,7 +197,7 @@ namespace calcNet
 
                 table.InsertRow(++i);
 
-                table.Rows[i].Cells[0].Paragraphs[0].Append(_esdi.IsPressureIn ? "Расчетное внутреннее избыточное давление, p:" 
+                table.Rows[i].Cells[0].Paragraphs[0].Append(_esdi.IsPressureIn ? "Расчетное внутреннее избыточное давление, p:"
                     : "Расчетное наружное давление, p:");
 
                 table.Rows[i].Cells[1].Paragraphs[0].Append($"{_esdi.p} МПа");

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace calcNet
+namespace CalculateVessels.Core.Interfaces
 {
     public interface IElement
     {

@@ -1,12 +1,15 @@
-﻿using System;
+﻿using CalculateVessels.Core.Interfaces;
+using CalculateVessels.Core.Shells.DataIn;
+using CalculateVessels.Core.Shells.Nozzle.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace calcNet
+namespace CalculateVessels.Core.Shells.Nozzle
 {
-    class NozzleDataIn : IDataIn
+    public class NozzleDataIn : IDataIn
     {
         public NozzleDataIn(ShellDataIn shellDataIn)
         {
