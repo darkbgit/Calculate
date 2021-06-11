@@ -62,7 +62,7 @@ namespace calcNet
             this.button6 = new System.Windows.Forms.Button();
             this.button7 = new System.Windows.Forms.Button();
             this.button8 = new System.Windows.Forms.Button();
-            this.button9 = new System.Windows.Forms.Button();
+            this.Saddle_b = new System.Windows.Forms.Button();
             this.button10 = new System.Windows.Forms.Button();
             this.button11 = new System.Windows.Forms.Button();
             this.button12 = new System.Windows.Forms.Button();
@@ -371,14 +371,15 @@ namespace calcNet
             this.button8.Text = "button8";
             this.button8.UseVisualStyleBackColor = true;
             // 
-            // button9
+            // Saddle_b
             // 
-            this.button9.Location = new System.Drawing.Point(207, 31);
-            this.button9.Name = "button9";
-            this.button9.Size = new System.Drawing.Size(186, 27);
-            this.button9.TabIndex = 19;
-            this.button9.Text = "button9";
-            this.button9.UseVisualStyleBackColor = true;
+            this.Saddle_b.Location = new System.Drawing.Point(207, 31);
+            this.Saddle_b.Name = "Saddle_b";
+            this.Saddle_b.Size = new System.Drawing.Size(186, 27);
+            this.Saddle_b.TabIndex = 19;
+            this.Saddle_b.Text = "Седловая опора";
+            this.Saddle_b.UseVisualStyleBackColor = true;
+            this.Saddle_b.Click += new System.EventHandler(this.Saddle_b_Click);
             // 
             // button10
             // 
@@ -651,7 +652,7 @@ namespace calcNet
             this.Controls.Add(this.button12);
             this.Controls.Add(this.button11);
             this.Controls.Add(this.button10);
-            this.Controls.Add(this.button9);
+            this.Controls.Add(this.Saddle_b);
             this.Controls.Add(this.button8);
             this.Controls.Add(this.button7);
             this.Controls.Add(this.button6);
@@ -715,7 +716,7 @@ namespace calcNet
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.Button button7;
         private System.Windows.Forms.Button button8;
-        private System.Windows.Forms.Button button9;
+        private System.Windows.Forms.Button Saddle_b;
         private System.Windows.Forms.Button button10;
         private System.Windows.Forms.Button button11;
         private System.Windows.Forms.Button button12;

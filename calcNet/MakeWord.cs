@@ -33,6 +33,29 @@ namespace calcNet
 
         internal static void MakeWord_saddle(DataSaddle_in d_in, DataSaddle_out d_out, string Docum = null)
         {
+
+            if (Docum != "")
+            {
+                Docum += ".docx";
+                if (System.IO.File.Exists(Docum))
+                {
+                    try
+                    {
+                        var f1 = System.IO.File.Open(Docum, System.IO.FileMode.Append);
+                        f1.Close();
+                    }
+                    catch
+                    {
+                        System.Windows.Forms.MessageBox.Show("Закройте" + Docum + "и нажмите OK");
+                    }
+
+                }
+                else
+                {
+                    System.IO.File.Copy("temp.docx", Docum);
+                }
+            }
+
             var doc = Xceed.Words.NET.DocX.Load(Docum);
             doc.InsertParagraph().InsertPageBreakAfterSelf();
             doc.InsertParagraph($"Расчет на прочность обечайки {d_in.nameob} от воздействия опорных нагрузок").Heading(HeadingType.Heading1).Alignment = Alignment.center;

@@ -1,6 +1,7 @@
 ﻿using CalculateVessels.Core.Interfaces;
 using CalculateVessels.Core.Shells.Enums;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace CalculateVessels.Core.Shells.DataIn
 {
@@ -11,10 +12,8 @@ namespace CalculateVessels.Core.Shells.DataIn
             this.shellType = shellType;
         }
 
-        public void CheckData()
-        {
-            isDataGood = !(ErrorList?.Count > 0);
-        }
+        public bool CheckData() => ErrorList.Any();
+        
 
 
 

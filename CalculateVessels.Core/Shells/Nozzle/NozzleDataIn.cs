@@ -33,7 +33,7 @@ namespace CalculateVessels.Core.Shells.Nozzle
 
         private readonly ShellDataIn shellDataIn;
 
-        internal ShellDataIn ShellDataIn { get => shellDataIn; }
+        public ShellDataIn ShellDataIn { get => shellDataIn; }
 
         public double t
         {
@@ -59,9 +59,9 @@ namespace CalculateVessels.Core.Shells.Nozzle
             set => _E1 = value;
         }
 
-        public double E2 { get; internal set; }
-        public double E3 { get; internal set; }
-        public double E4 { get; internal set; }
+        public double E2 { get; set; }
+        public double E3 { get; set; }
+        public double E4 { get; set; }
 
         public double d
         {
@@ -129,7 +129,7 @@ namespace CalculateVessels.Core.Shells.Nozzle
 
         public string steel2 { get; set; }
         public string steel3 { get; set; }
-        public string steel4 { get; internal set; }
+        public string steel4 { get; set; }
 
         public double l2 { get; set; }
         public double l3 { get; set; }
@@ -142,13 +142,13 @@ namespace CalculateVessels.Core.Shells.Nozzle
         public string Name { get; set; }
         public bool IsOval { get => isOval; set => isOval = value; }
         public double d1 { get; set; }
-        public double d2 { get; internal set; }
-        public double r { get; internal set; }
-        public double s0 { get; internal set; }
-        public double sigma_d2 { get; internal set; }
-        public double sigma_d3 { get; internal set; }
-        public double sigma_d4 { get; internal set; }
-        public byte l { get; internal set; }
+        public double d2 { get; set; }
+        public double r { get; set; }
+        public double s0 { get; set; }
+        public double sigma_d2 { get; set; }
+        public double sigma_d3 { get; set; }
+        public double sigma_d4 { get; set; }
+        public byte l { get; set; }
 
         private string error;
         private List<string> errorList = new List<string>();

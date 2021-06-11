@@ -4,7 +4,7 @@ namespace CalculateVessels.Core.Interfaces
 {
     public interface IDataIn
     {
-        void CheckData();
+        bool CheckData();
 
         public bool IsDataGood { get; }
 

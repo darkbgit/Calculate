@@ -1,5 +1,8 @@
 ﻿using CalculateVessels.Core.Interfaces;
 using CalculateVessels.Core.Shells.DataIn;
+using CalculateVessels.Core.Shells.Enums;
+using CalculateVessels.Core.Shells.Nozzle;
+using CalculateVessels.Core.Shells.Nozzle.Enums;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

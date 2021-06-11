@@ -14,12 +14,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Saddle\**" />
+    <EmbeddedResource Remove="Saddle\**" />
+    <None Remove="Saddle\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Iae.Windows.Forms.dll" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Aspose.Words" Version="21.2.0" />
-    <PackageReference Include="DocX" Version="1.7.1" />
+    <PackageReference Include="Aspose.Words" Version="21.6.0" />
+    <PackageReference Include="DocX" Version="1.8.0" />
     <PackageReference Include="MSBuild.Version.Target" Version="3.0.60" />
     <PackageReference Include="Open-XML-SDK" Version="2.9.1" />
   </ItemGroup>
@@ -43,11 +49,6 @@
     <None Update="data\data.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Utilites\" />
-    <Folder Include="Saddle\" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CalculateVessels.Core.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -25,6 +26,8 @@ namespace calcNet
 
         public PldnForm pdf = null;
         // TODO: KonForm 
+
+        public SaddleForm saddleForm = null;
         
 
 
@@ -150,6 +153,7 @@ namespace calcNet
             //}
         }
 
+
         private void Ell_b_Click(object sender, EventArgs e)
         {
             if (ef == null)
@@ -161,6 +165,22 @@ namespace calcNet
             {
                 ef.Owner = this;
                 ef.Show();
+            }
+        }
+
+        private void Saddle_b_Click(object sender, EventArgs e)
+        {
+            //CilForm cf = (CilForm) Application.OpenForms["CilForm"]; // создаем
+            if (saddleForm == null)
+            {
+                //cf.Dispose();
+                saddleForm = new SaddleForm { Owner = this };
+                saddleForm.Show();
+            }
+            else
+            {
+                saddleForm.Owner = this;
+                saddleForm.Show();
             }
         }
 

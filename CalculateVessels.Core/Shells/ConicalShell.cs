@@ -181,133 +181,133 @@ namespace CalculateVessels.Core.Shells
 
             }
 
-            if (_csdi.F > 0)
-            {
-                _s_calcrf = _csdi.F / (Math.PI * _csdi.D * _csdi.sigma_d * _csdi.fit);
-                _s_calcf = _s_calcrf + _c;
-                if (_csdi.isFTensile)
-                {
-                    _F_d = Math.PI * (_csdi.D + _csdi.s - _c) * (_csdi.s - _c) * _csdi.sigma_d * _csdi.fit;
-                }
-                else
-                {
-                    _F_dp = Math.PI * (_csdi.D + _csdi.s - _c) * (_csdi.s - _c) * _csdi.sigma_d;
-                    _F_de1 = 0.000031 * _csdi.E / _csdi.ny * Math.Pow(_csdi.D, 2) * Math.Pow(100 * (_csdi.s - _c) / _csdi.D, 2.5);
+            //if (_csdi.F > 0)
+            //{
+            //    _s_calcrf = _csdi.F / (Math.PI * _csdi.D * _csdi.sigma_d * _csdi.fit);
+            //    _s_calcf = _s_calcrf + _c;
+            //    if (_csdi.isFTensile)
+            //    {
+            //        _F_d = Math.PI * (_csdi.D + _csdi.s - _c) * (_csdi.s - _c) * _csdi.sigma_d * _csdi.fit;
+            //    }
+            //    else
+            //    {
+            //        _F_dp = Math.PI * (_csdi.D + _csdi.s - _c) * (_csdi.s - _c) * _csdi.sigma_d;
+            //        _F_de1 = 0.000031 * _csdi.E / _csdi.ny * Math.Pow(_csdi.D, 2) * Math.Pow(100 * (_csdi.s - _c) / _csdi.D, 2.5);
 
-                    const int L_MORE_THEN_D = 10;
-                    bool isLMoreThenD = _csdi.l / _csdi.D > L_MORE_THEN_D;
+            //        const int L_MORE_THEN_D = 10;
+            //        bool isLMoreThenD = _csdi.l / _csdi.D > L_MORE_THEN_D;
 
-                    if (isLMoreThenD)
-                    {
-                        switch (_csdi.FCalcSchema)
-                        {
-                            case 1:
-                                _lpr = _csdi.l;
-                                break;
-                            case 2:
-                                _lpr = 2 * _csdi.l;
-                                break;
-                            case 3:
-                                _lpr = 0.7 * _csdi.l;
-                                break;
-                            case 4:
-                                _lpr = 0.5 * _csdi.l;
-                                break;
-                            case 5:
-                                _F = _csdi.q * _csdi.l;
-                                _lpr = 1.12 * _csdi.l;
-                                break;
-                            case 6:
-                                double fDivl6 = _csdi.F / _csdi.l;
-                                fDivl6 *= 10;
-                                fDivl6 = Math.Round(fDivl6 / 2);
-                                fDivl6 *= 0.2;
-                                switch (fDivl6)
-                                {
-                                    case 0:
-                                        _lpr = 2 * _csdi.l;
-                                        break;
-                                    case 0.2:
-                                        _lpr = 1.73 * _csdi.l;
-                                        break;
-                                    case 0.4:
-                                        _lpr = 1.47 * _csdi.l;
-                                        break;
-                                    case 0.6:
-                                        _lpr = 1.23 * _csdi.l;
-                                        break;
-                                    case 0.8:
-                                        _lpr = 1.06 * _csdi.l;
-                                        break;
-                                    case 1:
-                                        _lpr = _csdi.l;
-                                        break;
-                                }
-                                break;
-                            case 7:
-                                double fDivl7 = _csdi.F / _csdi.l;
-                                fDivl7 *= 10;
-                                fDivl7 = Math.Round(fDivl7 / 2);
-                                fDivl7 *= 0.2;
-                                switch (fDivl7)
-                                {
-                                    case 0:
-                                        _lpr = 2 * _csdi.l;
-                                        break;
-                                    case 0.2:
-                                        _lpr = 1.7 * _csdi.l;
-                                        break;
-                                    case 0.4:
-                                        _lpr = 1.4 * _csdi.l;
-                                        break;
-                                    case 0.6:
-                                        _lpr = 1.11 * _csdi.l;
-                                        break;
-                                    case 0.8:
-                                        _lpr = 0.85 * _csdi.l;
-                                        break;
-                                    case 1:
-                                        _lpr = 0.7 * _csdi.l;
-                                        break;
-                                }
-                                break;
+            //        if (isLMoreThenD)
+            //        {
+            //            switch (_csdi.FCalcSchema)
+            //            {
+            //                case 1:
+            //                    _lpr = _csdi.l;
+            //                    break;
+            //                case 2:
+            //                    _lpr = 2 * _csdi.l;
+            //                    break;
+            //                case 3:
+            //                    _lpr = 0.7 * _csdi.l;
+            //                    break;
+            //                case 4:
+            //                    _lpr = 0.5 * _csdi.l;
+            //                    break;
+            //                case 5:
+            //                    _F = _csdi.q * _csdi.l;
+            //                    _lpr = 1.12 * _csdi.l;
+            //                    break;
+            //                case 6:
+            //                    double fDivl6 = _csdi.F / _csdi.l;
+            //                    fDivl6 *= 10;
+            //                    fDivl6 = Math.Round(fDivl6 / 2);
+            //                    fDivl6 *= 0.2;
+            //                    switch (fDivl6)
+            //                    {
+            //                        case 0:
+            //                            _lpr = 2 * _csdi.l;
+            //                            break;
+            //                        case 0.2:
+            //                            _lpr = 1.73 * _csdi.l;
+            //                            break;
+            //                        case 0.4:
+            //                            _lpr = 1.47 * _csdi.l;
+            //                            break;
+            //                        case 0.6:
+            //                            _lpr = 1.23 * _csdi.l;
+            //                            break;
+            //                        case 0.8:
+            //                            _lpr = 1.06 * _csdi.l;
+            //                            break;
+            //                        case 1:
+            //                            _lpr = _csdi.l;
+            //                            break;
+            //                    }
+            //                    break;
+            //                case 7:
+            //                    double fDivl7 = _csdi.F / _csdi.l;
+            //                    fDivl7 *= 10;
+            //                    fDivl7 = Math.Round(fDivl7 / 2);
+            //                    fDivl7 *= 0.2;
+            //                    switch (fDivl7)
+            //                    {
+            //                        case 0:
+            //                            _lpr = 2 * _csdi.l;
+            //                            break;
+            //                        case 0.2:
+            //                            _lpr = 1.7 * _csdi.l;
+            //                            break;
+            //                        case 0.4:
+            //                            _lpr = 1.4 * _csdi.l;
+            //                            break;
+            //                        case 0.6:
+            //                            _lpr = 1.11 * _csdi.l;
+            //                            break;
+            //                        case 0.8:
+            //                            _lpr = 0.85 * _csdi.l;
+            //                            break;
+            //                        case 1:
+            //                            _lpr = 0.7 * _csdi.l;
+            //                            break;
+            //                    }
+            //                    break;
 
-                        }
-                        lamda = 2.83 * _lpr / (_csdi.D + _csdi.s - _c);
-                        _F_de2 = Math.PI * (_csdi.D + _csdi.s - _c) * (_csdi.s - _c) * _csdi.E / _csdi.ny *
-                                        Math.Pow(Math.PI / lamda, 2);
-                        _F_de = Math.Min(_F_de1, _F_de2);
-                    }
-                    else
-                    {
-                        _F_de = _F_de1;
-                    }
+            //            }
+            //            lamda = 2.83 * _lpr / (_csdi.D + _csdi.s - _c);
+            //            _F_de2 = Math.PI * (_csdi.D + _csdi.s - _c) * (_csdi.s - _c) * _csdi.E / _csdi.ny *
+            //                            Math.Pow(Math.PI / lamda, 2);
+            //            _F_de = Math.Min(_F_de1, _F_de2);
+            //        }
+            //        else
+            //        {
+            //            _F_de = _F_de1;
+            //        }
 
-                    _F_d = _F_dp / Math.Sqrt(1 + Math.Pow(_F_dp / _F_de, 2));
-                }
-            }
+            //        _F_d = _F_dp / Math.Sqrt(1 + Math.Pow(_F_dp / _F_de, 2));
+            //    }
+            //}
 
-            if (_csdi.M > 0)
-            {
-                _M_dp = Math.PI / 4 * _csdi.D * (_csdi.D + _csdi.s - _c) * (_csdi.s - _c) * _csdi.sigma_d;
-                _M_de = 0.000089 * _csdi.E / _csdi.ny * Math.Pow(_csdi.D, 3) * Math.Pow(100 * (_csdi.s - _c) / _csdi.D, 2.5);
-                _M_d = _M_dp / Math.Sqrt(1 + Math.Pow(_M_dp / _M_de, 2));
-            }
+            //if (_csdi.M > 0)
+            //{
+            //    _M_dp = Math.PI / 4 * _csdi.D * (_csdi.D + _csdi.s - _c) * (_csdi.s - _c) * _csdi.sigma_d;
+            //    _M_de = 0.000089 * _csdi.E / _csdi.ny * Math.Pow(_csdi.D, 3) * Math.Pow(100 * (_csdi.s - _c) / _csdi.D, 2.5);
+            //    _M_d = _M_dp / Math.Sqrt(1 + Math.Pow(_M_dp / _M_de, 2));
+            //}
 
-            if (_csdi.Q > 0)
-            {
-                _Q_dp = 0.25 * _csdi.sigma_d * Math.PI * _csdi.D * (_csdi.s - _c);
-                _Q_de = 2.4 * _csdi.E * Math.Pow(_csdi.s - _c, 2) / _csdi.ny *
-                    (0.18 + 3.3 * _csdi.D * (_csdi.s - _c) / Math.Pow(_csdi.l, 2));
-                _Q_d = _Q_dp / Math.Sqrt(1 + Math.Pow(_Q_dp / _Q_de, 2));
-            }
+            //if (_csdi.Q > 0)
+            //{
+            //    _Q_dp = 0.25 * _csdi.sigma_d * Math.PI * _csdi.D * (_csdi.s - _c);
+            //    _Q_de = 2.4 * _csdi.E * Math.Pow(_csdi.s - _c, 2) / _csdi.ny *
+            //        (0.18 + 3.3 * _csdi.D * (_csdi.s - _c) / Math.Pow(_csdi.l, 2));
+            //    _Q_d = _Q_dp / Math.Sqrt(1 + Math.Pow(_Q_dp / _Q_de, 2));
+            //}
 
-            if ((_csdi.IsNeedpCalculate || _csdi.isNeedFCalculate) &&
-                (_csdi.isNeedMCalculate || _csdi.isNeedQCalculate))
-            {
-                conditionYstoich = _csdi.p / _p_d + _csdi.F / _F_d + _csdi.M / _M_d +
-                                        Math.Pow(_csdi.Q / _Q_d, 2);
-            }
+            //if ((_csdi.IsNeedpCalculate || _csdi.isNeedFCalculate) &&
+            //    (_csdi.isNeedMCalculate || _csdi.isNeedQCalculate))
+            //{
+            //    conditionYstoich = _csdi.p / _p_d + _csdi.F / _F_d + _csdi.M / _M_d +
+            //                            Math.Pow(_csdi.Q / _Q_d, 2);
+            //}
         }
 
         public void MakeWord(string filename)

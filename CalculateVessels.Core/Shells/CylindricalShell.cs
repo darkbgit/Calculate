@@ -34,10 +34,11 @@ namespace CalculateVessels.Core.Shells
                 filename = DEFAULT_FILE_NAME;
             }
 
-            using (WordprocessingDocument package = WordprocessingDocument.Open(filename, true))
-            {
+            //using (WordprocessingDocument package = WordprocessingDocument.Open(filename, true))
+            //{
 
-            }
+            //}
+            var doc = Xceed.Words.NET.DocX.Load(filename);
 
             doc.InsertParagraph().InsertPageBreakAfterSelf();
             doc.InsertParagraph($"Расчет на прочность обечайки {Csdi.Name}, нагруженной " +

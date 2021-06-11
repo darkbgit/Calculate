@@ -11,10 +11,10 @@ namespace calcNet
  
     class DataSaddle_in
     {
-        internal int G;
-        internal int L;
-        internal int Lob;
-        internal int H;
+        internal double G;
+        internal double L;
+        internal double Lob;
+        internal double H;
         internal double e;
         internal double a;
         internal double p;
@@ -29,12 +29,12 @@ namespace calcNet
         internal int type;
         internal double b;
         internal double b2;
-        internal int delta1;
-        internal int delta2;
+        internal double delta1;
+        internal double delta2;
         internal string name;
         internal string nameob;
-        internal int temp;
-        internal int l0;
+        internal double temp;
+        internal double l0;
         internal string steel;
 
         internal bool isPressureIn;
@@ -284,8 +284,10 @@ namespace calcNet
         }
 
 
+
+
+        private static double DegToRad(double degree) => degree * Math.PI / 180;
         
- 
 
         
 
@@ -295,7 +297,7 @@ namespace calcNet
 
             //d_in.sigma_d = GetSigma(d_in.steel, d_in.temp);
             {
-                double sigma_d = 0;
+                //double sigma_d = 0;
                 string dataInErr = "";
                 //if (GetSigma(d_in.steel, d_in.temp, ref sigma_d, ref dataInErr))
                 //{
@@ -321,7 +323,8 @@ namespace calcNet
                 //}
             }
 
-            bool isNotError = d_out.err == null;
+            //bool isNotError = d_out.err == null;
+            bool isNotError = true;
 
             if (isNotError)
             {
@@ -339,14 +342,14 @@ namespace calcNet
                             Math.Pow(100 * (d_in.s - d_in.c) / d_in.D, 2.5);
 
 
-                d_out.q = d_in.G / (d_in.L + (4 / 3) * d_in.H);
+                d_out.q = d_in.G / (d_in.L + (4.0 / 3.0) * d_in.H);
                 d_out.M0 = d_out.q * (Math.Pow(d_in.D, 2) / 16);
                 d_out.F1 = d_in.G / 2;
                 d_out.F2 = d_out.F1;
                 d_out.M1 = d_out.q * Math.Pow(d_in.e, 2) / 2 - d_out.M0;
                 d_out.M2 = d_out.M1;
-                d_out.M12 = d_out.M0 + d_out.F1 * (d_in.L / 2 - d_in.a) - (d_out.q / 2) * Math.Pow(d_in.L / 2 + (2 / 3) * d_in.H, 2);
-                d_out.Q1 = (d_in.L - 2 * d_in.a) * d_out.F1 / (d_in.L + (4 / 3) * d_in.H);
+                d_out.M12 = d_out.M0 + d_out.F1 * (d_in.L / 2 - d_in.a) - (d_out.q / 2) * Math.Pow(d_in.L / 2 + (2.0 / 3.0) * d_in.H, 2);
+                d_out.Q1 = (d_in.L - 2 * d_in.a) * d_out.F1 / (d_in.L + (4.0 / 3.0) * d_in.H);
                 d_out.Q2 = d_out.Q1;
                 if (d_out.M12 > d_out.M1)
                 {
@@ -453,17 +456,17 @@ namespace calcNet
                             d_out.K10_1 = Math.Exp(-d_out.beta1) * Math.Sin(d_out.beta1) / d_out.beta1;
                             d_out.K10 = Math.Max(d_out.K10_1, 0.25);
                             d_out.K11 = (1 - Math.Exp(-d_out.beta1) * Math.Cos(d_out.beta1)) / d_out.beta1;
-                            d_out.K12 = (1.15 - 0.1432 * Math.PI * 180 * d_in.delta2) / Math.Sin(0.5 * Math.PI * 180 * d_in.delta2);
-                            d_out.K13 = Math.Max(1.7 - 2.1 * Math.PI * 180 * d_in.delta2 / Math.PI, 0) / Math.Sin(0.5 * Math.PI * 180 * d_in.delta2);
-                            d_out.K14 = (1.45 - 0.43 * Math.PI * 180 * d_in.delta2) / Math.Sin(0.5 * Math.PI * 180 * d_in.delta2);
-                            d_out.K15_2 = (0.8 * Math.Sqrt(d_out.gamma) + 6 * d_out.gamma) / Math.PI * 180 * (d_in.delta2);
+                            d_out.K12 = (1.15 - 0.1432 * DegToRad(d_in.delta2)) / Math.Sin(0.5 * DegToRad(d_in.delta2));
+                            d_out.K13 = Math.Max(1.7 - 2.1 * DegToRad(d_in.delta2) / Math.PI, 0) / Math.Sin(0.5 * DegToRad(d_in.delta2));
+                            d_out.K14 = (1.45 - 0.43 * DegToRad(d_in.delta2)) / Math.Sin(0.5 * DegToRad(d_in.delta2));
+                            d_out.K15_2 = (0.8 * Math.Sqrt(d_out.gamma) + 6 * d_out.gamma) / DegToRad (d_in.delta2);
                             d_out.K15 = Math.Min(1, d_out.K15_2);
-                            d_out.K16 = 1 - 0.65 / (1 + Math.Pow(6 * d_out.gamma, 2)) * Math.Sqrt(Math.PI / (3 * Math.PI * 180 * d_in.delta2));
-                            d_out.K17 = 1 / (1 + 0.6 * Math.Pow(d_in.D / (d_out.sef), 1 / 3) * (d_in.b2 / d_in.D) * Math.PI * 180 * d_in.delta2);
+                            d_out.K16 = 1 - 0.65 / (1 + Math.Pow(6 * d_out.gamma, 2)) * Math.Sqrt(Math.PI / (3 * DegToRad(d_in.delta2)));
+                            d_out.K17 = 1 / (1 + 0.6 * Math.Pow(d_in.D / (d_out.sef), 1 / 3) * (d_in.b2 / d_in.D) * DegToRad(d_in.delta2));
                             d_out.sigma_mx = 4 * d_out.M1 / (Math.PI * Math.Pow(d_in.D, 2) * d_out.sef);
 
                             d_out.v1_2 = -0.23 * d_out.K13 * d_out.K15 / (d_out.K12 * d_out.K10);
-                            d_out.v1_3 = -0.53 * d_out.K11 / (d_out.K14 * d_out.K16 * d_out.K17 * Math.Sin(0.5 * Math.PI * 180 * d_in.delta2));
+                            d_out.v1_3 = -0.53 * d_out.K11 / (d_out.K14 * d_out.K16 * d_out.K17 * Math.Sin(0.5 * DegToRad(d_in.delta2)));
 
 
                             d_out.K2 = 1.25; // TODO: добавить для условий монтажа
@@ -472,11 +475,15 @@ namespace calcNet
                             d_out.v22_2 = (d_in.p * d_in.D / (4 * d_out.sef) - d_out.sigma_mx) / (d_out.K2 * d_in.sigma_d);
                             d_out.v22_3 = (d_in.p * d_in.D / (2 * d_out.sef)) / (d_out.K2 * d_in.sigma_d);
 
-                            d_out.K1_21 = (1 - Math.Pow(d_out.v21_2, 2)) / ((1 / 3 + d_out.v1_2 * d_out.v21_2) + Math.Sqrt(Math.Pow(1 / 3 + d_out.v1_2 * d_out.v21_2, 2) + (1 - Math.Pow(d_out.v21_2, 2)) * Math.Pow(d_out.v1_2, 2)));
-                            d_out.K1_22 = (1 - Math.Pow(d_out.v22_2, 2)) / ((1 / 3 + d_out.v1_2 * d_out.v22_2) + Math.Sqrt(Math.Pow(1 / 3 + d_out.v1_2 * d_out.v22_2, 2) + (1 - Math.Pow(d_out.v22_2, 2)) * Math.Pow(d_out.v1_2, 2)));
+                            d_out.K1_21 = (1 - Math.Pow(d_out.v21_2, 2)) /
+                                ((1.0 / 3.0 + d_out.v1_2 * d_out.v21_2) + 
+                                Math.Sqrt(Math.Pow(1 / 3 + d_out.v1_2 * d_out.v21_2, 2) + 
+                                (1 - Math.Pow(d_out.v21_2, 2)) * Math.Pow(d_out.v1_2, 2)));
 
-                            d_out.K1_31 = (1 - Math.Pow(d_out.v21_3, 2)) / ((1 / 3 + d_out.v1_3 * d_out.v21_3) + Math.Sqrt(Math.Pow(1 / 3 + d_out.v1_3 * d_out.v21_3, 2) + (1 - Math.Pow(d_out.v21_3, 2)) * Math.Pow(d_out.v1_3, 2)));
-                            d_out.K1_32 = (1 - Math.Pow(d_out.v22_3, 2)) / ((1 / 3 + d_out.v1_3 * d_out.v22_3) + Math.Sqrt(Math.Pow(1 / 3 + d_out.v1_3 * d_out.v22_3, 2) + (1 - Math.Pow(d_out.v22_3, 2)) * Math.Pow(d_out.v1_3, 2)));
+                            d_out.K1_22 = (1 - Math.Pow(d_out.v22_2, 2)) / ((1 / 3 + d_out.v1_2 * d_out.v22_2) + Math.Sqrt(Math.Pow(1.0 / 3.0 + d_out.v1_2 * d_out.v22_2, 2) + (1 - Math.Pow(d_out.v22_2, 2)) * Math.Pow(d_out.v1_2, 2)));
+
+                            d_out.K1_31 = (1 - Math.Pow(d_out.v21_3, 2)) / ((1 / 3 + d_out.v1_3 * d_out.v21_3) + Math.Sqrt(Math.Pow(1.0 / 3.0 + d_out.v1_3 * d_out.v21_3, 2) + (1 - Math.Pow(d_out.v21_3, 2)) * Math.Pow(d_out.v1_3, 2)));
+                            d_out.K1_32 = (1 - Math.Pow(d_out.v22_3, 2)) / ((1 / 3 + d_out.v1_3 * d_out.v22_3) + Math.Sqrt(Math.Pow(1.0 / 3.0 + d_out.v1_3 * d_out.v22_3, 2) + (1 - Math.Pow(d_out.v22_3, 2)) * Math.Pow(d_out.v1_3, 2)));
 
                             d_out.sigmai2_1 = d_out.K1_21 * d_out.K2 * d_in.sigma_d;
                             d_out.sigmai2_2 = d_out.K1_22 * d_out.K2 * d_in.sigma_d;

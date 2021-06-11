@@ -57,41 +57,4 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <metadata name="menuUp.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
-  <metadata name="data_contextMenu.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>115, 17</value>
-  </metadata>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="up_b.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vAAADrwBlbxySQAAANxJREFUWEftlWsKwkAMhFcFDyDo/S/THyo+bqQZyEhqg9VuUinsB0PT7jYzhbIp
-        jUajkpXqL6xFDIB6Vmi4VYHZQmz0ehCdRGetAdfSsOZ30UOFOj2ENb+KYNypUONZWgjP/CbaqVCnhfDM
-        rRFAfRGFhxgzx7rdExriG3MSHuIXczLlHZeaRtUhqhsIk3vwKK0xJ2MhBsc2J9peFPUneyHQGx7gNUVZ
-        4HoURZgTG4IfBg/r2bvBsYqNEebkPQQ8egEsWePVG98DkIbKmO3oaT1cPi4GkN2/0VgcpTwBaAtGNtfA
-        rMkAAAAASUVORK5CYII=
-</value>
-  </data>
-  <data name="down_b.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vAAADrwBlbxySQAAAOhJREFUWEftldsOgjAQRFETfTfR//8ZH9R4+SPdEztkMVWQbn3qSSaUAjNDuLRr
-        NBpvLJJq8dVfB9GSiWDw9BlZNqb1axhaQl54y79HbdgeTBfTngljlbYlyANPvMnwmYOdo+lhupoiSryH
-        403GoABosDPpxNISPhwvPPEmA/pwoefkL5hbIhfuvT6+X2MXTilR7FFiUBwu5hiFhYtfDMPDxRRjf07U
-        FzRgrARUCxe5EjfTNolxtXCRK8FvFVUPF76E7hrd0xxUCxe+xMl0TmOoHi5yy2vk8j0JAllQ0N/DhQo0
-        Go2ZdN0TTZRGNySlXmYAAAAASUVORK5CYII=
-</value>
-  </data>
-  <data name="del_b.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vAAADrwBlbxySQAAAOpJREFUWEftlesKAiEUhK2gfhZBvf/LRBRUj1RnyIEhXDvuugnhB4Oi54bX0Ol0
-        nCyivJTaZ2EwaImBL8BGfaqwMa3f3WwRnIMt7UfD6tGeTDfTEQPGKrYKx2ADW/hojGLU+WJ6moaK+EwO
-        W/hMKgDQ8WBi4LtJi9DkmGOh8AGjkxPuqybQIsDQnOfQukgt8cO0j0I/tTpVSS31OWr25ISBtyYeTOhq
-        2pnAbMlB0wIYuMkWpJL/7BB6r2HqnZh8DZs+RHRE2+QpVucmn5Gi32tuXzlX5TsmqJ7yHCrYqE8VSoNV
-        Td7p/DMhvAB50EVMB8txcQAAAABJRU5ErkJggg==
-</value>
-  </data>
 </root>
