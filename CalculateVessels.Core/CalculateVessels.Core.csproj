@@ -10,4 +10,8 @@
     <PackageReference Include="Open-XML-SDK" Version="2.9.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CalculateVessels.Data\CalculateVessels.Data.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -70,7 +70,7 @@ namespace calcNet
             //pressure
             ellipticalShellDataIn.IsPressureIn = vn_rb.Checked;
 
-            ellipticalShellDataIn.CheckData();
+
             if (ellipticalShellDataIn.IsDataGood)
             {
                 //[σ]
@@ -233,7 +233,7 @@ namespace calcNet
 
                 ellipticalShellDataIn.EllipticalBottomType = ell_rb.Checked ? EllipticalBottomType.Elliptical : EllipticalBottomType.Hemispherical;
 
-                ellipticalShellDataIn.CheckData();
+
                 bool isNotError = dataInErr.Count == 0 && ellipticalShellDataIn.IsDataGood;
 
                 if (isNotError)
@@ -297,7 +297,7 @@ namespace calcNet
                 }
             }
 
-            ellipticalShellDataIn.CheckData();
+
             bool isNotError = dataInErr.Count == 0 && ellipticalShellDataIn.IsDataGood;
 
             if (isNotError)

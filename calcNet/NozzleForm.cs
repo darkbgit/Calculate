@@ -1223,7 +1223,7 @@ namespace calcNet
             //steel1
             nozzleData.steel1 = steel1_cb.Text;
 
-            nozzleData.CheckData();
+
 
 
 
@@ -1600,7 +1600,7 @@ namespace calcNet
                 dataInErr.Add("cs+cs1 должно быть меньше s3");
             }
 
-            nozzleData.CheckData();
+
             bool isNotError = dataInErr.Count == 0 && nozzleData.IsDataGood;
 
             if (isNotError)

@@ -12,17 +12,13 @@ namespace CalculateVessels.Core.Shells.DataIn
             this.shellType = shellType;
         }
 
-        public bool CheckData() => ErrorList.Any();
+
         
-
-
-
-
         public ShellType Type { get; }
 
         protected bool isError;
 
-        private bool isDataGood;
+
 
 
 
@@ -33,7 +29,7 @@ namespace CalculateVessels.Core.Shells.DataIn
         private ShellType shellType;
 
 
-        public bool IsDataGood { get => isDataGood; }
+        public bool IsDataGood => !ErrorList.Any();
 
         public string Name { get => _name; set => _name = value; }
         public string Steel { get => steel; set => steel = value; }

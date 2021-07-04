@@ -24,7 +24,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Aspose.Words" Version="21.6.0" />
     <PackageReference Include="DocX" Version="1.8.0" />
     <PackageReference Include="MSBuild.Version.Target" Version="3.0.60" />
     <PackageReference Include="Open-XML-SDK" Version="2.9.1" />

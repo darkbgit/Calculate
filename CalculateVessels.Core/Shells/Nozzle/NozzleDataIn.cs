@@ -16,12 +16,8 @@ namespace CalculateVessels.Core.Shells.Nozzle
             this.shellDataIn = shellDataIn;
         }
 
-        public void CheckData()
-        {
-            IsDataGood = !(ErrorList?.Count > 0);
-        }
 
-        public bool IsDataGood { get; private set; }
+        public bool IsDataGood => !ErrorList.Any();
 
         public string Error
         {

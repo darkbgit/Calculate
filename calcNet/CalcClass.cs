@@ -258,23 +258,23 @@ namespace calcNet
                     E = Convert.ToDouble(Elist.ChildNodes.Item(i).Attributes["E"].Value);
                     return true;
                 }
-                else if (Convert.ToInt32(Elist.ChildNodes.Item(i).Attributes["temp"].Value) > temp)
+                if (Convert.ToInt32(Elist.ChildNodes.Item(i).Attributes["temp"].Value) > temp)
                 {
                     tempLittle = Convert.ToInt32(Elist.ChildNodes.Item(i).Attributes["temp"].Value);
                     EBig = Convert.ToInt32(Elist.ChildNodes.Item(i).Attributes["E"].Value);
                     break;
                 }
-                else if (i == Elist.ChildNodes.Count - 1)//temperature greater then max in data.xml
+                if (i == Elist.ChildNodes.Count - 1)//temperature greater then max in data.xml
                 {
                     dataInErr.Add($"Температура {temp} °С, больше чем максимальная температура {tempBig} °С " +
                                   $"для стали {steel} при которой определяется модуль  продольной упругости по ГОСТ 34233.1-2017");
                     return false;
                 }
-                else
-                {
+
                     tempBig = Convert.ToInt32(Elist.ChildNodes.Item(i).Attributes["temp"].Value);
                     ELittle = Convert.ToInt32(Elist.ChildNodes.Item(i).Attributes["E"].Value);
-                }
+
+
             }
 
 

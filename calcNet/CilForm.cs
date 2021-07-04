@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -85,7 +86,7 @@ namespace calcNet
             //
             cylindricalShellDataIn.IsPressureIn = vn_rb.Checked;
 
-            cylindricalShellDataIn.CheckData();
+
             if (cylindricalShellDataIn.IsDataGood)
             {
                 //[σ]
@@ -100,7 +101,7 @@ namespace calcNet
                                             ref sigma_d,
                                             ref dataInErr);
                         sigma_d_tb.ReadOnly = false;
-                        sigma_d_tb.Text = sigma_d.ToString();
+                        sigma_d_tb.Text = sigma_d.ToString(CultureInfo.CurrentCulture);
                         sigma_d_tb.ReadOnly = true;
                     }
                     else
@@ -339,7 +340,7 @@ namespace calcNet
                     //}
                 }
 
-                cylindricalShellDataIn.CheckData();
+
                 bool isNotError = dataInErr.Count == 0 && cylindricalShellDataIn.IsDataGood;
 
                 if (isNotError)
@@ -393,7 +394,7 @@ namespace calcNet
                 }
             }
 
-                cylindricalShellDataIn.CheckData();
+
                 bool isNotError = dataInErr.Count == 0 && cylindricalShellDataIn.IsDataGood;
 
             if (isNotError)
