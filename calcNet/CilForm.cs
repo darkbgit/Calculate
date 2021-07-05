@@ -22,7 +22,7 @@ namespace calcNet
             InitializeComponent();
         }
 
-        private CylindricalShellDataIn cylindricalShellDataIn = new();
+        private CylindricalShellDataIn cylindricalShellDataIn;
 
         private void Cancel_b_Click(object sender, EventArgs e)
         {
@@ -33,7 +33,6 @@ namespace calcNet
 
         private void Force_rb_CheckedChanged(object sender, EventArgs e)
         {
-            // приводим отправителя к элементу типа RadioButton
             RadioButton rb = sender as RadioButton;
             if (rb.Checked)
             {
@@ -62,7 +61,7 @@ namespace calcNet
             calc_b.Enabled = false;
 
 
-            //cylindricalShellDataIn = new CylindricalShellDataIn();
+            cylindricalShellDataIn = new CylindricalShellDataIn();
 
 
             List<string> dataInErr = new List<string>();
@@ -394,12 +393,11 @@ namespace calcNet
                 }
             }
 
-
-                bool isNotError = dataInErr.Count == 0 && cylindricalShellDataIn.IsDataGood;
+            bool isNotError = dataInErr.Count == 0 && cylindricalShellDataIn.IsDataGood;
 
             if (isNotError)
             {
-                CylindricalShell cylindricalShell = new CylindricalShell(cylindricalShellDataIn);
+                CylindricalShell cylindricalShell = new(cylindricalShellDataIn);
                 cylindricalShell.Calculate();
                 if (!cylindricalShell.IsCriticalError)
                 {
@@ -461,21 +459,17 @@ namespace calcNet
 
         private void CilForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (sender is CilForm)
+            if (sender is not CilForm) return;
+
+            if (this.Owner is MainForm {cf: { }} main)
             {
-                if (this.Owner is MainForm main)
-                {
-                    if (main.cf != null)
-                    {
-                        main.cf = null;
-                    }
-                }
+                main.cf = null;
             }
         }
 
         private void Stress_rb_CheckedChanged(object sender, EventArgs e)
         {
-            RadioButton rb = sender as RadioButton;
+            var rb = sender as RadioButton;
             if (rb.Checked)
             {
                 bool isForceHand = stressHand_rb.Checked;

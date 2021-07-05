@@ -58,13 +58,13 @@ namespace CalculateVessels.Core.Shells
                 const double CONDITION_USE_FORMULS_FROM = 0.001;
                 const double CONDITION_USE_FORMULS_TO = 0.05;
 
-                isConditionUseFormuls = _csdi.s1 * _cosAlfa1 / _csdi.D >= CONDITION_USE_FORMULS_FROM
+                IsConditionUseFormulas = _csdi.s1 * _cosAlfa1 / _csdi.D >= CONDITION_USE_FORMULS_FROM
                     && _csdi.s1 * _cosAlfa1 / _csdi.D <= CONDITION_USE_FORMULS_TO;
 
-                if (!isConditionUseFormuls)
+                if (!IsConditionUseFormulas)
                 {
-                    isError = true;
-                    err.Add("Условие применения формул не выполняется");
+                    IsError = true;
+                    ErrorList.Add("Условие применения формул не выполняется");
                 }
             }
 
@@ -107,8 +107,8 @@ namespace CalculateVessels.Core.Shells
                     }
                     else
                     {
-                        isCriticalError = true;
-                        err.Add("Принятая толщина меньше расчетной");
+                        IsCriticalError = true;
+                        ErrorList.Add("Принятая толщина меньше расчетной");
                     }
                 }
                 else
@@ -138,14 +138,14 @@ namespace CalculateVessels.Core.Shells
                     }
                     else
                     {
-                        isCriticalError = true;
-                        err.Add("Принятая толщина меньше расчетной");
+                        IsCriticalError = true;
+                        ErrorList.Add("Принятая толщина меньше расчетной");
                     }
                 }
                 if (_p_d < _csdi.p && _csdi.s != 0)
                 {
-                    isError = true;
-                    err.Add("[p] меньше p");
+                    IsError = true;
+                    ErrorList.Add("[p] меньше p");
                 }
                 if (_csdi.IsConnectionBig)
                 {
@@ -168,8 +168,8 @@ namespace CalculateVessels.Core.Shells
                             }
                             else
                             {
-                                isCriticalError = true;
-                                err.Add("Принятая толщина переходной зоны меньше расчетной");
+                                IsCriticalError = true;
+                                ErrorList.Add("Принятая толщина переходной зоны меньше расчетной");
                             }
                             break;
                         case ConicalConnectionType.WithRing:

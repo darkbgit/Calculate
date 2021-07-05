@@ -63,9 +63,459 @@ namespace CalculateVessels.Data.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        public static byte[] BSphRadial {
+            get {
+                object obj = ResourceManager.GetObject("BSphRadial", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] BSphRadialDekart {
+            get {
+                object obj = ResourceManager.GetObject("BSphRadialDekart", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] BSphTilted {
+            get {
+                object obj = ResourceManager.GetObject("BSphTilted", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] BSphTiltedDekart {
+            get {
+                object obj = ResourceManager.GetObject("BSphTiltedDekart", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] BSphVert {
+            get {
+                object obj = ResourceManager.GetObject("BSphVert", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] BSphVertDekart {
+            get {
+                object obj = ResourceManager.GetObject("BSphVertDekart", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] Cil {
+            get {
+                object obj = ResourceManager.GetObject("Cil", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConeAxial {
+            get {
+                object obj = ResourceManager.GetObject("ConeAxial", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConeOffset {
+            get {
+                object obj = ResourceManager.GetObject("ConeOffset", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConeRadial {
+            get {
+                object obj = ResourceManager.GetObject("ConeRadial", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConeSteepAxial {
+            get {
+                object obj = ResourceManager.GetObject("ConeSteepAxial", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConeSteepOffset {
+            get {
+                object obj = ResourceManager.GetObject("ConeSteepOffset", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConeSteepRadial {
+            get {
+                object obj = ResourceManager.GetObject("ConeSteepRadial", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConeSteepTilted {
+            get {
+                object obj = ResourceManager.GetObject("ConeSteepTilted", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConeSteepVert {
+            get {
+                object obj = ResourceManager.GetObject("ConeSteepVert", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConeTilted {
+            get {
+                object obj = ResourceManager.GetObject("ConeTilted", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConeVert {
+            get {
+                object obj = ResourceManager.GetObject("ConeVert", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] CylAxial {
+            get {
+                object obj = ResourceManager.GetObject("CylAxial", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] CylOffset {
+            get {
+                object obj = ResourceManager.GetObject("CylOffset", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] CylRadial {
+            get {
+                object obj = ResourceManager.GetObject("CylRadial", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] CylTilted {
+            get {
+                object obj = ResourceManager.GetObject("CylTilted", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         public static byte[] Ell {
             get {
                 object obj = ResourceManager.GetObject("Ell", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] Ell1 {
+            get {
+                object obj = ResourceManager.GetObject("Ell1", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] EllRadial {
+            get {
+                object obj = ResourceManager.GetObject("EllRadial", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] EllRadialDekart {
+            get {
+                object obj = ResourceManager.GetObject("EllRadialDekart", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] EllTilted {
+            get {
+                object obj = ResourceManager.GetObject("EllTilted", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] EllTiltedDekart {
+            get {
+                object obj = ResourceManager.GetObject("EllTiltedDekart", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] EllVert {
+            get {
+                object obj = ResourceManager.GetObject("EllVert", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] EllVertDekart {
+            get {
+                object obj = ResourceManager.GetObject("EllVertDekart", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] FlatRadial {
+            get {
+                object obj = ResourceManager.GetObject("FlatRadial", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] FlatRadialDekart {
+            get {
+                object obj = ResourceManager.GetObject("FlatRadialDekart", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] Nozzle1 {
+            get {
+                object obj = ResourceManager.GetObject("Nozzle1", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] Nozzle2 {
+            get {
+                object obj = ResourceManager.GetObject("Nozzle2", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] Nozzle3 {
+            get {
+                object obj = ResourceManager.GetObject("Nozzle3", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] Nozzle4 {
+            get {
+                object obj = ResourceManager.GetObject("Nozzle4", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] Nozzle5 {
+            get {
+                object obj = ResourceManager.GetObject("Nozzle5", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] Nozzle6 {
+            get {
+                object obj = ResourceManager.GetObject("Nozzle6", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] Nozzle7 {
+            get {
+                object obj = ResourceManager.GetObject("Nozzle7", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] Nozzle8 {
+            get {
+                object obj = ResourceManager.GetObject("Nozzle8", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] SaddleNothingElem {
+            get {
+                object obj = ResourceManager.GetObject("SaddleNothingElem", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] SaddleRingInElem {
+            get {
+                object obj = ResourceManager.GetObject("SaddleRingInElem", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] SaddleRingOutElem {
+            get {
+                object obj = ResourceManager.GetObject("SaddleRingOutElem", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] SaddleRingRib1Elem {
+            get {
+                object obj = ResourceManager.GetObject("SaddleRingRib1Elem", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] SaddleRingRib3Elem {
+            get {
+                object obj = ResourceManager.GetObject("SaddleRingRib3Elem", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] SaddleSheetElem {
+            get {
+                object obj = ResourceManager.GetObject("SaddleSheetElem", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] Sfer {
+            get {
+                object obj = ResourceManager.GetObject("Sfer", resourceCulture);
                 return ((byte[])(obj));
             }
         }

@@ -348,7 +348,7 @@ namespace calcNet
             {
                 if (rb.Name == "ell_rb")
                 {
-                    pictureBox.Image = calcNet.Properties.Resources.Ell;
+                    pictureBox.Image = CalculateVessels.Data.Properties.Resources.Ell;
                 }
                 else if (rb.Name == "polysfer_rb")
                 {

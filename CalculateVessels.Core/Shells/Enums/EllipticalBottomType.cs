@@ -3,6 +3,8 @@
     public enum EllipticalBottomType
     {
         Elliptical,
-        Hemispherical
+        Hemispherical,
+        Torospherical,
+        SphericalUnflanged
     }
 }

@@ -22,8 +22,10 @@ namespace CalculateVessels.Core.Shells
 
         private double _ellR;
         private double _ellKe;
+        private double _ellKePrev;
         private double _ellx;
 
+        public double EllR => _ellR;
         //public bool IsCriticalError { get => isCriticalError; }
 
         public void Calculate()
@@ -31,91 +33,123 @@ namespace CalculateVessels.Core.Shells
             //Data_out d_out = new Data_out { err = "" };
             _c = _esdi.c1 + _esdi.c2 + _esdi.c3;
 
-            //Condition use formuls
+            switch (_esdi.EllipticalBottomType)
             {
-                const double CONDITION_USE_FORMULS_1_MIN = 0.002,
+                case EllipticalBottomType.Elliptical:
+                case EllipticalBottomType.Hemispherical:
+                {
+                    //Condition use formulas
+                    {
+                        const double CONDITION_USE_FORMULS_1_MIN = 0.002,
                             CONDITION_USE_FORMULS_1_MAX = 0.1,
                             CONDITION_USE_FORMULS_2_MIN = 0.2,
                             CONDITION_USE_FORMULS_2_MAX = 0.5;
 
-                if ((_esdi.s - _c) / _esdi.D <= CONDITION_USE_FORMULS_1_MAX &
-                    (_esdi.s - _c) / _esdi.D >= CONDITION_USE_FORMULS_1_MIN &
-                    _esdi.ellH / _esdi.D < CONDITION_USE_FORMULS_2_MAX &
-                    _esdi.ellH / _esdi.D >= CONDITION_USE_FORMULS_2_MIN |
-                    _esdi.s == 0)
-                {
-                    isConditionUseFormuls = true;
+                        if ((_esdi.s - _c) / _esdi.D <= CONDITION_USE_FORMULS_1_MAX &
+                            (_esdi.s - _c) / _esdi.D >= CONDITION_USE_FORMULS_1_MIN &
+                            _esdi.ellH / _esdi.D < CONDITION_USE_FORMULS_2_MAX &
+                            _esdi.ellH / _esdi.D >= CONDITION_USE_FORMULS_2_MIN |
+                            _esdi.s == 0)
+                        {
+                            IsConditionUseFormulas = true;
+                        }
+                        else
+                        {
+                            IsError = true;
+                            IsConditionUseFormulas = false;
+                            ErrorList.Add("Условие применения формул не выполняется");
+                        }
+                    }
+
+                    _ellR = Math.Pow(_esdi.D, 2) / (4.0 * _esdi.ellH);
+                    if (_esdi.IsPressureIn)
+                    {
+                        _s_calcr = _esdi.p * _ellR / (2.0 * _esdi.sigma_d * _esdi.fi - 0.5 * _esdi.p);
+                        _s_calc = _s_calcr + _c;
+                        if (_esdi.s == 0.0)
+                        {
+                            _p_d = 2.0 * _esdi.sigma_d * _esdi.fi * _s_calcr /
+                                   (_ellR + 0.5 * _s_calcr);
+                        }
+                        else if (_esdi.s >= _s_calc)
+                        {
+                            _p_d = 2.0 * _esdi.sigma_d * _esdi.fi * (_esdi.s - _c) /
+                                   (_ellR + 0.5 * (_esdi.s - _c));
+                        }
+                        else
+                        {
+                            IsCriticalError = true;
+                            ErrorList.Add("Принятая толщина меньше расчетной");
+                        }
+                    }
+                    else
+                    {
+                        switch (_esdi.EllipticalBottomType)
+                        {
+                            case EllipticalBottomType.Elliptical:
+                                _ellKePrev = 0.9;
+                                break;
+                            case EllipticalBottomType.Hemispherical:
+                                _ellKePrev = 1.0;
+                                break;
+                        }
+
+                        _s_calcr1 = _ellKePrev * _ellR / 161 * Math.Sqrt(_esdi.ny * _esdi.p / (0.00001 * _esdi.E));
+                        _s_calcr2 = 1.2 * _esdi.p * _ellR / (2.0 * _esdi.sigma_d);
+
+                        _s_calcr = Math.Max(_s_calcr1, _s_calcr2);
+                        _s_calc = _s_calcr + _c;
+                        if (_esdi.s == 0.0)
+                        {
+                            _p_dp = 2.0 * _esdi.sigma_d * _s_calcr / (_ellR + 0.5 * _s_calcr);
+                            _ellx = 10.0 * (_s_calcr / _esdi.D) *
+                                    (_esdi.D / (2.0 * _esdi.ellH) - 2.0 * _esdi.ellH / _esdi.D);
+                            _ellKe = (1.0 + (2.4 + 8.0 * _ellx) * _ellx) / (1.0 + (3.0 + 10.0 * _ellx) * _ellx);
+                            _p_de = 2.6 * 0.00001 * _esdi.E / _esdi.ny *
+                                    Math.Pow(100.0 * _s_calcr / (_ellKe * _ellR), 2);
+                            _p_d = _p_dp / Math.Sqrt(1.0 + Math.Pow(_p_dp / _p_de, 2));
+
+                        }
+                        else if (_esdi.s >= _s_calc)
+                        {
+                            _p_dp = 2.0 * _esdi.sigma_d * (_esdi.s - _c) / (_ellR + 0.5 * (_esdi.s - _c));
+                            _ellx = 10.0 * ((_esdi.s - _c) / _esdi.D) *
+                                    (_esdi.D / (2.0 * _esdi.ellH) - 2.0 * _esdi.ellH / _esdi.D);
+                            _ellKe = (1.0 + (2.4 + 8.0 * _ellx) * _ellx) / (1.0 + (3.0 + 10.0 * _ellx) * _ellx);
+                            _p_de = 2.6 * 0.00001 * _esdi.E / _esdi.ny *
+                                    Math.Pow(100 * (_esdi.s - _c) / (_ellKe * _ellR), 2);
+                            _p_d = _p_dp / Math.Sqrt(1.0 + Math.Pow(_p_dp / _p_de, 2));
+                        }
+                        else
+                        {
+                            IsCriticalError = true;
+                            ErrorList.Add("Принятая толщина меньше расчетной");
+                        }
+                    }
+                    break;
                 }
-                else
+                case EllipticalBottomType.Torospherical:
                 {
-                    isError = true;
-                    isConditionUseFormuls = false;
-                    err.Add("Условие применения формул не выполняется");
+                    //TODO: Add calculate torospherical bottom
+                    break;
+                }
+
+                case EllipticalBottomType.SphericalUnflanged:
+                {
+                    //TODO Add calculate spherical unflanged bottom
+                    break;
+                }
+
+                default:
+                {
+                    IsCriticalError = true;
+                    ErrorList.Add("Неверный тип днища");
+                    break;
                 }
             }
-            _ellR = Math.Pow(_esdi.D, 2) / (4 * _esdi.ellH);
-            if (_esdi.IsPressureIn)
-            {
-                _s_calcr = _esdi.p * _ellR / (2 * _esdi.sigma_d * _esdi.fi - 0.5 * _esdi.p);
-                _s_calc = _s_calcr + _c;
-
-                if (_esdi.s == 0.0)
-                {
-                    _p_d = 2 * _esdi.sigma_d * _esdi.fi * (_s_calc - _c) / (_ellR + 0.5 * (_s_calc - _c));
-                }
-                else if (_esdi.s >= _s_calc)
-                {
-                    _p_d = 2 * _esdi.sigma_d * _esdi.fi * (_esdi.s - _c) / (_ellR + 0.5 * (_s_calc - _c));
-                }
-                else
-                {
-                    isCriticalError = true;
-                    err.Add("Принятая толщина меньше расчетной");
-                }
-            }
-            else
-            {
-                _s_calcr2 = 1.2 * _esdi.p * _ellR / (2 * _esdi.sigma_d);
-
-                switch (_esdi.EllipticalBottomType)
-                {
-                    case EllipticalBottomType.Elliptical:
-                        _ellKe = 0.9;
-                        break;
-                    case EllipticalBottomType.Hemispherical:
-                        _ellKe = 1;
-                        break;
-                }
-                _s_calcr1 = _ellKe * _ellR / 161 * Math.Sqrt(_esdi.ny * _esdi.p / (0.00001 * _esdi.E));
-                _s_calcr = Math.Max(_s_calcr1, _s_calcr2);
-                _s_calc = _s_calcr + _c;
-                if (_esdi.s == 0.0)
-                {
-                    //_elke = 0.9; // # добавить ке для полусферических =1
-                    _s_calcr1 = _ellKe * _ellR / 161 * Math.Sqrt(_esdi.ny * _esdi.p / (0.00001 * _esdi.E));
-                    _s_calcr = Math.Max(_s_calcr1, _s_calcr2);
-                    //#_p_dp = 2*_esdi.sigma_d*(_s_calc-_c)/(_elR + 0.5 * (_s_calc-_c))
-                    //#_elx = 10 * ((_esdi.s-_c)/_esdi.D)*(_esdi.D/(2*_esdi.elH)-(2*_esdi.elH)/_esdi.D)
-                    //_elke = (1 + (2.4 + 8 * _elx)*_elx)/(1+(3.0+10*_elx)*_elx)
-                    //#_p_de = (2.6*0.00001*_esdi.E)/_esdi.ny*Math.Pow(100*(_s-_c)/(_elke*_elR,2))
-                    //#_p_d = _p_dp/Math.Sqrt(1+Math.Pow(_p_dp/_p_de,2))
-                }
-                else if (_esdi.s >= _s_calc)
-                {
-                    _p_dp = 2 * _esdi.sigma_d * (_esdi.s - _c) / (_ellR + 0.5 * (_esdi.s - _c));
-                    _ellx = 10 * ((_esdi.s - _c) / _esdi.D) * (_esdi.D / (2 * _esdi.ellH) - 2 * _esdi.ellH / _esdi.D);
-                    _ellKe = (1 + (2.4 + 8 * _ellx) * _ellx) / (1 + (3.0 + 10 * _ellx) * _ellx);
-                    _p_de = 2.6 * 0.00001 * _esdi.E / _esdi.ny * Math.Pow(100 * (_esdi.s - _c) / (_ellKe * _ellR), 2);
-                    _p_d = _p_dp / Math.Sqrt(1 + Math.Pow(_p_dp / _p_de, 2));
-                }
-                else
-                {
-                    isCriticalError = true;
-                    err.Add("Принятая толщина меньше расчетной");
-                }
-            }
-
         }
+
+    
 
         public void MakeWord(string filename)
         {
@@ -143,7 +177,6 @@ namespace CalculateVessels.Core.Shells
 
             body.AddParagraph("");
 
-
             
             var imagePart = mainPart.AddImagePart(ImagePartType.Gif);
             
@@ -151,7 +184,6 @@ namespace CalculateVessels.Core.Shells
             imagePart.FeedData(stream);
 
             body.AddParagraph("").AddImage(mainPart.GetIdOfPart(imagePart));
-
            
             body.AddParagraph("Исходные данные")
                 .Alignment(AlignmentType.Center);
@@ -164,113 +196,138 @@ namespace CalculateVessels.Core.Shells
                     .AddCell("Материал днища")
                     .AddCell($"{_esdi.Steel}");
 
-                table.InsertRow(++i);
-                table.Rows[i].Cells[0].Paragraphs[0].Append("Внутренний диаметр днища, D:");
-                table.Rows[i].Cells[1].Paragraphs[0].Append($"{_esdi.D} мм");
+                table.AddRow()
+                    .AddCell("Внутренний диаметр днища, D:")
+                    .AddCell($"{_esdi.D} мм");
 
-                table.InsertRow(++i);
-                table.Rows[i].Cells[0].Paragraphs[0].Append("Высота выпуклой части, H:");
-                table.Rows[i].Cells[1].Paragraphs[0].Append($"{_esdi.ellH} мм");
+                table.AddRow()
+                    .AddCell("Высота выпуклой части, H:")
+                    .AddCell($"{_esdi.ellH} мм");
 
-                table.InsertRow(++i);
-                table.Rows[i].Cells[0].Paragraphs[0].Append("Длина отбортовки ").AppendEquation("h_1").Append(":");
-                table.Rows[i].Cells[1].Paragraphs[0].Append($"{_esdi.ellh1}");
+                table.AddRow()
+                    .AddCell("Длина отбортовки ")
+                    .AppendEquation("h_1")
+                    .AppendText(":")
+                    .AddCell($"{_esdi.ellh1}");
 
-                table.InsertRow(++i);
-                table.Rows[i].Cells[0].Paragraphs[0].Append("Прибавка на коррозию, ").AppendEquation("c_1").Append(":");
-                table.Rows[i].Cells[1].Paragraphs[0].Append($"{_esdi.c1} мм");
+                table.AddRow()
+                    .AddCell("Прибавка на коррозию, ")
+                    .AppendEquation("c_1")
+                    .AppendText(":")
+                    .AddCell($"{_esdi.c1} мм");
 
-                table.InsertRow(++i);
-                table.Rows[i].Cells[0].Paragraphs[0].Append("Прибавка для компенсации минусового допуска, ")
-                                                    .AppendEquation("c_2")
-                                                    .Append(":");
-                table.Rows[i].Cells[1].Paragraphs[0].Append($"{_esdi.c2} мм");
+                table.AddRow()
+                    .AddCell("Прибавка для компенсации минусового допуска, ")
+                    .AppendEquation("c_2")
+                    .AppendText(":")
+                    .AddCell($"{_esdi.c2} мм");
 
                 if (_esdi.c3 > 0)
                 {
-                    table.InsertRow(++i);
-                    table.Rows[i].Cells[0].Paragraphs[0].Append("Технологическая прибавка, ").AppendEquation("c_3").Append(":");
-                    table.Rows[i].Cells[1].Paragraphs[0].Append($"{_esdi.c3}");
+                    table.AddRow()
+                        .AddCell("Технологическая прибавка, ")
+                        .AppendEquation("c_3")
+                        .AppendText(":")
+                        .AddCell($"{_esdi.c3}");
                 }
-                table.InsertRow(++i);
-                table.Rows[i].Cells[0].Paragraphs[0].Append("Коэффициент прочности сварного шва, ").AppendEquation("φ_p");
-                table.Rows[i].Cells[1].Paragraphs[0].Append($"{_esdi.fi}");
-                body.AddParagraph("").InsertTableAfterSelf(table);
+
+                table.AddRow()
+                    .AddCell("Коэффициент прочности сварного шва, ")
+                    .AppendEquation("φ_p")
+                    .AppendText(":")
+                    .AddCell($"{_esdi.fi}");
+
+
+                body.InsertTable(table);
             }
 
             body.AddParagraph("");
-            body.AddParagraph("Условия нагружения").Alignment = Alignment.center;
+            body.AddParagraph("Условия нагружения").Alignment(AlignmentType.Center);
 
             //table
             {
-                var table = body.AddTable(1, 2);
-                table.SetWidths(new float[] { 300, 100 });
-                int i = 0;
-                table.Rows[i].Cells[0].Paragraphs[0].Append("Расчетная температура, Т:");
-                table.Rows[i].Cells[1].Paragraphs[0].Append($"{_esdi.t} °С");
+                var table = body.AddTable();
 
-                table.InsertRow(++i);
+                table.AddRow()
+                    .AddCell("Расчетная температура, Т:")
+                    .AddCell($"{_esdi.t} °С");
 
-                table.Rows[i].Cells[0].Paragraphs[0].Append(_esdi.IsPressureIn ? "Расчетное внутреннее избыточное давление, p:"
-                    : "Расчетное наружное давление, p:");
+                table.AddRow()
+                    .AddCell(_esdi.IsPressureIn ? "Расчетное внутреннее избыточное давление, p:"
+                    : "Расчетное наружное давление, p:")
+                    .AddCell($"{_esdi.p} МПа");
 
-                table.Rows[i].Cells[1].Paragraphs[0].Append($"{_esdi.p} МПа");
-
-                table.InsertRow(++i);
-                table.Rows[i].Cells[0].Paragraphs[0].Append($"Допускаемое напряжение для материала {_esdi.Steel} " +
-                                                            "при расчетной температуре, [σ]:");
-                table.Rows[i].Cells[1].Paragraphs[0].Append($"{_esdi.sigma_d} МПа");
+                table.AddRow()
+                    .AddCell($"Допускаемое напряжение для материала {_esdi.Steel} " +
+                             "при расчетной температуре, [σ]:")
+                    .AddCell($"{_esdi.sigma_d} МПа");
 
                 if (!_esdi.IsPressureIn)
                 {
-                    table.InsertRow(++i);
-                    table.Rows[i].Cells[0].Paragraphs[0].Append("Модуль продольной упругости при расчетной температуре, E:");
-                    table.Rows[i].Cells[1].Paragraphs[0].Append($"{_esdi.E} МПа");
+                    table.AddRow()
+                        .AddCell("Модуль продольной упругости при расчетной температуре, E:")
+                        .AddCell($"{_esdi.E} МПа");
                 }
 
-                body.AddParagraph("").InsertTableAfterSelf(table);
+                body.InsertTable(table);
             }
 
             body.AddParagraph("");
-            body.AddParagraph("Результаты расчета").Alignment = Alignment.center;
+            body.AddParagraph("Результаты расчета").Alignment(AlignmentType.Center);
             body.AddParagraph("");
             body.AddParagraph("Толщину стенки вычисляют по формуле:");
             body.AddParagraph("").AppendEquation("s_1≥s_1p+c");
-            body.AddParagraph("где ").AppendEquation("s_1p").Append(" - расчетная толщина стенки днища");
-            if (_esdi.IsPressureIn)
-            {
-                body.AddParagraph("").AppendEquation("s_1p=(p∙R)/(2∙[σ]∙φ-0.5∙p)");
-            }
-            else
-            {
-                body.AddParagraph("").AppendEquation("s_1p=max{(K_Э∙R)/(161)∙√((n_y∙p)/(10^-5∙E));(1.2∙p∙R)/(2∙[σ])}");
-            }
+            body.AddParagraph("где ")
+                .AppendEquation("s_1p")
+                .AddRun(" - расчетная толщина стенки днища");
+
+            body.AddParagraph("")
+                .AppendEquation(_esdi.IsPressureIn
+                ? "s_1p=(p∙R)/(2∙[σ]∙φ-0.5∙p)"
+                : "s_1p=max{(K_Э∙R)/(161)∙√((n_y∙p)/(10^-5∙E));(1.2∙p∙R)/(2∙[σ])}");
             body.AddParagraph("где R - радиус кривизны в вершине днища");
-            // добавить расчет R для разных ситуаций
-            if (_esdi.D == _ellR)
+
+            // TODO: добавить расчет R для разных ситуаций
+
+            if (_esdi.EllipticalBottomType == EllipticalBottomType.Elliptical &&
+                Math.Abs(_esdi.D - _ellR) < 0.00001)
             {
                 body.AddParagraph($"R=D={_esdi.D} мм - для эллиптичекских днищ с H=0.25D");
             }
+            else if (_esdi.EllipticalBottomType == EllipticalBottomType.Hemispherical &&
+                Math.Abs(0.5 * _esdi.D - _ellR) < 0.00001)
+            {
+                body.AddParagraph("")
+                    .AppendEquation($"R=0.5∙D={_esdi.D} мм")
+                    .AddRun(" - для полусферических днищ с H=0.5D");
+            }
             else
             {
-                body.AddParagraph("").AppendEquation("R=D^2/(4∙H)");
-                body.AddParagraph("").AppendEquation($"R={_esdi.D}^2/(4∙{_esdi.ellH})={_ellR} мм");
+                body.AddParagraph("")
+                    .AppendEquation($"R=D^2/(4∙H)={_esdi.D}^2/(4∙{_esdi.ellH})={_ellR:f2} мм");
             }
+
             if (_esdi.IsPressureIn)
             {
-                body.AddParagraph("").AppendEquation($"s_p=({_esdi.p}∙{_ellR})/(2∙{_esdi.sigma_d}∙{_esdi.fi}-0.5{_esdi.p})={_s_calcr:f2} мм");
+                body.AddParagraph("")
+                    .AppendEquation($"s_p=({_esdi.p}∙{_ellR:f2})/(2∙{_esdi.sigma_d}∙{_esdi.fi}-0.5{_esdi.p})={_s_calcr:f2} мм");
             }
             else
             {
-                body.AddParagraph("Для предварительного расчета ").AppendEquation("К_Э=0.9").Append(" для эллиптических днищ");
-                body.AddParagraph("").AppendEquation($"(0.9∙{_ellR})/(161)∙√(({_esdi.ny}∙{_esdi.p})/(10^-5∙{_esdi.E}))=" +
+                body.AddParagraph("Для предварительного расчета ")
+                    .AppendEquation($"К_Э={_ellKePrev}")
+                    .AddRun(_esdi.EllipticalBottomType == EllipticalBottomType.Elliptical
+                        ? " для эллиптических днищ"
+                        : " для полусферических днищ");
+                body.AddParagraph("")
+                    .AppendEquation($"({_ellKePrev}∙{_ellR:f2})/(161)∙√(({_esdi.ny}∙{_esdi.p})/(10^-5∙{_esdi.E}))=" +
                                                     $"{_s_calcr1:f2}");
-                body.AddParagraph("").AppendEquation($"(1.2∙{_esdi.p}∙{_ellR})/(2∙{_esdi.sigma_d})={_s_calcr2:f2}");
+                body.AddParagraph("").AppendEquation($"(1.2∙{_esdi.p}∙{_ellR:f2})/(2∙{_esdi.sigma_d})={_s_calcr2:f2}");
                 body.AddParagraph("").AppendEquation($"s_1p=max({_s_calcr1:f2};{_s_calcr2:f2})={_s_calcr:f2} мм");
             }
             body.AddParagraph("c - сумма прибавок к расчетной толщине");
-            body.AddParagraph("").AppendEquation("c=c_1+c_2+c_3");
-            body.AddParagraph("").AppendEquation($"c={_esdi.c1}+{_esdi.c2}+{_esdi.c3}={_c:f2} мм");
+            body.AddParagraph("")
+                .AppendEquation($"c=c_1+c_2+c_3={_esdi.c1}+{_esdi.c2}+{_esdi.c3}={_c:f2} мм");
 
             body.AddParagraph("").AppendEquation($"s={_s_calcr:f2}+{_c:f2}={_s_calc:f2} мм");
 
@@ -280,38 +337,76 @@ namespace CalculateVessels.Core.Shells
             }
             else
             {
-                body.AddParagraph($"Принятая толщина s={_esdi.s} мм").Bold().Color(System.Drawing.Color.Red);
+                body.AddParagraph($"Принятая толщина ").Bold().Color(System.Drawing.Color.Red)
+                    .AppendEquation($"s_1={_esdi.s} мм"); 
             }
-            body.AddParagraph("Допускаемое внутреннее избыточное давление вычисляют по формуле:");
-            body.AddParagraph("").AppendEquation("[p]=(2∙[σ]∙φ∙(s_1-c))/(R+0.5∙(s-c))");
-            body.AddParagraph("").AppendEquation($"[p]=(2∙{_esdi.sigma_d}∙{_esdi.fi}∙({_esdi.s}-{_c:f2}))/" +
-                                                $"({_ellR}+0.5∙({_esdi.s}-{_c:f2}))={_p_d:f2} МПа");
+
+            if (_esdi.IsPressureIn)
+            {
+                body.AddParagraph("Допускаемое внутреннее избыточное давление вычисляют по формуле:");
+                body.AddParagraph("")
+                    .AppendEquation("[p]=(2∙[σ]∙φ∙(s_1-c))/(R+0.5∙(s-c))" +
+                                    $"=(2∙{_esdi.sigma_d}∙{_esdi.fi}∙({_esdi.s}-{_c:f2}))/" +
+                                    $"({_ellR:f2}+0.5∙({_esdi.s}-{_c:f2}))={_p_d:f2} МПа");
+            }
+            else
+            {
+                body.AddParagraph("Допускаемое наружное давление вычисляют по формуле:");
+                body.AddParagraph("")
+                    .AppendEquation("[p]=[p]_П/√(1+([p]_П/[p]_E)^2)");
+                body.AddParagraph("допускаемое давление из условия прочности вычисляют по формуле:");
+                body.AddParagraph("")
+                    .AppendEquation("[p]_П=(2∙[σ]∙(s_1-c))/(R+0.5(s_1-c))" +
+                                    $"=(2∙{_esdi.sigma_d}∙({_esdi.s}-{_c:f2}))/({_ellR}+0.5({_esdi.s}-{_c:f2}))={_p_dp:f2} МПа");
+                body.AddParagraph("допускаемое давление из условия устойчивости в пределах упругости вычисляют по формуле:");
+                body.AddParagraph("")
+                    .AppendEquation("[p]_E=(2.6∙10^-5∙E)/n_y∙[(100∙(s_1-c))/(К_Э∙R)]^2");
+                body.AddParagraph("коэффициент ")
+                    .AppendEquation("К_Э")
+                    .AddRun(" вычисляют по формуле");
+                body.AddParagraph("")
+                    .AppendEquation("К_Э=(1+(2.4+8∙x)∙x)/(1+(3+10∙x)∙x)");
+                body.AddParagraph("")
+                    .AppendEquation($"x=10∙(s_1-c)/D∙(D/(2∙H)-(2∙H)/D)=10∙({_esdi.s-_c:f2})/{_esdi.D}∙({_esdi.D}/(2∙{_esdi.ellH})-(2∙{_esdi.ellH})/{_esdi.D})={_ellx:f2}");
+                body.AddParagraph("")
+                    .AppendEquation($"К_Э=(1+(2.4+8∙{_ellx})∙{_ellx})/(1+(3+10∙{_ellx})∙{_ellx}={_ellKe:f2}");
+                body.AddParagraph("")
+                    .AppendEquation($"[p]_E=(2.6∙10^-5∙{_esdi.E})/{_esdi.ny}∙" +
+                                    $"[(100∙({_esdi.s}-{_c:f2}))/({_ellKe:f2}∙{_ellR:f2})]^2={_p_de:f2} МПа");
+                body.AddParagraph("")
+                    .AppendEquation($"[p]={_p_dp:f2}/√(1+({_p_dp:f2}/{_p_de:f2})^2)={_p_d:f2} МПа");
+            }
             body.AddParagraph("").AppendEquation("[p]≥p");
             body.AddParagraph("").AppendEquation($"{_p_d:f2}≥{_esdi.p}");
+
             if (_p_d > _esdi.p)
             {
-                body.AddParagraph("Условие прочности выполняется").Bold();
+                body.AddParagraph("Условие прочности выполняется")
+                    .Bold();
             }
             else
             {
-                body.AddParagraph("Условие прочности не выполняется").Bold().Color(System.Drawing.Color.Red);
+                body.AddParagraph("Условие прочности не выполняется")
+                    .Bold()
+                    .Color(System.Drawing.Color.Red);
             }
-            if (isConditionUseFormuls)
-            {
-                body.AddParagraph("Границы применения формул ");
-            }
-            else
-            {
-                body.AddParagraph("").AppendEquation("Границы применения формул. Условие не выполняется").Bold().Color(System.Drawing.Color.Red);
-            }
-            //# эллептические днища
-            body.AddParagraph("").AppendEquation("0.002≤(s_1-c)/(D)≤0.1");
-            body.AddParagraph("").AppendEquation($"0.002≤({_esdi.s}-{_c:f2})/({_esdi.D})={(_esdi.s - _c) / _esdi.D:f3}≤0.1");
-            body.AddParagraph("").AppendEquation("0.2≤H/D≤0.5");
-            body.AddParagraph("").AppendEquation($"0.2≤{_esdi.ellH}/{_esdi.D}={_esdi.ellH / _esdi.D:f3}<0.5");
 
+            body.AddParagraph("Условия применения расчетных формул");
 
-            body.Save();
+            // эллептические днища
+            body.AddParagraph("")
+                .AppendEquation("0.002≤(s_1-c)/(D)" +
+                                $"=({_esdi.s}-{_c:f2})/({_esdi.D})={(_esdi.s - _c) / _esdi.D:f3}≤0.1");
+            body.AddParagraph("")
+                .AppendEquation($"0.2≤H/D={_esdi.ellH}/{_esdi.D}={_esdi.ellH / _esdi.D:f3}<0.5");
+
+            if (!IsConditionUseFormulas)
+            {
+                body.AddParagraph("Условия применения расчетных формул не выполняется ")
+                    .Bold()
+                    .Color(System.Drawing.Color.Red);
+            }
+            package.Close();
         }
     }
 }

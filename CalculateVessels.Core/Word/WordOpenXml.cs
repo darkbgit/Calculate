@@ -37,8 +37,28 @@ namespace CalculateVessels.Core.Word
             return r;
         }
 
+        public static Run AddRun(this Run r, string runText)
+        {
+            var p = r.Parent as Paragraph;
+            var newRun = p.AppendChild(new Run());
+            r.AppendChild(new Text(runText)
+            {
+                Space = SpaceProcessingModeValues.Preserve
+            });
+            return newRun;
+        }
+
         public static Paragraph AppendEquation(this Paragraph p, string text)
         {
+            var pM = p.AppendChild(new DocumentFormat.OpenXml.Math.Paragraph());
+            var m = new DocumentFormat.OpenXml.Math.OfficeMath(new Run(new Text(text)));
+            pM.AppendChild(m);
+            return p;
+        }
+
+        public static Paragraph AppendEquation(this Run r, string text)
+        {
+            var p = r.Parent as Paragraph;
             var pM = p.AppendChild(new DocumentFormat.OpenXml.Math.Paragraph());
             var m = new DocumentFormat.OpenXml.Math.OfficeMath(new Run(new Text(text)));
             pM.AppendChild(m);

@@ -118,7 +118,142 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="BSphRadial" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\pic\Nozzle\BSphRadial.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="BSphRadialDekart" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\pic\Nozzle\BSphRadialDekart.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="BSphTilted" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\pic\Nozzle\BSphTilted.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="BSphTiltedDekart" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\pic\Nozzle\BSphTiltedDekart.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="BSphVert" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\pic\Nozzle\BSphVert.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="BSphVertDekart" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\pic\Nozzle\BSphVertDekart.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Cil" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\pic\Cil\Cil.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConeAxial" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\pic\Nozzle\ConeAxial.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConeOffset" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\pic\Nozzle\ConeOffset.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConeRadial" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\pic\Nozzle\ConeRadial.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConeSteepAxial" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\pic\Nozzle\ConeSteepAxial.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConeSteepOffset" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\pic\Nozzle\ConeSteepOffset.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConeSteepRadial" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\pic\Nozzle\ConeSteepRadial.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConeSteepTilted" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\pic\Nozzle\ConeSteepTilted.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConeSteepVert" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\pic\Nozzle\ConeSteepVert.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConeTilted" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\pic\Nozzle\ConeTilted.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConeVert" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\pic\Nozzle\ConeVert.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CylAxial" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\pic\Nozzle\CylAxial.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CylOffset" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\pic\Nozzle\CylOffset.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CylRadial" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\pic\Nozzle\CylRadial.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CylTilted" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\pic\Nozzle\CylTilted.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="Ell" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\pic\Ell\Ell.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Ell1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\pic\Ell\Ell.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="EllRadial" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\pic\Nozzle\EllRadial.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="EllRadialDekart" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\pic\Nozzle\EllRadialDekart.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="EllTilted" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\pic\Nozzle\EllTilted.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="EllTiltedDekart" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\pic\Nozzle\EllTiltedDekart.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="EllVert" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\pic\Nozzle\EllVert.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="EllVertDekart" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\pic\Nozzle\EllVertDekart.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="FlatRadial" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\pic\Nozzle\FlatRadial.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="FlatRadialDekart" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\pic\Nozzle\FlatRadialDekart.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Nozzle1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\pic\Nozzle\Nozzle1.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Nozzle2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\pic\Nozzle\Nozzle2.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Nozzle3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\pic\Nozzle\Nozzle3.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Nozzle4" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\pic\Nozzle\Nozzle4.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Nozzle5" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\pic\Nozzle\Nozzle5.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Nozzle6" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\pic\Nozzle\Nozzle6.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Nozzle7" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\pic\Nozzle\Nozzle7.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Nozzle8" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\pic\Nozzle\Nozzle8.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="SaddleNothingElem" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\pic\Saddle\SaddleNothingElem.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="SaddleRingInElem" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\pic\Saddle\SaddleRingInElem.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="SaddleRingOutElem" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\pic\Saddle\SaddleRingOutElem.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="SaddleRingRib1Elem" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\pic\Saddle\SaddleRingRib1Elem.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="SaddleRingRib3Elem" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\pic\Saddle\SaddleRingRib3Elem.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="SaddleSheetElem" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\pic\Saddle\SaddleSheetElem.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Sfer" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\pic\Ell\Sfer.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>

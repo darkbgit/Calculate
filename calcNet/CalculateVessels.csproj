@@ -54,4 +54,8 @@
     <ProjectReference Include="..\CalculateVessels.Core\CalculateVessels.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Resources\" />
+  </ItemGroup>
+
 </Project>

@@ -4,7 +4,7 @@ namespace CalculateVessels.Core.Shells
 {
     public abstract class Shell
     {
-        public Shell()//ShellType shellType)
+        protected Shell()//ShellType shellType)
         {
             //this.shellType = shellType;
         }
@@ -19,16 +19,11 @@ namespace CalculateVessels.Core.Shells
         public double p_de { get => _p_de; }
         public double p_d { get => _p_d; }
 
-        public bool IsCriticalError { get => isCriticalError; }
-        public bool IsError { get => isError; }
-        public List<string> ErrorList { get => err; }
+        public bool IsCriticalError { get; protected set; }
+        public bool IsError { get; protected set; }
+        public List<string> ErrorList { get; protected set; } = new();
 
-
-        protected bool isCriticalError;
-        protected bool isError;
-        protected bool isConditionUseFormuls;
-
-        protected List<string> err = new List<string>();
+        public bool IsConditionUseFormulas { get; protected set; }
 
         //public ShellType ShellType { get => shellType; }
 

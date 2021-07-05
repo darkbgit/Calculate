@@ -20,6 +20,98 @@ namespace CalculateVessels.Core.Shells
         private readonly CylindricalShellDataIn _csdi;
 
         private const string FILENAME_CYLINDER_GIF = "pic/ObCil.gif";
+   
+        //internal bool IsConditionUseFormulas { get => isConditionUseFormuls; }
+
+        //internal double s_calcr1 { get => _s_calcr1;  }
+        //internal double s_calcr2 { get => _s_calcr2;  }
+        internal double s_calcrf { get => _s_calcrf; }
+        internal double s_calcf { get => _s_calcf; }
+
+
+
+        internal double b { get => _b; }
+        internal double b_2 { get => _b_2; }
+        internal double b1 { get => _B1; }
+        internal double b1_2 { get => _B1_2; }
+        internal double p_dp { get => _p_dp; }
+        //internal double p_de { get => _p_de;  }
+        internal double F_d { get => _F_d; }
+        internal double F_dp { get => _F_dp; }
+        internal double F_de { get => _F_de; }
+        internal double F_de1 { get => _F_de1; }
+        internal double F_de2 { get => _F_de2; }
+        internal double Lamda { get => lamda; }
+        internal double M_d { get => _M_d; }
+        internal double M_dp { get => _M_dp; }
+        internal double M_de { get => _M_de; }
+        internal double Q_d { get => _Q_d; }
+        internal double Q_dp { get => _Q_dp; }
+        internal double Q_de { get => _Q_de; }
+        internal double ElR { get => _elR; }
+        internal double Elke { get => _elke; }
+        internal double Elx { get => _elx; }
+        internal double Dk { get => _Dk; }
+        internal double Lpr { get => _lpr; }
+        internal double F1 { get => _F1; }
+        internal double ConditionYstoich { get => conditionYstoich; }
+        internal double L { get => _l; }
+
+
+        internal CylindricalShellDataIn Csdi { get => _csdi; }
+
+
+        internal int FCalcSchema; //1-7
+
+        internal bool isNeedMakeCalcNozzle,
+                    isNeedpCalculate,
+                    isPressureIn,
+                    isNeedFCalculate,
+                    isFTensile,
+                    isNeedMCalculate,
+                    isNeedQCalculate;
+
+
+        internal int bibliography;
+
+
+
+        private double _l;
+        //private double _c;
+
+
+
+
+        private double _s_calcrf;
+        private double _s_calcf;
+
+        private double _b;
+        private double _b_2;
+        private double _B1;
+        private double _B1_2;
+
+
+        private double _F_d;
+        private double _F_dp;
+        private double _F_de;
+        private double _F_de1;
+        private double _F_de2;
+        private double lamda;
+        private double _M_d;
+        private double _M_dp;
+        private double _M_de;
+        private double _Q_d;
+        private double _Q_dp;
+        private double _Q_de;
+        private double _elR;
+        private double _elke;
+        private double _elx;
+        private double _Dk;
+        private double _lpr;
+        private double _F1;
+        private double conditionYstoich;
+        private double l_in;
+        private double _F;
 
         public void Calculate()
         {
@@ -35,18 +127,18 @@ namespace CalculateVessels.Core.Shells
                 if (isDiametrBig)
                 {
                     const double CONDITION_USE_FORMULS_BIG_DIAMETR = 0.1;
-                    isConditionUseFormuls = (_csdi.s - _c) / _csdi.D <= CONDITION_USE_FORMULS_BIG_DIAMETR;
+                    IsConditionUseFormulas = (_csdi.s - _c) / _csdi.D <= CONDITION_USE_FORMULS_BIG_DIAMETR;
                 }
                 else
                 {
                     const double CONDITION_USE_FORMULS_LITTLE_DIAMETR = 0.3;
-                    isConditionUseFormuls = (_csdi.s - _c) / _csdi.D <= CONDITION_USE_FORMULS_LITTLE_DIAMETR;
+                    IsConditionUseFormulas = (_csdi.s - _c) / _csdi.D <= CONDITION_USE_FORMULS_LITTLE_DIAMETR;
                 }
 
-                if (!isConditionUseFormuls)
+                if (!IsConditionUseFormulas)
                 {
-                    isError = true;
-                    err.Add("Условие применения формул не выполняется");
+                    IsError = true;
+                    ErrorList.Add("Условие применения формул не выполняется");
                 }
             }
 
@@ -67,8 +159,8 @@ namespace CalculateVessels.Core.Shells
                     }
                     else
                     {
-                        isCriticalError = true;
-                        err.Add("Принятая толщина меньше расчетной");
+                        IsCriticalError = true;
+                        ErrorList.Add("Принятая толщина меньше расчетной");
                     }
                 }
                 else
@@ -96,15 +188,15 @@ namespace CalculateVessels.Core.Shells
                     }
                     else
                     {
-                        isCriticalError = true;
-                        err.Add("Принятая толщина меньше расчетной");
+                        IsCriticalError = true;
+                        ErrorList.Add("Принятая толщина меньше расчетной");
                     }
                     _p_d = _p_dp / Math.Sqrt(1 + Math.Pow(_p_dp / _p_de, 2));
                 }
                 if (_p_d < _csdi.p && _csdi.s != 0)
                 {
-                    isError = true;
-                    err.Add("[p] меньше p");
+                    IsError = true;
+                    ErrorList.Add("[p] меньше p");
                 }
             }
 
@@ -239,102 +331,6 @@ namespace CalculateVessels.Core.Shells
             //return d_out;
         }
 
-
-
-        //internal bool IsConditionUseFormulas { get => isConditionUseFormuls; }
-
-        //internal double s_calcr1 { get => _s_calcr1;  }
-        //internal double s_calcr2 { get => _s_calcr2;  }
-        internal double s_calcrf { get => _s_calcrf; }
-        internal double s_calcf { get => _s_calcf; }
-
-
-
-        internal double b { get => _b; }
-        internal double b_2 { get => _b_2; }
-        internal double b1 { get => _B1; }
-        internal double b1_2 { get => _B1_2; }
-        internal double p_dp { get => _p_dp; }
-        //internal double p_de { get => _p_de;  }
-        internal double F_d { get => _F_d; }
-        internal double F_dp { get => _F_dp; }
-        internal double F_de { get => _F_de; }
-        internal double F_de1 { get => _F_de1; }
-        internal double F_de2 { get => _F_de2; }
-        internal double Lamda { get => lamda; }
-        internal double M_d { get => _M_d; }
-        internal double M_dp { get => _M_dp; }
-        internal double M_de { get => _M_de; }
-        internal double Q_d { get => _Q_d; }
-        internal double Q_dp { get => _Q_dp; }
-        internal double Q_de { get => _Q_de; }
-        internal double ElR { get => _elR; }
-        internal double Elke { get => _elke; }
-        internal double Elx { get => _elx; }
-        internal double Dk { get => _Dk; }
-        internal double Lpr { get => _lpr; }
-        internal double F1 { get => _F1; }
-        internal double ConditionYstoich { get => conditionYstoich; }
-        internal double L { get => _l; }
-
-
-        internal CylindricalShellDataIn Csdi { get => _csdi; }
-
-
-        internal int FCalcSchema; //1-7
-
-        internal bool isNeedMakeCalcNozzle,
-                    isNeedpCalculate,
-                    isPressureIn,
-                    isNeedFCalculate,
-                    isFTensile,
-                    isNeedMCalculate,
-                    isNeedQCalculate;
-
-
-        internal int bibliography;
-
-
-
-        private double _l;
-        //private double _c;
-
-
-
-
-        private double _s_calcrf;
-        private double _s_calcf;
-
-        private double _b;
-        private double _b_2;
-        private double _B1;
-        private double _B1_2;
-
-
-        private double _F_d;
-        private double _F_dp;
-        private double _F_de;
-        private double _F_de1;
-        private double _F_de2;
-        private double lamda;
-        private double _M_d;
-        private double _M_dp;
-        private double _M_de;
-        private double _Q_d;
-        private double _Q_dp;
-        private double _Q_de;
-        private double _elR;
-        private double _elke;
-        private double _elx;
-        private double _Dk;
-        private double _lpr;
-        private double _F1;
-        private double conditionYstoich;
-        private double l_in;
-        private double _F;
-
-
-
         public void MakeWord(string filename)
         {
             if (filename == null)
@@ -356,7 +352,7 @@ namespace CalculateVessels.Core.Shells
 
             var imagePart = mainPart.AddImagePart(ImagePartType.Gif);
 
-            using FileStream stream = new(FILENAME_CYLINDER_GIF, FileMode.Open);
+            using MemoryStream stream = new(Data.Properties.Resources.Cil);
             imagePart.FeedData(stream);
 
             body.AddParagraph("").AddImage(mainPart.GetIdOfPart(imagePart));
@@ -477,8 +473,8 @@ namespace CalculateVessels.Core.Shells
             }
 
             body.AddParagraph("c - сумма прибавок к расчетной толщине");
-            body.AddParagraph("").AppendEquation("c=c_1+c_2+c_3"
-                                                 + $"={Csdi.c1}+{Csdi.c2}+{Csdi.c3}={_c:f2} мм");
+            body.AddParagraph("")
+                .AppendEquation($"c=c_1+c_2+c_3={Csdi.c1}+{Csdi.c2}+{Csdi.c3}={_c:f2} мм");
 
             body.AddParagraph("").AppendEquation($"s={_s_calcr:f2}+{_c:f2}={_s_calc:f2} мм");
 
@@ -553,7 +549,7 @@ namespace CalculateVessels.Core.Shells
                     $"(s-c)/(D)=({Csdi.s}-{_c:f2})/({Csdi.D})={(Csdi.s - _c) / Csdi.D:f3}≤0.1" :
                     $"(s-c)/(D)=({Csdi.s}-{_c:f2})/({Csdi.D})={(Csdi.s - _c) / Csdi.D:f3}≤0.3");
 
-            if (!isConditionUseFormuls)
+            if (!IsConditionUseFormulas)
             {
                 body.AddParagraph("Условия применения расчетных формул не выполняется ")
                     .Bold()
