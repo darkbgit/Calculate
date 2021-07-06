@@ -46,7 +46,7 @@ namespace calcNet
             };
 
             var result = CalcClass.CalcSaddle(dataIn);
-            MakeWord.MakeWord_saddle(dataIn, result, "6724-3");
+            //MakeWord.MakeWord_saddle(dataIn, result, "6724-3");
         }
     }
 }

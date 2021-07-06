@@ -542,8 +542,8 @@ namespace CalculateVessels.Core.Shells.Nozzle
 
             var imagePart = mainPart.AddImagePart(ImagePartType.Gif);
 
-            var stream = Data.Properties.Resources.ResourceManager
-                .GetStream($"Nozzle{(int)_nozzleDataIn.NozzleKind}");
+            using MemoryStream stream = new((byte[])Data.Properties.Resources.ResourceManager
+                .GetObject($"Nozzle{(int)_nozzleDataIn.NozzleKind}"));
             imagePart.FeedData(stream);
             stream.Close();
             body.AddParagraph("").AddImage(mainPart.GetIdOfPart(imagePart));

@@ -25,8 +25,6 @@ namespace CalculateVessels.Core.Shells
 
         public bool IsConditionUseFormulas { get; protected set; }
 
-        //public ShellType ShellType { get => shellType; }
-
         protected double _c;
         protected double _s_calcr;
         protected double _s_calcr1;

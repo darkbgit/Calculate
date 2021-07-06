@@ -44,6 +44,8 @@ namespace CalculateVessels.Core.Shells.DataIn
         private double _l;
         private double _l3_1;
         private double _l3_2;
+
+        public double fi_t { get; set; }
     }
 
 }

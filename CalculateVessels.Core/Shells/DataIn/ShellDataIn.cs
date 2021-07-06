@@ -173,7 +173,7 @@ namespace CalculateVessels.Core.Shells.DataIn
         }
 
         public double ny { get => _ny; set => _ny = value; }
-        public double fit { get => _fit; set => _fit = value; }
+        //public double fit { get => _fit; set => _fit = value; }
         public double F { get => _F; set => _F = value; }
         public double q { get => _q; set => _q = value; }
         public double M { get => _M; set => _M = value; }

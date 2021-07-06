@@ -184,9 +184,6 @@
   <data name="Ell" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\pic\Ell\Ell.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="Ell1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\pic\Ell\Ell.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="EllRadial" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\pic\Nozzle\EllRadial.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
@@ -234,6 +231,27 @@
   </data>
   <data name="Nozzle8" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\pic\Nozzle\Nozzle8.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="PC1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\pic\PC\PC1.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="PC2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\pic\PC\PC2.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="PC3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\pic\PC\PC3.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="PC4" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\pic\PC\PC4.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="PC5" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\pic\PC\PC5.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="PC6" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\pic\PC\PC6.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="PC7" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\pic\PC\PC7.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="SaddleNothingElem" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\pic\Saddle\SaddleNothingElem.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>

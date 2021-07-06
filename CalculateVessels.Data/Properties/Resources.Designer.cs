@@ -283,16 +283,6 @@ namespace CalculateVessels.Data.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        public static byte[] Ell1 {
-            get {
-                object obj = ResourceManager.GetObject("Ell1", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
         public static byte[] EllRadial {
             get {
                 object obj = ResourceManager.GetObject("EllRadial", resourceCulture);
@@ -446,6 +436,76 @@ namespace CalculateVessels.Data.Properties {
         public static byte[] Nozzle8 {
             get {
                 object obj = ResourceManager.GetObject("Nozzle8", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] PC1 {
+            get {
+                object obj = ResourceManager.GetObject("PC1", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] PC2 {
+            get {
+                object obj = ResourceManager.GetObject("PC2", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] PC3 {
+            get {
+                object obj = ResourceManager.GetObject("PC3", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] PC4 {
+            get {
+                object obj = ResourceManager.GetObject("PC4", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] PC5 {
+            get {
+                object obj = ResourceManager.GetObject("PC5", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] PC6 {
+            get {
+                object obj = ResourceManager.GetObject("PC6", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] PC7 {
+            get {
+                object obj = ResourceManager.GetObject("PC7", resourceCulture);
                 return ((byte[])(obj));
             }
         }

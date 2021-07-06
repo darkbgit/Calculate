@@ -348,11 +348,13 @@ namespace calcNet
             {
                 if (rb.Name == "ell_rb")
                 {
-                    pictureBox.Image = CalculateVessels.Data.Properties.Resources.Ell;
+                    pictureBox.Image = (Bitmap)new ImageConverter()
+                                            .ConvertFrom(CalculateVessels.Data.Properties.Resources.Ell);
                 }
                 else if (rb.Name == "polysfer_rb")
                 {
-                    pictureBox.Image = calcNet.Properties.Resources.Sfer;
+                    pictureBox.Image = (Bitmap)new ImageConverter()
+                                            .ConvertFrom(CalculateVessels.Data.Properties.Resources.Sfer);
                 }
             }
         }

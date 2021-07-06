@@ -858,6 +858,7 @@ namespace calcNet
             // 
             // calc_b
             // 
+            this.calc_b.Enabled = false;
             this.calc_b.Location = new System.Drawing.Point(152, 636);
             this.calc_b.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.calc_b.Name = "calc_b";

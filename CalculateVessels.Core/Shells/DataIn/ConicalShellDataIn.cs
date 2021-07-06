@@ -30,11 +30,15 @@ namespace CalculateVessels.Core.Shells.DataIn
         public double r { get; set; }
 
         public bool IsConnectionBig { get; set; }
-        public bool IsConnectionLittle { get; set; }
+        public bool IsConnectionWithLittle { get; set; }
 
         public ConicalConnectionType ConnectionType { get; set; }
 
         public double sigma_d_1 { get; set; }
         public double sigma_d_2 { get; set; }
+        public double sigma_d_k { get; set; }
+
+        public double fi_k { get; set; }
+        public double fi_t { get; set; }
     }
 }

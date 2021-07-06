@@ -42,7 +42,9 @@ namespace calcNet
             if (rb.Checked)
             {
                 int i = Convert.ToInt32(rb.Text[0].ToString());
-                vid_pictureBox.Image = (Bitmap)calcNet.Properties.Resources.ResourceManager.GetObject("Nozzle" + i.ToString());
+                vid_pictureBox.Image = 
+                    (Bitmap)new ImageConverter()
+                    .ConvertFrom(CalculateVessels.Data.Properties.Resources.ResourceManager.GetObject("Nozzle" + i.ToString()));
 
                 ring_gb.Enabled = false;
                 in_gb.Enabled = false;
@@ -76,12 +78,14 @@ namespace calcNet
                             {
                                 case PERPENDICULAR:
                                     {
-                                        place_pb.Image = Properties.Resources.CylRadial;
+                                        place_pb.Image = (Bitmap)new ImageConverter()
+                                            .ConvertFrom(CalculateVessels.Data.Properties.Resources.CylRadial);
                                         break;
                                     }
                                 case TRANSVERSELY:
                                     {
-                                        place_pb.Image = Properties.Resources.CylAxial;
+                                        place_pb.Image = (Bitmap)new ImageConverter()
+                                            .ConvertFrom(CalculateVessels.Data.Properties.Resources.CylAxial); 
                                         break;
                                     }
                                 //case "Смещенный":
@@ -92,7 +96,8 @@ namespace calcNet
                                 //    }
                                 case SLANTED:
                                     {
-                                        place_pb.Image = Properties.Resources.CylTilted;
+                                        place_pb.Image = (Bitmap)new ImageConverter()
+                                            .ConvertFrom(CalculateVessels.Data.Properties.Resources.CylTilted);
                                         break;
                                     }
                             }
@@ -110,11 +115,13 @@ namespace calcNet
                                             (Controls["place_gb"].Controls["corPn"]
                                                                  .Controls["placePolar_rb"] as RadioButton).Checked == true)
                                         {
-                                            place_pb.Image = Properties.Resources.EllRadial;
+                                            place_pb.Image = (Bitmap)new ImageConverter()
+                                                .ConvertFrom(CalculateVessels.Data.Properties.Resources.EllRadial);
                                         }
                                         else if ((Controls["place_gb"].Controls["corPn"].Controls["placeDekart_rb"] as RadioButton).Checked == true)
                                         {
-                                            place_pb.Image = Properties.Resources.EllRadialDekart;
+                                            place_pb.Image = (Bitmap)new ImageConverter()
+                                            .ConvertFrom(CalculateVessels.Data.Properties.Resources.EllRadialDekart);
                                         }
                                             break;
                                     }
@@ -124,11 +131,13 @@ namespace calcNet
                                             (Controls["place_gb"].Controls["corPn"]
                                                                 .Controls["placePolar_rb"] as RadioButton).Checked == true)
                                         {
-                                            place_pb.Image = Properties.Resources.EllVert;
+                                            place_pb.Image = (Bitmap)new ImageConverter()
+                                            .ConvertFrom(CalculateVessels.Data.Properties.Resources.EllVert);
                                         }
                                         else if ((Controls["place_gb"].Controls["corPn"].Controls["placeDekart_rb"] as RadioButton).Checked == true)
                                         {
-                                            place_pb.Image = Properties.Resources.EllVertDekart;
+                                            place_pb.Image = (Bitmap)new ImageConverter()
+                                            .ConvertFrom(CalculateVessels.Data.Properties.Resources.EllVertDekart);
                                         }
                                         break;
                                     }
@@ -211,9 +220,9 @@ namespace calcNet
                 Location = new System.Drawing.Point(115, 199)
             };
             
-            place_pb.Image = calcNet.Properties.Resources.EllRadial;
-          
-
+            place_pb.Image = (Bitmap)new ImageConverter()
+                                            .ConvertFrom(CalculateVessels.Data.Properties.Resources.EllRadial);
+        
             place_gb.Controls.Add(pn);
 
             place_gb.Controls["pn"].Controls.Add(lab_1_1);
@@ -269,9 +278,9 @@ namespace calcNet
                 Text = "мм",
                 Location = new System.Drawing.Point(115, 199)
             };
-            place_pb.Image = (Bitmap)calcNet.Properties.Resources.EllRadialDekart;
-        
-
+            place_pb.Image = (Bitmap)new ImageConverter()
+                                            .ConvertFrom(CalculateVessels.Data.Properties.Resources.EllRadialDekart);
+       
             place_gb.Controls.Add(pn);
 
             place_gb.Controls["pn"].Controls.Add(lab_1_1);
@@ -327,7 +336,8 @@ namespace calcNet
                 Text = "°",
                 Location = new System.Drawing.Point(115, 199)
             };
-            place_pb.Image = (Bitmap)calcNet.Properties.Resources.EllVert;
+            place_pb.Image = (Bitmap)new ImageConverter()
+                                            .ConvertFrom(CalculateVessels.Data.Properties.Resources.EllVert);
 
             place_gb.Controls.Add(pn);
 
@@ -384,8 +394,8 @@ namespace calcNet
                 Text = "мм",
                 Location = new System.Drawing.Point(115, 199)
             };
-            place_pb.Image = (Bitmap)calcNet.Properties.Resources.EllVertDekart;
-
+            place_pb.Image = (Bitmap)new ImageConverter()
+                                            .ConvertFrom(CalculateVessels.Data.Properties.Resources.EllVertDekart);
 
             place_gb.Controls.Add(pn);
 
@@ -461,7 +471,8 @@ namespace calcNet
                 Location = new System.Drawing.Point(115, 244)
             };
 
-            place_pb.Image = Properties.Resources.EllTilted;
+            place_pb.Image = (Bitmap)new ImageConverter()
+                .ConvertFrom(CalculateVessels.Data.Properties.Resources.EllTilted);
 
             place_gb.Controls.Add(pn);
 
@@ -539,8 +550,8 @@ namespace calcNet
                 Text = "°",
                 Location = new System.Drawing.Point(115, 244)
             };
-            place_pb.Image = (Bitmap)calcNet.Properties.Resources.EllTiltedDekart;
-
+            place_pb.Image = (Bitmap)new ImageConverter()
+                                            .ConvertFrom(CalculateVessels.Data.Properties.Resources.EllTiltedDekart);
 
             place_gb.Controls.Add(pn);
 
@@ -1058,7 +1069,8 @@ namespace calcNet
                         //place_gb.Controls.Add(placerb_4);
                         place_gb.Controls.Add(pn);
 
-                        place_pb.Image = calcNet.Properties.Resources.CylRadial;
+                        place_pb.Image = (Bitmap)new ImageConverter()
+                                            .ConvertFrom(CalculateVessels.Data.Properties.Resources.CylRadial);
                     }
                     break;
                 // TODO: Добавить расчет конуса
@@ -1163,7 +1175,8 @@ namespace calcNet
                         place_gb.Controls.Add(corPn);
 
                         place_pb.Location = new Point(place_pb.Location.X, place_pb.Location.Y + 35);
-                        place_pb.Image = calcNet.Properties.Resources.EllRadial;
+                        place_pb.Image = (Bitmap)new ImageConverter()
+                                            .ConvertFrom(CalculateVessels.Data.Properties.Resources.EllRadial);
 
                     }
                     break;

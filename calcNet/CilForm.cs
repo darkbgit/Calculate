@@ -36,7 +36,7 @@ namespace calcNet
             RadioButton rb = sender as RadioButton;
             if (rb.Checked)
             {
-                f_pb.Image = (Bitmap)calcNet.Properties.Resources.ResourceManager.GetObject("PC" + rb.Text);
+                f_pb.Image = (Bitmap)new ImageConverter().ConvertFrom(CalculateVessels.Data.Properties.Resources.ResourceManager.GetObject("PC" + rb.Text));
             }
         }
 

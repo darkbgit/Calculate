@@ -3,7 +3,8 @@
     public enum ConicalConnectionType
     {
         Simply,
-        WithRing,
+        WithRingPicture25b,
+        WithRingPicture29,
         Toroidal
     }
 }

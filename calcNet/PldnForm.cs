@@ -22,7 +22,7 @@ namespace calcNet
             RadioButton rb = sender as RadioButton;
             if (rb.Checked)
             {
-                type_pb.Image = (Bitmap)calcNet.Properties.Resources.ResourceManager.GetObject("pldn" + rb.Text);
+                type_pb.Image = (Bitmap)CalculateVessels.Data.Properties.Resources.ResourceManager.GetObject("pldn" + rb.Text);
                 Type_Draw(sender);
             }
         }

@@ -43,9 +43,18 @@ namespace CalculateVessels.Core.Shells
         private double _B1;
 
         private double _s_2p;
-        private double _beta_1;
         private double _beta;
+        private double _beta_0;
+        private double _beta_1;
+        private double _beta_2;
+        private double _beta_a;
+
         private double _chi_1;
+
+        private double _Ak;
+
+        private double _B2;
+        private double _B3;
 
         internal double Dk { get => _Dk; }
 
@@ -71,7 +80,8 @@ namespace CalculateVessels.Core.Shells
             switch (_csdi.ConnectionType)
             {
                 case ConicalConnectionType.Simply:
-                case ConicalConnectionType.WithRing:
+                case ConicalConnectionType.WithRingPicture25b:
+                case ConicalConnectionType.WithRingPicture29:
                     _a1p = 0.7 * Math.Sqrt(_csdi.D * (_csdi.s1 - _c) / _cosAlfa1);
                     _a2p = 0.7 * Math.Sqrt(_csdi.D * (_csdi.s2 - _c));
                     break;
@@ -81,7 +91,7 @@ namespace CalculateVessels.Core.Shells
                     break;
             }
 
-            if (_csdi.IsConnectionLittle)
+            if (_csdi.IsConnectionWithLittle)
             {
                 _a1p_l = Math.Sqrt(_csdi.D1 * (_csdi.s1 - _c) / _cosAlfa1);
                 _a2p_l = 1.25 * Math.Sqrt(_csdi.D1 * (_csdi.s2 - _c));
@@ -100,7 +110,11 @@ namespace CalculateVessels.Core.Shells
                     _s_calcr = _csdi.p * _Dk / (2 * _csdi.sigma_d * _csdi.fi - _csdi.p)
                         * (1 / _cosAlfa1);
                     _s_calc = _s_calcr + _c;
-                    if (_csdi.s == 0.0 || _csdi.s >= _s_calc)
+                    if (_csdi.s == 0)
+                    {
+                        _p_d = 2 * _csdi.sigma_d * _csdi.fi * _s_calcr / (_Dk / _cosAlfa1 + _s_calcr);
+                    }
+                    else if (_csdi.s >= _s_calc)
                     {
                         _p_d = 2 * _csdi.sigma_d * _csdi.fi * (_csdi.s - _c)
                             / (_Dk / _cosAlfa1 + (_csdi.s - _c));
@@ -113,7 +127,7 @@ namespace CalculateVessels.Core.Shells
                 }
                 else
                 {
-                    _lE = (_csdi.D - _csdi.D1) / (2 * _cosAlfa1);
+                    _lE = (_csdi.D - _csdi.D1) / (2 * _sinAlfa1);
                     _DE_1 = (_csdi.D + _csdi.D1) / (2 * _cosAlfa1);
                     _DE_2 = _csdi.D / _cosAlfa1 - 0.3 * (_csdi.D + _csdi.D1)
                         * Math.Sqrt((_csdi.D + _csdi.D1) / ((_csdi.s - _c) * 100)) * _tgAlfa1;
@@ -127,8 +141,14 @@ namespace CalculateVessels.Core.Shells
                         * (1 / _cosAlfa1);
                     _s_calcr = Math.Max(_s_calcr1, _s_calcr2);
                     _s_calc = _s_calcr + _c;
-
-                    if (_csdi.s >= _s_calc)
+                    if (_csdi.s == 0)
+                    {
+                        _p_dp = 2 * _csdi.sigma_d * _s_calcr / (_Dk / _cosAlfa1 + _s_calcr);
+                        _p_de = 2.08 * 0.00001 * _csdi.E / (_csdi.ny * _B1) * (_DE / _lE)
+                            * Math.Pow(100 * _s_calcr / _DE, 2.5);
+                        _p_d = _p_dp / Math.Sqrt(1 + Math.Pow(_p_dp / _p_de, 2));
+                    }
+                    else if (_csdi.s >= _s_calc)
                     {
                         _p_dp = 2 * _csdi.sigma_d * (_csdi.s - _c)
                             / (_Dk / _cosAlfa1 + _csdi.s - _c);
@@ -172,7 +192,19 @@ namespace CalculateVessels.Core.Shells
                                 ErrorList.Add("Принятая толщина переходной зоны меньше расчетной");
                             }
                             break;
-                        case ConicalConnectionType.WithRing:
+                        case ConicalConnectionType.WithRingPicture25b:
+                            _chi_1 = _csdi.sigma_d_1 / _csdi.sigma_d_2;
+                            _beta = 0.4 * Math.Sqrt(_csdi.D / (_csdi.s2 - _c)) * _tgAlfa1
+                                / (1 + Math.Sqrt((1 + _chi_1
+                                * Math.Pow((_csdi.s1 - _c) / (_csdi.s2 - _c), 2))
+                                / (2 * _cosAlfa1) * _chi_1 * (_csdi.s1 - _c) / (_csdi.s2 - _c))) - 0.25;
+                            _beta_a = (2 * _csdi.sigma_d_2 * _csdi.fi / _csdi.p - 1) * (_csdi.s2 - _c) / _csdi.D;
+                            _Ak = _csdi.p * Math.Pow(_csdi.D, 2) * _tgAlfa1 / (8 * _csdi.sigma_d_k * _csdi.fi_k)
+                                * (1 - (_beta_a + 0.25) / (_beta + 0.25));
+                            _B2 = 1.6 * _Ak / ((_csdi.s2 - _c) * Math.Sqrt(_csdi.D * (_csdi.s2 - _c)))
+                                * _csdi.sigma_d_k * _csdi.fi_k / (_csdi.sigma_d_2 * _csdi.fi_t);
+                            break;
+                        case ConicalConnectionType.WithRingPicture29:
                             break;
                         case ConicalConnectionType.Toroidal:
                             break;

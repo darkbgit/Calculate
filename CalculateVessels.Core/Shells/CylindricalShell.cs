@@ -202,11 +202,11 @@ namespace CalculateVessels.Core.Shells
 
             if (_csdi.F > 0)
             {
-                _s_calcrf = _csdi.F / (Math.PI * _csdi.D * _csdi.sigma_d * _csdi.fit);
+                _s_calcrf = _csdi.F / (Math.PI * _csdi.D * _csdi.sigma_d * _csdi.fi_t);
                 _s_calcf = _s_calcrf + _c;
                 if (_csdi.isFTensile)
                 {
-                    _F_d = Math.PI * (_csdi.D + _csdi.s - _c) * (_csdi.s - _c) * _csdi.sigma_d * _csdi.fit;
+                    _F_d = Math.PI * (_csdi.D + _csdi.s - _c) * (_csdi.s - _c) * _csdi.sigma_d * _csdi.fi_t;
                 }
                 else
                 {

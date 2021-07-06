@@ -58,8 +58,8 @@ namespace calcNet
                         System.IO.File.Copy("temp.docx", f);
                     }
                     List<int> bibliography = new List<int>();
-                    try
-                    {
+                    //try
+                    //{
                         foreach (IElement element in Elements.ElementsList)
                         {
                             element.MakeWord(f);
@@ -103,11 +103,11 @@ namespace calcNet
                         //}
                         MakeWord.MakeLit(bibliography, f);
                         System.Windows.Forms.MessageBox.Show("OK");
-                    }
-                    catch
-                    {
-                        System.Windows.Forms.MessageBox.Show("Error");
-                    }
+                    //}
+                    //catch (Exception)
+                    //{
+                        System.Windows.Forms.MessageBox.Show("Error" + e.ToString());
+                    //}
 
                 }
                 else
