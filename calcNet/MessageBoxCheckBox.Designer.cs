@@ -1,5 +1,5 @@
 ﻿
-namespace calcNet
+namespace CalculateVessels
 {
     partial class MessageBoxCheckBox
     {

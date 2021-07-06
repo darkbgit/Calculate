@@ -1,19 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Xml;
-using CalculateVessels.Core.Shells.DataIn;
+using calcNet;
 using CalculateVessels.Core.Shells;
+using CalculateVessels.Core.Shells.DataIn;
 
-
-namespace calcNet
+namespace CalculateVessels
 {
     public partial class CilForm : Form
     {

@@ -1,16 +1,9 @@
-﻿using CalculateVessels.Core.Interfaces;
-using CalculateVessels.Core.Shells.DataIn;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 using System.Windows.Forms;
+using CalculateVessels.Core.Interfaces;
+using CalculateVessels.Core.Shells.DataIn;
 
-namespace calcNet
+namespace CalculateVessels
 {
     public partial class MessageBoxCheckBox : Form
     {
