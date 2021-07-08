@@ -208,6 +208,39 @@
   <data name="FlatRadialDekart" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\pic\Nozzle\FlatRadialDekart.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="GOST_34233_1" xml:space="preserve">
+    <value>ГОСТ 34233.1-2017 Сосуды и аппараты. Нормы и методы расчета на прочность. Общие требования</value>
+  </data>
+  <data name="GOST_34233_10" xml:space="preserve">
+    <value>ГОСТ 34233.10-2017 Сосуды и аппараты. Нормы и методы расчета на прочность. Сосуды и аппараты работающие с сероводородными средами</value>
+  </data>
+  <data name="GOST_34233_11" xml:space="preserve">
+    <value>ГОСТ 34233.11-2017 Сосуды и аппараты. Нормы и методы расчета на прочность. Метод расчета на прочность обечаек и днищ с учетом смещения кромок сварных соединений, угловатости и некруглости обечаек</value>
+  </data>
+  <data name="GOST_34233_2" xml:space="preserve">
+    <value>ГОСТ 34233.2-2017 Сосуды и аппараты. Нормы и методы расчета на прочность. Расчет цилиндрических и конических обечаек, выпуклых и плоских днищ и крышек</value>
+  </data>
+  <data name="GOST_34233_3" xml:space="preserve">
+    <value>ГОСТ 34233.3-2017 Сосуды и аппараты. Нормы и методы расчета на прочность. Укрепление отверстий в обечайках и днищах при внутреннем и наружном давлениях. Расчет на прочность обечаек и днищ при внешних статических нагрузках на штуцер</value>
+  </data>
+  <data name="GOST_34233_4" xml:space="preserve">
+    <value>ГОСТ 34233.4-2017 Сосуды и аппараты. Нормы и методы расчета на прочность. Расчет на прочность и герметичность фланцевых соединений</value>
+  </data>
+  <data name="GOST_34233_5" xml:space="preserve">
+    <value>ГОСТ 34233.5-2017 Сосуды и аппараты. Нормы и методы расчета на прочность. Расчет  обечаек и днищ от воздействия опорных нагрузок</value>
+  </data>
+  <data name="GOST_34233_6" xml:space="preserve">
+    <value>ГОСТ 34233.6-2017 Сосуды и аппараты. Нормы и методы расчета на прочность. Расчет на прочность при малоцикловых нагрузках</value>
+  </data>
+  <data name="GOST_34233_7" xml:space="preserve">
+    <value>ГОСТ 34233.7-2017 Сосуды и аппараты. Нормы и методы расчета на прочность. Теплообменные аппараты</value>
+  </data>
+  <data name="GOST_34233_8" xml:space="preserve">
+    <value>ГОСТ 34233.8-2017 Сосуды и аппараты. Нормы и методы расчета на прочность. Сосуды и аппараты с рубашками</value>
+  </data>
+  <data name="GOST_34233_9" xml:space="preserve">
+    <value>ГОСТ 34233.9-2017 Сосуды и аппараты. Нормы и методы расчета на прочность. Аппараты колонного типа</value>
+  </data>
   <data name="Nozzle1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\pic\Nozzle\Nozzle1.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>

@@ -361,6 +361,105 @@ namespace CalculateVessels.Data.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ГОСТ 34233.1-2017 Сосуды и аппараты. Нормы и методы расчета на прочность. Общие требования.
+        /// </summary>
+        public static string GOST_34233_1 {
+            get {
+                return ResourceManager.GetString("GOST_34233_1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ГОСТ 34233.10-2017 Сосуды и аппараты. Нормы и методы расчета на прочность. Сосуды и аппараты работающие с сероводородными средами.
+        /// </summary>
+        public static string GOST_34233_10 {
+            get {
+                return ResourceManager.GetString("GOST_34233_10", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ГОСТ 34233.11-2017 Сосуды и аппараты. Нормы и методы расчета на прочность. Метод расчета на прочность обечаек и днищ с учетом смещения кромок сварных соединений, угловатости и некруглости обечаек.
+        /// </summary>
+        public static string GOST_34233_11 {
+            get {
+                return ResourceManager.GetString("GOST_34233_11", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ГОСТ 34233.2-2017 Сосуды и аппараты. Нормы и методы расчета на прочность. Расчет цилиндрических и конических обечаек, выпуклых и плоских днищ и крышек.
+        /// </summary>
+        public static string GOST_34233_2 {
+            get {
+                return ResourceManager.GetString("GOST_34233_2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ГОСТ 34233.3-2017 Сосуды и аппараты. Нормы и методы расчета на прочность. Укрепление отверстий в обечайках и днищах при внутреннем и наружном давлениях. Расчет на прочность обечаек и днищ при внешних статических нагрузках на штуцер.
+        /// </summary>
+        public static string GOST_34233_3 {
+            get {
+                return ResourceManager.GetString("GOST_34233_3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ГОСТ 34233.4-2017 Сосуды и аппараты. Нормы и методы расчета на прочность. Расчет на прочность и герметичность фланцевых соединений.
+        /// </summary>
+        public static string GOST_34233_4 {
+            get {
+                return ResourceManager.GetString("GOST_34233_4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ГОСТ 34233.5-2017 Сосуды и аппараты. Нормы и методы расчета на прочность. Расчет  обечаек и днищ от воздействия опорных нагрузок.
+        /// </summary>
+        public static string GOST_34233_5 {
+            get {
+                return ResourceManager.GetString("GOST_34233_5", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ГОСТ 34233.6-2017 Сосуды и аппараты. Нормы и методы расчета на прочность. Расчет на прочность при малоцикловых нагрузках.
+        /// </summary>
+        public static string GOST_34233_6 {
+            get {
+                return ResourceManager.GetString("GOST_34233_6", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ГОСТ 34233.7-2017 Сосуды и аппараты. Нормы и методы расчета на прочность. Теплообменные аппараты.
+        /// </summary>
+        public static string GOST_34233_7 {
+            get {
+                return ResourceManager.GetString("GOST_34233_7", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ГОСТ 34233.8-2017 Сосуды и аппараты. Нормы и методы расчета на прочность. Сосуды и аппараты с рубашками.
+        /// </summary>
+        public static string GOST_34233_8 {
+            get {
+                return ResourceManager.GetString("GOST_34233_8", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ГОСТ 34233.9-2017 Сосуды и аппараты. Нормы и методы расчета на прочность. Аппараты колонного типа.
+        /// </summary>
+        public static string GOST_34233_9 {
+            get {
+                return ResourceManager.GetString("GOST_34233_9", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
         public static byte[] Nozzle1 {
