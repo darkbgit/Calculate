@@ -1,4 +1,7 @@
-﻿using System;
+﻿using CalculateVessels.Core.Bibliography;
+using CalculateVessels.Core.Interfaces;
+using CalculateVessels.Data.PhisicalData;
+using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using calcNet;
@@ -49,59 +52,41 @@ namespace CalculateVessels
                     }
                     else
                     {
-                        System.IO.File.Copy("temp.docx", f);
+                        try
+                        {
+                            System.IO.File.Copy("temp.docx", f);
+                        }
+                        catch
+                        {
+                            System.Windows.Forms.MessageBox.Show("Закройте" + f + "и нажмите OK");
+                        }
                     }
-                    List<int> bibliography = new List<int>();
-                    //try
-                    //{
-                        foreach (IElement element in Elements.ElementsList)
+                    List<string> bibliography = new List<string>();
+
+                    foreach (IElement element in Elements.ElementsList)
+                    {
+                        try
                         {
                             element.MakeWord(f);
+                            bibliography = bibliography.Union(element.Bibliograhy).ToList();
                         }
 
-                        //for (int i = 0; i < DataWordOut.DataArr.Count; i++)
-                        //{
-                        //    //int inx = item.id;
-                        //    if (DataWordOut.DataArr[i].id != 0)
-                        //    {
-                        //        switch (DataWordOut.DataArr[i].calculatedElementType)
-                        //        {
-                        //            case CalculatedElementType.Cylindrical:
-                        //                MakeWord.MakeWord_cil(DataWordOut.DataArr[i].Data_In, DataWordOut.DataArr[i].Data_Out, f);
-                        //                bibliography.Add(2);
-                        //                break;
-                        //            case CalculatedElementType.Conical:
-                        //                bibliography.Add(2);
-                        //                break;
-                        //            case CalculatedElementType.Elliptical:
-                        //                MakeWord.MakeWord_ell(DataWordOut.DataArr[i].Data_In, DataWordOut.DataArr[i].Data_Out, f);
-                        //                bibliography.Add(2);
-                        //                break;
-                        //            case CalculatedElementType.CylindricalWhithNozzle:
-                        //            case CalculatedElementType.ConicalWhithNozzle:
-                        //            case CalculatedElementType.EllipticalWhithNozzle:
-                        //                MakeWord.MakeWord_nozzle(DataWordOut.DataArr[i].Data_In, DataWordOut.DataArr[i].Data_Out, DataWordOut.DataArr[i].DataN_In, DataWordOut.DataArr[i].DataN_Out, f);
-                        //                bibliography.Add(3);
-                        //                break;
-                        //            case CalculatedElementType.Saddle:
-                        //                bibliography.Add(5);
-                        //                break;
-                        //            case CalculatedElementType.Heatexchenge:
-                        //                bibliography.Add(7);
-                        //                break;
-                        //            case CalculatedElementType.FlatBottom:
-                        //                bibliography.Add(2);
-                        //                break;
-                        //        }
-                        //    }
-                        //}
-                        MakeWord.MakeLit(bibliography, f);
+                        catch (Exception)
+                        {
+                            System.Windows.Forms.MessageBox.Show($"Couldnt create word file for element {element}" + e.ToString());
+                        }
+                    }
+
+                    try
+                    {
+                        Bibliography.AddBibliography(bibliography, f);
                         System.Windows.Forms.MessageBox.Show("OK");
-                    //}
-                    //catch (Exception)
-                    //{
-                        System.Windows.Forms.MessageBox.Show("Error" + e.ToString());
-                    //}
+                    }
+                    catch
+                    {
+                        System.Windows.Forms.MessageBox.Show("Couldnt create word file for bibliography" + e.ToString());
+                    }
+
 
                 }
                 else
@@ -314,6 +299,12 @@ namespace CalculateVessels
                 AboutBox abf = new AboutBox();
                 abf.ShowDialog();
             }
+        }
+
+        private void button10_Click(object sender, EventArgs e)
+        {
+            var steels = Phisical.GetSteelsList();
+            MessageBox.Show(string.Join<string>(Environment.NewLine, steels));
         }
     }
 }

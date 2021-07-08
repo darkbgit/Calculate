@@ -346,7 +346,7 @@ namespace CalculateVessels.Core.Shells
         {
             throw new NotImplementedException();
         }
+
+        public override string ToString() => $"Коническая обечайка {_csdi.Name}";
     }
-
-
 }

@@ -50,6 +50,8 @@ namespace CalculateVessels.Core.Shells.Nozzle
         public double d0 { get => _d0; }
         public double b { get => _b; }
 
+        public List<string> Bibliograhy { get; } = new() { "GOST_34233_3" };
+
         private double _E2;
         private double _E3;
         private double _E4;

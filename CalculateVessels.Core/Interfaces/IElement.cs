@@ -10,11 +10,15 @@ namespace CalculateVessels.Core.Interfaces
 
         void MakeWord(string filename);
 
+        string ToString();
+
         bool IsCriticalError { get; }
 
         bool IsError { get; }
 
         List<string> ErrorList { get; }
+
+        List<string> Bibliograhy { get; }
     }
 
 }

@@ -149,8 +149,6 @@ namespace CalculateVessels.Core.Shells
             }
         }
 
-    
-
         public void MakeWord(string filename)
         {
             if (filename == null)

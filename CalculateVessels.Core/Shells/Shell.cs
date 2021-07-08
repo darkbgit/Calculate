@@ -33,6 +33,8 @@ namespace CalculateVessels.Core.Shells
         protected double _p_de;
         protected double _p_dp;
         protected double _p_d;
+
+        public List<string> Bibliograhy { get; } = new() { "GOST_34233_1", "GOST_34233_2" };
     }
 
 }
