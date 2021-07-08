@@ -1,11 +1,11 @@
 ﻿using CalculateVessels.Core.Bibliography;
 using CalculateVessels.Core.Interfaces;
-using CalculateVessels.Data.PhisicalData;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
-using calcNet;
-using CalculateVessels.Core.Interfaces;
+using CalculateVessels.Data.PhysicalData;
+
 
 namespace CalculateVessels
 {
@@ -303,7 +303,7 @@ namespace CalculateVessels
 
         private void button10_Click(object sender, EventArgs e)
         {
-            var steels = Phisical.GetSteelsList();
+            var steels = Physical.GetSteelsList();
             MessageBox.Show(string.Join<string>(Environment.NewLine, steels));
         }
     }

@@ -4,7 +4,6 @@ using System.Drawing;
 using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
-using calcNet;
 using CalculateVessels.Core.Shells;
 using CalculateVessels.Core.Shells.DataIn;
 
