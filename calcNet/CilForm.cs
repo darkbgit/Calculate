@@ -6,6 +6,7 @@ using System.Linq;
 using System.Windows.Forms;
 using CalculateVessels.Core.Shells;
 using CalculateVessels.Core.Shells.DataIn;
+using CalculateVessels.Data.PhysicalData;
 
 namespace CalculateVessels
 {
@@ -85,14 +86,12 @@ namespace CalculateVessels
                 //[σ]
                 //InputClass.GetInput_sigma_d(sigma_d_tb, ref d_in, ref dataInErr);
                 {
-                    double sigma_d = 0;
+                    double sigma_d;
                     if (sigma_d_tb.ReadOnly)
                     {
-
-                        CalcClass.GetSigma(cylindricalShellDataIn.Steel,
-                                            cylindricalShellDataIn.t,
-                                            ref sigma_d,
-                                            ref dataInErr);
+                        sigma_d = Physical.GetSigma(cylindricalShellDataIn.Steel,
+                                                    cylindricalShellDataIn.t,
+                                                    ref dataInErr);
                         sigma_d_tb.ReadOnly = false;
                         sigma_d_tb.Text = sigma_d.ToString(CultureInfo.CurrentCulture);
                         sigma_d_tb.ReadOnly = true;
@@ -114,19 +113,28 @@ namespace CalculateVessels
                     //E
                     //InputClass.GetInput_E(E_tb, ref d_in, ref dataInErr);
                     {
-                        double E = 0;
-                        //List<string> dataInErr = new List<string>();
-                        CalcClass.GetE(steel_cb.Text, Convert.ToInt32(t_tb.Text), ref E, ref dataInErr);
-                        E_tb.Text = E.ToString();
-
-                        if (double.TryParse(E_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
-                        System.Globalization.CultureInfo.InvariantCulture, out E))
+                        double E;
+                        if (E_tb.ReadOnly)
                         {
-                            cylindricalShellDataIn.E = E;
+                            E = Physical.GetE(cylindricalShellDataIn.Steel,
+                                                cylindricalShellDataIn.t,
+                                                ref dataInErr);
+                            E_tb.ReadOnly = false;
+                            E_tb.Text = E.ToString();
+                            E_tb.ReadOnly = true;
                         }
                         else
                         {
-                            dataInErr.Add("E неверный ввод");
+
+                            if (double.TryParse(E_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
+                            System.Globalization.CultureInfo.InvariantCulture, out E))
+                            {
+                                cylindricalShellDataIn.E = E;
+                            }
+                            else
+                            {
+                                dataInErr.Add("E неверный ввод");
+                            }
                         }
                     }
 
@@ -433,15 +441,19 @@ namespace CalculateVessels
 
         private void CilForm_Load(object sender, EventArgs e)
         {
-            SetSteelList.SetList(steel_cb);
+            var steels = Physical.GetSteelsList()?.ToArray();
+            if (steels != null)
+            {
+                steel_cb.Items.AddRange(steels);
+                steel_cb.SelectedIndex = 0;
+            }
             Gost_cb.SelectedIndex = 0;
         }
 
         private void GetE_b_Click(object sender, EventArgs e)
         {
-            double E = 0;
             List<string> dataInErr = new List<string>();
-            CalcClass.GetE(steel_cb.Text, Convert.ToInt32(t_tb.Text), ref E, ref dataInErr);
+            var E = Physical.GetE(steel_cb.Text, Convert.ToInt32(t_tb.Text), ref dataInErr);
             E_tb.Text = E.ToString();
         }
 

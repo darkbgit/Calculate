@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Xml;
-using CalculateVessels.Core.Interfaces;
 using CalculateVessels.Data.PhysicalData;
 
 namespace CalculateVessels
@@ -22,30 +20,6 @@ namespace CalculateVessels
         }
     }
 
-    public static class Elements
-    {
-        public static List<IElement> ElementsList { get; set; } = new List<IElement>();
-    }
-
-
-
-    internal static class SetSteelList
-    {
-        internal static void SetList(ComboBox cb)
-        {
-            var steels = Physical.GetSteelsList().ToArray();
-            //XmlDocument doc = new XmlDocument();
-            //doc.Load(System.IO.Path.Combine(System.IO.Directory.GetCurrentDirectory(), @"data\data.xml"));
-            //var root = doc.DocumentElement;
-            //XmlNodeList steels = root.SelectNodes("sigma_list/steels/steel");
-            //foreach (XmlNode steel in steels)
-            //{
-            //    cb.Items.Add(steel.Attributes["name"].Value);
-            //}
-            cb.Items.AddRange(steels);
-            cb.SelectedIndex = 0;
-        }
-    }
 
     enum CalculatedElementType
     {

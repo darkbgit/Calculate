@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CalculateVessels.Data.PhysicalData;
+using System;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -23,8 +24,13 @@ namespace CalculateVessels
 
         private void PldnForm_Load(object sender, EventArgs e)
         {
-            SetSteelList.SetList(steel_cb);
-            steel_cb.SelectedIndex = 0;
+            var steels = Physical.GetSteelsList();
+            if (steels != null)
+            {
+                steel_cb.Items.AddRange(steels);
+                steel_cb.SelectedIndex = 0;
+            }
+
             Gost_cb.SelectedIndex = 0;
             Type_Draw(rb1);
         }

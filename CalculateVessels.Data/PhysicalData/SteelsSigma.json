@@ -3,54 +3,62 @@
 		"Name": "Ст3",
 		"IsCouldBigThickness": true,
 		"BigThickness": 20,
-		"Sigmas": [
+		"Values": [
 			{
 				"Temperature": 20,
-				"Sigma": [ 20, 154.0, 154.0, 140.0, 140.0 ]
+				"SigmaValue": [ 20, 154.0, 154.0, 140.0, 140.0 ],
+				"EValue": 199000
 			},
 			{
 				"Temperature": 100,
-				"Sigma": [ 149.0, 149.0, 134.0, 134.0 ]
+				"SigmaValue": [ 149.0, 149.0, 134.0, 134.0 ],
+				"EValue": 191000
 			},
 			{
 				"Temperature": 150,
-				"Sigma": [ 145.0, 145.0, 131.0, 131.0 ]
+				"SigmaValue": [ 145.0, 145.0, 131.0, 131.0 ],
+				"EValue": 186000
 			},
 			{
 				"Temperature": 200,
-				"Sigma": [ 142.0, 142.0, 126.0, 126.0 ]
+				"SigmaValue": [ 142.0, 142.0, 126.0, 126.0 ],
+				"EValue": 181000
 			},
 			{
 				"Temperature": 250,
-				"Sigma": [ 131.0, 131.0, 120.0, 120.0 ]
+				"SigmaValue": [ 131.0, 131.0, 120.0, 120.0 ],
+				"EValue": 176000
 			},
 			{
 				"Temperature": 300,
-				"Sigma": [ 115.0, 115.0, 108.0, 108.0 ]
+				"SigmaValue": [ 115.0, 115.0, 108.0, 108.0 ],
+				"EValue": 171000
 			},
 			{
 				"Temperature": 350,
-				"Sigma": [ 105.0, 105.0, 98.0, 98.0 ]
+				"SigmaValue": [ 105.0, 105.0, 98.0, 98.0 ],
+				"EValue": 164000
 			},
 			{
 				"Temperature": 375,
-				"Sigma": [ 93.0, 93.0, 93.0, 93.0 ]
+				"SigmaValue": [ 93.0, 93.0, 93.0, 93.0 ]
 			},
 			{
 				"Temperature": 400,
-				"Sigma": [ 85.0, 68.0, 85.0, 68.0 ]
+				"SigmaValue": [ 85.0, 68.0, 85.0, 68.0 ],
+				"EValue": 155000
 			},
 			{
 				"Temperature": 410,
-				"Sigma": [ 81.0, 65.0, 81.0, 65.0 ]
+				"SigmaValue": [ 81.0, 65.0, 81.0, 65.0 ]
 			},
 			{
 				"Temperature": 420,
-				"Sigma": [ 75.0, 60.0, 75.0, 60.0 ]
+				"SigmaValue": [ 75.0, 60.0, 75.0, 60.0 ]
 			},
 			{
 				"Temperature": 430,
-				"Sigma": [ 71.0, 57.0, 71.0, 57.0 ]
+				"SigmaValue": [ 71.0, 57.0, 71.0, 57.0 ]
 			}
 		]
 	},
@@ -58,74 +66,83 @@
 		"Name": "09Г2С",
 		"IsCouldBigThickness": true,
 		"BigThickness": 20,
-		"Sigmas": [
+		"Values": [
 			{
 				"Temperature": 20,
-				"Sigma": [ 196.0, 196.0, 183.0, 183.0 ]
+				"SigmaValue": [ 196.0, 196.0, 183.0, 183.0 ],
+				"EValue": 199000
 			},
 			{
 				"Temperature": 100,
-				"Sigma": [ 177.0, 177.0, 160.0, 160.0 ]
+				"SigmaValue": [ 177.0, 177.0, 160.0, 160.0 ],
+				"EValue": 191000
 			},
 			{
 				"Temperature": 150,
-				"Sigma": [ 171.0, 171.0, 154.0, 154.0 ]
+				"SigmaValue": [ 171.0, 171.0, 154.0, 154.0 ],
+				"EValue": 186000
 			},
 			{
 				"Temperature": 200,
-				"Sigma": [ 165.0, 165.0, 148.0, 148.0 ]
+				"SigmaValue": [ 165.0, 165.0, 148.0, 148.0 ],
+				"EValue": 181000
 			},
 			{
 				"Temperature": 250,
-				"Sigma": [ 162.0, 162.0, 145.0, 145.0 ]
+				"SigmaValue": [ 162.0, 162.0, 145.0, 145.0 ],
+				"EValue": 176000
 			},
 			{
 				"Temperature": 300,
-				"Sigma": [ 151.0, 151.0, 134.0, 134.0 ]
+				"SigmaValue": [ 151.0, 151.0, 134.0, 134.0 ],
+				"EValue": 171000
 			},
 			{
 				"Temperature": 350,
-				"Sigma": [ 140.0, 140.0, 123.0, 123.0 ]
+				"SigmaValue": [ 140.0, 140.0, 123.0, 123.0 ],
+				"EValue": 164000
 			},
 			{
 				"Temperature": 375,
-				"Sigma": [ 133.0, 133.0, 116.0, 116.0 ]
+				"SigmaValue": [ 133.0, 133.0, 116.0, 116.0 ]
 			},
 			{
 				"Temperature": 400,
-				"Sigma": [ 122.0, 122.0, 105.0, 105.0 ]
+				"SigmaValue": [ 122.0, 122.0, 105.0, 105.0 ],
+				"EValue": 155000
 			},
 			{
 				"Temperature": 410,
-				"Sigma": [ 104.0, 104.0, 104.0, 104.0 ]
+				"SigmaValue": [ 104.0, 104.0, 104.0, 104.0 ]
 			},
 			{
 				"Temperature": 420,
-				"Sigma": [ 92.0, 92.0, 92.0, 92.0 ]
+				"SigmaValue": [ 92.0, 92.0, 92.0, 92.0 ]
 			},
 			{
 				"Temperature": 430,
-				"Sigma": [ 86.0, 73.0, 86.0, 73.0 ]
+				"SigmaValue": [ 86.0, 73.0, 86.0, 73.0 ]
 			},
 			{
 				"Temperature": 440,
-				"Sigma": [ 78.0, 66.0, 78.0, 66.0 ]
+				"SigmaValue": [ 78.0, 66.0, 78.0, 66.0 ]
 			},
 			{
 				"Temperature": 450,
-				"Sigma": [ 71.0, 53.0, 71.0, 53.0 ]
+				"SigmaValue": [ 71.0, 53.0, 71.0, 53.0 ],
+				"EValue": 140000
 			},
 			{
 				"Temperature": 460,
-				"Sigma": [ 64.0, 48.0, 64.0, 48.0 ]
+				"SigmaValue": [ 64.0, 48.0, 64.0, 48.0 ]
 			},
 			{
 				"Temperature": 470,
-				"Sigma": [ 56.0, 42.0, 56.0, 42.0 ]
+				"SigmaValue": [ 56.0, 42.0, 56.0, 42.0 ]
 			},
 			{
 				"Temperature": 475,
-				"Sigma": [ 53.0, 40.0, 53.0, 40.0 ]
+				"SigmaValue": [ 53.0, 40.0, 53.0, 40.0 ]
 			}
 		]
 	},
@@ -133,836 +150,923 @@
 		"Name": "16ГС",
 		"IsCouldBigThickness": true,
 		"BigThickness": 32,
-		"Sigmas": [
+		"Values": [
 			{
 				"Temperature": 20,
-				"Sigma": [ 196.0, 196.0, 183.0, 183.0 ]
+				"SigmaValue": [ 196.0, 196.0, 183.0, 183.0 ],
+				"EValue": 199000
 			},
 			{
 				"Temperature": 100,
-				"Sigma": [ 177.0, 177.0, 160.0, 160.0 ]
+				"SigmaValue": [ 177.0, 177.0, 160.0, 160.0 ],
+				"EValue": 191000
 			},
 			{
 				"Temperature": 150,
-				"Sigma": [ 171.0, 171.0, 154.0, 154.0 ]
+				"SigmaValue": [ 171.0, 171.0, 154.0, 154.0 ],
+				"EValue": 186000
 			},
 			{
 				"Temperature": 200,
-				"Sigma": [ 165.0, 165.0, 148.0, 148.0 ]
+				"SigmaValue": [ 165.0, 165.0, 148.0, 148.0 ],
+				"EValue": 181000
 			},
 			{
 				"Temperature": 250,
-				"Sigma": [ 162.0, 162.0, 145.0, 145.0 ]
+				"SigmaValue": [ 162.0, 162.0, 145.0, 145.0 ],
+				"EValue": 176000
 			},
 			{
 				"Temperature": 300,
-				"Sigma": [ 151.0, 151.0, 134.0, 134.0 ]
+				"SigmaValue": [ 151.0, 151.0, 134.0, 134.0 ],
+				"EValue": 171000
 			},
 			{
 				"Temperature": 350,
-				"Sigma": [ 140.0, 140.0, 123.0, 123.0 ]
+				"SigmaValue": [ 140.0, 140.0, 123.0, 123.0 ],
+				"EValue": 164000
 			},
 			{
 				"Temperature": 375,
-				"Sigma": [ 133.0, 133.0, 116.0, 116.0 ]
+				"SigmaValue": [ 133.0, 133.0, 116.0, 116.0 ]
 			},
 			{
 				"Temperature": 400,
-				"Sigma": [ 122.0, 122.0, 105.0, 105.0 ]
+				"SigmaValue": [ 122.0, 122.0, 105.0, 105.0 ],
+				"EValue": 155000
 			},
 			{
 				"Temperature": 410,
-				"Sigma": [ 104.0, 104.0, 104.0, 104.0 ]
+				"SigmaValue": [ 104.0, 104.0, 104.0, 104.0 ]
 			},
 			{
 				"Temperature": 420,
-				"Sigma": [ 92.0, 92.0, 92.0, 92.0 ]
+				"SigmaValue": [ 92.0, 92.0, 92.0, 92.0 ]
 			},
 			{
 				"Temperature": 430,
-				"Sigma": [ 86.0, 73.0, 86.0, 73.0 ]
+				"SigmaValue": [ 86.0, 73.0, 86.0, 73.0 ]
 			},
 			{
 				"Temperature": 440,
-				"Sigma": [ 78.0, 66.0, 78.0, 66.0 ]
+				"SigmaValue": [ 78.0, 66.0, 78.0, 66.0 ]
 			},
 			{
 				"Temperature": 450,
-				"Sigma": [ 71.0, 53.0, 71.0, 53.0 ]
+				"SigmaValue": [ 71.0, 53.0, 71.0, 53.0 ],
+				"EValue": 140000
 			},
 			{
 				"Temperature": 460,
-				"Sigma": [ 64.0, 48.0, 64.0, 48.0 ]
+				"SigmaValue": [ 64.0, 48.0, 64.0, 48.0 ]
 			},
 			{
 				"Temperature": 470,
-				"Sigma": [ 56.0, 42.0, 56.0, 42.0 ]
+				"SigmaValue": [ 56.0, 42.0, 56.0, 42.0 ]
 			},
 			{
 				"Temperature": 475,
-				"Sigma": [ 53.0, 40.0, 53.0, 40.0 ]
+				"SigmaValue": [ 53.0, 40.0, 53.0, 40.0 ]
 			}
 		]
 	},
 	{
 		"Name": "Сталь 20",
 		"IsCouldBigThickness": false,
-		"Sigmas": [
+		"Values": [
 			{
 				"Temperature": 20,
-				"Sigma": [ 147.0, 147.0 ]
+				"SigmaValue": [ 147.0, 147.0 ],
+				"EValue": 199000
 			},
 			{
 				"Temperature": 100,
-				"Sigma": [ 142.0, 142.0 ]
+				"SigmaValue": [ 142.0, 142.0 ],
+				"EValue": 191000
 			},
 			{
 				"Temperature": 150,
-				"Sigma": [ 139.0, 139.0 ]
+				"SigmaValue": [ 139.0, 139.0 ],
+				"EValue": 186000
 			},
 			{
 				"Temperature": 200,
-				"Sigma": [ 136.0, 136.0 ]
+				"SigmaValue": [ 136.0, 136.0 ],
+				"EValue": 181000
 			},
 			{
 				"Temperature": 250,
-				"Sigma": [ 132.0, 132.0 ]
+				"SigmaValue": [ 132.0, 132.0 ],
+				"EValue": 176000
 			},
 			{
 				"Temperature": 300,
-				"Sigma": [ 119.0, 119.0 ]
+				"SigmaValue": [ 119.0, 119.0 ],
+				"EValue": 171000
 			},
 			{
 				"Temperature": 350,
-				"Sigma": [ 106.0, 106.0 ]
+				"SigmaValue": [ 106.0, 106.0 ],
+				"EValue": 164000
 			},
 			{
 				"Temperature": 375,
-				"Sigma": [ 98.0, 98.0 ]
+				"SigmaValue": [ 98.0, 98.0 ]
 			},
 			{
 				"Temperature": 400,
-				"Sigma": [ 92.0, 74.0 ]
+				"SigmaValue": [ 92.0, 74.0 ],
+				"EValue": 155000
 			},
 			{
 				"Temperature": 410,
-				"Sigma": [ 86.0, 69.0 ]
+				"SigmaValue": [ 86.0, 69.0 ]
 			},
 			{
 				"Temperature": 420,
-				"Sigma": [ 80.0, 64.0 ]
+				"SigmaValue": [ 80.0, 64.0 ]
 			},
 			{
 				"Temperature": 430,
-				"Sigma": [ 75.0, 60.0 ]
+				"SigmaValue": [ 75.0, 60.0 ]
 			},
 			{
 				"Temperature": 440,
-				"Sigma": [ 67.0, 53.0 ]
+				"SigmaValue": [ 67.0, 53.0 ]
 			},
 			{
 				"Temperature": 450,
-				"Sigma": [ 61.0, 49.0 ]
+				"SigmaValue": [ 61.0, 49.0 ],
+				"EValue": 140000
 			},
 			{
 				"Temperature": 460,
-				"Sigma": [ 55.0, 44.0 ]
+				"SigmaValue": [ 55.0, 44.0 ]
 			},
 			{
 				"Temperature": 470,
-				"Sigma": [ 49.0, 39.0 ]
+				"SigmaValue": [ 49.0, 39.0 ]
 			},
 			{
 				"Temperature": 475,
-				"Sigma": [ 46.0, 36.0 ]
+				"SigmaValue": [ 46.0, 36.0 ]
 			}
 		]
 	},
 	{
 		"Name": "Сталь 20К",
 		"IsCouldBigThickness": false,
-
-		"Sigmas": [
+		"Values": [
 			{
 				"Temperature": 20,
-				"Sigma": [ 147.0, 147.0 ]
+				"SigmaValue": [ 147.0, 147.0 ],
+				"EValue": 199000
 			},
 			{
 				"Temperature": 100,
-				"Sigma": [ 142.0, 142.0 ]
+				"SigmaValue": [ 142.0, 142.0 ],
+				"EValue": 191000
 			},
 			{
 				"Temperature": 150,
-				"Sigma": [ 139.0, 139.0 ]
+				"SigmaValue": [ 139.0, 139.0 ],
+				"EValue": 186000
 			},
 			{
 				"Temperature": 200,
-				"Sigma": [ 136.0, 136.0 ]
+				"SigmaValue": [ 136.0, 136.0 ],
+				"EValue": 181000
 			},
 			{
 				"Temperature": 250,
-				"Sigma": [ 132.0, 132.0 ]
+				"SigmaValue": [ 132.0, 132.0 ],
+				"EValue": 176000
 			},
 			{
 				"Temperature": 300,
-				"Sigma": [ 119.0, 119.0 ]
+				"SigmaValue": [ 119.0, 119.0 ],
+				"EValue": 171000
 			},
 			{
 				"Temperature": 350,
-				"Sigma": [ 106.0, 106.0 ]
+				"SigmaValue": [ 106.0, 106.0 ],
+				"EValue": 164000
 			},
 			{
 				"Temperature": 375,
-				"Sigma": [ 98.0, 98.0 ]
+				"SigmaValue": [ 98.0, 98.0 ]
 			},
 			{
 				"Temperature": 400,
-				"Sigma": [ 92.0, 74.0 ]
+				"SigmaValue": [ 92.0, 74.0 ],
+				"EValue": 155000
 			},
 			{
 				"Temperature": 410,
-				"Sigma": [ 86.0, 69.0 ]
+				"SigmaValue": [ 86.0, 69.0 ]
 			},
 			{
 				"Temperature": 420,
-				"Sigma": [ 80.0, 64.0 ]
+				"SigmaValue": [ 80.0, 64.0 ]
 			},
 			{
 				"Temperature": 430,
-				"Sigma": [ 75.0, 60.0 ]
+				"SigmaValue": [ 75.0, 60.0 ]
 			},
 			{
 				"Temperature": 440,
-				"Sigma": [ 67.0, 53.0 ]
+				"SigmaValue": [ 67.0, 53.0 ]
 			},
 			{
 				"Temperature": 450,
-				"Sigma": [ 61.0, 49.0 ]
+				"SigmaValue": [ 61.0, 49.0 ],
+				"EValue": 140000
 			},
 			{
 				"Temperature": 460,
-				"Sigma": [ 55.0, 44.0 ]
+				"SigmaValue": [ 55.0, 44.0 ]
 			},
 			{
 				"Temperature": 470,
-				"Sigma": [ 49.0, 39.0 ]
+				"SigmaValue": [ 49.0, 39.0 ]
 			},
 			{
 				"Temperature": 475,
-				"Sigma": [ 46.0, 36.0 ]
+				"SigmaValue": [ 46.0, 36.0 ]
 			}
 		]
 	},
 	{
 		"Name": "Сталь 10",
 		"IsCouldBigThickness": false,
-
-		"Sigmas": [
+		"Values": [
 			{
 				"Temperature": 20,
-				"Sigma": [ 130.0, 130.0 ]
+				"SigmaValue": [ 130.0, 130.0 ],
+				"EValue": 199000
 			},
 			{
 				"Temperature": 100,
-				"Sigma": [ 125.0, 125.0 ]
+				"SigmaValue": [ 125.0, 125.0 ],
+				"EValue": 191000
 			},
 			{
 				"Temperature": 150,
-				"Sigma": [ 122.0, 122.0 ]
+				"SigmaValue": [ 122.0, 122.0 ],
+				"EValue": 186000
 			},
 			{
 				"Temperature": 200,
-				"Sigma": [ 118.0, 118.0 ]
+				"SigmaValue": [ 118.0, 118.0 ],
+				"EValue": 181000
 			},
 			{
 				"Temperature": 250,
-				"Sigma": [ 112.0, 112.0 ]
+				"SigmaValue": [ 112.0, 112.0 ],
+				"EValue": 176000
 			},
 			{
 				"Temperature": 300,
-				"Sigma": [ 100.0, 100.0 ]
+				"SigmaValue": [ 100.0, 100.0 ],
+				"EValue": 171000
 			},
 			{
 				"Temperature": 350,
-				"Sigma": [ 88.0, 88.0 ]
+				"SigmaValue": [ 88.0, 88.0 ],
+				"EValue": 164000
 			},
 			{
 				"Temperature": 375,
-				"Sigma": [ 82.0, 82.0 ]
+				"SigmaValue": [ 82.0, 82.0 ]
 			},
 			{
 				"Temperature": 400,
-				"Sigma": [ 77.0, 61.0 ]
+				"SigmaValue": [ 77.0, 61.0 ],
+				"EValue": 155000
 			},
 			{
 				"Temperature": 410,
-				"Sigma": [ 75.0, 60.0 ]
+				"SigmaValue": [ 75.0, 60.0 ]
 			},
 			{
 				"Temperature": 420,
-				"Sigma": [ 72.0, 57.0 ]
+				"SigmaValue": [ 72.0, 57.0 ]
 			},
 			{
 				"Temperature": 430,
-				"Sigma": [ 68.0, 54.0 ]
+				"SigmaValue": [ 68.0, 54.0 ]
 			},
 			{
 				"Temperature": 440,
-				"Sigma": [ 60.0, 48.0 ]
+				"SigmaValue": [ 60.0, 48.0 ]
 			},
 			{
 				"Temperature": 450,
-				"Sigma": [ 53.0, 42.0 ]
+				"SigmaValue": [ 53.0, 42.0 ],
+				"EValue": 140000
 			},
 			{
 				"Temperature": 460,
-				"Sigma": [ 47.0, 37.0 ]
+				"SigmaValue": [ 47.0, 37.0 ]
 			},
 			{
 				"Temperature": 470,
-				"Sigma": [ 42.0, 33.0 ]
+				"SigmaValue": [ 42.0, 33.0 ]
 			},
 			{
 				"Temperature": 475,
-				"Sigma": [ 37.0, 29.0 ]
+				"SigmaValue": [ 37.0, 29.0 ]
 			}
 		]
 	},
 	{
 		"Name": "10Г2",
 		"IsCouldBigThickness": false,
-
-		"Sigmas": [
+		"Values": [
 			{
 				"Temperature": 20,
-				"Sigma": [ 180.0, 180.0 ]
+				"SigmaValue": [ 180.0, 180.0 ],
+				"EValue": 199000
 			},
 			{
 				"Temperature": 100,
-				"Sigma": [ 160.0, 160.0 ]
+				"SigmaValue": [ 160.0, 160.0 ],
+				"EValue": 191000
 			},
 			{
 				"Temperature": 150,
-				"Sigma": [ 154.0, 154.0 ]
+				"SigmaValue": [ 154.0, 154.0 ],
+				"EValue": 186000
 			},
 			{
 				"Temperature": 200,
-				"Sigma": [ 148.0, 148.0 ]
+				"SigmaValue": [ 148.0, 148.0 ],
+				"EValue": 181000
 			},
 			{
 				"Temperature": 250,
-				"Sigma": [ 145.0, 145.0 ]
+				"SigmaValue": [ 145.0, 145.0 ],
+				"EValue": 176000
 			},
 			{
 				"Temperature": 300,
-				"Sigma": [ 134.0, 134.0 ]
+				"SigmaValue": [ 134.0, 134.0 ],
+				"EValue": 171000
 			},
 			{
 				"Temperature": 350,
-				"Sigma": [ 123.0, 123.0 ]
+				"SigmaValue": [ 123.0, 123.0 ],
+				"EValue": 164000
 			},
 			{
 				"Temperature": 375,
-				"Sigma": [ 108.0, 108.0 ]
+				"SigmaValue": [ 108.0, 108.0 ]
 			},
 			{
 				"Temperature": 400,
-				"Sigma": [ 92.0, 78.0 ]
+				"SigmaValue": [ 92.0, 78.0 ],
+				"EValue": 155000
 			},
 			{
 				"Temperature": 410,
-				"Sigma": [ 86.0, 73.0 ]
+				"SigmaValue": [ 86.0, 73.0 ]
 			},
 			{
 				"Temperature": 420,
-				"Sigma": [ 80.0, 68.0 ]
+				"SigmaValue": [ 80.0, 68.0 ]
 			},
 			{
 				"Temperature": 430,
-				"Sigma": [ 75.0, 64.0 ]
+				"SigmaValue": [ 75.0, 64.0 ]
 			},
 			{
 				"Temperature": 440,
-				"Sigma": [ 67.0, 57.0 ]
+				"SigmaValue": [ 67.0, 57.0 ]
 			},
 			{
 				"Temperature": 450,
-				"Sigma": [ 61.0, 46.0 ]
+				"SigmaValue": [ 61.0, 46.0 ],
+				"EValue": 140000
 			},
 			{
 				"Temperature": 460,
-				"Sigma": [ 55.0, 41.0 ]
+				"SigmaValue": [ 55.0, 41.0 ]
 			},
 			{
 				"Temperature": 470,
-				"Sigma": [ 49.0, 37.0 ]
+				"SigmaValue": [ 49.0, 37.0 ]
 			},
 			{
 				"Temperature": 475,
-				"Sigma": [ 46.0, 34.0 ]
+				"SigmaValue": [ 46.0, 34.0 ]
 			}
 		]
 	},
 	{
 		"Name": "09Г2",
 		"IsCouldBigThickness": false,
-
-		"Sigmas": [
+		"Values": [
 			{
 				"Temperature": 20,
-				"Sigma": [ 180.0, 180.0 ]
+				"SigmaValue": [ 180.0, 180.0 ],
+				"EValue": 199000
 			},
 			{
 				"Temperature": 100,
-				"Sigma": [ 160.0, 160.0 ]
+				"SigmaValue": [ 160.0, 160.0 ],
+				"EValue": 191000
 			},
 			{
 				"Temperature": 150,
-				"Sigma": [ 154.0, 154.0 ]
+				"SigmaValue": [ 154.0, 154.0 ],
+				"EValue": 186000
 			},
 			{
 				"Temperature": 200,
-				"Sigma": [ 148.0, 148.0 ]
+				"SigmaValue": [ 148.0, 148.0 ],
+				"EValue": 181000
 			},
 			{
 				"Temperature": 250,
-				"Sigma": [ 145.0, 145.0 ]
+				"SigmaValue": [ 145.0, 145.0 ],
+				"EValue": 176000
 			},
 			{
 				"Temperature": 300,
-				"Sigma": [ 134.0, 134.0 ]
+				"SigmaValue": [ 134.0, 134.0 ],
+				"EValue": 171000
 			},
 			{
 				"Temperature": 350,
-				"Sigma": [ 123.0, 123.0 ]
+				"SigmaValue": [ 123.0, 123.0 ],
+				"EValue": 164000
 			},
 			{
 				"Temperature": 375,
-				"Sigma": [ 108.0, 108.0 ]
+				"SigmaValue": [ 108.0, 108.0 ]
 			},
 			{
 				"Temperature": 400,
-				"Sigma": [ 92.0, 78.0 ]
+				"SigmaValue": [ 92.0, 78.0 ],
+				"EValue": 155000
 			},
 			{
 				"Temperature": 410,
-				"Sigma": [ 86.0, 73.0 ]
+				"SigmaValue": [ 86.0, 73.0 ]
 			},
 			{
 				"Temperature": 420,
-				"Sigma": [ 80.0, 68.0 ]
+				"SigmaValue": [ 80.0, 68.0 ]
 			},
 			{
 				"Temperature": 430,
-				"Sigma": [ 75.0, 64.0 ]
+				"SigmaValue": [ 75.0, 64.0 ]
 			},
 			{
 				"Temperature": 440,
-				"Sigma": [ 67.0, 57.0 ]
+				"SigmaValue": [ 67.0, 57.0 ]
 			},
 			{
 				"Temperature": 450,
-				"Sigma": [ 61.0, 46.0 ]
+				"SigmaValue": [ 61.0, 46.0 ],
+				"EValue": 140000
 			},
 			{
 				"Temperature": 460,
-				"Sigma": [ 55.0, 41.0 ]
+				"SigmaValue": [ 55.0, 41.0 ]
 			},
 			{
 				"Temperature": 470,
-				"Sigma": [ 49.0, 37.0 ]
+				"SigmaValue": [ 49.0, 37.0 ]
 			},
 			{
 				"Temperature": 475,
-				"Sigma": [ 46.0, 34.0 ]
+				"SigmaValue": [ 46.0, 34.0 ]
 			}
 		]
 	},
 	{
 		"Name": "17ГС",
 		"IsCouldBigThickness": false,
-
-		"Sigmas": [
+		"Values": [
 			{
 				"Temperature": 20,
-				"Sigma": [ 183.0, 183.0 ]
+				"SigmaValue": [ 183.0, 183.0 ],
+				"EValue": 199000
 			},
 			{
 				"Temperature": 100,
-				"Sigma": [ 160.0, 160.0 ]
+				"SigmaValue": [ 160.0, 160.0 ],
+				"EValue": 191000
 			},
 			{
 				"Temperature": 150,
-				"Sigma": [ 154.0, 154.0 ]
+				"SigmaValue": [ 154.0, 154.0 ],
+				"EValue": 186000
 			},
 			{
 				"Temperature": 200,
-				"Sigma": [ 148.0, 148.0 ]
+				"SigmaValue": [ 148.0, 148.0 ],
+				"EValue": 181000
 			},
 			{
 				"Temperature": 250,
-				"Sigma": [ 145.0, 145.0 ]
+				"SigmaValue": [ 145.0, 145.0 ],
+				"EValue": 176000
 			},
 			{
 				"Temperature": 300,
-				"Sigma": [ 134.0, 134.0 ]
+				"SigmaValue": [ 134.0, 134.0 ],
+				"EValue": 171000
 			},
 			{
 				"Temperature": 350,
-				"Sigma": [ 123.0, 123.0 ]
+				"SigmaValue": [ 123.0, 123.0 ],
+				"EValue": 164000
 			},
 			{
 				"Temperature": 375,
-				"Sigma": [ 116.0, 116.0 ]
+				"SigmaValue": [ 116.0, 116.0 ]
 			},
 			{
 				"Temperature": 400,
-				"Sigma": [ 105.0, 105.0 ]
+				"SigmaValue": [ 105.0, 105.0 ],
+				"EValue": 155000
 			},
 			{
 				"Temperature": 410,
-				"Sigma": [ 104.0, 104.0 ]
+				"SigmaValue": [ 104.0, 104.0 ]
 			},
 			{
 				"Temperature": 420,
-				"Sigma": [ 92.0, 92.0 ]
+				"SigmaValue": [ 92.0, 92.0 ]
 			},
 			{
 				"Temperature": 430,
-				"Sigma": [ 86.0, 73.0 ]
+				"SigmaValue": [ 86.0, 73.0 ]
 			},
 			{
 				"Temperature": 440,
-				"Sigma": [ 78.0, 66.0 ]
+				"SigmaValue": [ 78.0, 66.0 ]
 			},
 			{
 				"Temperature": 450,
-				"Sigma": [ 71.0, 53.0 ]
+				"SigmaValue": [ 71.0, 53.0 ],
+				"EValue": 140000
 			},
 			{
 				"Temperature": 460,
-				"Sigma": [ 64.0, 48.0 ]
+				"SigmaValue": [ 64.0, 48.0 ]
 			},
 			{
 				"Temperature": 470,
-				"Sigma": [ 56.0, 42.0 ]
+				"SigmaValue": [ 56.0, 42.0 ]
 			},
 			{
 				"Temperature": 475,
-				"Sigma": [ 53.0, 40.0 ]
+				"SigmaValue": [ 53.0, 40.0 ]
 			}
 		]
 	},
 	{
 		"Name": "17Г1С",
 		"IsCouldBigThickness": false,
-
-		"Sigmas": [
+		"Values": [
 			{
 				"Temperature": 20,
-				"Sigma": [ 183.0, 183.0 ]
+				"SigmaValue": [ 183.0, 183.0 ],
+				"EValue": 199000
 			},
 			{
 				"Temperature": 100,
-				"Sigma": [ 160.0, 160.0 ]
+				"SigmaValue": [ 160.0, 160.0 ],
+				"EValue": 191000
 			},
 			{
 				"Temperature": 150,
-				"Sigma": [ 154.0, 154.0 ]
+				"SigmaValue": [ 154.0, 154.0 ],
+				"EValue": 186000
 			},
 			{
 				"Temperature": 200,
-				"Sigma": [ 148.0, 148.0 ]
+				"SigmaValue": [ 148.0, 148.0 ],
+				"EValue": 181000
 			},
 			{
 				"Temperature": 250,
-				"Sigma": [ 145.0, 145.0 ]
+				"SigmaValue": [ 145.0, 145.0 ],
+				"EValue": 176000
 			},
 			{
 				"Temperature": 300,
-				"Sigma": [ 134.0, 134.0 ]
+				"SigmaValue": [ 134.0, 134.0 ],
+				"EValue": 171000
 			},
 			{
 				"Temperature": 350,
-				"Sigma": [ 123.0, 123.0 ]
+				"SigmaValue": [ 123.0, 123.0 ],
+				"EValue": 164000
 			},
 			{
 				"Temperature": 375,
-				"Sigma": [ 116.0, 116.0 ]
+				"SigmaValue": [ 116.0, 116.0 ]
 			},
 			{
 				"Temperature": 400,
-				"Sigma": [ 105.0, 105.0 ]
+				"SigmaValue": [ 105.0, 105.0 ],
+				"EValue": 155000
 			},
 			{
 				"Temperature": 410,
-				"Sigma": [ 104.0, 104.0 ]
+				"SigmaValue": [ 104.0, 104.0 ]
 			},
 			{
 				"Temperature": 420,
-				"Sigma": [ 92.0, 92.0 ]
+				"SigmaValue": [ 92.0, 92.0 ]
 			},
 			{
 				"Temperature": 430,
-				"Sigma": [ 86.0, 73.0 ]
+				"SigmaValue": [ 86.0, 73.0 ]
 			},
 			{
 				"Temperature": 440,
-				"Sigma": [ 78.0, 66.0 ]
+				"SigmaValue": [ 78.0, 66.0 ]
 			},
 			{
 				"Temperature": 450,
-				"Sigma": [ 71.0, 53.0 ]
+				"SigmaValue": [ 71.0, 53.0 ],
+				"EValue": 140000
 			},
 			{
 				"Temperature": 460,
-				"Sigma": [ 64.0, 48.0 ]
+				"SigmaValue": [ 64.0, 48.0 ]
 			},
 			{
 				"Temperature": 470,
-				"Sigma": [ 56.0, 42.0 ]
+				"SigmaValue": [ 56.0, 42.0 ]
 			},
 			{
 				"Temperature": 475,
-				"Sigma": [ 53.0, 40.0 ]
+				"SigmaValue": [ 53.0, 40.0 ]
 			}
 		]
 	},
 	{
 		"Name": "10Г2С1",
 		"IsCouldBigThickness": false,
-
-		"Sigmas": [
+		"Values": [
 			{
 				"Temperature": 20,
-				"Sigma": [ 183.0, 183.0 ]
+				"SigmaValue": [ 183.0, 183.0 ],
+				"EValue": 199000
 			},
 			{
 				"Temperature": 100,
-				"Sigma": [ 160.0, 160.0 ]
+				"SigmaValue": [ 160.0, 160.0 ],
+				"EValue": 191000
 			},
 			{
 				"Temperature": 150,
-				"Sigma": [ 154.0, 154.0 ]
+				"SigmaValue": [ 154.0, 154.0 ],
+				"EValue": 186000
 			},
 			{
 				"Temperature": 200,
-				"Sigma": [ 148.0, 148.0 ]
+				"SigmaValue": [ 148.0, 148.0 ],
+				"EValue": 181000
 			},
 			{
 				"Temperature": 250,
-				"Sigma": [ 145.0, 145.0 ]
+				"SigmaValue": [ 145.0, 145.0 ],
+				"EValue": 176000
 			},
 			{
 				"Temperature": 300,
-				"Sigma": [ 134.0, 134.0 ]
+				"SigmaValue": [ 134.0, 134.0 ],
+				"EValue": 171000
 			},
 			{
 				"Temperature": 350,
-				"Sigma": [ 123.0, 123.0 ]
+				"SigmaValue": [ 123.0, 123.0 ],
+				"EValue": 164000
 			},
 			{
 				"Temperature": 375,
-				"Sigma": [ 116.0, 116.0 ]
+				"SigmaValue": [ 116.0, 116.0 ]
 			},
 			{
 				"Temperature": 400,
-				"Sigma": [ 105.0, 105.0 ]
+				"SigmaValue": [ 105.0, 105.0 ],
+				"EValue": 155000
 			},
 			{
 				"Temperature": 410,
-				"Sigma": [ 104.0, 104.0 ]
+				"SigmaValue": [ 104.0, 104.0 ]
 			},
 			{
 				"Temperature": 420,
-				"Sigma": [ 92.0, 92.0 ]
+				"SigmaValue": [ 92.0, 92.0 ]
 			},
 			{
 				"Temperature": 430,
-				"Sigma": [ 86.0, 73.0 ]
+				"SigmaValue": [ 86.0, 73.0 ]
 			},
 			{
 				"Temperature": 440,
-				"Sigma": [ 78.0, 66.0 ]
+				"SigmaValue": [ 78.0, 66.0 ]
 			},
 			{
 				"Temperature": 450,
-				"Sigma": [ 71.0, 53.0 ]
+				"SigmaValue": [ 71.0, 53.0 ],
+				"EValue": 140000
 			},
 			{
 				"Temperature": 460,
-				"Sigma": [ 64.0, 48.0 ]
+				"SigmaValue": [ 64.0, 48.0 ]
 			},
 			{
 				"Temperature": 470,
-				"Sigma": [ 56.0, 42.0 ]
+				"SigmaValue": [ 56.0, 42.0 ]
 			},
 			{
 				"Temperature": 475,
-				"Sigma": [ 53.0, 40.0 ]
+				"SigmaValue": [ 53.0, 40.0 ]
 			}
 		]
 	},
 	{
 		"Name": "12Х18Н10Т",
 		"IsCouldBigThickness": false,
-
-		"Sigmas": [
+		"Values": [
 			{
 				"Temperature": 20,
-				"Sigma": [ 184.0, 184.0 ]
+				"SigmaValue": [ 184.0, 184.0 ],
+				"EValue": 200000
 			},
 			{
 				"Temperature": 100,
-				"Sigma": [ 174.0, 174.0 ]
+				"SigmaValue": [ 174.0, 174.0 ],
+				"EValue": 200000
 			},
 			{
 				"Temperature": 150,
-				"Sigma": [ 168.0, 168.0 ]
+				"SigmaValue": [ 168.0, 168.0 ],
+				"EValue": 199000
 			},
 			{
 				"Temperature": 200,
-				"Sigma": [ 160.0, 160.0 ]
+				"SigmaValue": [ 160.0, 160.0 ],
+				"EValue": 197000
 			},
 			{
 				"Temperature": 250,
-				"Sigma": [ 154.0, 154.0 ]
+				"SigmaValue": [ 154.0, 154.0 ],
+				"EValue": 194000
 			},
 			{
 				"Temperature": 300,
-				"Sigma": [ 148.0, 148.0 ]
+				"SigmaValue": [ 148.0, 148.0 ],
+				"EValue": 190000
 			},
 			{
 				"Temperature": 350,
-				"350": [ 144.0, 144.0 ]
+				"SigmaValue": [ 144.0, 144.0 ],
+				"EValue": 185000
 			},
 			{
 				"Temperature": 375,
-				"Sigma": [ 140.0, 140.0 ]
+				"SigmaValue": [ 140.0, 140.0 ]
 			},
 			{
 				"Temperature": 400,
-				"Sigma": [ 137.0, 137.0 ]
+				"SigmaValue": [ 137.0, 137.0 ],
+				"EValue": 180000
 			},
 			{
 				"Temperature": 410,
-				"Sigma": [ 136.0, 136.0 ]
+				"SigmaValue": [ 136.0, 136.0 ]
 			},
 			{
 				"Temperature": 420,
-				"Sigma": [ 135.0, 135.0 ]
+				"SigmaValue": [ 135.0, 135.0 ]
 			},
 			{
 				"Temperature": 430,
-				"Sigma": [ 134.0, 134.0 ]
+				"SigmaValue": [ 134.0, 134.0 ]
 			},
 			{
 				"Temperature": 440,
-				"Sigma": [ 133.0, 133.0 ]
+				"SigmaValue": [ 133.0, 133.0 ]
 			},
 			{
 				"Temperature": 450,
-				"Sigma": [ 132.0, 132.0 ]
+				"SigmaValue": [ 132.0, 132.0 ],
+				"EValue": 174000
 			},
 			{
 				"Temperature": 460,
-				"Sigma": [ 131.0, 131.0 ]
+				"SigmaValue": [ 131.0, 131.0 ]
 			},
 			{
 				"Temperature": 470,
-				"Sigma": [ 130.0, 130.0 ]
+				"SigmaValue": [ 130.0, 130.0 ]
 			},
 			{
 				"Temperature": 480,
-				"Sigma": [ 129.0, 129.0 ]
+				"SigmaValue": [ 129.0, 129.0 ]
 			},
 			{
 				"Temperature": 490,
-				"Sigma": [ 128.0, 128.0 ]
+				"SigmaValue": [ 128.0, 128.0 ]
 			},
 			{
 				"Temperature": 500,
-				"Sigma": [ 127.0, 127.0 ]
+				"SigmaValue": [ 127.0, 127.0 ],
+				"EValue": 167000
 			},
 			{
 				"Temperature": 510,
-				"Sigma": [ 126.0, 126.0 ]
+				"SigmaValue": [ 126.0, 126.0 ]
 			},
 			{
 				"Temperature": 520,
-				"Sigma": [ 125.0, 125.0 ]
+				"SigmaValue": [ 125.0, 125.0 ]
 			},
 			{
 				"Temperature": 530,
-				"Sigma": [ 124.0, 111.0 ]
+				"SigmaValue": [ 124.0, 111.0 ]
 			},
 			{
 				"Temperature": 540,
-				"Sigma": [ 111.0, 100.0 ]
+				"SigmaValue": [ 111.0, 100.0 ]
 			},
 			{
 				"Temperature": 550,
-				"Sigma": [ 111.0, 99.0 ]
+				"SigmaValue": [ 111.0, 99.0 ],
+				"EValue": 160000
 			},
 			{
 				"Temperature": 560,
-				"Sigma": [ 101.0, 91.0 ]
+				"SigmaValue": [ 101.0, 91.0 ]
 			},
 			{
 				"Temperature": 570,
-				"Sigma": [ 97.0, 87.0 ]
+				"SigmaValue": [ 97.0, 87.0 ]
 			},
 			{
 				"Temperature": 580,
-				"Sigma": [ 90.0, 81.0 ]
+				"SigmaValue": [ 90.0, 81.0 ]
 			},
 			{
 				"Temperature": 590,
-				"Sigma": [ 81.0, 73.0 ]
+				"SigmaValue": [ 81.0, 73.0 ]
 			},
 			{
 				"Temperature": 600,
-				"Sigma": [ 74.0, 59.0 ]
+				"SigmaValue": [ 74.0, 59.0 ],
+				"EValue": 152000
 			},
 			{
 				"Temperature": 610,
-				"Sigma": [ 68.0, 54.0 ]
+				"SigmaValue": [ 68.0, 54.0 ]
 			},
 			{
 				"Temperature": 620,
-				"Sigma": [ 62.0, 50.0 ]
+				"SigmaValue": [ 62.0, 50.0 ]
 			},
 			{
 				"Temperature": 630,
-				"Sigma": [ 57.0, 45.0 ]
+				"SigmaValue": [ 57.0, 45.0 ]
 			},
 			{
 				"Temperature": 640,
-				"Sigma": [ 52.0, 41.0 ]
+				"SigmaValue": [ 52.0, 41.0 ]
 			},
 			{
 				"Temperature": 650,
-				"Sigma": [ 48.0, 38.0 ]
+				"SigmaValue": [ 48.0, 38.0 ],
+				"EValue": 143000
 			},
 			{
 				"Temperature": 660,
-				"Sigma": [ 45.0, 36.0 ]
+				"SigmaValue": [ 45.0, 36.0 ]
 			},
 			{
 				"Temperature": 670,
-				"670": [ 42.0, 33.0 ]
+				"SigmaValue": [ 42.0, 33.0 ]
 			},
 			{
 				"Temperature": 680,
-				"Sigma": [ 38.0, 30.0 ]
+				"SigmaValue": [ 38.0, 30.0 ]
 			},
 			{
 				"Temperature": 690,
-				"Sigma": [ 34.0, 27.0 ]
+				"SigmaValue": [ 34.0, 27.0 ]
 			},
 			{
 				"Temperature": 700,
-				"Sigma": [ 30.0, 24.0 ]
+				"SigmaValue": [ 30.0, 24.0 ],
+				"EValue": 132000
 			}
 		]
 	}

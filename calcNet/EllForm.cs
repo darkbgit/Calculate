@@ -1,6 +1,7 @@
 ﻿using CalculateVessels.Core.Shells;
 using CalculateVessels.Core.Shells.DataIn;
 using CalculateVessels.Core.Shells.Enums;
+using CalculateVessels.Data.PhysicalData;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -24,8 +25,12 @@ namespace CalculateVessels
 
         private void EllForm_Load(object sender, EventArgs e)
         {
-            SetSteelList.SetList(steel_cb);
-            steel_cb.SelectedIndex = 0;
+            var steels = Physical.GetSteelsList();
+            if (steels != null)
+            {
+                steel_cb.Items.AddRange(steels);
+                steel_cb.SelectedIndex = 0;
+            }
             Gost_cb.SelectedIndex = 0;
         }
 
@@ -76,14 +81,12 @@ namespace CalculateVessels
                 //[σ]
                 //InputClass.GetInput_sigma_d(sigma_d_tb, ref d_in, ref dataInErr);
                 {
-                    double sigma_d = 0;
+                    double sigma_d;
                     if (sigma_d_tb.ReadOnly)
                     {
-
-                        CalcClass.GetSigma(ellipticalShellDataIn.Steel,
-                            ellipticalShellDataIn.t,
-                            ref sigma_d,
-                            ref dataInErr);
+                        sigma_d = Physical.GetSigma(ellipticalShellDataIn.Steel,
+                                                    ellipticalShellDataIn.t,
+                                                    ref dataInErr);
                         sigma_d_tb.ReadOnly = false;
                         sigma_d_tb.Text = sigma_d.ToString();
                         sigma_d_tb.ReadOnly = true;

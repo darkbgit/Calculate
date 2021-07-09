@@ -8,6 +8,7 @@ using CalculateVessels.Core.Shells.DataIn;
 using CalculateVessels.Core.Shells.Enums;
 using CalculateVessels.Core.Shells.Nozzle;
 using CalculateVessels.Core.Shells.Nozzle.Enums;
+using CalculateVessels.Data.PhysicalData;
 
 namespace CalculateVessels
 {
@@ -986,12 +987,17 @@ namespace CalculateVessels
 
         private void NozzleForm_Load(object sender, EventArgs e)
         {
-            SetSteelList.SetList(steel1_cb);
-            steel1_cb.SelectedIndex = 0;
-            SetSteelList.SetList(steel2_cb);
-            steel2_cb.SelectedIndex = 0;
-            SetSteelList.SetList(steel3_cb);
-            steel3_cb.SelectedIndex = 0;
+            var steels = Physical.GetSteelsList()?.ToArray();
+            if (steels != null)
+            {
+                steel1_cb.Items.AddRange(steels);
+                steel1_cb.SelectedIndex = 0;
+                steel2_cb.Items.AddRange(steels);
+                steel2_cb.SelectedIndex = 0;
+                steel3_cb.Items.AddRange(steels);
+                steel3_cb.SelectedIndex = 0;
+            }
+
             Gost_cb.SelectedIndex = 0;
 
 
@@ -1233,20 +1239,15 @@ namespace CalculateVessels
             nozzleData.steel1 = steel1_cb.Text;
 
 
-
-
-
             if (nozzleData.IsDataGood)
             {
                 {
-                    double sigma_d1 = 0;
+                    double sigma_d1;
                     if (sigma_d1_tb.ReadOnly)
                     {
-
-                        CalcClass.GetSigma(nozzleData.steel1,
-                            nozzleData.t,
-                            ref sigma_d1,
-                            ref dataInErr);
+                        sigma_d1 = Physical.GetSigma(nozzleData.steel1,
+                                            nozzleData.t,
+                                            ref dataInErr);
                         sigma_d1_tb.ReadOnly = false;
                         sigma_d1_tb.Text = sigma_d1.ToString();
                         sigma_d1_tb.ReadOnly = true;
@@ -1259,7 +1260,6 @@ namespace CalculateVessels
                             dataInErr.Add("[σ]" + WRONG_INPUT);
                         }
                     }
-
                     nozzleData.sigma_d1 = sigma_d1;
                 }
 
@@ -1267,14 +1267,12 @@ namespace CalculateVessels
                 if (!nozzleData.ShellDataIn.IsPressureIn)
                 {
                     //E1
-                    double E1 = 0;
+                    double E1;
                     if (E1_tb.ReadOnly)
                     {
-
-                        CalcClass.GetE(nozzleData.steel1,
-                            nozzleData.t,
-                            ref E1,
-                            ref dataInErr);
+                        E1 = Physical.GetE(nozzleData.steel1,
+                                            nozzleData.t,
+                                            ref dataInErr);
                         E1_tb.ReadOnly = false;
                         E1_tb.Text = E1.ToString();
                         E1_tb.ReadOnly = true;
@@ -1455,21 +1453,16 @@ namespace CalculateVessels
 
                 //sigma_d2
                 {
-                    double sigma_d2 = 0;
-                    CalcClass.GetSigma(nozzleData.steel2, nozzleData.t, ref sigma_d2, ref dataInErr);
+                    var sigma_d2 = Physical.GetSigma(nozzleData.steel2, nozzleData.t, ref dataInErr);
                     nozzleData.sigma_d2 = sigma_d2;
                 }
 
                 //E2
                 {
-                    double E2 = 0;
-                    CalcClass.GetE(nozzleData.steel2,
-                            nozzleData.t,
-                            ref E2,
-                            ref dataInErr);
-
+                    var E2 = Physical.GetE(nozzleData.steel2,
+                                            nozzleData.t,
+                                            ref dataInErr);
                     nozzleData.E2 = E2;
-
                 }
             }
 
@@ -1507,21 +1500,16 @@ namespace CalculateVessels
 
                 //sigma_d3
                 {
-                    double sigma_d3 = 0;
-                    CalcClass.GetSigma(nozzleData.steel3, nozzleData.t, ref sigma_d3, ref dataInErr);
+                    var sigma_d3 = Physical.GetSigma(nozzleData.steel3, nozzleData.t, ref dataInErr);
                     nozzleData.sigma_d3 = sigma_d3;
                 }
 
                 //E3
                 {
-                    double E3 = 0;
-                    CalcClass.GetE(nozzleData.steel3,
-                            nozzleData.t,
-                            ref E3,
-                            ref dataInErr);
-
+                    var E3 = Physical.GetE(nozzleData.steel3,
+                                            nozzleData.t,
+                                            ref dataInErr);
                     nozzleData.E3 = E3;
-
                 }
             }
 

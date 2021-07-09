@@ -225,5 +225,123 @@ namespace CalculateVessels.Core.Trash
 
         //    doc.SaveAs(filename);
         //}
+
+
+
+        /// <summary>
+        /// Get [σ] 
+        /// </summary>
+        /// <param name="steel">Steel name</param>
+        /// <param name="temp">Calculation temperature</param>
+        /// <param name="sigma_d">Reference on </param>
+        /// <returns>true - Ok, false - Error (Input temperature bigger then the biggest temperature for [σ] in GOST for input steel) </returns>
+        //internal static bool GetSigma(string steel, double temp, ref double sigma_d, ref List<string> dataInErr)
+        //{
+        //    XmlDocument doc = new XmlDocument();
+        //    doc.Load(System.IO.Path.Combine(System.IO.Directory.GetCurrentDirectory(), @"data\data.xml"));
+        //    var root = doc.DocumentElement;
+        //    XmlNode steelTempNodes = root.SelectSingleNode("sigma_list")
+        //                                 .SelectSingleNode("steels")
+        //                                 .SelectSingleNode("//steel[@name='" + steel + "']");
+
+        //    double sigma, sigmaLittle = 0, sigmaBig = 0;
+        //    int tempLittle = 0, tempBig = 0;
+
+        //    for (int i = 0; i < steelTempNodes.ChildNodes.Count; i++)
+        //    {
+        //        if ((i == 0 && Convert.ToInt32(steelTempNodes.ChildNodes.Item(i).Attributes["temp"].Value) > temp) ||
+        //                Convert.ToInt32(steelTempNodes.ChildNodes.Item(i).Attributes["temp"].Value) == temp)
+        //        {
+        //            sigma_d = Convert.ToDouble(steelTempNodes.ChildNodes.Item(i).Attributes["sigma"].Value,
+        //                                    System.Globalization.CultureInfo.InvariantCulture);
+        //            return true;
+        //        }
+        //        else if (Convert.ToInt32(steelTempNodes.ChildNodes.Item(i).Attributes["temp"].Value) > temp)
+        //        {
+        //            tempLittle = Convert.ToInt32(steelTempNodes.ChildNodes.Item(i).Attributes["temp"].Value);
+        //            sigmaBig = Convert.ToDouble(steelTempNodes.ChildNodes.Item(i).Attributes["sigma"].Value,
+        //                                        System.Globalization.CultureInfo.InvariantCulture);
+        //            break;
+        //        }
+        //        else if (i == steelTempNodes.ChildNodes.Count - 1)
+        //        {
+        //            dataInErr.Add($"Температура {temp} °С, больше чем максимальная температура {tempBig} °С " +
+        //                          $"для стали {steel} при которой определяется допускаемое напряжение по ГОСТ 34233.1-2017");
+        //            return false;
+        //        }
+        //        else
+        //        {
+        //            tempBig = Convert.ToInt32(steelTempNodes.ChildNodes.Item(i).Attributes["temp"].Value);
+        //            sigmaLittle = double.Parse(steelTempNodes.ChildNodes.Item(i).Attributes["sigma"].Value,
+        //                                        System.Globalization.CultureInfo.InvariantCulture);
+        //        }
+        //    }
+        //    sigma = sigmaBig - ((sigmaBig - sigmaLittle) * (temp - tempLittle) / (tempBig - tempLittle));
+        //    sigma *= 10;
+        //    sigma = Math.Truncate(sigma / 5);
+        //    sigma *= 0.5;
+        //    sigma_d = sigma;
+        //    return true;
+        //}
+
+        //internal static bool GetE(string steel, double temp, ref double E, ref List<string> dataInErr)
+        //{
+        //    Regex regex = new Regex(@"(.*)(?=\()");
+        //    MatchCollection matches = regex.Matches(steel);
+
+        //    string steelName;
+
+        //    if (matches.Count > 0)
+        //    {
+        //        steelName = matches[0].Groups[0].Value;
+        //    }
+        //    else
+        //    {
+        //        steelName = steel;
+        //    }
+
+        //    XmlDocument doc = new XmlDocument();
+        //    doc.Load(System.IO.Path.Combine(System.IO.Directory.GetCurrentDirectory(), @"data\data.xml"));
+        //    var root = doc.DocumentElement;
+        //    XmlNode classListNode = root.SelectSingleNode("//n[@name='" + steelName + "']");
+        //    var steelClass = classListNode.ParentNode.Name;
+        //    XmlNode Elist = root.SelectSingleNode("E_list").SelectSingleNode("//class[@name='" + steelClass + "']");
+
+        //    double ELittle = 0, EBig = 0;
+        //    double tempLittle = 0, tempBig = 0;
+
+        //    for (int i = 0; i < Elist.ChildNodes.Count; i++)
+        //    {
+        //        if ((i == 0 && Convert.ToInt32(Elist.ChildNodes.Item(i).Attributes["temp"].Value) > temp) ||
+        //            Convert.ToInt32(Elist.ChildNodes.Item(i).Attributes["temp"].Value) == temp)
+        //        {
+        //            E = Convert.ToDouble(Elist.ChildNodes.Item(i).Attributes["E"].Value);
+        //            return true;
+        //        }
+        //        if (Convert.ToInt32(Elist.ChildNodes.Item(i).Attributes["temp"].Value) > temp)
+        //        {
+        //            tempLittle = Convert.ToInt32(Elist.ChildNodes.Item(i).Attributes["temp"].Value);
+        //            EBig = Convert.ToInt32(Elist.ChildNodes.Item(i).Attributes["E"].Value);
+        //            break;
+        //        }
+        //        if (i == Elist.ChildNodes.Count - 1)//temperature greater then max in data.xml
+        //        {
+        //            dataInErr.Add($"Температура {temp} °С, больше чем максимальная температура {tempBig} °С " +
+        //                          $"для стали {steel} при которой определяется модуль  продольной упругости по ГОСТ 34233.1-2017");
+        //            return false;
+        //        }
+
+        //        tempBig = Convert.ToInt32(Elist.ChildNodes.Item(i).Attributes["temp"].Value);
+        //        ELittle = Convert.ToInt32(Elist.ChildNodes.Item(i).Attributes["E"].Value);
+
+
+        //    }
+
+
+        //    E = Convert.ToDouble(EBig - ((EBig - ELittle) * (temp - tempLittle) / (tempBig - tempLittle)));
+
+        //    return true;
+        //}
+
     }
 }
