@@ -59,7 +59,7 @@ namespace CalculateVessels
             cylindricalShellDataIn = new CylindricalShellDataIn();
 
 
-            List<string> dataInErr = new List<string>();
+            var dataInErr = new List<string>();
 
             //t
             {
@@ -142,7 +142,7 @@ namespace CalculateVessels
                     //InputClass.GetInput_l(l_tb, ref d_in, ref dataInErr);
                     {
                         if (double.TryParse(l_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
-                        System.Globalization.CultureInfo.InvariantCulture, out double l))
+                        System.Globalization.CultureInfo.InvariantCulture, out var l))
                         {
                             cylindricalShellDataIn.l = l;
                         }
@@ -157,7 +157,7 @@ namespace CalculateVessels
                 //    InputClass.GetInput_p(p_tb, ref d_in, ref dataInErr);
                 {
                     if (double.TryParse(p_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
-                    System.Globalization.CultureInfo.InvariantCulture, out double p))
+                    System.Globalization.CultureInfo.InvariantCulture, out var p))
                     {
                         cylindricalShellDataIn.p = p;
                     }
@@ -171,7 +171,7 @@ namespace CalculateVessels
                 //    InputClass.GetInput_fi(fi_tb, ref d_in, ref dataInErr);
                 {
                     if (double.TryParse(fi_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
-                    System.Globalization.CultureInfo.InvariantCulture, out double fi))
+                    System.Globalization.CultureInfo.InvariantCulture, out var fi))
                     {
                         cylindricalShellDataIn.fi = fi;
                     }
@@ -185,7 +185,7 @@ namespace CalculateVessels
                 //    InputClass.GetInput_D(D_tb, ref d_in, ref dataInErr);
                 {
                     if (double.TryParse(D_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
-                    System.Globalization.CultureInfo.InvariantCulture, out double D))
+                    System.Globalization.CultureInfo.InvariantCulture, out var D))
                     {
                         cylindricalShellDataIn.D = D;
                     }
@@ -199,7 +199,7 @@ namespace CalculateVessels
                 //    InputClass.GetInput_c1(c1_tb, ref d_in, ref dataInErr);
                 {
                     if (double.TryParse(c1_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
-                    System.Globalization.CultureInfo.InvariantCulture, out double c1))
+                    System.Globalization.CultureInfo.InvariantCulture, out var c1))
                     {
                         cylindricalShellDataIn.c1 = c1;
                     }
@@ -217,7 +217,7 @@ namespace CalculateVessels
                         cylindricalShellDataIn.c2 = 0;
                     }
                     else if (double.TryParse(c2_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
-                    System.Globalization.CultureInfo.InvariantCulture, out double c2))
+                    System.Globalization.CultureInfo.InvariantCulture, out var c2))
                     {
                         cylindricalShellDataIn.c2 = c2;
                     }
@@ -234,7 +234,7 @@ namespace CalculateVessels
                         cylindricalShellDataIn.c3 = 0;
                     }
                     else if (double.TryParse(c3_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
-                    System.Globalization.CultureInfo.InvariantCulture, out double c3))
+                    System.Globalization.CultureInfo.InvariantCulture, out var c3))
                     {
                         cylindricalShellDataIn.c3 = c3;
                     }
@@ -342,11 +342,11 @@ namespace CalculateVessels
                 }
 
 
-                bool isNotError = dataInErr.Count == 0 && cylindricalShellDataIn.IsDataGood;
+                var isNotError = dataInErr.Count == 0 && cylindricalShellDataIn.IsDataGood;
 
                 if (isNotError)
                 {
-                    CylindricalShell cyl = new CylindricalShell(cylindricalShellDataIn);
+                    var cyl = new CylindricalShell(cylindricalShellDataIn);
                     cyl.Calculate();
                     if (!cyl.IsCriticalError)
                     {

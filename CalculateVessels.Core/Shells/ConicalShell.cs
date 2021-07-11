@@ -3,9 +3,13 @@ using CalculateVessels.Core.Shells.DataIn;
 using CalculateVessels.Core.Shells.Enums;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CalculateVessels.Core.Word;
+using CalculateVessels.Core.Word.Enums;
+using DocumentFormat.OpenXml.Packaging;
 
 namespace CalculateVessels.Core.Shells
 {
@@ -97,7 +101,7 @@ namespace CalculateVessels.Core.Shells
                 _a2p_l = 1.25 * Math.Sqrt(_csdi.D1 * (_csdi.s2 - _c));
             }
 
-            _Dk = _csdi.IsTorr
+            _Dk = _csdi.ConnectionType == ConicalConnectionType.Toroidal
                 ? _csdi.D - 2 * (_csdi.r * (1 - _cosAlfa1) + 0.7 * _a1p * _sinAlfa1)
                 : _csdi.D - 1.4 * _a1p * _sinAlfa1;
 
@@ -344,7 +348,264 @@ namespace CalculateVessels.Core.Shells
 
         public void MakeWord(string filename)
         {
-            throw new NotImplementedException();
+            if (filename == null)
+            {
+                const string DEFAULT_FILE_NAME = "temp.docx";
+                filename = DEFAULT_FILE_NAME;
+            }
+
+            using WordprocessingDocument package = WordprocessingDocument.Open(filename, true);
+
+            var mainPart = package.MainDocumentPart;
+            var body = mainPart?.Document.Body;
+
+            if (body == null) return;
+
+            body.AddParagraph($"Расчет на прочность конической обечайки {_csdi.Name}, нагруженной " +
+                              (_csdi.IsPressureIn ? "внутренним избыточным давлением" : "наружным давлением")).Heading(HeadingType.Heading1);
+            body.AddParagraph("");
+
+            var imagePart = mainPart.AddImagePart(ImagePartType.Gif);
+
+            using MemoryStream stream = new(Data.Properties.Resources.ConeElemBottom);
+            imagePart.FeedData(stream);
+
+            body.AddParagraph("").AddImage(mainPart.GetIdOfPart(imagePart));
+
+            body.AddParagraph("Исходные данные").Alignment(AlignmentType.Center);
+
+            //table
+            {
+                var table = body.AddTable();
+                //table.SetWidths(new float[] { 300, 100 });
+                //int i = 0;
+                table.AddRow()
+                    .AddCell("Материал обечайки")
+                    .AddCell($"{_csdi.Steel}");
+
+                table.AddRow()
+                    .AddCell("Внутренний диаметр обечайки, D:")
+                    .AddCell($"{_csdi.D} мм");
+
+                if (!_csdi.IsPressureIn)
+                {
+                    table.AddRow()
+                        .AddCell("Длина обечайки, l:")
+                        .AddCell($"{_csdi.l} мм");
+                }
+
+                table.AddRow()
+                    .AddCell("Прибавка на коррозию, ")
+                    .AppendEquation("c_1")
+                    .AppendText(":")
+                    .AddCell($"{_csdi.c1} мм");
+
+
+                table.AddRow()
+                    .AddCell("Прибавка для компенсации минусового допуска, ")
+                    .AppendEquation("c_2")
+                    .AppendText(":")
+                    .AddCell($"{_csdi.c2} мм");
+
+                if (_csdi.c3 > 0)
+                {
+                    table.AddRow()
+                        .AddCell("Технологическая прибавка, ")
+                        .AppendEquation("c_3")
+                        .AppendText(":")
+                        .AddCell($"{_csdi.c3} мм");
+                }
+
+                table.AddRow()
+                    .AddCell("Коэффициент прочности сварного шва, ")
+                    .AppendEquation("φ_p")
+                    .AppendText(":")
+                    .AddCell($"{_csdi.fi}");
+
+                body.InsertTable(table);
+            }
+
+            body.AddParagraph("");
+            body.AddParagraph("Условия нагружения").Alignment(AlignmentType.Center);
+
+            //table
+            {
+                var table = body.AddTable();
+
+                table.AddRow()
+                    .AddCell("Расчетная температура, Т:")
+                    .AddCell($"{_csdi.t} °С");
+
+                table.AddRow()
+                    .AddCell("Расчетное " + (_csdi.IsPressureIn ? "внутреннее избыточное" : "наружное")
+                                          + " давление, p:")
+                    .AddCell($"{_csdi.p} МПа");
+
+                table.AddRow()
+                    .AddCell($"Допускаемое напряжение для материала {_csdi.Steel} при расчетной температуре, [σ]:")
+                    .AddCell($"{_csdi.sigma_d} МПа");
+
+                if (!_csdi.IsPressureIn)
+                {
+                    table.AddRow()
+                        .AddCell("Модуль продольной упругости при расчетной температуре, E:")
+                        .AddCell($"{_csdi.E} МПа");
+                }
+                body.InsertTable(table);
+            }
+
+            body.AddParagraph("");
+            body.AddParagraph("Результаты расчета").Alignment(AlignmentType.Center);
+            body.AddParagraph("");
+            body.AddParagraph("Расчетные параметры").Alignment(AlignmentType.Center);
+            body.AddParagraph("");
+            body.AddParagraph("Расчетные длины переходных частей");
+            switch (_csdi.ConnectionType)
+            {
+                case ConicalConnectionType.Simply:
+                case ConicalConnectionType.WithRingPicture25b:
+                    body.AddParagraph("")
+                        .AppendEquation("a_1p=0.7√(D/cosα_1∙(s_1-c))" +
+                                        $"=0.7√({_csdi.D}/cos{_csdi.alfa1}({_csdi.s1}-{_c:f2}))={_a1p:f2}");
+                    body.AddParagraph("")
+                        .AppendEquation("a_2p=0.7√(D∙(s_2-c))" +
+                                        $"=0.7√({_csdi.D}∙({_csdi.s2}-{_c:f2}))={_a2p:f2}");
+                    break;
+                case ConicalConnectionType.Toroidal:
+                    body.AddParagraph("")
+                        .AppendEquation("a_1p=0.7√(D/cosα_1∙(s_T-c))" +
+                                        $"=0.7√({_csdi.D}/cos{_csdi.alfa1}({_csdi.sT}-{_c:f2}))={_a1p:f2}");
+                    body.AddParagraph("")
+                        .AppendEquation("a_2p=0.5√(D∙(s_T-c))" +
+                                        $"=0.5√({_csdi.D}∙({_csdi.sT}-{_c:f2}))={_a2p:f2}");
+                    break;
+            }
+
+            if (_csdi.IsConnectionWithLittle)
+            {
+                body.AddParagraph("")
+                    .AppendEquation("a_1p=√(D_1/cosα_1∙(s_1-c))" +
+                                    $"=√({_csdi.D1}/cos{_csdi.alfa1}({_csdi.s1}-{_c:f2}))={_a1p_l:f2}");
+                body.AddParagraph("")
+                    .AppendEquation("a_2p=1.25√(D_1∙(s_2-c))" +
+                                    $"=1.25√({_csdi.D1}∙({_csdi.s2}-{_c:f2}))={_a2p_l:f2}");
+            }
+
+            body.AddParagraph("Толщину стенки вычисляют по формуле:");
+            body.AddParagraph("").AppendEquation("s≥s_p+c");
+            body.AddParagraph("где ").AppendEquation("s_p").AddRun(" - расчетная толщина стенки обечайки");
+
+            if (_csdi.IsPressureIn)
+            {
+                body.AddParagraph("")
+                    .AppendEquation("s_p=(p∙D)/(2∙[σ]∙φ_p-p)" +
+                                    $"=({_csdi.p}∙{_csdi.D})/(2∙{_csdi.sigma_d}∙{_csdi.fi}-{_csdi.p})=" +
+                                    $"{_s_calcr:f2} мм");
+            }
+            else
+            {
+                body.AddParagraph("")
+                    .AppendEquation("s_p=max{1.06∙(10^-2∙D)/(B)∙(p/(10^-5∙E)∙l/D)^0.4;(1.2∙p∙D)/(2∙[σ]-p)}");
+                body.AddParagraph("Коэффициент B вычисляют по формуле:");
+                body.AddParagraph("")
+                    .AppendEquation("B=max{1;0.47∙(p/(10^-5∙E))^0.067∙(l/D)^0.4}");
+                body.AddParagraph("")
+                    .AppendEquation($"0.47∙({_csdi.p}/(10^-5∙{_csdi.E}))^0.067∙({_l}/{_csdi.D})^0.4={_b_2:f2}");
+                body.AddParagraph("")
+                    .AppendEquation($"B=max(1;{_b_2:f2})={_b:f2}");
+                body.AddParagraph("")
+                    .AppendEquation($"1.06∙(10^-2∙{_csdi.D})/({_b:f2})∙({_csdi.p}/(10^-5∙{_csdi.E})∙{_l}/{_csdi.D})^0.4={_s_calcr1:f2}");
+                body.AddParagraph("")
+                    .AppendEquation($"(1.2∙{_csdi.p}∙{_csdi.D})/(2∙{_csdi.sigma_d}-{_csdi.p})={_s_calcr2:f2}");
+                body.AddParagraph("")
+                    .AppendEquation($"s_p=max({_s_calcr1:f2};{_s_calcr2:f2})={_s_calcr:f2} мм");
+            }
+
+            body.AddParagraph("c - сумма прибавок к расчетной толщине");
+            body.AddParagraph("")
+                .AppendEquation($"c=c_1+c_2+c_3={_csdi.c1}+{_csdi.c2}+{_csdi.c3}={_c:f2} мм");
+
+            body.AddParagraph("").AppendEquation($"s={_s_calcr:f2}+{_c:f2}={_s_calc:f2} мм");
+
+            if (_csdi.s > _s_calc)
+            {
+                body.AddParagraph($"Принятая толщина s={_csdi.s} мм").Bold();
+            }
+            else
+            {
+                body.AddParagraph($"Принятая толщина s={_csdi.s} мм")
+                    .Bold()
+                    .Color(System.Drawing.Color.Red);
+            }
+            if (_csdi.IsPressureIn)
+            {
+                body.AddParagraph("Допускаемое внутреннее избыточное давление вычисляют по формуле:");
+                body.AddParagraph("")
+                    .AppendEquation("[p]=(2∙[σ]∙φ_p∙(s-c))/(D+s-c)"
+                                    + $"=(2∙{_csdi.sigma_d}∙{_csdi.fi}∙({_csdi.s}-{_c:f2}))/"
+                                    + $"({_csdi.D}+{_csdi.s}-{_c:f2})={_p_d:f2} МПа");
+            }
+            else
+            {
+                body.AddParagraph("Допускаемое наружное давление вычисляют по формуле:");
+                body.AddParagraph("")
+                    .AppendEquation("[p]=[p]_П/√(1+([p]_П/[p]_E)^2)");
+                body.AddParagraph("допускаемое давление из условия прочности вычисляют по формуле:");
+                body.AddParagraph("").AppendEquation("[p]_П=(2∙[σ]∙(s-c))/(D+s-c)" +
+                                                     $"=(2∙{_csdi.sigma_d}∙({_csdi.s}-{_c:f2}))/({_csdi.D}+{_csdi.s}-{_c:f2})={_p_dp:f2} МПа");
+                body.AddParagraph("допускаемое давление из условия устойчивости в пределах упругости вычисляют по формуле:");
+                body.AddParagraph("")
+                    .AppendEquation("[p]_E=(2.08∙10^-5∙E)/(n_y∙B_1)∙D/l∙[(100∙(s-c))/D]^2.5");
+                body.AddParagraph("коэффициент ")
+                    .AppendEquation("B_1")
+                    .AddRun(" вычисляют по формуле");
+                body.AddParagraph("")
+                    .AppendEquation("B_1=min{1;9.45∙D/l∙√(D/(100∙(s-c)))}");
+                body.AddParagraph("")
+                    .AppendEquation($"9.45∙{_csdi.D}/{_l}∙√({_csdi.D}/(100∙({_csdi.s}-{_c:f2})))={_B1_2:f2}");
+                body.AddParagraph("")
+                    .AppendEquation($"B_1=min(1;{_B1_2:f2})={_B1:f1}");
+                body.AddParagraph("")
+                    .AppendEquation($"[p]_E=(2.08∙10^-5∙{_csdi.E})/({_csdi.ny}∙{_B1:f2})∙{_csdi.D}/" +
+                                    $"{_l}∙[(100∙({_csdi.s}-{_c:f2}))/{_csdi.D}]^2.5={_p_de:f2} МПа");
+                body.AddParagraph("")
+                    .AppendEquation($"[p]={_p_dp:f2}/√(1+({_p_dp:f2}/{_p_de:f2})^2)={_p_d:f2} МПа");
+            }
+
+            body.AddParagraph("").AppendEquation("[p]≥p");
+            body.AddParagraph("")
+                .AppendEquation($"{_p_d:f2}≥{_csdi.p}");
+            if (_p_d > _csdi.p)
+            {
+                body.AddParagraph("Условие прочности выполняется")
+                    .Bold();
+            }
+            else
+            {
+                body.AddParagraph("Условие прочности не выполняется")
+                    .Bold()
+                    .Color(System.Drawing.Color.Red);
+            }
+
+            const int DIAMETER_BIG_LITTLE_BORDER = 200;
+            body.AddParagraph("Условия применения расчетных формул ")
+                .AddRun(_csdi.D >= DIAMETER_BIG_LITTLE_BORDER ?
+                    "при D ≥ 200 мм" : "при D < 200 мм");
+
+
+            body.AddParagraph("")
+                .AppendEquation(_csdi.D >= DIAMETER_BIG_LITTLE_BORDER ?
+                    $"(s-c)/(D)=({_csdi.s}-{_c:f2})/({_csdi.D})={(_csdi.s - _c) / _csdi.D:f3}≤0.1" :
+                    $"(s-c)/(D)=({_csdi.s}-{_c:f2})/({_csdi.D})={(_csdi.s - _c) / _csdi.D:f3}≤0.3");
+
+            if (!IsConditionUseFormulas)
+            {
+                body.AddParagraph("Условия применения расчетных формул не выполняется ")
+                    .Bold()
+                    .Color(System.Drawing.Color.Red);
+            }
+
+            package.Close();
         }
 
         public override string ToString() => $"Коническая обечайка {_csdi.Name}";

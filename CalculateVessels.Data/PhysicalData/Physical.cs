@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
+using CalculateVessels.Data.PhysicalData.Gost34233_1;
+using CalculateVessels.Data.PhysicalData.Gost6533;
 
 namespace CalculateVessels.Data.PhysicalData
 {
@@ -10,7 +13,7 @@ namespace CalculateVessels.Data.PhysicalData
     {
         public static string[] GetSteelsList()
         {
-            using StreamReader file = new("PhysicalData/SteelsSigma.json");
+            using StreamReader file = new("PhysicalData/Gost34233_1/SteelsSigma.json");
             try
             {
                 var json = file.ReadToEnd();
@@ -31,7 +34,7 @@ namespace CalculateVessels.Data.PhysicalData
 
             try
             {
-                using StreamReader file = new("PhysicalData/SteelsSigma.json");
+                using StreamReader file = new("PhysicalData/Gost34233_1/SteelsSigma.json");
                 var json = file.ReadToEnd();
                 file.Close();
                 steels = JsonSerializer.Deserialize<List<SteelForSigma>>(json);
@@ -56,7 +59,7 @@ namespace CalculateVessels.Data.PhysicalData
                 accessI = 3;
             }
             
-            var steel = steels.Where(s => s.Name.Equals(steelName)).FirstOrDefault();
+            var steel = steels.FirstOrDefault(s => s.Name.Equals(steelName));
 
             double sigma_d, sigmaLittle = 0, sigmaBig = 0;
             double tempLittle = 0, tempBig = 0;
@@ -104,7 +107,7 @@ namespace CalculateVessels.Data.PhysicalData
 
             try
             {
-                using StreamReader file = new("PhysicalData/SteelsSigma.json");
+                using StreamReader file = new("PhysicalData/Gost34233_1/SteelsSigma.json");
                 var json = file.ReadToEnd();
                 file.Close();
                 steels = JsonSerializer.Deserialize<List<SteelForE>>(json);
@@ -114,7 +117,7 @@ namespace CalculateVessels.Data.PhysicalData
                 return 0;
             }
 
-            var steel = steels.Where(s => s.Name.Equals(steelName)).FirstOrDefault();
+            var steel = steels.FirstOrDefault(s => s.Name.Equals(steelName));
 
             steel.Values = steel.Values.Where(v => v.EValue != 0).ToList();
 
@@ -153,5 +156,45 @@ namespace CalculateVessels.Data.PhysicalData
             return E;
         }
 
+        public static List<string> GetEllipseDiameters(EllipticalBottomGostType type)
+        {
+            EllipsesList ellipsesList;
+
+            try
+            {
+                using StreamReader file = new("PhysicalData/Gost6533/EllipticalBottom.json");
+                var json = file.ReadToEnd();
+                file.Close();
+                ellipsesList = JsonSerializer.Deserialize<EllipsesList>(json);
+            }
+            catch
+            {
+                return null;
+            }
+
+            var ellipses = type switch
+            {
+                EllipticalBottomGostType.Ell025In => ellipsesList?.Ell025In,
+                EllipticalBottomGostType.Ell025Out => ellipsesList?.Ell025Out,
+                _ => null
+            };
+
+            return ellipses?.Select(e => e.Diameter.ToString(CultureInfo.CurrentCulture)).ToList();
+        }
+
+        public static EllipsesList GetEllipsesList()
+        {
+            try
+            {
+                using StreamReader file = new("PhysicalData/Gost6533/EllipticalBottom.json");
+                var json = file.ReadToEnd();
+                file.Close();
+                return  JsonSerializer.Deserialize<EllipsesList>(json);
+            }
+            catch
+            {
+                return null;
+            }
+        }
     }
 }

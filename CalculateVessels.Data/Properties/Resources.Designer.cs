@@ -143,6 +143,46 @@ namespace CalculateVessels.Data.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        public static byte[] ConeElemBottom {
+            get {
+                object obj = ResourceManager.GetObject("ConeElemBottom", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConeElemLeft {
+            get {
+                object obj = ResourceManager.GetObject("ConeElemLeft", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConeElemRight {
+            get {
+                object obj = ResourceManager.GetObject("ConeElemRight", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConeElemTop {
+            get {
+                object obj = ResourceManager.GetObject("ConeElemTop", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         public static byte[] ConeOffset {
             get {
                 object obj = ResourceManager.GetObject("ConeOffset", resourceCulture);

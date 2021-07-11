@@ -25,7 +25,7 @@ namespace CalculateVessels.Core.Shells.DataIn
         public double s2 { get; set; }
         public double sT { get; set; }
 
-        public bool IsTorr { get; set; }
+        //public bool IsTorr { get; set; }
 
         public double r { get; set; }
 

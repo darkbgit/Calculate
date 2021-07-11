@@ -6,7 +6,7 @@
 		"Values": [
 			{
 				"Temperature": 20,
-				"SigmaValue": [ 20, 154.0, 154.0, 140.0, 140.0 ],
+				"SigmaValue": [ 154.0, 154.0, 140.0, 140.0 ],
 				"EValue": 199000
 			},
 			{

@@ -1,6 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 using System.Windows.Forms;
 using System.Xml;
+using CalculateVessels.Core.Shells.Enums;
+using CalculateVessels.Data.PhysicalData;
+using CalculateVessels.Data.PhysicalData.Gost6533;
 
 namespace CalculateVessels
 {
@@ -9,6 +15,7 @@ namespace CalculateVessels
         public GostEllForm()
         {
             InitializeComponent();
+            _elepses = Physical.GetEllipsesList();
         }
 
         private void Cancel_b_Click(object sender, EventArgs e)
@@ -16,109 +23,99 @@ namespace CalculateVessels
             this.Close();
         }
 
+        private readonly EllipsesList _elepses;
+
         private void GostEllForm_Load(object sender, EventArgs e)
         {
             type_cb.SelectedIndex = 0;
-            //string list = "";
-            //if (type_cb.SelectedIndex == 0)
-            //{
-            //    list = "ell025vn";
-            //}
-            //XmlDocument doc = new XmlDocument();
-            //doc.Load(System.IO.Path.Combine(System.IO.Directory.GetCurrentDirectory(), @"data\data.xml"));
-            //var root = doc.DocumentElement;
-            //XmlNode ell_list = root.SelectSingleNode("ell_list").SelectSingleNode(list);
-            //foreach (XmlNode s in ell_list.ChildNodes)
-            //{
-            //    D_cb.Items.Add(s.Attributes["D"].Value);
-            //}
         }
 
         private void Type_cb_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string list = "";
-            switch (type_cb.SelectedIndex)
+            var diameters = type_cb.SelectedIndex switch
             {
-                case 0:
-                    list = "ell025vn";
-                    break;
-                case 1:
-                    list = "ell025nar";
-                    break;
-                case 2:
-                    list = "ell02vn";
-                    break;
-            }
-            
-            XmlDocument doc = new XmlDocument();
-            doc.Load(System.IO.Path.Combine(System.IO.Directory.GetCurrentDirectory(), @"data\data.xml"));
-            var root = doc.DocumentElement;
-            XmlNode ell_list = root.SelectSingleNode("ell_list").SelectSingleNode(list);
-            D_cb.Items.Clear();
-            foreach (XmlNode D in ell_list.ChildNodes)
+                0 => _elepses.Ell025In
+                    .Select(eb => eb.Diameter.ToString(CultureInfo.CurrentCulture))
+                    .ToArray<object>(),
+                1 => _elepses.Ell025Out
+                    .Select(eb => eb.Diameter.ToString(CultureInfo.CurrentCulture))
+                    .ToArray<object>(),
+                _ => null
+            };
+
+            if (diameters != null)
             {
-                D_cb.Items.Add(D.Attributes["D"].Value);
+                D_cb.Items.Clear();
+                D_cb.Items.AddRange(diameters);
+                D_cb.SelectedIndex = 0;
             }
-            D_cb.SelectedIndex = 0;
+            else
+            {
+                MessageBox.Show("Error");
+                this.Close();
+            }
         }
 
         private void D_cb_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string list = "";
-            switch (type_cb.SelectedIndex)
+            var sList = type_cb.SelectedIndex switch
             {
-                case 0:
-                    list = "ell025vn";
-                    break;
-                case 1:
-                    list = "ell025nar";
-                    break;
-                case 2:
-                    list = "ell02vn";
-                    break;
-            }
-
-            XmlDocument doc = new XmlDocument();
-            doc.Load(System.IO.Path.Combine(System.IO.Directory.GetCurrentDirectory(), @"data\data.xml"));
-            var root = doc.DocumentElement;
-            XmlNode ell_list = root.SelectSingleNode("ell_list")
-                .SelectSingleNode(list)
-                .SelectSingleNode("//Dia[@D = '" + D_cb.Text + "']");
-            s_cb.Items.Clear();
-            foreach (XmlNode s in ell_list.ChildNodes)
+                0 => _elepses.Ell025In
+                    .FirstOrDefault(eb=>
+                        eb.Diameter.Equals(Convert.ToDouble(D_cb.Text)))
+                    ?.SValue
+                    ?.Select(s => s.s.ToString(CultureInfo.CurrentCulture))
+                    .ToArray<object>(),
+                1 => _elepses.Ell025Out
+                    .FirstOrDefault(eb =>
+                        eb.Diameter.Equals(Convert.ToDouble(D_cb.Text)))
+                    ?.SValue
+                    ?.Select(s => s.s.ToString(CultureInfo.CurrentCulture))
+                    .ToArray<object>(),
+                _ => null
+            };
+            if (sList != null)
             {
-                s_cb.Items.Add(s.Attributes["s"].Value);
+                s_cb.Items.Clear();
+                s_cb.Items.AddRange(sList);
+                s_cb.SelectedIndex = 0;
             }
-            s_cb.SelectedIndex = 0;
+            else
+            {
+                MessageBox.Show("Error");
+                this.Close();
+            }
         }
 
         private void Scb_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string list = "";
-            switch (type_cb.SelectedIndex)
+            var ellipse = type_cb.SelectedIndex switch
             {
-                case 0:
-                    list = "ell025vn";
-                    break;
-                case 1:
-                    list = "ell025nar";
-                    break;
-                case 2:
-                    list = "ell02vn";
-                    break;
-            }
+                0 => _elepses.Ell025In
+                    .FirstOrDefault(eb =>
+                        eb.Diameter.Equals(Convert.ToDouble(D_cb.Text)))
+                    ?.SValue
+                    .FirstOrDefault(s => 
+                        s.s.Equals(Convert.ToDouble(s_cb.Text))),
+                1 => _elepses.Ell025Out
+                    .FirstOrDefault(eb =>
+                        eb.Diameter.Equals(Convert.ToDouble(D_cb.Text)))
+                    ?.SValue
+                    .FirstOrDefault(s =>
+                        s.s.Equals(Convert.ToDouble(s_cb.Text))),
+                _ => null
+            };
 
-            XmlDocument doc = new XmlDocument();
-            doc.Load(System.IO.Path.Combine(System.IO.Directory.GetCurrentDirectory(), @"data\data.xml"));
-            var root = doc.DocumentElement;
-            XmlNode s_list = root.SelectSingleNode("ell_list")
-                .SelectSingleNode(list)
-                .SelectSingleNode("//Dia[@D = '" + D_cb.Text + "']")
-                .SelectSingleNode("el[@s ='" + s_cb.Text + "']");
-            
-            H_tb.Text = s_list.Attributes["H"].Value;
-            h1_tb.Text = s_list.Attributes["h1"].Value;
-            
+            if (ellipse != null)
+            {
+                H_tb.Text = ellipse.H.ToString(CultureInfo.CurrentCulture);
+                h1_tb.Text = ellipse.h1.ToString(CultureInfo.CurrentCulture);
+            }
+            else
+            {
+                MessageBox.Show("Error");
+                this.Close();
+            }
         }
 
         private void OK_b_Click(object sender, EventArgs e)
