@@ -13,4 +13,10 @@
     <ProjectReference Include="..\CalculateVessels.Data\CalculateVessels.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Trash\data.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

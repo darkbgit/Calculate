@@ -2,6 +2,7 @@
 {
     public enum ConicalConnectionType
     {
+        WithoutConnection,
         Simply,
         WithRingPicture25b,
         WithRingPicture29,

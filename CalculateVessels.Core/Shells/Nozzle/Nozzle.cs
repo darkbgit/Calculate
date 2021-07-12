@@ -27,7 +27,7 @@ namespace CalculateVessels.Core.Shells.Nozzle
         private readonly IElement _element;
 
 
-        private List<string> errorList = new List<string>();
+        private List<string> errorList = new();
 
 
         private string _name;
@@ -300,17 +300,12 @@ namespace CalculateVessels.Core.Shells.Nozzle
             _psi2 = Math.Min(1, _nozzleDataIn.sigma_d2 / _nozzleDataIn.ShellDataIn.sigma_d);
             _psi3 = Math.Min(1, _nozzleDataIn.sigma_d3 / _nozzleDataIn.ShellDataIn.sigma_d);
 
-            switch (_nozzleDataIn.NozzleKind)
+            _psi4 = _nozzleDataIn.NozzleKind switch
             {
-                case NozzleKind.WithTorusshapedInsert:
-                case NozzleKind.WithWealdedRing:
-                    _psi4 = Math.Min(1, _nozzleDataIn.sigma_d4 / _nozzleDataIn.ShellDataIn.sigma_d);
-                    break;
-                default:
-                    _psi4 = 1;
-                    break;
-            }
-
+                NozzleKind.WithTorusshapedInsert or NozzleKind.WithWealdedRing =>
+                Math.Min(1, _nozzleDataIn.sigma_d4 / _nozzleDataIn.ShellDataIn.sigma_d),
+                _ => 1,
+            };
             _d0p = 0.4 * Math.Sqrt(_Dp * (_nozzleDataIn.ShellDataIn.s - _c));
 
             _b = Math.Sqrt(_Dp * (_nozzleDataIn.ShellDataIn.s - _c)) + Math.Sqrt(_Dp * (_nozzleDataIn.ShellDataIn.s - _c));

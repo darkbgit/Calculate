@@ -181,37 +181,37 @@ namespace CalculateVessels
                 Size = new Size(300, 310)
             };
             
-             Label lab_1_1 = new Label
+            var lab_1_1 = new Label
             {
                 AutoSize = true,
                 Text = "Смещение, Rш:",
                 Location = new System.Drawing.Point(8, 130)
             };
-            TextBox tb1 = new TextBox
+            var tb1 = new TextBox
             {
                 Name = "Rsh_tb",
                 Size = new Size(100, 20),
                 Location = new System.Drawing.Point(8, 150)
             };
-            Label lab_1_2 = new Label
+            var lab_1_2 = new Label
             {
                 Text = "мм",
                 Location = new System.Drawing.Point(115, 154)
             };
 
-            Label lab_2_1 = new Label
+            var lab_2_1 = new Label
             {
                 AutoSize = true,
                 Text = "Угол смещения оси, θ:",
                 Location = new System.Drawing.Point(8, 175)
             };
-            TextBox tb2 = new TextBox
+            var tb2 = new TextBox
             {
                 Name = "theta_tb",
                 Size = new Size(100, 20),
                 Location = new System.Drawing.Point(8, 195)
             };
-            Label lab_2_2 = new Label
+            var lab_2_2 = new Label
             {
                 Text = "°",
                 Location = new System.Drawing.Point(115, 199)
@@ -233,44 +233,44 @@ namespace CalculateVessels
         private void EllRadialDekartDraw()
         {
             place_gb.Controls["pn"].Dispose();
-            Panel pn = new Panel
+            var pn = new Panel
             {
                 Name = "pn",
                 Location = new Point(2, 15),
                 Size = new Size(300, 310)
             };
 
-            Label lab_1_1 = new Label
+            var lab_1_1 = new Label
             {
                 AutoSize = true,
                 Text = "Координата, x0:",
                 Location = new System.Drawing.Point(8, 130)
             };
-            TextBox tb1 = new TextBox
+            var tb1 = new TextBox
             {
                 Name = "x0_tb",
                 Size = new Size(100, 20),
                 Location = new System.Drawing.Point(8, 150)
             };
-            Label lab_1_2 = new Label
+            var lab_1_2 = new Label
             {
                 Text = "мм",
                 Location = new System.Drawing.Point(115, 154)
             };
 
-            Label lab_2_1 = new Label
+            var lab_2_1 = new Label
             {
                 AutoSize = true,
                 Text = "Координата, y0:",
                 Location = new System.Drawing.Point(8, 175)
             };
-            TextBox tb2 = new TextBox
+            var tb2 = new TextBox
             {
                 Name = "y0_tb",
                 Size = new Size(100, 20),
                 Location = new System.Drawing.Point(8, 195)
             };
-            Label lab_2_2 = new Label
+            var lab_2_2 = new Label
             {
                 Text = "мм",
                 Location = new System.Drawing.Point(115, 199)
@@ -291,44 +291,44 @@ namespace CalculateVessels
         private void EllVertDraw()
         {
             place_gb.Controls["pn"].Dispose();
-            Panel pn = new Panel
+            var pn = new Panel
             {
                 Name = "pn",
                 Location = new Point(2, 15),
                 Size = new Size(300, 310)
             };
 
-            Label lab_1_1 = new Label
+            var lab_1_1 = new Label
             {
                 AutoSize = true,
                 Text = "Смещение, Rш:",
                 Location = new System.Drawing.Point(8, 130)
             };
-            TextBox tb1 = new TextBox
+            var tb1 = new TextBox
             {
                 Name = "Rsh_tb",
                 Size = new Size(100, 20),
                 Location = new System.Drawing.Point(8, 150)
             };
-            Label lab_1_2 = new Label
+            var lab_1_2 = new Label
             {
                 Text = "мм",
                 Location = new System.Drawing.Point(115, 154)
             };
 
-            Label lab_2_1 = new Label
+            var lab_2_1 = new Label
             {
                 AutoSize = true,
                 Text = "Угол смещения оси, θ:",
                 Location = new System.Drawing.Point(8, 175)
             };
-            TextBox tb2 = new TextBox
+            var tb2 = new TextBox
             {
                 Name = "theta_tb",
                 Size = new Size(100, 20),
                 Location = new System.Drawing.Point(8, 195)
             };
-            Label lab_2_2 = new Label
+            var lab_2_2 = new Label
             {
                 Text = "°",
                 Location = new System.Drawing.Point(115, 199)
@@ -356,37 +356,37 @@ namespace CalculateVessels
                 Size = new Size(300, 310)
             };
 
-            Label lab_1_1 = new Label
+            var lab_1_1 = new Label
             {
                 AutoSize = true,
                 Text = "Координата, x0:",
                 Location = new System.Drawing.Point(8, 130)
             };
-            TextBox tb1 = new TextBox
+            var tb1 = new TextBox
             {
                 Name = "x0_tb",
                 Size = new Size(100, 20),
                 Location = new System.Drawing.Point(8, 150)
             };
-            Label lab_1_2 = new Label
+            var lab_1_2 = new Label
             {
                 Text = "мм",
                 Location = new System.Drawing.Point(115, 154)
             };
 
-            Label lab_2_1 = new Label
+            var lab_2_1 = new Label
             {
                 AutoSize = true,
                 Text = "Координата, y0:",
                 Location = new System.Drawing.Point(8, 175)
             };
-            TextBox tb2 = new TextBox
+            var tb2 = new TextBox
             {
                 Name = "y0_tb",
                 Size = new Size(100, 20),
                 Location = new System.Drawing.Point(8, 195)
             };
-            Label lab_2_2 = new Label
+            var lab_2_2 = new Label
             {
                 Text = "мм",
                 Location = new System.Drawing.Point(115, 199)
@@ -414,55 +414,55 @@ namespace CalculateVessels
                 Size = new Size(300, 310)
             };
 
-            Label lab_1_1 = new Label
+            var lab_1_1 = new Label
             {
                 AutoSize = true,
                 Text = "Смещение, Rш:",
                 Location = new System.Drawing.Point(8, 130)
             };
-            TextBox tb1 = new TextBox
+            var tb1 = new TextBox
             {
                 Name = "Rsh_tb",
                 Size = new Size(100, 20),
                 Location = new System.Drawing.Point(8, 150)
             };
-            Label lab_1_2 = new Label
+            var lab_1_2 = new Label
             {
                 Text = "мм",
                 Location = new System.Drawing.Point(115, 154)
             };
 
-            Label lab_2_1 = new Label
+            var lab_2_1 = new Label
             {
                 AutoSize = true,
                 Text = "Угол смещения оси, θ:",
                 Location = new System.Drawing.Point(8, 175)
             };
-            TextBox tb2 = new TextBox
+            var tb2 = new TextBox
             {
                 Name = "theta_tb",
                 Size = new Size(100, 20),
                 Location = new System.Drawing.Point(8, 195)
             };
-            Label lab_2_2 = new Label
+            var lab_2_2 = new Label
             {
                 Text = "°",
                 Location = new System.Drawing.Point(115, 199)
             };
 
-            Label lab_3_1 = new Label
+            var lab_3_1 = new Label
             {
                 AutoSize = true,
                 Text = "Угол наклона оси, γ:",
                 Location = new System.Drawing.Point(8, 220)
             };
-            TextBox tb3 = new TextBox
+            var tb3 = new TextBox
             {
                 Name = "gamma_tb",
                 Size = new Size(100, 20),
                 Location = new System.Drawing.Point(8, 240)
             };
-            Label lab_3_2 = new Label
+            var lab_3_2 = new Label
             {
                 Text = "°",
                 Location = new System.Drawing.Point(115, 244)
@@ -494,55 +494,55 @@ namespace CalculateVessels
                 Size = new Size(300, 310)
             };
 
-            Label lab_1_1 = new Label
+            var lab_1_1 = new Label
             {
                 AutoSize = true,
                 Text = "Координата, x0:",
                 Location = new System.Drawing.Point(8, 130)
             };
-            TextBox tb1 = new TextBox
+            var tb1 = new TextBox
             {
                 Name = "x0_tb",
                 Size = new Size(100, 20),
                 Location = new System.Drawing.Point(8, 150)
             };
-            Label lab_1_2 = new Label
+            var lab_1_2 = new Label
             {
                 Text = "мм",
                 Location = new System.Drawing.Point(115, 154)
             };
 
-            Label lab_2_1 = new Label
+            var lab_2_1 = new Label
             {
                 AutoSize = true,
                 Text = "Координата, y0:",
                 Location = new System.Drawing.Point(8, 175)
             };
-            TextBox tb2 = new TextBox
+            var tb2 = new TextBox
             {
                 Name = "y0_tb",
                 Size = new Size(100, 20),
                 Location = new System.Drawing.Point(8, 195)
             };
-            Label lab_2_2 = new Label
+            var lab_2_2 = new Label
             {
                 Text = "мм",
                 Location = new System.Drawing.Point(115, 199)
             };
 
-            Label lab_3_1 = new Label
+            var lab_3_1 = new Label
             {
                 AutoSize = true,
                 Text = "Угол наклона оси, γ:",
                 Location = new System.Drawing.Point(8, 220)
             };
-            TextBox tb3 = new TextBox
+            var tb3 = new TextBox
             {
                 Name = "gamma_tb",
                 Size = new Size(100, 20),
                 Location = new System.Drawing.Point(8, 240)
             };
-            Label lab_3_2 = new Label
+            var lab_3_2 = new Label
             {
                 Text = "°",
                 Location = new System.Drawing.Point(115, 244)
@@ -580,37 +580,37 @@ namespace CalculateVessels
                                 Location = new Point(2, 15),
                                 Size = new Size(300, 310)
                             };
-                            Label lab_1_1 = new Label
+                            var lab_1_1 = new Label
                             {
                                 AutoSize = true,
                                 Text = "Смещение, Lш:",
                                 Location = new System.Drawing.Point(8, 130)
                             };
-                            TextBox tb1 = new TextBox
+                            var tb1 = new TextBox
                             {
                                 Name = "Lsh_tb",
                                 Size = new Size(100, 20),
                                 Location = new System.Drawing.Point(8, 150)
                             };
-                            Label lab_1_2 = new Label
+                            var lab_1_2 = new Label
                             {
                                 Text = "м",
                                 Location = new System.Drawing.Point(115, 154)
                             };
 
-                            Label lab_2_1 = new Label
+                            var lab_2_1 = new Label
                             {
                                 AutoSize = true,
                                 Text = "Угол смещения оси, θ:",
                                 Location = new System.Drawing.Point(8, 175)
                             };
-                            TextBox tb2 = new TextBox
+                            var tb2 = new TextBox
                             {
                                 Name = "theta_tb",
                                 Size = new Size(100, 20),
                                 Location = new System.Drawing.Point(8, 195)
                             };
-                            Label lab_2_2 = new Label
+                            var lab_2_2 = new Label
                             {
                                 Text = "°",
                                 Location = new System.Drawing.Point(115, 199)
@@ -637,73 +637,73 @@ namespace CalculateVessels
                                 Location = new Point(2, 15),
                                 Size = new Size(300, 310)
                             };
-                            Label lab_1_1 = new Label
+                            var lab_1_1 = new Label
                             {
                                 AutoSize = true,
                                 Text = "Смещение, Lш:",
                                 Location = new System.Drawing.Point(8, 130)
                             };
-                            TextBox tb1 = new TextBox
+                            var tb1 = new TextBox
                             {
                                 Name = "Lsh_tb",
                                 Size = new Size(100, 20),
                                 Location = new System.Drawing.Point(8, 150)
                             };
-                            Label lab_1_2 = new Label
+                            var lab_1_2 = new Label
                             {
                                 Text = "м",
                                 Location = new System.Drawing.Point(115, 154)
                             };
 
-                            Label lab_2_1 = new Label
+                            var lab_2_1 = new Label
                             {
                                 AutoSize = true,
                                 Text = "Угол смещения оси, θ:",
                                 Location = new System.Drawing.Point(8, 175)
                             };
-                            TextBox tb2 = new TextBox
+                            var tb2 = new TextBox
                             {
                                 Name = "theta_tb",
                                 Size = new Size(100, 20),
                                 Location = new System.Drawing.Point(8, 195)
                             };
-                            Label lab_2_2 = new Label
+                            var lab_2_2 = new Label
                             {
                                 Text = "°",
                                 Location = new System.Drawing.Point(115, 199)
                             };
 
-                            Label lab_3_1 = new Label
+                            var lab_3_1 = new Label
                             {
                                 AutoSize = true,
                                 Text = "Угол, ψ:",
                                 Location = new System.Drawing.Point(8, 220)
                             };
-                            TextBox tb3 = new TextBox
+                            var tb3 = new TextBox
                             {
                                 Name = "psi_tb",
                                 Size = new Size(100, 20),
                                 Location = new System.Drawing.Point(8, 240)
                             };
-                            Label lab_3_2 = new Label
+                            var lab_3_2 = new Label
                             {
                                 Text = "°",
                                 Location = new System.Drawing.Point(115, 244)
                             };
 
-                            Label lab_4_1 = new Label
+                            var lab_4_1 = new Label
                             {
                                 AutoSize = true,
                                 Text = "Смещение, t:",
                                 Location = new System.Drawing.Point(8, 265)
                             };
-                            TextBox tb4 = new TextBox
+                            var tb4 = new TextBox
                             {
                                 Name = "t_tb",
                                 Size = new Size(100, 20),
                                 Location = new System.Drawing.Point(8, 285)
                             };
-                            Label lab_4_2 = new Label
+                            var lab_4_2 = new Label
                             {
                                 Text = "мм",
                                 Location = new System.Drawing.Point(115, 289)
@@ -812,73 +812,73 @@ namespace CalculateVessels
                                 Location = new Point(2, 15),
                                 Size = new Size(300, 310)
                             };
-                            Label lab_1_1 = new Label
+                            var lab_1_1 = new Label
                             {
                                 AutoSize = true,
                                 Text = "Смещение, Lш:",
                                 Location = new System.Drawing.Point(8, 130)
                             };
-                            TextBox tb1 = new TextBox
+                            var tb1 = new TextBox
                             {
                                 Name = "Lsh_tb",
                                 Size = new Size(100, 20),
                                 Location = new System.Drawing.Point(8, 150)
                             };
-                            Label lab_1_2 = new Label
+                            var lab_1_2 = new Label
                             {
                                 Text = "м",
                                 Location = new System.Drawing.Point(115, 154)
                             };
 
-                            Label lab_2_1 = new Label
+                            var lab_2_1 = new Label
                             {
                                 AutoSize = true,
                                 Text = "Угол смещения оси, θ:",
                                 Location = new System.Drawing.Point(8, 175)
                             };
-                            TextBox tb2 = new TextBox
+                            var tb2 = new TextBox
                             {
                                 Name = "theta_tb",
                                 Size = new Size(100, 20),
                                 Location = new System.Drawing.Point(8, 195)
                             };
-                            Label lab_2_2 = new Label
+                            var lab_2_2 = new Label
                             {
                                 Text = "°",
                                 Location = new System.Drawing.Point(115, 199)
                             };
 
-                            Label lab_3_1 = new Label
+                            var lab_3_1 = new Label
                             {
                                 AutoSize = true,
                                 Text = "Угол наклона оси, γ:",
                                 Location = new System.Drawing.Point(8, 220)
                             };
-                            TextBox tb3 = new TextBox
+                            var tb3 = new TextBox
                             {
                                 Name = "gamma_tb",
                                 Size = new Size(100, 20),
                                 Location = new System.Drawing.Point(8, 240)
                             };
-                            Label lab_3_2 = new Label
+                            var lab_3_2 = new Label
                             {
                                 Text = "°",
                                 Location = new System.Drawing.Point(115, 244)
                             };
 
-                            Label lab_4_1 = new Label
+                            var lab_4_1 = new Label
                             {
                                 AutoSize = true,
                                 Text = "Угол отклонения оси, ω:",
                                 Location = new System.Drawing.Point(8, 265)
                             };
-                            TextBox tb4 = new TextBox
+                            var tb4 = new TextBox
                             {
                                 Name = "omega_tb",
                                 Size = new Size(100, 20),
                                 Location = new System.Drawing.Point(8, 285)
                             };
-                            Label lab_4_2 = new Label
+                            var lab_4_2 = new Label
                             {
                                 Text = "°",
                                 Location = new System.Drawing.Point(115, 289)
@@ -1156,7 +1156,7 @@ namespace CalculateVessels
                         };
                         placePolar_rb.CheckedChanged += new EventHandler(PlaceCoordinat_rb_CheckedChanged);
 
-                        Label corL = new Label
+                        var corL = new Label
                         {
                             Text = "Система координат:",
                             AutoSize = true,
@@ -1634,7 +1634,7 @@ namespace CalculateVessels
             
        
 
-                Nozzle nozzle = new Nozzle(element, nozzleData);
+                var nozzle = new Nozzle(element, nozzleData);
                 nozzle.Calculate();
             if (!nozzle.IsCriticalError)
             {

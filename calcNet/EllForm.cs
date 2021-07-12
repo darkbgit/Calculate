@@ -54,7 +54,7 @@ namespace CalculateVessels
         private void PredCalc_b_Click(object sender, EventArgs e)
         {
             const string WRONG_INPUT = " неверный ввод";
-            List<string> dataInErr = new List<string>();
+            List<string> dataInErr = new();
 
             //t
             {
@@ -282,7 +282,7 @@ namespace CalculateVessels
             c_tb.Text = "";
             scalc_l.Text = "";
 
-            List<string> dataInErr = new List<string>();
+            List<string> dataInErr = new ();
 
             //name
             ellipticalShellDataIn.Name = name_tb.Text;

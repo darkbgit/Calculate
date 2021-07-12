@@ -83,57 +83,57 @@ namespace CalculateVessels
                         {
                             typePanel.Controls.Clear();
 
-                            Label lab_1_1 = new Label
+                            var lab_1_1 = new Label
                             {
                                 AutoSize = true,
                                 Text = "Внутренний диаметр смежного элемента, D:",
                                 Location = new System.Drawing.Point(8, 8)
                             };
-                            TextBox tb1 = new TextBox
+                            var tb1 = new TextBox
                             {
                                 Name = "D_tb",
                                 Size = new Size(46, 23),
                                 Location = new System.Drawing.Point(264, 4)
                             };
-                            Label lab_1_2 = new Label
+                            var lab_1_2 = new Label
                             {
                                 Text = "мм",
                                 Location = new System.Drawing.Point(318, 8)
                             };
 
-                            Label lab_2_1 = new Label
+                            var lab_2_1 = new Label
                             {
                                 Size = new Size(252, 15),
                                 Text = "Толщина стенки смежного элемента, s:",
                                 TextAlign = ContentAlignment.MiddleRight,
                                 Location = new System.Drawing.Point(8, 38)
                             };
-                            TextBox tb2 = new TextBox
+                            var tb2 = new TextBox
                             {
                                 Name = "s_tb",
                                 Size = new Size(46, 23),
                                 Location = new System.Drawing.Point(264, 34)
                             };
-                            Label lab_2_2 = new Label
+                            var lab_2_2 = new Label
                             {
                                 Text = "мм",
                                 Location = new System.Drawing.Point(318, 38)
                             };
 
-                            Label lab_3_1 = new Label
+                            var lab_3_1 = new Label
                             {
                                 Size = new Size(252, 15),
                                 Text = "Катет сварного шва, а:",
                                 TextAlign = ContentAlignment.MiddleRight,
                                 Location = new System.Drawing.Point(8, 68)
                             };
-                            TextBox tb3 = new TextBox
+                            var tb3 = new TextBox
                             {
                                 Name = "a_tb",
                                 Size = new Size(46, 23),
                                 Location = new System.Drawing.Point(264, 64)
                             };
-                            Label lab_3_2 = new Label
+                            var lab_3_2 = new Label
                             {
                                 Text = "мм",
                                 Location = new System.Drawing.Point(318, 68)
@@ -159,38 +159,38 @@ namespace CalculateVessels
                         {
                             typePanel.Controls.Clear();
 
-                            Label lab_1_1 = new Label
+                            var lab_1_1 = new Label
                             {
                                 AutoSize = true,
                                 Text = "Внутренний диаметр смежного элемента, D:",
                                 Location = new System.Drawing.Point(8, 8)
                             };
-                            TextBox tb1 = new TextBox
+                            var tb1 = new TextBox
                             {
                                 Name = "D_tb",
                                 Size = new Size(46, 23),
                                 Location = new System.Drawing.Point(264, 4)
                             };
-                            Label lab_1_2 = new Label
+                            var lab_1_2 = new Label
                             {
                                 Text = "мм",
                                 Location = new System.Drawing.Point(318, 8)
                             };
 
-                            Label lab_2_1 = new Label
+                            var lab_2_1 = new Label
                             {
                                 Size = new Size(252, 15),
                                 Text = "Толщина стенки смежного элемента, s:",
                                 TextAlign = ContentAlignment.MiddleRight,
                                 Location = new System.Drawing.Point(8, 38)
                             };
-                            TextBox tb2 = new TextBox
+                            var tb2 = new TextBox
                             {
                                 Name = "s_tb",
                                 Size = new Size(46, 23),
                                 Location = new System.Drawing.Point(264, 34)
                             };
-                            Label lab_2_2 = new Label
+                            var lab_2_2 = new Label
                             {
                                 Text = "мм",
                                 Location = new System.Drawing.Point(318, 38)
@@ -215,76 +215,76 @@ namespace CalculateVessels
                         {
                             typePanel.Controls.Clear();
 
-                            Label lab_1_1 = new Label
+                            var lab_1_1 = new Label
                             {
                                 AutoSize = true,
                                 Text = "Внутренний диаметр смежного элемента, D:",
                                 Location = new System.Drawing.Point(8, 8)
                             };
-                            TextBox tb1 = new TextBox
+                            var tb1 = new TextBox
                             {
                                 Name = "D_tb",
                                 Size = new Size(46, 23),
                                 Location = new System.Drawing.Point(264, 4)
                             };
-                            Label lab_1_2 = new Label
+                            var lab_1_2 = new Label
                             {
                                 Text = "мм",
                                 Location = new System.Drawing.Point(318, 8)
                             };
 
-                            Label lab_2_1 = new Label
+                            var lab_2_1 = new Label
                             {
                                 Size = new Size(252, 15),
                                 Text = "Толщина стенки смежного элемента, s:",
                                 TextAlign = ContentAlignment.MiddleRight,
                                 Location = new System.Drawing.Point(8, 38)
                             };
-                            TextBox tb2 = new TextBox
+                            var tb2 = new TextBox
                             {
                                 Name = "s_tb",
                                 Size = new Size(46, 23),
                                 Location = new System.Drawing.Point(264, 34)
                             };
-                            Label lab_2_2 = new Label
+                            var lab_2_2 = new Label
                             {
                                 Text = "мм",
                                 Location = new System.Drawing.Point(318, 38)
                             };
 
-                            Label lab_3_1 = new Label
+                            var lab_3_1 = new Label
                             {
                                 Size = new Size(252, 15),
                                 Text = "Радиус выточки, r:",
                                 TextAlign = ContentAlignment.MiddleRight,
                                 Location = new System.Drawing.Point(8, 68)
                             };
-                            TextBox tb3 = new TextBox
+                            var tb3 = new TextBox
                             {
                                 Name = "r_tb",
                                 Size = new Size(46, 23),
                                 Location = new System.Drawing.Point(264, 64)
                             };
-                            Label lab_3_2 = new Label
+                            var lab_3_2 = new Label
                             {
                                 Text = "мм",
                                 Location = new System.Drawing.Point(318, 68)
                             };
 
-                            Label lab_4_1 = new Label
+                            var lab_4_1 = new Label
                             {
                                 Size = new Size(252, 15),
                                 Text = "Высота выточки, h1:",
                                 TextAlign = ContentAlignment.MiddleRight,
                                 Location = new System.Drawing.Point(8, 98)
                             };
-                            TextBox tb4 = new TextBox
+                            var tb4 = new TextBox
                             {
                                 Name = "h1_tb",
                                 Size = new Size(46, 23),
                                 Location = new System.Drawing.Point(264, 94)
                             };
-                            Label lab_4_2 = new Label
+                            var lab_4_2 = new Label
                             {
                                 Text = "мм",
                                 Location = new System.Drawing.Point(318, 98)
@@ -309,76 +309,76 @@ namespace CalculateVessels
                         {
                             typePanel.Controls.Clear();
 
-                            Label lab_1_1 = new Label
+                            var lab_1_1 = new Label
                             {
                                 AutoSize = true,
                                 Text = "Внутренний диаметр смежного элемента, D:",
                                 Location = new System.Drawing.Point(8, 8)
                             };
-                            TextBox tb1 = new TextBox
+                            var tb1 = new TextBox
                             {
                                 Name = "D_tb",
                                 Size = new Size(46, 23),
                                 Location = new System.Drawing.Point(264, 4)
                             };
-                            Label lab_1_2 = new Label
+                            var lab_1_2 = new Label
                             {
                                 Text = "мм",
                                 Location = new System.Drawing.Point(318, 8)
                             };
 
-                            Label lab_2_1 = new Label
+                            var lab_2_1 = new Label
                             {
                                 Size = new Size(252, 15),
                                 Text = "Толщина стенки смежного элемента, s:",
                                 TextAlign = ContentAlignment.MiddleRight,
                                 Location = new System.Drawing.Point(8, 38)
                             };
-                            TextBox tb2 = new TextBox
+                            var tb2 = new TextBox
                             {
                                 Name = "s_tb",
                                 Size = new Size(46, 23),
                                 Location = new System.Drawing.Point(264, 34)
                             };
-                            Label lab_2_2 = new Label
+                            var lab_2_2 = new Label
                             {
                                 Text = "мм",
                                 Location = new System.Drawing.Point(318, 38)
                             };
 
-                            Label lab_3_1 = new Label
+                            var lab_3_1 = new Label
                             {
                                 Size = new Size(252, 15),
                                 Text = "Радиус выточки, r:",
                                 TextAlign = ContentAlignment.MiddleRight,
                                 Location = new System.Drawing.Point(8, 68)
                             };
-                            TextBox tb3 = new TextBox
+                            var tb3 = new TextBox
                             {
                                 Name = "r_tb",
                                 Size = new Size(46, 23),
                                 Location = new System.Drawing.Point(264, 64)
                             };
-                            Label lab_3_2 = new Label
+                            var lab_3_2 = new Label
                             {
                                 Text = "мм",
                                 Location = new System.Drawing.Point(318, 68)
                             };
 
-                            Label lab_4_1 = new Label
+                            var lab_4_1 = new Label
                             {
                                 Size = new Size(252, 15),
                                 Text = "Угол выхода выточки, γ:",
                                 TextAlign = ContentAlignment.MiddleRight,
                                 Location = new System.Drawing.Point(8, 98)
                             };
-                            TextBox tb4 = new TextBox
+                            var tb4 = new TextBox
                             {
                                 Name = "gamma_tb",
                                 Size = new Size(46, 23),
                                 Location = new System.Drawing.Point(264, 94)
                             };
-                            Label lab_4_2 = new Label
+                            var lab_4_2 = new Label
                             {
                                 Text = "°",
                                 Location = new System.Drawing.Point(318, 98)
@@ -405,58 +405,58 @@ namespace CalculateVessels
                         {
                             typePanel.Controls.Clear();
 
-                            Label lab_1_1 = new Label
+                            var lab_1_1 = new Label
                             {
                                 Size = new Size(252, 15),
                                 Text = "Диаметр утоненной части, D2:",
                                 TextAlign = ContentAlignment.MiddleRight,
                                 Location = new System.Drawing.Point(8, 8)
                             };
-                            TextBox tb1 = new TextBox
+                            var tb1 = new TextBox
                             {
                                 Name = "D2_tb",
                                 Size = new Size(46, 23),
                                 Location = new System.Drawing.Point(264, 4)
                             };
-                            Label lab_1_2 = new Label
+                            var lab_1_2 = new Label
                             {
                                 Text = "мм",
                                 Location = new System.Drawing.Point(318, 8)
                             };
 
-                            Label lab_2_1 = new Label
+                            var lab_2_1 = new Label
                             {
                                 Size = new Size(252, 15),
                                 Text = "Диаметр болтовой окружности, D3:",
                                 TextAlign = ContentAlignment.MiddleRight,
                                 Location = new Point(8, 38)
                             };
-                            TextBox tb2 = new TextBox
+                            var tb2 = new TextBox
                             {
                                 Name = "D3_tb",
                                 Size = new Size(46, 23),
                                 Location = new Point(264, 34)
                             };
-                            Label lab_2_2 = new Label
+                            var lab_2_2 = new Label
                             {
                                 Text = "мм",
                                 Location = new System.Drawing.Point(318, 38)
                             };
 
-                            Label lab_3_1 = new Label
+                            var lab_3_1 = new Label
                             {
                                 Size = new Size(252, 15),
                                 Text = "Толщина в зоне утонения, s2:",
                                 TextAlign = ContentAlignment.MiddleRight,
                                 Location = new Point(8, 68)
                             };
-                            TextBox tb3 = new TextBox
+                            var tb3 = new TextBox
                             {
                                 Name = "s2_tb",
                                 Size = new Size(46, 23),
                                 Location = new System.Drawing.Point(264, 64)
                             };
-                            Label lab_3_2 = new Label
+                            var lab_3_2 = new Label
                             {
                                 Text = "мм",
                                 Location = new System.Drawing.Point(318, 68)
@@ -478,58 +478,58 @@ namespace CalculateVessels
                         {
                             typePanel.Controls.Clear();
 
-                            Label lab_1_1 = new Label
+                            var lab_1_1 = new Label
                             {
                                 Size = new Size(252, 15),
                                 Text = "Диаметр утоненной части, D2:",
                                 TextAlign = ContentAlignment.MiddleRight,
                                 Location = new System.Drawing.Point(8, 8)
                             };
-                            TextBox tb1 = new TextBox
+                            var tb1 = new TextBox
                             {
                                 Name = "D2_tb",
                                 Size = new Size(46, 23),
                                 Location = new System.Drawing.Point(264, 4)
                             };
-                            Label lab_1_2 = new Label
+                            var lab_1_2 = new Label
                             {
                                 Text = "мм",
                                 Location = new System.Drawing.Point(318, 8)
                             };
 
-                            Label lab_2_1 = new Label
+                            var lab_2_1 = new Label
                             {
                                 Size = new Size(252, 15),
                                 Text = "Расчетный диаметр прокладки, Dсп:",
                                 TextAlign = ContentAlignment.MiddleRight,
                                 Location = new Point(8, 38)
                             };
-                            TextBox tb2 = new TextBox
+                            var tb2 = new TextBox
                             {
                                 Name = "Dsp_tb",
                                 Size = new Size(46, 23),
                                 Location = new Point(264, 34)
                             };
-                            Label lab_2_2 = new Label
+                            var lab_2_2 = new Label
                             {
                                 Text = "мм",
                                 Location = new System.Drawing.Point(318, 38)
                             };
 
-                            Label lab_3_1 = new Label
+                            var lab_3_1 = new Label
                             {
                                 Size = new Size(252, 15),
                                 Text = "Толщина в зоне утонения, s2:",
                                 TextAlign = ContentAlignment.MiddleRight,
                                 Location = new Point(8, 68)
                             };
-                            TextBox tb3 = new TextBox
+                            var tb3 = new TextBox
                             {
                                 Name = "s2_tb",
                                 Size = new Size(46, 23),
                                 Location = new System.Drawing.Point(264, 64)
                             };
-                            Label lab_3_2 = new Label
+                            var lab_3_2 = new Label
                             {
                                 Text = "мм",
                                 Location = new System.Drawing.Point(318, 68)
@@ -551,96 +551,96 @@ namespace CalculateVessels
                         {
                             typePanel.Controls.Clear();
 
-                            Label lab_1_1 = new Label
+                            var lab_1_1 = new Label
                             {
                                 Size = new Size(252, 15),
                                 Text = "Диаметр утоненной части, D2:",
                                 TextAlign = ContentAlignment.MiddleRight,
                                 Location = new System.Drawing.Point(8, 8)
                             };
-                            TextBox tb1 = new TextBox
+                            var tb1 = new TextBox
                             {
                                 Name = "D2_tb",
                                 Size = new Size(46, 23),
                                 Location = new System.Drawing.Point(264, 4)
                             };
-                            Label lab_1_2 = new Label
+                            var lab_1_2 = new Label
                             {
                                 Text = "мм",
                                 Location = new System.Drawing.Point(318, 8)
                             };
 
-                            Label lab_2_1 = new Label
+                            var lab_2_1 = new Label
                             {
                                 Size = new Size(252, 15),
                                 Text = "Диаметр болтовой окружности, D3:",
                                 TextAlign = ContentAlignment.MiddleRight,
                                 Location = new Point(8, 38)
                             };
-                            TextBox tb2 = new TextBox
+                            var tb2 = new TextBox
                             {
                                 Name = "D3_tb",
                                 Size = new Size(46, 23),
                                 Location = new Point(264, 34)
                             };
-                            Label lab_2_2 = new Label
+                            var lab_2_2 = new Label
                             {
                                 Text = "мм",
                                 Location = new System.Drawing.Point(318, 38)
                             };
 
-                            Label lab_3_1 = new Label
+                            var lab_3_1 = new Label
                             {
                                 Size = new Size(252, 15),
                                 Text = "Расчетный диаметр прокладки, Dсп:",
                                 TextAlign = ContentAlignment.MiddleRight,
                                 Location = new Point(8, 68)
                             };
-                            TextBox tb3 = new TextBox
+                            var tb3 = new TextBox
                             {
                                 Name = "Dsp_tb",
                                 Size = new Size(46, 23),
                                 Location = new Point(264, 64)
                             };
-                            Label lab_3_2 = new Label
+                            var lab_3_2 = new Label
                             {
                                 Text = "мм",
                                 Location = new System.Drawing.Point(318, 68)
                             };
 
-                            Label lab_4_1 = new Label
+                            var lab_4_1 = new Label
                             {
                                 Size = new Size(252, 15),
                                 Text = "Толщина в зоне утонения, s2:",
                                 TextAlign = ContentAlignment.MiddleRight,
                                 Location = new Point(8, 98)
                             };
-                            TextBox tb4 = new TextBox
+                            var tb4 = new TextBox
                             {
                                 Name = "s2_tb",
                                 Size = new Size(46, 23),
                                 Location = new System.Drawing.Point(264, 94)
                             };
-                            Label lab_4_2 = new Label
+                            var lab_4_2 = new Label
                             {
                                 Text = "мм",
                                 Location = new System.Drawing.Point(318, 98)
                             };
 
-                            Label lab_5_1 = new Label
+                            var lab_5_1 = new Label
                             {
                                 Size = new Size(252, 15),
                                 Text = "Толщина вне уплотнения, s3:",
                                 TextAlign = ContentAlignment.MiddleRight,
                                 Location = new Point(8, 128)
                             };
-                            TextBox tb5 = new TextBox
+                            var tb5 = new TextBox
                             {
                                 Name = "s3_tb",
                                 Size = new Size(46, 23),
                                 Location = new System.Drawing.Point(264, 124)
                             };
-                            Label lab_5_2 = new Label
+                            var lab_5_2 = new Label
                             {
                                 Text = "мм",
                                 Location = new System.Drawing.Point(318, 128)
@@ -668,115 +668,115 @@ namespace CalculateVessels
                         {
                             typePanel.Controls.Clear();
 
-                            Label lab_1_1 = new Label
+                            var lab_1_1 = new Label
                             {
                                 Size = new Size(252, 15),
                                 Text = "Диаметр утоненной части, D2:",
                                 TextAlign = ContentAlignment.MiddleRight,
                                 Location = new System.Drawing.Point(8, 8)
                             };
-                            TextBox tb1 = new TextBox
+                            var tb1 = new TextBox
                             {
                                 Name = "D2_tb",
                                 Size = new Size(46, 23),
                                 Location = new System.Drawing.Point(264, 4)
                             };
-                            Label lab_1_2 = new Label
+                            var lab_1_2 = new Label
                             {
                                 Text = "мм",
                                 Location = new System.Drawing.Point(318, 8)
                             };
 
-                            Label lab_2_1 = new Label
+                            var lab_2_1 = new Label
                             {
                                 Size = new Size(252, 15),
                                 Text = "Диаметр болтовой окружности, D3:",
                                 TextAlign = ContentAlignment.MiddleRight,
                                 Location = new Point(8, 38)
                             };
-                            TextBox tb2 = new TextBox
+                            var tb2 = new TextBox
                             {
                                 Name = "D3_tb",
                                 Size = new Size(46, 23),
                                 Location = new Point(264, 34)
                             };
-                            Label lab_2_2 = new Label
+                            var lab_2_2 = new Label
                             {
                                 Text = "мм",
                                 Location = new System.Drawing.Point(318, 38)
                             };
 
-                            Label lab_3_1 = new Label
+                            var lab_3_1 = new Label
                             {
                                 Size = new Size(252, 15),
                                 Text = "Расчетный диаметр прокладки, Dсп:",
                                 TextAlign = ContentAlignment.MiddleRight,
                                 Location = new Point(8, 68)
                             };
-                            TextBox tb3 = new TextBox
+                            var tb3 = new TextBox
                             {
                                 Name = "Dsp_tb",
                                 Size = new Size(46, 23),
                                 Location = new Point(264, 64)
                             };
-                            Label lab_3_2 = new Label
+                            var lab_3_2 = new Label
                             {
                                 Text = "мм",
                                 Location = new System.Drawing.Point(318, 68)
                             };
 
-                            Label lab_4_1 = new Label
+                            var lab_4_1 = new Label
                             {
                                 Size = new Size(252, 15),
                                 Text = "Толщина в зоне утонения, s2:",
                                 TextAlign = ContentAlignment.MiddleRight,
                                 Location = new Point(8, 98)
                             };
-                            TextBox tb4 = new TextBox
+                            var tb4 = new TextBox
                             {
                                 Name = "s2_tb",
                                 Size = new Size(46, 23),
                                 Location = new System.Drawing.Point(264, 94)
                             };
-                            Label lab_4_2 = new Label
+                            var lab_4_2 = new Label
                             {
                                 Text = "мм",
                                 Location = new System.Drawing.Point(318, 98)
                             };
 
-                            Label lab_5_1 = new Label
+                            var lab_5_1 = new Label
                             {
                                 Size = new Size(252, 15),
                                 Text = "Толщина вне уплотнения, s3:",
                                 TextAlign = ContentAlignment.MiddleRight,
                                 Location = new Point(8, 128)
                             };
-                            TextBox tb5 = new TextBox
+                            var tb5 = new TextBox
                             {
                                 Name = "s3_tb",
                                 Size = new Size(46, 23),
                                 Location = new System.Drawing.Point(264, 124)
                             };
-                            Label lab_5_2 = new Label
+                            var lab_5_2 = new Label
                             {
                                 Text = "мм",
                                 Location = new System.Drawing.Point(318, 128)
                             };
 
-                            Label lab_6_1 = new Label
+                            var lab_6_1 = new Label
                             {
                                 Size = new Size(252, 15),
                                 Text = "Ширина паза под прокладку, s4:",
                                 TextAlign = ContentAlignment.MiddleRight,
                                 Location = new Point(8, 158)
                             };
-                            TextBox tb6 = new TextBox
+                            TextBox tb6 = new()
                             {
                                 Name = "s4_tb",
                                 Size = new Size(46, 23),
                                 Location = new System.Drawing.Point(264, 154)
                             };
-                            Label lab_6_2 = new Label
+                            Label lab_6_2 = new()
                             {
                                 Text = "мм",
                                 Location = new System.Drawing.Point(318, 158)
