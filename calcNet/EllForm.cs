@@ -246,7 +246,7 @@ namespace CalculateVessels
                     if (!ell.IsCriticalError)
                     {
                         c_tb.Text = $"{ell.c:f2}";
-                        scalc_l.Text = $"sp={ell.s_calc:f3} мм";
+                        scalc_l.Text = $"sp={ell.s:f3} мм";
                         calc_b.Enabled = true;
                     }
                     else
@@ -309,7 +309,7 @@ namespace CalculateVessels
                 ellipticalShell.Calculate();
                 if (!ellipticalShell.IsCriticalError)
                 {
-                    scalc_l.Text = $"sp={ellipticalShell.s_calc:f3} мм";
+                    scalc_l.Text = $"sp={ellipticalShell.s:f3} мм";
                     p_d_l.Text = $"pd={ellipticalShell.p_d:f3} МПа";
 
                     if (this.Owner is MainForm main)

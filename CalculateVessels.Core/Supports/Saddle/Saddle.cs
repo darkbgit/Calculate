@@ -29,7 +29,11 @@ namespace CalculateVessels.Core.Supports.Saddle
 
         public bool IsConditionUseFormulas { get; private set; }
 
-        public List<string> Bibliograhy { get; } = new() { "GOST_34233_5" };
+        public List<string> Bibliograhy { get; } = new()
+        {
+            Data.Properties.Resources.GOST_34233_1,
+            Data.Properties.Resources.GOST_34233_5
+        };
 
         private double _q;
         private double _M0;

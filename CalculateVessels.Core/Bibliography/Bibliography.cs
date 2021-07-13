@@ -20,7 +20,6 @@ namespace CalculateVessels.Core.Bibliography
 
             if (body == null) return;
 
-
             //body.AddParagraph("").InsertPageBreakAfterSelf();
 
             body.AddParagraph("Литература").Heading(HeadingType.Heading1).Alignment(AlignmentType.Center);
@@ -29,11 +28,10 @@ namespace CalculateVessels.Core.Bibliography
 
             bibliography.Sort();
 
-            var i = 0;
+            var i = 1;
             foreach (var biblio in bibliography)
             {
-                body.AddParagraph($"{i++ + 1}. " 
-                    + Data.Properties.Resources.ResourceManager.GetString(biblio));
+                body.AddParagraph($"{i++}. {biblio}."); 
             }
 
             package.Close();

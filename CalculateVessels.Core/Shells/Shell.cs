@@ -14,8 +14,8 @@ namespace CalculateVessels.Core.Shells
         //internal ShellDataIn ShellDataIn;
 
         public double c { get => _c; }
-        public double s_calcr { get => _s_calcr; }
-        public double s_calc { get => _s_calc; }
+        public double s_p { get => _s_p; }
+        public double s { get => _s; }
         public double p_de { get => _p_de; }
         public double p_d { get => _p_d; }
 
@@ -26,15 +26,19 @@ namespace CalculateVessels.Core.Shells
         public bool IsConditionUseFormulas { get; protected set; }
 
         protected double _c;
-        protected double _s_calcr;
-        protected double _s_calcr1;
-        protected double _s_calcr2;
-        protected double _s_calc;
+        protected double _s_p;
+        protected double _s_p_1;
+        protected double _s_p_2;
+        protected double _s;
         protected double _p_de;
         protected double _p_dp;
         protected double _p_d;
 
-        public List<string> Bibliograhy { get; } = new() { "GOST_34233_1", "GOST_34233_2" };
+        public List<string> Bibliograhy { get; } = new() 
+        {
+            Data.Properties.Resources.GOST_34233_1,
+            Data.Properties.Resources.GOST_34233_2
+        };
     }
 
 }

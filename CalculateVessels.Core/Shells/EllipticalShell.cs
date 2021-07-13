@@ -64,14 +64,14 @@ namespace CalculateVessels.Core.Shells
                     _ellR = Math.Pow(_esdi.D, 2) / (4.0 * _esdi.ellH);
                     if (_esdi.IsPressureIn)
                     {
-                        _s_calcr = _esdi.p * _ellR / (2.0 * _esdi.sigma_d * _esdi.fi - 0.5 * _esdi.p);
-                        _s_calc = _s_calcr + _c;
+                        _s_p = _esdi.p * _ellR / (2.0 * _esdi.sigma_d * _esdi.fi - 0.5 * _esdi.p);
+                        _s = _s_p + _c;
                         if (_esdi.s == 0.0)
                         {
-                            _p_d = 2.0 * _esdi.sigma_d * _esdi.fi * _s_calcr /
-                                   (_ellR + 0.5 * _s_calcr);
+                            _p_d = 2.0 * _esdi.sigma_d * _esdi.fi * _s_p /
+                                   (_ellR + 0.5 * _s_p);
                         }
-                        else if (_esdi.s >= _s_calc)
+                        else if (_esdi.s >= _s)
                         {
                             _p_d = 2.0 * _esdi.sigma_d * _esdi.fi * (_esdi.s - _c) /
                                    (_ellR + 0.5 * (_esdi.s - _c));
@@ -94,23 +94,23 @@ namespace CalculateVessels.Core.Shells
                                 break;
                         }
 
-                        _s_calcr1 = _ellKePrev * _ellR / 161 * Math.Sqrt(_esdi.ny * _esdi.p / (0.00001 * _esdi.E));
-                        _s_calcr2 = 1.2 * _esdi.p * _ellR / (2.0 * _esdi.sigma_d);
+                        _s_p_1 = _ellKePrev * _ellR / 161 * Math.Sqrt(_esdi.ny * _esdi.p / (0.00001 * _esdi.E));
+                        _s_p_2 = 1.2 * _esdi.p * _ellR / (2.0 * _esdi.sigma_d);
 
-                        _s_calcr = Math.Max(_s_calcr1, _s_calcr2);
-                        _s_calc = _s_calcr + _c;
+                        _s_p = Math.Max(_s_p_1, _s_p_2);
+                        _s = _s_p + _c;
                         if (_esdi.s == 0.0)
                         {
-                            _p_dp = 2.0 * _esdi.sigma_d * _s_calcr / (_ellR + 0.5 * _s_calcr);
-                            _ellx = 10.0 * (_s_calcr / _esdi.D) *
+                            _p_dp = 2.0 * _esdi.sigma_d * _s_p / (_ellR + 0.5 * _s_p);
+                            _ellx = 10.0 * (_s_p / _esdi.D) *
                                     (_esdi.D / (2.0 * _esdi.ellH) - 2.0 * _esdi.ellH / _esdi.D);
                             _ellKe = (1.0 + (2.4 + 8.0 * _ellx) * _ellx) / (1.0 + (3.0 + 10.0 * _ellx) * _ellx);
                             _p_de = 2.6 * 0.00001 * _esdi.E / _esdi.ny *
-                                    Math.Pow(100.0 * _s_calcr / (_ellKe * _ellR), 2);
+                                    Math.Pow(100.0 * _s_p / (_ellKe * _ellR), 2);
                             _p_d = _p_dp / Math.Sqrt(1.0 + Math.Pow(_p_dp / _p_de, 2));
 
                         }
-                        else if (_esdi.s >= _s_calc)
+                        else if (_esdi.s >= _s)
                         {
                             _p_dp = 2.0 * _esdi.sigma_d * (_esdi.s - _c) / (_ellR + 0.5 * (_esdi.s - _c));
                             _ellx = 10.0 * ((_esdi.s - _c) / _esdi.D) *
@@ -308,7 +308,7 @@ namespace CalculateVessels.Core.Shells
             if (_esdi.IsPressureIn)
             {
                 body.AddParagraph("")
-                    .AppendEquation($"s_p=({_esdi.p}∙{_ellR:f2})/(2∙{_esdi.sigma_d}∙{_esdi.fi}-0.5{_esdi.p})={_s_calcr:f2} мм");
+                    .AppendEquation($"s_p=({_esdi.p}∙{_ellR:f2})/(2∙{_esdi.sigma_d}∙{_esdi.fi}-0.5{_esdi.p})={_s_p:f2} мм");
             }
             else
             {
@@ -319,17 +319,17 @@ namespace CalculateVessels.Core.Shells
                         : " для полусферических днищ");
                 body.AddParagraph("")
                     .AppendEquation($"({_ellKePrev}∙{_ellR:f2})/(161)∙√(({_esdi.ny}∙{_esdi.p})/(10^-5∙{_esdi.E}))=" +
-                                                    $"{_s_calcr1:f2}");
-                body.AddParagraph("").AppendEquation($"(1.2∙{_esdi.p}∙{_ellR:f2})/(2∙{_esdi.sigma_d})={_s_calcr2:f2}");
-                body.AddParagraph("").AppendEquation($"s_1p=max({_s_calcr1:f2};{_s_calcr2:f2})={_s_calcr:f2} мм");
+                                                    $"{_s_p_1:f2}");
+                body.AddParagraph("").AppendEquation($"(1.2∙{_esdi.p}∙{_ellR:f2})/(2∙{_esdi.sigma_d})={_s_p_2:f2}");
+                body.AddParagraph("").AppendEquation($"s_1p=max({_s_p_1:f2};{_s_p_2:f2})={_s_p:f2} мм");
             }
             body.AddParagraph("c - сумма прибавок к расчетной толщине");
             body.AddParagraph("")
                 .AppendEquation($"c=c_1+c_2+c_3={_esdi.c1}+{_esdi.c2}+{_esdi.c3}={_c:f2} мм");
 
-            body.AddParagraph("").AppendEquation($"s={_s_calcr:f2}+{_c:f2}={_s_calc:f2} мм");
+            body.AddParagraph("").AppendEquation($"s={_s_p:f2}+{_c:f2}={_s:f2} мм");
 
-            if (_esdi.s >= _s_calc)
+            if (_esdi.s >= _s)
             {
                 body.AddParagraph("Принятая толщина ").Bold().AppendEquation($"s_1={_esdi.s} мм");
             }

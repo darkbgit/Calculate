@@ -61,7 +61,7 @@ namespace CalculateVessels
                             System.Windows.Forms.MessageBox.Show("Закройте" + f + "и нажмите OK");
                         }
                     }
-                    List<string> bibliography = new List<string>();
+                    var bibliography = new List<string>();
 
                     foreach (IElement element in Elements.ElementsList)
                     {
@@ -296,7 +296,7 @@ namespace CalculateVessels
         {
             if (sender is ToolStripItem it && it.Name == "AboutToolStripMenuItem")
             {
-                AboutBox abf = new AboutBox();
+                var abf = new AboutBox();
                 abf.ShowDialog();
             }
         }

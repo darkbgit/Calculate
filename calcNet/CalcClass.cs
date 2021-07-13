@@ -180,7 +180,7 @@ namespace CalculateVessels
 
         internal static DataPldn_out CalcPldn(DataPldn_in d_in)
         {
-            DataPldn_out d_out = new DataPldn_out { err = "" };
+            var d_out = new DataPldn_out { err = "" };
 
             d_out.c = d_in.c1 + d_in.c2 + d_in.c3;
 

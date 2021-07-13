@@ -45,7 +45,6 @@ namespace CalculateVessels
                 //l_tb.ReadOnly = isPressureIn;
                 getE_b.Enabled = isPressureOut;
                 getL_b.Enabled = isPressureOut;
-                f_pb.Visible = isPressureOut;
             }
         }
 
@@ -351,8 +350,12 @@ namespace CalculateVessels
                     if (!cyl.IsCriticalError)
                     {
                         c_tb.Text = $"{cyl.c:f2}";
-                        scalc_l.Text = $"sp={cyl.s_calc:f3} мм";
+                        scalc_l.Text = $"sp={cyl.s:f3} мм";
                         calc_b.Enabled = true;
+                        if (cyl.IsError)
+                        {
+                            MessageBox.Show(string.Join<string>(Environment.NewLine, cyl.ErrorList));
+                        }
                     }
                     else
                     {
@@ -403,7 +406,7 @@ namespace CalculateVessels
                 cylindricalShell.Calculate();
                 if (!cylindricalShell.IsCriticalError)
                 {
-                    scalc_l.Text = $"sp={cylindricalShell.s_calc:f3} мм";
+                    scalc_l.Text = $"sp={cylindricalShell.s:f3} мм";
                     p_d_l.Text = $"pd={cylindricalShell.p_d:f3} МПа";
 
                     if (this.Owner is MainForm main)
@@ -421,7 +424,7 @@ namespace CalculateVessels
                         MessageBox.Show(string.Join<string>(Environment.NewLine, cylindricalShell.ErrorList));
                     }
 
-                    System.Windows.Forms.MessageBox.Show("Calculation complete");
+                    MessageBox.Show("Calculation complete");
 
                     MessageBoxCheckBox mbcb = new MessageBoxCheckBox(cylindricalShell, cylindricalShellDataIn) { Owner = this };
                     mbcb.ShowDialog();
@@ -459,7 +462,7 @@ namespace CalculateVessels
 
         private void GetFi_b_Click(object sender, EventArgs e)
         {
-            FiForm ff = new FiForm { Owner = this };
+            var ff = new FiForm { Owner = this };
             ff.ShowDialog(); // показываем
         }
 

@@ -185,7 +185,7 @@ namespace CalculateVessels.Core.Shells.DataIn
 
 
 
-        internal int FCalcSchema; //1-7
+        
 
         internal bool isNeedMakeCalcNozzle,
                     isNeedFCalculate,

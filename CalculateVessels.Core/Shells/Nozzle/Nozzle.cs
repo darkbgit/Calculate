@@ -50,7 +50,10 @@ namespace CalculateVessels.Core.Shells.Nozzle
         public double d0 { get => _d0; }
         public double b { get => _b; }
 
-        public List<string> Bibliograhy { get; } = new() { "GOST_34233_3" };
+        public List<string> Bibliograhy { get; } = new()
+        {
+            Data.Properties.Resources.GOST_34233_3
+        };
 
         private double _E2;
         private double _E3;
@@ -105,7 +108,7 @@ namespace CalculateVessels.Core.Shells.Nozzle
 
 
         private double _c;
-        private double _s_calcr;
+        private double _s_p;
         private double _Dk;
         private double _p_deShell;
         private double _alfa1;
@@ -116,7 +119,7 @@ namespace CalculateVessels.Core.Shells.Nozzle
         public void Calculate()
         {
             _c = (_element as Shell).c;
-            _s_calcr = (_element as Shell).s_calcr;
+            _s_p = (_element as Shell).s_p;
             if (!_nozzleDataIn.ShellDataIn.IsPressureIn) _p_deShell = (_element as Shell).p_de;
             if (_nozzleDataIn.ShellDataIn.ShellType == ShellType.Conical)
             {
@@ -177,7 +180,7 @@ namespace CalculateVessels.Core.Shells.Nozzle
             }
             else
             {
-                _sp = (_element as Shell).s_calcr;
+                _sp = (_element as Shell).s_p;
             }
 
             if (!_nozzleDataIn.IsOval)
@@ -243,7 +246,7 @@ namespace CalculateVessels.Core.Shells.Nozzle
             // l1p, l3p, l2p
             {
 
-                var d = !_nozzleDataIn.IsOval ? _nozzleDataIn.d : _nozzleDataIn.d2;
+                double d = !_nozzleDataIn.IsOval ? _nozzleDataIn.d : _nozzleDataIn.d2;
 
                 _l1p2 = 1.25 * Math.Sqrt((d + 2.0 * _nozzleDataIn.cs) * (_nozzleDataIn.s1 - _nozzleDataIn.cs));
                 _l1p = Math.Min(_nozzleDataIn.l1, _l1p2);
@@ -369,8 +372,8 @@ namespace CalculateVessels.Core.Shells.Nozzle
 
             if (_dp > _d0)
             {
-                _yslyk1 = _l1p * (_nozzleDataIn.s1 - _s1p - _nozzleDataIn.cs) * _psi1 + _l2p * _nozzleDataIn.s2 * _psi2 + _l3p * (_nozzleDataIn.s3 - _nozzleDataIn.cs - _nozzleDataIn.cs1) * _psi3 + _lp * (_nozzleDataIn.ShellDataIn.s - _s_calcr - _c) * _psi4;
-                _yslyk2 = 0.5 * (_dp - _d0p) * _s_calcr;
+                _yslyk1 = _l1p * (_nozzleDataIn.s1 - _s1p - _nozzleDataIn.cs) * _psi1 + _l2p * _nozzleDataIn.s2 * _psi2 + _l3p * (_nozzleDataIn.s3 - _nozzleDataIn.cs - _nozzleDataIn.cs1) * _psi3 + _lp * (_nozzleDataIn.ShellDataIn.s - _s_p - _c) * _psi4;
+                _yslyk2 = 0.5 * (_dp - _d0p) * _s_p;
                 if (_yslyk1 < _yslyk2)
                 {
                     IsError = true;

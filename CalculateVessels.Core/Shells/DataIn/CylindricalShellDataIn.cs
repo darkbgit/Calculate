@@ -11,15 +11,6 @@ namespace CalculateVessels.Core.Shells.DataIn
 
         }
 
-        //public void CheckData()
-        //{
-        //    IsDataGood = !(ErrorList?.Count > 0);
-        //}
-
-        //public bool IsDataGood { get; set; }
-
-        public bool IsNeedpCalculate { get => isNeedpCalculate; set => isNeedpCalculate = value; }
-
         public double l
         {
             get => _l;
@@ -36,16 +27,20 @@ namespace CalculateVessels.Core.Shells.DataIn
                 }
             }
         }
-        public double l3_1 { get => _l3_1; set => _l3_1 = value; }
-        public double l3_2 { get => _l3_2; set => _l3_2 = value; }
+        public double l3 { get; set; }
 
-        private bool isNeedpCalculate;
 
         private double _l;
-        private double _l3_1;
-        private double _l3_2;
+        private double _l3;
+
 
         public double fi_t { get; set; }
+
+        public bool ConditionForCalcF5341 { get; set; }
+
+        public int FCalcSchema; //1-7
+
+        public double f { get; set; }
     }
 
 }
