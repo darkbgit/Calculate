@@ -18,7 +18,7 @@ namespace CalculateVessels.Core.Interfaces
 
         List<string> ErrorList { get; }
 
-        List<string> Bibliograhy { get; }
+        List<string> Bibliography { get; }
     }
 
 }

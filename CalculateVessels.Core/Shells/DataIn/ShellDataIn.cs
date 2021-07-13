@@ -7,33 +7,22 @@ namespace CalculateVessels.Core.Shells.DataIn
 {
     public abstract class ShellDataIn : IDataIn
     {
-        public ShellDataIn(ShellType shellType)
+        protected ShellDataIn(ShellType shellType)
         {
-            this.shellType = shellType;
+            this.ShellType = shellType;
         }
-
-
-        
-        public ShellType Type { get; }
-
-        protected bool isError;
-
-
-
-
 
         protected List<string> errorList = new List<string>();
 
-        private string _name;
-        private string steel;
-        private ShellType shellType;
+        public bool IsDataGood => !isError;
+        
+        protected bool isError;
 
+        public string Name { get; set; }
+        public string Steel { get; set; }
 
-        public bool IsDataGood => !ErrorList.Any();
+        public ShellType ShellType { get; }
 
-        public string Name { get => _name; set => _name = value; }
-        public string Steel { get => steel; set => steel = value; }
-        public ShellType ShellType { get => shellType; }
         public double c1
         {
             get => _c1;
@@ -82,7 +71,8 @@ namespace CalculateVessels.Core.Shells.DataIn
                 }
             }
         }
-        public double c3 { get => _c3; set => _c3 = value; }
+        public double c3 { get; set; }
+
         public double p
         {
             get => _p;
@@ -133,7 +123,7 @@ namespace CalculateVessels.Core.Shells.DataIn
                 }
             }
         }
-        public double s { get => _s; set => _s = value; }
+        public double s { get; set; }
 
         public double sigma_d
         {
@@ -172,49 +162,32 @@ namespace CalculateVessels.Core.Shells.DataIn
             }
         }
 
-        public double ny { get => _ny; set => _ny = value; }
+        public double ny { get; set; } = 2.4;
+
         //public double fit { get => _fit; set => _fit = value; }
-        public double F { get => _F; set => _F = value; }
-        public double q { get => _q; set => _q = value; }
-        public double M { get => _M; set => _M = value; }
-        public double Q { get => _Q; set => _Q = value; }
+        public double F { get; set; }
 
-        public bool IsPressureIn { get => isPressureIn; set => isPressureIn = value; }
-        public List<string> ErrorList { get => errorList; }
+        public double q { get; set; }
 
+        public double M { get; set; }
 
+        public double Q { get; set; }
 
+        public bool IsPressureIn { get; set; }
 
-        
-
-        internal bool isNeedMakeCalcNozzle,
-                    isNeedFCalculate,
-                    isFTensile,
-                    isNeedMCalculate,
-                    isNeedQCalculate;
+        public List<string> ErrorList => errorList;
 
 
-        internal int bibliography;
         private double _c1;
         private double _D;
         private double _c2;
-        private double _c3;
         private double _p;
         private double _E;
         private double _t;
-        private double _s;
 
         private double _sigma_d;
         private double _fi;
 
-        private double _ny = 2.4;
-        private double _fit;
-        private double _F;
-        private double _q;
-        private double _M;
-        private double _Q;
-
-        private bool isPressureIn;
 
         public void SetValue(string name, double value)
         {
@@ -238,7 +211,5 @@ namespace CalculateVessels.Core.Shells.DataIn
             var field = typeof(ShellDataIn).GetProperty(name);
             field.SetValue(this, value);
         }
-
-        //public void GetType
     }
 }

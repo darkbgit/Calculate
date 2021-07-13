@@ -68,7 +68,7 @@ namespace CalculateVessels
                         try
                         {
                             element.MakeWord(f);
-                            bibliography = bibliography.Union(element.Bibliograhy).ToList();
+                            bibliography = bibliography.Union(element.Bibliography).ToList();
                         }
 
                         catch (Exception)

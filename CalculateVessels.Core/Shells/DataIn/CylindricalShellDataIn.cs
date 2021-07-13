@@ -1,4 +1,5 @@
-﻿using CalculateVessels.Core.Interfaces;
+﻿using System;
+using CalculateVessels.Core.Interfaces;
 using CalculateVessels.Core.Shells.Enums;
 
 namespace CalculateVessels.Core.Shells.DataIn
@@ -38,9 +39,27 @@ namespace CalculateVessels.Core.Shells.DataIn
 
         public bool ConditionForCalcF5341 { get; set; }
 
-        public int FCalcSchema; //1-7
+        private int _FCalcSchema;
+        public int FCalcSchema
+        {
+            get => _FCalcSchema;
+            set
+            {
+                if (value > 0 && value <= 7)
+                {
+                    _FCalcSchema = value;
+                }
+                else
+                {
+                    isError = true;
+                    errorList.Add("Схема расчета F [1,7]");
+                }
+            }
+        } //1-7
 
         public double f { get; set; }
+
+        public bool IsFTensile { get; set; }
     }
 
 }

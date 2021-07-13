@@ -33,7 +33,7 @@ namespace CalculateVessels.Core.Shells
         private double _F_de;
         private double _F_de1;
         private double _F_de2;
-        private double _lamda;
+        private double _lambda;
         private double _M_d;
         private double _M_dp;
         private double _M_de;
@@ -49,13 +49,13 @@ namespace CalculateVessels.Core.Shells
             _c = _csdi.c1 + _csdi.c2 + _csdi.c3;
 
             // Condition use formulas
-            const int DIAMETR_BIG_LITTLE_BORDER = 200;
-            const double CONDITION_USE_FORMULS_BIG_DIAMETR = 0.1;
-            const double CONDITION_USE_FORMULS_LITTLE_DIAMETR = 0.3;
+            const int DIAMETER_BIG_LITTLE_BORDER = 200;
+            const double CONDITION_USE_FORMALS_BIG_DIAMETER = 0.1;
+            const double CONDITION_USE_FORMALS_LITTLE_DIAMETER = 0.3;
 
-            IsConditionUseFormulas = DIAMETR_BIG_LITTLE_BORDER < _csdi.D
-                ? (_csdi.s - _c) / _csdi.D <= CONDITION_USE_FORMULS_BIG_DIAMETR
-                : (_csdi.s - _c) / _csdi.D <= CONDITION_USE_FORMULS_LITTLE_DIAMETR;
+            IsConditionUseFormulas = DIAMETER_BIG_LITTLE_BORDER < _csdi.D
+                ? (_csdi.s - _c) / _csdi.D <= CONDITION_USE_FORMALS_BIG_DIAMETER
+                : (_csdi.s - _c) / _csdi.D <= CONDITION_USE_FORMALS_LITTLE_DIAMETER;
 
             if (!IsConditionUseFormulas)
             {
@@ -120,7 +120,7 @@ namespace CalculateVessels.Core.Shells
 
             if (_csdi.F > 0 && _csdi.s != 0.0)
             {
-                if (_csdi.isFTensile)
+                if (_csdi.IsFTensile)
                 {
                     _s_pf = _csdi.F / (Math.PI * _csdi.D * _csdi.sigma_d * _csdi.fi_t);
                     _s_f = _s_pf + _c;
@@ -219,9 +219,9 @@ namespace CalculateVessels.Core.Shells
                                 break;
 
                         }
-                        _lamda = 2.83 * _lpr / (_csdi.D + _csdi.s - _c);
+                        _lambda = 2.83 * _lpr / (_csdi.D + _csdi.s - _c);
                         _F_de2 = Math.PI * (_csdi.D + _csdi.s - _c) * (_csdi.s - _c) * _csdi.E / _csdi.ny *
-                                        Math.Pow(Math.PI / _lamda, 2);
+                                        Math.Pow(Math.PI / _lambda, 2);
                         _F_de = Math.Min(_F_de1, _F_de2);
                     }
                     else
