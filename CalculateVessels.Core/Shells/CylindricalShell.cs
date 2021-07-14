@@ -19,7 +19,7 @@ namespace CalculateVessels.Core.Shells
 
         private readonly CylindricalShellDataIn _csdi;
 
-        internal CylindricalShellDataIn Csdi { get => _csdi; }
+        //internal CylindricalShellDataIn Csdi { get => _csdi; }
 
         private double _l;
         private double _s_pf;
@@ -168,54 +168,32 @@ namespace CalculateVessels.Core.Shells
                                 fDivl6 *= 10;
                                 fDivl6 = Math.Round(fDivl6 / 2);
                                 fDivl6 *= 0.2;
-                                switch (fDivl6)
+                                _lpr = fDivl6 switch
                                 {
-                                    case 0:
-                                        _lpr = 2 * _csdi.l;
-                                        break;
-                                    case 0.2:
-                                        _lpr = 1.73 * _csdi.l;
-                                        break;
-                                    case 0.4:
-                                        _lpr = 1.47 * _csdi.l;
-                                        break;
-                                    case 0.6:
-                                        _lpr = 1.23 * _csdi.l;
-                                        break;
-                                    case 0.8:
-                                        _lpr = 1.06 * _csdi.l;
-                                        break;
-                                    case 1:
-                                        _lpr = _csdi.l;
-                                        break;
-                                }
+                                    0 => 2 * _csdi.l,
+                                    0.2 => 1.73 * _csdi.l,
+                                    0.4 => 1.47 * _csdi.l,
+                                    0.6 => 1.23 * _csdi.l,
+                                    0.8 => 1.06 * _csdi.l,
+                                    1 => _csdi.l,
+                                    _ => _lpr
+                                };
                                 break;
                             case 7:
                                 double fDivl7 = _csdi.f / _csdi.l;
                                 fDivl7 *= 10;
                                 fDivl7 = Math.Round(fDivl7 / 2);
                                 fDivl7 *= 0.2;
-                                switch (fDivl7)
+                                _lpr = fDivl7 switch
                                 {
-                                    case 0:
-                                        _lpr = 2 * _csdi.l;
-                                        break;
-                                    case 0.2:
-                                        _lpr = 1.7 * _csdi.l;
-                                        break;
-                                    case 0.4:
-                                        _lpr = 1.4 * _csdi.l;
-                                        break;
-                                    case 0.6:
-                                        _lpr = 1.11 * _csdi.l;
-                                        break;
-                                    case 0.8:
-                                        _lpr = 0.85 * _csdi.l;
-                                        break;
-                                    case 1:
-                                        _lpr = 0.7 * _csdi.l;
-                                        break;
-                                }
+                                    0 => 2 * _csdi.l,
+                                    0.2 => 1.7 * _csdi.l,
+                                    0.4 => 1.4 * _csdi.l,
+                                    0.6 => 1.11 * _csdi.l,
+                                    0.8 => 0.85 * _csdi.l,
+                                    1 => 0.7 * _csdi.l,
+                                    _ => _lpr
+                                };
                                 break;
 
                         }

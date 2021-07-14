@@ -13,11 +13,11 @@ namespace CalculateVessels.Core.Shells
 
         //internal ShellDataIn ShellDataIn;
 
-        public double c { get => _c; }
-        public double s_p { get => _s_p; }
-        public double s { get => _s; }
-        public double p_de { get => _p_de; }
-        public double p_d { get => _p_d; }
+        public double c => _c;
+        public double s_p => _s_p;
+        public double s => _s;
+        public double p_de => _p_de;
+        public double p_d => _p_d;
 
         public bool IsCriticalError { get; protected set; }
         public bool IsError { get; protected set; }
