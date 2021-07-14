@@ -652,6 +652,156 @@ namespace CalculateVessels.Data.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        public static byte[] pldn1 {
+            get {
+                object obj = ResourceManager.GetObject("pldn1", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] pldn10 {
+            get {
+                object obj = ResourceManager.GetObject("pldn10", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] pldn11 {
+            get {
+                object obj = ResourceManager.GetObject("pldn11", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] pldn12 {
+            get {
+                object obj = ResourceManager.GetObject("pldn12", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] pldn13 {
+            get {
+                object obj = ResourceManager.GetObject("pldn13", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] pldn14 {
+            get {
+                object obj = ResourceManager.GetObject("pldn14", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] pldn15 {
+            get {
+                object obj = ResourceManager.GetObject("pldn15", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] pldn2 {
+            get {
+                object obj = ResourceManager.GetObject("pldn2", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] pldn3 {
+            get {
+                object obj = ResourceManager.GetObject("pldn3", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] pldn4 {
+            get {
+                object obj = ResourceManager.GetObject("pldn4", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] pldn5 {
+            get {
+                object obj = ResourceManager.GetObject("pldn5", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] pldn6 {
+            get {
+                object obj = ResourceManager.GetObject("pldn6", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] pldn7 {
+            get {
+                object obj = ResourceManager.GetObject("pldn7", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] pldn8 {
+            get {
+                object obj = ResourceManager.GetObject("pldn8", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] pldn9 {
+            get {
+                object obj = ResourceManager.GetObject("pldn9", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         public static byte[] SaddleNothingElem {
             get {
                 object obj = ResourceManager.GetObject("SaddleNothingElem", resourceCulture);

@@ -29,7 +29,6 @@ namespace CalculateVessels
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CilForm));
             this.label1 = new System.Windows.Forms.Label();
             this.Name_tb = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
@@ -93,13 +92,17 @@ namespace CalculateVessels
             this.rb1 = new System.Windows.Forms.RadioButton();
             this.f_pb = new System.Windows.Forms.PictureBox();
             this.label20 = new System.Windows.Forms.Label();
+            this.fq_panel = new System.Windows.Forms.Panel();
+            this.fq_mes_l = new System.Windows.Forms.Label();
+            this.fq_l = new System.Windows.Forms.Label();
+            this.fq_tb = new System.Windows.Forms.TextBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.p_d_l = new System.Windows.Forms.Label();
             this.scalc_l = new System.Windows.Forms.Label();
             this.predCalc_b = new System.Windows.Forms.Button();
             this.calc_b = new System.Windows.Forms.Button();
             this.cancel_b = new System.Windows.Forms.Button();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.shell_pb = new System.Windows.Forms.PictureBox();
             this.label21 = new System.Windows.Forms.Label();
             this.label22 = new System.Windows.Forms.Label();
             this.label23 = new System.Windows.Forms.Label();
@@ -119,8 +122,9 @@ namespace CalculateVessels
             this.force_gb.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.f_pb)).BeginInit();
+            this.fq_panel.SuspendLayout();
             this.groupBox4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.shell_pb)).BeginInit();
             this.M_gb.SuspendLayout();
             this.Q_gb.SuspendLayout();
             this.SuspendLayout();
@@ -648,6 +652,7 @@ namespace CalculateVessels
             this.force_gb.Controls.Add(this.rb1);
             this.force_gb.Controls.Add(this.f_pb);
             this.force_gb.Controls.Add(this.label20);
+            this.force_gb.Controls.Add(this.fq_panel);
             this.force_gb.Enabled = false;
             this.force_gb.Location = new System.Drawing.Point(371, 312);
             this.force_gb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -664,6 +669,7 @@ namespace CalculateVessels
             this.F_tb.Name = "F_tb";
             this.F_tb.Size = new System.Drawing.Size(100, 23);
             this.F_tb.TabIndex = 10;
+            this.F_tb.Text = "0";
             // 
             // panel1
             // 
@@ -702,7 +708,7 @@ namespace CalculateVessels
             // 
             this.rb7.AutoSize = true;
             this.rb7.Enabled = false;
-            this.rb7.Location = new System.Drawing.Point(259, 104);
+            this.rb7.Location = new System.Drawing.Point(292, 49);
             this.rb7.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.rb7.Name = "rb7";
             this.rb7.Size = new System.Drawing.Size(31, 19);
@@ -715,7 +721,7 @@ namespace CalculateVessels
             // 
             this.rb6.AutoSize = true;
             this.rb6.Enabled = false;
-            this.rb6.Location = new System.Drawing.Point(259, 76);
+            this.rb6.Location = new System.Drawing.Point(254, 104);
             this.rb6.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.rb6.Name = "rb6";
             this.rb6.Size = new System.Drawing.Size(31, 19);
@@ -728,7 +734,7 @@ namespace CalculateVessels
             // 
             this.rb5.AutoSize = true;
             this.rb5.Enabled = false;
-            this.rb5.Location = new System.Drawing.Point(258, 49);
+            this.rb5.Location = new System.Drawing.Point(253, 76);
             this.rb5.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.rb5.Name = "rb5";
             this.rb5.Size = new System.Drawing.Size(31, 19);
@@ -741,7 +747,7 @@ namespace CalculateVessels
             // 
             this.rb4.AutoSize = true;
             this.rb4.Enabled = false;
-            this.rb4.Location = new System.Drawing.Point(215, 132);
+            this.rb4.Location = new System.Drawing.Point(253, 49);
             this.rb4.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.rb4.Name = "rb4";
             this.rb4.Size = new System.Drawing.Size(31, 19);
@@ -793,8 +799,7 @@ namespace CalculateVessels
             // 
             // f_pb
             // 
-            this.f_pb.Image = ((System.Drawing.Image)(resources.GetObject("f_pb.Image")));
-            this.f_pb.InitialImage = ((System.Drawing.Image)(resources.GetObject("f_pb.InitialImage")));
+            this.f_pb.InitialImage = null;
             this.f_pb.Location = new System.Drawing.Point(8, 49);
             this.f_pb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.f_pb.Name = "f_pb";
@@ -811,6 +816,41 @@ namespace CalculateVessels
             this.label20.Size = new System.Drawing.Size(16, 15);
             this.label20.TabIndex = 0;
             this.label20.Text = "H";
+            // 
+            // fq_panel
+            // 
+            this.fq_panel.Controls.Add(this.fq_mes_l);
+            this.fq_panel.Controls.Add(this.fq_l);
+            this.fq_panel.Controls.Add(this.fq_tb);
+            this.fq_panel.Location = new System.Drawing.Point(138, 144);
+            this.fq_panel.Name = "fq_panel";
+            this.fq_panel.Size = new System.Drawing.Size(177, 30);
+            this.fq_panel.TabIndex = 11;
+            this.fq_panel.Visible = false;
+            // 
+            // fq_mes_l
+            // 
+            this.fq_mes_l.AutoSize = true;
+            this.fq_mes_l.Location = new System.Drawing.Point(146, 8);
+            this.fq_mes_l.Name = "fq_mes_l";
+            this.fq_mes_l.Size = new System.Drawing.Size(0, 15);
+            this.fq_mes_l.TabIndex = 2;
+            // 
+            // fq_l
+            // 
+            this.fq_l.AutoSize = true;
+            this.fq_l.Location = new System.Drawing.Point(22, 8);
+            this.fq_l.Name = "fq_l";
+            this.fq_l.Size = new System.Drawing.Size(11, 15);
+            this.fq_l.TabIndex = 1;
+            this.fq_l.Text = "f";
+            // 
+            // fq_tb
+            // 
+            this.fq_tb.Location = new System.Drawing.Point(39, 3);
+            this.fq_tb.Name = "fq_tb";
+            this.fq_tb.Size = new System.Drawing.Size(100, 23);
+            this.fq_tb.TabIndex = 0;
             // 
             // groupBox4
             // 
@@ -879,17 +919,16 @@ namespace CalculateVessels
             this.cancel_b.UseVisualStyleBackColor = true;
             this.cancel_b.Click += new System.EventHandler(this.Cancel_b_Click);
             // 
-            // pictureBox1
+            // shell_pb
             // 
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.InitialImage = ((System.Drawing.Image)(resources.GetObject("pictureBox1.InitialImage")));
-            this.pictureBox1.Location = new System.Drawing.Point(371, 43);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(300, 200);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.pictureBox1.TabIndex = 7;
-            this.pictureBox1.TabStop = false;
+            this.shell_pb.InitialImage = null;
+            this.shell_pb.Location = new System.Drawing.Point(371, 43);
+            this.shell_pb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.shell_pb.Name = "shell_pb";
+            this.shell_pb.Size = new System.Drawing.Size(300, 200);
+            this.shell_pb.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.shell_pb.TabIndex = 7;
+            this.shell_pb.TabStop = false;
             // 
             // label21
             // 
@@ -1001,6 +1040,7 @@ namespace CalculateVessels
             this.M_tb.Name = "M_tb";
             this.M_tb.Size = new System.Drawing.Size(100, 23);
             this.M_tb.TabIndex = 0;
+            this.M_tb.Text = "0";
             // 
             // Q_gb
             // 
@@ -1029,6 +1069,7 @@ namespace CalculateVessels
             this.Q_tb.Name = "Q_tb";
             this.Q_tb.Size = new System.Drawing.Size(100, 23);
             this.Q_tb.TabIndex = 2;
+            this.Q_tb.Text = "0";
             // 
             // CilForm
             // 
@@ -1085,7 +1126,7 @@ namespace CalculateVessels
             this.Controls.Add(this.label7);
             this.Controls.Add(this.dav_gb);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.shell_pb);
             this.Controls.Add(this.t_tb);
             this.Controls.Add(this.Gost_cb);
             this.Controls.Add(this.label3);
@@ -1110,9 +1151,11 @@ namespace CalculateVessels
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.f_pb)).EndInit();
+            this.fq_panel.ResumeLayout(false);
+            this.fq_panel.PerformLayout();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.shell_pb)).EndInit();
             this.M_gb.ResumeLayout(false);
             this.M_gb.PerformLayout();
             this.Q_gb.ResumeLayout(false);
@@ -1131,7 +1174,7 @@ namespace CalculateVessels
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox Gost_cb;
         private System.Windows.Forms.TextBox t_tb;
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox shell_pb;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.RadioButton vn_rb;
@@ -1208,5 +1251,9 @@ namespace CalculateVessels
         private System.Windows.Forms.GroupBox Q_gb;
         private System.Windows.Forms.Label label30;
         private System.Windows.Forms.TextBox Q_tb;
+        private System.Windows.Forms.Panel fq_panel;
+        private System.Windows.Forms.Label fq_mes_l;
+        private System.Windows.Forms.Label fq_l;
+        private System.Windows.Forms.TextBox fq_tb;
     }
 }

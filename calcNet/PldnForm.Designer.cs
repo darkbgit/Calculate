@@ -29,7 +29,6 @@ namespace CalculateVessels
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PldnForm));
             this.label28 = new System.Windows.Forms.Label();
             this.label27 = new System.Windows.Forms.Label();
             this.label25 = new System.Windows.Forms.Label();
@@ -451,8 +450,7 @@ namespace CalculateVessels
             // 
             // type_pb
             // 
-            this.type_pb.Image = ((System.Drawing.Image)(resources.GetObject("type_pb.Image")));
-            this.type_pb.InitialImage = ((System.Drawing.Image)(resources.GetObject("type_pb.InitialImage")));
+            this.type_pb.InitialImage = null;
             this.type_pb.Location = new System.Drawing.Point(8, 22);
             this.type_pb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.type_pb.Name = "type_pb";

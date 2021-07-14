@@ -263,6 +263,7 @@ namespace CalculateVessels
             this.file_tb.Name = "file_tb";
             this.file_tb.Size = new System.Drawing.Size(100, 23);
             this.file_tb.TabIndex = 7;
+            this.file_tb.Text = "C:\\Calculate\\";
             // 
             // proekt_tb
             // 

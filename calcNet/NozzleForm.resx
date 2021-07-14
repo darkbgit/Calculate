@@ -57,8 +57,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Drawing.Common" name="System.Drawing.Common, Version=5.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51" />
-  <data name="place_pb.Image" type="System.Drawing.Bitmap, System.Drawing.Common" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="place_pb.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         R0lGODlh/wDIAIIAAAAAAAAAAAD+/oCAgP7+AP7+/gECAwECAyH+GlNvZnR3YXJlOiBNaWNyb3NvZnQg
         T2ZmaWNlACH/C05FVFNDQVBFMi4wAwEBAAAh+QQBAAAAACwAAAAA/wDIAAAI/wABCBxIsKDBgwgTKlzI
@@ -92,7 +92,7 @@
         y9/++ve/AA6wgAdM4AIb+MAITvB0AwIAOw==
 </value>
   </data>
-  <data name="place_pb.InitialImage" type="System.Drawing.Bitmap, System.Drawing.Common" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="place_pb.InitialImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         R0lGODlhqgBQAIYAAAAAAAAAABAQEBYWFggICBkZGQ0NDR0dHQ8PDxMTEwcHBx8fHxUVFQsLCwYGBgD/
         /ysrKzc3NzIyMjk5OSQkJCAgICUlJS8vLz09PTExMT8/P09PT0dHR11dXVRUVENDQ0BAQE5OTlVVVVxc
@@ -126,7 +126,7 @@
         +MynPvfJz376858ADahAB5qTgAAAOw==
 </value>
   </data>
-  <data name="vid_pictureBox.Image" type="System.Drawing.Bitmap, System.Drawing.Common" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="vid_pictureBox.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         R0lGODlh/wDIAIIAAAAAAAAAAAD+/oCAgP7+AP7+/gECAwECAyH+GlNvZnR3YXJlOiBNaWNyb3NvZnQg
         T2ZmaWNlACH/C05FVFNDQVBFMi4wAwEBAAAh+QQBAAAAACwAAAAA/wDIAAAI/wABCBxIsKDBgwgTKlzI
@@ -169,7 +169,7 @@
         L/jCG/7wiE+84hfP+MY7/vGQ90hAAAA7
 </value>
   </data>
-  <data name="vid_pictureBox.InitialImage" type="System.Drawing.Bitmap, System.Drawing.Common" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="vid_pictureBox.InitialImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         R0lGODlhLAHIAIIAAAAAAAAAAAD//4CAgP///wECAwECAwECAyH+GlNvZnR3YXJlOiBNaWNyb3NvZnQg
         T2ZmaWNlACH/C05FVFNDQVBFMi4wAwEBAAAh+QQBAAAAACwAAAAALAHIAAAI/wABCBxIsKDBgwgTKlzI

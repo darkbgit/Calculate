@@ -27,8 +27,6 @@ namespace CalculateVessels
         public SaddleForm saddleForm = null;
         
 
-
-
         private void MakeWord_b_Click(object sender, EventArgs e)
         {
             if (Word_lv.Items.Count > 0)
@@ -132,7 +130,6 @@ namespace CalculateVessels
             //}
         }
 
-
         private void Ell_b_Click(object sender, EventArgs e)
         {
             if (ef == null)
@@ -186,7 +183,7 @@ namespace CalculateVessels
             }
         }
 
-        private static void MoveSelectedItemListView(System.Windows.Forms.ListView lv, int idx, bool moveUp)
+        private static void MoveSelectedItemListView(ListView lv, int idx, bool moveUp)
         {
             if (lv.Items.Count > 1)
             {
@@ -194,14 +191,7 @@ namespace CalculateVessels
                 //int idx = lv.SelectedItems[0].Index;
                 if (idx >= 0)
                 {
-                    if (moveUp)
-                    {
-                        offset = -1;
-                    }
-                    else
-                    {
-                        offset = 1;
-                    }
+                    offset = moveUp ? -1 : 1;
                 }
 
                 if (offset != 0)
@@ -225,7 +215,6 @@ namespace CalculateVessels
             }
         }
     
-
         private void Up_b_Click(object sender, EventArgs e)
         {
             int idx = Word_lv.SelectedItems[0].Index;
@@ -251,7 +240,6 @@ namespace CalculateVessels
             Word_lv.SelectedItems[0].Remove();
             Elements.ElementsList.RemoveAt(idx);
             //Word_lv.SelectedItems.Clear();
-
         }
 
         private void Word_lv_Leave(object sender, EventArgs e)

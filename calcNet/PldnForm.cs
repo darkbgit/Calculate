@@ -17,7 +17,7 @@ namespace CalculateVessels
             RadioButton rb = sender as RadioButton;
             if (rb.Checked)
             {
-                type_pb.Image = (Bitmap)CalculateVessels.Data.Properties.Resources.ResourceManager.GetObject("pldn" + rb.Text);
+                type_pb.Image = (Bitmap)new ImageConverter().ConvertFrom(Data.Properties.Resources.ResourceManager.GetObject("pldn" + rb.Text));
                 Type_Draw(sender);
             }
         }
@@ -32,6 +32,8 @@ namespace CalculateVessels
             }
 
             Gost_cb.SelectedIndex = 0;
+            type_pb.Image = (Bitmap)new ImageConverter().ConvertFrom
+                (Data.Properties.Resources.pldn1);
             Type_Draw(rb1);
         }
 
@@ -59,14 +61,7 @@ namespace CalculateVessels
         {
             if (sender is CheckBox cb)
             {
-                if (cb.Checked)
-                {
-                    otv_gb.Enabled = true;
-                }
-                else
-                {
-                    otv_gb.Enabled = false;
-                }
+                otv_gb.Enabled = cb.Checked;
             }
         }
 

@@ -31,7 +31,24 @@ namespace CalculateVessels
             RadioButton rb = sender as RadioButton;
             if (rb.Checked)
             {
-                f_pb.Image = (Bitmap)new ImageConverter().ConvertFrom(CalculateVessels.Data.Properties.Resources.ResourceManager.GetObject("PC" + rb.Text));
+                f_pb.Image = (Bitmap)new ImageConverter().ConvertFrom(Data.Properties.Resources.ResourceManager.GetObject("PC" + rb.Text));
+                switch (Convert.ToInt32(rb.Text))
+                {
+                    case 5:
+                        fq_l.Text = "q";
+                        fq_mes_l.Text = "";
+                        fq_panel.Visible = true;
+                        break;
+                    case 6:
+                    case 7:
+                        fq_l.Text = "f";
+                        fq_mes_l.Text = "мм";
+                        fq_panel.Visible = true;
+                        break;
+                    default:
+                        fq_panel.Visible = false;
+                        break;
+                }
             }
         }
 
@@ -54,9 +71,7 @@ namespace CalculateVessels
             scalc_l.Text = "";
             calc_b.Enabled = false;
 
-
             cylindricalShellDataIn = new CylindricalShellDataIn();
-
 
             var dataInErr = new List<string>();
 
@@ -244,103 +259,6 @@ namespace CalculateVessels
                 }
 
 
-                {
-                    //   bool isNotError = true;
-                    //{
-                    //    string[] TextBoxNames =
-                    //    {
-                    //        "Name_tb",
-                    //        "Gost_cb",
-                    //        "t_tb",
-                    //        "p_tb",
-                    //        "Steel_cb",
-                    //        "sigma_d_tb",
-                    //        "E_tb",
-                    //        "fi_tb",
-                    //        "D_tb",
-                    //        "l_tb",
-                    //        "c1_tb",
-                    //        "c2_tb",
-                    //        "c3_tb",
-                    //        "s_tb"
-                    //    };
-                    //    foreach (string tb in TextBoxNames)
-                    //    {
-                    //        if (tb == "sigma_d_tb")
-                    //        {
-                    //            double sigma = 0;
-                    //            string str = "";
-                    //            if (CalcClass.GetSigma(d_in.Steel, d_in.t, ref sigma, ref str))
-                    //            {
-                    //                sigma_d_tb.Text = sigma.ToString();
-                    //            }
-                    //            else
-                    //            {
-                    //                isNotError = false;
-                    //                MessageBox.Show(str);
-                    //                break;
-                    //            }
-                    //        }
-
-                    //        Control control = Controls[tb] ?? Controls["dav_gb"].Controls[tb];
-                    //        //if (control is TextBox || control is ComboBox)
-
-                    //        string name = control.Name;
-                    //        name = name.Remove(name.Length - 3, 3);
-
-
-                    //        var type = typeof(ShellDataIn).GetProperty(name)?.PropertyType;
-
-                    //        double val = 0;
-                    //        if (type != null && type.Equals(typeof(double)))
-                    //        {
-                    //            if (control.Text == "")
-                    //            {
-                    //                //try
-                    //                //{
-                    //                //    d_in.SetValue(name, val);
-                    //                //}
-                    //                ////catch (ArgumentOutOfRangeException ex)
-                    //                ////{
-                    //                ////    isNotError = false;
-                    //                ////    MessageBox.Show(ex.Message);
-                    //                ////    break;
-                    //                ////}
-
-                    //            }
-                    //            else if (double.TryParse((control as TextBox).Text, System.Globalization.NumberStyles.AllowDecimalPoint,
-                    //                    System.Globalization.CultureInfo.InvariantCulture, out val))
-                    //            {
-                    //                //InputClass.TrySetValue(in name, in val, ref d_in, ref isNotError);
-                    //                try
-                    //                {
-                    //                    d_in.SetValue(name, val);
-                    //                }
-                    //                catch (ArgumentOutOfRangeException ex)
-                    //                {
-                    //                    isNotError = false;
-                    //                    MessageBox.Show(ex.Message);
-                    //                    break;
-                    //                }
-                    //            }
-                    //            else
-                    //            {
-                    //                isNotError = false;
-                    //                MessageBox.Show($"{name} неверный формат");
-                    //                break;
-                    //            }
-                    //        }
-                    //        else if (type != null && type.Equals(typeof(string)))
-                    //        {
-                    //            d_in.SetValue(name, control.Text);
-                    //        }
-                    //        //MessageBox.Show($"{name} is {val} text {control.Text}");
-                    //    }
-
-                    //}
-                }
-
-
                 var isNotError = dataInErr.Count == 0 && cylindricalShellDataIn.IsDataGood;
 
                 if (isNotError)
@@ -398,6 +316,90 @@ namespace CalculateVessels
                 }
             }
 
+            if (stressHand_rb.Checked)
+            {
+                //Q
+                {
+                    if (double.TryParse(Q_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
+                System.Globalization.CultureInfo.InvariantCulture, out double Q))
+                    {
+                        cylindricalShellDataIn.Q = Q;
+                    }
+                    else
+                    {
+                        dataInErr.Add("Q неверный ввод");
+                    }
+                }
+
+                //M
+                {
+                    if (double.TryParse(M_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
+                System.Globalization.CultureInfo.InvariantCulture, out double M))
+                    {
+                        cylindricalShellDataIn.M = M;
+                    }
+                    else
+                    {
+                        dataInErr.Add("M неверный ввод");
+                    }
+                }
+
+                cylindricalShellDataIn.IsFTensile = forceStretch_rb.Checked;
+
+                //F
+                {
+                    if (double.TryParse(F_tb.Text, NumberStyles.AllowDecimalPoint,
+                        CultureInfo.InvariantCulture, out double F))
+                    {
+                        cylindricalShellDataIn.F = F;
+                    }
+                    else
+                    {
+                        dataInErr.Add("F неверный ввод");
+                    }
+                }
+
+                if (!cylindricalShellDataIn.IsFTensile)
+                {
+                    var idx = force_gb.Controls.OfType<RadioButton>().FirstOrDefault(rb => rb.Checked)?.Text;
+                    if (int.TryParse(idx, NumberStyles.Integer, CultureInfo.InvariantCulture, out int i))
+                    {
+                        cylindricalShellDataIn.FCalcSchema = i;
+
+                        switch (i)
+                        {
+                            case 5:
+                                if (double.TryParse(F_tb.Text, NumberStyles.AllowDecimalPoint,
+                                    CultureInfo.InvariantCulture, out double q))
+                                {
+                                    cylindricalShellDataIn.q = q;
+                                }
+                                else
+                                {
+                                    dataInErr.Add("q неверный ввод");
+                                }
+                                break;
+                            case 6:
+                            case 7:
+                                if (double.TryParse(F_tb.Text, NumberStyles.AllowDecimalPoint,
+                                    CultureInfo.InvariantCulture, out double f))
+                                {
+                                    cylindricalShellDataIn.f = f;
+                                }
+                                else
+                                {
+                                    dataInErr.Add("f неверный ввод");
+                                }
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        dataInErr.Add("Не возможно определить тип сжимающего усилия");
+                    }
+                }
+            }
+
             bool isNotError = dataInErr.Count == 0 && cylindricalShellDataIn.IsDataGood;
 
             if (isNotError)
@@ -451,6 +453,8 @@ namespace CalculateVessels
                 steel_cb.SelectedIndex = 0;
             }
             Gost_cb.SelectedIndex = 0;
+            shell_pb.Image = (Bitmap)new ImageConverter().ConvertFrom(Data.Properties.Resources.Cil);
+            f_pb.Image = (Bitmap)new ImageConverter().ConvertFrom(Data.Properties.Resources.PC1);
         }
 
         private void GetE_b_Click(object sender, EventArgs e)

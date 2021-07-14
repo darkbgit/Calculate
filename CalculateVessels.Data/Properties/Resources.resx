@@ -298,6 +298,51 @@
   <data name="PC7" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\pic\PC\PC7.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="pldn1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\pic\pldn\pldn1.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="pldn10" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\pic\pldn\pldn10.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="pldn11" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\pic\pldn\pldn11.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="pldn12" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\pic\pldn\pldn12.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="pldn13" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\pic\pldn\pldn13.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="pldn14" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\pic\pldn\pldn14.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="pldn15" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\pic\pldn\pldn15.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="pldn2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\pic\pldn\pldn2.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="pldn3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\pic\pldn\pldn3.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="pldn4" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\pic\pldn\pldn4.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="pldn5" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\pic\pldn\pldn5.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="pldn6" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\pic\pldn\pldn6.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="pldn7" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\pic\pldn\pldn7.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="pldn8" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\pic\pldn\pldn8.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="pldn9" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\pic\pldn\pldn9.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="SaddleNothingElem" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\pic\Saddle\SaddleNothingElem.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
