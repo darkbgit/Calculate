@@ -43,7 +43,17 @@ namespace CalculateVessels.Core.Bottoms.FlatBottom
         private double _s2_2;
         private double _conditionUseFormulas;
         private double _p_d;
-
+        private double _Pbp;
+        private double _Pbm;
+        private double _Pb1;
+        private double _Pb2;
+        private double _Pb1_1;
+        private double _Pb1_2;
+        private double _alfa;
+        private double _alfa_m;
+        private double _yp;
+        private double _yb;
+        private double _Lb;
 
         public void Calculate()
         {
@@ -133,8 +143,18 @@ namespace CalculateVessels.Core.Bottoms.FlatBottom
                 case 13:
                 case 14:
                     _Dp = _fbdi.Dcp;
-                    //_Pbp = 
+                    _yp = _fbdi.BWM.IsMetall
+                        ? 0 : _fbdi.BWM.hp * _fbdi.BWM.Kobj / (_fbdi.BWM.Ep * Math.PI * _fbdi.Dcp * _fbdi.BWM.bp);
+
+                    _Lb = _fbdi.BWM.Lb0 + (_fbdi.BWM.IsStud ? 0.56 : 0.28) * _fbdi.BWM.d;
+                    _yb = _Lb / (_Eb20 * _fb * _n);
+                    _alfa = 1 - (_yp - (_yf * _e + _ykp * _b) * _b) /
+                        (_yp + _yb + (_yf + _ykp) * Math.Pow(_b, 2));
                     _Qd = 0.785 * _fbdi.p * Math.Pow(_fbdi.Dcp, 2);
+                    _Pb1_1 = _alfa * (_Qd + _fbdi.BWM.F) + _Rp + 4 * alfa_m * Math.Abs(_M) / _Dcp;
+                    _Pb1 = Math.Max(_Pb1_1, _Pb1_2);
+                    _Pbm = Math.Max(_Pb1, _Pb2);
+                    _Pbp = _Pbm + (1 - alfa)(_Qd + F) + Q_1 + 4 * (1 - alfa_m) * Math.Abs(_M) / _Dcp;
                     _psi1 = _Pbp / _Qd;
                     _K6 = 0.41 * Math.Sqrt((1 + 3 * _psi1 * (_fbdi.D3 / _fbdi.Dsp - 1)) / (_fbdi.D3 / _fbdi.Dsp));
                     break;
@@ -187,13 +207,6 @@ namespace CalculateVessels.Core.Bottoms.FlatBottom
                     ErrorList.Add("Принятая толщина s1 меньше расчетной");
                 }
             }
-            else if (_fbdi.s1 != 0 && _fbdi.s1 < _s1_calc)
-            {
-                ErrorList += "Принятая толщина меньше расчетной\n";
-            }
-
-
-
         }
 
         public void MakeWord(string filename)

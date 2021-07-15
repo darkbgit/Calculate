@@ -28,10 +28,30 @@ namespace CalculateVessels.Core.Bottoms.FlatBottom
         public double h1 { get; set; }
         public double r { get; set; }
         public double p { get; set; }
-        public double d { get; set; }
+        
         public double di { get; set; }
         public double fi { get; set; }
         public double sigma_d { get; set; }
+
+
+        public BottomWithMoment BWM { get; set; } = new();
+
+
+        public class BottomWithMoment
+        {
+            public double hp { get; set; }
+            public double bp { get; set; }
+
+            public bool IsMetall { get; set; }
+            public bool IsStud { get; set; }
+
+            public double Kobj { get; set; }
+            public double Ep { get; set; }
+            public double F { get; set; }
+            public double Lb0 { get; set; }
+            
+            public double d { get; set; }
+        }
 
         public HoleInFlatBottom Hole { get; set; }
 
