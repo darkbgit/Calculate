@@ -15,7 +15,7 @@ namespace CalculateVessels
         public GostEllForm()
         {
             InitializeComponent();
-            _elepses = Physical.GetEllipsesList();
+            _elepses = Physical.Gost6533.GetEllipsesList();
         }
 
         private void Cancel_b_Click(object sender, EventArgs e)

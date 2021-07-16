@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CalculateVessels.Core.Bottoms.Enums;
+using CalculateVessels.Data.PhysicalData;
 
 namespace CalculateVessels.Core.Bottoms.FlatBottom
 {
@@ -54,6 +55,16 @@ namespace CalculateVessels.Core.Bottoms.FlatBottom
         private double _yp;
         private double _yb;
         private double _Lb;
+        private double _fb;
+
+        private double _m;
+        private double _qobj;
+        private double _q_d;
+        private double _Kobj;
+        private double _Ep;
+        private double _Eb20;
+
+        private double _Rp;
 
         public void Calculate()
         {
@@ -142,15 +153,37 @@ namespace CalculateVessels.Core.Bottoms.FlatBottom
                     break;
                 case 13:
                 case 14:
+                    _fb = Physical.Gost34233_4.Getfb(_fbdi.BWM.ScrewM, _fbdi.BWM.IsScrewGroove);
+                    
+                    
+                    _Eb20 = Physical.Gost34233_4.GetE(_fbdi.BWM.ScrewSteel, 20);
+
+                    if (_fb == 0 || _Eb20 == 0)
+                    {
+                        IsCriticalError = true;
+                        ErrorList.Add("Ошибка получения значений физических велечин");
+                        return;
+                    }
+                    
+                    if(_fbdi.BWM.IsMetall)
+                    {
+                        (_m, _qobj, _, _, _) = Physical.Gost34233_4.GetGasketParameters(_fbdi.BWM.GasketType);
+                    }
+                    else
+                    {
+                        (_m, _qobj, _q_d, _Kobj, _Ep) = Physical.Gost34233_4.GetGasketParameters(_fbdi.BWM.GasketType);
+                    }
+
                     _Dp = _fbdi.Dcp;
                     _yp = _fbdi.BWM.IsMetall
-                        ? 0 : _fbdi.BWM.hp * _fbdi.BWM.Kobj / (_fbdi.BWM.Ep * Math.PI * _fbdi.Dcp * _fbdi.BWM.bp);
+                        ? 0 : _fbdi.BWM.hp * _Kobj / (_Ep * Math.PI * _fbdi.Dcp * _fbdi.BWM.bp);
 
                     _Lb = _fbdi.BWM.Lb0 + (_fbdi.BWM.IsStud ? 0.56 : 0.28) * _fbdi.BWM.d;
-                    _yb = _Lb / (_Eb20 * _fb * _n);
+                    _yb = _Lb / (_Eb20 * _fb * _fbdi.BWM.n);
                     _alfa = 1 - (_yp - (_yf * _e + _ykp * _b) * _b) /
                         (_yp + _yb + (_yf + _ykp) * Math.Pow(_b, 2));
                     _Qd = 0.785 * _fbdi.p * Math.Pow(_fbdi.Dcp, 2);
+                    _Rp = Math.PI * _fbdi.Dcp * _fbdi.BWM.b0 * _m * Math.Abs(_fbdi.p);
                     _Pb1_1 = _alfa * (_Qd + _fbdi.BWM.F) + _Rp + 4 * alfa_m * Math.Abs(_M) / _Dcp;
                     _Pb1 = Math.Max(_Pb1_1, _Pb1_2);
                     _Pbm = Math.Max(_Pb1, _Pb2);

@@ -49,8 +49,17 @@ namespace CalculateVessels.Core.Bottoms.FlatBottom
             public double Ep { get; set; }
             public double F { get; set; }
             public double Lb0 { get; set; }
-            
+
+            public double b0 { get; set; }
+
             public double d { get; set; }
+            public int ScrewM { get; set; }
+            public bool IsScrewGroove { get; set; }
+            public int n { get; set; }
+
+            public string GasketType { get; set; }
+
+            public string ScrewSteel { get; set; }
         }
 
         public HoleInFlatBottom Hole { get; set; }
