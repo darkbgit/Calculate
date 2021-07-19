@@ -24,7 +24,7 @@ namespace CalculateVessels
 
         private void PldnForm_Load(object sender, EventArgs e)
         {
-            var steels = Physical.GetSteelsList();
+            var steels = Physical.Gost34233_1.GetSteelsList();
             if (steels != null)
             {
                 steel_cb.Items.AddRange(steels);

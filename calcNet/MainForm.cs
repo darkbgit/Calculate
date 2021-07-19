@@ -291,7 +291,7 @@ namespace CalculateVessels
 
         private void button10_Click(object sender, EventArgs e)
         {
-            var steels = Physical.GetSteelsList();
+            var steels = Physical.Gost34233_1.GetSteelsList();
             MessageBox.Show(string.Join<string>(Environment.NewLine, steels));
         }
     }

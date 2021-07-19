@@ -7,13 +7,14 @@ using System.Threading.Tasks;
 using CalculateVessels.Core.Bottoms.Enums;
 using CalculateVessels.Data.PhysicalData;
 
-namespace CalculateVessels.Core.Bottoms.FlatBottom
+
+namespace CalculateVessels.Core.Bottoms.FlatBottomWithAdditionalMoment
 {
-    public class FlatBottom : IElement
+    public class FlatBottomWithAdditionalMoment : IElement
     {
         private readonly FlatBottomWithAdditionalMomentDataIn _fbdi;
 
-        public FlatBottom(FlatBottomWithAdditionalMomentDataIn fbdi)
+        public FlatBottomWithAdditionalMoment(FlatBottomWithAdditionalMomentDataIn fbdi)
         {
             _fbdi = fbdi;
         }
@@ -36,6 +37,7 @@ namespace CalculateVessels.Core.Bottoms.FlatBottom
         private double _K0;
         private double _Kp;
         private double _Dp;
+        private double _Qd;
         private double _s1p;
         private double _s1;
         private double _s2;
@@ -43,7 +45,43 @@ namespace CalculateVessels.Core.Bottoms.FlatBottom
         private double _s2_2;
         private double _conditionUseFormulas;
         private double _p_d;
+        private double _Pbp;
+        private double _Pbm;
+        private double _Pb1;
+        private double _Pb2;
+        private double _Pb1_1;
+        private double _Pb1_2;
+        private double _alfa;
+        private double _alfa_m;
+        private double _yp;
+        private double _yb;
+        private double _Lb;
+        private double _fb;
 
+        private double _m;
+        private double _qobj;
+        private double _q_d;
+        private double _Kobj;
+        private double _Ep;
+        private double _Eb20;
+        private double _E20;
+        private double _Ekp20;
+        private double _l0;
+        private double _KGost34233_4;
+        private double _betaT;
+        private double _betaU;
+        private double _betaY;
+        private double _betaZ;
+        private double _betaF;
+        private double _betaV;
+        private double _f;
+        private double _lambda;
+        private double _yF;
+        private double _ykp;
+        private double _Xkp;
+        private double _Kkp;
+
+        private double _Rp;
 
         public void Calculate()
         {
@@ -98,7 +136,7 @@ namespace CalculateVessels.Core.Bottoms.FlatBottom
                     break;
                 case 10:
                     if (_fbdi.gamma < 30 || _fbdi.gamma > 90 ||
-                        _fbdi.r < 0.25 * _fbdi.s1 || _fbdi.r > (_fbdi.s1 - _fbdi.s2))
+                        _fbdi.r < 0.25 * _fbdi.s1 || _fbdi.r > _fbdi.s1 - _fbdi.s2)
                     {
                         IsError = true;
                         ErrorList.Add("Условие закрепления не выполняется");
@@ -115,17 +153,8 @@ namespace CalculateVessels.Core.Bottoms.FlatBottom
                     }
                     goto case 4;
                 case 11:
-                case 12:
-                    if (_fbdi.Type == 11)
-                    {
-                        _K = 0.4;
-                        _Dp = _fbdi.D3;
-                    }
-                    else
-                    {
-                        _K = 0.41;
-                        _Dp = _fbdi.Dcp;
-                    }
+                    _K = 0.4;
+                    _Dp = _fbdi.D3;
                     _s2_1 = 0.7 * (_fbdi.s1 - _c);
                     _s2_2 = (_fbdi.s1 - _c) * Math.Sqrt(2 * (_Dp - _fbdi.D2) * _fbdi.D2 / Math.Pow(_fbdi.D2, 2));
                     _s2 = Math.Max(_s2_1, _s2_2) + _c;
@@ -135,15 +164,93 @@ namespace CalculateVessels.Core.Bottoms.FlatBottom
                         ErrorList.Add("Принятая толщина s2 меньше расчетной");
                     }
                     break;
-            }
+                case 12:
+                    _K = 0.41;
+                    _Dp = _fbdi.Dcp;
+                    break;
+                case 13:
+                case 14:
 
+                    //_fb = Physical.Gost34233_4.Getfb(_fbdi.BWM.ScrewM, _fbdi.BWM.IsScrewGroove);
+
+
+                    //_Eb20 = Physical.Gost34233_4.GetE(_fbdi.BWM.ScrewSteel, 20);
+                    //_E20 = Physical.Gost34233_4.GetE(_fbdi.BWM.FlangeSteel, 20);
+
+                    //List<string> errorList = new();
+                    //_Ekp20 = Physical.Gost34233_1.GetE(_fbdi.BWM.CoverSteel, 20, ref errorList);
+
+                    //if (errorList.Any())
+                    //{
+                    //    IsCriticalError = true;
+                    //    ErrorList = ErrorList.Concat(errorList).ToList();
+                    //    return;
+                    //}
+
+                    //if (_fb == 0 || _Eb20 == 0)
+                    //{
+                    //    IsCriticalError = true;
+                    //    ErrorList.Add("Ошибка получения значений физических велечин");
+                    //    return;
+                    //}
+
+                    //if (_fbdi.BWM.IsMetall)
+                    //{
+                    //    (_m, _qobj, _, _, _) = Physical.Gost34233_4.GetGasketParameters(_fbdi.BWM.GasketType);
+                    //}
+                    //else
+                    //{
+                    //    (_m, _qobj, _q_d, _Kobj, _Ep) = Physical.Gost34233_4.GetGasketParameters(_fbdi.BWM.GasketType);
+                    //}
+
+                    //_Dp = _fbdi.Dcp;
+                    //_yp = _fbdi.BWM.IsMetall
+                    //    ? 0 : _fbdi.BWM.hp * _Kobj / (_Ep * Math.PI * _fbdi.Dcp * _fbdi.BWM.bp);
+
+                    //_Lb = _fbdi.BWM.Lb0 + (_fbdi.BWM.IsStud ? 0.56 : 0.28) * _fbdi.BWM.d;
+                    //_yb = _Lb / (_Eb20 * _fb * _fbdi.BWM.n);
+                    //_l0 = Math.Sqrt(_fbdi.D * _fbdi.BWM.S0);
+                    //_KGost34233_4 = _fbdi.BWM.Dn / _fbdi.D;
+                    //_betaT = (Math.Pow(_KGost34233_4, 2) * (1 + 8.55 * Math.Log(_KGost34233_4)) - 1) /
+                    //         (1.05 + 1.945 * Math.Pow(_KGost34233_4, 2) * (_KGost34233_4 - 1));
+                    //_betaU = (Math.Pow(_KGost34233_4, 2) * (1 + 8.55 * Math.Log(_KGost34233_4)) - 1) /
+                    //         (1.36 * (Math.Pow(_KGost34233_4, 2) - 1) * (_KGost34233_4 - 1));
+                    //_betaY = 1 / (_KGost34233_4 - 1) *
+                    //         (0.69 + 5.72 * Math.Pow(_KGost34233_4, 2) * Math.Log(_KGost34233_4) /
+                    //             (Math.Pow(_KGost34233_4, 2) - 1));
+                    //_betaZ = (Math.Pow(_KGost34233_4, 2) + 1) / (Math.Pow(_KGost34233_4, 2) - 1);
+                    //_betaF = _fbdi.BWM.S1 / _fbdi.BWM.S0;
+                    //_betaF = 0.91;
+                    //_betaV = 0.55;
+                    //_f = 1.0;
+                    ////TODO: _betaF, _betaV, _f take values from diagram. how?
+                    //_lambda = _betaF * _fbdi.BWM.h + _l0 / (_betaT * _l0) +
+                    //          _betaV * Math.Pow(_fbdi.BWM.h, 3) / (_betaU * _l0 * Math.Pow(_fbdi.BWM.S0, 2));
+                    //_yF = 0.91 * _betaV / (_E20 * _lambda * Math.Pow(_fbdi.BWM.S0, 2) * _l0);
+                    //_Kkp = _fbdi.BWM.Dn / _fbdi.Dcp;
+                    //_Xkp = 0.67 * (Math.Pow(_Kkp, 2) * (1 + 8.55 * Math.Log(_Kkp)) - 1) /
+                    //    ((_Kkp - 1) * (Math.Pow(_Kkp, 2) - 1 + (1.857 * Math.Pow(_Kkp, 2) + 1) * Math.Pow(_hkp, 3) / Math.Pow(_dkp, 3)));
+                    //_ykp = _Xkp / (_Ekp20 * Math.Pow(_deltakp, 3));
+                    //_alfa = 1 - (_yp - (_yF * _e + _ykp * _b) * _b) /
+                    //    (_yp + _yb + (_yF + _ykp) * Math.Pow(_b, 2));
+                    //_Qd = 0.785 * _fbdi.p * Math.Pow(_fbdi.Dcp, 2);
+                    //_Rp = Math.PI * _fbdi.Dcp * _fbdi.BWM.b0 * _m * Math.Abs(_fbdi.p);
+                    //_Pb1_1 = _alfa * (_Qd + _fbdi.BWM.F) + _Rp + 4 * alfa_m * Math.Abs(_M) / _Dcp;
+                    //_Pb1 = Math.Max(_Pb1_1, _Pb1_2);
+                    //_Pbm = Math.Max(_Pb1, _Pb2);
+                    //_Pbp = _Pbm + (1 - alfa)(_Qd + F) + Q_1 + 4 * (1 - alfa_m) * Math.Abs(_M) / _Dcp;
+                    //_psi1 = _Pbp / _Qd;
+                    //_K6 = 0.41 * Math.Sqrt((1 + 3 * _psi1 * (_fbdi.D3 / _fbdi.Dsp - 1)) / (_fbdi.D3 / _fbdi.Dsp));
+                    break;
+            }
+            // UNDONE: доделать расчет плоского днища
             switch (_fbdi.Hole)
             {
                 case HoleInFlatBottom.WithoutHole:
                     _K0 = 1;
                     break;
                 case HoleInFlatBottom.OneHole:
-                    _K0 = Math.Sqrt(1.0 + _fbdi.d / _Dp + Math.Pow(_fbdi.d / _Dp, 2));
+                    //_K0 = Math.Sqrt(1.0 + _fbdi.d / _Dp + Math.Pow(_fbdi.d / _Dp, 2));
                     break;
                 case HoleInFlatBottom.MoreThenOneHole:
                     if (_fbdi.di > 0.7 * _Dp)
@@ -182,7 +289,6 @@ namespace CalculateVessels.Core.Bottoms.FlatBottom
                 {
                     IsCriticalError = true;
                     ErrorList.Add("Принятая толщина s1 меньше расчетной");
-                    return;
                 }
             }
         }

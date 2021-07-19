@@ -987,7 +987,7 @@ namespace CalculateVessels
 
         private void NozzleForm_Load(object sender, EventArgs e)
         {
-            var steels = Physical.GetSteelsList()?.ToArray();
+            var steels = Physical.Gost34233_1.GetSteelsList()?.ToArray();
             if (steels != null)
             {
                 steel1_cb.Items.AddRange(steels);
@@ -1245,7 +1245,7 @@ namespace CalculateVessels
                     double sigma_d1;
                     if (sigma_d1_tb.ReadOnly)
                     {
-                        sigma_d1 = Physical.GetSigma(nozzleData.steel1,
+                        sigma_d1 = Physical.Gost34233_1.GetSigma(nozzleData.steel1,
                                             nozzleData.t,
                                             ref dataInErr);
                         sigma_d1_tb.ReadOnly = false;
@@ -1270,7 +1270,7 @@ namespace CalculateVessels
                     double E1;
                     if (E1_tb.ReadOnly)
                     {
-                        E1 = Physical.GetE(nozzleData.steel1,
+                        E1 = Physical.Gost34233_1.GetE(nozzleData.steel1,
                                             nozzleData.t,
                                             ref dataInErr);
                         E1_tb.ReadOnly = false;
@@ -1453,13 +1453,13 @@ namespace CalculateVessels
 
                 //sigma_d2
                 {
-                    var sigma_d2 = Physical.GetSigma(nozzleData.steel2, nozzleData.t, ref dataInErr);
+                    var sigma_d2 = Physical.Gost34233_1.GetSigma(nozzleData.steel2, nozzleData.t, ref dataInErr);
                     nozzleData.sigma_d2 = sigma_d2;
                 }
 
                 //E2
                 {
-                    var E2 = Physical.GetE(nozzleData.steel2,
+                    var E2 = Physical.Gost34233_1.GetE(nozzleData.steel2,
                                             nozzleData.t,
                                             ref dataInErr);
                     nozzleData.E2 = E2;
@@ -1500,13 +1500,13 @@ namespace CalculateVessels
 
                 //sigma_d3
                 {
-                    var sigma_d3 = Physical.GetSigma(nozzleData.steel3, nozzleData.t, ref dataInErr);
+                    var sigma_d3 = Physical.Gost34233_1.GetSigma(nozzleData.steel3, nozzleData.t, ref dataInErr);
                     nozzleData.sigma_d3 = sigma_d3;
                 }
 
                 //E3
                 {
-                    var E3 = Physical.GetE(nozzleData.steel3,
+                    var E3 = Physical.Gost34233_1.GetE(nozzleData.steel3,
                                             nozzleData.t,
                                             ref dataInErr);
                     nozzleData.E3 = E3;

@@ -103,7 +103,7 @@ namespace CalculateVessels
                     double sigma_d;
                     if (sigma_d_tb.ReadOnly)
                     {
-                        sigma_d = Physical.GetSigma(cylindricalShellDataIn.Steel,
+                        sigma_d = Physical.Gost34233_1.GetSigma(cylindricalShellDataIn.Steel,
                                                     cylindricalShellDataIn.t,
                                                     ref dataInErr);
                         sigma_d_tb.ReadOnly = false;
@@ -130,7 +130,7 @@ namespace CalculateVessels
                         double E;
                         if (E_tb.ReadOnly)
                         {
-                            E = Physical.GetE(cylindricalShellDataIn.Steel,
+                            E = Physical.Gost34233_1.GetE(cylindricalShellDataIn.Steel,
                                                 cylindricalShellDataIn.t,
                                                 ref dataInErr);
                             E_tb.ReadOnly = false;
@@ -446,7 +446,7 @@ namespace CalculateVessels
 
         private void CilForm_Load(object sender, EventArgs e)
         {
-            var steels = Physical.GetSteelsList()?.ToArray();
+            var steels = Physical.Gost34233_1.GetSteelsList()?.ToArray();
             if (steels != null)
             {
                 steel_cb.Items.AddRange(steels);
@@ -460,7 +460,7 @@ namespace CalculateVessels
         private void GetE_b_Click(object sender, EventArgs e)
         {
             List<string> dataInErr = new List<string>();
-            var E = Physical.GetE(steel_cb.Text, Convert.ToInt32(t_tb.Text), ref dataInErr);
+            var E = Physical.Gost34233_1.GetE(steel_cb.Text, Convert.ToInt32(t_tb.Text), ref dataInErr);
             E_tb.Text = E.ToString();
         }
 

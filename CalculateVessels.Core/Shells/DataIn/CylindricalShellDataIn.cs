@@ -24,7 +24,7 @@ namespace CalculateVessels.Core.Shells.DataIn
                 else
                 {
                     isError = true;
-                    errorList.Add("l должно быть больше 0");
+                    ErrorList.Add("l должно быть больше 0");
                 }
             }
         }
@@ -52,7 +52,7 @@ namespace CalculateVessels.Core.Shells.DataIn
                 else
                 {
                     isError = true;
-                    errorList.Add("Тип схемы расчета F должен быть 1-7");
+                    ErrorList.Add("Тип схемы расчета F должен быть 1-7");
                 }
             }
         } //1-7
