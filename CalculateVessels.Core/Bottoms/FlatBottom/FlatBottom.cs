@@ -11,9 +11,9 @@ namespace CalculateVessels.Core.Bottoms.FlatBottom
 {
     public class FlatBottom : IElement
     {
-        private readonly FlatBottomWithAdditionalMomentDataIn _fbdi;
+        private readonly FlatBottomDataIn _fbdi;
 
-        public FlatBottom(FlatBottomWithAdditionalMomentDataIn fbdi)
+        public FlatBottom(FlatBottomDataIn fbdi)
         {
             _fbdi = fbdi;
         }

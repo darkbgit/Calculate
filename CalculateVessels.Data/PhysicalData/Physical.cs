@@ -317,6 +317,95 @@ namespace CalculateVessels.Data.PhysicalData
 
                 return E;
             }
+
+            public static double GetAlfa(string steelName, double temperature)
+            {
+                var steels = new List<PhysicalData.Gost34233_4.SteelForAlfa>();
+
+                try
+                {
+                    using StreamReader file = new("PhysicalData/Gost34233_4/Steels.json");
+                    var json = file.ReadToEnd();
+                    file.Close();
+                    steels = JsonSerializer.Deserialize<List<PhysicalData.Gost34233_4.SteelForAlfa>>(json);
+                }
+                catch
+                {
+                    return 0;
+                }
+
+                var steel = steels.FirstOrDefault(s => s.Name.Equals(steelName));
+
+                steel.Values = steel.Values.Where(v => v.AlfaValue != 0).ToList();
+
+                for (var i = 0; i < steel.Values.Count; i++)
+                {
+                    if ((i == 0 && steel.Values[i].Temperature > temperature) ||
+                        steel.Values[i].Temperature == temperature)
+                    {
+                        return steel.Values[i].AlfaValue;
+                    }
+                }
+                return 0;
+            }
+
+            public static double GetSigma(string steelName, double temperature)
+            {
+                var steels = new List<PhysicalData.Gost34233_4.SteelForSigma>();
+
+                try
+                {
+                    using StreamReader file = new("PhysicalData/Gost34233_4/Steels.json");
+                    var json = file.ReadToEnd();
+                    file.Close();
+                    steels = JsonSerializer.Deserialize<List<PhysicalData.Gost34233_4.SteelForSigma>>(json);
+                }
+                catch
+                {
+                    return 0;
+                }
+
+                var steel = steels.FirstOrDefault(s => s.Name.Equals(steelName));
+
+                steel.Values = steel.Values.Where(v => v.SigmaValue != 0).ToList();
+
+                double sigma_d, sigmaLittle = 0, sigmaBig = 0;
+                double tempLittle = 0, tempBig = 0;
+
+                for (var i = 0; i < steel.Values.Count; i++)
+                {
+                    if ((i == 0 && steel.Values[i].Temperature > temperature) ||
+                        steel.Values[i].Temperature == temperature)
+                    {
+                        return steel.Values[i].SigmaValue;
+                    }
+                    else if (steel.Values[i].Temperature > temperature)
+                    {
+                        tempLittle = steel.Values[i].Temperature;
+                        sigmaBig = steel.Values[i].SigmaValue;
+                        break;
+                    }
+                    else if (i == steel.Values.Count - 1)
+                    {
+                        //dataInErr.Add($"Температура {temperature} °С, больше чем максимальная температура {tempBig} °С " +
+                        //  $"для стали {steelName} при которой определяется модуль  продольной упругости по ГОСТ 34233.1-2017");
+                        return 0;
+                    }
+                    else
+                    {
+                        tempBig = steel.Values[i].Temperature;
+                        sigmaLittle = steel.Values[i].SigmaValue;
+                    }
+                }
+
+                sigma_d = sigmaBig - ((sigmaBig - sigmaLittle) * (temperature - tempLittle) / (tempBig - tempLittle));
+                sigma_d *= 10;
+                sigma_d = Math.Truncate(sigma_d / 5);
+                sigma_d *= 0.5;
+
+                return sigma_d;
+            }
+
         }
         
     }

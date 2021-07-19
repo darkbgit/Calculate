@@ -8,7 +8,7 @@ using CalculateVessels.Core.Bottoms.Enums;
 
 namespace CalculateVessels.Core.Bottoms.FlatBottom
 {
-    public class FlatBottomWithAdditionalMomentDataIn : IDataIn
+    public class FlatBottomDataIn : IDataIn
     {
         public bool IsDataGood => !ErrorList.Any();
 

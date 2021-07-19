@@ -474,9 +474,9 @@ namespace CalculateVessels
         {
             if (sender is not CilForm) return;
 
-            if (this.Owner is MainForm {cf: { }} main)
+            if (this.Owner is MainForm { cylindricalForm: { }} main)
             {
-                main.cf = null;
+                main.cylindricalForm = null;
             }
         }
 

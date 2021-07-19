@@ -54,9 +54,8 @@ namespace CalculateVessels
             this.proekt_tb = new System.Windows.Forms.TextBox();
             this.polysfer_b = new System.Windows.Forms.Button();
             this.torosfer_b = new System.Windows.Forms.Button();
-            this.pldn_b = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
+            this.flatBottom_b = new System.Windows.Forms.Button();
+            this.flatBottomWithAdditionalMoment_b = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
@@ -292,35 +291,25 @@ namespace CalculateVessels
             this.torosfer_b.Text = "Торосферическое днище";
             this.torosfer_b.UseVisualStyleBackColor = true;
             // 
-            // pldn_b
+            // flatBottom_b
             // 
-            this.pldn_b.Location = new System.Drawing.Point(14, 196);
-            this.pldn_b.Name = "pldn_b";
-            this.pldn_b.Size = new System.Drawing.Size(186, 27);
-            this.pldn_b.TabIndex = 11;
-            this.pldn_b.Text = "Плоское днище";
-            this.pldn_b.UseVisualStyleBackColor = true;
-            this.pldn_b.Click += new System.EventHandler(this.Pldn_b_Click);
+            this.flatBottom_b.Location = new System.Drawing.Point(14, 196);
+            this.flatBottom_b.Name = "flatBottom_b";
+            this.flatBottom_b.Size = new System.Drawing.Size(186, 27);
+            this.flatBottom_b.TabIndex = 11;
+            this.flatBottom_b.Text = "Плоское днище";
+            this.flatBottom_b.UseVisualStyleBackColor = true;
+            this.flatBottom_b.Click += new System.EventHandler(this.FlatBottom_b_Click);
             // 
-            // button2
+            // flatBottomWithAdditionalMoment_b
             // 
-            this.button2.Enabled = false;
-            this.button2.Location = new System.Drawing.Point(14, 229);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(186, 27);
-            this.button2.TabIndex = 12;
-            this.button2.Text = "button2";
-            this.button2.UseVisualStyleBackColor = true;
-            // 
-            // button3
-            // 
-            this.button3.Enabled = false;
-            this.button3.Location = new System.Drawing.Point(14, 262);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(186, 27);
-            this.button3.TabIndex = 13;
-            this.button3.Text = "button3";
-            this.button3.UseVisualStyleBackColor = true;
+            this.flatBottomWithAdditionalMoment_b.Location = new System.Drawing.Point(14, 229);
+            this.flatBottomWithAdditionalMoment_b.Name = "flatBottomWithAdditionalMoment_b";
+            this.flatBottomWithAdditionalMoment_b.Size = new System.Drawing.Size(186, 60);
+            this.flatBottomWithAdditionalMoment_b.TabIndex = 12;
+            this.flatBottomWithAdditionalMoment_b.Text = "Плоское днище с дополнительным краевым моментом";
+            this.flatBottomWithAdditionalMoment_b.UseVisualStyleBackColor = true;
+            this.flatBottomWithAdditionalMoment_b.Click += new System.EventHandler(this.FlatBottomWithAdditionalMoment_b_Click);
             // 
             // button4
             // 
@@ -660,9 +649,8 @@ namespace CalculateVessels
             this.Controls.Add(this.button6);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.button4);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.pldn_b);
+            this.Controls.Add(this.flatBottomWithAdditionalMoment_b);
+            this.Controls.Add(this.flatBottom_b);
             this.Controls.Add(this.torosfer_b);
             this.Controls.Add(this.polysfer_b);
             this.Controls.Add(this.proekt_tb);
@@ -710,9 +698,8 @@ namespace CalculateVessels
         private System.Windows.Forms.ToolStripMenuItem delall_MenuItem;
         private System.Windows.Forms.Button polysfer_b;
         private System.Windows.Forms.Button torosfer_b;
-        private System.Windows.Forms.Button pldn_b;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button flatBottom_b;
+        private System.Windows.Forms.Button flatBottomWithAdditionalMoment_b;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button button6;

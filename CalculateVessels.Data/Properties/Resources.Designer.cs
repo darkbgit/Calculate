@@ -63,6 +63,26 @@ namespace CalculateVessels.Data.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        public static byte[] Bolt {
+            get {
+                object obj = ResourceManager.GetObject("Bolt", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] BoltGroove {
+            get {
+                object obj = ResourceManager.GetObject("BoltGroove", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         public static byte[] BSphRadial {
             get {
                 object obj = ResourceManager.GetObject("BSphRadial", resourceCulture);
@@ -376,6 +396,176 @@ namespace CalculateVessels.Data.Properties {
         public static byte[] EllVertDekart {
             get {
                 object obj = ResourceManager.GetObject("EllVertDekart", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] fl1_a {
+            get {
+                object obj = ResourceManager.GetObject("fl1_a", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] fl1_a52857 {
+            get {
+                object obj = ResourceManager.GetObject("fl1_a52857", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] fl1_b {
+            get {
+                object obj = ResourceManager.GetObject("fl1_b", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] fl1_b52857 {
+            get {
+                object obj = ResourceManager.GetObject("fl1_b52857", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] fl1_c {
+            get {
+                object obj = ResourceManager.GetObject("fl1_c", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] fl1_c52857 {
+            get {
+                object obj = ResourceManager.GetObject("fl1_c52857", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] fl1_d {
+            get {
+                object obj = ResourceManager.GetObject("fl1_d", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] fl1_d52857 {
+            get {
+                object obj = ResourceManager.GetObject("fl1_d52857", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] fl2_a {
+            get {
+                object obj = ResourceManager.GetObject("fl2_a", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] fl2_a52857 {
+            get {
+                object obj = ResourceManager.GetObject("fl2_a52857", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] fl2_b {
+            get {
+                object obj = ResourceManager.GetObject("fl2_b", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] fl2_b52857 {
+            get {
+                object obj = ResourceManager.GetObject("fl2_b52857", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] fl2_c {
+            get {
+                object obj = ResourceManager.GetObject("fl2_c", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] fl2_c52857 {
+            get {
+                object obj = ResourceManager.GetObject("fl2_c52857", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] fl5_a {
+            get {
+                object obj = ResourceManager.GetObject("fl5_a", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] FlatBottomWithMoment {
+            get {
+                object obj = ResourceManager.GetObject("FlatBottomWithMoment", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] FlatBottomWithMomentWithGroove {
+            get {
+                object obj = ResourceManager.GetObject("FlatBottomWithMomentWithGroove", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -702,26 +892,6 @@ namespace CalculateVessels.Data.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        public static byte[] pldn14 {
-            get {
-                object obj = ResourceManager.GetObject("pldn14", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        public static byte[] pldn15 {
-            get {
-                object obj = ResourceManager.GetObject("pldn15", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
         public static byte[] pldn2 {
             get {
                 object obj = ResourceManager.GetObject("pldn2", resourceCulture);
@@ -865,6 +1035,26 @@ namespace CalculateVessels.Data.Properties {
         public static byte[] Sfer {
             get {
                 object obj = ResourceManager.GetObject("Sfer", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] Stud {
+            get {
+                object obj = ResourceManager.GetObject("Stud", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] StudGroove {
+            get {
+                object obj = ResourceManager.GetObject("StudGroove", resourceCulture);
                 return ((byte[])(obj));
             }
         }

@@ -17,14 +17,17 @@ namespace CalculateVessels
             InitializeComponent();
         }
 
-        public CilForm cf = null;
+        public CilForm cylindricalForm = null;
         public NozzleForm nf = null;
         public EllForm ef = null;
 
         public PldnForm pdf = null;
+        public FlatBottomWithAdditionalMomentForm flatBottomWithAdditionalMomentForm = null;
         // TODO: KonForm 
 
         public SaddleForm saddleForm = null;
+
+
         
 
         private void MakeWord_b_Click(object sender, EventArgs e)
@@ -103,16 +106,16 @@ namespace CalculateVessels
         private void Cil_b_Click(object sender, EventArgs e)
         {
             //CilForm cf = (CilForm) Application.OpenForms["CilForm"]; // создаем
-            if (cf == null)
+            if (cylindricalForm == null)
             {
                 //cf.Dispose();
-                cf = new CilForm { Owner = this };
-                cf.Show();
+                cylindricalForm = new CilForm { Owner = this };
+                cylindricalForm.Show();
             }
             else
             {
-                cf.Owner = this;
-                cf.Show();
+                cylindricalForm.Owner = this;
+                cylindricalForm.Show();
             }
         }
 
@@ -157,6 +160,34 @@ namespace CalculateVessels
             {
                 saddleForm.Owner = this;
                 saddleForm.Show();
+            }
+        }
+
+        private void FlatBottom_b_Click(object sender, EventArgs e)
+        {
+            if (pdf == null)
+            {
+                pdf = new PldnForm { Owner = this };
+                pdf.Show();
+            }
+            else
+            {
+                pdf.Owner = this;
+                pdf.Show();
+            }
+        }
+
+        private void FlatBottomWithAdditionalMoment_b_Click(object sender, EventArgs e)
+        {
+            if (flatBottomWithAdditionalMomentForm == null)
+            {
+                flatBottomWithAdditionalMomentForm = new FlatBottomWithAdditionalMomentForm { Owner = this };
+                flatBottomWithAdditionalMomentForm.Show();
+            }
+            else
+            {
+                flatBottomWithAdditionalMomentForm.Owner = this;
+                flatBottomWithAdditionalMomentForm.Show();
             }
         }
 
@@ -257,20 +288,6 @@ namespace CalculateVessels
             
         }
 
-        private void Pldn_b_Click(object sender, EventArgs e)
-        {
-            if (pdf == null)
-            {
-                pdf = new PldnForm { Owner = this };
-                pdf.Show();
-            }
-            else
-            {
-                pdf.Owner = this;
-                pdf.Show();
-            }
-        }
-
         private void MenuUp_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
             //if (e.ClickedItem.Name == "AboutToolStripMenuItem")
@@ -294,5 +311,6 @@ namespace CalculateVessels
             var steels = Physical.Gost34233_1.GetSteelsList();
             MessageBox.Show(string.Join<string>(Environment.NewLine, steels));
         }
+
     }
 }
