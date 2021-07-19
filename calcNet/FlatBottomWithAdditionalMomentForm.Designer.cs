@@ -49,7 +49,7 @@ namespace CalculateVessels
             this.scalc_l = new System.Windows.Forms.Label();
             this.type_gb = new System.Windows.Forms.GroupBox();
             this.label35 = new System.Windows.Forms.Label();
-            this.Dcp_tb = new System.Windows.Forms.TextBox();
+            this.Dcp_tb1 = new System.Windows.Forms.TextBox();
             this.label36 = new System.Windows.Forms.Label();
             this.label31 = new System.Windows.Forms.Label();
             this.D3_tb = new System.Windows.Forms.TextBox();
@@ -95,9 +95,18 @@ namespace CalculateVessels
             this.label8 = new System.Windows.Forms.Label();
             this.steel_cb = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
-            this.dav_gb = new System.Windows.Forms.GroupBox();
-            this.nar_rb = new System.Windows.Forms.RadioButton();
-            this.vn_rb = new System.Windows.Forms.RadioButton();
+            this.gasket_gb = new System.Windows.Forms.GroupBox();
+            this.label38 = new System.Windows.Forms.Label();
+            this.Dcp_tb = new System.Windows.Forms.TextBox();
+            this.label39 = new System.Windows.Forms.Label();
+            this.label40 = new System.Windows.Forms.Label();
+            this.bp_tb = new System.Windows.Forms.TextBox();
+            this.label41 = new System.Windows.Forms.Label();
+            this.label42 = new System.Windows.Forms.Label();
+            this.hp_tb = new System.Windows.Forms.TextBox();
+            this.label43 = new System.Windows.Forms.Label();
+            this.gasketType_cb = new System.Windows.Forms.ComboBox();
+            this.label37 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.p_tb = new System.Windows.Forms.TextBox();
@@ -126,7 +135,7 @@ namespace CalculateVessels
             this.groupBox4.SuspendLayout();
             this.type_gb.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cover_pb)).BeginInit();
-            this.dav_gb.SuspendLayout();
+            this.gasket_gb.SuspendLayout();
             this.flange_gb.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.flange_pb)).BeginInit();
             this.SuspendLayout();
@@ -197,7 +206,7 @@ namespace CalculateVessels
             // 
             this.label28.AutoSize = true;
             this.label28.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.label28.Location = new System.Drawing.Point(-10, 443);
+            this.label28.Location = new System.Drawing.Point(3, 397);
             this.label28.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label28.MaximumSize = new System.Drawing.Size(0, 1);
             this.label28.MinimumSize = new System.Drawing.Size(350, 0);
@@ -248,7 +257,7 @@ namespace CalculateVessels
             // 
             // cancel_b
             // 
-            this.cancel_b.Location = new System.Drawing.Point(260, 644);
+            this.cancel_b.Location = new System.Drawing.Point(261, 723);
             this.cancel_b.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cancel_b.Name = "cancel_b";
             this.cancel_b.Size = new System.Drawing.Size(88, 27);
@@ -259,7 +268,7 @@ namespace CalculateVessels
             // 
             // calc_b
             // 
-            this.calc_b.Location = new System.Drawing.Point(165, 644);
+            this.calc_b.Location = new System.Drawing.Point(166, 723);
             this.calc_b.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.calc_b.Name = "calc_b";
             this.calc_b.Size = new System.Drawing.Size(88, 27);
@@ -269,7 +278,7 @@ namespace CalculateVessels
             // 
             // predCalc_b
             // 
-            this.predCalc_b.Location = new System.Drawing.Point(27, 636);
+            this.predCalc_b.Location = new System.Drawing.Point(28, 715);
             this.predCalc_b.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.predCalc_b.Name = "predCalc_b";
             this.predCalc_b.Size = new System.Drawing.Size(130, 42);
@@ -313,7 +322,7 @@ namespace CalculateVessels
             // type_gb
             // 
             this.type_gb.Controls.Add(this.label35);
-            this.type_gb.Controls.Add(this.Dcp_tb);
+            this.type_gb.Controls.Add(this.Dcp_tb1);
             this.type_gb.Controls.Add(this.label36);
             this.type_gb.Controls.Add(this.label31);
             this.type_gb.Controls.Add(this.D3_tb);
@@ -356,13 +365,13 @@ namespace CalculateVessels
             this.label35.TabIndex = 179;
             this.label35.Text = "Dcп:";
             // 
-            // Dcp_tb
+            // Dcp_tb1
             // 
-            this.Dcp_tb.Location = new System.Drawing.Point(416, 131);
-            this.Dcp_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.Dcp_tb.Name = "Dcp_tb";
-            this.Dcp_tb.Size = new System.Drawing.Size(46, 23);
-            this.Dcp_tb.TabIndex = 178;
+            this.Dcp_tb1.Location = new System.Drawing.Point(416, 131);
+            this.Dcp_tb1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.Dcp_tb1.Name = "Dcp_tb1";
+            this.Dcp_tb1.Size = new System.Drawing.Size(46, 23);
+            this.Dcp_tb1.TabIndex = 178;
             // 
             // label36
             // 
@@ -585,7 +594,7 @@ namespace CalculateVessels
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(205, 562);
+            this.button4.Location = new System.Drawing.Point(206, 641);
             this.button4.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(170, 27);
@@ -595,7 +604,7 @@ namespace CalculateVessels
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(27, 562);
+            this.button3.Location = new System.Drawing.Point(28, 641);
             this.button3.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(170, 27);
@@ -605,7 +614,7 @@ namespace CalculateVessels
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(265, 529);
+            this.button2.Location = new System.Drawing.Point(266, 608);
             this.button2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(35, 27);
@@ -616,7 +625,7 @@ namespace CalculateVessels
             // checkBox1
             // 
             this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(31, 534);
+            this.checkBox1.Location = new System.Drawing.Point(32, 613);
             this.checkBox1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(201, 19);
@@ -794,6 +803,7 @@ namespace CalculateVessels
             // 
             // steel_cb
             // 
+            this.steel_cb.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.steel_cb.FormattingEnabled = true;
             this.steel_cb.Location = new System.Drawing.Point(214, 191);
             this.steel_cb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -811,41 +821,135 @@ namespace CalculateVessels
             this.label7.TabIndex = 135;
             this.label7.Text = "Марка материала:";
             // 
-            // dav_gb
+            // gasket_gb
             // 
-            this.dav_gb.Controls.Add(this.nar_rb);
-            this.dav_gb.Controls.Add(this.vn_rb);
-            this.dav_gb.Location = new System.Drawing.Point(111, 655);
-            this.dav_gb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.dav_gb.Name = "dav_gb";
-            this.dav_gb.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.dav_gb.Size = new System.Drawing.Size(350, 77);
-            this.dav_gb.TabIndex = 128;
-            this.dav_gb.TabStop = false;
+            this.gasket_gb.Controls.Add(this.label38);
+            this.gasket_gb.Controls.Add(this.Dcp_tb);
+            this.gasket_gb.Controls.Add(this.label39);
+            this.gasket_gb.Controls.Add(this.label40);
+            this.gasket_gb.Controls.Add(this.bp_tb);
+            this.gasket_gb.Controls.Add(this.label41);
+            this.gasket_gb.Controls.Add(this.label42);
+            this.gasket_gb.Controls.Add(this.hp_tb);
+            this.gasket_gb.Controls.Add(this.label43);
+            this.gasket_gb.Controls.Add(this.gasketType_cb);
+            this.gasket_gb.Controls.Add(this.label37);
+            this.gasket_gb.Location = new System.Drawing.Point(13, 404);
+            this.gasket_gb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.gasket_gb.Name = "gasket_gb";
+            this.gasket_gb.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.gasket_gb.Size = new System.Drawing.Size(205, 140);
+            this.gasket_gb.TabIndex = 128;
+            this.gasket_gb.TabStop = false;
+            this.gasket_gb.Text = "Прокладка";
             // 
-            // nar_rb
+            // label38
             // 
-            this.nar_rb.AutoSize = true;
-            this.nar_rb.Location = new System.Drawing.Point(185, 45);
-            this.nar_rb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.nar_rb.Name = "nar_rb";
-            this.nar_rb.Size = new System.Drawing.Size(80, 19);
-            this.nar_rb.TabIndex = 6;
-            this.nar_rb.Text = "наружное";
-            this.nar_rb.UseVisualStyleBackColor = true;
+            this.label38.AutoSize = true;
+            this.label38.Location = new System.Drawing.Point(13, 109);
+            this.label38.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label38.Name = "label38";
+            this.label38.Size = new System.Drawing.Size(31, 15);
+            this.label38.TabIndex = 179;
+            this.label38.Text = "Dсп:";
             // 
-            // vn_rb
+            // Dcp_tb
             // 
-            this.vn_rb.AutoSize = true;
-            this.vn_rb.Checked = true;
-            this.vn_rb.Location = new System.Drawing.Point(81, 45);
-            this.vn_rb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.vn_rb.Name = "vn_rb";
-            this.vn_rb.Size = new System.Drawing.Size(88, 19);
-            this.vn_rb.TabIndex = 5;
-            this.vn_rb.TabStop = true;
-            this.vn_rb.Text = "внутреннее";
-            this.vn_rb.UseVisualStyleBackColor = true;
+            this.Dcp_tb.Location = new System.Drawing.Point(49, 103);
+            this.Dcp_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.Dcp_tb.Name = "Dcp_tb";
+            this.Dcp_tb.Size = new System.Drawing.Size(46, 23);
+            this.Dcp_tb.TabIndex = 178;
+            // 
+            // label39
+            // 
+            this.label39.AutoSize = true;
+            this.label39.Location = new System.Drawing.Point(103, 107);
+            this.label39.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label39.Name = "label39";
+            this.label39.Size = new System.Drawing.Size(25, 15);
+            this.label39.TabIndex = 180;
+            this.label39.Text = "мм";
+            // 
+            // label40
+            // 
+            this.label40.AutoSize = true;
+            this.label40.Location = new System.Drawing.Point(20, 51);
+            this.label40.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label40.Name = "label40";
+            this.label40.Size = new System.Drawing.Size(24, 15);
+            this.label40.TabIndex = 176;
+            this.label40.Text = "bп:";
+            // 
+            // bp_tb
+            // 
+            this.bp_tb.Location = new System.Drawing.Point(49, 45);
+            this.bp_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.bp_tb.Name = "bp_tb";
+            this.bp_tb.Size = new System.Drawing.Size(46, 23);
+            this.bp_tb.TabIndex = 175;
+            // 
+            // label41
+            // 
+            this.label41.AutoSize = true;
+            this.label41.Location = new System.Drawing.Point(103, 49);
+            this.label41.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label41.Name = "label41";
+            this.label41.Size = new System.Drawing.Size(25, 15);
+            this.label41.TabIndex = 177;
+            this.label41.Text = "мм";
+            // 
+            // label42
+            // 
+            this.label42.AutoSize = true;
+            this.label42.Location = new System.Drawing.Point(20, 80);
+            this.label42.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label42.Name = "label42";
+            this.label42.Size = new System.Drawing.Size(24, 15);
+            this.label42.TabIndex = 173;
+            this.label42.Text = "hп:";
+            // 
+            // hp_tb
+            // 
+            this.hp_tb.Location = new System.Drawing.Point(49, 74);
+            this.hp_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.hp_tb.Name = "hp_tb";
+            this.hp_tb.Size = new System.Drawing.Size(46, 23);
+            this.hp_tb.TabIndex = 172;
+            // 
+            // label43
+            // 
+            this.label43.AutoSize = true;
+            this.label43.Location = new System.Drawing.Point(103, 78);
+            this.label43.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label43.Name = "label43";
+            this.label43.Size = new System.Drawing.Size(25, 15);
+            this.label43.TabIndex = 174;
+            this.label43.Text = "мм";
+            // 
+            // gasketType_cb
+            // 
+            this.gasketType_cb.AllowDrop = true;
+            this.gasketType_cb.DropDownHeight = 150;
+            this.gasketType_cb.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.gasketType_cb.DropDownWidth = 600;
+            this.gasketType_cb.FormattingEnabled = true;
+            this.gasketType_cb.IntegralHeight = false;
+            this.gasketType_cb.Location = new System.Drawing.Point(81, 16);
+            this.gasketType_cb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.gasketType_cb.Name = "gasketType_cb";
+            this.gasketType_cb.Size = new System.Drawing.Size(114, 23);
+            this.gasketType_cb.TabIndex = 136;
+            // 
+            // label37
+            // 
+            this.label37.AutoSize = true;
+            this.label37.Location = new System.Drawing.Point(8, 19);
+            this.label37.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label37.Name = "label37";
+            this.label37.Size = new System.Drawing.Size(65, 15);
+            this.label37.TabIndex = 137;
+            this.label37.Text = "Материал:";
             // 
             // label6
             // 
@@ -1035,11 +1139,12 @@ namespace CalculateVessels
             this.scirtFlange_cb.TabIndex = 5;
             this.scirtFlange_cb.Text = "Приварной встык фланец";
             this.scirtFlange_cb.UseVisualStyleBackColor = true;
-            this.scirtFlange_cb.CheckedChanged += new System.EventHandler(this.scirtFlange_cb_CheckedChanged);
+            this.scirtFlange_cb.CheckedChanged += new System.EventHandler(this.ScirtFlange_cb_CheckedChanged);
             // 
             // d_flange_rb
             // 
             this.d_flange_rb.AutoSize = true;
+            this.d_flange_rb.Enabled = false;
             this.d_flange_rb.Location = new System.Drawing.Point(351, 72);
             this.d_flange_rb.Name = "d_flange_rb";
             this.d_flange_rb.Size = new System.Drawing.Size(133, 19);
@@ -1143,7 +1248,7 @@ namespace CalculateVessels
             this.Controls.Add(this.label8);
             this.Controls.Add(this.steel_cb);
             this.Controls.Add(this.label7);
-            this.Controls.Add(this.dav_gb);
+            this.Controls.Add(this.gasket_gb);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.t_tb);
             this.Controls.Add(this.Gost_cb);
@@ -1162,8 +1267,8 @@ namespace CalculateVessels
             this.type_gb.ResumeLayout(false);
             this.type_gb.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cover_pb)).EndInit();
-            this.dav_gb.ResumeLayout(false);
-            this.dav_gb.PerformLayout();
+            this.gasket_gb.ResumeLayout(false);
+            this.gasket_gb.PerformLayout();
             this.flange_gb.ResumeLayout(false);
             this.flange_gb.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.flange_pb)).EndInit();
@@ -1219,12 +1324,10 @@ namespace CalculateVessels
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.ComboBox steel_cb;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.GroupBox dav_gb;
+        private System.Windows.Forms.GroupBox gasket_gb;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.RadioButton nar_rb;
         private System.Windows.Forms.TextBox p_tb;
-        private System.Windows.Forms.RadioButton vn_rb;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox t_tb;
         private System.Windows.Forms.ComboBox Gost_cb;
@@ -1256,7 +1359,7 @@ namespace CalculateVessels
         private System.Windows.Forms.TextBox s3_tb;
         private System.Windows.Forms.Label label26;
         private System.Windows.Forms.Label label35;
-        private System.Windows.Forms.TextBox Dcp_tb;
+        private System.Windows.Forms.TextBox Dcp_tb1;
         private System.Windows.Forms.Label label36;
         private System.Windows.Forms.GroupBox flange_gb;
         private System.Windows.Forms.RadioButton d_flange_rb;
@@ -1265,5 +1368,16 @@ namespace CalculateVessels
         private System.Windows.Forms.RadioButton a_flange_rb;
         private System.Windows.Forms.PictureBox flange_pb;
         private System.Windows.Forms.CheckBox scirtFlange_cb;
+        private System.Windows.Forms.ComboBox gasketType_cb;
+        private System.Windows.Forms.Label label37;
+        private System.Windows.Forms.Label label38;
+        private System.Windows.Forms.TextBox Dcp_tb;
+        private System.Windows.Forms.Label label39;
+        private System.Windows.Forms.Label label40;
+        private System.Windows.Forms.TextBox bp_tb;
+        private System.Windows.Forms.Label label41;
+        private System.Windows.Forms.Label label42;
+        private System.Windows.Forms.TextBox hp_tb;
+        private System.Windows.Forms.Label label43;
     }
 }

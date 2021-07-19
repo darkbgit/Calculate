@@ -14,9 +14,9 @@ namespace CalculateVessels.Core.Bottoms.FlatBottomWithAdditionalMoment
     {
         private readonly FlatBottomWithAdditionalMomentDataIn _fbdi;
 
-        public FlatBottomWithAdditionalMoment(FlatBottomWithAdditionalMomentDataIn fbdi)
+        public FlatBottomWithAdditionalMoment(FlatBottomWithAdditionalMomentDataIn flatBottomWithAdditionalMomentDataIn)
         {
-            _fbdi = fbdi;
+            _fbdi = flatBottomWithAdditionalMomentDataIn;
         }
 
         public bool IsCriticalError { get; private set; }
@@ -206,7 +206,7 @@ namespace CalculateVessels.Core.Bottoms.FlatBottomWithAdditionalMoment
                 return;
             }
 
-            if (_fbdi.IsGasketMetall)
+            if (_fbdi.IsGasketMetal)
             {
                 (_m, _qobj, _, _, _) = Physical.Gost34233_4.GetGasketParameters(_fbdi.GasketType);
             }
@@ -248,7 +248,7 @@ namespace CalculateVessels.Core.Bottoms.FlatBottomWithAdditionalMoment
             _Se = 0.5 * (_zeta * _S0);
             
             
-            _yp = _fbdi.IsGasketMetall
+            _yp = _fbdi.IsGasketMetal
                 ? 0 : _fbdi.hp * _Kobj / (_Ep * Math.PI * _Dcp * _fbdi.bp);
             
             _Lb = _fbdi.Lb0 + (_fbdi.IsStud ? 0.56 : 0.28) * _fbdi.Screwd;

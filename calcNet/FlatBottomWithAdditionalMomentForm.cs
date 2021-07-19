@@ -64,7 +64,14 @@ namespace CalculateVessels
             }
             Gost_cb.SelectedIndex = 0;
             cover_pb.Image = (Bitmap)new ImageConverter().ConvertFrom(Data.Properties.Resources.FlatBottomWithMoment);
-            //f_pb.Image = (Bitmap)new ImageConverter().ConvertFrom(Data.Properties.Resources.PC1);
+            flange_pb.Image = (Bitmap) new ImageConverter().ConvertFrom
+                (Data.Properties.Resources.fl2_a);
+            var gaskets = Physical.Gost34233_4.GetGasketsList()?.ToArray();
+            if (gaskets != null)
+            {
+                gasketType_cb.Items.AddRange(gaskets);
+                gasketType_cb.SelectedIndex = 0;
+            }
         }
 
         private void GrooveCover_cb_CheckedChanged(object sender, EventArgs e)
@@ -106,6 +113,18 @@ namespace CalculateVessels
             {
                 a_flange_rb.Checked = true;
             }
+
+            var name = flange_gb.Controls
+                .OfType<RadioButton>()
+                .FirstOrDefault(r => r.Checked == true)?.Name[0].ToString();
+            CheckBox cb = sender as CheckBox;
+
+            d_flange_rb.Enabled = cb.Checked;
+            string type = cb.Checked ? "fl1_" : "fl2_";
+            flange_pb.Image =
+                (Bitmap)new ImageConverter()
+                    .ConvertFrom(Data.Properties.Resources.ResourceManager.GetObject(type + name));
+            
             //UNDONE
         }
     }

@@ -5,6 +5,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
+using CalculateVessels.Data.PhysicalData.Gost34233_4;
 
 namespace CalculateVessels.Data.PhysicalData
 {
@@ -203,7 +204,7 @@ namespace CalculateVessels.Data.PhysicalData
                 }
             }
         }
-        
+
 
         public static class Gost34233_4
         {
@@ -302,7 +303,7 @@ namespace CalculateVessels.Data.PhysicalData
                     else if (i == steel.Values.Count - 1)
                     {
                         //dataInErr.Add($"Температура {temperature} °С, больше чем максимальная температура {tempBig} °С " +
-                                    //  $"для стали {steelName} при которой определяется модуль  продольной упругости по ГОСТ 34233.1-2017");
+                        //  $"для стали {steelName} при которой определяется модуль  продольной упругости по ГОСТ 34233.1-2017");
                         return 0;
                     }
                     else
@@ -346,6 +347,7 @@ namespace CalculateVessels.Data.PhysicalData
                         return steel.Values[i].AlfaValue;
                     }
                 }
+
                 return 0;
             }
 
@@ -406,9 +408,24 @@ namespace CalculateVessels.Data.PhysicalData
                 return sigma_d;
             }
 
-        }
-        
-    }
+            public static IEnumerable<string> GetGasketsList()
+            {
+                List<Gasket> gaskets;
 
-    
+                try
+                {
+                    using StreamReader file = new("PhysicalData/Gost34233_4/Gaskets.json");
+                    var json = file.ReadToEnd();
+                    file.Close();
+                    gaskets = JsonSerializer.Deserialize<List<PhysicalData.Gost34233_4.Gasket>>(json);
+                }
+                catch
+                {
+                    return null;
+                }
+
+                return gaskets?.Select(g => g.Material);
+            }
+        }
+    }
 }

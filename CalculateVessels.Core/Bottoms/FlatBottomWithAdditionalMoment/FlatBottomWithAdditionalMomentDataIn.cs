@@ -57,7 +57,7 @@ namespace CalculateVessels.Core.Bottoms.FlatBottomWithAdditionalMoment
 
         //gasket
         public string GasketType { get; set; }
-        public bool IsGasketMetall { get; set; }
+        public bool IsGasketMetal { get; set; }
         public bool IsGasketFlat { get; set; }
         public double Dnp { get; set; }
         public double Dcp { get; set; }
