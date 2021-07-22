@@ -8,5 +8,6 @@ namespace CalculateVessels.Data.PhysicalData.Gost34233_4
 {
     public class Steel
     {
+        public string Name { get; set; }
     }
 }

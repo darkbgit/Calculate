@@ -12,7 +12,8 @@
 			{
 				"Temperature": 100,
 				"SigmaValue": [ 149.0, 149.0, 134.0, 134.0 ],
-				"EValue": 191000
+				"EValue": 191000,
+				"AlfaValue": 0.0000116
 			},
 			{
 				"Temperature": 150,
@@ -22,7 +23,8 @@
 			{
 				"Temperature": 200,
 				"SigmaValue": [ 142.0, 142.0, 126.0, 126.0 ],
-				"EValue": 181000
+				"EValue": 181000,
+				"AlfaValue": 0.0000126
 			},
 			{
 				"Temperature": 250,
@@ -32,7 +34,8 @@
 			{
 				"Temperature": 300,
 				"SigmaValue": [ 115.0, 115.0, 108.0, 108.0 ],
-				"EValue": 171000
+				"EValue": 171000,
+				"AlfaValue": 0.0000131
 			},
 			{
 				"Temperature": 350,
@@ -46,7 +49,8 @@
 			{
 				"Temperature": 400,
 				"SigmaValue": [ 85.0, 68.0, 85.0, 68.0 ],
-				"EValue": 155000
+				"EValue": 155000,
+				"AlfaValue": 0.0000136
 			},
 			{
 				"Temperature": 410,
@@ -58,7 +62,8 @@
 			},
 			{
 				"Temperature": 430,
-				"SigmaValue": [ 71.0, 57.0, 71.0, 57.0 ]
+				"SigmaValue": [ 71.0, 57.0, 71.0, 57.0 ],
+				"AlfaValue": 0.0000141
 			}
 		]
 	},

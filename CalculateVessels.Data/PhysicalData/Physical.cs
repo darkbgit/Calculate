@@ -5,7 +5,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
-using CalculateVessels.Data.PhysicalData.Gost34233_4;
+
 
 namespace CalculateVessels.Data.PhysicalData
 {
@@ -236,13 +236,33 @@ namespace CalculateVessels.Data.PhysicalData
                 }
             }
 
-            public static (double m, double qobj, double q_d, double Kobj, double Ep) GetGasketParameters(string name)
+            public static IEnumerable<string> GetScrewDs()
+            {
+                var fbs = new List<PhysicalData.Gost34233_4.Fb>();
+
+                try
+                {
+                    using StreamReader file = new("PhysicalData/Gost34233_4/ScrewSquare.json");
+                    var json = file.ReadToEnd();
+                    file.Close();
+                    fbs = JsonSerializer.Deserialize<List<PhysicalData.Gost34233_4.Fb>>(json);
+                }
+                catch
+                {
+                    return null;
+                }
+
+                return fbs?.Select(f => f.M.ToString());
+
+            }
+
+            public static (double m, double qobj, double q_d, double Kobj, double Ep, bool isFlat, bool isMetall) GetGasketParameters(string name)
             {
                 var gaskets = new List<PhysicalData.Gost34233_4.Gasket>();
 
                 try
                 {
-                    using StreamReader file = new("PhysicalData/Gost34233_4/ScrewSquare.json");
+                    using StreamReader file = new("PhysicalData/Gost34233_4/Gaskets.json");
                     var json = file.ReadToEnd();
                     file.Close();
                     gaskets = JsonSerializer.Deserialize<List<PhysicalData.Gost34233_4.Gasket>>(json);
@@ -260,7 +280,7 @@ namespace CalculateVessels.Data.PhysicalData
                 }
                 else
                 {
-                    return (gasket.m, gasket.qobj, gasket.q_d, gasket.Kobj, gasket.Ep);
+                    return (gasket.m, gasket.qobj, gasket.q_d, gasket.Kobj, gasket.Ep, gasket.IsFlat, gasket.IsMetal);
                 }
             }
 
@@ -341,8 +361,7 @@ namespace CalculateVessels.Data.PhysicalData
 
                 for (var i = 0; i < steel.Values.Count; i++)
                 {
-                    if ((i == 0 && steel.Values[i].Temperature > temperature) ||
-                        steel.Values[i].Temperature == temperature)
+                    if (steel.Values[i].Temperature >= temperature)
                     {
                         return steel.Values[i].AlfaValue;
                     }
@@ -410,7 +429,7 @@ namespace CalculateVessels.Data.PhysicalData
 
             public static IEnumerable<string> GetGasketsList()
             {
-                List<Gasket> gaskets;
+                List<PhysicalData.Gost34233_4.Gasket> gaskets;
 
                 try
                 {
@@ -426,6 +445,56 @@ namespace CalculateVessels.Data.PhysicalData
 
                 return gaskets?.Select(g => g.Material);
             }
+
+            public static IEnumerable<string> GetSteelsList()
+            {
+                List<PhysicalData.Gost34233_4.Steel> steels;
+
+                try
+                {
+                    using StreamReader file = new("PhysicalData/Gost34233_4/Steels.json");
+                    var json = file.ReadToEnd();
+                    file.Close();
+                    steels = JsonSerializer.Deserialize<List<PhysicalData.Gost34233_4.Steel>>(json);
+                }
+                catch
+                {
+                    return null;
+                }
+
+                return steels?.Select(s => s.Name);
+            }
+        }
+
+        public static double GetAlfa(string steelName, double temperature, string gost = "Gost34233_1")
+        {
+            var steels = new List<PhysicalData.Gost34233_4.SteelForAlfa>();
+
+            try
+            {
+                using StreamReader file = new($"PhysicalData/{gost}/Steels.json");
+                var json = file.ReadToEnd();
+                file.Close();
+                steels = JsonSerializer.Deserialize<List<PhysicalData.Gost34233_4.SteelForAlfa>>(json);
+            }
+            catch
+            {
+                return 0;
+            }
+
+            var steel = steels.FirstOrDefault(s => s.Name.Equals(steelName));
+
+            steel.Values = steel.Values.Where(v => v.AlfaValue != 0).ToList();
+
+            for (var i = 0; i < steel.Values.Count; i++)
+            {
+                if (steel.Values[i].Temperature >= temperature)
+                {
+                    return steel.Values[i].AlfaValue;
+                }
+            }
+
+            return 0;
         }
     }
 }

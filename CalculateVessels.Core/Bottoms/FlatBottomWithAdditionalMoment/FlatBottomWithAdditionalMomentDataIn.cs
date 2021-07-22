@@ -57,8 +57,6 @@ namespace CalculateVessels.Core.Bottoms.FlatBottomWithAdditionalMoment
 
         //gasket
         public string GasketType { get; set; }
-        public bool IsGasketMetal { get; set; }
-        public bool IsGasketFlat { get; set; }
         public double Dnp { get; set; }
         public double Dcp { get; set; }
         public double bp { get; set; }
@@ -70,12 +68,14 @@ namespace CalculateVessels.Core.Bottoms.FlatBottomWithAdditionalMoment
         public double h { get; set; }
         public bool IsFlangeIsolated { get; set; }
         public bool IsFlangeFlat { get; set; }
-        public double s0 { get; set; }
+        public double S0 { get; set; }
         public double S1 { get; set; }
         public double l { get; set; }
         public double Dn { get; set; }
+        public FlangeFaceType FlangeFace { get; set; }
 
         //washer
+        public bool IsWasher { get; set; }
         public string WasherSteel { get; set; }
         public double hsh { get; set; }
 
@@ -84,5 +84,8 @@ namespace CalculateVessels.Core.Bottoms.FlatBottomWithAdditionalMoment
 
         public double di { get; set; }
         public double d { get; set; }
+
+
+        public string Name { get; set; }
     }
 }

@@ -14,5 +14,7 @@ namespace CalculateVessels.Data.PhysicalData.Gost34233_4
         public double q_d { get; set; }
         public double Kobj { get; set; }
         public double Ep { get; set; }
+        public bool IsFlat { get; set; }
+        public bool IsMetal { get; set; }
     }
 }
