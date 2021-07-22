@@ -72,7 +72,7 @@ namespace CalculateVessels
 
             cover_pb.Image = (Bitmap)new ImageConverter().ConvertFrom(Data.Properties.Resources.FlatBottomWithMoment);
             flange_pb.Image = (Bitmap) new ImageConverter().ConvertFrom
-                (Data.Properties.Resources.fl2_a);
+                (Data.Properties.Resources.fl2_a52857);
 
             var gaskets = Physical.Gost34233_4.GetGasketsList()?.ToArray();
             if (gaskets != null)
@@ -132,7 +132,7 @@ namespace CalculateVessels
                 string type = scirtFlange_cb.Checked ? "fl1_" : "fl2_";
                 flange_pb.Image =
                     (Bitmap)new ImageConverter()
-                    .ConvertFrom(Data.Properties.Resources.ResourceManager.GetObject(type + i));
+                    .ConvertFrom(Data.Properties.Resources.ResourceManager.GetObject(type + i + "52857"));
             }
         }
 
@@ -150,9 +150,8 @@ namespace CalculateVessels
 
             d4_flange_rb.Enabled = cb.Checked;
             string type = cb.Checked ? "fl1_" : "fl2_";
-            flange_pb.Image =
-                (Bitmap)new ImageConverter()
-                    .ConvertFrom(Data.Properties.Resources.ResourceManager.GetObject(type + name));
+            flange_pb.Image = (Bitmap)new ImageConverter()
+                    .ConvertFrom(Data.Properties.Resources.ResourceManager.GetObject(type + name + "52857"));
 
             s_1_l.Visible = !cb.Checked;
             s_2_l.Visible = !cb.Checked;
