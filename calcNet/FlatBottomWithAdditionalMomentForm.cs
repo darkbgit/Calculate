@@ -654,13 +654,13 @@ namespace CalculateVessels
                 //Dcp
                 {
                     if (double.TryParse(Dcp_tb.Text, NumberStyles.AllowDecimalPoint,
-                    CultureInfo.InvariantCulture, out var Dcp))
+                    CultureInfo.InvariantCulture, out var Dnp))
                     {
-                        dataIn.Dcp = Dcp;
+                        dataIn.Dcp = Dnp;
                     }
                     else
                     {
-                        dataInErr.Add("Dcp неверный ввод");
+                        dataInErr.Add("Dnp неверный ввод");
                     }
                 }
 
@@ -726,7 +726,7 @@ namespace CalculateVessels
                     if (!bottom.IsCriticalError)
                     {
                         //c_tb.Text = $"{bottom.c:f2}";
-                        scalc_l.Text = $"sp={bottom.PressurePermissible:f3} мм";
+                        p_d_l.Text = $"p={bottom.PressurePermissible:f3} МПа";
                         calc_b.Enabled = true;
                         if (bottom.IsError)
                         {
@@ -747,6 +747,57 @@ namespace CalculateVessels
             {
                 MessageBox.Show(string.Join<string>(Environment.NewLine, dataInErr));
             }
+        }
+
+        private void Calc_b_Click(object sender, EventArgs e)
+        {
+            scalc_l.Text = "";
+
+            List<string> dataInErr = new();
+
+            //name
+            dataIn.Name = name_tb.Text;
+            
+
+            bool isNotError = dataInErr.Count == 0 && dataIn.IsDataGood;
+
+            if (isNotError)
+            {
+                FlatBottomWithAdditionalMoment bottom = new(dataIn);
+                bottom.Calculate();
+                if (!bottom.IsCriticalError)
+                {
+                    p_d_l.Text = $"pd={bottom.PressurePermissible:f2} МПа";
+
+                    if (this.Owner is MainForm main)
+                    {
+                        main.Word_lv.Items.Add(bottom.ToString());
+                        Elements.ElementsList.Add(bottom);
+                        this.Hide();
+                    }
+                    else
+                    {
+                        System.Windows.Forms.MessageBox.Show("MainForm Error");
+                    }
+
+                    if (bottom.IsError)
+                    {
+                        MessageBox.Show(string.Join<string>(Environment.NewLine, bottom.ErrorList));
+                    }
+
+                    MessageBox.Show("Calculation complete");
+
+                }
+                else
+                {
+                    MessageBox.Show(string.Join<string>(Environment.NewLine, bottom.ErrorList));
+                }
+            }
+            else
+            {
+                MessageBox.Show(string.Join<string>(Environment.NewLine, dataInErr.Union(dataIn.ErrorList)));
+            }
+
         }
     }
 }

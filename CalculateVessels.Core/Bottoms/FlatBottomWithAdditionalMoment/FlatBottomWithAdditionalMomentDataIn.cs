@@ -57,7 +57,6 @@ namespace CalculateVessels.Core.Bottoms.FlatBottomWithAdditionalMoment
 
         //gasket
         public string GasketType { get; set; }
-        public double Dnp { get; set; }
         public double Dcp { get; set; }
         public double bp { get; set; }
         public double hp { get; set; }

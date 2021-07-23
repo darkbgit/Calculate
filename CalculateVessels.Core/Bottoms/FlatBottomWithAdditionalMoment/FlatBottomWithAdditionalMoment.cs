@@ -10,6 +10,8 @@ using DocumentFormat.OpenXml.Packaging;
 using CalculateVessels.Core.Word;
 using CalculateVessels.Core.Word.Enums;
 using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
+using DocumentFormat.OpenXml.Wordprocessing;
 
 namespace CalculateVessels.Core.Bottoms.FlatBottomWithAdditionalMoment
 {
@@ -50,6 +52,7 @@ namespace CalculateVessels.Core.Bottoms.FlatBottomWithAdditionalMoment
 
         private bool _isGasketFlat;
         private bool _isGasketMetal;
+        private bool _isConditionUseFormulas;
 
         private double _K;
         private double _K_1;
@@ -146,6 +149,7 @@ namespace CalculateVessels.Core.Bottoms.FlatBottomWithAdditionalMoment
         private double _deltakr;
 
         private double _sigma_dnb;
+        private double _sigma_d_krm;
         private double _psi1;
         private double _Phi;
         private double _Phi_1;
@@ -154,6 +158,7 @@ namespace CalculateVessels.Core.Bottoms.FlatBottomWithAdditionalMoment
         private double _Xkr;
         private double _Kkr;
 
+        public override string ToString() => $"Плоская крышка с дополнительным краевым моментом {_fbdi.Name}";
 
         public void Calculate()
         {
@@ -179,6 +184,7 @@ namespace CalculateVessels.Core.Bottoms.FlatBottomWithAdditionalMoment
             _Ekr20 = Physical.Gost34233_1.GetE(_fbdi.CoverSteel, 20, ref errorList);
             _Ekr = Physical.Gost34233_1.GetE(_fbdi.CoverSteel, _fbdi.t, ref errorList);
             _alfakr = Physical.GetAlfa(_fbdi.CoverSteel, _fbdi.t);
+            _sigma_d_krm = _fbdi.sigma_d * 1.5 / 1.1;
 
             _tkr = _fbdi.t;
             _hkr = _fbdi.s2;
@@ -236,7 +242,7 @@ namespace CalculateVessels.Core.Bottoms.FlatBottomWithAdditionalMoment
             if (_isGasketFlat)
             {
                 _b0 = _fbdi.bp <= 15 ? _fbdi.bp : 3.8 * Math.Sqrt(_fbdi.bp);
-                _Dcp = _fbdi.Dnp - _b0;
+                _Dcp = _fbdi.Dcp + _fbdi.bp - _b0;
             }
             else
             {
@@ -367,7 +373,7 @@ namespace CalculateVessels.Core.Bottoms.FlatBottomWithAdditionalMoment
             _s1 = _s1p + _c;
 
             _Phi_1 = _Pbp / _fbdi.sigma_d;
-            _Phi_2 = _Pbm / _fbdi.sigma_d;
+            _Phi_2 = _Pbm / _sigma_d_krm;
             _Phi = Math.Max(_Phi_1, _Phi_2);
 
             _K7Fors2 = 0.8 * Math.Sqrt(_fbdi.D3 / _Dcp - 1);
@@ -389,7 +395,8 @@ namespace CalculateVessels.Core.Bottoms.FlatBottomWithAdditionalMoment
             if (_fbdi.s1 >= _s1 && _fbdi.s2 >= _s2 && _fbdi.s3 >= _s3)
             {
                 _conditionUseFormulas = (_fbdi.s1 - _c) / _Dp;
-                _Kp = _conditionUseFormulas <= 0.11
+                _isConditionUseFormulas = _conditionUseFormulas <= 0.11;
+                _Kp = _isConditionUseFormulas
                     ? 1
                     : 2.2 / (1 + Math.Sqrt(1 + Math.Pow(6 * (_fbdi.s1 - _c) / _Dp, 2)));
 
@@ -442,12 +449,11 @@ namespace CalculateVessels.Core.Bottoms.FlatBottomWithAdditionalMoment
 
             {
                 var imagePart = mainPart.AddImagePart(ImagePartType.Gif);
-                
-                
+
                 var type = _fbdi.IsFlangeFlat ? "f21_" : "fl1_";
 
                 string type1 = "";
-                
+
                 switch (_fbdi.FlangeFace)
                 {
                     case FlangeFaceType.Flat:
@@ -464,652 +470,631 @@ namespace CalculateVessels.Core.Bottoms.FlatBottomWithAdditionalMoment
                         break;
                 }
 
-                var stream = Data.Properties.Resources.ResourceManager.GetObject(type + type1 + "52857");
+                var b =(byte[])Data.Properties.Resources.ResourceManager.GetObject(type + type1 + "52857");
+                var stream = new MemoryStream(b);
                 imagePart.FeedData(stream);
 
-                body.AddParagraph("").AddImage(mainPart.GetIdOfPart(imagePart));
-        }
-
-//        body.AddParagraph("Исходные данные").Alignment(AlignmentType.Center);
-
-//            //table
-//            {
-//                var table = body.AddTable();
-
-//                table.AddRow()
-//                    .AddCell("Внутренний диаметр обечайки, D:")
-//                    .AddCell($"{_fbdi.D} мм");
-
-//                table.AddRow()
-//                    .AddCell("Толщина стенки обечайки, s:")
-//                    .AddCell($"{_fbdi.s} мм");
-
-//                table.AddRow()
-//                    .AddCell("Прибавка к расчетной толщине, c:")
-//                    .AddCell($"{_fbdi.c} мм");
-
-//                table.AddRow()
-//                    .AddCell("Длина обечайки, ")
-//                    .AppendEquation("L_ob")
-//                    .AppendText(":")
-//                    .AddCell($"{_fbdi.Lob} мм");
-
-//                table.AddRow()
-//                    .AddCell("Коэффициент прочности сварного шва, φ:")
-//                    .AddCell($"{_fbdi.fi}");
-
-//                table.AddRow()
-//                    .AddCell("Марка стали")
-//                    .AddCell($"{_fbdi.Steel}");
-
-//                table.AddRow()
-//                    .AddCell("Ширина опоры, b:")
-//                    .AddCell($"{_fbdi.b} мм");
-
-//                table.AddRow()
-//                    .AddCell("Угол охвата опоры, ")
-//                    .AppendEquation("δ_1")
-//                    .AppendText(":")
-//                    .AddCell($"{_fbdi.delta1} °");
-
-//                table.AddRow()
-//                    .AddCell("Длина свободно выступающей части, e:")
-//                    .AddCell($"{_fbdi.e} мм");
-
-//                table.AddRow()
-//                    .AddCell("Длина выступающей цилиндрической части сосуда, включая отбортовку днища, a")
-//                    .AddCell($"{_fbdi.a} мм");
-
-//                table.AddRow()
-//                    .AddCell("Высота опоры, Н")
-//                    .AddCell($"{_fbdi.H} мм");
-//                if (_fbdi.Type == SaddleType.SaddleWithoutRingWithSheet)
-//                {
-//                    table.AddRow()
-//                        .AddCell("Толщина подкладного листа, ")
-//                        .AppendEquation("s_2")
-//                        .AppendText(":")
-//                        .AddCell($"{_fbdi.s2} мм");
-
-//                    table.AddRow()
-//                        .AddCell("Ширина подкладного листа, мм")
-//                        .AppendEquation("b_2")
-//                        .AppendText(":")
-//                        .AddCell($"{_fbdi.b2} мм");
-
-//                    table.AddRow()
-//                        .AddCell("Угол охвата подкладного листа, ")
-//                        .AppendEquation("δ_2")
-//                        .AppendText(":")
-//                        .AddCell($"{_fbdi.delta2} °");
-//    }
-//    body.InsertTable(table);
-//            }
-
-//body.AddParagraph("");
-//            body.AddParagraph("Условия нагружения")
-//                .Alignment(AlignmentType.Center);
-
-//            //table
-//            {
-//                var table = body.AddTable();
-
-//                table.AddRow()
-//                    .AddCell("Собственный вес с содержимым, G:")
-//                    .AddCell($"{_fbdi.G} H");
-
-//                table.AddRow()
-//                    .AddCell("Расчетная температура, Т:")
-//                    .AddCell($"{_fbdi.Temp} °С");
-
-//                table.AddRow()
-//                    .AddCell("Расчетное " +
-//                             (_fbdi.IsPressureIn
-//                             ? "внутреннее избыточное"
-//                             : "наружное") + " давление, p:")
-//                    .AddCell($"{_fbdi.p} МПа");
-
-//                table.AddRow()
-//                    .AddCell($"Допускаемое напряжение для материала {_fbdi.Steel} при расчетной температуре, [σ]:")
-//                    .AddCell($"{_fbdi.sigma_d} МПа");
-
-//                if (!_fbdi.IsPressureIn)
-//                {
-//                    table.AddRow()
-//                        .AddCell("Модуль продольной упругости при расчетной температуре, E:")
-//                        .AddCell($"{_fbdi.E} МПа");
-//                }
-//                body.InsertTable(table);
-//            }
-
-//            body.AddParagraph("");
-//            body.AddParagraph("Результаты расчета").Alignment(AlignmentType.Center);
-//            body.AddParagraph("");
-
-
-//            body.AddParagraph("Расчетные параметры").Alignment(AlignmentType.Center);
-//            body.AddParagraph("");
-
-//            body.AddParagraph("Распределенная весовая нагрузка");
-//            body.AddParagraph("")
-//                .AppendEquation("q=G/(L+4/3∙H)" +
-//                    $"={_fbdi.G}/({_fbdi.L}+4/3∙{_fbdi.H})={_q:f2} Н/мм");
-
-//            body.AddParagraph("Расчетный изгибающий момент, действующий на консольную часть обечайки");
-//            body.AddParagraph("")
-//                .AppendEquation("M_0=q∙D^2/16" +
-//                                $"={_q:f2}∙{_fbdi.D}^2/16={_M0:f2} Н∙мм");
-
-//            body.AddParagraph("Опорное усилие");
-//            body.AddParagraph("")
-//                .AppendEquation("F_1=F_2=G/2" +
-//                                $"={_fbdi.G}/2={_F1:f2} H");
-
-//            body.AddParagraph("Изгибающий момент над опорами");
-//            body.AddParagraph("")
-//                .AppendEquation("M_1=M_2=(q∙e^2)/2-M_0" +
-//                                $"=({_q:f2}∙{_fbdi.e:f2}^2)/2-{_M0:f2}={_M1:f2} Н∙мм");
-
-//            body.AddParagraph("Максимальный изгибающий момент между опорами");
-//            body.AddParagraph("")
-//                .AppendEquation("M_12=M_0+F_1∙(L/2-a)-q/2∙(L/2+2/3∙H)^2" +
-//                                $"={_M0:f2}+{_F1:f2}∙({_fbdi.L}/2-{_fbdi.a})-{_q:f2}/2∙({_fbdi.L}/2+2/3∙{_fbdi.H})^2={_M12:f2} Н∙мм");
-
-//            body.AddParagraph("Поперечное усилие в сечении оболочки над опорой");
-//            body.AddParagraph("")
-//                .AppendEquation("Q_1=Q_2=(L-2∙a)/(L+4/3∙H)∙F_1" +
-//                                $"=({_fbdi.L}-2∙{_fbdi.a})/({_fbdi.L}+4/3∙{_fbdi.H})∙{_F1:f2}={_Q1:f2} H");
-
-//            body.AddParagraph("Несущую способность обечайки в сечении между опорами следует проверять при условии");
-//            body.AddParagraph("").AppendEquation("max{M_12}>max{M_1}");
-//            body.AddParagraph("").AppendEquation($"{_M12:f2} Н∙мм > {_M1:f2} Н∙мм");
-//            if (_M12 > _M1)
-//            {
-//                body.AddParagraph("Проверка несущей способности обечайки в сечении между опорами");
-//                body.AddParagraph("Условие прочности");
-//                body.AddParagraph("").AppendEquation("(p∙D)/(4∙(s-c))+(4∙M_12∙K_9)/(π∙D^2∙(s-c))≤[σ]∙φ");
-//                body.AddParagraph("где ")
-//                    .AppendEquation("K_9")
-//                    .AddRun(" - коэффициент, учитывающий частичное заполнение жидкостью");
-//                body.AddParagraph("")
-//                    .AppendEquation("K_9=max{[1.6-0.20924∙(x-1)+0.028702∙x∙(x-1)+0.4795∙10^3∙y∙(x-1)-0.2391∙10^-6∙x∙y∙(x-1)-0.29936∙10^-2∙(x-1)∙x^2-0.85692∙10^-6∙(х-1)∙у^2+0.88174∙10^-6∙х^2∙(х-1)∙у-0.75955∙10^-8∙у^2∙(х-1)∙х+0.82748∙10^-4∙(х-1)∙х^3+0.48168∙10^-9∙(х-1)∙у^3];1}");
-//                body.AddParagraph("где ").AppendEquation("y=D/(s-c);x=L/D");
-//                body.AddParagraph("")
-//                    .AppendEquation($"y={_fbdi.D}/({_fbdi.s}-{_fbdi.c})={_y:f2}");
-//                body.AddParagraph("")
-//                    .AppendEquation($"x={_fbdi.L}/{_fbdi.D}={_x:f2}");
-
-//                body.AddParagraph("").AppendEquation($"K_9=max({_K9_1:f2};1)={_K9:f2}");
-
-//                body.AddParagraph("")
-//                    .AppendEquation($"(p∙D)/(4∙(s-c))+(4∙M_12∙K_9)/(π∙D^2∙(s-c))=({_fbdi.p}∙{_fbdi.D})/(4∙({_fbdi.s}-{_fbdi.c}))+(4∙{_M12:f2}∙{_K9:f2})/(π∙{_fbdi.D}^2∙({_fbdi.s}-{_fbdi.c}))={_conditionStrength1_1:f2}");
-//                body.AddParagraph("")
-//                    .AppendEquation($"[σ]∙φ={_fbdi.sigma_d}∙{_fbdi.fi}={_conditionStrength1_2:f2}");
-//                body.AddParagraph("")
-//                    .AppendEquation($"{_conditionStrength1_1:f2}≤{_conditionStrength1_2:f2}");
-//                if (_conditionStrength1_1 <= _conditionStrength1_2)
-//                {
-//                    body.AddParagraph("Условие прочности выполняется");
-//                }
-//                else
-//                {
-//                    body.AddParagraph("Условие прочности не выполняется")
-//                        .Bold()
-//                        .Color(System.Drawing.Color.Red);
-//                }
-//                body.AddParagraph("Условие устойчивости");
-//                body.AddParagraph("").AppendEquation("|M_12|/[M]≤1");
-
-//                body.AddParagraph("где [M] - допускаемый изгибающий момент из условия устойчивости");
-//                body.AddParagraph("")
-//                    .AppendEquation("[M]=(8.9∙10^-5∙E)/n_y∙D^3∙[(100∙(s-c))/D]^2.5" +
-//                                    $"=(8.9∙10^-5∙{_fbdi.E})/{_fbdi.ny}∙{_fbdi.D}^3∙[(100∙({_fbdi.s}-{_fbdi.c}))/{_fbdi.D}]^2.5={_M_d:f2} Н∙мм");
-//                body.AddParagraph("").AppendEquation($"|{_M12:f2}|/{_M_d:f2}={_conditionStability1:f2}≤1");
-
-//                if (_conditionStability1 <= 1)
-//                {
-//                    body.AddParagraph("Условие устойчивости выполняется");
-//                }
-//                else
-//                {
-//                    body.AddParagraph("Условие устойчивости не выполняется")
-//                        .Bold()
-//                        .Color(System.Drawing.Color.Red);
-//                }
-//            }
-//            else
-//            {
-//                body.AddParagraph("Проверка несущей способности обечайки в сечении между опорами не требуется");
-//            }
-
-//            switch (_fbdi.Type)
-//            {
-//                case SaddleType.SaddleWithoutRingWithoutSheet:
-//                    {
-//                        body.AddParagraph("Проверка несущей способности обечайки, не укрепленной кольцами жесткости в области опорного узла и без подкладного листа в месте опоры");
-//                        body.AddParagraph("Вспомогательные параметры и коэффициенты");
-//                        body.AddParagraph("Параметр, определяемый расстоянием от середины опоры до днища");
-//                        body.AddParagraph("")
-//                            .AppendEquation("γ=2.83∙a/D∙√((s-c)/D)" +
-//                                            $"=2.83∙{_fbdi.a}/{_fbdi.D}∙√(({_fbdi.s}-{_fbdi.c})/{_fbdi.D})={_gamma:f2}");
-
-//                        body.AddParagraph("Параметр, определяемый шириной пояса опоры");
-//                        body.AddParagraph("")
-//                            .AppendEquation("β_1=0.91∙b/√(D∙(s-c))" +
-//                                            $"=0.91∙{_fbdi.b}/√({_fbdi.D}∙({_fbdi.s}-{_fbdi.c}))={_beta1:f2}");
-
-//                        body.AddParagraph("Коэффициенты, учитывающие влияние ширины пояса опоры");
-//                        body.AddParagraph("")
-//                            .AppendEquation("K_10=max{(exp(-β_1)∙sin(β_1))/β_1;0.25}" +
-//                                            $"=max{{(exp(-{_beta1:f2})∙sin({_beta1:f2}))/{_beta1:f2};0.25}}" +
-//                                            $"=max({_K10_1:f2};0.25)={_K10:f2}");
-
-//                        body.AddParagraph("")
-//                            .AppendEquation("K_11=(1-exp(-β_1)∙cos(β_1))/β_1" +
-//                                            $"=(1-exp(-{_beta1:f2})∙cos({_beta1:f2}))/{_beta1:f2}={_K11:f2}");
-
-//                        body.AddParagraph("Коэффициенты, учитывающие влияние угла охвата");
-//                        body.AddParagraph("")
-//                            .AppendEquation("K_12=(1.15-0.1432∙δ_1)/sin(0.5∙δ_1)" +
-//                                            $"=(1.15-0.1432∙{DegToRad(_fbdi.delta1):f2})/sin(0.5∙{DegToRad(_fbdi.delta1):f2})={_K12:f2}");
-
-//                        body.AddParagraph("")
-//                            .AppendEquation("K_13=(max{1.7-(2.1∙δ_1)/π;0})/sin(0.5∙δ_1)" +
-//                                            $"=(max{{1.7 - (2.1∙{DegToRad(_fbdi.delta1):f2})/π;0}})/sin(0.5∙{DegToRad(_fbdi.delta1):f2})={_K13:f2}");
-
-//                        body.AddParagraph("")
-//                            .AppendEquation("K_14=(1.45-0.43∙δ_1)/sin(0.5∙δ_1)" +
-//                                            $"=(1.45-0.43∙{DegToRad(_fbdi.delta1):f2})/sin(0.5∙{DegToRad(_fbdi.delta1):f2})={_K14:f2}");
-
-//                        body.AddParagraph("Коэффициенты, учитывающие влияние расстояния от середины опоры до днища и угла охвата");
-//                        body.AddParagraph("")
-//                            .AppendEquation("K_15=min{1.0;(0.8∙√γ+6∙γ)/δ_1}" +
-//                                            $"min{{1.0;(0.8∙√{_gamma:f2}+6∙{_gamma:f2})/{DegToRad(_fbdi.delta1):f2}}}=min{{1.0;{_K15_2:f2}}}={_K15:f2}");
-
-//                        body.AddParagraph("")
-//                            .AppendEquation("K_16=1-0.65/(1+(6∙γ)^2)∙√(π/(3∙δ_1))"
-//                                            + $"=1-0.65/(1+(6∙{_gamma:f2})^2)∙√(π/(3∙{DegToRad(_fbdi.delta1):f2}))={_K16:f2}");
-
-//                        body.AddParagraph("Коэффициенты, учитывающие влияние ширины пояса опоры и угла охвата");
-//                        body.AddParagraph("")
-//                            .AppendEquation("K_17=1/(1+0.6∙∛(D/(s-c))∙(b/D)∙δ_1)" +
-//                                            $"=1/(1+0.6∙∛({_fbdi.D}/({_fbdi.s}-{_fbdi.c}))∙({_fbdi.b}/{_fbdi.D})∙{DegToRad(_fbdi.delta1):f2})={_K17:f2}");
-
-//                        body.AddParagraph("Общее мембранное меридиональное напряжение изгиба от весовых нагрузок, действующее в области опорного узла");
-//                        body.AddParagraph("")
-//                            .AppendEquation("σ_mx=4∙M_i/(π∙D^2∙(s-c))" +
-//                                            $"=4∙{_M1}/(π∙{_fbdi.D}^2∙({_fbdi.s}-{_fbdi.c}))={_sigma_mx:f2}");
-
-//                        body.AddParagraph("Условие прочности");
-//                        body.AddParagraph("").AppendEquation("F_1≤min{[F]_2;[F]_3}");
-//                        body.AddParagraph("где ")
-//                            .AppendEquation("[F]_2")
-//                            .AddRun(" - допускаемое опорное усилие от нагружения в меридиональном направлении");
-//                        body.AddParagraph("").AppendEquation("[F]_2=(0.7∙[σ_i]_2∙(s-c)∙√(D∙(s-c)))/(K_10∙K_12)");
-
-//                        body.AddParagraph("\t")
-//                            .AppendEquation("[F]_3")
-//                            .AddRun(" - допускаемое опорное усилие от нагружения в окружном направлении");
-
-//                        body.AddParagraph("")
-//                            .AppendEquation("[F]_3=(0.9∙[σ_i]_3∙(s-c)∙√(D∙(s-c)))/(K_14∙K_16∙K_17)");
-
-//                        body.AddParagraph("где ")
-//                            .AppendEquation("[σ_i]_2, [σ_i]_2")
-//                            .AddRun(" - предельные напряжения изгиба в меридиональном и окружном направлениях");
-
-//                        body.AddParagraph("")
-//                            .AppendEquation("[σ_i]=K_1∙K_2∙[σ]");
-
-//                        body.AddParagraph("")
-//                            .AppendEquation("K_1=(1-ϑ_2^2)/((1/3+ϑ_1∙ϑ_2)+√((1/3+ϑ_1∙ϑ_2)^2+(1-ϑ_2^2)∙ϑ_1^2))");
-
-//                        body.AddParagraph("")
-//                            .AppendEquation($"K_2={_K2}")
-//                            .AddRun(_fbdi.IsAssembly
-//                            ? " - для условий испытания и монтажа"
-//                            : " - для рабочих условий");
-
-//                        body.AddParagraph("для ").AppendEquation("[σ_i]_2");
-//                        body.AddParagraph("")
-//                            .AppendEquation("ϑ_1=-(0,23∙K_13∙K_15)/(K_12∙K_10)" +
-//                                            $"={_v1_2:f2}");
-
-//                        body.AddParagraph("")
-//                            .AppendEquation("ϑ_(2,1)=- ̅σ_mx∙1/(K_2∙[σ])" +
-//                                            $"={_v21_2:f2}");
-//                        body.AddParagraph("")
-//                            .AppendEquation("ϑ_(2,2)=[(p∙D)/(4∙(s-c))- ̅σ_mx]∙1/(K_2∙[σ])" +
-//                                            $"={_v22_2:f2}");
-
-//                        body.AddParagraph("Для ")
-//                            .AppendEquation("ϑ_2")
-//                            .AddRun("принимают одно из значений ")
-//                            .AppendEquation("ϑ_(2,1)")
-//                            .AddRun(" или ")
-//                            .AppendEquation("ϑ_(2,2)")
-//                            .AddRun(", для которого предельное напряжение изгибабудет наименьшим.");
-
-//                        body.AddParagraph("")
-//                            .AppendEquation(_K1_2For_v21 < _K1_2For_v22
-//                            ? $"ϑ_2=ϑ_(2,1)={_v21_2:f2}"
-//                            : $"ϑ_2=ϑ_(2,2)={_v22_2:f2}");
-
-//                        body.AddParagraph("").AppendEquation($"K_1={_K1_2:f2}");
-
-//                        body.AddParagraph("")
-//                            .AppendEquation($"[σ_i]_2={_K1_2:f2}∙{_K2:f2}∙{_fbdi.sigma_d}={_sigmai2:f2}");
-
-//                        body.AddParagraph("")
-//                            .AppendEquation($"[F]_2=(0.7∙{_sigmai2:f2}∙({_fbdi.s}-{_fbdi.c})∙√({_fbdi.D}∙({_fbdi.s}-{_fbdi.c})))/({_K10:f2}∙{_K12:f2})={_F_d2:f2}");
-
-//                        body.AddParagraph("для ").AppendEquation("[σ_i]_3");
-//                        body.AddParagraph("")
-//                            .AppendEquation("ϑ_1=-(0,53∙K_11)/(K_14∙K_16∙K_17∙sin(0.5∙δ_1))" +
-//                                            $"={_v1_3:f2}");
-
-//                        body.AddParagraph("").AppendEquation("ϑ_(2,1)=0");
-
-//                        body.AddParagraph("")
-//                            .AppendEquation("ϑ_(2,2)=(p∙D)/(2∙(s-c))∙1/(K_2∙[σ])" + $"={_v22_3:f2}");
-
-//                        body.AddParagraph("Для ")
-//                            .AppendEquation("ϑ_2")
-//                            .AddRun("принимают одно из значений ")
-//                            .AppendEquation("ϑ_(2,1)")
-//                            .AddRun(" или ")
-//                            .AppendEquation("ϑ_(2,2)")
-//                            .AddRun(", для которого предельное напряжение изгибабудет наименьшим.");
-
-//                        body.AddParagraph("").AppendEquation(_K1_3For_v21 < _K1_3For_v22
-//                            ? $"ϑ_2=ϑ_(2,1)={_v21_3:f2}"
-//                            : $"ϑ_2=ϑ_(2,2)={_v22_3:f2}");
-
-//                        body.AddParagraph("").AppendEquation($"K_1={_K1_3:f2}");
-
-//                        body.AddParagraph("")
-//                            .AppendEquation($"[σ_i]_3={_K1_3:f2}∙{_K2:f2}∙{_fbdi.sigma_d}={_sigmai3:f2}");
-
-//                        body.AddParagraph("")
-//                            .AppendEquation($"[F]_3=(0.9∙{_sigmai2:f2}∙({_fbdi.s}-{_fbdi.c})∙√({_fbdi.D}∙({_fbdi.s}-{_fbdi.c})))/({_K14:f2}∙{_K16:f2}∙{_K17:f2})={_F_d3:f2}");
-
-//                        body.AddParagraph("")
-//                            .AppendEquation($"{_F1:f2}≤min{{{_F_d2:f2};{_F_d3:f2}}}");
-
-//                        if (_F1 <= Math.Min(_F_d2, _F_d3))
-//                        {
-//                            body.AddParagraph("Условие прочности выполняется");
-//                        }
-//                        else
-//                        {
-//                            body.AddParagraph("Условие прочности не выполняется")
-//                                .Bold()
-//                                .Color(System.Drawing.Color.Red);
-//                        }
-
-//                        body.AddParagraph("Условие устойчивости");
-
-//                        body.AddParagraph("").AppendEquation("|p|/[p]+|M_i|/[M]+|F_e|/[F]+(Q_i/[Q])^2≤1");
-
-//                        body.AddParagraph("где p - расчетное наружное давление (для сосудов, работающих под внутренним избыточным давлением, р=0");
-
-//                        body.AddParagraph("где ")
-//                            .AppendEquation("F_e")
-//                            .AddRun(" - эффективное осевое усилие от местных мембранных напряжений, действующих в области опоры");
-
-//                        body.AddParagraph("")
-//                            .AppendEquation("F_e=F_i∙π/4∙K_13∙K_15∙√(D/(s-c))" +
-//                                            $"={_F1:f2}∙π/4∙{_K13:f2}∙{_K15:f2}∙√({_fbdi.D}/({_fbdi.s}-{_fbdi.c}))={_Fe:f2}");
-
-//                        body.AddParagraph("")
-//                            .AppendEquation(_fbdi.IsPressureIn
-//                        ? "0"
-//                        : $"{_fbdi.p}/{_p_d}" +
-//                          $"+{_M1:f2}/{_M_d:f2}+{_Fe:f2}/{_F_d:f2}+({_Q1:f2}/{_Q_d:f2})^2={_conditionStability2:f2}≤1");
-
-//                        if (_conditionStability2 <= 1)
-//                        {
-//                            body.AddParagraph("Условие устойчивости выполняется");
-//                        }
-//                        else
-//                        {
-//                            body.AddParagraph("Условие устойчивости не выполняется")
-//                                .Bold()
-//                                .Color(System.Drawing.Color.Red);
-//                        }
-//                        break;
-//                    }
-//                case SaddleType.SaddleWithoutRingWithSheet:
-//                    {
-//                        body.AddParagraph("Проверка несущей способности обечайки, не укрепленной кольцами жесткости в области опорного узла с подкладным листом в месте опоры");
-//                        body.AddParagraph("Вспомогательные параметры и коэффициенты");
-
-//                        body.AddParagraph("")
-//                            .AppendEquation("s_ef=(s-c)∙√(1+(s_2/(s-c))^2)" +
-//                                            $"=({_fbdi.s}-{_fbdi.c})∙√(1+({_fbdi.s2}/({_fbdi.s}-{_fbdi.c}))^2)={_sef:f2}");
-
-//                        body.AddParagraph("Параметр, определяемый расстоянием от середины опоры до днища");
-//                        body.AddParagraph("")
-//                            .AppendEquation("γ=2.83∙a/D∙√(s_ef/D)" +
-//                                            $"=2.83∙{_fbdi.a}/{_fbdi.D}∙√({_sef:f2})/{_fbdi.D})={_gamma:f2}");
-
-//                        body.AddParagraph("Параметр, определяемый шириной пояса опоры");
-//                        body.AddParagraph("")
-//                            .AppendEquation("β_1=0.91∙b_2/√(D∙s_ef)" +
-//                                             $"=0.91∙{_fbdi.b}/√({_fbdi.D}∙{_sef:f2})={_beta1:f2}");
-
-//                        body.AddParagraph("Коэффициенты, учитывающие влияние ширины пояса опоры");
-//                        body.AddParagraph("")
-//                            .AppendEquation("K_10=max{(exp(-β_1)∙sin(β_1))/β_1;0.25}" +
-//                                            $"=max{{(exp(-{_beta1:f2})∙sin({_beta1:f2}))/{_beta1:f2};0.25}}" +
-//                                            $"=max({_K10_1:f2};0.25)={_K10:f2}");
-
-//                        body.AddParagraph("")
-//                            .AppendEquation("K_11=(1-exp(-β_1)∙cos(β_1))/β_1" +
-//                                            $"=(1-exp(-{_beta1:f2})∙cos({_beta1:f2}))/{_beta1:f2}={_K11:f2}");
-
-//                        body.AddParagraph("Коэффициенты, учитывающие влияние угла охвата");
-//                        body.AddParagraph("")
-//                            .AppendEquation("K_12=(1.15-0.1432∙δ_2)/sin(0.5∙δ_2)" +
-//                                            $"=(1.15-0.1432∙{DegToRad(_fbdi.delta2):f2})/sin(0.5∙{DegToRad(_fbdi.delta2):f2})={_K12:f2}");
-
-//                        body.AddParagraph("")
-//                            .AppendEquation("K_13=(max{1.7-(2.1∙δ_2)/π;0})/sin(0.5∙δ_2)" +
-//                                            $"=(max{{1.7 - (2.1∙{DegToRad(_fbdi.delta2):f2})/π;0}})/sin(0.5∙{DegToRad(_fbdi.delta2):f2})={_K13:f2}");
-
-//                        body.AddParagraph("")
-//                            .AppendEquation("K_14=(1.45-0.43∙δ_2)/sin(0.5∙δ_2)" +
-//                                            $"=(1.45-0.43∙{DegToRad(_fbdi.delta2):f2})/sin(0.5∙{DegToRad(_fbdi.delta2):f2})={_K14:f2}");
-
-//                        body.AddParagraph("Коэффициенты, учитывающие влияние расстояния от середины опоры до днища и угла охвата");
-//                        body.AddParagraph("")
-//                            .AppendEquation("K_15=min{1.0;(0.8∙√γ+6∙γ)/δ_2}" +
-//                                            $"min{{1.0;(0.8∙√{_gamma:f2}+6∙{_gamma:f2})/{DegToRad(_fbdi.delta2):f2}}}=min{{1.0;{_K15_2:f2}}}={_K15:f2}");
-
-//                        body.AddParagraph("")
-//                            .AppendEquation("K_16=1-0.65/(1+(6∙γ)^2)∙√(π/(3∙δ_2))"
-//                                            + $"=1-0.65/(1+(6∙{_gamma:f2})^2)∙√(π/(3∙{DegToRad(_fbdi.delta2):f2}))={_K16:f2}");
-
-//                        body.AddParagraph("Коэффициенты, учитывающие влияние ширины пояса опоры и угла охвата");
-//                        body.AddParagraph("")
-//                            .AppendEquation("K_17=1/(1+0.6∙∛(D/s_ef)∙(b_2/D)∙δ_2)" +
-//                                            $"=1/(1+0.6∙∛({_fbdi.D}/{_sef:f2})∙({_fbdi.b2}/{_fbdi.D})∙{DegToRad(_fbdi.delta2):f2})={_K17:f2}");
-
-//                        body.AddParagraph("Общее мембранное меридиональное напряжение изгиба от весовых нагрузок, действующее в области опорного узла");
-//                        body.AddParagraph("")
-//                            .AppendEquation("σ_mx=4∙M_i/(π∙D^2∙s_ef)" +
-//                                            $"=4∙{_M1}/(π∙{_fbdi.D}^2∙{_sef:f2})={_sigma_mx:f2}");
-
-//                        body.AddParagraph("Условие прочности");
-//                        body.AddParagraph("").AppendEquation("F_1≤min{[F]_2;[F]_3}");
-//                        body.AddParagraph("где ")
-//                            .AppendEquation("[F]_2")
-//                            .AddRun(" - допускаемое опорное усилие от нагружения в меридиональном направлении");
-//                        body.AddParagraph("").AppendEquation("[F]_2=(0.7∙[σ_i]_2∙s_ef∙√(D∙s_ef))/(K_10∙K_12)");
-
-//                        body.AddParagraph("\t")
-//                            .AppendEquation("[F]_3")
-//                            .AddRun(" - допускаемое опорное усилие от нагружения в окружном направлении");
-
-//                        body.AddParagraph("")
-//                            .AppendEquation("[F]_3=(0.9∙[σ_i]_3∙s_ef∙√(D∙s_ef))/(K_14∙K_16∙K_17)");
-
-//                        body.AddParagraph("где ")
-//                            .AppendEquation("[σ_i]_2, [σ_i]_2")
-//                            .AddRun(" - предельные напряжения изгиба в меридиональном и окружном направлениях");
-
-//                        body.AddParagraph("")
-//                            .AppendEquation("[σ_i]=K_1∙K_2∙[σ]");
-
-//                        body.AddParagraph("")
-//                            .AppendEquation("K_1=(1-ϑ_2^2)/((1/3+ϑ_1∙ϑ_2)+√((1/3+ϑ_1∙ϑ_2)^2+(1-ϑ_2^2)∙ϑ_1^2))");
-
-//                        body.AddParagraph("")
-//                            .AppendEquation($"K_2={_K2}")
-//                            .AddRun(_fbdi.IsAssembly
-//                            ? " - для условий испытания и монтажа"
-//                            : " - для рабочих условий");
-
-//                        body.AddParagraph("для ").AppendEquation("[σ_i]_2");
-//                        body.AddParagraph("")
-//                            .AppendEquation("ϑ_1=-(0,23∙K_13∙K_15)/(K_12∙K_10)" +
-//                                            $"={_v1_2:f2}");
-
-//                        body.AddParagraph("")
-//                            .AppendEquation("ϑ_(2,1)=- ̅σ_mx∙1/(K_2∙[σ])" +
-//                                            $"={_v21_2:f2}");
-//                        body.AddParagraph("")
-//                            .AppendEquation("ϑ_(2,2)=[(p∙D)/(4∙s_ef)- ̅σ_mx]∙1/(K_2∙[σ])" +
-//                                            $"={_v22_2:f2}");
-
-//                        body.AddParagraph("Для ")
-//                            .AppendEquation("ϑ_2")
-//                            .AddRun("принимают одно из значений ")
-//                            .AppendEquation("ϑ_(2,1)")
-//                            .AddRun(" или ")
-//                            .AppendEquation("ϑ_(2,2)")
-//                            .AddRun(", для которого предельное напряжение изгибабудет наименьшим.");
-
-//                        body.AddParagraph("")
-//                            .AppendEquation(_K1_2For_v21 < _K1_2For_v22
-//                            ? $"ϑ_2=ϑ_(2,1)={_v21_2:f2}"
-//                            : $"ϑ_2=ϑ_(2,2)={_v22_2:f2}");
-
-//                        body.AddParagraph("").AppendEquation($"K_1={_K1_2:f2}");
-
-//                        body.AddParagraph("")
-//                            .AppendEquation($"[σ_i]_2={_K1_2:f2}∙{_K2:f2}∙{_fbdi.sigma_d}={_sigmai2:f2}");
-
-//                        body.AddParagraph("")
-//                            .AppendEquation($"[F]_2=(0.7∙{_sigmai2:f2}∙{_sef:f2}∙√({_fbdi.D}∙{_sef:f2}))/({_K10:f2}∙{_K12:f2})={_F_d2:f2}");
-
-//                        body.AddParagraph("для ").AppendEquation("[σ_i]_3");
-//                        body.AddParagraph("")
-//                            .AppendEquation("ϑ_1=-(0,53∙K_11)/(K_14∙K_16∙K_17∙sin(0.5∙δ_2))" +
-//                                            $"={_v1_3:f2}");
-
-//                        body.AddParagraph("").AppendEquation("ϑ_(2,1)=0");
-
-//                        body.AddParagraph("")
-//                            .AppendEquation("ϑ_(2,2)=(p∙D)/(2∙s_ef)∙1/(K_2∙[σ])" + $"={_v22_3:f2}");
-
-//                        body.AddParagraph("Для ")
-//                            .AppendEquation("ϑ_2")
-//                            .AddRun("принимают одно из значений ")
-//                            .AppendEquation("ϑ_(2,1)")
-//                            .AddRun(" или ")
-//                            .AppendEquation("ϑ_(2,2)")
-//                            .AddRun(", для которого предельное напряжение изгибабудет наименьшим.");
-
-//                        body.AddParagraph("").AppendEquation(_K1_3For_v21 < _K1_3For_v22
-//                            ? $"ϑ_2=ϑ_(2,1)={_v21_3:f2}"
-//                            : $"ϑ_2=ϑ_(2,2)={_v22_3:f2}");
-
-//                        body.AddParagraph("").AppendEquation($"K_1={_K1_3:f2}");
-
-//                        body.AddParagraph("")
-//                            .AppendEquation($"[σ_i]_3={_K1_3:f2}∙{_K2:f2}∙{_fbdi.sigma_d}={_sigmai3:f2}");
-
-//                        body.AddParagraph("")
-//                            .AppendEquation($"[F]_3=(0.9∙{_sigmai2:f2}∙{_sef:f2}∙√({_fbdi.D}∙{_sef:f2}))/({_K14:f2}∙{_K16:f2}∙{_K17:f2})={_F_d3:f2}");
-
-//                        body.AddParagraph("")
-//                            .AppendEquation($"{_F1:f2}≤min{{{_F_d2:f2};{_F_d3:f2}}}");
-
-//                        if (_F1 <= Math.Min(_F_d2, _F_d3))
-//                        {
-//                            body.AddParagraph("Условие прочности выполняется");
-//                        }
-//                        else
-//                        {
-//                            body.AddParagraph("Условие прочности не выполняется")
-//                                .Bold()
-//                                .Color(System.Drawing.Color.Red);
-//                        }
-
-//                        body.AddParagraph("Условие устойчивости");
-
-//                        body.AddParagraph("").AppendEquation("|p|/[p]+|M_i|/[M]+|F_e|/[F]+(Q_i/[Q])^2≤1");
-
-//                        body.AddParagraph("где p - расчетное наружное давление (для сосудов, работающих под внутренним избыточным давлением, р=0");
-
-//                        body.AddParagraph("где ")
-//                            .AppendEquation("F_e")
-//                            .AddRun(" - эффективное осевое усилие от местных мембранных напряжений, действующих в области опоры");
-
-//                        body.AddParagraph("")
-//                            .AppendEquation("F_e=F_i∙π/4∙K_13∙K_15∙√(D/s_ef)" +
-//                                            $"={_F1:f2}∙π/4∙{_K13:f2}∙{_K15:f2}∙√({_fbdi.D}/{_sef:f2})={_Fe:f2}");
-
-//                        body.AddParagraph("")
-//                            .AppendEquation(_fbdi.IsPressureIn
-//                        ? "0"
-//                        : $"{_fbdi.p}/{_p_d}" +
-//                            $"+{_M1:f2}/{_M_d:f2}+{_Fe:f2}/{_F_d:f2}+({_Q1:f2}/{_Q_d:f2})^2={_conditionStability2:f2}≤1");
-
-//                        if (_conditionStability2 <= 1)
-//                        {
-//                            body.AddParagraph("Условие устойчивости выполняется");
-//                        }
-//                        else
-//                        {
-//                            body.AddParagraph("Условие устойчивости не выполняется")
-//                                .Bold()
-//                                .Color(System.Drawing.Color.Red);
-//                        }
-//                        break;
-//                    }
-//            }
-
-//            body.AddParagraph("Условия применения расчетных формул ");
-
-//            if (IsConditionUseFormulas)
-//            {
-//                body.AddParagraph("Условия применения формул");
-//            }
-//            else
-//            {
-//                body.AddParagraph("Условия применения формул не выполняются").Bold().Color(System.Drawing.Color.Red);
-//            }
-//            body.AddParagraph("")
-//                .AppendEquation($"60°≤δ_1={_fbdi.delta1}°≤180°");
-//            body.AddParagraph("")
-//                .AppendEquation($"(s-c)/D=({_fbdi.s}-{_fbdi.c})/{_fbdi.D}={(_fbdi.s - _fbdi.c) / _fbdi.D:f2}≤0.05");
-//            if (_fbdi.Type == SaddleType.SaddleWithoutRingWithSheet)
-//            {
-//                body.AddParagraph("").AppendEquation("s_2≥s");
-//                body.AddParagraph("").AppendEquation($"{_fbdi.s2} мм ≥ {_fbdi.s} мм");
-//                body.AddParagraph("").AppendEquation("δ_2≥δ_1+20°");
-//                body.AddParagraph("")
-//                    .AppendEquation(
-//                        $"{_fbdi.delta2}°≥{_fbdi.delta1}°+20°={_fbdi.delta1 + 20}°");
-//            }
-
-//            if (_fbdi.Type == SaddleType.SaddleWithRing)
-//            {
-//                body.AddParagraph("").AppendEquation("A_k≥(s-c)√(D∙(s-c))");
-//                body.AddParagraph("").AppendEquation($"{_fbdi.Ak:f2}≥({_fbdi.s}-{_fbdi.c})√({_fbdi.D}∙({_fbdi.s}-{_fbdi.c}))={_Ak:f2}");
-//            }
+                body.Elements<Paragraph>().LastOrDefault().AddImage(mainPart.GetIdOfPart(imagePart));
+            }
+
+            body.AddParagraph("Исходные данные").Alignment(AlignmentType.Center);
+
+            //table
+            {
+                body.AddParagraph("Крышка");
+
+                var table = body.AddTable();
+
+                //table.AddRow().
+                //  AddCell("");
+
+                table.AddRow()
+                    .AddCell("Марка стали")
+                    .AddCell($"{_fbdi.CoverSteel}");
+
+                table.AddRow()
+                    .AddCell("Коэффициент прочности сварного шва, φ:")
+                    .AddCell($"{_fbdi.fi}");
+
+                table.AddRow()
+                    .AddCell("Прибавка на коррозию, ")
+                    .AppendEquation("c_1")
+                    .AppendText(":")
+                    .AddCell($"{_fbdi.c1} мм");
+
+                table.AddRow()
+                    .AddCell("Прибавка для компенсации минусового допуска, ")
+                    .AppendEquation("c_2")
+                    .AppendText(":")
+                    .AddCell($"{_fbdi.c2} мм");
+
+                if (_fbdi.c3 > 0)
+                {
+                    table.AddRow()
+                        .AddCell("Технологическая прибавка, ")
+                        .AppendEquation("c_3")
+                        .AppendText(":")
+                        .AddCell($"{_fbdi.c3} мм");
+                }
+
+                table.AddRow()
+                    .AddCell(_fbdi.IsCoverWithGroove
+                    ? "Исполнительная толщина плоской крышки в месте паза для перегородки, "
+                    : "Исполнительная толщина крышки, ")
+                    .AppendEquation("s_1")
+                    .AppendText(":")
+                    .AddCell($"{_fbdi.s1} мм");
+
+                table.AddRow()
+                    .AddCell("Исполнительная толщина плоской крышки в зоне уплотнения, ")
+                    .AppendEquation("s_2")
+                    .AppendText(":")
+                    .AddCell($"{_fbdi.s2} мм");
+
+                table.AddRow()
+                    .AddCell("Толщина крышки вне уплотнения, ")
+                    .AppendEquation("s_3")
+                    .AppendText(":")
+                    .AddCell($"{_fbdi.s3} мм");
+
+                if (_fbdi.IsCoverWithGroove)
+                {
+                    table.AddRow()
+                    .AddCell("Ширина паза под перегородку, ")
+                    .AppendEquation("s_4")
+                    .AppendText(":")
+                    .AddCell($"{_fbdi.s4} мм");
+                }
+
+                table.AddRow()
+                    .AddCell("Наименьший диаметр наружной утоненной части плоской крышки, ")
+                    .AppendEquation("D_2")
+                    .AppendText(":")
+                    .AddCell($"{_fbdi.D2} мм");
+
+                table.AddRow()
+                    .AddCell("Диаметр болтовой окружности, ")
+                    .AppendEquation("D_3")
+                    .AppendText(":")
+                    .AddCell($"{_fbdi.D3} мм");
+
+                table.AddRow()
+                    .AddCell("Отверстия в крышке")
+                    .AddCell(_fbdi.Hole == HoleInFlatBottom.WithoutHole ? "нет" : "есть");
+
+                switch (_fbdi.Hole)
+                {
+                    case HoleInFlatBottom.OneHole:
+                        table.AddRow()
+                            .AddCell("Диаметр отверстия в крышке, d:")
+                            .AddCell($"{_fbdi.d} мм");
+                        break;
+                    case HoleInFlatBottom.MoreThenOneHole:
+                        table.AddRow()
+                            .AddCell("Диаметр отверстий в крышке, ")
+                            .AppendEquation("d_i")
+                            .AppendText(":")
+                            .AddCell($"{_fbdi.di} мм");
+                        break;
+                }
+                body.InsertTable(table);
+
+            }
+
+            {
+                body.AddParagraph("Фланец");
+
+                var table = body.AddTable();
+
+                //table.AddRow().
+                //    AddCell("Фланец");
+
+                table.AddRow()
+                    .AddCell("Марка стали")
+                    .AddCell($"{_fbdi.FlangeSteel}");
+
+                table.AddRow()
+                    .AddCell("Тип фланца")
+                    .AddCell(_fbdi.IsFlangeFlat
+                    ? "Плоский приварной"
+                    : "Приварной встык");
+
+                switch (_fbdi.FlangeFace)
+                {
+                    case FlangeFaceType.Flat:
+                        table.AddRow()
+                            .AddCell("Тип уплотнительной поверхности")
+                            .AddCell("Плоская");
+                        break;
+                    case FlangeFaceType.MaleFemale:
+                        table.AddRow()
+                            .AddCell("Тип уплотнительной поверхности")
+                            .AddCell("Выступ - впадина");
+                        break;
+                    case FlangeFaceType.TongueGroove:
+                        table.AddRow()
+                            .AddCell("Тип уплотнительной поверхности")
+                            .AddCell("Шип - паз");
+                        break;
+                    case FlangeFaceType.Ring:
+                        table.AddRow()
+                            .AddCell("Тип уплотнительной поверхности")
+                            .AddCell("Под прокладку овального сечения");
+                        break;
+                }
+
+                table.AddRow()
+                    .AddCell("Наружный диаметр фланца, ")
+                    .AppendEquation("D_н")
+                    .AppendText(":")
+                    .AddCell($"{_fbdi.Dn} мм");
+
+                table.AddRow()
+                    .AddCell("Диаметр болтовой окружности, ")
+                    .AppendEquation("D_б")
+                    .AppendText(":")
+                    .AddCell($"{_fbdi.Db} мм");
+
+                table.AddRow()
+                    .AddCell("Внутренний диаметр фланца, D:")
+                    .AddCell($"{_fbdi.D} мм");
+
+                if (_fbdi.IsFlangeFlat)
+                {
+                    table.AddRow()
+                        .AddCell("Толщина стенки обечайки, s:")
+                        .AddCell($"{_fbdi.s} мм");
+                }
+                else
+                {
+                    table.AddRow()
+                    .AddCell("Толщина втулки приварного встык фланца в месте приварки к обечайке, ")
+                    .AppendEquation("S_0")
+                    .AppendText(":")
+                    .AddCell($"{_fbdi.S0} мм");
+
+                    table.AddRow()
+                    .AddCell("Толщина втулки приварного встык фланца в месте присоединения к тарелке, ")
+                    .AppendEquation("S_1")
+                    .AppendText(":")
+                    .AddCell($"{_fbdi.S1} мм");
+
+                    table.AddRow()
+                    .AddCell("Длина конической втулки приварного встык фланца, l:")
+                    .AddCell($"{_fbdi.l} мм");
+                }
+                body.InsertTable(table);
+            }
+
+            {
+                body.AddParagraph("Прокладка");
+
+                var table = body.AddTable();
+                //table.AddRow().
+                //    AddCell("Прокладка");
+
+                table.AddRow()
+                    .AddCell("Материал")
+                    .AddCell($"{_fbdi.GasketType}");
+
+                table.AddRow()
+                    .AddCell("Ширина прокладки, ")
+                    .AppendEquation("b_п")
+                    .AppendText(":")
+                    .AddCell($"{_fbdi.bp} мм");
+
+                table.AddRow()
+                .AddCell("Толщина прокладки, ")
+                .AppendEquation("h_п")
+                .AppendText(":")
+                .AddCell($"{_fbdi.hp} мм");
+
+                table.AddRow()
+                .AddCell("Средний диаметр прокладки, ")
+                .AppendEquation("D_сп")
+                .AppendText(":")
+                .AddCell($"{_fbdi.Dcp} мм");
+
+                body.InsertTable(table);
+            }
+
+            {
+                body.AddParagraph("Крепеж");
+
+                var table = body.AddTable();
+
+                //table.AddRow().
+                //    AddCell("Крепеж");
+
+                table.AddRow()
+                    .AddCell("Материал")
+                    .AddCell($"{_fbdi.ScrewSteel}");
+
+                table.AddRow()
+                    .AddCell("Наружный диаметр крепежа, d:")
+                    .AddCell($"{_fbdi.Screwd} мм");
+
+                table.AddRow()
+                    .AddCell("Колличество, n:")
+                    .AddCell($"{_fbdi.n} мм");
+
+                table.AddRow()
+                    .AddCell("Вид крепежа:")
+                    .AddCell(_fbdi.IsStud ? "Шпилька" : "Болт");
+
+                table.AddRow()
+                    .AddCell("Проточка:")
+                    .AddCell(_fbdi.IsScrewWithGroove ? "Есть" : "Нет");
+
+                table.AddRow()
+                    .AddCell("Шайба:")
+                    .AddCell(_fbdi.IsWasher ? "Есть" : "Нет");
+
+                if (_fbdi.IsWasher)
+                {
+                    table.AddRow()
+                    .AddCell("Материал")
+                    .AddCell($"{_fbdi.WasherSteel}");
+
+                    table.AddRow()
+                        .AddCell("Толщина шайбы, ")
+                        .AppendEquation("h_ш")
+                        .AppendText(":")
+                        .AddCell($"{_fbdi.hsh} мм");
+                }
+
+                body.InsertTable(table);
+            }
+
+            body.AddParagraph("");
+            body.AddParagraph("Условия нагружения")
+                .Alignment(AlignmentType.Center);
+
+            //table
+            {
+                var table = body.AddTable();
+
+                table.AddRow()
+                    .AddCell("Расчетная температура, Т:")
+                    .AddCell($"{_fbdi.t} °С");
+
+                table.AddRow()
+                    .AddCell("Расчетное " +
+                             (_fbdi.IsPressureIn
+                             ? "внутреннее избыточное"
+                             : "наружное") + " давление, p:")
+                    .AddCell($"{_fbdi.p} МПа");
+
+                body.InsertTable(table);
+            }
+
+            {
+                body.AddParagraph("Крышка");
+
+                var table = body.AddTable();
+                //table.AddRow().
+                //    AddCell("Крышка");
+
+                table.AddRow()
+                    .AddCell($"Допускаемое напряжение для материала {_fbdi.CoverSteel} при расчетной температуре, [σ]:")
+                    .AddCell($"{_fbdi.sigma_d} МПа");
+
+                table.AddRow()
+                    .AddCell("Модуль продольной упругости при температуре 20°C, ")
+                    .AppendEquation("E^20")
+                    .AppendText(":")
+                    .AddCell($"{_Ekr:f2} МПа");
+
+                table.AddRow()
+                    .AddCell("Модуль продольной упругости при расчетной температуре, E:")
+                    .AddCell($"{_Ekr:f2} МПа");
+
+                table.AddRow()
+                    .AddCell("Коэффициент линейного расширения, ")
+                    .AppendEquation("α")
+                    .AppendText(":")
+                    .AddCell($"{_alfakr:f7} ")
+                    .AppendEquation("°C^-1");
+
+                body.InsertTable(table);
+            }
+
+            {
+                body.AddParagraph("Фланец");
+
+                var table = body.AddTable();
+
+                //table.AddRow().
+                //    AddCell("Фланец");
+
+                table.AddRow()
+                    .AddCell("Модуль продольной упругости при температуре 20°C, ")
+                    .AppendEquation("E^20_ф")
+                    .AppendText(":")
+                    .AddCell($"{_E20:f2} МПа");
+
+                table.AddRow()
+                    .AddCell("Модуль продольной упругости при расчетной температуре, ")
+                    .AppendEquation("E_ф")
+                    .AppendText(":")
+                    .AddCell($"{_E:f2} МПа");
+
+                table.AddRow()
+                    .AddCell("Коэффициент линейного расширения, ")
+                    .AppendEquation("α_ф")
+                    .AppendText(":")
+                    .AddCell($"{_alfa:f7} ")
+                    .AppendEquation("°C^-1");
+
+                body.InsertTable(table);
+            }
+
+            {
+                body.AddParagraph("Крепеж");
+
+                var table = body.AddTable();
+
+                //table.AddRow().
+                //    AddCell("Крепеж");
+
+                table.AddRow()
+                    .AddCell($"Допускаемое напряжение при расчетной температуре, ")
+                    .AppendEquation("[σ]_б")
+                    .AppendText(":")
+                    .AddCell($"{_sigma_dnb:f1} МПа");
+
+                table.AddRow()
+                    .AddCell("Модуль продольной упругости при температуре 20C°, ")
+                    .AppendEquation("E^20_б")
+                    .AppendText(":")
+                    .AddCell($"{_Eb20:f2} МПа");
+
+                table.AddRow()
+                    .AddCell("Модуль продольной упругости при расчетной температуре, ")
+                    .AppendEquation("E_б")
+                    .AppendText(":")
+                    .AddCell($"{_Eb:f2} МПа");
+
+                table.AddRow()
+                    .AddCell("Коэффициент линейного расширения,")
+                    .AppendEquation("α_б")
+                    .AppendText(":")
+                    .AddCell($"{_alfab:f7} ")
+                    .AppendEquation("°C^-1");
+
+                if (_fbdi.IsWasher)
+                {
+                    table.AddRow().
+                        AddCell("Шайба");
+
+                    table.AddRow()
+                        .AddCell("Коэффициент линейного расширения,")
+                        .AppendEquation("α_ш")
+                        .AppendText(":")
+                        .AddCell($"{_alfash1:f7} ")
+                        .AppendEquation("°C^-1");
+                }
+
+                body.InsertTable(table);
+            }
+
+            body.AddParagraph("");
+            body.AddParagraph("Результаты расчета").Alignment(AlignmentType.Center);
+            body.AddParagraph("");
+
+            body.AddParagraph("Толщину плоской круглой крышки с дополнительным краевым моментом под действием внутреннего давления вычисляют по формуле");
+            body.AddParagraph("").AppendEquation("s_1≥s_1p+c");
+            body.AddParagraph("где ");
+            body.AddParagraph("").AppendEquation("s_1p=K_0∙K_6∙D_p∙√(p/(φ∙[σ]))");
+            body.AddParagraph("где ");
+
+            body.AddParagraph("").AppendEquation($"D_p=D_сп={_Dcp:f2} мм");
+
+            switch (_fbdi.Hole)
+            {
+                case HoleInFlatBottom.WithoutHole:
+                    body.AddParagraph("Коэффициент ")
+                        .AppendEquation("K_0=1")
+                        .AddRun(" - для крышек без отверстий.");
+                    break;
+                case HoleInFlatBottom.OneHole:
+                    body.AddParagraph("Коэффициент ")
+                       .AppendEquation("K_0")
+                       .AddRun(" - для крышекек, имеющих одно отверстие, вычисляют по формул");
+                    body.AddParagraph("")
+                        .AppendEquation("K_0=√(1+d/D_p+(d/D_p)^2)" +
+                        $"=√(1+{_fbdi.d}/{_Dp:f2}+({_fbdi.d}/{_Dp:f2})^2)={_K0:f2}");
+                    break;
+                case HoleInFlatBottom.MoreThenOneHole:
+                    body.AddParagraph("Коэффициент ")
+                       .AppendEquation("K_0")
+                       .AddRun(" - для крышекек, имеющих несколько отверстий, вычисляют по формул");
+                    body.AddParagraph("")
+                        .AppendEquation("K_0=√((1-(Σd_i/D_p)^3)/(1-(Σd_i/D_p)))" +
+                        $"=√((1-({_fbdi.di}/{_Dp:f2})^3)/(1-({_fbdi.di}/{_Dp:f2})))={_K0:f2}");
+                    break;
+            }
+
+            body.AddParagraph("Коэффициент ")
+                        .AppendEquation("K_6")
+                        .AddRun(" вычисляют по формуле");
+            if (_fbdi.IsCoverWithGroove)
+            {
+                body.AddParagraph("")
+                            .AppendEquation("K_6=0.41∙√((1+3∙ψ_1∙(D_3/D_сп-1)+9.6∙D_3/D_сп∙s_4/D_сп)/(D_3/D_сп))");
+            }
+            else
+            {
+                body.AddParagraph("")
+                            .AppendEquation("K_6=0,41∙√((1+3∙ψ_1∙(D_3/D_сп-1))/(D_3/D_сп))");
+            }
+            
+            body.AddParagraph("Значение ")
+                        .AppendEquation("ψ_1")
+                        .AddRun(" вычисляют по формуле");
+            body.AddParagraph("")
+                        .AppendEquation("ψ_1=P_б^p/Q_д");
+            body.AddParagraph("")
+                        .AppendEquation($"P_б^p={_Pbp:f2} H")
+                        .AddRun(" расчетная нагрузка на " +
+                        (_fbdi.IsStud ? "шпильки" : "болты") +
+                        " фланцевых соединений, определяют по ГОСТ 34233.4 для рабочих условий");
+            body.AddParagraph("")
+                        .AppendEquation($"Q_д=0.785∙p∙D_сп^2=0.785∙{_fbdi.p}∙{_Dcp:f2}^2={_Qd:f2} H");
+
+            body.AddParagraph("")
+                        .AppendEquation($"ψ_1={_Pbp:f2}/{_Qd:f2}={_psi1:f2}");
+
+            if (_fbdi.IsCoverWithGroove)
+            {
+                body.AddParagraph("")
+                        .AppendEquation($"K_6=0,41∙√((1+3∙{_psi1:f2}({_fbdi.D3}/{_Dcp:f2}-1)+9.6∙{_fbdi.D3}/{_Dcp:f2}∙{_fbdi.s4}/{_Dcp:f2})/({_fbdi.D3}/{_Dcp:f2}))={_K6:f2}");
+            }
+            else
+            {
+                body.AddParagraph("")
+                        .AppendEquation($"K_6=0,41∙√((1+3∙{_psi1:f2}({_fbdi.D3}/{_Dcp:f2}-1))/({_fbdi.D3}/{_Dcp:f2}))={_K6:f2}");
+            }
+
+            body.AddParagraph("").AppendEquation($"s_1p={_K0:f2}∙{_K6:f2}∙{_Dp:f2}∙√({_fbdi.p}/({_fbdi.fi}∙{_fbdi.sigma_d}))={_s1p:f2} мм");
+
+            body.AddParagraph("c - сумма прибавок к расчетной толщине");
+            body.AddParagraph("")
+                .AppendEquation($"c=c_1+c_2+c_3={_fbdi.c1}+{_fbdi.c2}+{_fbdi.c3}={_c:f2} мм");
+
+            body.AddParagraph("").AppendEquation($"s_1={_s1p:f2}+{_c:f2}={_s1:f2} мм");
+
+            if (_fbdi.s1 > _s1)
+            {
+                body.AddParagraph("Принятая толщина ")
+                    .AppendEquation($"s_1={_fbdi.s1} мм")
+                    .Bold();
+            }
+            else
+            {
+                body.AddParagraph($"Принятая толщина ")
+                    .AppendEquation($"s_1={_fbdi.s1} мм")
+                    .Bold()
+                    .Color(System.Drawing.Color.Red);
+            }
+
+
+            body.AddParagraph("Толщину плоской круглой крышки с дополнительным краевым моментом в месте уплотнения вычисляют по формуле");
+            body.AddParagraph("").AppendEquation("s_2≥s_2p+c");
+            body.AddParagraph("где ");
+            body.AddParagraph("").AppendEquation("s_2p=max{K_7∙√(Φ);0.6/D_сп∙Φ}");
+            body.AddParagraph("где ");
+
+            body.AddParagraph("").AppendEquation("Φ=max{P_б^p/[σ]^p;P_б^м/[σ]^м}" +
+                $"=max{{{_Pbp:f2}/{_fbdi.sigma_d};{_Pbm:f2}/{_sigma_d_krm:f1}}}" +
+                $"=max{{{_Phi_1:f2};{_Phi_2:f2}}}={_Phi:f2}");
+
+            body.AddParagraph("Коэффициент ")
+                        .AppendEquation("K_7")
+                        .AddRun(" вычисляют по формуле");
+
+            body.AddParagraph("")
+                        .AppendEquation($"K_7=0.8∙√(D_3/D_сп-1)=0.8∙√({_fbdi.D3}/{_Dcp:f2}-1)={_K7Fors2:f2}");
+
+            body.AddParagraph("").AppendEquation($"K_7∙√(Φ)={_K7Fors2:f2}∙√({_Phi:f2})={_s2p_1:f2}");
+            body.AddParagraph("").AppendEquation($"0.6/D_сп∙Φ=0.6/{_Dcp:f2}∙{_Phi:f2}={_s2p_2:f2}");
+
+            body.AddParagraph("")
+                .AppendEquation($"s_2p=max{{{_s2p_1:f2};{_s2p_2:f2}}}={_s2p:f2} мм");
+
+
+            body.AddParagraph("").AppendEquation($"s_2={_s2p:f2}+{_c:f2}={_s2:f2} мм");
+
+            if (_fbdi.s2 > _s2)
+            {
+                body.AddParagraph("Принятая толщина ")
+                    .AppendEquation($"s_2={_fbdi.s2} мм")
+                    .Bold();
+            }
+            else
+            {
+                body.AddParagraph($"Принятая толщина ")
+                    .AppendEquation($"s_2={_fbdi.s2} мм")
+                    .Bold()
+                    .Color(System.Drawing.Color.Red);
+            }
+
+
+            body.AddParagraph("Толщину плоской круглой крышки с дополнительным краевым моментом вне зоны уплотнения вычисляют по формуле");
+            body.AddParagraph("").AppendEquation("s_3≥s_3p+c");
+            body.AddParagraph("где ");
+            body.AddParagraph("").AppendEquation("s_3p=max{K_7∙√(Φ);0.6/D_2∙Φ}");
+
+            body.AddParagraph("Коэффициент ")
+                        .AppendEquation("K_7")
+                        .AddRun(" вычисляют по формуле");
+
+            body.AddParagraph("")
+                        .AppendEquation($"K_7=0.8∙√(D_3/D_2-1)=0.8∙√({_fbdi.D3}/{_fbdi.D2}-1)={_K7Fors3:f2}");
+
+            body.AddParagraph("").AppendEquation($"K_7∙√(Φ)={_K7Fors3:f2}∙√({_Phi:f2})={_s3p_1:f2}");
+            body.AddParagraph("").AppendEquation($"0.6/D_2∙Φ=0.6/{_fbdi.D2}∙{_Phi:f2}={_s3p_2:f2}");
+
+            body.AddParagraph("")
+                .AppendEquation($"s_2p=max{{{_s3p_1:f2};{_s3p_2:f2}}}={_s3p:f2} мм");
+
+
+            body.AddParagraph("").AppendEquation($"s_2={_s3p:f2}+{_c:f2}={_s3:f2} мм");
+
+            if (_fbdi.s3 > _s3)
+            {
+                body.AddParagraph("Принятая толщина ")
+                    .AppendEquation($"s_3={_fbdi.s3} мм")
+                    .Bold();
+            }
+            else
+            {
+                body.AddParagraph($"Принятая толщина ")
+                    .AppendEquation($"s_3={_fbdi.s3} мм")
+                    .Bold()
+                    .Color(System.Drawing.Color.Red);
+            }
+
+            body.AddParagraph("Допускаемое давление вычисляют по формуле:");
+            body.AddParagraph("")
+                .AppendEquation("[p]=((s_1-c)/(K_0∙K_6∙D_p))^2∙[σ]∙φ"
+                                + $"=(({_fbdi.s1}-{_c:f2})/({_K0:f2}∙{_K6:f2}∙{_Dp:f2}))^2∙{_fbdi.sigma_d}∙{_fbdi.fi}"
+                                + $"={_p_d:f2} МПа");
+            
+            body.AddParagraph("Условия применения расчетных формул ");
+            body.AddParagraph("")
+                .AppendEquation($"(s_1-c)/D_p=({_fbdi.s1}-{_c:f2})/{_Dp:f2}={_conditionUseFormulas}≤0.11");
+            if (_isConditionUseFormulas)
+            {
+                body.AddParagraph("").AppendEquation("[p]≥p");
+                body.AddParagraph("")
+                    .AppendEquation($"{_p_d:f2}≥{_fbdi.p}");
+            }
+            else
+            {
+                body.AddParagraph("Т.к. условие применения формул не выполняется, то условие прочности имеет вид");
+                body.AddParagraph("").AppendEquation("K_p∙[p]≥p");
+                body.AddParagraph("где ")
+                        .AppendEquation("K_p")
+                        .AddRun("  - поправочный коэффициент");
+                body.AddParagraph("")
+                        .AppendEquation("K_p=2.2/(1+√(1+(6∙(s_1-c)/D_p)^2))" +
+                        $"=2.2/(1+√(1+(6∙({_fbdi.s1}-{_c:f2})/{_Dp:f2})^2))={_Kp:f2}");
+
+                body.AddParagraph("")
+                    .AppendEquation($"{_Kp:f2}∙{_p_d:f2}={_Kp * _p_d:f2}≥{_fbdi.p}");
+            }
+            if (_p_d * _Kp > _fbdi.p)
+            {
+                body.AddParagraph("Условие прочности выполняется")
+                    .Bold();
+            }
+            else
+            {
+                body.AddParagraph("Условие прочности не выполняется")
+                    .Bold()
+                    .Color(System.Drawing.Color.Red);
+            }
 
             package.Close();
         }

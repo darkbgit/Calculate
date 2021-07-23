@@ -72,6 +72,8 @@ namespace CalculateVessels.Core.Shells
 
         internal double Dk { get => _Dk; }
 
+        public override string ToString() => $"Коническая обечайка {_csdi.Name}";
+
         public void Calculate()
         {
             _c = _csdi.c1 + _csdi.c2 + _csdi.c3;
@@ -782,6 +784,6 @@ namespace CalculateVessels.Core.Shells
             package.Close();
         }
 
-        public override string ToString() => $"Коническая обечайка {_csdi.Name}";
+        
     }
 }

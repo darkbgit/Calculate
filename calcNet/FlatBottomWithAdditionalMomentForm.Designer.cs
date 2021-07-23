@@ -94,7 +94,7 @@ namespace CalculateVessels
             this.label7 = new System.Windows.Forms.Label();
             this.gasket_gb = new System.Windows.Forms.GroupBox();
             this.gostGasket_b = new System.Windows.Forms.Button();
-            this.label38 = new System.Windows.Forms.Label();
+            this.Dcp_l = new System.Windows.Forms.Label();
             this.Dcp_tb = new System.Windows.Forms.TextBox();
             this.label39 = new System.Windows.Forms.Label();
             this.label40 = new System.Windows.Forms.Label();
@@ -313,6 +313,7 @@ namespace CalculateVessels
             // 
             // calc_b
             // 
+            this.calc_b.Enabled = false;
             this.calc_b.Location = new System.Drawing.Point(151, 694);
             this.calc_b.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.calc_b.Name = "calc_b";
@@ -320,6 +321,7 @@ namespace CalculateVessels
             this.calc_b.TabIndex = 141;
             this.calc_b.Text = "Расчет";
             this.calc_b.UseVisualStyleBackColor = true;
+            this.calc_b.Click += new System.EventHandler(this.Calc_b_Click);
             // 
             // predCalc_b
             // 
@@ -846,7 +848,7 @@ namespace CalculateVessels
             // gasket_gb
             // 
             this.gasket_gb.Controls.Add(this.gostGasket_b);
-            this.gasket_gb.Controls.Add(this.label38);
+            this.gasket_gb.Controls.Add(this.Dcp_l);
             this.gasket_gb.Controls.Add(this.Dcp_tb);
             this.gasket_gb.Controls.Add(this.label39);
             this.gasket_gb.Controls.Add(this.label40);
@@ -875,15 +877,15 @@ namespace CalculateVessels
             this.gostGasket_b.Text = "Размеры по ГОСТ";
             this.gostGasket_b.UseVisualStyleBackColor = true;
             // 
-            // label38
+            // Dcp_l
             // 
-            this.label38.AutoSize = true;
-            this.label38.Location = new System.Drawing.Point(13, 109);
-            this.label38.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label38.Name = "label38";
-            this.label38.Size = new System.Drawing.Size(31, 15);
-            this.label38.TabIndex = 179;
-            this.label38.Text = "Dсп:";
+            this.Dcp_l.AutoSize = true;
+            this.Dcp_l.Location = new System.Drawing.Point(13, 109);
+            this.Dcp_l.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.Dcp_l.Name = "Dcp_l";
+            this.Dcp_l.Size = new System.Drawing.Size(25, 15);
+            this.Dcp_l.TabIndex = 179;
+            this.Dcp_l.Text = "Dn:";
             // 
             // Dcp_tb
             // 
@@ -1928,7 +1930,7 @@ namespace CalculateVessels
         private System.Windows.Forms.CheckBox scirtFlange_cb;
         private System.Windows.Forms.ComboBox gasketType_cb;
         private System.Windows.Forms.Label label37;
-        private System.Windows.Forms.Label label38;
+        private System.Windows.Forms.Label Dcp_l;
         private System.Windows.Forms.TextBox Dcp_tb;
         private System.Windows.Forms.Label label39;
         private System.Windows.Forms.Label label40;
