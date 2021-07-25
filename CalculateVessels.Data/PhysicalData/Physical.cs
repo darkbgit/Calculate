@@ -29,7 +29,7 @@ namespace CalculateVessels.Data.PhysicalData
             }
 
             public static double GetSigma(string steelName, double temperature,
-                ref List<string> dataInErr,
+                ref List<string> errorList,
                 bool isBigThickness = false, bool isBigResource = false)
             {
                 var steels = new List<PhysicalData.Gost34233_1.SteelForSigma>();
@@ -43,20 +43,21 @@ namespace CalculateVessels.Data.PhysicalData
                 }
                 catch
                 {
-                    return 0;
+                    errorList.Add($"Error open file for sigma {steelName}");
+                    return default;
                 }
 
                 var accessI = 0;
 
-                if (isBigResource == true & isBigThickness == false)
+                if (isBigResource & !isBigThickness)
                 {
                     accessI = 1;
                 }
-                else if (isBigResource == false & isBigThickness == true)
+                else if (!isBigResource & isBigThickness)
                 {
                     accessI = 2;
                 }
-                else if (isBigResource == true & isBigThickness == true)
+                else if (isBigResource & isBigThickness)
                 {
                     accessI = 3;
                 }
@@ -83,9 +84,9 @@ namespace CalculateVessels.Data.PhysicalData
                     }
                     else if (i == steel.Values.Count - 1)
                     {
-                        dataInErr.Add($"Температура {temperature} °С, больше чем максимальная температура {tempBig} °С " +
+                        errorList.Add($"Температура {temperature} °С, больше чем максимальная температура {tempBig} °С " +
                                       $"для стали {steelName} при которой определяется допускаемое напряжение по ГОСТ 34233.1-2017");
-                        return 0;
+                        return default;
                     }
                     else
                     {
@@ -495,6 +496,41 @@ namespace CalculateVessels.Data.PhysicalData
             }
 
             return 0;
+        }
+
+        public static class Gost34233_7
+        {
+            private const string TABLE_B1 = "PhysicalData/Gost34233_7/TableB1.json";
+
+            public static double Getpsi0(double etaT, ref List<string> errorList)
+            {
+                var psiList = new List<PhysicalData.Gost34233_7.Psi>();
+
+                try
+                {
+                    using StreamReader file = new(TABLE_B1);
+                    var json = file.ReadToEnd();
+                    file.Close();
+                    psiList = JsonSerializer.Deserialize<List<PhysicalData.Gost34233_7.Psi>>(json);
+                }
+                catch
+                {
+                    errorList.Add("Error open file for psi0");
+                    return default;
+                }
+
+                var etaTRound = Math.Round(etaT * 20) / 20;
+
+                var result = psiList.FirstOrDefault(p => Math.Abs(p.etaT - etaTRound) < 0.00001);
+
+                if (result == null)
+                {
+                    errorList.Add($"Coudnt find value of psi0 for etaT={etaT}");
+                    return default;
+                }
+
+                return result.psi0;
+            }
         }
     }
 }

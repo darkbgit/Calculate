@@ -883,9 +883,9 @@ namespace CalculateVessels
             this.Dcp_l.Location = new System.Drawing.Point(13, 109);
             this.Dcp_l.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.Dcp_l.Name = "Dcp_l";
-            this.Dcp_l.Size = new System.Drawing.Size(25, 15);
+            this.Dcp_l.Size = new System.Drawing.Size(31, 15);
             this.Dcp_l.TabIndex = 179;
-            this.Dcp_l.Text = "Dn:";
+            this.Dcp_l.Text = "Dcp:";
             // 
             // Dcp_tb
             // 

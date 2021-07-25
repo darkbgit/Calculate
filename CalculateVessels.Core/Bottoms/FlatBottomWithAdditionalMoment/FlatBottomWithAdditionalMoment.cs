@@ -470,7 +470,7 @@ namespace CalculateVessels.Core.Bottoms.FlatBottomWithAdditionalMoment
                         break;
                 }
 
-                var b =(byte[])Data.Properties.Resources.ResourceManager.GetObject(type + type1 + "52857");
+                var b =(byte[])Data.Properties.Resources.ResourceManager.GetObject(type + type1);
                 var stream = new MemoryStream(b);
                 imagePart.FeedData(stream);
 
