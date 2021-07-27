@@ -26,7 +26,7 @@ namespace CalculateVessels.Core.HeatExchanger
         //shell
         
         public double sK { get; set; }
-        public double D { get; internal set; }
+        public double D { get; set; }
 
 
 
@@ -37,33 +37,56 @@ namespace CalculateVessels.Core.HeatExchanger
         public double Dkom { get; set; }
         public double rkom { get; set; }
         public double deltakom { get; set; }
-        public int nkom { get; internal set; }
-        public double Kkom { get; internal set; }
-        public double beta0 { get; internal set; }
+        public int nkom { get; set; }
+        public double Kkom { get; set; }
+        public double beta0 { get; set; }
 
         //extender
-        public double D1 { get; internal set; }
-        public double deltap { get; internal set; }
-        public double Lpac { get; internal set; }
+        public double D1 { get; set; }
+        public double deltap { get; set; }
+        public double Lpac { get; set; }
 
         //tube plate
         public bool IsDifferentTubePlate { get; set; }
-        public double sp { get; internal set; }
-        public double sp1 { get; internal set; }
-        public double sp2 { get; internal set; }
-        public double d0 { get; internal set; }
-        public double tp { get; internal set; }
-        public double s1 { get; internal set; }
-        public double s2 { get; internal set; }
-        public double DH { get; internal set; }
-        public double h1 { get; internal set; }
-        public double h2 { get; internal set; }
-        public double tK { get; internal set; }
-        public double t0 { get; internal set; }
-        public double tT { get; internal set; }
-        public double pT { get; internal set; }
-        public double pM { get; internal set; }
-        public bool IsWithPartitions { get; internal set; }
-        public double l1R { get; internal set; }
+        public double sp { get; set; }
+        public double sp1 { get; set; }
+        public double sp2 { get; set; }
+        public double d0 { get; set; }
+        public double tp { get; set; }
+        public double tP { get; internal set; }
+        public double s1 { get; set; }
+        public double s2 { get; set; }
+        public double DH { get; set; }
+        public double h1 { get; set; }
+        public double h2 { get; set; }
+        public double tK { get; set; }
+        public double t0 { get; set; }
+        public double tT { get; set; }
+        public double pT { get; set; }
+        public double pM { get; set; }
+        public bool IsWithPartitions { get; set; }
+        public double l1R { get; set; }
+        public double s1p { get; set; }
+        public double c { get; set; }
+        public double fip { get; set; }
+        public double cK { get; internal set; }
+        public int N { get; internal set; }
+
+
+        public string Stellp { get; set; }
+        public bool IsOneGo { get; internal set; }
+        public double BP { get; internal set; }
+        public double sn { get; internal set; }
+        public bool IsNeedCheckHardnessTubePlate { get; internal set; }
+        public string StellK { get; internal set; }
+        public string StellT { get; internal set; }
+        public bool IsWorkCondition { get; internal set; }
+        public byte l2R { get; internal set; }
+        public bool IsNeedCheckHardnessTube { get; internal set; }
+        public TubeRollingType TubeRolling { get; internal set; }
+        public double lB { get; internal set; }
+        public bool IsTubeOnlyWelding { get; internal set; }
+        public double delta { get; internal set; }
+        public double pp { get; internal set; }
     }
 }

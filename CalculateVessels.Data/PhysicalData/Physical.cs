@@ -1,4 +1,5 @@
-﻿using CalculateVessels.Data.PhysicalData.Gost6533;
+﻿using CalculateVessels.Data.PhysicalData.Enums;
+using CalculateVessels.Data.PhysicalData.Gost6533;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -26,6 +27,34 @@ namespace CalculateVessels.Data.PhysicalData
                 {
                     return null;
                 }
+            }
+
+            public static SteelType GetSteelType (string steelName, ref List<string> errorList)
+            {
+                var steels = new List<PhysicalData.Gost34233_1.SteelForSteelType>();
+
+                try
+                {
+                    using StreamReader file = new("PhysicalData/Gost34233_1/Steels.json");
+                    var json = file.ReadToEnd();
+                    file.Close();
+                    steels = JsonSerializer.Deserialize<List<PhysicalData.Gost34233_1.SteelForSteelType>>(json);
+                }
+                catch
+                {
+                    errorList.Add($"Error open file for SteelType of {steelName}");
+                    return default;
+                }
+
+                var steel = steels.FirstOrDefault(s => s.Name.Equals(steelName));
+
+                if (steel == null)
+                {
+                    errorList.Add($"Error find stell {steelName}");
+                    return default;
+                }
+
+                return (SteelType)steel.SteelType;
             }
 
             public static double GetSigma(string steelName, double temperature,
@@ -500,7 +529,10 @@ namespace CalculateVessels.Data.PhysicalData
 
         public static class Gost34233_7
         {
+            private const string TABLE_2 = "PhysicalData/Gost34233_7/Table2.json";
             private const string TABLE_B1 = "PhysicalData/Gost34233_7/TableB1.json";
+            private const string TABLE_G1 = "PhysicalData/Gost34233_7/TableG1.json";
+            private const string TABLE_G23 = "PhysicalData/Gost34233_7/TableG23.json";
 
             public static double Getpsi0(double etaT, ref List<string> errorList)
             {
@@ -531,6 +563,192 @@ namespace CalculateVessels.Data.PhysicalData
 
                 return result.psi0;
             }
+
+            public static double GetpW_d(double D, ref List<string> errorList)
+            {
+                var Ws = new List<PhysicalData.Gost34233_7.W>();
+
+                try
+                {
+                    using StreamReader file = new(TABLE_2);
+                    var json = file.ReadToEnd();
+                    file.Close();
+                    Ws = JsonSerializer.Deserialize<List<PhysicalData.Gost34233_7.W>>(json);
+                }
+                catch
+                {
+                    errorList.Add("Error open file for [W]");
+                    return default;
+                }
+
+                var result = Ws.LastOrDefault(w => w.D <= D);
+
+                if (result == null)
+                {
+                    errorList.Add($"Coudnt find value of [W] for D={D}");
+                    return default;
+                }
+
+                return result.W_d;
+            }
+
+            public static (double T1, double T2, double T3) GetT1T2T3(double omega, double mn, ref List<string> errorList)
+            {
+                if (omega is < 0 or > 10)
+                {
+                    errorList.Add($"Error input value for omega {omega} value must be in range 0-10");
+                    return default;
+                }
+
+                if (mn is < 1 or > 1.54)
+                {
+                    errorList.Add($"Error input value for mn {mn} value must be in range 1.0-1.5");
+                    return default;
+                }
+
+                var omegaRound = omega <= 4
+                        ? Math.Round(omega * 2.0) / 2.0
+                        : Math.Round(omega);
+                var mnRound = Math.Round(mn * 10.0) / 10.0;
+
+                var omegaList = new List<PhysicalData.Gost34233_7.OmegaForT1T2T3>();
+
+                try
+                {
+                    using StreamReader file = new(TABLE_G1);
+                    var json = file.ReadToEnd();
+                    file.Close();
+                    omegaList = JsonSerializer.Deserialize<List<PhysicalData.Gost34233_7.OmegaForT1T2T3>>(json);
+                }
+                catch
+                {
+                    errorList.Add("Error open file for T1, T2, T3");
+                    return default;
+                }
+
+
+                var result = omegaList
+                    .FirstOrDefault(o => Math.Abs(o.Omega - omegaRound) < 0.00001)
+                    ?.MnList
+                    .FirstOrDefault(m => Math.Abs(m.mn - mnRound) < 0.00001);
+
+                if (result == null)
+                {
+                    errorList.Add($"Coudnt find value of T1, T2, T3 for omega={omega} and mn={mn}");
+                    return default;
+                }
+
+                return (result.T1, result.T2, result.T3);
+            }
+
+            public static double GetA(double omega, double mA, ref List<string> errorList)
+            {
+                if (omega is < 0 or > 10)
+                {
+                    errorList.Add($"Error input value for omega {omega} value must be in range 0-10");
+                    return default;
+                }
+
+                double omegaRound;
+                if (omega <= 2)
+                {
+                    omegaRound = Math.Round(omega * 2.0) / 2.0;
+                }
+                else if (omega <= 5)
+                {
+                    omegaRound = Math.Round(omega);
+                }
+                else
+                {
+                    omegaRound = omega < 7.5 ? 5 : 10;
+                }
+
+                var mARound = Math.Round(mA * 10) / 10.0;
+
+                var omegaList = new List<PhysicalData.Gost34233_7.OmegaForAB>();
+
+                try
+                {
+                    using StreamReader file = new(TABLE_G23);
+                    var json = file.ReadToEnd();
+                    file.Close();
+                    omegaList = JsonSerializer.Deserialize<List<PhysicalData.Gost34233_7.OmegaForAB>>(json);
+                }
+                catch
+                {
+                    errorList.Add("Error open file for A");
+                    return default;
+                }
+
+
+                var result = omegaList
+                    .FirstOrDefault(o => Math.Abs(o.Omega - omegaRound) < 0.00001)
+                    ?.mAnBList
+                    .FirstOrDefault(m => Math.Abs(m.Value - mARound) < 0.00001);
+
+                if (result == null)
+                {
+                    errorList.Add($"Coudnt find value of A for omega={omega} and mA={mA}");
+                    return default;
+                }
+
+                return result.A;
+            }
+
+            public static double GetB(double omega, double nB, ref List<string> errorList)
+            {
+                if (omega is < 0 or > 10)
+                {
+                    errorList.Add($"Error input value for omega {omega} value must be in range 0-10");
+                    return default;
+                }
+
+                double omegaRound;
+                if (omega <= 2)
+                {
+                    omegaRound = Math.Round(omega * 2.0) / 2.0;
+                }
+                else if (omega <= 5)
+                {
+                    omegaRound = Math.Round(omega);
+                }
+                else
+                {
+                    omegaRound = omega < 7.5 ? 5 : 10;
+                }
+
+                var nBRound = Math.Round(nB * 10) / 10.0;
+
+                var omegaList = new List<PhysicalData.Gost34233_7.OmegaForAB>();
+
+                try
+                {
+                    using StreamReader file = new(TABLE_G23);
+                    var json = file.ReadToEnd();
+                    file.Close();
+                    omegaList = JsonSerializer.Deserialize<List<PhysicalData.Gost34233_7.OmegaForAB>>(json);
+                }
+                catch
+                {
+                    errorList.Add("Error open file for B");
+                    return default;
+                }
+
+
+                var result = omegaList
+                    .FirstOrDefault(o => Math.Abs(o.Omega - omegaRound) < 0.00001)
+                    ?.mAnBList
+                    .FirstOrDefault(n => Math.Abs(n.Value - nBRound) < 0.00001);
+
+                if (result == null)
+                {
+                    errorList.Add($"Coudnt find value of B for omega={omega} and nB={nB}");
+                    return default;
+                }
+
+                return result.B;
+            }
+
         }
     }
 }

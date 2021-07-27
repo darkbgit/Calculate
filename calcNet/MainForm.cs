@@ -308,8 +308,32 @@ namespace CalculateVessels
 
         private void button10_Click(object sender, EventArgs e)
         {
-            var steels = Physical.Gost34233_1.GetSteelsList();
-            MessageBox.Show(string.Join<string>(Environment.NewLine, steels));
+            //var steels = Physical.Gost34233_1.GetSteelsList();
+            //MessageBox.Show(string.Join<string>(Environment.NewLine, steels));
+
+            List<string> _errorList = new();
+
+            //var (_T1, _T2, _T3) = Physical.Gost34233_7.GetT1T2T3(3.2, 1.27, ref _errorList);
+
+            //if ((_T1, _T2, _T3) == default)
+            //{
+            //    MessageBox.Show(string.Join<string>(Environment.NewLine, _errorList));
+            //}
+            //else
+            //{
+            //    MessageBox.Show(_T1.ToString() + _T2 + _T3);
+            //}
+
+            var w = Physical.Gost34233_7.GetpW_d(1450, ref _errorList);
+
+            if (w == default)
+            {
+                MessageBox.Show(string.Join<string>(Environment.NewLine, _errorList));
+            }
+            else
+            {
+                MessageBox.Show(w.ToString());
+            }
         }
 
     }

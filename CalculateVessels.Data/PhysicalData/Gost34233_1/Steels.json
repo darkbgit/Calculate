@@ -3,6 +3,7 @@
 		"Name": "Ст3",
 		"IsCouldBigThickness": true,
 		"BigThickness": 20,
+		"SteelType" : 0,
 		"Values": [
 			{
 				"Temperature": 20,
@@ -71,6 +72,7 @@
 		"Name": "09Г2С",
 		"IsCouldBigThickness": true,
 		"BigThickness": 20,
+		"SteelType": 1,
 		"Values": [
 			{
 				"Temperature": 20,
@@ -155,6 +157,7 @@
 		"Name": "16ГС",
 		"IsCouldBigThickness": true,
 		"BigThickness": 32,
+		"SteelType": 1,
 		"Values": [
 			{
 				"Temperature": 20,
@@ -238,6 +241,7 @@
 	{
 		"Name": "Сталь 20",
 		"IsCouldBigThickness": false,
+		"SteelType": 0,
 		"Values": [
 			{
 				"Temperature": 20,
@@ -321,6 +325,7 @@
 	{
 		"Name": "Сталь 20К",
 		"IsCouldBigThickness": false,
+		"SteelType": 0,
 		"Values": [
 			{
 				"Temperature": 20,
@@ -404,6 +409,7 @@
 	{
 		"Name": "Сталь 10",
 		"IsCouldBigThickness": false,
+		"SteelType": 0,
 		"Values": [
 			{
 				"Temperature": 20,
@@ -487,6 +493,7 @@
 	{
 		"Name": "10Г2",
 		"IsCouldBigThickness": false,
+		"SteelType": 1,
 		"Values": [
 			{
 				"Temperature": 20,
@@ -570,6 +577,7 @@
 	{
 		"Name": "09Г2",
 		"IsCouldBigThickness": false,
+		"SteelType": 1,
 		"Values": [
 			{
 				"Temperature": 20,
@@ -653,6 +661,7 @@
 	{
 		"Name": "17ГС",
 		"IsCouldBigThickness": false,
+		"SteelType": 1,
 		"Values": [
 			{
 				"Temperature": 20,
@@ -736,6 +745,7 @@
 	{
 		"Name": "17Г1С",
 		"IsCouldBigThickness": false,
+		"SteelType": 1,
 		"Values": [
 			{
 				"Temperature": 20,
@@ -819,6 +829,7 @@
 	{
 		"Name": "10Г2С1",
 		"IsCouldBigThickness": false,
+		"SteelType": 1,
 		"Values": [
 			{
 				"Temperature": 20,
@@ -902,6 +913,7 @@
 	{
 		"Name": "12Х18Н10Т",
 		"IsCouldBigThickness": false,
+		"SteelType": 2,
 		"Values": [
 			{
 				"Temperature": 20,
