@@ -28,7 +28,7 @@ namespace CalculateVessels.Core.Bottoms.FlatBottomWithAdditionalMoment
 
         public bool IsError { get; private set; }
 
-        public List<string> ErrorList { get; private set; } = new();
+        public List<string> ErrorList { get => _errorList; private set => _errorList = value; }
 
         public List<string> Bibliography { get; } = new()
         {
@@ -157,6 +157,7 @@ namespace CalculateVessels.Core.Bottoms.FlatBottomWithAdditionalMoment
 
         private double _Xkr;
         private double _Kkr;
+        private List<string> _errorList = new();
 
         public override string ToString() => $"Плоская крышка с дополнительным краевым моментом {_fbdi.Name}";
 
@@ -178,11 +179,16 @@ namespace CalculateVessels.Core.Bottoms.FlatBottomWithAdditionalMoment
 
             _E20 = Physical.Gost34233_4.GetE(_fbdi.FlangeSteel, 20);
             _E = Physical.Gost34233_4.GetE(_fbdi.FlangeSteel, _tf);
-            _alfaf = Physical.Gost34233_4.GetAlfa(_fbdi.FlangeSteel, _fbdi.t);
+            if (!Physical.TryGetAlfa(_fbdi.FlangeSteel, _fbdi.t, ref _alfaf, ref _errorList))
+            {
+                IsCriticalError = true;
+                return;
+            }
 
             List<string> errorList = new();
             _Ekr20 = Physical.Gost34233_1.GetE(_fbdi.CoverSteel, 20, ref errorList);
             _Ekr = Physical.Gost34233_1.GetE(_fbdi.CoverSteel, _fbdi.t, ref errorList);
+
             _alfakr = Physical.GetAlfa(_fbdi.CoverSteel, _fbdi.t);
             _sigma_d_krm = _fbdi.sigma_d * 1.5 / 1.1;
 

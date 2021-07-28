@@ -1,4 +1,4 @@
-﻿namespace CalculateVessels.Data.PhysicalData.Gost34233_4
+﻿namespace CalculateVessels.Data.PhysicalData.Common
 {
     public class E
     {

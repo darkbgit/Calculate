@@ -67,7 +67,7 @@ namespace CalculateVessels
             this.button12 = new System.Windows.Forms.Button();
             this.button13 = new System.Windows.Forms.Button();
             this.button14 = new System.Windows.Forms.Button();
-            this.button15 = new System.Windows.Forms.Button();
+            this.heatExchengerWithFixedTubePlate_b = new System.Windows.Forms.Button();
             this.button16 = new System.Windows.Forms.Button();
             this.button17 = new System.Windows.Forms.Button();
             this.button18 = new System.Windows.Forms.Button();
@@ -157,12 +157,15 @@ namespace CalculateVessels
             // 
             // Cil_b
             // 
+            this.Cil_b.Image = global::CalculateVessels.Properties.Resources.Icon1000;
+            this.Cil_b.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.Cil_b.Location = new System.Drawing.Point(14, 31);
             this.Cil_b.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Cil_b.Name = "Cil_b";
-            this.Cil_b.Size = new System.Drawing.Size(186, 27);
+            this.Cil_b.Size = new System.Drawing.Size(186, 48);
             this.Cil_b.TabIndex = 2;
-            this.Cil_b.Text = "Цилиндрическая обечайка";
+            this.Cil_b.Text = "Цилиндрическая \r\nобечайка";
+            this.Cil_b.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
             this.Cil_b.UseVisualStyleBackColor = true;
             this.Cil_b.Click += new System.EventHandler(this.Cil_b_Click);
             // 
@@ -225,7 +228,7 @@ namespace CalculateVessels
             // Kon_b
             // 
             this.Kon_b.Enabled = false;
-            this.Kon_b.Location = new System.Drawing.Point(14, 64);
+            this.Kon_b.Location = new System.Drawing.Point(14, 85);
             this.Kon_b.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Kon_b.Name = "Kon_b";
             this.Kon_b.Size = new System.Drawing.Size(186, 27);
@@ -236,7 +239,7 @@ namespace CalculateVessels
             // 
             // Ell_b
             // 
-            this.Ell_b.Location = new System.Drawing.Point(14, 97);
+            this.Ell_b.Location = new System.Drawing.Point(14, 118);
             this.Ell_b.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Ell_b.Name = "Ell_b";
             this.Ell_b.Size = new System.Drawing.Size(186, 27);
@@ -274,7 +277,7 @@ namespace CalculateVessels
             // polysfer_b
             // 
             this.polysfer_b.Enabled = false;
-            this.polysfer_b.Location = new System.Drawing.Point(14, 130);
+            this.polysfer_b.Location = new System.Drawing.Point(14, 151);
             this.polysfer_b.Name = "polysfer_b";
             this.polysfer_b.Size = new System.Drawing.Size(186, 27);
             this.polysfer_b.TabIndex = 9;
@@ -284,7 +287,7 @@ namespace CalculateVessels
             // torosfer_b
             // 
             this.torosfer_b.Enabled = false;
-            this.torosfer_b.Location = new System.Drawing.Point(14, 163);
+            this.torosfer_b.Location = new System.Drawing.Point(14, 184);
             this.torosfer_b.Name = "torosfer_b";
             this.torosfer_b.Size = new System.Drawing.Size(186, 27);
             this.torosfer_b.TabIndex = 10;
@@ -293,7 +296,7 @@ namespace CalculateVessels
             // 
             // flatBottom_b
             // 
-            this.flatBottom_b.Location = new System.Drawing.Point(14, 196);
+            this.flatBottom_b.Location = new System.Drawing.Point(14, 217);
             this.flatBottom_b.Name = "flatBottom_b";
             this.flatBottom_b.Size = new System.Drawing.Size(186, 27);
             this.flatBottom_b.TabIndex = 11;
@@ -303,7 +306,7 @@ namespace CalculateVessels
             // 
             // flatBottomWithAdditionalMoment_b
             // 
-            this.flatBottomWithAdditionalMoment_b.Location = new System.Drawing.Point(14, 229);
+            this.flatBottomWithAdditionalMoment_b.Location = new System.Drawing.Point(14, 250);
             this.flatBottomWithAdditionalMoment_b.Name = "flatBottomWithAdditionalMoment_b";
             this.flatBottomWithAdditionalMoment_b.Size = new System.Drawing.Size(186, 60);
             this.flatBottomWithAdditionalMoment_b.TabIndex = 12;
@@ -314,7 +317,7 @@ namespace CalculateVessels
             // button4
             // 
             this.button4.Enabled = false;
-            this.button4.Location = new System.Drawing.Point(14, 295);
+            this.button4.Location = new System.Drawing.Point(14, 316);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(186, 27);
             this.button4.TabIndex = 14;
@@ -324,7 +327,7 @@ namespace CalculateVessels
             // button5
             // 
             this.button5.Enabled = false;
-            this.button5.Location = new System.Drawing.Point(14, 328);
+            this.button5.Location = new System.Drawing.Point(14, 349);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(186, 27);
             this.button5.TabIndex = 15;
@@ -334,7 +337,7 @@ namespace CalculateVessels
             // button6
             // 
             this.button6.Enabled = false;
-            this.button6.Location = new System.Drawing.Point(14, 361);
+            this.button6.Location = new System.Drawing.Point(14, 382);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(186, 27);
             this.button6.TabIndex = 16;
@@ -344,7 +347,7 @@ namespace CalculateVessels
             // button7
             // 
             this.button7.Enabled = false;
-            this.button7.Location = new System.Drawing.Point(14, 394);
+            this.button7.Location = new System.Drawing.Point(14, 415);
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(186, 27);
             this.button7.TabIndex = 17;
@@ -354,7 +357,7 @@ namespace CalculateVessels
             // button8
             // 
             this.button8.Enabled = false;
-            this.button8.Location = new System.Drawing.Point(14, 427);
+            this.button8.Location = new System.Drawing.Point(14, 448);
             this.button8.Name = "button8";
             this.button8.Size = new System.Drawing.Size(186, 27);
             this.button8.TabIndex = 18;
@@ -417,18 +420,22 @@ namespace CalculateVessels
             this.button14.Text = "button14";
             this.button14.UseVisualStyleBackColor = true;
             // 
-            // button15
+            // heatExchengerWithFixedTubePlate_b
             // 
-            this.button15.Location = new System.Drawing.Point(207, 196);
-            this.button15.Name = "button15";
-            this.button15.Size = new System.Drawing.Size(186, 27);
-            this.button15.TabIndex = 25;
-            this.button15.Text = "button15";
-            this.button15.UseVisualStyleBackColor = true;
+            this.heatExchengerWithFixedTubePlate_b.Image = global::CalculateVessels.Properties.Resources.Icon41000;
+            this.heatExchengerWithFixedTubePlate_b.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.heatExchengerWithFixedTubePlate_b.Location = new System.Drawing.Point(207, 196);
+            this.heatExchengerWithFixedTubePlate_b.Name = "heatExchengerWithFixedTubePlate_b";
+            this.heatExchengerWithFixedTubePlate_b.Size = new System.Drawing.Size(186, 60);
+            this.heatExchengerWithFixedTubePlate_b.TabIndex = 25;
+            this.heatExchengerWithFixedTubePlate_b.Text = "Теплообменный аппарат\r\n с неподвижными\r\n трубными решетками";
+            this.heatExchengerWithFixedTubePlate_b.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            this.heatExchengerWithFixedTubePlate_b.UseVisualStyleBackColor = true;
+            this.heatExchengerWithFixedTubePlate_b.Click += new System.EventHandler(this.HeatExchengerWithFixedTubePlate_b_Click);
             // 
             // button16
             // 
-            this.button16.Location = new System.Drawing.Point(207, 394);
+            this.button16.Location = new System.Drawing.Point(206, 427);
             this.button16.Name = "button16";
             this.button16.Size = new System.Drawing.Size(186, 27);
             this.button16.TabIndex = 31;
@@ -437,7 +444,7 @@ namespace CalculateVessels
             // 
             // button17
             // 
-            this.button17.Location = new System.Drawing.Point(207, 361);
+            this.button17.Location = new System.Drawing.Point(206, 394);
             this.button17.Name = "button17";
             this.button17.Size = new System.Drawing.Size(186, 27);
             this.button17.TabIndex = 30;
@@ -446,7 +453,7 @@ namespace CalculateVessels
             // 
             // button18
             // 
-            this.button18.Location = new System.Drawing.Point(206, 328);
+            this.button18.Location = new System.Drawing.Point(205, 361);
             this.button18.Name = "button18";
             this.button18.Size = new System.Drawing.Size(186, 27);
             this.button18.TabIndex = 29;
@@ -455,7 +462,7 @@ namespace CalculateVessels
             // 
             // button19
             // 
-            this.button19.Location = new System.Drawing.Point(207, 295);
+            this.button19.Location = new System.Drawing.Point(206, 328);
             this.button19.Name = "button19";
             this.button19.Size = new System.Drawing.Size(186, 27);
             this.button19.TabIndex = 28;
@@ -464,7 +471,7 @@ namespace CalculateVessels
             // 
             // button20
             // 
-            this.button20.Location = new System.Drawing.Point(207, 262);
+            this.button20.Location = new System.Drawing.Point(206, 295);
             this.button20.Name = "button20";
             this.button20.Size = new System.Drawing.Size(186, 27);
             this.button20.TabIndex = 27;
@@ -473,7 +480,7 @@ namespace CalculateVessels
             // 
             // button21
             // 
-            this.button21.Location = new System.Drawing.Point(207, 229);
+            this.button21.Location = new System.Drawing.Point(206, 262);
             this.button21.Name = "button21";
             this.button21.Size = new System.Drawing.Size(186, 27);
             this.button21.TabIndex = 26;
@@ -637,7 +644,7 @@ namespace CalculateVessels
             this.Controls.Add(this.button19);
             this.Controls.Add(this.button20);
             this.Controls.Add(this.button21);
-            this.Controls.Add(this.button15);
+            this.Controls.Add(this.heatExchengerWithFixedTubePlate_b);
             this.Controls.Add(this.button14);
             this.Controls.Add(this.button13);
             this.Controls.Add(this.button12);
@@ -711,7 +718,7 @@ namespace CalculateVessels
         private System.Windows.Forms.Button button12;
         private System.Windows.Forms.Button button13;
         private System.Windows.Forms.Button button14;
-        private System.Windows.Forms.Button button15;
+        private System.Windows.Forms.Button heatExchengerWithFixedTubePlate_b;
         private System.Windows.Forms.Button button16;
         private System.Windows.Forms.Button button17;
         private System.Windows.Forms.Button button18;

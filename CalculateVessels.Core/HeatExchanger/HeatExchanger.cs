@@ -211,18 +211,19 @@ namespace CalculateVessels.Core.HeatExchanger
             _sigma_dK = 0.0;
             _sigma_dT = 0.0;
 
-            _alfaK = 0.0;
-            _alfaT = 0.0;
-
-            _Rmp = 0.0;
-
-
-
-            if (ErrorList.Any())
+            if (Physical.TryGetAlfa(_hedi.StellK, _hedi.tK, ref _alfaK, ref _errorList))
             {
                 IsCriticalError = true;
                 return;
             }
+
+            if (Physical.TryGetAlfa(_hedi.StellT, _hedi.tT, ref _alfaT, ref _errorList))
+            {
+                IsCriticalError = true;
+                return;
+            }
+
+            _Rmp = 0.0;
 
             //TODO: sigmaa for different matireals Al,Cu, Tt
 
@@ -361,19 +362,17 @@ namespace CalculateVessels.Core.HeatExchanger
 
             _ro1 = _Ky * _hedi.a * _hedi.a1 / (Math.Pow(_beta, 2) * _KF * _R1);
 
-            _Phi1 = 0.0;
-            _Phi2 = 0.0;
-            _Phi3 = 0.0;
-            //TODO: Get values to _Phi1, _Phi2, _Phi3 from tables or calculete them
+            //_Phi1 = 0.0;
+            //_Phi2 = 0.0;
+            //_Phi3 = 0.0;
+            ////TODO: Get values to _Phi1, _Phi2, _Phi3 from tables or calculete them
 
-            _t = 1 + (1.4 * _omega * (_mn - 1));
-            _T1 = _Phi1 * (_mn + (0.5 * (1 + (_mn * _t)) * (_t - 1)));
-            _T2 = _Phi2 * _t;
-            _T3 = _Phi3 * _mn;
+            //_t = 1 + (1.4 * _omega * (_mn - 1));
+            //_T1 = _Phi1 * (_mn + (0.5 * (1 + (_mn * _t)) * (_t - 1)));
+            //_T2 = _Phi2 * _t;
+            //_T3 = _Phi3 * _mn;
 
-            (_T1, _T2, _T3) = Physical.Gost34233_7.GetT1T2T3(_omega, _mn, ref _errorList);
-
-            if ((_T1, _T2, _T3) == default)
+            if (!Physical.Gost34233_7.TryGetT1T2T3(_omega, _mn, ref _T1, ref _T2, ref _T3, ref _errorList))
             {
                 IsCriticalError = true;
                 return;
@@ -413,8 +412,7 @@ namespace CalculateVessels.Core.HeatExchanger
 
             if (_mA >= -1.0 & _mA <= 1.0)
             {
-                _A = Physical.Gost34233_7.GetA(_omega, _mA, ref _errorList);
-                if (_A == default)
+                if (!Physical.Gost34233_7.TryGetA(_omega, _mA, ref _A, ref _errorList))
                 {
                     IsCriticalError = true;
                     return;
@@ -424,8 +422,7 @@ namespace CalculateVessels.Core.HeatExchanger
             else
             {
                 _nB = 1.0 / _mA;
-                _B = Physical.Gost34233_7.GetB(_omega, _nB, ref _errorList);
-                if (_B == default)
+                if (!Physical.Gost34233_7.TryGetB(_omega, _nB, ref _B, ref _errorList))
                 {
                     IsCriticalError = true;
                     return;
@@ -501,12 +498,9 @@ namespace CalculateVessels.Core.HeatExchanger
             {
                 _W = 1.2 / (_Ky * _hedi.a1) * Math.Abs((_T1 * _QP) + (_T2 * _beta * _MP));
 
-                _W_d = Physical.Gost34233_7.GetpW_d(_hedi.D, ref _errorList);
-
-                if (_W_d == default)
+                if (!Physical.Gost34233_7.TryGetpW_d(_hedi.D, ref _W_d, ref _errorList))
                 {
                     IsCriticalError = true;
-                    _errorList.Add("Невозможно получить значение [W]");
                     return;
                 }
 
@@ -643,7 +637,7 @@ namespace CalculateVessels.Core.HeatExchanger
                 _errorList.Add("Условие прочности крепления трубы в решетке не выполняется");
             }
 
-            _spp_5_5_1 = 0.5 * _hedi.delta * Math.Sqrt(_hedi.pp / _sigmaa_dp);
+            _spp_5_5_1 = 0.5 * _hedi.DE * Math.Sqrt(_hedi.pp / _sigmaa_dp);
             _sp_5_5_1 = _spp_5_5_1 + _hedi.c;
 
             if (_sp_5_5_1 > _hedi.sp)
@@ -664,11 +658,7 @@ namespace CalculateVessels.Core.HeatExchanger
                                               double deltasigma3) => Ksigma * Math.Max(Math.Abs(deltasigma1 - deltasigma2),
                 Math.Max(Math.Abs(deltasigma2 - deltasigma3), Math.Abs(deltasigma1 - deltasigma3)));
 
-        //private static double CalculateSigmaa_d(string steelName, double tempereture)
-        //{
 
-            
-        //}
 
 
     }

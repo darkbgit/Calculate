@@ -310,6 +310,213 @@
   <data name="GOST_34233_9" xml:space="preserve">
     <value>ГОСТ 34233.9-2017 Сосуды и аппараты. Нормы и методы расчета на прочность. Аппараты колонного типа</value>
   </data>
+  <data name="Icon1000" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icon1000.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Icon10000" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icon10000.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Icon10100" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icon10100.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Icon111000" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icon111000.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Icon112000" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icon112000.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Icon12000" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icon12000.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Icon15000" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icon15000.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Icon16000" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icon16000.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Icon17000" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icon17000.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Icon18000" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icon18000.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Icon18500" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icon18500.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Icon2000" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icon2000.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Icon20000" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icon20000.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Icon21000" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icon21000.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Icon21200" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icon21200.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Icon21400" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icon21400.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Icon22000" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icon22000.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Icon22100" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icon22100.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Icon22200" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icon22200.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Icon23000" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icon23000.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Icon25000" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icon25000.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Icon26000" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icon26000.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Icon27000" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icon27000.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Icon28000" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icon28000.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Icon28300" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icon28300.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Icon29000" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icon29000.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Icon3000" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icon3000.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Icon31000" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icon31000.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Icon32000" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icon32000.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Icon36000" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icon36000.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Icon37000" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icon37000.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Icon37500" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icon37500.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Icon38000" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icon38000.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Icon38500" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icon38500.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Icon38600" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icon38600.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Icon39000" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icon39000.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Icon39500" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icon39500.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Icon4000" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icon4000.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Icon40000" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icon40000.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Icon40500" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icon40500.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Icon41000" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icon41000.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Icon42000" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icon42000.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Icon43000" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icon43000.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Icon44000" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icon44000.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Icon45000" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icon45000.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Icon46000" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icon46000.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="icon5000" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon5000.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Icon50100" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icon50100.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Icon6000" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icon6000.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Icon7000" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icon7000.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Icon70000" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icon70000.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Icon71000" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icon71000.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Icon72000" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icon72000.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Icon73000" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icon73000.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Icon75000" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icon75000.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Icon76000" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icon76000.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Icon76500" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icon76500.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Icon77000" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icon77000.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Icon78000" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icon78000.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Icon8000" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icon8000.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Icon8100" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icon8100.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Icon81000" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icon81000.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Icon83000" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icon83000.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Icon87000" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icon87000.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Icon88000" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icon88000.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Icon9000" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icon9000.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Icon92000" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icon92000.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Icon9500" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icon9500.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Icon98000" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icon98000.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="Nozzle1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\pic\Nozzle\Nozzle1.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>

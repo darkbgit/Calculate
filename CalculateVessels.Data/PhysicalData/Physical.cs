@@ -1,4 +1,5 @@
-﻿using CalculateVessels.Data.PhysicalData.Enums;
+﻿using CalculateVessels.Data.PhysicalData.Common;
+using CalculateVessels.Data.PhysicalData.Enums;
 using CalculateVessels.Data.PhysicalData.Gost6533;
 using System;
 using System.Collections.Generic;
@@ -316,14 +317,14 @@ namespace CalculateVessels.Data.PhysicalData
 
             public static double GetE(string steelName, double temperature)
             {
-                var steels = new List<PhysicalData.Gost34233_4.SteelForE>();
+                var steels = new List<SteelForE>();
 
                 try
                 {
                     using StreamReader file = new("PhysicalData/Gost34233_4/Steels.json");
                     var json = file.ReadToEnd();
                     file.Close();
-                    steels = JsonSerializer.Deserialize<List<PhysicalData.Gost34233_4.SteelForE>>(json);
+                    steels = JsonSerializer.Deserialize<List<SteelForE>>(json);
                 }
                 catch
                 {
@@ -369,36 +370,36 @@ namespace CalculateVessels.Data.PhysicalData
                 return E;
             }
 
-            public static double GetAlfa(string steelName, double temperature)
-            {
-                var steels = new List<PhysicalData.Gost34233_4.SteelForAlfa>();
+            //public static double GetAlfa(string steelName, double temperature)
+            //{
+            //    var steels = new List<SteelForAlfa>();
 
-                try
-                {
-                    using StreamReader file = new("PhysicalData/Gost34233_4/Steels.json");
-                    var json = file.ReadToEnd();
-                    file.Close();
-                    steels = JsonSerializer.Deserialize<List<PhysicalData.Gost34233_4.SteelForAlfa>>(json);
-                }
-                catch
-                {
-                    return 0;
-                }
+            //    try
+            //    {
+            //        using StreamReader file = new("PhysicalData/Gost34233_4/Steels.json");
+            //        var json = file.ReadToEnd();
+            //        file.Close();
+            //        steels = JsonSerializer.Deserialize<List<SteelForAlfa>>(json);
+            //    }
+            //    catch
+            //    {
+            //        return 0;
+            //    }
 
-                var steel = steels.FirstOrDefault(s => s.Name.Equals(steelName));
+            //    var steel = steels.FirstOrDefault(s => s.Name.Equals(steelName));
 
-                steel.Values = steel.Values.Where(v => v.AlfaValue != 0).ToList();
+            //    steel.Values = steel.Values.Where(v => v.AlfaValue != 0).ToList();
 
-                for (var i = 0; i < steel.Values.Count; i++)
-                {
-                    if (steel.Values[i].Temperature >= temperature)
-                    {
-                        return steel.Values[i].AlfaValue;
-                    }
-                }
+            //    for (var i = 0; i < steel.Values.Count; i++)
+            //    {
+            //        if (steel.Values[i].Temperature >= temperature)
+            //        {
+            //            return steel.Values[i].AlfaValue;
+            //        }
+            //    }
 
-                return 0;
-            }
+            //    return 0;
+            //}
 
             public static double GetSigma(string steelName, double temperature)
             {
@@ -496,35 +497,46 @@ namespace CalculateVessels.Data.PhysicalData
             }
         }
 
-        public static double GetAlfa(string steelName, double temperature, string gost = "Gost34233_1")
+        public static bool TryGetAlfa(string steelName, double temperature,
+            ref double alfa, ref List<string> errorList, string gost = "Gost34233_1")
         {
-            var steels = new List<PhysicalData.Gost34233_4.SteelForAlfa>();
+            List<SteelForAlfa> steels = new();
 
             try
             {
                 using StreamReader file = new($"PhysicalData/{gost}/Steels.json");
                 var json = file.ReadToEnd();
                 file.Close();
-                steels = JsonSerializer.Deserialize<List<PhysicalData.Gost34233_4.SteelForAlfa>>(json);
+                steels = JsonSerializer.Deserialize<List<SteelForAlfa>>(json);
             }
             catch
             {
-                return 0;
+                errorList.Add($"Cannt open file for alfa for steel {steelName} in GOST {gost}");
+                return false;
             }
 
-            var steel = steels.FirstOrDefault(s => s.Name.Equals(steelName));
+            var alfaList = steels
+                .FirstOrDefault(s => s.Name.Equals(steelName))
+                ?.Values
+                .Where(v => v.AlfaValue != 0).ToList();
 
-            steel.Values = steel.Values.Where(v => v.AlfaValue != 0).ToList();
-
-            for (var i = 0; i < steel.Values.Count; i++)
+            if (alfaList == null)
             {
-                if (steel.Values[i].Temperature >= temperature)
+                errorList.Add($"Coudnt find alfa values for steel={steelName} in GOST {gost}");
+                return false;
+            }
+
+            for (var i = 0; i < alfaList.Count; i++)
+            {
+                if (alfaList[i].Temperature >= temperature)
                 {
-                    return steel.Values[i].AlfaValue;
+                    alfa = alfaList[i].AlfaValue;
+                    return true;
                 }
             }
 
-            return 0;
+            errorList.Add($"Coudnt find alfa value for steel={steelName} on temperature {temperature} in GOST {gost}");
+            return false;
         }
 
         public static class Gost34233_7
@@ -534,7 +546,7 @@ namespace CalculateVessels.Data.PhysicalData
             private const string TABLE_G1 = "PhysicalData/Gost34233_7/TableG1.json";
             private const string TABLE_G23 = "PhysicalData/Gost34233_7/TableG23.json";
 
-            public static double Getpsi0(double etaT, ref List<string> errorList)
+            public static bool TryGetpsi0(double etaT,ref double psi0, ref List<string> errorList)
             {
                 var psiList = new List<PhysicalData.Gost34233_7.Psi>();
 
@@ -548,7 +560,7 @@ namespace CalculateVessels.Data.PhysicalData
                 catch
                 {
                     errorList.Add("Error open file for psi0");
-                    return default;
+                    return false;
                 }
 
                 var etaTRound = Math.Round(etaT * 20) / 20;
@@ -558,13 +570,14 @@ namespace CalculateVessels.Data.PhysicalData
                 if (result == null)
                 {
                     errorList.Add($"Coudnt find value of psi0 for etaT={etaT}");
-                    return default;
+                    return false;
                 }
 
-                return result.psi0;
+                psi0 = result.psi0;
+                return true;
             }
 
-            public static double GetpW_d(double D, ref List<string> errorList)
+            public static bool TryGetpW_d(double D, ref double W_d, ref List<string> errorList)
             {
                 var Ws = new List<PhysicalData.Gost34233_7.W>();
 
@@ -578,7 +591,7 @@ namespace CalculateVessels.Data.PhysicalData
                 catch
                 {
                     errorList.Add("Error open file for [W]");
-                    return default;
+                    return false;
                 }
 
                 var result = Ws.LastOrDefault(w => w.D <= D);
@@ -586,24 +599,27 @@ namespace CalculateVessels.Data.PhysicalData
                 if (result == null)
                 {
                     errorList.Add($"Coudnt find value of [W] for D={D}");
-                    return default;
+                    return false;
                 }
 
-                return result.W_d;
+                W_d = result.W_d;
+                return true;
             }
 
-            public static (double T1, double T2, double T3) GetT1T2T3(double omega, double mn, ref List<string> errorList)
+            public static bool TryGetT1T2T3(double omega, double mn,
+                ref double T1, ref double T2, ref double T3,
+                ref List<string> errorList)
             {
                 if (omega is < 0 or > 10)
                 {
                     errorList.Add($"Error input value for omega {omega} value must be in range 0-10");
-                    return default;
+                    return false;
                 }
 
                 if (mn is < 1 or > 1.54)
                 {
                     errorList.Add($"Error input value for mn {mn} value must be in range 1.0-1.5");
-                    return default;
+                    return false;
                 }
 
                 var omegaRound = omega <= 4
@@ -623,7 +639,7 @@ namespace CalculateVessels.Data.PhysicalData
                 catch
                 {
                     errorList.Add("Error open file for T1, T2, T3");
-                    return default;
+                    return false;
                 }
 
 
@@ -635,18 +651,21 @@ namespace CalculateVessels.Data.PhysicalData
                 if (result == null)
                 {
                     errorList.Add($"Coudnt find value of T1, T2, T3 for omega={omega} and mn={mn}");
-                    return default;
+                    return false;
                 }
 
-                return (result.T1, result.T2, result.T3);
+                T1 = result.T1;
+                T2 = result.T2;
+                T3 = result.T3;
+                return true;
             }
 
-            public static double GetA(double omega, double mA, ref List<string> errorList)
+            public static bool TryGetA(double omega, double mA, ref double A, ref List<string> errorList)
             {
                 if (omega is < 0 or > 10)
                 {
                     errorList.Add($"Error input value for omega {omega} value must be in range 0-10");
-                    return default;
+                    return false;
                 }
 
                 double omegaRound;
@@ -677,7 +696,7 @@ namespace CalculateVessels.Data.PhysicalData
                 catch
                 {
                     errorList.Add("Error open file for A");
-                    return default;
+                    return false;
                 }
 
 
@@ -689,18 +708,19 @@ namespace CalculateVessels.Data.PhysicalData
                 if (result == null)
                 {
                     errorList.Add($"Coudnt find value of A for omega={omega} and mA={mA}");
-                    return default;
+                    return false;
                 }
 
-                return result.A;
+                A = result.A;
+                return true;
             }
 
-            public static double GetB(double omega, double nB, ref List<string> errorList)
+            public static bool TryGetB(double omega, double nB, ref double B, ref List<string> errorList)
             {
                 if (omega is < 0 or > 10)
                 {
                     errorList.Add($"Error input value for omega {omega} value must be in range 0-10");
-                    return default;
+                    return false;
                 }
 
                 double omegaRound;
@@ -731,7 +751,7 @@ namespace CalculateVessels.Data.PhysicalData
                 catch
                 {
                     errorList.Add("Error open file for B");
-                    return default;
+                    return false;
                 }
 
 
@@ -743,10 +763,11 @@ namespace CalculateVessels.Data.PhysicalData
                 if (result == null)
                 {
                     errorList.Add($"Coudnt find value of B for omega={omega} and nB={nB}");
-                    return default;
+                    return false;
                 }
 
-                return result.B;
+                B = result.B;
+                return true;
             }
 
         }

@@ -17,15 +17,19 @@ namespace CalculateVessels
             InitializeComponent();
         }
 
-        public CilForm cylindricalForm = null;
-        public NozzleForm nf = null;
-        public EllForm ef = null;
 
-        public PldnForm pdf = null;
+        public CilForm cylindricalForm = null;
+        public EllForm ef = null;
         public FlatBottomWithAdditionalMomentForm flatBottomWithAdditionalMomentForm = null;
+        public NozzleForm nf = null;
+        public PldnForm pdf = null;
+        public SaddleForm saddleForm = null;
+        public HeatExchengerWithFixedTubePlatesForm heatExchengerWithFixedTubePlatesForm = null;
+
+
         // TODO: KonForm 
 
-        public SaddleForm saddleForm = null;
+        
 
 
         
@@ -324,9 +328,9 @@ namespace CalculateVessels
             //    MessageBox.Show(_T1.ToString() + _T2 + _T3);
             //}
 
-            var w = Physical.Gost34233_7.GetpW_d(1450, ref _errorList);
-
-            if (w == default)
+            double w = default;
+            
+            if (!Physical.Gost34233_7.TryGetpW_d(1450, ref w, ref _errorList))
             {
                 MessageBox.Show(string.Join<string>(Environment.NewLine, _errorList));
             }
@@ -336,5 +340,18 @@ namespace CalculateVessels
             }
         }
 
+        private void HeatExchengerWithFixedTubePlate_b_Click(object sender, EventArgs e)
+        {
+            if (heatExchengerWithFixedTubePlatesForm == null)
+            {
+                heatExchengerWithFixedTubePlatesForm = new HeatExchengerWithFixedTubePlatesForm { Owner = this };
+                heatExchengerWithFixedTubePlatesForm.Show();
+            }
+            else
+            {
+                heatExchengerWithFixedTubePlatesForm.Owner = this;
+                heatExchengerWithFixedTubePlatesForm.Show();
+            }
+        }
     }
 }
