@@ -10,6 +10,7 @@ namespace CalculateVessels.Data.PhysicalData.Enums
     {
         Carbon,
         Alloyed,
-        Austenitic
+        Austenitic,
+        Undefined
     }
 }

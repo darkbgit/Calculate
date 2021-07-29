@@ -174,7 +174,7 @@ namespace CalculateVessels
         private void EllRadialDraw()
         {
             place_gb.Controls["pn"].Dispose();
-            Panel pn = new Panel
+            Panel pn = new()
             {
                 Name = "pn",
                 Location = new Point(2, 15),
@@ -349,7 +349,7 @@ namespace CalculateVessels
         private void EllVertDekartDraw()
         {
             place_gb.Controls["pn"].Dispose();
-            Panel pn = new Panel
+            Panel pn = new()
             {
                 Name = "pn",
                 Location = new Point(2, 15),
@@ -407,7 +407,7 @@ namespace CalculateVessels
         private void EllTiltedDraw()
         {
             place_gb.Controls["pn"].Dispose();
-            Panel pn = new Panel
+            Panel pn = new()
             {
                 Name = "pn",
                 Location = new Point(2, 15),
@@ -487,7 +487,7 @@ namespace CalculateVessels
         private void EllTiltedDekartDraw()
         {
             place_gb.Controls["pn"].Dispose();
-            Panel pn = new Panel
+            Panel pn = new()
             {
                 Name = "pn",
                 Location = new Point(2, 15),
@@ -574,7 +574,7 @@ namespace CalculateVessels
                         if (rb == null || (rb.Checked && rb.Text == PERPENDICULAR))
                         {
                             place_gb.Controls["pn"].Dispose();
-                            Panel pn = new Panel
+                            Panel pn = new()
                             {
                                 Name = "pn",
                                 Location = new Point(2, 15),
@@ -631,7 +631,7 @@ namespace CalculateVessels
                         else if (rb.Checked && rb.Text == TRANSVERSELY)
                         {
                             place_gb.Controls["pn"].Dispose();
-                            Panel pn = new Panel
+                            Panel pn = new()
                             {
                                 Name = "pn",
                                 Location = new Point(2, 15),
@@ -806,7 +806,7 @@ namespace CalculateVessels
                         else if (rb.Checked && rb.Text == SLANTED)
                         {
                             place_gb.Controls["pn"].Dispose();
-                            Panel pn = new Panel
+                            Panel pn = new()
                             {
                                 Name = "pn",
                                 Location = new Point(2, 15),
@@ -1011,7 +1011,7 @@ namespace CalculateVessels
                     {
                         MessageBox.Show(shellDataIn.ShellType.ToString());
 
-                        RadioButton placerb_1 = new RadioButton
+                        RadioButton placerb_1 = new()
                         {
                             Text = PERPENDICULAR,
                             Checked = true,
@@ -1026,7 +1026,7 @@ namespace CalculateVessels
 
                         //placerb_1.toggled[bool].emit(False)
 
-                        RadioButton placerb_2 = new RadioButton
+                        RadioButton placerb_2 = new()
                         {
                             Text = TRANSVERSELY,
                             AutoSize = true,
@@ -1047,7 +1047,7 @@ namespace CalculateVessels
                         //    UseVisualStyleBackColor = true
                         //};
                         //placerb_3.CheckedChanged += new EventHandler(Place_rb_CheckedChanged);
-                        RadioButton placerb_3 = new RadioButton
+                        RadioButton placerb_3 = new()
                         {
                             Text = SLANTED,
                             AutoSize = true,
@@ -1058,7 +1058,7 @@ namespace CalculateVessels
                         };
                         placerb_3.CheckedChanged += new EventHandler(Place_rb_CheckedChanged);
 
-                        Panel pn = new Panel
+                        Panel pn = new()
                         {
                             Name = "pn",
                             Location = new Point(2, 15),
@@ -1085,7 +1085,7 @@ namespace CalculateVessels
                     {
                         System.Windows.Forms.MessageBox.Show(shellDataIn.ShellType.ToString());
 
-                        RadioButton placerb_1 = new RadioButton
+                        RadioButton placerb_1 = new()
                         {
                             Text = PERPENDICULAR,
                             Checked = true,
@@ -1098,7 +1098,7 @@ namespace CalculateVessels
                         placerb_1.CheckedChanged += new EventHandler(Place_rb_CheckedChanged);
                         //Size = new System.Drawing.Size(31, 19),
 
-                        RadioButton placerb_2 = new RadioButton
+                        RadioButton placerb_2 = new()
                         {
                             Text = OFFSET,
                             AutoSize = true,
@@ -1119,7 +1119,7 @@ namespace CalculateVessels
                         //};
                         //placerb_4.CheckedChanged += new EventHandler(Place_rb_CheckedChanged);
 
-                        Panel pn = new Panel
+                        Panel pn = new()
                         {
                             Name = "pn",
                             Location = new Point(2, 15),
@@ -1132,7 +1132,7 @@ namespace CalculateVessels
                         //place_gb.Controls.Add(placerb_4);
                         place_gb.Controls.Add(pn);
 
-                        RadioButton placeDekart_rb = new RadioButton
+                        RadioButton placeDekart_rb = new()
                         {
                             Text = "Декартова",
                             AutoSize = true,
@@ -1144,7 +1144,7 @@ namespace CalculateVessels
                         placeDekart_rb.CheckedChanged += new EventHandler(PlaceCoordinat_rb_CheckedChanged);
                         //Size = new System.Drawing.Size(31, 19),
 
-                        RadioButton placePolar_rb = new RadioButton
+                        RadioButton placePolar_rb = new()
                         {
                             Text = "Полярная",
                             Checked = true,
@@ -1163,7 +1163,7 @@ namespace CalculateVessels
                             Location = new Point(0, 15)
                         };
 
-                        Panel corPn = new Panel
+                        Panel corPn = new()
                         {
                             Name = "corPn",
                             Location = new Point(110, 10),
@@ -1213,7 +1213,7 @@ namespace CalculateVessels
             const string WRONG_INPUT = " неверный ввод";
             //NozzleDataIn nozzleData = new NozzleDataIn(shellDataIn);
 
-            List<string> dataInErr = new List<string>();
+            List<string> dataInErr = new();
 
             //NozzleKind
             {
@@ -1242,15 +1242,18 @@ namespace CalculateVessels
             if (nozzleData.IsDataGood)
             {
                 {
-                    double sigma_d1;
+                    double sigma_d1 = default;
                     if (sigma_d1_tb.ReadOnly)
                     {
-                        sigma_d1 = Physical.Gost34233_1.GetSigma(nozzleData.steel1,
+                        if (Physical.Gost34233_1.TryGetSigma(nozzleData.steel1,
                                             nozzleData.t,
-                                            ref dataInErr);
-                        sigma_d1_tb.ReadOnly = false;
-                        sigma_d1_tb.Text = sigma_d1.ToString();
-                        sigma_d1_tb.ReadOnly = true;
+                                            ref sigma_d1,
+                                            ref dataInErr))
+                        {
+                            sigma_d1_tb.ReadOnly = false;
+                            sigma_d1_tb.Text = sigma_d1.ToString();
+                            sigma_d1_tb.ReadOnly = true;
+                        }
                     }
                     else
                     {
@@ -1267,22 +1270,22 @@ namespace CalculateVessels
                 if (!nozzleData.ShellDataIn.IsPressureIn)
                 {
                     //E1
-                    double E1;
+                    double E1 = 0.0;
                     if (E1_tb.ReadOnly)
                     {
-                        E1 = Physical.Gost34233_1.GetE(nozzleData.steel1,
-                                            nozzleData.t,
-                                            ref dataInErr);
-                        E1_tb.ReadOnly = false;
-                        E1_tb.Text = E1.ToString();
-                        E1_tb.ReadOnly = true;
+                        if (Physical.TryGetE(nozzleData.steel1, nozzleData.t, ref E1, ref dataInErr))
+                        {
+                            E1_tb.ReadOnly = false;
+                            E1_tb.Text = E1.ToString();
+                            E1_tb.ReadOnly = true;
+                        }
                     }
                     else
                     {
                         if (!double.TryParse(E1_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
                             System.Globalization.CultureInfo.InvariantCulture, out E1))
                         {
-                            dataInErr.Add("[σ]" + WRONG_INPUT);
+                            dataInErr.Add("E" + WRONG_INPUT);
                         }
                     }
                     nozzleData.E1 = E1;
@@ -1453,16 +1456,20 @@ namespace CalculateVessels
 
                 //sigma_d2
                 {
-                    var sigma_d2 = Physical.Gost34233_1.GetSigma(nozzleData.steel2, nozzleData.t, ref dataInErr);
-                    nozzleData.sigma_d2 = sigma_d2;
+                    double sigma_d2 = default;
+                    if (Physical.Gost34233_1.TryGetSigma(nozzleData.steel2, nozzleData.t, ref sigma_d2, ref dataInErr))
+                    {
+                        nozzleData.sigma_d2 = sigma_d2;
+                    }
                 }
 
                 //E2
                 {
-                    var E2 = Physical.Gost34233_1.GetE(nozzleData.steel2,
-                                            nozzleData.t,
-                                            ref dataInErr);
-                    nozzleData.E2 = E2;
+                    var E2 = 0.0;
+                    if (Physical.TryGetE(nozzleData.steel2, nozzleData.t, ref E2, ref dataInErr))
+                    {
+                        nozzleData.E2 = E2;
+                    }
                 }
             }
 
@@ -1500,16 +1507,20 @@ namespace CalculateVessels
 
                 //sigma_d3
                 {
-                    var sigma_d3 = Physical.Gost34233_1.GetSigma(nozzleData.steel3, nozzleData.t, ref dataInErr);
-                    nozzleData.sigma_d3 = sigma_d3;
+                    double sigma_d3 = default;
+                    if (Physical.Gost34233_1.TryGetSigma(nozzleData.steel3, nozzleData.t, ref sigma_d3, ref dataInErr))
+                    {
+                        nozzleData.sigma_d3 = sigma_d3;
+                    }
                 }
 
                 //E3
                 {
-                    var E3 = Physical.Gost34233_1.GetE(nozzleData.steel3,
-                                            nozzleData.t,
-                                            ref dataInErr);
-                    nozzleData.E3 = E3;
+                    double E3 = default;
+                    if (Physical.TryGetE(nozzleData.steel3, nozzleData.t, ref E3, ref dataInErr))
+                    {
+                        nozzleData.E3 = E3;
+                    }
                 }
             }
 
@@ -1602,7 +1613,7 @@ namespace CalculateVessels
 
             if (isNotError)
             {
-                Nozzle nozzle = new Nozzle(element, nozzleData);
+                Nozzle nozzle = new(element, nozzleData);
                 nozzle.Calculate();
                 if (!nozzle.IsCriticalError)
                 {

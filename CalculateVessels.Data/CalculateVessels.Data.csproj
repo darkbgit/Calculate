@@ -23,7 +23,7 @@
     <None Update="PhysicalData\Gost34233_4\Gaskets.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="PhysicalData\Gost34233_4\ScrewSquare.json">
+    <None Update="PhysicalData\Gost34233_4\TableD1.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="PhysicalData\Gost34233_4\Steels.json">

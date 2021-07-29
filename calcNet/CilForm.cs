@@ -98,17 +98,19 @@ namespace CalculateVessels
             if (cylindricalShellDataIn.IsDataGood)
             {
                 //[σ]
-                //InputClass.GetInput_sigma_d(sigma_d_tb, ref d_in, ref dataInErr);
                 {
-                    double sigma_d;
+                    double sigma_d = 0.0;
                     if (sigma_d_tb.ReadOnly)
                     {
-                        sigma_d = Physical.Gost34233_1.GetSigma(cylindricalShellDataIn.Steel,
+                        if (Physical.Gost34233_1.TryGetSigma(cylindricalShellDataIn.Steel,
                                                     cylindricalShellDataIn.t,
-                                                    ref dataInErr);
-                        sigma_d_tb.ReadOnly = false;
-                        sigma_d_tb.Text = sigma_d.ToString(CultureInfo.CurrentCulture);
-                        sigma_d_tb.ReadOnly = true;
+                                                    ref sigma_d,
+                                                    ref dataInErr))
+                        {
+                            sigma_d_tb.ReadOnly = false;
+                            sigma_d_tb.Text = sigma_d.ToString(CultureInfo.CurrentCulture);
+                            sigma_d_tb.ReadOnly = true;
+                        }
                     }
                     else
                     {
@@ -127,15 +129,18 @@ namespace CalculateVessels
                     //E
                     //InputClass.GetInput_E(E_tb, ref d_in, ref dataInErr);
                     {
-                        double E;
+                        double E = 0.0;
                         if (E_tb.ReadOnly)
                         {
-                            E = Physical.Gost34233_1.GetE(cylindricalShellDataIn.Steel,
+                            if (Physical.TryGetE(cylindricalShellDataIn.Steel,
                                                 cylindricalShellDataIn.t,
-                                                ref dataInErr);
-                            E_tb.ReadOnly = false;
-                            E_tb.Text = E.ToString();
-                            E_tb.ReadOnly = true;
+                                                ref E,
+                                                ref dataInErr))
+                            {
+                                E_tb.ReadOnly = false;
+                                E_tb.Text = E.ToString();
+                                E_tb.ReadOnly = true;
+                            }
                         }
                         else
                         {
@@ -298,7 +303,7 @@ namespace CalculateVessels
 
             //CylindricalShellDataIn cylindricalShellDataIn = new CylindricalShellDataIn();
 
-            List<string> dataInErr = new List<string>();
+            List<string> dataInErr = new();
 
             //name
             cylindricalShellDataIn.Name = Name_tb.Text;
@@ -428,7 +433,7 @@ namespace CalculateVessels
 
                     MessageBox.Show("Calculation complete");
 
-                    MessageBoxCheckBox mbcb = new MessageBoxCheckBox(cylindricalShell, cylindricalShellDataIn) { Owner = this };
+                    MessageBoxCheckBox mbcb = new(cylindricalShell, cylindricalShellDataIn) { Owner = this };
                     mbcb.ShowDialog();
                 }
                 else
@@ -459,9 +464,12 @@ namespace CalculateVessels
 
         private void GetE_b_Click(object sender, EventArgs e)
         {
-            List<string> dataInErr = new List<string>();
-            var E = Physical.Gost34233_1.GetE(steel_cb.Text, Convert.ToInt32(t_tb.Text), ref dataInErr);
-            E_tb.Text = E.ToString();
+            List<string> dataInErr = new();
+            double E = 0.0;
+            if (Physical.TryGetE(steel_cb.Text, Convert.ToInt32(t_tb.Text), ref E, ref dataInErr))
+            {
+                E_tb.Text = E.ToString();
+            }
         }
 
         private void GetFi_b_Click(object sender, EventArgs e)

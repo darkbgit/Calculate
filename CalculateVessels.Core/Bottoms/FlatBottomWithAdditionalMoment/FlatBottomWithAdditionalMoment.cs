@@ -177,19 +177,42 @@ namespace CalculateVessels.Core.Bottoms.FlatBottomWithAdditionalMoment
             }
 
 
-            _E20 = Physical.Gost34233_4.GetE(_fbdi.FlangeSteel, 20);
-            _E = Physical.Gost34233_4.GetE(_fbdi.FlangeSteel, _tf);
+            if (!Physical.TryGetE(_fbdi.FlangeSteel, 20, ref _E20, ref _errorList))
+            {
+                IsCriticalError = true;
+                return;
+            }
+
+            if (!Physical.TryGetE(_fbdi.FlangeSteel, _tf, ref _E, ref _errorList))
+            {
+                IsCriticalError = true;
+                return;
+            }
+
             if (!Physical.TryGetAlfa(_fbdi.FlangeSteel, _fbdi.t, ref _alfaf, ref _errorList))
             {
                 IsCriticalError = true;
                 return;
             }
 
-            List<string> errorList = new();
-            _Ekr20 = Physical.Gost34233_1.GetE(_fbdi.CoverSteel, 20, ref errorList);
-            _Ekr = Physical.Gost34233_1.GetE(_fbdi.CoverSteel, _fbdi.t, ref errorList);
+            if (!Physical.TryGetE(_fbdi.CoverSteel, 20, ref _Ekr20, ref _errorList))
+            {
+                IsCriticalError = true;
+                return;
+            }
 
-            _alfakr = Physical.GetAlfa(_fbdi.CoverSteel, _fbdi.t);
+            if (!Physical.TryGetE(_fbdi.CoverSteel, _fbdi.t, ref _Ekr, ref _errorList))
+            {
+                IsCriticalError = true;
+                return;
+            }
+
+            if (!Physical.TryGetAlfa(_fbdi.CoverSteel, _fbdi.t, ref _alfakr, ref _errorList))
+            {
+                IsCriticalError = true;
+                return;
+            }
+
             _sigma_d_krm = _fbdi.sigma_d * 1.5 / 1.1;
 
             _tkr = _fbdi.t;
@@ -199,33 +222,43 @@ namespace CalculateVessels.Core.Bottoms.FlatBottomWithAdditionalMoment
 
             if (_fbdi.IsWasher)
             {
-                _alfash1 = Physical.Gost34233_4.GetAlfa(_fbdi.WasherSteel, _tf);
+                if (!Physical.TryGetAlfa(_fbdi.WasherSteel, _tf, ref _alfash1, ref _errorList, "Gost34233_4"))
+                {
+                    IsCriticalError = true;
+                    return;
+                }
                 _alfash2 = _alfash1;
             }
 
-            _Eb20 = Physical.Gost34233_4.GetE(_fbdi.ScrewSteel, 20);
-            _Eb = Physical.Gost34233_4.GetE(_fbdi.ScrewSteel, _tb);
-            _alfab = Physical.Gost34233_4.GetAlfa(_fbdi.ScrewSteel, _tb);
-            _fb = Physical.Gost34233_4.Getfb(_fbdi.Screwd, _fbdi.IsScrewWithGroove);
+            if (!Physical.TryGetE(_fbdi.ScrewSteel, 20, ref _Eb20, ref _errorList, "GOST34233_4"))
+            {
+                IsCriticalError = true;
+                return;
+            }
+
+            if (!Physical.TryGetE(_fbdi.ScrewSteel, _tb, ref _Eb, ref _errorList, "GOST34233_4"))
+            {
+                IsCriticalError = true;
+                return;
+            }
+
+            if (!Physical.TryGetAlfa(_fbdi.ScrewSteel, _tb, ref _alfab, ref _errorList, "Gost34233_4"))
+            {
+                IsCriticalError = true;
+                return;
+            }
+
+            if (!Physical.Gost34233_4.TryGetfb(_fbdi.Screwd, _fbdi.IsScrewWithGroove, ref _fb, ref _errorList))
+            {
+                IsCriticalError = true;
+                return;
+            }
+
             _sigma_dnb = Physical.Gost34233_4.GetSigma(_fbdi.ScrewSteel, _tb);
 
 
             _S0 = _fbdi.IsFlangeFlat ? _fbdi.s : _fbdi.S0;
 
-
-            if (errorList.Any())
-            {
-                IsCriticalError = true;
-                ErrorList = ErrorList.Concat(errorList).ToList();
-                return;
-            }
-
-            if (_fb == 0 || _Eb20 == 0)
-            {
-                IsCriticalError = true;
-                ErrorList.Add("Ошибка получения значений физических велечин");
-                return;
-            }
 
             if (_isGasketMetal)
             {

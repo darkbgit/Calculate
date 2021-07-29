@@ -81,15 +81,18 @@ namespace CalculateVessels
                 //[σ]
                 //InputClass.GetInput_sigma_d(sigma_d_tb, ref d_in, ref dataInErr);
                 {
-                    double sigma_d;
+                    double sigma_d = 0.0;
                     if (sigma_d_tb.ReadOnly)
                     {
-                        sigma_d = Physical.Gost34233_1.GetSigma(ellipticalShellDataIn.Steel,
+                        if (Physical.Gost34233_1.TryGetSigma(ellipticalShellDataIn.Steel,
                                                     ellipticalShellDataIn.t,
-                                                    ref dataInErr);
-                        sigma_d_tb.ReadOnly = false;
-                        sigma_d_tb.Text = sigma_d.ToString();
-                        sigma_d_tb.ReadOnly = true;
+                                                    ref sigma_d,
+                                                    ref dataInErr))
+                        {
+                            sigma_d_tb.ReadOnly = false;
+                            sigma_d_tb.Text = sigma_d.ToString();
+                            sigma_d_tb.ReadOnly = true;
+                        }
                     }
                     else
                     {
@@ -241,7 +244,7 @@ namespace CalculateVessels
 
                 if (isNotError)
                 {
-                    EllipticalShell ell = new EllipticalShell(ellipticalShellDataIn);
+                    EllipticalShell ell = new(ellipticalShellDataIn);
                     ell.Calculate();
                     if (!ell.IsCriticalError)
                     {
@@ -267,13 +270,13 @@ namespace CalculateVessels
 
         private void GetGostDim_b_Click(object sender, EventArgs e)
         {
-            GostEllForm gef = new GostEllForm { Owner = this };
+            GostEllForm gef = new() { Owner = this };
             gef.ShowDialog(); // показываем
         }
 
         private void GetFi_b_Click(object sender, EventArgs e)
         {
-            FiForm ff = new FiForm { Owner = this };
+            FiForm ff = new() { Owner = this };
             ff.ShowDialog(); // показываем
         }
 
@@ -305,7 +308,7 @@ namespace CalculateVessels
 
             if (isNotError)
             {
-                EllipticalShell ellipticalShell = new EllipticalShell(ellipticalShellDataIn);
+                EllipticalShell ellipticalShell = new(ellipticalShellDataIn);
                 ellipticalShell.Calculate();
                 if (!ellipticalShell.IsCriticalError)
                 {
@@ -329,7 +332,7 @@ namespace CalculateVessels
 
                     System.Windows.Forms.MessageBox.Show("Calculation complete");
 
-                    MessageBoxCheckBox mbcb = new MessageBoxCheckBox(ellipticalShell, ellipticalShellDataIn) { Owner = this };
+                    MessageBoxCheckBox mbcb = new(ellipticalShell, ellipticalShellDataIn) { Owner = this };
                     mbcb.ShowDialog();
                 }
                 else

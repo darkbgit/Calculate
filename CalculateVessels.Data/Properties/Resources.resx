@@ -220,6 +220,87 @@
   <data name="EllVertDekart" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\pic\Nozzle\EllVertDekart.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="Fixed_1_1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Fixed 1-1.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Fixed_1_1_Exp" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Fixed 1-1 Exp.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Fixed_1_1_Syl" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Fixed 1-1 Syl.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Fixed_1_2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Fixed 1-2.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Fixed_1_2_Exp" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Fixed 1-2 Exp.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Fixed_1_2_Syl" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Fixed 1-2 Syl.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Fixed_1_3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Fixed 1-3.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Fixed_1_3_Exp" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Fixed 1-3 Exp.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Fixed_1_3_Syl" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Fixed 1-3 Syl.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Fixed_2_1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Fixed 2-1.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Fixed_2_1_Exp" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Fixed 2-1 Exp.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Fixed_2_1_Syl" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Fixed 2-1 Syl.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Fixed_2_2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Fixed 2-2.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Fixed_2_2_Exp" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Fixed 2-2 Exp.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Fixed_2_2_Syl" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Fixed 2-2 Syl.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Fixed_2_3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Fixed 2-3.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Fixed_2_3_Exp" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Fixed 2-3 Exp.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Fixed_2_3_Syl" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Fixed 2-3 Syl.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Fixed_3_1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Fixed 3-1.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Fixed_3_1_Exp" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Fixed 3-1 Exp.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Fixed_3_1_Syl" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Fixed 3-1 Syl.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Fixed_3_2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Fixed 3-2.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Fixed_3_2_Exp" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Fixed 3-2 Exp.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Fixed_3_2_Syl" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Fixed 3-2 Syl.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Fixed_3_3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Fixed 3-3.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Fixed_3_3_Exp" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Fixed 3-3 Exp.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Fixed_3_3_Syl" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Fixed 3-3 Syl.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="fl1_a" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\pic\pldn\flange\fl1-a.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>

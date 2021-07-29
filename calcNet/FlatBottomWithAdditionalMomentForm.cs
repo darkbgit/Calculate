@@ -216,17 +216,19 @@ namespace CalculateVessels
             if (dataIn.IsDataGood)
             {
                 //[σ]
-                //InputClass.GetInput_sigma_d(sigma_d_tb, ref d_in, ref dataInErr);
                 {
-                    double sigma_d;
+                    double sigma_d = default;
                     if (sigma_d_tb.ReadOnly)
                     {
-                        sigma_d = Physical.Gost34233_1.GetSigma(dataIn.CoverSteel,
+                        if (Physical.Gost34233_1.TryGetSigma(dataIn.CoverSteel,
                                                     dataIn.t,
-                                                    ref dataInErr);
-                        sigma_d_tb.ReadOnly = false;
-                        sigma_d_tb.Text = sigma_d.ToString(CultureInfo.CurrentCulture);
-                        sigma_d_tb.ReadOnly = true;
+                                                    ref sigma_d,
+                                                    ref dataInErr))
+                        {
+                            sigma_d_tb.ReadOnly = false;
+                            sigma_d_tb.Text = sigma_d.ToString(CultureInfo.CurrentCulture);
+                            sigma_d_tb.ReadOnly = true;
+                        }
                     }
                     else
                     {

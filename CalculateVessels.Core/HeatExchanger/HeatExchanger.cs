@@ -1,9 +1,15 @@
-﻿using CalculateVessels.Core.HeatExchanger.Enums;
+﻿using CalculateVessels.Core.Bottoms.Enums;
+using CalculateVessels.Core.HeatExchanger.Enums;
 using CalculateVessels.Core.Interfaces;
+using CalculateVessels.Core.Word;
+using CalculateVessels.Core.Word.Enums;
 using CalculateVessels.Data.PhysicalData;
 using CalculateVessels.Data.PhysicalData.Enums;
+using DocumentFormat.OpenXml.Packaging;
+using DocumentFormat.OpenXml.Wordprocessing;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -186,44 +192,123 @@ namespace CalculateVessels.Core.HeatExchanger
         public void Calculate()
         {
             //TODO: Get phisycal parameters
-            _ET = 0.0;
-            _EK = 0.0;
-            _ED = 0.0;
-            _E1 = 0.0;
-            _E2 = 0.0;
+            //ET
+            if (!Physical.TryGetE(_hedi.SteelT, _hedi.tT, ref _ET, ref _errorList))
+            {
+                IsCriticalError = true;
+                return;
+            }
 
+            //EK
+            if (!Physical.TryGetE(_hedi.SteelK, _hedi.tK, ref _EK, ref _errorList))
+            {
+                IsCriticalError = true;
+                return;
+            }
+
+            //ED
+            if (!Physical.TryGetE(_hedi.SteelD, _hedi.tT, ref _ED, ref _errorList))
+            {
+                IsCriticalError = true;
+                return;
+            }
+
+            //Ep
             if (_hedi.IsDifferentTubePlate)
             {
-                _Ep1 = 0.0;
-                _Ep2 = 0.0;
+                if (!Physical.TryGetE(_hedi.Steelp1, _hedi.tK, ref _Ep1, ref _errorList))
+                {
+                    IsCriticalError = true;
+                    return;
+                }
+
+                if (!Physical.TryGetE(_hedi.Steelp2, _hedi.tK, ref _Ep2, ref _errorList))
+                {
+                    IsCriticalError = true;
+                    return;
+                }
             }
             else
             {
-                _Ep = 0.0;
+                if (!Physical.TryGetE(_hedi.Steelp, _hedi.tK, ref _Ep, ref _errorList))
+                {
+                    IsCriticalError = true;
+                    return;
+                }
             }
-            
+
+            //TODO: Get E1 for condition if two different tube piate and flange not with tube plate
+            //E1
+            if (true)
+            {
+                _E1 = _Ep;
+            }
+            else
+            {
+                if (!Physical.TryGetE(_hedi.Steel1, _hedi.tK, ref _E1, ref _errorList))
+                {
+                    IsCriticalError = true;
+                    return;
+                }
+            }
+
+            //E2         
+            if (!Physical.TryGetE(_hedi.Steel2, _hedi.tK, ref _E2, ref _errorList))
+            {
+                IsCriticalError = true;
+                return;
+            }
+
+            //Ekom
             if (_hedi.IsNeedKcompensatorCalculate)
             {
-                _Ekom = 0.0;
+                if (!Physical.TryGetE(_hedi.Steelkom, _hedi.tK, ref _Ekom, ref _errorList))
+                {
+                    IsCriticalError = true;
+                    return;
+                }
             }
 
-            _sigma_dp = 0.0;
-            _sigma_dK = 0.0;
-            _sigma_dT = 0.0;
-
-            if (Physical.TryGetAlfa(_hedi.StellK, _hedi.tK, ref _alfaK, ref _errorList))
+            //[]p
+            if (Physical.Gost34233_1.TryGetSigma(_hedi.Steelp, _hedi.tK, ref _sigma_dp, ref _errorList))
             {
                 IsCriticalError = true;
                 return;
             }
 
-            if (Physical.TryGetAlfa(_hedi.StellT, _hedi.tT, ref _alfaT, ref _errorList))
+            //[]K
+            if (Physical.Gost34233_1.TryGetSigma(_hedi.SteelK, _hedi.tK, ref _sigma_dK, ref _errorList))
             {
                 IsCriticalError = true;
                 return;
             }
 
-            _Rmp = 0.0;
+            //[]T
+            if (Physical.Gost34233_1.TryGetSigma(_hedi.SteelT, _hedi.tT, ref _sigma_dT, ref _errorList))
+            {
+                IsCriticalError = true;
+                return;
+            }
+
+            //alfap
+            if (Physical.TryGetAlfa(_hedi.SteelK, _hedi.tK, ref _alfaK, ref _errorList))
+            {
+                IsCriticalError = true;
+                return;
+            }
+
+            //alfaT
+            if (Physical.TryGetAlfa(_hedi.SteelT, _hedi.tT, ref _alfaT, ref _errorList))
+            {
+                IsCriticalError = true;
+                return;
+            }
+
+            if (Physical.Gost34233_1.TryGetRm(_hedi.Steelp, _hedi.tK, ref _Rmp, ref _errorList))
+            {
+                IsCriticalError = true;
+                return;
+            }
 
             //TODO: sigmaa for different matireals Al,Cu, Tt
 
@@ -232,16 +317,16 @@ namespace CalculateVessels.Core.HeatExchanger
 
             _CtForSigmaa = (2300.0 - _hedi.tp) / 2300.0;
 
-            _AForSigmaap = (Physical.Gost34233_1.GetSteelType(_hedi.Stellp, ref _errorList) is SteelType.Carbon or SteelType.Austenitic) ? 60000.0 : 45000.0;
+            _AForSigmaap = (Physical.Gost34233_1.GetSteelType(_hedi.Steelp, ref _errorList) is (SteelType.Carbon or SteelType.Austenitic) and not SteelType.Undefined) ? 60000.0 : 45000.0;
 
             _BForSigmaa = 0.4 * _Rmp;
 
             _sigmaa_dp = (_CtForSigmaa * _AForSigmaap / Math.Sqrt(_nNForSigmaa * _hedi.N)) + (_BForSigmaa / _nsigmaForSigmaa);
 
-            _AForSigmaaK = (Physical.Gost34233_1.GetSteelType(_hedi.StellK, ref _errorList) is SteelType.Carbon or SteelType.Austenitic) ? 60000.0 : 45000.0;
+            _AForSigmaaK = (Physical.Gost34233_1.GetSteelType(_hedi.SteelK, ref _errorList) is (SteelType.Carbon or SteelType.Austenitic) and not SteelType.Undefined) ? 60000.0 : 45000.0;
             _sigmaa_dK = (_CtForSigmaa * _AForSigmaaK / Math.Sqrt(_nNForSigmaa * _hedi.N)) + (_BForSigmaa / _nsigmaForSigmaa);
 
-            _AForSigmaaT = (Physical.Gost34233_1.GetSteelType(_hedi.StellT, ref _errorList) is SteelType.Carbon or SteelType.Austenitic) ? 60000.0 : 45000.0;
+            _AForSigmaaT = (Physical.Gost34233_1.GetSteelType(_hedi.SteelT, ref _errorList) is (SteelType.Carbon or SteelType.Austenitic) and not SteelType.Undefined) ? 60000.0 : 45000.0;
             _sigmaa_dT = (_CtForSigmaa * _AForSigmaaT / Math.Sqrt(_nNForSigmaa * _hedi.N)) + (_BForSigmaa / _nsigmaForSigmaa);
 
             _mn = _hedi.a / _hedi.a1;
@@ -649,7 +734,183 @@ namespace CalculateVessels.Core.HeatExchanger
 
         public void MakeWord(string filename)
         {
-            throw new NotImplementedException();
+            if (filename == null)
+            {
+                const string DEFAULT_FILE_NAME = "temp.docx";
+                filename = DEFAULT_FILE_NAME;
+            }
+
+            using WordprocessingDocument package = WordprocessingDocument.Open(filename, true);
+
+            var mainPart = package.MainDocumentPart;
+            var body = mainPart?.Document.Body;
+
+            if (body == null) return;
+
+            body.AddParagraph($"Расчет на прочность теплообменного аппарата с неподвижными трубными решетками {_hedi.Name}")
+                .Heading(HeadingType.Heading1)
+                .Alignment(AlignmentType.Center);
+
+            body.AddParagraph("");
+
+            {
+                var imagePart = mainPart.AddImagePart(ImagePartType.Gif);
+
+                var a = ((int)_hedi.FirstTubePlate.TubePlateType).ToString();
+
+                var b = _hedi.IsDifferentTubePlate
+                    ? ((int)_hedi.SecondTubePlate.TubePlateType).ToString() : a;
+
+                var c = _hedi.CompensatorType switch
+                {
+                    CompensatorType.No => "",
+                    CompensatorType.Compensator => " Syl",
+                    CompensatorType.Expander => " Exp",
+                    CompensatorType.CompensatorOnExpander => " Exp",
+                    _ => "",
+                };
+
+                var pic = (byte[])Data.Properties.Resources.ResourceManager.GetObject("Fixed " + a + "-" + b + c);
+
+                var stream = new MemoryStream(pic);
+                imagePart.FeedData(stream);
+
+                body.AddParagraph("").AddImage(mainPart.GetIdOfPart(imagePart));
+            }
+
+            {
+                var imagePart = mainPart.AddImagePart(ImagePartType.Gif);
+
+                var type = _fbdi.IsFlangeFlat ? "f21_" : "fl1_";
+
+                string type1 = "";
+
+                switch (_fbdi.FlangeFace)
+                {
+                    case FlangeFaceType.Flat:
+                        type1 = "a";
+                        break;
+                    case FlangeFaceType.MaleFemale:
+                        type1 = "b";
+                        break;
+                    case FlangeFaceType.TongueGroove:
+                        type1 = "c";
+                        break;
+                    case FlangeFaceType.Ring:
+                        type1 = "d";
+                        break;
+                }
+
+                var b = (byte[])Data.Properties.Resources.ResourceManager.GetObject(type + type1);
+                var stream = new MemoryStream(b);
+                imagePart.FeedData(stream);
+
+                body.Elements<Paragraph>().LastOrDefault().AddImage(mainPart.GetIdOfPart(imagePart));
+            }
+
+            body.AddParagraph("Исходные данные").Alignment(AlignmentType.Center);
+
+            //table
+            {
+                body.AddParagraph("Крышка");
+
+                var table = body.AddTable();
+
+                //table.AddRow().
+                //  AddCell("");
+
+                table.AddRow()
+                    .AddCell("Марка стали")
+                    .AddCell($"{_fbdi.CoverSteel}");
+
+                table.AddRow()
+                    .AddCell("Коэффициент прочности сварного шва, φ:")
+                    .AddCell($"{_fbdi.fi}");
+
+                table.AddRow()
+                    .AddCell("Прибавка на коррозию, ")
+                    .AppendEquation("c_1")
+                    .AppendText(":")
+                    .AddCell($"{_fbdi.c1} мм");
+
+                table.AddRow()
+                    .AddCell("Прибавка для компенсации минусового допуска, ")
+                    .AppendEquation("c_2")
+                    .AppendText(":")
+                    .AddCell($"{_fbdi.c2} мм");
+
+                if (_fbdi.c3 > 0)
+                {
+                    table.AddRow()
+                        .AddCell("Технологическая прибавка, ")
+                        .AppendEquation("c_3")
+                        .AppendText(":")
+                        .AddCell($"{_fbdi.c3} мм");
+                }
+
+                table.AddRow()
+                    .AddCell(_fbdi.IsCoverWithGroove
+                    ? "Исполнительная толщина плоской крышки в месте паза для перегородки, "
+                    : "Исполнительная толщина крышки, ")
+                    .AppendEquation("s_1")
+                    .AppendText(":")
+                    .AddCell($"{_fbdi.s1} мм");
+
+                table.AddRow()
+                    .AddCell("Исполнительная толщина плоской крышки в зоне уплотнения, ")
+                    .AppendEquation("s_2")
+                    .AppendText(":")
+                    .AddCell($"{_fbdi.s2} мм");
+
+                table.AddRow()
+                    .AddCell("Толщина крышки вне уплотнения, ")
+                    .AppendEquation("s_3")
+                    .AppendText(":")
+                    .AddCell($"{_fbdi.s3} мм");
+
+                if (_fbdi.IsCoverWithGroove)
+                {
+                    table.AddRow()
+                    .AddCell("Ширина паза под перегородку, ")
+                    .AppendEquation("s_4")
+                    .AppendText(":")
+                    .AddCell($"{_fbdi.s4} мм");
+                }
+
+                table.AddRow()
+                    .AddCell("Наименьший диаметр наружной утоненной части плоской крышки, ")
+                    .AppendEquation("D_2")
+                    .AppendText(":")
+                    .AddCell($"{_fbdi.D2} мм");
+
+                table.AddRow()
+                    .AddCell("Диаметр болтовой окружности, ")
+                    .AppendEquation("D_3")
+                    .AppendText(":")
+                    .AddCell($"{_fbdi.D3} мм");
+
+                table.AddRow()
+                    .AddCell("Отверстия в крышке")
+                    .AddCell(_fbdi.Hole == HoleInFlatBottom.WithoutHole ? "нет" : "есть");
+
+                switch (_fbdi.Hole)
+                {
+                    case HoleInFlatBottom.OneHole:
+                        table.AddRow()
+                            .AddCell("Диаметр отверстия в крышке, d:")
+                            .AddCell($"{_fbdi.d} мм");
+                        break;
+                    case HoleInFlatBottom.MoreThenOneHole:
+                        table.AddRow()
+                            .AddCell("Диаметр отверстий в крышке, ")
+                            .AppendEquation("d_i")
+                            .AppendText(":")
+                            .AddCell($"{_fbdi.di} мм");
+                        break;
+                }
+                body.InsertTable(table);
+
+            }
         }
 
         private static double CalculateSigmaa(double Ksigma,

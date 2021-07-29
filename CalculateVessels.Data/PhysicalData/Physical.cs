@@ -15,9 +15,11 @@ namespace CalculateVessels.Data.PhysicalData
     {
         public static class Gost34233_1
         {
+            private const string TABLE_STEELS = "PhysicalData/Gost34233_1/Steels.json";
+
             public static string[] GetSteelsList()
             {
-                using StreamReader file = new("PhysicalData/Gost34233_1/Steels.json");
+                using StreamReader file = new(TABLE_STEELS);
                 try
                 {
                     var json = file.ReadToEnd();
@@ -36,7 +38,7 @@ namespace CalculateVessels.Data.PhysicalData
 
                 try
                 {
-                    using StreamReader file = new("PhysicalData/Gost34233_1/Steels.json");
+                    using StreamReader file = new(TABLE_STEELS);
                     var json = file.ReadToEnd();
                     file.Close();
                     steels = JsonSerializer.Deserialize<List<PhysicalData.Gost34233_1.SteelForSteelType>>(json);
@@ -44,7 +46,7 @@ namespace CalculateVessels.Data.PhysicalData
                 catch
                 {
                     errorList.Add($"Error open file for SteelType of {steelName}");
-                    return default;
+                    return SteelType.Undefined;
                 }
 
                 var steel = steels.FirstOrDefault(s => s.Name.Equals(steelName));
@@ -52,21 +54,21 @@ namespace CalculateVessels.Data.PhysicalData
                 if (steel == null)
                 {
                     errorList.Add($"Error find stell {steelName}");
-                    return default;
+                    return SteelType.Undefined;
                 }
 
                 return (SteelType)steel.SteelType;
             }
 
-            public static double GetSigma(string steelName, double temperature,
-                ref List<string> errorList,
+            public static bool TryGetSigma(string steelName, double temperature,
+                ref double sigma_d, ref List<string> errorList,
                 bool isBigThickness = false, bool isBigResource = false)
             {
                 var steels = new List<PhysicalData.Gost34233_1.SteelForSigma>();
 
                 try
                 {
-                    using StreamReader file = new("PhysicalData/Gost34233_1/Steels.json");
+                    using StreamReader file = new(TABLE_STEELS);
                     var json = file.ReadToEnd();
                     file.Close();
                     steels = JsonSerializer.Deserialize<List<PhysicalData.Gost34233_1.SteelForSigma>>(json);
@@ -74,7 +76,7 @@ namespace CalculateVessels.Data.PhysicalData
                 catch
                 {
                     errorList.Add($"Error open file for sigma {steelName}");
-                    return default;
+                    return false;
                 }
 
                 var accessI = 0;
@@ -94,7 +96,7 @@ namespace CalculateVessels.Data.PhysicalData
 
                 var steel = steels.FirstOrDefault(s => s.Name.Equals(steelName));
 
-                double sigma_d, sigmaLittle = 0, sigmaBig = 0;
+                double sigmaLittle = 0, sigmaBig = 0;
                 double tempLittle = 0, tempBig = 0;
 
                 for (var i = 0; i < steel.Values.Count; i++)
@@ -103,8 +105,7 @@ namespace CalculateVessels.Data.PhysicalData
                         steel.Values[i].Temperature == temperature)
                     {
                         sigma_d = steel.Values[i].SigmaValue[accessI];
-
-                        return sigma_d;
+                        return true;
                     }
                     else if (steel.Values[i].Temperature > temperature)
                     {
@@ -116,7 +117,7 @@ namespace CalculateVessels.Data.PhysicalData
                     {
                         errorList.Add($"Температура {temperature} °С, больше чем максимальная температура {tempBig} °С " +
                                       $"для стали {steelName} при которой определяется допускаемое напряжение по ГОСТ 34233.1-2017");
-                        return default;
+                        return false;
                     }
                     else
                     {
@@ -130,31 +131,33 @@ namespace CalculateVessels.Data.PhysicalData
                 sigma_d = Math.Truncate(sigma_d / 5);
                 sigma_d *= 0.5;
 
-                return sigma_d;
+                return true;
             }
 
-
-            public static double GetE(string steelName, double temperature, ref List<string> dataInErr)
+            public static bool TryGetRm(string steelName, double temperature,
+                ref double Rm, ref List<string> errorList,
+                bool isBigThickness = false)
             {
-                var steels = new List<PhysicalData.Gost34233_1.SteelForE>();
+                var steels = new List<PhysicalData.Gost34233_1.SteelForRm>();
 
                 try
                 {
-                    using StreamReader file = new("PhysicalData/Gost34233_1/Steels.json");
+                    using StreamReader file = new(TABLE_STEELS);
                     var json = file.ReadToEnd();
                     file.Close();
-                    steels = JsonSerializer.Deserialize<List<PhysicalData.Gost34233_1.SteelForE>>(json);
+                    steels = JsonSerializer.Deserialize<List<PhysicalData.Gost34233_1.SteelForRm>>(json);
                 }
                 catch
                 {
-                    return 0;
+                    errorList.Add($"Error open file for Rm {steelName}");
+                    return false;
                 }
+
+                var accessI = isBigThickness ? 1 : 0;
 
                 var steel = steels.FirstOrDefault(s => s.Name.Equals(steelName));
 
-                steel.Values = steel.Values.Where(v => v.EValue != 0).ToList();
-
-                double E, ELittle = 0, EBig = 0;
+                double RmLittle = 0, RmBig = 0;
                 double tempLittle = 0, tempBig = 0;
 
                 for (var i = 0; i < steel.Values.Count; i++)
@@ -162,32 +165,33 @@ namespace CalculateVessels.Data.PhysicalData
                     if ((i == 0 && steel.Values[i].Temperature > temperature) ||
                         steel.Values[i].Temperature == temperature)
                     {
-                        return steel.Values[i].EValue;
+                        Rm = steel.Values[i].RmValue[accessI];
+                        return true;
                     }
                     else if (steel.Values[i].Temperature > temperature)
                     {
                         tempLittle = steel.Values[i].Temperature;
-                        EBig = steel.Values[i].EValue;
+                        RmBig = steel.Values[i].RmValue[accessI];
                         break;
                     }
                     else if (i == steel.Values.Count - 1)
                     {
-                        dataInErr.Add($"Температура {temperature} °С, больше чем максимальная температура {tempBig} °С " +
-                                      $"для стали {steelName} при которой определяется модуль  продольной упругости по ГОСТ 34233.1-2017");
-                        return 0;
+                        errorList.Add($"Температура {temperature} °С, больше чем максимальная температура {tempBig} °С " +
+                                      $"для стали {steelName} при которой определяется значение времменного сопротивления по ГОСТ 34233.1-2017");
+                        return false;
                     }
                     else
                     {
                         tempBig = steel.Values[i].Temperature;
-                        ELittle = steel.Values[i].EValue;
+                        RmLittle = steel.Values[i].RmValue[accessI];
                     }
                 }
 
-                E = EBig - ((EBig - ELittle) * (temperature - tempLittle) / (tempBig - tempLittle));
-                E = Math.Truncate(E);
-
-                return E;
+                Rm = RmBig - ((RmBig - RmLittle) * (temperature - tempLittle) / (tempBig - tempLittle));
+                Rm = Math.Round(Rm);
+                return true;
             }
+
         }
 
 
@@ -239,31 +243,36 @@ namespace CalculateVessels.Data.PhysicalData
 
         public static class Gost34233_4
         {
-            public static double Getfb(int M, bool isGroove = false)
+            private const string TABLE_D1 = "PhysicalData/Gost34233_4/TableD1.json";
+
+            public static bool TryGetfb(int M, bool isGroove, ref double fb, ref List<string> errorList)
             {
                 var fbs = new List<PhysicalData.Gost34233_4.Fb>();
 
                 try
                 {
-                    using StreamReader file = new("PhysicalData/Gost34233_4/ScrewSquare.json");
+                    using StreamReader file = new(TABLE_D1);
                     var json = file.ReadToEnd();
                     file.Close();
                     fbs = JsonSerializer.Deserialize<List<PhysicalData.Gost34233_4.Fb>>(json);
                 }
                 catch
                 {
-                    return 0;
+                    errorList.Add($"Error open file {TABLE_D1} for fb");
+                    return false;
                 }
 
-                var fb = fbs.FirstOrDefault(f => f.M == M);
+                var fbValue = fbs.FirstOrDefault(f => f.M == M);
 
-                if (fb == null)
+                if (fbValue == null)
                 {
-                    return 0;
+                    errorList.Add($"Error find value for fb for M {M} in file {TABLE_D1}");
+                    return false;
                 }
                 else
                 {
-                    return isGroove ? fb.fb_groove : fb.fb;
+                    fb = isGroove ? fbValue.fb_groove : fbValue.fb;
+                    return true;
                 }
             }
 
@@ -314,92 +323,6 @@ namespace CalculateVessels.Data.PhysicalData
                     return (gasket.m, gasket.qobj, gasket.q_d, gasket.Kobj, gasket.Ep, gasket.IsFlat, gasket.IsMetal);
                 }
             }
-
-            public static double GetE(string steelName, double temperature)
-            {
-                var steels = new List<SteelForE>();
-
-                try
-                {
-                    using StreamReader file = new("PhysicalData/Gost34233_4/Steels.json");
-                    var json = file.ReadToEnd();
-                    file.Close();
-                    steels = JsonSerializer.Deserialize<List<SteelForE>>(json);
-                }
-                catch
-                {
-                    return 0;
-                }
-
-                var steel = steels.FirstOrDefault(s => s.Name.Equals(steelName));
-
-                steel.Values = steel.Values.Where(v => v.EValue != 0).ToList();
-
-                double E, ELittle = 0, EBig = 0;
-                double tempLittle = 0, tempBig = 0;
-
-                for (var i = 0; i < steel.Values.Count; i++)
-                {
-                    if ((i == 0 && steel.Values[i].Temperature > temperature) ||
-                        steel.Values[i].Temperature == temperature)
-                    {
-                        return steel.Values[i].EValue;
-                    }
-                    else if (steel.Values[i].Temperature > temperature)
-                    {
-                        tempLittle = steel.Values[i].Temperature;
-                        EBig = steel.Values[i].EValue;
-                        break;
-                    }
-                    else if (i == steel.Values.Count - 1)
-                    {
-                        //dataInErr.Add($"Температура {temperature} °С, больше чем максимальная температура {tempBig} °С " +
-                        //  $"для стали {steelName} при которой определяется модуль  продольной упругости по ГОСТ 34233.1-2017");
-                        return 0;
-                    }
-                    else
-                    {
-                        tempBig = steel.Values[i].Temperature;
-                        ELittle = steel.Values[i].EValue;
-                    }
-                }
-
-                E = EBig - ((EBig - ELittle) * (temperature - tempLittle) / (tempBig - tempLittle));
-                E = Math.Truncate(E);
-
-                return E;
-            }
-
-            //public static double GetAlfa(string steelName, double temperature)
-            //{
-            //    var steels = new List<SteelForAlfa>();
-
-            //    try
-            //    {
-            //        using StreamReader file = new("PhysicalData/Gost34233_4/Steels.json");
-            //        var json = file.ReadToEnd();
-            //        file.Close();
-            //        steels = JsonSerializer.Deserialize<List<SteelForAlfa>>(json);
-            //    }
-            //    catch
-            //    {
-            //        return 0;
-            //    }
-
-            //    var steel = steels.FirstOrDefault(s => s.Name.Equals(steelName));
-
-            //    steel.Values = steel.Values.Where(v => v.AlfaValue != 0).ToList();
-
-            //    for (var i = 0; i < steel.Values.Count; i++)
-            //    {
-            //        if (steel.Values[i].Temperature >= temperature)
-            //        {
-            //            return steel.Values[i].AlfaValue;
-            //        }
-            //    }
-
-            //    return 0;
-            //}
 
             public static double GetSigma(string steelName, double temperature)
             {
@@ -496,48 +419,7 @@ namespace CalculateVessels.Data.PhysicalData
                 return steels?.Select(s => s.Name);
             }
         }
-
-        public static bool TryGetAlfa(string steelName, double temperature,
-            ref double alfa, ref List<string> errorList, string gost = "Gost34233_1")
-        {
-            List<SteelForAlfa> steels = new();
-
-            try
-            {
-                using StreamReader file = new($"PhysicalData/{gost}/Steels.json");
-                var json = file.ReadToEnd();
-                file.Close();
-                steels = JsonSerializer.Deserialize<List<SteelForAlfa>>(json);
-            }
-            catch
-            {
-                errorList.Add($"Cannt open file for alfa for steel {steelName} in GOST {gost}");
-                return false;
-            }
-
-            var alfaList = steels
-                .FirstOrDefault(s => s.Name.Equals(steelName))
-                ?.Values
-                .Where(v => v.AlfaValue != 0).ToList();
-
-            if (alfaList == null)
-            {
-                errorList.Add($"Coudnt find alfa values for steel={steelName} in GOST {gost}");
-                return false;
-            }
-
-            for (var i = 0; i < alfaList.Count; i++)
-            {
-                if (alfaList[i].Temperature >= temperature)
-                {
-                    alfa = alfaList[i].AlfaValue;
-                    return true;
-                }
-            }
-
-            errorList.Add($"Coudnt find alfa value for steel={steelName} on temperature {temperature} in GOST {gost}");
-            return false;
-        }
+    
 
         public static class Gost34233_7
         {
@@ -559,7 +441,7 @@ namespace CalculateVessels.Data.PhysicalData
                 }
                 catch
                 {
-                    errorList.Add("Error open file for psi0");
+                    errorList.Add($"Error open file {TABLE_B1} for psi0");
                     return false;
                 }
 
@@ -771,5 +653,109 @@ namespace CalculateVessels.Data.PhysicalData
             }
 
         }
+
+
+        public static bool TryGetAlfa(string steelName, double temperature,
+            ref double alfa, ref List<string> errorList, string gost = "Gost34233_1")
+        {
+            List<SteelForAlfa> steels = new();
+
+            try
+            {
+                using StreamReader file = new($"PhysicalData/{gost}/Steels.json");
+                var json = file.ReadToEnd();
+                file.Close();
+                steels = JsonSerializer.Deserialize<List<SteelForAlfa>>(json);
+            }
+            catch
+            {
+                errorList.Add($"Cannt open file for alfa for steel {steelName} in GOST {gost}");
+                return false;
+            }
+
+            var alfaList = steels
+                .FirstOrDefault(s => s.Name.Equals(steelName))
+                ?.Values
+                .Where(v => v.AlfaValue != 0).ToList();
+
+            if (alfaList == null)
+            {
+                errorList.Add($"Coudnt find alfa values for steel={steelName} in GOST {gost}");
+                return false;
+            }
+
+            for (var i = 0; i < alfaList.Count; i++)
+            {
+                if (alfaList[i].Temperature >= temperature)
+                {
+                    alfa = alfaList[i].AlfaValue;
+                    return true;
+                }
+            }
+
+            errorList.Add($"Coudnt find alfa value for steel={steelName} on temperature {temperature} in GOST {gost}");
+            return false;
+        }
+
+        public static bool TryGetE(string steelName, double temperature, ref double E, ref List<string> errorList, string gost = "GOST34233_1")
+        {
+            var steels = new List<SteelForE>();
+
+            try
+            {
+                using StreamReader file = new($"PhysicalData/{gost}/Steels.json");
+                var json = file.ReadToEnd();
+                file.Close();
+                steels = JsonSerializer.Deserialize<List<SteelForE>>(json);
+            }
+            catch
+            {
+                errorList.Add($"Cannt open file for E for steel {steelName} in GOST {gost}");
+                return false;
+            }
+
+            var Elist = steels
+                .FirstOrDefault(s => s.Name.Equals(steelName))
+                ?.Values
+                .Where(v => v.EValue != 0).ToList();
+
+            double ELittle = 0, EBig = 0;
+            double tempLittle = 0, tempBig = 0;
+
+            for (var i = 0; i < Elist.Count; i++)
+            {
+                if ((i == 0 && Elist[i].Temperature > temperature) ||
+                    Elist[i].Temperature == temperature)
+                {
+                    E = Elist[i].EValue;
+                    return true;
+                }
+                else if (Elist[i].Temperature > temperature)
+                {
+                    tempLittle = Elist[i].Temperature;
+                    EBig = Elist[i].EValue;
+                    break;
+                }
+                else if (i == Elist.Count - 1)
+                {
+                    errorList.Add($"Температура {temperature} °С, больше чем максимальная температура {tempBig} °С " +
+                      $"для стали {steelName} при которой определяется модуль продольной упругости по {gost}-2017");
+                    return false;
+                }
+                else
+                {
+                    tempBig = Elist[i].Temperature;
+                    ELittle = Elist[i].EValue;
+                }
+            }
+
+            E = EBig - ((EBig - ELittle) * (temperature - tempLittle) / (tempBig - tempLittle));
+            E = Math.Truncate(E);
+
+            return true;
+        }
+
+
+
     }
 }

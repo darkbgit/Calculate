@@ -403,6 +403,276 @@ namespace CalculateVessels.Data.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        public static byte[] Fixed_1_1 {
+            get {
+                object obj = ResourceManager.GetObject("Fixed_1_1", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] Fixed_1_1_Exp {
+            get {
+                object obj = ResourceManager.GetObject("Fixed_1_1_Exp", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] Fixed_1_1_Syl {
+            get {
+                object obj = ResourceManager.GetObject("Fixed_1_1_Syl", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] Fixed_1_2 {
+            get {
+                object obj = ResourceManager.GetObject("Fixed_1_2", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] Fixed_1_2_Exp {
+            get {
+                object obj = ResourceManager.GetObject("Fixed_1_2_Exp", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] Fixed_1_2_Syl {
+            get {
+                object obj = ResourceManager.GetObject("Fixed_1_2_Syl", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] Fixed_1_3 {
+            get {
+                object obj = ResourceManager.GetObject("Fixed_1_3", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] Fixed_1_3_Exp {
+            get {
+                object obj = ResourceManager.GetObject("Fixed_1_3_Exp", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] Fixed_1_3_Syl {
+            get {
+                object obj = ResourceManager.GetObject("Fixed_1_3_Syl", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] Fixed_2_1 {
+            get {
+                object obj = ResourceManager.GetObject("Fixed_2_1", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] Fixed_2_1_Exp {
+            get {
+                object obj = ResourceManager.GetObject("Fixed_2_1_Exp", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] Fixed_2_1_Syl {
+            get {
+                object obj = ResourceManager.GetObject("Fixed_2_1_Syl", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] Fixed_2_2 {
+            get {
+                object obj = ResourceManager.GetObject("Fixed_2_2", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] Fixed_2_2_Exp {
+            get {
+                object obj = ResourceManager.GetObject("Fixed_2_2_Exp", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] Fixed_2_2_Syl {
+            get {
+                object obj = ResourceManager.GetObject("Fixed_2_2_Syl", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] Fixed_2_3 {
+            get {
+                object obj = ResourceManager.GetObject("Fixed_2_3", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] Fixed_2_3_Exp {
+            get {
+                object obj = ResourceManager.GetObject("Fixed_2_3_Exp", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] Fixed_2_3_Syl {
+            get {
+                object obj = ResourceManager.GetObject("Fixed_2_3_Syl", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] Fixed_3_1 {
+            get {
+                object obj = ResourceManager.GetObject("Fixed_3_1", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] Fixed_3_1_Exp {
+            get {
+                object obj = ResourceManager.GetObject("Fixed_3_1_Exp", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] Fixed_3_1_Syl {
+            get {
+                object obj = ResourceManager.GetObject("Fixed_3_1_Syl", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] Fixed_3_2 {
+            get {
+                object obj = ResourceManager.GetObject("Fixed_3_2", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] Fixed_3_2_Exp {
+            get {
+                object obj = ResourceManager.GetObject("Fixed_3_2_Exp", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] Fixed_3_2_Syl {
+            get {
+                object obj = ResourceManager.GetObject("Fixed_3_2_Syl", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] Fixed_3_3 {
+            get {
+                object obj = ResourceManager.GetObject("Fixed_3_3", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] Fixed_3_3_Exp {
+            get {
+                object obj = ResourceManager.GetObject("Fixed_3_3_Exp", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] Fixed_3_3_Syl {
+            get {
+                object obj = ResourceManager.GetObject("Fixed_3_3_Syl", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         public static byte[] fl1_a {
             get {
                 object obj = ResourceManager.GetObject("fl1_a", resourceCulture);
