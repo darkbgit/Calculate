@@ -781,136 +781,136 @@ namespace CalculateVessels.Core.HeatExchanger
             {
                 var imagePart = mainPart.AddImagePart(ImagePartType.Gif);
 
-                var type = _fbdi.IsFlangeFlat ? "f21_" : "fl1_";
+                //var type = _fbdi.IsFlangeFlat ? "f21_" : "fl1_";
 
-                string type1 = "";
+                //string type1 = "";
 
-                switch (_fbdi.FlangeFace)
-                {
-                    case FlangeFaceType.Flat:
-                        type1 = "a";
-                        break;
-                    case FlangeFaceType.MaleFemale:
-                        type1 = "b";
-                        break;
-                    case FlangeFaceType.TongueGroove:
-                        type1 = "c";
-                        break;
-                    case FlangeFaceType.Ring:
-                        type1 = "d";
-                        break;
-                }
+                //switch (_fbdi.FlangeFace)
+                //{
+                //    case FlangeFaceType.Flat:
+                //        type1 = "a";
+                //        break;
+                //    case FlangeFaceType.MaleFemale:
+                //        type1 = "b";
+                //        break;
+                //    case FlangeFaceType.TongueGroove:
+                //        type1 = "c";
+                //        break;
+                //    case FlangeFaceType.Ring:
+                //        type1 = "d";
+                //        break;
+                //}
 
-                var b = (byte[])Data.Properties.Resources.ResourceManager.GetObject(type + type1);
-                var stream = new MemoryStream(b);
-                imagePart.FeedData(stream);
+                //var b = (byte[])Data.Properties.Resources.ResourceManager.GetObject(type + type1);
+                //var stream = new MemoryStream(b);
+                //imagePart.FeedData(stream);
 
-                body.Elements<Paragraph>().LastOrDefault().AddImage(mainPart.GetIdOfPart(imagePart));
+                //body.Elements<Paragraph>().LastOrDefault().AddImage(mainPart.GetIdOfPart(imagePart));
             }
 
             body.AddParagraph("Исходные данные").Alignment(AlignmentType.Center);
 
             //table
-            {
-                body.AddParagraph("Крышка");
+            //{
+            //    body.AddParagraph("Крышка");
 
-                var table = body.AddTable();
+            //    var table = body.AddTable();
 
-                //table.AddRow().
-                //  AddCell("");
+            //    //table.AddRow().
+            //    //  AddCell("");
 
-                table.AddRow()
-                    .AddCell("Марка стали")
-                    .AddCell($"{_fbdi.CoverSteel}");
+            //    table.AddRow()
+            //        .AddCell("Марка стали")
+            //        .AddCell($"{_fbdi.CoverSteel}");
 
-                table.AddRow()
-                    .AddCell("Коэффициент прочности сварного шва, φ:")
-                    .AddCell($"{_fbdi.fi}");
+            //    table.AddRow()
+            //        .AddCell("Коэффициент прочности сварного шва, φ:")
+            //        .AddCell($"{_fbdi.fi}");
 
-                table.AddRow()
-                    .AddCell("Прибавка на коррозию, ")
-                    .AppendEquation("c_1")
-                    .AppendText(":")
-                    .AddCell($"{_fbdi.c1} мм");
+            //    table.AddRow()
+            //        .AddCell("Прибавка на коррозию, ")
+            //        .AppendEquation("c_1")
+            //        .AppendText(":")
+            //        .AddCell($"{_fbdi.c1} мм");
 
-                table.AddRow()
-                    .AddCell("Прибавка для компенсации минусового допуска, ")
-                    .AppendEquation("c_2")
-                    .AppendText(":")
-                    .AddCell($"{_fbdi.c2} мм");
+            //    table.AddRow()
+            //        .AddCell("Прибавка для компенсации минусового допуска, ")
+            //        .AppendEquation("c_2")
+            //        .AppendText(":")
+            //        .AddCell($"{_fbdi.c2} мм");
 
-                if (_fbdi.c3 > 0)
-                {
-                    table.AddRow()
-                        .AddCell("Технологическая прибавка, ")
-                        .AppendEquation("c_3")
-                        .AppendText(":")
-                        .AddCell($"{_fbdi.c3} мм");
-                }
+            //    if (_fbdi.c3 > 0)
+            //    {
+            //        table.AddRow()
+            //            .AddCell("Технологическая прибавка, ")
+            //            .AppendEquation("c_3")
+            //            .AppendText(":")
+            //            .AddCell($"{_fbdi.c3} мм");
+            //    }
 
-                table.AddRow()
-                    .AddCell(_fbdi.IsCoverWithGroove
-                    ? "Исполнительная толщина плоской крышки в месте паза для перегородки, "
-                    : "Исполнительная толщина крышки, ")
-                    .AppendEquation("s_1")
-                    .AppendText(":")
-                    .AddCell($"{_fbdi.s1} мм");
+            //    table.AddRow()
+            //        .AddCell(_fbdi.IsCoverWithGroove
+            //        ? "Исполнительная толщина плоской крышки в месте паза для перегородки, "
+            //        : "Исполнительная толщина крышки, ")
+            //        .AppendEquation("s_1")
+            //        .AppendText(":")
+            //        .AddCell($"{_fbdi.s1} мм");
 
-                table.AddRow()
-                    .AddCell("Исполнительная толщина плоской крышки в зоне уплотнения, ")
-                    .AppendEquation("s_2")
-                    .AppendText(":")
-                    .AddCell($"{_fbdi.s2} мм");
+            //    table.AddRow()
+            //        .AddCell("Исполнительная толщина плоской крышки в зоне уплотнения, ")
+            //        .AppendEquation("s_2")
+            //        .AppendText(":")
+            //        .AddCell($"{_fbdi.s2} мм");
 
-                table.AddRow()
-                    .AddCell("Толщина крышки вне уплотнения, ")
-                    .AppendEquation("s_3")
-                    .AppendText(":")
-                    .AddCell($"{_fbdi.s3} мм");
+            //    table.AddRow()
+            //        .AddCell("Толщина крышки вне уплотнения, ")
+            //        .AppendEquation("s_3")
+            //        .AppendText(":")
+            //        .AddCell($"{_fbdi.s3} мм");
 
-                if (_fbdi.IsCoverWithGroove)
-                {
-                    table.AddRow()
-                    .AddCell("Ширина паза под перегородку, ")
-                    .AppendEquation("s_4")
-                    .AppendText(":")
-                    .AddCell($"{_fbdi.s4} мм");
-                }
+            //    if (_fbdi.IsCoverWithGroove)
+            //    {
+            //        table.AddRow()
+            //        .AddCell("Ширина паза под перегородку, ")
+            //        .AppendEquation("s_4")
+            //        .AppendText(":")
+            //        .AddCell($"{_fbdi.s4} мм");
+            //    }
 
-                table.AddRow()
-                    .AddCell("Наименьший диаметр наружной утоненной части плоской крышки, ")
-                    .AppendEquation("D_2")
-                    .AppendText(":")
-                    .AddCell($"{_fbdi.D2} мм");
+            //    table.AddRow()
+            //        .AddCell("Наименьший диаметр наружной утоненной части плоской крышки, ")
+            //        .AppendEquation("D_2")
+            //        .AppendText(":")
+            //        .AddCell($"{_fbdi.D2} мм");
 
-                table.AddRow()
-                    .AddCell("Диаметр болтовой окружности, ")
-                    .AppendEquation("D_3")
-                    .AppendText(":")
-                    .AddCell($"{_fbdi.D3} мм");
+            //    table.AddRow()
+            //        .AddCell("Диаметр болтовой окружности, ")
+            //        .AppendEquation("D_3")
+            //        .AppendText(":")
+            //        .AddCell($"{_fbdi.D3} мм");
 
-                table.AddRow()
-                    .AddCell("Отверстия в крышке")
-                    .AddCell(_fbdi.Hole == HoleInFlatBottom.WithoutHole ? "нет" : "есть");
+            //    table.AddRow()
+            //        .AddCell("Отверстия в крышке")
+            //        .AddCell(_fbdi.Hole == HoleInFlatBottom.WithoutHole ? "нет" : "есть");
 
-                switch (_fbdi.Hole)
-                {
-                    case HoleInFlatBottom.OneHole:
-                        table.AddRow()
-                            .AddCell("Диаметр отверстия в крышке, d:")
-                            .AddCell($"{_fbdi.d} мм");
-                        break;
-                    case HoleInFlatBottom.MoreThenOneHole:
-                        table.AddRow()
-                            .AddCell("Диаметр отверстий в крышке, ")
-                            .AppendEquation("d_i")
-                            .AppendText(":")
-                            .AddCell($"{_fbdi.di} мм");
-                        break;
-                }
-                body.InsertTable(table);
+            //    switch (_fbdi.Hole)
+            //    {
+            //        case HoleInFlatBottom.OneHole:
+            //            table.AddRow()
+            //                .AddCell("Диаметр отверстия в крышке, d:")
+            //                .AddCell($"{_fbdi.d} мм");
+            //            break;
+            //        case HoleInFlatBottom.MoreThenOneHole:
+            //            table.AddRow()
+            //                .AddCell("Диаметр отверстий в крышке, ")
+            //                .AppendEquation("d_i")
+            //                .AppendText(":")
+            //                .AddCell($"{_fbdi.di} мм");
+            //            break;
+            //    }
+            //    body.InsertTable(table);
 
-            }
+            //}
         }
 
         private static double CalculateSigmaa(double Ksigma,

@@ -223,7 +223,7 @@ namespace CalculateVessels.Core.Word
             return p;
         }
 
-        public static Run Color(this Run r)
+        public static Run Color(this Run r, System.Drawing.Color color)
         {
             if (!r.Elements<RunProperties>().Any())
             {
@@ -234,7 +234,7 @@ namespace CalculateVessels.Core.Word
 
             rPr.Color = new Color()
             {
-                Val = "FF0000"
+                Val = color.ToString() //Val = "FF0000"
             };
 
             return r;
