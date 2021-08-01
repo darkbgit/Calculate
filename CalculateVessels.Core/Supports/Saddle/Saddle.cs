@@ -408,17 +408,20 @@ namespace CalculateVessels.Core.Supports.Saddle
 
             var imagePart = mainPart.AddImagePart(ImagePartType.Gif);
 
-            var stream = _saddleDataIn.Type switch
+            byte[] bytes = _saddleDataIn.Type switch
             {
                 SaddleType.SaddleWithoutRingWithoutSheet =>
-                    new MemoryStream(Data.Properties.Resources.SaddleNothingElem),
+                    Data.Properties.Resources.SaddleNothingElem,
                 SaddleType.SaddleWithoutRingWithSheet =>
-                    new MemoryStream(Data.Properties.Resources.SaddleSheetElem),
-                _ => new MemoryStream(Data.Properties.Resources.SaddleNothingElem)
+                    Data.Properties.Resources.SaddleSheetElem,
+                _ => null
             };
-            imagePart.FeedData(stream);
 
-            body.AddParagraph("").AddImage(mainPart.GetIdOfPart(imagePart));
+            if (bytes != null)
+            {
+                imagePart.FeedData(new MemoryStream(bytes));
+                body.AddParagraph("").AddImage(mainPart.GetIdOfPart(imagePart), bytes);
+            }
 
             body.AddParagraph("Исходные данные").Alignment(AlignmentType.Center);
 

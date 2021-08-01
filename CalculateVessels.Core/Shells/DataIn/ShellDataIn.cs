@@ -173,7 +173,7 @@ namespace CalculateVessels.Core.Shells.DataIn
 
         public bool IsPressureIn { get; set; }
 
-        public List<string> ErrorList { get; set; }
+        public List<string> ErrorList { get; set; } = new();
 
 
         private double _c1;

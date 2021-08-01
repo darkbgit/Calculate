@@ -178,11 +178,15 @@ namespace CalculateVessels.Core.Shells
             
             var imagePart = mainPart.AddImagePart(ImagePartType.Gif);
             
-            using MemoryStream stream = new(Data.Properties.Resources.Ell);
-            imagePart.FeedData(stream);
+            byte[] bytes = Data.Properties.Resources.Ell;
 
-            body.AddParagraph("").AddImage(mainPart.GetIdOfPart(imagePart));
-           
+            if (bytes != null)
+            {
+                imagePart.FeedData(new MemoryStream(bytes));
+
+                body.AddParagraph("").AddImage(mainPart.GetIdOfPart(imagePart), bytes);
+            }
+
             body.AddParagraph("Исходные данные")
                 .Alignment(AlignmentType.Center);
 

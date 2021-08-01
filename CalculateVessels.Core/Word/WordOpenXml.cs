@@ -6,8 +6,10 @@ using System.Text;
 using System.Threading.Tasks;
 using CalculateVessels.Core.Word.Enums;
 using DocumentFormat.OpenXml;
+using DocumentFormat.OpenXml.ExtendedProperties;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
+using ImageMagick;
 using A = DocumentFormat.OpenXml.Drawing;
 using DW = DocumentFormat.OpenXml.Drawing.Wordprocessing;
 using PIC = DocumentFormat.OpenXml.Drawing.Pictures;
@@ -240,13 +242,18 @@ namespace CalculateVessels.Core.Word
             return r;
         }
 
-        public static void AddImage(this Paragraph p, string relationshipId)
+        public static void AddImage(this Paragraph p, string relationshipId, byte[] image)
         {
+            long width;
+            long height;
+
+            (width, height) = GetImageSize(image);
+
             // Define the reference of the image.
             var element =
                  new Drawing(
                      new DW.Inline(
-                         new DW.Extent() { Cx = 990000L, Cy = 792000L },
+                         new DW.Extent() { Cx = width, Cy = height },
                          new DW.EffectExtent()
                          {
                              LeftEdge = 0L,
@@ -290,7 +297,7 @@ namespace CalculateVessels.Core.Word
                                      new PIC.ShapeProperties(
                                          new A.Transform2D(
                                              new A.Offset() { X = 0L, Y = 0L },
-                                             new A.Extents() { Cx = 990000L, Cy = 792000L }),
+                                             new A.Extents() { Cx = width, Cy = height }),
                                          new A.PresetGeometry(
                                              new A.AdjustValueList()
                                          )
@@ -314,10 +321,10 @@ namespace CalculateVessels.Core.Word
 
         public static Table AddTable(this Body body)
         {
-            Table table = new Table();
+            Table table = new ();
 
             // Create a TableProperties object and specify its border information.
-            TableProperties tblProp = new TableProperties(
+            TableProperties tblProp = new (
                 new TableBorders(
                     new TopBorder()
                     {
@@ -353,7 +360,7 @@ namespace CalculateVessels.Core.Word
 
         public static TableRow AddRow(this Table table)
         {
-            TableRow tr = new TableRow();
+            TableRow tr = new ();
             table.AppendChild(tr);
             return tr;
         }
@@ -361,7 +368,7 @@ namespace CalculateVessels.Core.Word
         public static TableRow AddCell(this TableRow tr, string text)
         {
             // Create a cell.
-            TableCell tc1 = new TableCell();
+            TableCell tc1 = new ();
 
             // Specify the table cell content.
             tc1.AppendChild(new Paragraph(new Run(new Text(text)
@@ -400,6 +407,25 @@ namespace CalculateVessels.Core.Word
         public static void InsertTable(this Body body, Table table)
         {
             body.AppendChild(table);
+        }
+
+        private static (long width, long height) GetImageSize(byte[] image)
+        {
+            if (image == null)
+            {
+                return default;
+            }
+
+            using var img = new MagickImage(image);
+
+            long iWidth = img.Width;
+            long iHeight = img.Height;
+
+            iWidth = (long)Math.Round((decimal)iWidth * 9525);
+            iHeight = (long)Math.Round((decimal)iHeight * 9525);
+
+            return (iWidth, iHeight);
+
         }
     }
 }

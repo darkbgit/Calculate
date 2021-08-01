@@ -80,11 +80,11 @@ namespace CalculateVessels.Core.Shells
 
             // Condition use formuls
             {
-                const double CONDITION_USE_FORMULS_FROM = 0.001;
-                const double CONDITION_USE_FORMULS_TO = 0.05;
+                const double CONDITION_USE_FORMULAS_FROM = 0.001;
+                const double CONDITION_USE_FORMULAS_TO = 0.05;
 
-                IsConditionUseFormulas = _csdi.s1 * _cosAlfa1 / _csdi.D >= CONDITION_USE_FORMULS_FROM
-                    && _csdi.s1 * _cosAlfa1 / _csdi.D <= CONDITION_USE_FORMULS_TO;
+                IsConditionUseFormulas = _csdi.s1 * _cosAlfa1 / _csdi.D >= CONDITION_USE_FORMULAS_FROM
+                    && _csdi.s1 * _cosAlfa1 / _csdi.D <= CONDITION_USE_FORMULAS_TO;
 
                 if (!IsConditionUseFormulas)
                 {
@@ -458,10 +458,13 @@ namespace CalculateVessels.Core.Shells
 
             var imagePart = mainPart.AddImagePart(ImagePartType.Gif);
 
-            using MemoryStream stream = new(Data.Properties.Resources.ConeElemBottom);
-            imagePart.FeedData(stream);
+            byte[] bytes = Data.Properties.Resources.ConeElemBottom;
 
-            body.AddParagraph("").AddImage(mainPart.GetIdOfPart(imagePart));
+            if (bytes != null)
+            {
+                imagePart.FeedData(new MemoryStream(bytes));
+                body.AddParagraph("").AddImage(mainPart.GetIdOfPart(imagePart), bytes);
+            }
 
             body.AddParagraph("Исходные данные").Alignment(AlignmentType.Center);
 

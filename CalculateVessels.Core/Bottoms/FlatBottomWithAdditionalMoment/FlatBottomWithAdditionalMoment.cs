@@ -36,7 +36,7 @@ namespace CalculateVessels.Core.Bottoms.FlatBottomWithAdditionalMoment
             Data.Properties.Resources.GOST_34233_2
         };
 
-        public double PressurePermissible { get => _p_d; }
+        public double PressurePermissible => _p_d;
 
         private double _Ab;
 
@@ -478,12 +478,13 @@ namespace CalculateVessels.Core.Bottoms.FlatBottomWithAdditionalMoment
             {
                 var imagePart = mainPart.AddImagePart(ImagePartType.Gif);
 
-                var stream = new MemoryStream(_fbdi.IsCoverWithGroove ?
-                    Data.Properties.Resources.FlatBottomWithMomentWithGroove
-                    : Data.Properties.Resources.FlatBottomWithMoment);
-                imagePart.FeedData(stream);
+                byte[] bytes = _fbdi.IsCoverWithGroove
+                    ? Data.Properties.Resources.FlatBottomWithMomentWithGroove
+                    : Data.Properties.Resources.FlatBottomWithMoment;
 
-                body.AddParagraph("").AddImage(mainPart.GetIdOfPart(imagePart));
+                imagePart.FeedData(new MemoryStream(bytes));
+
+                body.AddParagraph("").AddImage(mainPart.GetIdOfPart(imagePart), bytes);
             }
 
             {
@@ -509,11 +510,13 @@ namespace CalculateVessels.Core.Bottoms.FlatBottomWithAdditionalMoment
                         break;
                 }
 
-                var b =(byte[])Data.Properties.Resources.ResourceManager.GetObject(type + type1);
-                var stream = new MemoryStream(b);
-                imagePart.FeedData(stream);
+                var bytes =(byte[])Data.Properties.Resources.ResourceManager.GetObject(type + type1);
 
-                body.Elements<Paragraph>().LastOrDefault().AddImage(mainPart.GetIdOfPart(imagePart));
+                if (bytes != null)
+                {
+                    imagePart.FeedData(new MemoryStream(bytes));
+                    body.Elements<Paragraph>().LastOrDefault().AddImage(mainPart.GetIdOfPart(imagePart), bytes);
+                }
             }
 
             body.AddParagraph("Исходные данные").Alignment(AlignmentType.Center);

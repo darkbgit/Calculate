@@ -13,6 +13,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ImageMagick;
+
 
 namespace CalculateVessels.Core.HeatExchanger
 {
@@ -447,21 +449,24 @@ namespace CalculateVessels.Core.HeatExchanger
 
             _ro1 = _Ky * _hedi.a * _hedi.a1 / (Math.Pow(_beta, 2) * _KF * _R1);
 
-            //_Phi1 = 0.0;
-            //_Phi2 = 0.0;
-            //_Phi3 = 0.0;
-            ////TODO: Get values to _Phi1, _Phi2, _Phi3 from tables or calculete them
-
-            //_t = 1 + (1.4 * _omega * (_mn - 1));
-            //_T1 = _Phi1 * (_mn + (0.5 * (1 + (_mn * _t)) * (_t - 1)));
-            //_T2 = _Phi2 * _t;
-            //_T3 = _Phi3 * _mn;
-
-            if (!Physical.Gost34233_7.TryGetT1T2T3(_omega, _mn, ref _T1, ref _T2, ref _T3, ref _errorList))
+            if (!Physical.Gost34233_7.TryGetPhi1Phi2Phi3(_omega, ref _Phi1, ref _Phi2, ref _Phi3, ref _errorList))
             {
                 IsCriticalError = true;
                 return;
             }
+
+            //TODO: Calculete values of _Phi1, _Phi2, _Phi3
+
+            _t = 1 + (1.4 * _omega * (_mn - 1));
+            _T1 = _Phi1 * (_mn + (0.5 * (1 + (_mn * _t)) * (_t - 1)));
+            _T2 = _Phi2 * _t;
+            _T3 = _Phi3 * _mn;
+
+            //if (!Physical.Gost34233_7.TryGetT1T2T3(_omega, _mn, ref _T1, ref _T2, ref _T3, ref _errorList))
+            //{
+            //    IsCriticalError = true;
+            //    return;
+            //}
 
             _m1 = (1 + (_beta1 * _hedi.h1)) / (2 * Math.Pow(_beta1, 2));
             _m2 = (1 + (_beta2 * _hedi.h2)) / (2 * Math.Pow(_beta2, 2));
@@ -772,10 +777,12 @@ namespace CalculateVessels.Core.HeatExchanger
 
                 var pic = (byte[])Data.Properties.Resources.ResourceManager.GetObject("Fixed " + a + "-" + b + c);
 
-                var stream = new MemoryStream(pic);
-                imagePart.FeedData(stream);
+                if (pic != null)
+                {
+                    imagePart.FeedData(new MemoryStream(pic));
 
-                body.AddParagraph("").AddImage(mainPart.GetIdOfPart(imagePart));
+                    body.AddParagraph("").AddImage(mainPart.GetIdOfPart(imagePart), pic);
+                }
             }
 
             {

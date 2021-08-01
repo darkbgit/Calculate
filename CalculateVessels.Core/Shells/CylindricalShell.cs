@@ -5,7 +5,7 @@ using System.IO;
 using DocumentFormat.OpenXml.Packaging;
 using CalculateVessels.Core.Word;
 using CalculateVessels.Core.Word.Enums;
-
+using ImageMagick;
 
 namespace CalculateVessels.Core.Shells
 {
@@ -255,10 +255,12 @@ namespace CalculateVessels.Core.Shells
 
             var imagePart = mainPart.AddImagePart(ImagePartType.Gif);
 
-            using MemoryStream stream = new(Data.Properties.Resources.Cil);
-            imagePart.FeedData(stream);
+            byte[] bytes = Data.Properties.Resources.Cil;
 
-            body.AddParagraph("").AddImage(mainPart.GetIdOfPart(imagePart));
+
+            imagePart.FeedData(new MemoryStream(bytes));
+
+            body.AddParagraph("").AddImage(mainPart.GetIdOfPart(imagePart), bytes);
 
             body.AddParagraph("Исходные данные").Alignment(AlignmentType.Center);
 
