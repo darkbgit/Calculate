@@ -14,16 +14,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Saddle\**" />
-    <EmbeddedResource Remove="Saddle\**" />
-    <None Remove="Saddle\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Remove="Iae.Windows.Forms.dll" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="MSBuild.Version.Target" Version="3.0.60" />
   </ItemGroup>
 

@@ -187,6 +187,264 @@
   <data name="ConeVert" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\pic\Nozzle\ConeVert.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="ConnToCase1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConnToCase1.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConnToCase1_offset" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConnToCase1 offset.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConnToFlange1_Butt1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConnToFlange1-Butt1.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConnToFlange1_Butt1_52857" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConnToFlange1-Butt1_52857.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConnToFlange1_Butt2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConnToFlange1-Butt2.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConnToFlange1_Butt2_52857" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConnToFlange1-Butt2_52857.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConnToFlange1_Butt3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConnToFlange1-Butt3.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConnToFlange1_Butt3_52857" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConnToFlange1-Butt3_52857.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConnToFlange1_Butt4" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConnToFlange1-Butt4.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConnToFlange1_Butt4_52857" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConnToFlange1-Butt4_52857.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConnToFlange1_Flat1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConnToFlange1-Flat1.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConnToFlange1_Flat1_52857" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConnToFlange1-Flat1_52857.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConnToFlange1_Flat2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConnToFlange1-Flat2.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConnToFlange1_Flat2_52857" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConnToFlange1-Flat2_52857.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConnToFlange1_Flat3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConnToFlange1-Flat3.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConnToFlange1_Flat3_52857" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConnToFlange1-Flat3_52857.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConnToFlange2_Butt1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConnToFlange2-Butt1.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConnToFlange2_Butt1_52857" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConnToFlange2-Butt1_52857.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConnToFlange2_Butt2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConnToFlange2-Butt2.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConnToFlange2_Butt2_52857" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConnToFlange2-Butt2_52857.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConnToFlange2_Butt3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConnToFlange2-Butt3.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConnToFlange2_Butt3_52857" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConnToFlange2-Butt3_52857.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConnToFlange2_Butt4" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConnToFlange2-Butt4.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConnToFlange2_Butt4_52857" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConnToFlange2-Butt4_52857.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConnToFlange2_Flat1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConnToFlange2-Flat1.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConnToFlange2_Flat1_52857" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConnToFlange2-Flat1_52857.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConnToFlange2_Flat2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConnToFlange2-Flat2.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConnToFlange2_Flat2_52857" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConnToFlange2-Flat2_52857.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConnToFlange2_Flat3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConnToFlange2-Flat3.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConnToFlange2_Flat3_52857" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConnToFlange2-Flat3_52857.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConnToFlange3_Butt1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConnToFlange3-Butt1.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConnToFlange3_Butt1_52857" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConnToFlange3-Butt1_52857.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConnToFlange3_Butt2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConnToFlange3-Butt2.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConnToFlange3_Butt2_52857" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConnToFlange3-Butt2_52857.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConnToFlange3_Butt3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConnToFlange3-Butt3.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConnToFlange3_Butt3_52857" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConnToFlange3-Butt3_52857.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConnToFlange3_Butt4" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConnToFlange3-Butt4.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConnToFlange3_Butt4_52857" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConnToFlange3-Butt4_52857.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConnToFlange3_Flat1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConnToFlange3-Flat1.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConnToFlange3_Flat1_52857" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConnToFlange3-Flat1_52857.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConnToFlange3_Flat2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConnToFlange3-Flat2.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConnToFlange3_Flat2_52857" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConnToFlange3-Flat2_52857.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConnToFlange3_Flat3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConnToFlange3-Flat3.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConnToFlange3_Flat3_52857" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConnToFlange3-Flat3_52857.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConnToFlange4_Butt1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConnToFlange4-Butt1.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConnToFlange4_Butt1_52857" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConnToFlange4-Butt1_52857.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConnToFlange4_Butt2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConnToFlange4-Butt2.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConnToFlange4_Butt2_52857" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConnToFlange4-Butt2_52857.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConnToFlange4_Butt3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConnToFlange4-Butt3.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConnToFlange4_Butt3_52857" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConnToFlange4-Butt3_52857.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConnToFlange4_Butt4" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConnToFlange4-Butt4.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConnToFlange4_Butt4_52857" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConnToFlange4-Butt4_52857.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConnToFlange4_Flat1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConnToFlange4-Flat1.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConnToFlange4_Flat1_52857" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConnToFlange4-Flat1_52857.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConnToFlange4_Flat2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConnToFlange4-Flat2.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConnToFlange4_Flat2_52857" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConnToFlange4-Flat2_52857.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConnToFlange4_Flat3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConnToFlange4-Flat3.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConnToFlange4_Flat3_52857" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConnToFlange4-Flat3_52857.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConnToFlange5_Butt1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConnToFlange5-Butt1.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConnToFlange5_Butt1_52857" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConnToFlange5-Butt1_52857.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConnToFlange5_Butt2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConnToFlange5-Butt2.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConnToFlange5_Butt2_52857" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConnToFlange5-Butt2_52857.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConnToFlange5_Butt3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConnToFlange5-Butt3.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConnToFlange5_Butt3_52857" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConnToFlange5-Butt3_52857.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConnToFlange5_Butt4" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConnToFlange5-Butt4.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConnToFlange5_Butt4_52857" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConnToFlange5-Butt4_52857.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConnToFlange5_Flat1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConnToFlange5-Flat1.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConnToFlange5_Flat1_52857" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConnToFlange5-Flat1_52857.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConnToFlange5_Flat2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConnToFlange5-Flat2.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConnToFlange5_Flat2_52857" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConnToFlange5-Flat2_52857.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConnToFlange5_Flat3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConnToFlange5-Flat3.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConnToFlange5_Flat3_52857" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConnToFlange5-Flat3_52857.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConnToFlanges1_Butt1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConnToFlanges1-Butt1.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConnToFlanges1_Butt1_52857" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConnToFlanges1-Butt1_52857.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConnToFlanges1_Butt2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConnToFlanges1-Butt2.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConnToFlanges1_Butt2_52857" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConnToFlanges1-Butt2_52857.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConnToFlanges1_Butt3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConnToFlanges1-Butt3.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConnToFlanges1_Butt3_52857" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConnToFlanges1-Butt3_52857.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConnToFlanges1_Butt4" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConnToFlanges1-Butt4.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConnToFlanges1_Butt4_52857" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConnToFlanges1-Butt4_52857.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConnToFlanges1_Flat1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConnToFlanges1-Flat1.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConnToFlanges1_Flat1_52857" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConnToFlanges1-Flat1_52857.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConnToFlanges1_Flat2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConnToFlanges1-Flat2.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConnToFlanges1_Flat2_52857" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConnToFlanges1-Flat2_52857.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConnToFlanges1_Flat3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConnToFlanges1-Flat3.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConnToFlanges1_Flat3_52857" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConnToFlanges1-Flat3_52857.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="CylAxial" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\pic\Nozzle\CylAxial.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
@@ -300,6 +558,48 @@
   </data>
   <data name="Fixed_3_3_Syl" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Fixed 3-3 Syl.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="FixType1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\FixType1.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="FixType1Weld" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\FixType1Weld.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="FixType1Weld_52857" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\FixType1Weld_52857.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="FixType1_52857" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\FixType1_52857.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="FixType2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\FixType2.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="FixType2Weld" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\FixType2Weld.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="FixType2Weld_52857" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\FixType2Weld_52857.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="FixType2_52857" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\FixType2_52857.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="FixType3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\FixType3.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="FixType3Weld" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\FixType3Weld.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="FixType3Weld_52857" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\FixType3Weld_52857.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="FixType3_52857" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\FixType3_52857.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="FixType4" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\FixType4.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="FixType4_52857" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\FixType4_52857.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="fl1_a" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\pic\pldn\flange\fl1-a.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -708,5 +1008,68 @@
   </data>
   <data name="StudGroove" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\pic\pldn\flange\StudGroove.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="TubeSheet_45" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TubeSheet 45.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="TubeSheet_45_Offset" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TubeSheet 45 Offset.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="TubeSheet_45_Offset_UTube" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TubeSheet 45 Offset UTube.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="TubeSheet_45_Slot" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TubeSheet 45 Slot.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="TubeSheet_45_Slot_Offset" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TubeSheet 45 Slot Offset.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="TubeSheet_45_UTube" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TubeSheet 45 UTube.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="TubeSheet_60" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TubeSheet 60.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="TubeSheet_60_Offset" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TubeSheet 60 Offset.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="TubeSheet_60_Offset_UTube" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TubeSheet 60 Offset UTube.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="TubeSheet_60_Slot" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TubeSheet 60 Slot.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="TubeSheet_60_Slot_Offset" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TubeSheet 60 Slot Offset.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="TubeSheet_60_UTube" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TubeSheet 60 UTube.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="TubeSheet_90" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TubeSheet 90.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="TubeSheet_90_Offset" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TubeSheet 90 Offset.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="TubeSheet_90_Offset_UTube" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TubeSheet 90 Offset UTube.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="TubeSheet_90_Slot" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TubeSheet 90 Slot.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="TubeSheet_90_Slot_Offset" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TubeSheet 90 Slot Offset.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="TubeSheet_90_UTube" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TubeSheet 90 UTube.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="TubeSheet_UserDef" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TubeSheet UserDef.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="TubeSheet_UserDef_Slot" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TubeSheet UserDef Slot.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="TubeSheet_UserDef_UTube" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TubeSheet UserDef UTube.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>

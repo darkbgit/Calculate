@@ -554,7 +554,7 @@ namespace CalculateVessels.Data.PhysicalData
                 ref double Phi1, ref double Phi2, ref double Phi3,
                 ref List<string> errorList)
             {
-                if (omega is < 0 or > 11)
+                if (omega is < 0 or > 11.5)
                 {
                     errorList.Add($"Error input value for omega {omega} value must be in range 0-11");
                     return false;
@@ -563,6 +563,14 @@ namespace CalculateVessels.Data.PhysicalData
                 var omegaRound = omega <= 4
                     ? Math.Round(omega * 2.0) / 2.0
                     : Math.Round(omega);
+
+                if (omegaRound == 11)
+                {
+                    Phi1 = Math.Sqrt(2) * omega;
+                    Phi2 = omega;
+                    Phi3 = Math.Sqrt(2) * omega;
+                    return true;
+                }
  
                 List<PhysicalData.Gost34233_7.OmegaForPhi1Phi2Phi3> omegaList;
 

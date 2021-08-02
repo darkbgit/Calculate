@@ -293,6 +293,866 @@ namespace CalculateVessels.Data.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        public static byte[] ConnToCase1 {
+            get {
+                object obj = ResourceManager.GetObject("ConnToCase1", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConnToCase1_offset {
+            get {
+                object obj = ResourceManager.GetObject("ConnToCase1_offset", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConnToFlange1_Butt1 {
+            get {
+                object obj = ResourceManager.GetObject("ConnToFlange1_Butt1", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConnToFlange1_Butt1_52857 {
+            get {
+                object obj = ResourceManager.GetObject("ConnToFlange1_Butt1_52857", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConnToFlange1_Butt2 {
+            get {
+                object obj = ResourceManager.GetObject("ConnToFlange1_Butt2", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConnToFlange1_Butt2_52857 {
+            get {
+                object obj = ResourceManager.GetObject("ConnToFlange1_Butt2_52857", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConnToFlange1_Butt3 {
+            get {
+                object obj = ResourceManager.GetObject("ConnToFlange1_Butt3", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConnToFlange1_Butt3_52857 {
+            get {
+                object obj = ResourceManager.GetObject("ConnToFlange1_Butt3_52857", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConnToFlange1_Butt4 {
+            get {
+                object obj = ResourceManager.GetObject("ConnToFlange1_Butt4", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConnToFlange1_Butt4_52857 {
+            get {
+                object obj = ResourceManager.GetObject("ConnToFlange1_Butt4_52857", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConnToFlange1_Flat1 {
+            get {
+                object obj = ResourceManager.GetObject("ConnToFlange1_Flat1", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConnToFlange1_Flat1_52857 {
+            get {
+                object obj = ResourceManager.GetObject("ConnToFlange1_Flat1_52857", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConnToFlange1_Flat2 {
+            get {
+                object obj = ResourceManager.GetObject("ConnToFlange1_Flat2", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConnToFlange1_Flat2_52857 {
+            get {
+                object obj = ResourceManager.GetObject("ConnToFlange1_Flat2_52857", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConnToFlange1_Flat3 {
+            get {
+                object obj = ResourceManager.GetObject("ConnToFlange1_Flat3", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConnToFlange1_Flat3_52857 {
+            get {
+                object obj = ResourceManager.GetObject("ConnToFlange1_Flat3_52857", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConnToFlange2_Butt1 {
+            get {
+                object obj = ResourceManager.GetObject("ConnToFlange2_Butt1", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConnToFlange2_Butt1_52857 {
+            get {
+                object obj = ResourceManager.GetObject("ConnToFlange2_Butt1_52857", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConnToFlange2_Butt2 {
+            get {
+                object obj = ResourceManager.GetObject("ConnToFlange2_Butt2", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConnToFlange2_Butt2_52857 {
+            get {
+                object obj = ResourceManager.GetObject("ConnToFlange2_Butt2_52857", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConnToFlange2_Butt3 {
+            get {
+                object obj = ResourceManager.GetObject("ConnToFlange2_Butt3", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConnToFlange2_Butt3_52857 {
+            get {
+                object obj = ResourceManager.GetObject("ConnToFlange2_Butt3_52857", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConnToFlange2_Butt4 {
+            get {
+                object obj = ResourceManager.GetObject("ConnToFlange2_Butt4", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConnToFlange2_Butt4_52857 {
+            get {
+                object obj = ResourceManager.GetObject("ConnToFlange2_Butt4_52857", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConnToFlange2_Flat1 {
+            get {
+                object obj = ResourceManager.GetObject("ConnToFlange2_Flat1", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConnToFlange2_Flat1_52857 {
+            get {
+                object obj = ResourceManager.GetObject("ConnToFlange2_Flat1_52857", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConnToFlange2_Flat2 {
+            get {
+                object obj = ResourceManager.GetObject("ConnToFlange2_Flat2", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConnToFlange2_Flat2_52857 {
+            get {
+                object obj = ResourceManager.GetObject("ConnToFlange2_Flat2_52857", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConnToFlange2_Flat3 {
+            get {
+                object obj = ResourceManager.GetObject("ConnToFlange2_Flat3", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConnToFlange2_Flat3_52857 {
+            get {
+                object obj = ResourceManager.GetObject("ConnToFlange2_Flat3_52857", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConnToFlange3_Butt1 {
+            get {
+                object obj = ResourceManager.GetObject("ConnToFlange3_Butt1", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConnToFlange3_Butt1_52857 {
+            get {
+                object obj = ResourceManager.GetObject("ConnToFlange3_Butt1_52857", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConnToFlange3_Butt2 {
+            get {
+                object obj = ResourceManager.GetObject("ConnToFlange3_Butt2", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConnToFlange3_Butt2_52857 {
+            get {
+                object obj = ResourceManager.GetObject("ConnToFlange3_Butt2_52857", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConnToFlange3_Butt3 {
+            get {
+                object obj = ResourceManager.GetObject("ConnToFlange3_Butt3", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConnToFlange3_Butt3_52857 {
+            get {
+                object obj = ResourceManager.GetObject("ConnToFlange3_Butt3_52857", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConnToFlange3_Butt4 {
+            get {
+                object obj = ResourceManager.GetObject("ConnToFlange3_Butt4", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConnToFlange3_Butt4_52857 {
+            get {
+                object obj = ResourceManager.GetObject("ConnToFlange3_Butt4_52857", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConnToFlange3_Flat1 {
+            get {
+                object obj = ResourceManager.GetObject("ConnToFlange3_Flat1", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConnToFlange3_Flat1_52857 {
+            get {
+                object obj = ResourceManager.GetObject("ConnToFlange3_Flat1_52857", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConnToFlange3_Flat2 {
+            get {
+                object obj = ResourceManager.GetObject("ConnToFlange3_Flat2", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConnToFlange3_Flat2_52857 {
+            get {
+                object obj = ResourceManager.GetObject("ConnToFlange3_Flat2_52857", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConnToFlange3_Flat3 {
+            get {
+                object obj = ResourceManager.GetObject("ConnToFlange3_Flat3", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConnToFlange3_Flat3_52857 {
+            get {
+                object obj = ResourceManager.GetObject("ConnToFlange3_Flat3_52857", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConnToFlange4_Butt1 {
+            get {
+                object obj = ResourceManager.GetObject("ConnToFlange4_Butt1", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConnToFlange4_Butt1_52857 {
+            get {
+                object obj = ResourceManager.GetObject("ConnToFlange4_Butt1_52857", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConnToFlange4_Butt2 {
+            get {
+                object obj = ResourceManager.GetObject("ConnToFlange4_Butt2", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConnToFlange4_Butt2_52857 {
+            get {
+                object obj = ResourceManager.GetObject("ConnToFlange4_Butt2_52857", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConnToFlange4_Butt3 {
+            get {
+                object obj = ResourceManager.GetObject("ConnToFlange4_Butt3", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConnToFlange4_Butt3_52857 {
+            get {
+                object obj = ResourceManager.GetObject("ConnToFlange4_Butt3_52857", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConnToFlange4_Butt4 {
+            get {
+                object obj = ResourceManager.GetObject("ConnToFlange4_Butt4", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConnToFlange4_Butt4_52857 {
+            get {
+                object obj = ResourceManager.GetObject("ConnToFlange4_Butt4_52857", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConnToFlange4_Flat1 {
+            get {
+                object obj = ResourceManager.GetObject("ConnToFlange4_Flat1", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConnToFlange4_Flat1_52857 {
+            get {
+                object obj = ResourceManager.GetObject("ConnToFlange4_Flat1_52857", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConnToFlange4_Flat2 {
+            get {
+                object obj = ResourceManager.GetObject("ConnToFlange4_Flat2", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConnToFlange4_Flat2_52857 {
+            get {
+                object obj = ResourceManager.GetObject("ConnToFlange4_Flat2_52857", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConnToFlange4_Flat3 {
+            get {
+                object obj = ResourceManager.GetObject("ConnToFlange4_Flat3", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConnToFlange4_Flat3_52857 {
+            get {
+                object obj = ResourceManager.GetObject("ConnToFlange4_Flat3_52857", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConnToFlange5_Butt1 {
+            get {
+                object obj = ResourceManager.GetObject("ConnToFlange5_Butt1", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConnToFlange5_Butt1_52857 {
+            get {
+                object obj = ResourceManager.GetObject("ConnToFlange5_Butt1_52857", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConnToFlange5_Butt2 {
+            get {
+                object obj = ResourceManager.GetObject("ConnToFlange5_Butt2", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConnToFlange5_Butt2_52857 {
+            get {
+                object obj = ResourceManager.GetObject("ConnToFlange5_Butt2_52857", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConnToFlange5_Butt3 {
+            get {
+                object obj = ResourceManager.GetObject("ConnToFlange5_Butt3", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConnToFlange5_Butt3_52857 {
+            get {
+                object obj = ResourceManager.GetObject("ConnToFlange5_Butt3_52857", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConnToFlange5_Butt4 {
+            get {
+                object obj = ResourceManager.GetObject("ConnToFlange5_Butt4", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConnToFlange5_Butt4_52857 {
+            get {
+                object obj = ResourceManager.GetObject("ConnToFlange5_Butt4_52857", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConnToFlange5_Flat1 {
+            get {
+                object obj = ResourceManager.GetObject("ConnToFlange5_Flat1", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConnToFlange5_Flat1_52857 {
+            get {
+                object obj = ResourceManager.GetObject("ConnToFlange5_Flat1_52857", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConnToFlange5_Flat2 {
+            get {
+                object obj = ResourceManager.GetObject("ConnToFlange5_Flat2", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConnToFlange5_Flat2_52857 {
+            get {
+                object obj = ResourceManager.GetObject("ConnToFlange5_Flat2_52857", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConnToFlange5_Flat3 {
+            get {
+                object obj = ResourceManager.GetObject("ConnToFlange5_Flat3", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConnToFlange5_Flat3_52857 {
+            get {
+                object obj = ResourceManager.GetObject("ConnToFlange5_Flat3_52857", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConnToFlanges1_Butt1 {
+            get {
+                object obj = ResourceManager.GetObject("ConnToFlanges1_Butt1", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConnToFlanges1_Butt1_52857 {
+            get {
+                object obj = ResourceManager.GetObject("ConnToFlanges1_Butt1_52857", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConnToFlanges1_Butt2 {
+            get {
+                object obj = ResourceManager.GetObject("ConnToFlanges1_Butt2", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConnToFlanges1_Butt2_52857 {
+            get {
+                object obj = ResourceManager.GetObject("ConnToFlanges1_Butt2_52857", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConnToFlanges1_Butt3 {
+            get {
+                object obj = ResourceManager.GetObject("ConnToFlanges1_Butt3", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConnToFlanges1_Butt3_52857 {
+            get {
+                object obj = ResourceManager.GetObject("ConnToFlanges1_Butt3_52857", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConnToFlanges1_Butt4 {
+            get {
+                object obj = ResourceManager.GetObject("ConnToFlanges1_Butt4", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConnToFlanges1_Butt4_52857 {
+            get {
+                object obj = ResourceManager.GetObject("ConnToFlanges1_Butt4_52857", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConnToFlanges1_Flat1 {
+            get {
+                object obj = ResourceManager.GetObject("ConnToFlanges1_Flat1", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConnToFlanges1_Flat1_52857 {
+            get {
+                object obj = ResourceManager.GetObject("ConnToFlanges1_Flat1_52857", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConnToFlanges1_Flat2 {
+            get {
+                object obj = ResourceManager.GetObject("ConnToFlanges1_Flat2", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConnToFlanges1_Flat2_52857 {
+            get {
+                object obj = ResourceManager.GetObject("ConnToFlanges1_Flat2_52857", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConnToFlanges1_Flat3 {
+            get {
+                object obj = ResourceManager.GetObject("ConnToFlanges1_Flat3", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConnToFlanges1_Flat3_52857 {
+            get {
+                object obj = ResourceManager.GetObject("ConnToFlanges1_Flat3_52857", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         public static byte[] CylAxial {
             get {
                 object obj = ResourceManager.GetObject("CylAxial", resourceCulture);
@@ -666,6 +1526,146 @@ namespace CalculateVessels.Data.Properties {
         public static byte[] Fixed_3_3_Syl {
             get {
                 object obj = ResourceManager.GetObject("Fixed_3_3_Syl", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] FixType1 {
+            get {
+                object obj = ResourceManager.GetObject("FixType1", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] FixType1_52857 {
+            get {
+                object obj = ResourceManager.GetObject("FixType1_52857", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] FixType1Weld {
+            get {
+                object obj = ResourceManager.GetObject("FixType1Weld", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] FixType1Weld_52857 {
+            get {
+                object obj = ResourceManager.GetObject("FixType1Weld_52857", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] FixType2 {
+            get {
+                object obj = ResourceManager.GetObject("FixType2", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] FixType2_52857 {
+            get {
+                object obj = ResourceManager.GetObject("FixType2_52857", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] FixType2Weld {
+            get {
+                object obj = ResourceManager.GetObject("FixType2Weld", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] FixType2Weld_52857 {
+            get {
+                object obj = ResourceManager.GetObject("FixType2Weld_52857", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] FixType3 {
+            get {
+                object obj = ResourceManager.GetObject("FixType3", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] FixType3_52857 {
+            get {
+                object obj = ResourceManager.GetObject("FixType3_52857", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] FixType3Weld {
+            get {
+                object obj = ResourceManager.GetObject("FixType3Weld", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] FixType3Weld_52857 {
+            get {
+                object obj = ResourceManager.GetObject("FixType3Weld_52857", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] FixType4 {
+            get {
+                object obj = ResourceManager.GetObject("FixType4", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] FixType4_52857 {
+            get {
+                object obj = ResourceManager.GetObject("FixType4_52857", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -2015,6 +3015,216 @@ namespace CalculateVessels.Data.Properties {
         public static byte[] StudGroove {
             get {
                 object obj = ResourceManager.GetObject("StudGroove", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] TubeSheet_45 {
+            get {
+                object obj = ResourceManager.GetObject("TubeSheet_45", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] TubeSheet_45_Offset {
+            get {
+                object obj = ResourceManager.GetObject("TubeSheet_45_Offset", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] TubeSheet_45_Offset_UTube {
+            get {
+                object obj = ResourceManager.GetObject("TubeSheet_45_Offset_UTube", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] TubeSheet_45_Slot {
+            get {
+                object obj = ResourceManager.GetObject("TubeSheet_45_Slot", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] TubeSheet_45_Slot_Offset {
+            get {
+                object obj = ResourceManager.GetObject("TubeSheet_45_Slot_Offset", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] TubeSheet_45_UTube {
+            get {
+                object obj = ResourceManager.GetObject("TubeSheet_45_UTube", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] TubeSheet_60 {
+            get {
+                object obj = ResourceManager.GetObject("TubeSheet_60", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] TubeSheet_60_Offset {
+            get {
+                object obj = ResourceManager.GetObject("TubeSheet_60_Offset", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] TubeSheet_60_Offset_UTube {
+            get {
+                object obj = ResourceManager.GetObject("TubeSheet_60_Offset_UTube", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] TubeSheet_60_Slot {
+            get {
+                object obj = ResourceManager.GetObject("TubeSheet_60_Slot", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] TubeSheet_60_Slot_Offset {
+            get {
+                object obj = ResourceManager.GetObject("TubeSheet_60_Slot_Offset", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] TubeSheet_60_UTube {
+            get {
+                object obj = ResourceManager.GetObject("TubeSheet_60_UTube", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] TubeSheet_90 {
+            get {
+                object obj = ResourceManager.GetObject("TubeSheet_90", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] TubeSheet_90_Offset {
+            get {
+                object obj = ResourceManager.GetObject("TubeSheet_90_Offset", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] TubeSheet_90_Offset_UTube {
+            get {
+                object obj = ResourceManager.GetObject("TubeSheet_90_Offset_UTube", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] TubeSheet_90_Slot {
+            get {
+                object obj = ResourceManager.GetObject("TubeSheet_90_Slot", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] TubeSheet_90_Slot_Offset {
+            get {
+                object obj = ResourceManager.GetObject("TubeSheet_90_Slot_Offset", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] TubeSheet_90_UTube {
+            get {
+                object obj = ResourceManager.GetObject("TubeSheet_90_UTube", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] TubeSheet_UserDef {
+            get {
+                object obj = ResourceManager.GetObject("TubeSheet_UserDef", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] TubeSheet_UserDef_Slot {
+            get {
+                object obj = ResourceManager.GetObject("TubeSheet_UserDef_Slot", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] TubeSheet_UserDef_UTube {
+            get {
+                object obj = ResourceManager.GetObject("TubeSheet_UserDef_UTube", resourceCulture);
                 return ((byte[])(obj));
             }
         }

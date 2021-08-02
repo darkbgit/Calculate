@@ -785,8 +785,10 @@ namespace CalculateVessels.Core.HeatExchanger
                 }
             }
 
+            //TODO: Add image flange
             {
                 var imagePart = mainPart.AddImagePart(ImagePartType.Gif);
+
 
                 //var type = _fbdi.IsFlangeFlat ? "f21_" : "fl1_";
 
@@ -814,6 +816,8 @@ namespace CalculateVessels.Core.HeatExchanger
 
                 //body.Elements<Paragraph>().LastOrDefault().AddImage(mainPart.GetIdOfPart(imagePart));
             }
+
+
 
             body.AddParagraph("Исходные данные").Alignment(AlignmentType.Center);
 
@@ -918,6 +922,272 @@ namespace CalculateVessels.Core.HeatExchanger
             //    body.InsertTable(table);
 
             //}
+
+            body.AddParagraph("Результаты расчета").Alignment(AlignmentType.Center);
+
+            body.AddParagraph("Вспомогательные величины").Alignment(AlignmentType.Center);
+
+            body.AddParagraph("Относительную характеристику беструбного края трубной решетки вычисляют по формуле");
+
+            body.AddParagraph("")
+                .AppendEquation($"m_n=a/a_1={_hedi.a}/{_hedi.a1}={_mn:f2}");
+
+            body.AddParagraph("Коэффициенты влияния давления на трубную решетку вычисляют по формулам:");
+            body.AddParagraph("- со стороны межтрубного пространства");
+            body.AddParagraph("")
+                .AppendEquation($"η_M=1-(i∙d_T^2)/(4∙a_1^2)=1-({_hedi.i}∙{_hedi.dT}^2)/(4∙{_hedi.a1}^2)={_etaM:f2}");
+            body.AddParagraph("- со стороны трубного пространства");
+            body.AddParagraph("")
+                .AppendEquation($"η_T=1-(i∙(d_T-2∙s_T)^2)/(4∙a_1^2)=1-({_hedi.i}∙({_hedi.dT}-{_hedi.sT})^2)/(4∙{_hedi.a1}^2)={_etaT:f2}");
+            body.AddParagraph("Основные характеристики жесткости элементов теплообменного аппарата");
+            body.AddParagraph("Модуль упругости основания(системы труб) вычисляют по формуле");
+            body.AddParagraph("")
+                .AppendEquation($"K_y=(E_T∙(η_T-η_M))/l=({_ET}∙({_etaT:f2}-{_etaM:f2}))/{_hedi.l}={_Ky:f2}");
+            body.AddParagraph("Приведенное отношение жесткости труб к жесткости кожуха вычисляют по формуле");
+            body.AddParagraph("")
+                .AppendEquation($"ρ=(K_y∙a_1∙l)/(E_K∙s_K)=({_Ky:f2}∙{_hedi.a1}∙{_hedi.l})/({_EK}∙{_hedi.sK})={_ro:f2}");
+            body.AddParagraph("Коэффициенты изменения жесткости системы трубы — кожух вычисляют по формулам:");
+            body.AddParagraph("")
+                .AppendEquation("K_q=1+K_q^*");
+            body.AddParagraph("")
+                .AppendEquation("К_р=1+К_p^*");
+
+            switch (_hedi.CompensatorType)
+            {
+                case CompensatorType.No:
+                    body.AddParagraph("Для аппаратов с неподвижными трубными решетками")
+                        .AppendEquation("K_q^*=K_p^*=0");
+                    break;
+                case CompensatorType.Compensator:
+                    body.AddParagraph("Для аппаратов с компенсатором на кожухе");
+                    body.AddParagraph("")
+                        .AppendEquation($"K_q^*=(π∙a∙E_K∙s_K)/(l∙K_ком)={_Kqz:f2}");
+                    body.AddParagraph("")
+                        .AppendEquation($"K_p^*=(π∙(D_ком^2-d_ком^2)∙E_K∙s_K)/(4.8∙l∙a∙K_ком)={_Kpz:f2}");
+
+                    if (_hedi.IsNeedKcompensatorCalculate)
+                    {
+                        //TODO: Get calculate Kkom
+                    }
+                    break;
+                case CompensatorType.Expander:
+                    //TODO:
+                    if (_hedi.beta0 == 90)
+                    {
+
+                    }
+                    else if (_hedi.beta0 >= 15 && _hedi.beta0 <= 60)
+                    {
+
+                    }
+                    break;
+                case CompensatorType.CompensatorOnExpander:
+                    //TODO: Make calculation compensator on expeander 
+                    break;
+            }
+
+            body.AddParagraph("")
+                .AppendEquation($"K_q=1+{_Kqz:f2}={_Kq:f2}");
+            body.AddParagraph("")
+                .AppendEquation($"К_р=1+{_Kpz:f2}={_Kp:f2}");
+
+            body.AddParagraph("Коэффициент ослабления трубной решетки при расчете кожухотрубчатых теплообменных аппаратов с неподвижными трубными решетками и компенсатором на кожухе вычисляют по формуле");
+            body.AddParagraph("")
+                .AppendEquation($"φ_p=1-d_0/t_p=1-{_hedi.d0}/{_hedi.tp}={_fip:f2}");
+
+            body.AddParagraph("Коэффициент жесткости перфорированной плиты вычисляют по формуле");
+            body.AddParagraph("")
+                .AppendEquation($"ψ_0=η_T^(7/3)={_psi0:f2}");
+
+            body.AddParagraph("Коэффициент системы решетка — трубы" +
+                (_hedi.IsDifferentTubePlate ? " для теплообменных аппаратов с двумя отличающимися друг от друга по толщине или модулю упругости решетками" : " ") +
+                "вычисляют по формуле");
+            
+            if (!_hedi.IsDifferentTubePlate)
+            {
+                body.AddParagraph("")
+                    .AppendEquation($"β=1.82/s_p∙∜((K_y∙s_p)/(ψ_0∙E_p))=1.82/{_hedi.sp}∙∜(({_Ky:f2}∙{_hedi.sp})/({_psi0:f2}∙{_Ep}))={_beta:f2}");
+            }
+            else
+            {
+                body.AddParagraph("")
+                    .AppendEquation($"β=1.53∙∜(K_y/ψ_0∙(1/(E_p1∙s_p1^3)+1/(E_p2∙s_p2^3))" +
+                    $"=1.53∙∜({_Ky:f2}/{_psi0:f2}∙(1/({_Ep1}∙{_hedi.sp1}^3)+1/({_Ep2}∙{_hedi.sp2}^3))={_beta:f2}");
+            }
+
+            body.AddParagraph("Безразмерный параметр системы решетка — трубы вычисляют по формуле");
+            body.AddParagraph("")
+                .AppendEquation($"ω=β∙a_1={_beta:f2}∙{_hedi.a1}={_omega:f2}");
+
+            body.AddParagraph("Коэффициент системы кожух — решетка");
+            body.AddParagraph("")
+                .AppendEquation($"β_1=1.3/√(a∙s_1)=1.3/√({_hedi.a}∙{_hedi.s1})={_beta1:f2}");
+
+            body.AddParagraph("Коэффициент системы обечайка — фланец камеры");
+            body.AddParagraph("")
+                .AppendEquation($"β_2=1.3/√(a∙s_2)=1.3/√({_hedi.a}∙{_hedi.s2})={_beta2:f2}");
+
+            body.AddParagraph("Коэффициент жесткости фланцевого соединения при изгибе");
+            body.AddParagraph("")
+                .AppendEquation("K_Φ=K_Φ1+K_Φ2");
+
+            body.AddParagraph("")
+                .AppendEquation("K_Φ1=(E_1∙h_1^3∙b_1)/(12∙R_1^2)+K_1∙(1+(β_1∙h_1)/2)");
+
+            body.AddParagraph("")
+                .AppendEquation($"K_1=(β_1∙a∙E_K∙s_1^3)/(5.5∙R_1)=({_beta1:f2}∙{_hedi.a}∙{_EK}∙{_hedi.s1}^3)/(5.5∙{_R1:f2})={_K1:f2}");
+
+            body.AddParagraph("")
+                .AppendEquation($"K_Φ1=({_E1}∙{_hedi.h1}^3∙{_b1:f2})/(12∙{_R1:f2}^2)+{_K1:f2}∙(1+({_beta1:f2}∙{_hedi.h1:f2})/2)={_KF1:f2}");
+
+            body.AddParagraph("")
+                .AppendEquation("K_Φ2=(E_2∙h_2^3∙b_2)/(12∙R_2^2)+K_2∙(1+(β_2∙h_2)/2)");
+
+            body.AddParagraph("")
+                .AppendEquation($"K_2=(β_2∙a∙E_D∙s_2^3)/(5.5∙R_2)=({_beta2:f2}∙{_hedi.a}∙{_ED}∙{_hedi.s2}^3)/(5.5∙{_R2:f2})={_K2:f2}");
+
+            body.AddParagraph("")
+                .AppendEquation($"K_Φ1=({_E2}∙{_hedi.h2}^3∙{_b2:f2})/(12∙{_R2:f2}^2)+{_K2:f2}∙(1+({_beta2:f2}∙{_hedi.h2:f2})/2)={_KF2:f2}");
+
+            body.AddParagraph("")
+                .AppendEquation($"K_Φ={_KF1:f2}+{_KF2:f2}={_KF:f2}");
+
+            body.AddParagraph("Определение усилий в элементах теплообменного аппарата");
+
+            body.AddParagraph("Приведенное давление ")
+                .AppendEquation("p_0")
+                .AddRun(" вычисляют по формуле");
+
+            body.AddParagraph("")
+                .AppendEquation("p_0=[α_K∙(t_K-t_0)-α_T∙(t_T-t_0)∙K_y∙l+[η_T-1+m_cp+m_n∙(m_n+0.5∙ρ∙K_q)]∙p_T-[η_M-1+m_cp+m_n∙(m_n+0.3∙ρ∙K_p)]∙p_M]");
+
+            body.AddParagraph("где ")
+                .AppendEquation("m_cp")
+                .AddRun(" - коэффициент влияния давления на продольную деформацию труб");
+
+            body.AddParagraph("")
+                .AppendEquation($"m_cp=0.15∙(i∙(d_T-s_T)^2)/a_1^2=0.15∙({_hedi.i}∙({_hedi.dT}-{_hedi.sT})^2)/{_hedi.a1}^2={_mcp:f2}");
+
+            body.AddParagraph("")
+                .AppendEquation($"p_0=[{_alfaK}∙({_hedi.tK}-{_hedi.t0})-{_alfaT}∙({_hedi.tT}-{_hedi.t0})∙{_Ky:f2}∙{_hedi.l}+[{_etaT:f2}-1+{_mcp:f2}+{_mn:f2}∙({_mn:f2}+0.5∙{_ro:f2}∙{_Kq:f2})]∙{_hedi.pT}-[{_etaM:f2}-1+{_mcp:f2}+{_mn:f2}∙({_mn:f2}+0.3∙{_ro:f2}∙{_Kp:f2})]∙{_hedi.pM}]={_p0:f2} МПа");
+
+            body.AddParagraph("Приведенное отношение жесткости труб к жесткости фланцевого соединения вычисляют по формуле");
+
+            body.AddParagraph("")
+                .AppendEquation($"ρ_1=(K_y∙a∙a_1)/(β_2∙K_Φ∙R_1)=({_Ky:f2}∙{_hedi.a}∙{_hedi.a1})/({_beta2:f2}∙{_KF:f2}∙{_R1:f2})={_ro1:f2}");
+
+            body.AddParagraph("Коэффициенты, учитывающие поддерживающее влияние труб ")
+                .AppendEquation($"Φ_1={_Phi1}, Φ_2={_Phi2}, Φ_3={_Phi3}")
+                .AddRun(" определяют по таблице 1 ГОСТ 34233.7");
+
+            body.AddParagraph("")
+                .AppendEquation("T_1=Φ_1∙[m_n+0.5∙(1+m_n∙t)(t-1)]");
+            body.AddParagraph("")
+                .AppendEquation("T_2=Φ_2∙t");
+            body.AddParagraph("")
+                .AppendEquation("T_3=Φ_3∙m_n");
+
+            body.AddParagraph("")
+                .AppendEquation($"t=1+1.4∙ω∙(m_n-1)=1+1.4∙{_omega:f2}∙({_mn:f2}-1)={_t:f2}");
+
+            body.AddParagraph("")
+                .AppendEquation($"T_1={_Phi1:f2}∙[{_mn:f2}+0.5∙(1+{_mn:f2}∙{_t:f2})({_t:f2}-1)]={_T1:f2}");
+            body.AddParagraph("")
+                .AppendEquation($"T_2={_Phi2:f2}∙{_t:f2}={_T2:f2}");
+            body.AddParagraph("")
+                .AppendEquation($"T_3={_Phi3:f2}∙{_mn:f2}={_T3:f2}");
+
+            body.AddParagraph("Изгибающий момент и перерезывающую силу, распределенные по краю трубной решетки, вычисляют по формулам:");
+            body.AddParagraph("- для изгибающего момента");
+
+            body.AddParagraph("")
+                .AppendEquation("M_Π=(a_1/β)∙(p_1∙(T_1+ρ∙K_q)-p_0∙T_2)/((T_1+ρ∙K_q)∙(T_3+ρ_1)-T_2^2)");
+
+            body.AddParagraph("- для перерезывающей силы");
+
+            body.AddParagraph("")
+                .AppendEquation("Q_Π=a_1∙(p_0∙(T_3+ρ_1)-p_1∙T_2)/((T_1+ρ∙K_q)∙(T_3+ρ_1)-T_2^2)");
+
+            body.AddParagraph("где");
+
+            body.AddParagraph("")
+                .AppendEquation("p_1=K_y/(β∙K_Φ)∙(m_1∙p_M-m_2∙p_T)");
+
+            body.AddParagraph("")
+                .AppendEquation($"m_1=(1-β_1∙h_1)/(2∙β_1^2)=(1-{_beta1:f2}∙{_hedi.h1})/(2∙{_beta1:f2}^2)={_m1:f2}");
+
+            body.AddParagraph("")
+                .AppendEquation($"m_2=(1-β_2∙h_2)/(2∙β_2^2)=(1-{_beta2:f2}∙{_hedi.h2})/(2∙{_beta2:f2}^2)={_m2:f2}");
+
+            body.AddParagraph("")
+                .AppendEquation($"p_1={_Ky:f2}/({_beta:f2}∙{_KF:f2})∙({_m1:f2}∙{_hedi.pM}-{_m2:f2}∙{_hedi.pT})={_p1:f2}");
+
+            body.AddParagraph("")
+                .AppendEquation($"M_Π=({_hedi.a1}/{_beta:f2})∙({_p1:f2}∙({_T1:f2}+{_ro:f2}∙{_Kq:f2})-{_p0:f2}∙{_T2:f2})/(({_T1:f2}+{_ro:f2}∙{_Kq:f2})∙({_T3:f2}+{_ro1:f2})-{_T2:f2}^2)={_MP:f2} (Н∙мм)/мм");
+
+            body.AddParagraph("")
+                .AppendEquation($"Q_Π={_hedi.a1}∙({_p0:f2}∙({_T3:f2}+{_ro1:f2})-{_p1:f2}∙{_T2:f2})/(({_T1:f2}+{_ro:f2}∙{_Kq:f2})∙({_T3:f2}+{_ro1:f2})-{_T2:f2}^2)={_QP:f2} H");
+
+            body.AddParagraph("Изгибающий момент и перерезывающие силы, распределенные по периметру перфорированной зоны решетки, вычисляют по формулам:");
+            body.AddParagraph("- для изгибающего момента");
+            body.AddParagraph("")
+                .AppendEquation($"M_a=M_Π+(a-a_1)∙Q_Π={_MP:f2}+({_hedi.a}-{_hedi.a1})={_Ma:f2} (Н∙мм)/мм");
+
+            body.AddParagraph("- для перерезывающей силы");
+            body.AddParagraph("")
+                .AppendEquation($"Q_a={_mn:f2}∙{_QP:f2}={_Qa:f2} H");
+
+            body.AddParagraph("Осевую силу и изгибающий момент, действующие на трубу, вычисляют по формулам:");
+
+            body.AddParagraph("- для осевой силы");
+            body.AddParagraph("")
+                .AppendEquation("N_T=(π∙a_1)/i∙[(η_M∙p_M-η_T∙p_T)∙a_1+Φ_1∙Q_a+Φ_2∙β∙M_a]" +
+                $"=(π∙{_hedi.a1})/{_hedi.i}∙[({_etaM:f2}∙{_hedi.pM}-{_etaT:f2}∙{_hedi.pT})∙{_hedi.a1}+{_Phi1:f2}∙{_Qa:f2}+{_Phi2:f2}∙{_beta:f2}∙{_Ma:f2}]={_NT:f2} H");
+
+            body.AddParagraph("- для изгибающего момента");
+            body.AddParagraph("")
+                .AppendEquation("M_T=(E_T∙J_T∙β)/(K_y∙a_1∙l_пр)∙(Φ_2∙Q_a+Φ_3∙β∙M_a)");
+
+            body.AddParagraph("где ")
+                .AppendEquation("l_пр")
+                .AddRun(_hedi.IsWithPartitions ? " для аппаратов с перегородками в кожухе" : " для аппаратов без перегородок в кожухе");
+
+            if (!_hedi.IsWithPartitions)
+            {
+                body.AddParagraph("")
+                .AppendEquation($"l_пр=l={_hedi.l} мм");
+            }
+            else
+            {
+                body.AddParagraph("")
+                .AppendEquation($"l_пр=L_1R/3={_hedi.l1R}/3={_lpr:f2} мм");
+            }
+
+            body.AddParagraph("")
+                .AppendEquation("J_T")
+                .AddRun(" - момент инерции поперечного сечения трубы");
+
+            body.AddParagraph("")
+                .AppendEquation($"J_T=(π∙d_T^4-(d_T-2∙s_T)^4)/64=(π∙{_hedi.dT}^4-({_hedi.dT}-2∙{_hedi.sT})^4)/64={_JT:f2} мм^4");
+
+            body.AddParagraph("")
+                .AppendEquation($"M_T=({_ET}∙{_JT:f2}∙{_beta:f2})/({_Ky:f2}∙{_hedi.a1}∙{_lpr:f2})∙({_Phi2:f2}∙{_Qa:f2}+{_Phi3:f2}∙{_beta:f2}∙{_Ma:f2})={_MT:f2} (Н∙мм)/мм");
+
+            body.AddParagraph("Нагрузки на кожух вычисляют по формулам:");
+            
+            body.AddParagraph("- усилие, распределенное по периметру кожуха");
+            body.AddParagraph("")
+                .AppendEquation($"Q_K=a/2∙p_T-Q_Π={_hedi.a}/2∙{_hedi.pT}-{_QP:f2}={_QK:f2} H");
+
+            body.AddParagraph("- изгибающий момент, распределенный по периметру кожуха");
+            body.AddParagraph("")
+                .AppendEquation("M_K=K_1/(ρ_1∙K_Φ∙β)∙(T_2∙Q_Π+T_3∙β∙M_Π)-p_M/(2∙β_1^2) +" +
+                $"{_K1:f2}/({_ro1:f2}∙{_KF:f2}∙{_beta:f2})∙({_T2:f2}∙{_QP:f2}+{_T3:f2}∙{_beta:f2}∙{_MP:f2})-{_hedi.pM}/(2∙{_beta1:f2}^2)={_MK:f2} (Н∙мм)/мм");
+
+            body.AddParagraph("- суммарная осевая сила, действующая на кожух");
+            body.AddParagraph("")
+                .AppendEquation($"F=π∙D∙Q_K=π∙{_hedi.D}∙{_QK:f2}={_F:f2} H");
+
         }
 
         private static double CalculateSigmaa(double Ksigma,
