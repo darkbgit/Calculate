@@ -14,6 +14,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ImageMagick;
+using System.Security.Cryptography;
 
 
 namespace CalculateVessels.Core.HeatExchanger
@@ -32,7 +33,6 @@ namespace CalculateVessels.Core.HeatExchanger
         private bool _isConditionStaticStressForTube;
         private bool _isConditionStaticStressForTubePlate;
         private bool _isConditionStressBracingTube;
-        private bool _isConditionStressBracingTube2;
         private double _A;
         private double _AForSigmaaK;
         private double _AForSigmaap;
@@ -125,7 +125,8 @@ namespace CalculateVessels.Core.HeatExchanger
         private double _Phi1;
         private double _Phi2;
         private double _Phi3;
-        private double _PhiC;
+        private double _PhiC2;
+        private double _phiC;
         private double _phiT;
         private double _psi0;
         private double _Qa;
@@ -176,6 +177,15 @@ namespace CalculateVessels.Core.HeatExchanger
         private double _Y;
         private double _Ykom;
         private List<string> _errorList = new();
+        private double _deltasigma1pk;
+        private double _deltasigma2pk;
+        private double _deltasigma3pk;
+        private double _deltasigma1pp;
+        private double _deltasigma2pp;
+        private double _deltasigma3pp;
+        private double _fper;
+        private double _sper;
+        private double _sigma_dper;
 
         public bool IsCriticalError { get; private set; }
 
@@ -497,7 +507,7 @@ namespace CalculateVessels.Core.HeatExchanger
             _sigmap1 = 6 * Math.Abs(_MP) / Math.Pow(_hedi.s1p - _hedi.c, 2);
             _taup1 = Math.Abs(_QP) / (_hedi.s1p - _hedi.c);
 
-            
+
             _mA = _beta * _Ma / _Qa;
 
             if (_mA >= -1.0 & _mA <= 1.0)
@@ -546,15 +556,21 @@ namespace CalculateVessels.Core.HeatExchanger
                 _errorList.Add("Условие статической прочности трубной решетки не выполняется");
             }
 
-            _sigmaa_5_2_4k = CalculateSigmaa(_Ksigma, _sigmap1, 0, 0);
-             
+            _deltasigma1pk = _sigmap1;
+            _deltasigma2pk = 0;
+            _deltasigma3pk = 0.0;
+            _sigmaa_5_2_4k = CalculateSigmaa(_Ksigma, _deltasigma1pk, _deltasigma2pk, _deltasigma2pk);
+
             if (_sigmaa_5_2_4k > _sigmaa_dp)
             {
                 IsError = true;
                 _errorList.Add("Условие малоцикловой прочности трубной решетки в месте соединения с кожухом не выполняется");
             }
 
-            _sigmaa_5_2_4p = CalculateSigmaa(1, _sigmap2, 0, 0);
+            _deltasigma1pp = _sigmap2;
+            _deltasigma2pp = 0.0;
+            _deltasigma3pp = 0.0;
+            _sigmaa_5_2_4p = CalculateSigmaa(1, _deltasigma1pp, _deltasigma1pp, _deltasigma1pp);
 
             if (_sigmaa_5_2_4p > _sigmaa_dp)
             {
@@ -601,27 +617,29 @@ namespace CalculateVessels.Core.HeatExchanger
                 }
             }
 
-            //TODO: Make check dont need calculate for construction on picture 9
-            _conditionStaticStressForShell2 = 1.3 * _sigma_dK;
-
-            _isConditionStaticStressForShell = _sigmaMX <= _conditionStaticStressForShell2;
-            if (!_isConditionStaticStressForShell)
+            if (_hedi.FirstTubePlate.TubePlateType != TubePlateType.WeldedInFlange &
+                _hedi.SecondTubePlate.TubePlateType != TubePlateType.WeldedInFlange)
             {
-                IsError = true;
-                _errorList.Add("Условие статической прочности кожуха в месте присоединения к трубной решетке не выполняется");
+                _conditionStaticStressForShell2 = 1.3 * _sigma_dK;
+
+                _isConditionStaticStressForShell = _sigmaMX <= _conditionStaticStressForShell2;
+                if (!_isConditionStaticStressForShell)
+                {
+                    IsError = true;
+                    _errorList.Add("Условие статической прочности кожуха в месте присоединения к трубной решетке не выполняется");
+                }
+
+                _deltasigma1K = _sigmaMX + _sigmaIX;
+                _deltasigma2K = _sigmaMfi + _sigmaIfi;
+                _deltasigma3K = 0.0;
+                _sigmaaK = CalculateSigmaa(_Ksigma, _deltasigma1K, _deltasigma2K, _deltasigma3K);
+
+                if (_sigmaaK > _sigmaa_dK)
+                {
+                    IsError = true;
+                    _errorList.Add("Условие малоцикловой прочности кожуха в месте присоединения к трубной решетке не выполняется");
+                }
             }
-
-            _deltasigma1K = _sigmaMX + _sigmaIX;
-            _deltasigma2K = _sigmaMfi + _sigmaIfi;
-            _deltasigma3K = 0.0;
-            _sigmaaK = CalculateSigmaa(_Ksigma, _deltasigma1K, _deltasigma2K, _deltasigma3K);
-
-            if (_sigmaaK > _sigmaa_dK)
-            {
-                IsError = true;
-                _errorList.Add("Условие малоцикловой прочности кожуха в месте присоединения к трубной решетке не выполняется");
-            }
-
 
             if (_F < 0)
             {
@@ -657,7 +675,7 @@ namespace CalculateVessels.Core.HeatExchanger
                 _lambda = _KT * Math.Sqrt(_sigmaa_dT / _ET) * _lR / (_hedi.dT - _hedi.sT);
                 _phiT = 1 / Math.Sqrt(1 + Math.Pow(_lambda, 4));
 
-                _conditionStabilityForTube2 =_phiT * _sigmaa_dp;
+                _conditionStabilityForTube2 = _phiT * _sigmaa_dp;
 
                 _isConditionStabilityForTube = _sigma1T <= _conditionStabilityForTube2;
                 if (!_isConditionStabilityForTube)
@@ -696,32 +714,34 @@ namespace CalculateVessels.Core.HeatExchanger
                     break;
             }
 
-            _isConditionStressBracingTube = Math.Abs(_NT) <= _Ntp_d;
-            if (!_isConditionStressBracingTube)
-            {
-                IsError = true;
-                _errorList.Add("Условие прочности крепления трубы в решетке не выполняется");
-            }
-
-            _PhiC = Math.Min(0.5, 0.95 - (0.2 * Math.Log(_hedi.N)));
-
-            if (_hedi.IsTubeOnlyWelding)
-            {
-                _tau = ((Math.Abs(_NT) * _hedi.dT) + (4 * Math.Abs(_MT))) /
+            _PhiC2 = 0.95 - (0.2 * Math.Log(_hedi.N));
+            _phiC = Math.Min(0.5, 0.95 - (0.2 * Math.Log(_hedi.N)));
+            _tau = ((Math.Abs(_NT) * _hedi.dT) + (4 * Math.Abs(_MT))) /
                     (Math.PI * Math.Pow(_hedi.dT, 2) * _hedi.delta);
-                _conditionStressBracingTube2 = _PhiC * Math.Min(_sigma_dT, _sigmaa_dp);
-                _isConditionStressBracingTube2 = _tau <= _conditionStressBracingTube2;
-            }
-            else
+
+            switch (_hedi.FixTubeInTubePlate)
             {
-                _conditionStressBracingTube11 = _PhiC * Math.Min(_sigma_dT, _sigmaa_dp) / _tau +
-                    0.6 * _Ntp_d / Math.Abs(_NT);
-                _conditionStressBracingTube12 = _Ntp_d / Math.Abs(_NT);
+                case FixTubeInTubePlateType.OnlyRolling:
 
-                _isConditionStressBracingTube2 = Math.Max(_conditionStressBracingTube11, _conditionStressBracingTube12) <= 1.0;
+                    _isConditionStressBracingTube = Math.Abs(_NT) <= _Ntp_d;
+                    break;
+
+                case FixTubeInTubePlateType.OnlyWelding:
+
+                    _conditionStressBracingTube2 = _phiC * Math.Min(_sigma_dT, _sigma_dp);
+                    _isConditionStressBracingTube = _tau <= _conditionStressBracingTube2;
+                    break;
+
+                case FixTubeInTubePlateType.RollingWithWelding:
+
+                    _conditionStressBracingTube11 = _phiC * Math.Min(_sigma_dT, _sigma_dp) / _tau +
+                        0.6 * _Ntp_d / Math.Abs(_NT);
+                    _conditionStressBracingTube12 = _Ntp_d / Math.Abs(_NT);
+                    _isConditionStressBracingTube = Math.Max(_conditionStressBracingTube11, _conditionStressBracingTube12) >= 1.0;
+                    break;
             }
 
-            if (!_isConditionStressBracingTube2)
+            if (!_isConditionStressBracingTube)
             {
                 IsError = true;
                 _errorList.Add("Условие прочности крепления трубы в решетке не выполняется");
@@ -734,6 +754,12 @@ namespace CalculateVessels.Core.HeatExchanger
             {
                 IsError = true;
                 _errorList.Add("Толщина трубной решетки меньше расчетной");
+            }
+
+            if (!_hedi.IsOneGo)
+            {
+                _fper = 1 / (1 + (_hedi.Bper / _hedi.Lper) + Math.Pow(_hedi.Bper / _hedi.Lper, 2));
+                _sper = (0.71 * _hedi.Bper * Math.Sqrt(_hedi.deltap * _fper / _sigma_dper)) + _hedi.cper;
             }
         }
 
@@ -761,10 +787,28 @@ namespace CalculateVessels.Core.HeatExchanger
             {
                 var imagePart = mainPart.AddImagePart(ImagePartType.Gif);
 
-                var a = ((int)_hedi.FirstTubePlate.TubePlateType).ToString();
+                var a = _hedi.FirstTubePlate.TubePlateType switch
+                {
+                    TubePlateType.WeldedInShell => "1",
+                    TubePlateType.SimplyFlange => "2",
+                    TubePlateType.SimplyFlangeWithShell => "2",
+                    TubePlateType.FlangeWithFlanging => "2",
+                    TubePlateType.WeldedInFlange => "2",
+                    TubePlateType.BetweenFlange => "3",
+                    _ => "1",
+                };
 
                 var b = _hedi.IsDifferentTubePlate
-                    ? ((int)_hedi.SecondTubePlate.TubePlateType).ToString() : a;
+                    ? _hedi.FirstTubePlate.TubePlateType switch
+                    {
+                        TubePlateType.WeldedInShell => "1",
+                        TubePlateType.SimplyFlange => "2",
+                        TubePlateType.SimplyFlangeWithShell => "2",
+                        TubePlateType.FlangeWithFlanging => "2",
+                        TubePlateType.WeldedInFlange => "2",
+                        TubePlateType.BetweenFlange => "3",
+                        _ => "1",
+                    } : a;
 
                 var c = _hedi.CompensatorType switch
                 {
@@ -1002,7 +1046,7 @@ namespace CalculateVessels.Core.HeatExchanger
             body.AddParagraph("Коэффициент системы решетка — трубы" +
                 (_hedi.IsDifferentTubePlate ? " для теплообменных аппаратов с двумя отличающимися друг от друга по толщине или модулю упругости решетками" : " ") +
                 "вычисляют по формуле");
-            
+
             if (!_hedi.IsDifferentTubePlate)
             {
                 body.AddParagraph("")
@@ -1174,7 +1218,7 @@ namespace CalculateVessels.Core.HeatExchanger
                 .AppendEquation($"M_T=({_ET}∙{_JT:f2}∙{_beta:f2})/({_Ky:f2}∙{_hedi.a1}∙{_lpr:f2})∙({_Phi2:f2}∙{_Qa:f2}+{_Phi3:f2}∙{_beta:f2}∙{_Ma:f2})={_MT:f2} (Н∙мм)/мм");
 
             body.AddParagraph("Нагрузки на кожух вычисляют по формулам:");
-            
+
             body.AddParagraph("- усилие, распределенное по периметру кожуха");
             body.AddParagraph("")
                 .AppendEquation($"Q_K=a/2∙p_T-Q_Π={_hedi.a}/2∙{_hedi.pT}-{_QP:f2}={_QK:f2} H");
@@ -1188,6 +1232,546 @@ namespace CalculateVessels.Core.HeatExchanger
             body.AddParagraph("")
                 .AppendEquation($"F=π∙D∙Q_K=π∙{_hedi.D}∙{_QK:f2}={_F:f2} H");
 
+            body.AddParagraph("Расчетные напряжения в элементах конструкции");
+
+            body.AddParagraph("Крепления трубной решетки к кожуху или фланцу");
+
+
+            //TODO: Insert image
+
+            //{
+            //    var imagePart = mainPart.AddImagePart(ImagePartType.Gif);
+
+            //    var a = ((int)_hedi.FirstTubePlate.TubePlateType).ToString();
+
+            //    var b = _hedi.IsDifferentTubePlate
+            //        ? ((int)_hedi.SecondTubePlate.TubePlateType).ToString() : a;
+
+            //    var c = _hedi.CompensatorType switch
+            //    {
+            //        CompensatorType.No => "",
+            //        CompensatorType.Compensator => " Syl",
+            //        CompensatorType.Expander => " Exp",
+            //        CompensatorType.CompensatorOnExpander => " Exp",
+            //        _ => "",
+            //    };
+
+            //    var pic = (byte[])Data.Properties.Resources.ResourceManager.GetObject("Fixed " + a + "-" + b + c);
+
+            //    if (pic != null)
+            //    {
+            //        imagePart.FeedData(new MemoryStream(pic));
+
+            //        body.AddParagraph("").AddImage(mainPart.GetIdOfPart(imagePart), pic);
+            //    }
+            //}
+
+            body.AddParagraph("Расчетные напряжения в трубных решетках");
+
+            body.AddParagraph("Напряжения в трубной решетке в месте соединения с кожухом вычисляют по формулам:");
+
+            body.AddParagraph("- изгибные");
+            body.AddParagraph("")
+                .AppendEquation($"σ_p1=(6∙|M_Π|)/(s_1p-c)^2=(6∙|{_MP:f2}|)/({_hedi.s1p}-{_hedi.c})^2={_sigmap1:f2} МПа");
+
+            body.AddParagraph("- касательные");
+            body.AddParagraph("")
+                .AppendEquation($"τ_p1=|Q_Π|/(s_1p-c)=|{_QP:f2}|/({_hedi.s1p}-{_hedi.c})={_taup1:f2} МПа");
+
+            body.AddParagraph("Напряжения в перфорированной части трубной решетки вычисляют по формулам:");
+
+            body.AddParagraph("- изгибные");
+            body.AddParagraph("")
+                .AppendEquation($"σ_p2=(6∙M_max)/(φ_p∙(s_1p-c)^2)");
+
+            body.AddParagraph("где ")
+                .AppendEquation("M_max")
+                .AddRun(" максимальный расчетный изгибающий момент в перфорированной части трубной решетки");
+
+            if (_mA >= -1.0 & _mA <= 1.0)
+            {
+                body.AddParagraph("При");
+
+                body.AddParagraph("")
+                    .AppendEquation($"-1.0≤(β∙M_a)/Q_a=({_beta:f2}∙{_Ma:f2})/{_Qa:f2}={_mA:f2}≤1.0");
+
+                body.AddParagraph("")
+                    .AppendEquation("M_max=A∙|Q_a|/β");
+
+                body.AddParagraph($"где A={_A} - коэффициент, определяемый по таблице Г.2 ГОСТ 34233.7");
+
+                body.AddParagraph("")
+                    .AppendEquation($"M_max={_A}∙|{_Qa:f2}|/{_beta:f2}={_Mmax:f2} (Н∙мм)/мм");
+            }
+            else
+            {
+                body.AddParagraph("При");
+
+                body.AddParagraph("")
+                    .AppendEquation($"-(β∙M_a)/Q_a=({_beta:f2}∙{_Ma:f2})/{_Qa:f2}={_mA:f2}" +
+                    (_mA < -1.0 ? "<-1.0" : ">1.0"));
+
+                body.AddParagraph("")
+                    .AppendEquation("M_max=B∙|M_a|");
+
+                body.AddParagraph($"где B={_B} - коэффициент, определяемый по таблице Г.2 ГОСТ 34233.7");
+
+                body.AddParagraph("")
+                    .AppendEquation($"M_max={_B}∙|{_Ma:f2}|/{_beta:f2}={_Mmax:f2} (Н∙мм)/мм");
+            }
+
+            body.AddParagraph("")
+                .AppendEquation($"σ_p2=(6∙{_Mmax:f2})/({_fip:f2}∙({_hedi.s1p}-{_hedi.c})^2)={_sigmap2:f2} МПа");
+
+            body.AddParagraph("- касательные");
+            body.AddParagraph("")
+                .AppendEquation($"τ_p2=|Q_a|/(φ_p∙(s_1p-c))=|{_QP:f2}|/({_fip:f2}∙({_hedi.s1p}-{_hedi.c}))={_taup2:f2} МПа");
+
+            body.AddParagraph("Напряжения в кожухе в месте присоединения к решетке вычисляют по формулам:");
+
+            body.AddParagraph("- в меридиональном направлении:");
+
+            body.AddParagraph("мембранные");
+            body.AddParagraph("")
+                .AppendEquation($"σ_MX=|Q_K|/(s_1-c_K)=|{_QK:f2}|/({_hedi.s1}-{_hedi.cK})={_sigmaMX:f2} МПа");
+
+            body.AddParagraph("изгибные");
+            body.AddParagraph("")
+                .AppendEquation($"σ_ИX=(6∙|M_K|)/(s_1-c_K)^2=(6∙|{_MK:f2}|)/({_hedi.s1}-{_hedi.cK})^2={_sigmaIX:f2} МПа");
+
+            body.AddParagraph("- в окружном направлении:");
+
+            body.AddParagraph("мембранные");
+            body.AddParagraph("")
+                .AppendEquation($"σ_Mφ=(|p_M|∙a)/(s_1-c_K)=(|{_hedi.pM}|∙{_hedi.a})/({_hedi.s1}-{_hedi.cK})={_sigmaMfi:f2} МПа");
+
+            body.AddParagraph("изгибные");
+            body.AddParagraph("")
+                .AppendEquation($"σ_Иφ=0.3∙σ_ИX=0.3∙{_sigmaIX:f2}={_sigmaIfi:f2} МПа");
+
+            body.AddParagraph("Напряжения в трубах вычисляют по формулам:");
+
+            body.AddParagraph("- в осевом направлении:");
+
+            body.AddParagraph("мембранные");
+            body.AddParagraph("")
+                .AppendEquation($"σ_1T=|N_T|/(π∙(d_T-s_T)∙s_T)=|{_NT:f2}|/(π∙({_hedi.dT}-{_hedi.sT})∙{_hedi.sT})={_sigma1T:f2} МПа");
+
+            body.AddParagraph("суммарные");
+            body.AddParagraph("")
+                .AppendEquation($"σ_1=σ_1T+(d_T∙|M_T|)/(2∙J_T)={_sigma1T:f2}+({_hedi.dT}∙|{_MT:f2}|/(2∙{_JT:f2})={_sigma1:f2} МПа");
+
+            body.AddParagraph("- в окружном направлении");
+            body.AddParagraph("")
+                .AppendEquation($"σ_2T=((d_T-s_T)∙max{{|p_T|;|p_M|;|p_T-p_M|}})/(2∙s_T)=(({_hedi.dT}-{_hedi.sT})∙max{{{_hedi.pT};{_hedi.pM};{Math.Abs(_hedi.pT - _hedi.pM)}}})/(2∙{_hedi.sT})={_sigma2T:f2} МПа");
+
+            body.AddParagraph("Проверка прочности трубных решеток").Alignment(AlignmentType.Center);
+
+            body.AddParagraph("Проверку статической прочности проводят по формуле");
+
+            body.AddParagraph("")
+                .AppendEquation("max{τ_p1;τ_p2}≤0.8∙[σ]_p");
+
+            body.AddParagraph("")
+                .AppendEquation($"max{{{_taup1:f2};{_taup2:f2}}}≤0.8∙{_sigmaa_dp}");
+
+            body.AddParagraph("")
+                .AppendEquation($"{_conditionStaticStressForTubePlate1:f2}≤{_conditionStaticStressForTubePlate2}");
+
+            if (_isConditionStaticStressForTubePlate)
+            {
+                body.AddParagraph("Условие прочности выполняется")
+                    .Bold();
+            }
+            else
+            {
+                body.AddParagraph("Условие прочности не выполняется")
+                    .Bold()
+                    .Color(System.Drawing.Color.Red);
+            }
+
+            body.AddParagraph("Проверку трубной решетки на малоцикловую прочность проводят по ГОСТ 34233.6");
+
+            body.AddParagraph("- в месте соединения с кожухом");
+
+            body.AddParagraph("")
+                .AppendEquation($"Δσ_1=σ_p1={_sigmap1:f2} МПа, Δσ_2=Δσ_3=0, K_σ={_Ksigma}");
+
+            MakeWordSigmaa(_sigmap1, 0, 0, _Ksigma, _sigmaa_dp, _sigmaa_5_2_4k, ref body);
+
+            body.AddParagraph("- в перфорированной части");
+
+            body.AddParagraph("")
+                .AppendEquation($"Δσ_1=σ_p2={_sigmap2:f2} МПа, Δσ_2=Δσ_3=0, K_σ=1");
+
+            MakeWordSigmaa(_sigmap2, 0, 0, 1, _sigmaa_dp, _sigmaa_5_2_4p, ref body);
+
+            if (!_hedi.IsOneGo)
+            {
+                body.AddParagraph("Для многоходовых по трубному пространству теплообменных аппаратов прочность трубных решеток в зоне паза под перегородку проверяют по формуле");
+
+                body.AddParagraph("")
+                    .AppendEquation("s_n≥(s_p-c)∙max{[1-√(d_0/B_Π∙(t_Π/t_p-1))];√(φ_p)}+c");
+
+                body.AddParagraph("")
+                    .AppendEquation($"1-√(d_0/B_Π∙(t_Π/t_p-1))=1-√({_hedi.d0}/{_hedi.BP}∙({_hedi.tP}/{_hedi.tp}-1))={_snp1:f2}");
+
+                body.AddParagraph("")
+                    .AppendEquation($"√(φ_p)=√({_fip:f2})={_snp2:f2}");
+
+
+                body.AddParagraph("")
+                    .AppendEquation($"s_n=({_hedi.sp}-{_hedi.c})∙max{{{_snp1:f2};{_snp2:f2}}}+{_hedi.c}={_sn:f2} мм");
+
+                if (_sn >= _hedi.sn)
+                {
+                    body.AddParagraph("Принятая толщина ")
+                        .Bold()
+                        .AppendEquation($"s_n={_hedi.sn} мм");
+                }
+                else
+                {
+                    body.AddParagraph("Принятая толщина ")
+                        .Bold()
+                        .Color(System.Drawing.Color.Red)
+                        .AppendEquation($"s_n={_hedi.sn} мм");
+                }
+            }
+
+            if (_hedi.IsNeedCheckHardnessTubePlate)
+            {
+                body.AddParagraph("Проверка жесткости трубных решеток").Alignment(AlignmentType.Center);
+
+                body.AddParagraph("Проверку проводят, когда к жесткости трубных решеток предъявляются какие - либо дополнительные требования, например для аппаратов со стекающей пленкой, с перегородками по трубному пространству, если недопустим переток между ходами.");
+
+                body.AddParagraph("Условие жесткости:");
+                body.AddParagraph("")
+                    .AppendEquation("W≤[W]");
+
+                body.AddParagraph("")
+                    .AppendEquation($"W=1.2/(K_y∙a_1)∙|T_1∙Q_Π+T_2∙β∙M_Π|=1.2/({_Ky:f2}∙{_hedi.a1})∙|{_T1:f2}∙{_QP:f2}+{_T2:f2}∙{_beta:f2}∙{_MP:f2}|={_W:f2} мм");
+
+                body.AddParagraph($"[W]={_W_d} мм - допустимоее значение прогиба трубной решетки по таблице 2 ГОСТ 34233.7");
+
+                body.AddParagraph("")
+                    .AppendEquation($"{_W:f2} мм ≤{_W_d} мм");
+
+                if (_W <= _W_d)
+                {
+                    body.AddParagraph("Условие жесткости выполняется")
+                        .Bold();
+                }
+                else
+                {
+                    body.AddParagraph("Условие жесткости не выполняется")
+                        .Bold()
+                        .Color(System.Drawing.Color.Red);
+                }
+            }
+
+            if (_hedi.FirstTubePlate.TubePlateType != TubePlateType.WeldedInFlange &
+                _hedi.SecondTubePlate.TubePlateType != TubePlateType.WeldedInFlange)
+            {
+                body.AddParagraph("Расчет прочности и устойчивости кожуха").Alignment(AlignmentType.Center);
+
+                body.AddParagraph("Условие статической прочности кожуха в месте присоединения к решетке:");
+
+                body.AddParagraph("")
+                    .AppendEquation("σ_MX≤1.3∙[σ]_K");
+                body.AddParagraph("")
+                    .AppendEquation($"{_sigmaMX:f2}≤1.3∙{_sigmaa_dK}={_conditionStaticStressForShell2:f2}");
+
+                if (_isConditionStaticStressForShell)
+                {
+                    body.AddParagraph("Условие прочности выполняется")
+                        .Bold();
+                }
+                else
+                {
+                    body.AddParagraph("Условие прочности не выполняется")
+                        .Bold()
+                        .Color(System.Drawing.Color.Red);
+                }
+            }
+
+            //TODO: Make calculate for F<0
+
+            body.AddParagraph("Проверку кожуха на малоцикповую прочность в месте присоединения к решетке проводят по ГОСТ 34233.6");
+
+            body.AddParagraph("")
+                .AppendEquation($"Δσ_1=σ_MX+σ_ИX={_sigmaMX:f2}+{_sigmaIX:f2}={_deltasigma1K:f2} МПа");
+            body.AddParagraph("")
+                .AppendEquation($"Δσ_2=σ_MX+σ_ИX={_sigmaMfi:f2}+{_sigmaIfi:f2}={_deltasigma2K:f2} МПа");
+            body.AddParagraph("")
+                .AppendEquation($"Δσ_31={_deltasigma3K:f2} МПа");
+            body.AddParagraph("")
+                .AppendEquation($"K_σ={_Ksigma}");
+
+            MakeWordSigmaa(_deltasigma1K, _deltasigma2K, _deltasigma2K, _Ksigma, _sigmaa_dK, _sigmaaK, ref body);
+
+            body.AddParagraph("Расчет труб на прочность, устойчивость и жесткость и расчет крепления труб в решетке");
+
+            body.AddParagraph("Условие статической прочности труб:");
+
+            body.AddParagraph("")
+                    .AppendEquation("max{σ_1T;σ_2T}≤[σ]_T");
+            body.AddParagraph("")
+                .AppendEquation($"max{{{_sigma1T:f2};{_sigma2T:f2}}}={_conditionStaticStressForTube1:f2}≤{_sigmaa_dT}");
+
+            if (_isConditionStaticStressForTube)
+            {
+                body.AddParagraph("Условие прочности выполняется")
+                    .Bold();
+            }
+            else
+            {
+                body.AddParagraph("Условие прочности не выполняется")
+                    .Bold()
+                    .Color(System.Drawing.Color.Red);
+            }
+
+            body.AddParagraph("Проверку труб на устойчивость" + (_NT < 0 ? " " : " не ") + "проводят, т.к. ")
+                .AppendEquation($"N_T={_NT:f2}<0");
+
+            if (_NT < 0)
+            {
+                body.AddParagraph("Условие устойчивости:");
+
+                body.AddParagraph("")
+                    .AppendEquation("σ_1T≤φ_T∙[σ]_T");
+
+                body.AddParagraph("где ")
+                    .AppendEquation("φ_T")
+                    .AddRun(" — коэффициент уменьшения допускаемого напряжения при продольном изгибе");
+
+                body.AddParagraph("")
+                    .AppendEquation("φ_T=1/√(1+λ^4)");
+
+                body.AddParagraph("")
+                    .AppendEquation("λ=K_T∙√([σ]_T/E_T)∙l_R/((d_T-s_T))");
+
+                body.AddParagraph("где ")
+                    .AppendEquation($"K_T={_KT}")
+                    .AddRun(_hedi.IsWorkCondition ? " — для рабочих условий" : " - для условий гидроиспытания");
+
+                if (_hedi.IsWithPartitions)
+                {
+                    body.AddParagraph("")
+                    .AppendEquation($"l_R=max{{l_2R;0.7∙l_1R}}=max{{{_hedi.l2R};0.7∙{_hedi.l1R}}}={_lR} мм")
+                    .AddRun(" — для аппаратов с перегородками");
+                }
+                else
+                {
+                    body.AddParagraph("")
+                    .AppendEquation($"l_R=l={_lR} мм")
+                    .AddRun(" — для аппаратов без перегородок");
+                }
+
+
+                body.AddParagraph("")
+                    .AppendEquation($"λ=K_T∙√([σ]_T/E_T)∙l_R/((d_T-s_T))={_KT}∙√({_sigmaa_dT}/{_ET})∙{_lR}/(({_hedi.dT}-{_hedi.sT}))={_lambda:f2}");
+
+                body.AddParagraph("")
+                    .AppendEquation($"φ_T=1/√(1+{_lambda:f2}^4)={_phiT:f2}");
+
+                body.AddParagraph("")
+                    .AppendEquation($"{_sigma1T:f2}≤{_phiT:f2}∙{_sigmaa_dT}={_conditionStabilityForTube2:f2}");
+
+                if (_isConditionStabilityForTube)
+                {
+                    body.AddParagraph("Условие устойчивости выполняется")
+                        .Bold();
+                }
+                else
+                {
+                    body.AddParagraph("Условие устойчивости не выполняется")
+                        .Bold()
+                        .Color(System.Drawing.Color.Red);
+                }
+
+                if (_hedi.IsNeedCheckHardnessTube)
+                {
+                    body.AddParagraph("Проверка жесткости труб");
+
+                    body.AddParagraph("Проверку проводят, когда к жесткости труб предъявляют какие-либо дополнительные требования");
+
+                    body.AddParagraph("Прогиб трубы вычисляют по формуле");
+
+                    body.AddParagraph("")
+                        .AppendEquation("Y=A_y∙|M_T|/|N_T|");
+
+                    body.AddParagraph("")
+                        .AppendEquation("A_y=(1-cos√(λ_y))/(1-cos√(λ_y))");
+
+                    body.AddParagraph("")
+                        .AppendEquation($"λ_y=(|N_T|∙l_пр^2/(E_T∙J_T)=(|{_NT:f2}|∙{_lpr:f2}^2/({_ET}∙{_JT:f2})={_lambday:f2}");
+
+                    body.AddParagraph("")
+                        .AppendEquation($"A_y=(1-cos√({_lambday:f2}))/(1-cos√({_lambday:f2}))={_Ay:f2}");
+
+                    body.AddParagraph("")
+                        .AppendEquation($"Y={_Ay:f2}∙|{_MT:f2}|/|{_NT:f2}|={_Y:f2} мм");
+
+                    body.AddParagraph("о всех случаях прогиб трубы не должен превышать зазор между трубами в пучке и приводить к их соприкосновению.");
+                    //TODO: Check Y for compare with something
+                }
+
+            }
+
+
+            body.AddParagraph("Проверка прочности крепления трубы в решетке");
+
+            body.AddParagraph("Допускаемую нагрузку на соединение трубы с решеткой ")
+                .AppendEquation("[N]_TP")
+                .AddRun(" определяют на основании испытаний или по нормативным документам. При отсутствии данных о прочности вальцовочного соединения вычисляем значение по формуле");
+
+            switch (_hedi.TubeRolling)
+            {
+                case TubeRollingType.RollingWithoutGroove:
+                    body.AddParagraph("- для гладкозавальцованных труб");
+
+                    body.AddParagraph("")
+                        .AppendEquation($"[N]_TP=0.5∙π∙s_T∙(d_T-s_T)∙min{{l_B/d_T;1.6}}∙min{{[σ]_T;[σ]_p}}={_Ntp_d:f2} H");
+                    break;
+                case TubeRollingType.RollingWithOneGroove:
+                    body.AddParagraph("- для труб, завальцованных в пазы при наличии одного паза");
+
+                    body.AddParagraph("")
+                        .AppendEquation($"[N]_TP=0.6∙π∙s_T∙(d_T-s_T)∙min{{[σ]_T;[σ]_p}}={_Ntp_d:f2} H");
+                    break;
+                case TubeRollingType.RollingWithMoreThenOneGroove:
+                    body.AddParagraph("- для труб, завальцованных в пазы с двумя или более пазами");
+
+                    body.AddParagraph("")
+                        .AppendEquation($"[N]_TP=0.8∙π∙s_T∙(d_T-s_T)∙min{{[σ]_T;[σ]_p}}={_Ntp_d:f2} H");
+                    break;
+            }
+
+            switch (_hedi.FixTubeInTubePlate)
+            {
+                case FixTubeInTubePlateType.OnlyRolling:
+                    body.AddParagraph("Если трубы крепятся в решетке с помощью развальцовки, должно выполняться условие");
+
+                    body.AddParagraph("")
+                        .AppendEquation("|N_T|≤[N]_TP");
+
+                    body.AddParagraph("")
+                        .AppendEquation($"|{_NT:f2}|≤{_Ntp_d:f2}");
+
+                    break;
+
+                case FixTubeInTubePlateType.OnlyWelding:
+                    body.AddParagraph("Если трубы крепятся к решетке способом приварки или приварки с подвальцовкой, должно выполняться условие");
+
+                    body.AddParagraph("")
+                        .AppendEquation("(|N_T|∙d_T+4∙M_T)/π∙d_T^2∙δ≤φ_C∙min{[σ]_T;[σ]_p}");
+
+                    body.AddParagraph("")
+                        .AppendEquation($"φ_C=min{{0.5;(0.95-0.2∙lgN)}}=min{{0.5;(0.95-0.2∙lg{_hedi.N})}}=min{{0.5;{_PhiC2:f2})}}={_phiC:f2}");
+
+                    body.AddParagraph("")
+                        .AppendEquation($"(|N_T|∙d_T+4∙M_T)/π∙d_T^2∙δ≤φ_C∙min{{[σ]_T;[σ]_p}}=(|{_NT:f2}|∙{_hedi.dT}+4∙{_MT:f2})/π∙{_hedi.dT}^2∙{_hedi.delta}={_tau:f2}");
+
+                    body.AddParagraph("")
+                        .AppendEquation($"φ_C∙min{{[σ]_T;[σ]_p}}={_phiC:f2}∙min{{{_sigma_dT};{_sigma_dp}}}={_conditionStressBracingTube2:f2}");
+
+                    body.AddParagraph("")
+                        .AppendEquation($"{_tau:f2}≤{_conditionStressBracingTube2:f2}");
+
+                    break;
+
+                case FixTubeInTubePlateType.RollingWithWelding:
+                    body.AddParagraph("В случае крепления труб к решетке способом развальцовки с обваркой должно выполняться условие");
+
+                    body.AddParagraph("")
+                        .AppendEquation("max{(φ_C∙min{[σ]_T;[σ]_p})/τ+0.6∙[N]_TP/|N_T|;[N]_TP/|N_T|}≥1");
+
+                    body.AddParagraph("")
+                        .AppendEquation("τ=(|N_T|∙d_T+4∙M_T)/π∙d_T^2∙δ≤φ_C∙min{[σ]_T;[σ]_p}");
+
+                    body.AddParagraph("")
+                        .AppendEquation($"φ_C=min{{0.5;(0.95-0.2∙lgN)}}=min{{0.5;(0.95-0.2∙lg{_hedi.N})}}=min{{0.5;{_PhiC2:f2})}}={_phiC:f2}");
+
+                    body.AddParagraph("")
+                        .AppendEquation($"τ=(|{_NT:f2}|∙{_hedi.dT}+4∙{_MT:f2})/π∙{_hedi.dT}^2∙{_hedi.delta}={_tau:f2}");
+
+                    body.AddParagraph("")
+                        .AppendEquation($"(φ_C∙min{{[σ]_T;[σ]_p}})/τ+0.6∙[N]_TP/|N_T|=({_phiC:f2}∙min{{{_sigma_dT};{_sigma_dp}}})/{_tau:f2}+0.6∙{_Ntp_d:f2}/|{_NT:f2}|={_conditionStressBracingTube11:f2}");
+
+                    body.AddParagraph("")
+                        .AppendEquation($"[N]_TP/|N_T|={_Ntp_d:f2}/|{_NT:f2}|={_conditionStressBracingTube12:f2}");
+
+                    body.AddParagraph("")
+                        .AppendEquation($"max{{{_conditionStressBracingTube11:f2};{_conditionStressBracingTube12:f2}={Math.Max(_conditionStressBracingTube11, _conditionStressBracingTube12):f2}≥1");
+
+                    break;
+            }
+
+            if (_isConditionStressBracingTube)
+            {
+                body.AddParagraph("Условие прочности выполняется")
+                    .Bold();
+            }
+            else
+            {
+                body.AddParagraph("Условие прочности не выполняется")
+                    .Bold()
+                    .Color(System.Drawing.Color.Red);
+            }
+
+            body.AddParagraph("При наличии беструбной зоны принятая толщина трубной решетки должна дополнительно удовлетворять условию");
+
+            body.AddParagraph("")
+                .AppendEquation($"s_p≥0.5∙D_E∙√(p_p/[σ]_p)+c=0.5∙{_hedi.DE}∙√({_pp}/{_sigma_dp})+{_hedi.c}={_sp_5_5_1:f2} мм");
+
+            if (_sp_5_5_1 >= _hedi.sp)
+            {
+                body.AddParagraph("Принятая толщина ")
+                    .Bold()
+                    .AppendEquation($"s_p={_hedi.sp} мм");
+            }
+            else
+            {
+                body.AddParagraph("Принятая толщина ")
+                    .Bold()
+                    .Color(System.Drawing.Color.Red)
+                    .AppendEquation($"s_p={_hedi.sp} мм");
+            }
+
+
+            body.AddParagraph("Для трубных решеток, выполненных заодно с фланцем, принятая толщина должна быть не менее толщины кольца ответного фланца.Допускается уменьшение толщины решетки по сравнению с толщиной ответного фланца при условии подтверждения плотности и прочности фланцевого соединения специальным расчетом.");
+
+            if (!_hedi.IsOneGo)
+            {
+                body.AddParagraph("Перегородки между ходами по трубному пространству кожухотрубчатых теплообменных аппаратов");
+
+                body.AddParagraph("Толщина перегородки должна отвечать условию");
+            }
+
+        }
+
+        private static void MakeWordSigmaa(double ds1, double ds2, double ds3, double Ks, double sigmaa_d, double sigmaa, ref Body body)
+        {
+            body.AddParagraph("Амплитуду напряжений для каждого цикла вычисляют по формуле");
+            body.AddParagraph("")
+                .AppendEquation("σ_a=K_σ/2∙max{|Δσ_1-Δσ_2|;|Δσ_2-Δσ_3|;|Δσ_1-Δσ_3|}"
+                + $"={Ks}/2∙max{{|{ds1}-{ds2}|;|{ds2}-{ds3}|;|{ds1}-{ds3}|}}" +
+                $"={Ks}/2∙max{{|{ds1 - ds2}|;|{ds2 - ds3}|;|{ds1 - ds3}|}}={sigmaa:f2}");
+
+            body.AddParagraph("").AppendEquation("[σ_a]≥σ_a");
+            body.AddParagraph("")
+                .AppendEquation($"{sigmaa_d:f2}≥{sigmaa}");
+            if (sigmaa_d > sigmaa)
+            {
+                body.AddParagraph("Условие малоцикловой прочности выполняется")
+                    .Bold();
+            }
+            else
+            {
+                body.AddParagraph("Условие малоцикловой прочности не выполняется")
+                    .Bold()
+                    .Color(System.Drawing.Color.Red);
+            }
         }
 
         private static double CalculateSigmaa(double Ksigma,

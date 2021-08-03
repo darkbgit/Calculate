@@ -6,13 +6,10 @@ using System.Threading.Tasks;
 
 namespace CalculateVessels.Core.HeatExchanger.Enums
 {
-    public enum TubePlateType
+    public enum FixTubeInTubePlateType
     {
-        WeldedInShell,
-        SimplyFlange,
-        SimplyFlangeWithShell,
-        FlangeWithFlanging,
-        WeldedInFlange,
-        BetweenFlange
+        OnlyRolling,
+        OnlyWelding,
+        RollingWithWelding
     }
 }

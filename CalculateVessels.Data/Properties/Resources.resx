@@ -190,8 +190,17 @@
   <data name="ConnToCase1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ConnToCase1.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="ConnToCase1Dim" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConnToCase1Dim.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="ConnToCase1_offset" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ConnToCase1 offset.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConnToFlange1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConnToFlange1.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConnToFlange1Dim" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConnToFlange1Dim.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="ConnToFlange1_Butt1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ConnToFlange1-Butt1.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -235,6 +244,12 @@
   <data name="ConnToFlange1_Flat3_52857" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ConnToFlange1-Flat3_52857.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="ConnToFlange2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConnToFlange2.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConnToFlange2Dim" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConnToFlange2Dim.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="ConnToFlange2_Butt1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ConnToFlange2-Butt1.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
@@ -276,6 +291,12 @@
   </data>
   <data name="ConnToFlange2_Flat3_52857" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ConnToFlange2-Flat3_52857.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConnToFlange3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConnToFlange3.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConnToFlange3Dim" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConnToFlange3Dim.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="ConnToFlange3_Butt1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ConnToFlange3-Butt1.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -319,6 +340,12 @@
   <data name="ConnToFlange3_Flat3_52857" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ConnToFlange3-Flat3_52857.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="ConnToFlange4" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConnToFlange4.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConnToFlange4Dim" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConnToFlange4Dim.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="ConnToFlange4_Butt1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ConnToFlange4-Butt1.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
@@ -360,6 +387,12 @@
   </data>
   <data name="ConnToFlange4_Flat3_52857" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ConnToFlange4-Flat3_52857.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConnToFlange5" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConnToFlange5.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConnToFlange5Dim" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ConnToFlange5Dim.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="ConnToFlange5_Butt1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ConnToFlange5-Butt1.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>

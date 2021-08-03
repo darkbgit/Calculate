@@ -99,6 +99,10 @@ namespace CalculateVessels.Core.HeatExchanger
         public string Steelp1 { get; internal set; }
         public string Steelp2 { get; internal set; }
         public object Name { get; internal set; }
+        public FixTubeInTubePlateType FixTubeInTubePlate { get; internal set; }
+        public int Bper { get; internal set; }
+        public int Lper { get; internal set; }
+        public double cper { get; internal set; }
     }
 
     public class TubePlate

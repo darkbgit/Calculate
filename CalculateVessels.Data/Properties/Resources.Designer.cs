@@ -313,6 +313,26 @@ namespace CalculateVessels.Data.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        public static byte[] ConnToCase1Dim {
+            get {
+                object obj = ResourceManager.GetObject("ConnToCase1Dim", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConnToFlange1 {
+            get {
+                object obj = ResourceManager.GetObject("ConnToFlange1", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         public static byte[] ConnToFlange1_Butt1 {
             get {
                 object obj = ResourceManager.GetObject("ConnToFlange1_Butt1", resourceCulture);
@@ -446,6 +466,26 @@ namespace CalculateVessels.Data.Properties {
         public static byte[] ConnToFlange1_Flat3_52857 {
             get {
                 object obj = ResourceManager.GetObject("ConnToFlange1_Flat3_52857", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConnToFlange1Dim {
+            get {
+                object obj = ResourceManager.GetObject("ConnToFlange1Dim", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConnToFlange2 {
+            get {
+                object obj = ResourceManager.GetObject("ConnToFlange2", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -593,6 +633,26 @@ namespace CalculateVessels.Data.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        public static byte[] ConnToFlange2Dim {
+            get {
+                object obj = ResourceManager.GetObject("ConnToFlange2Dim", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConnToFlange3 {
+            get {
+                object obj = ResourceManager.GetObject("ConnToFlange3", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         public static byte[] ConnToFlange3_Butt1 {
             get {
                 object obj = ResourceManager.GetObject("ConnToFlange3_Butt1", resourceCulture);
@@ -726,6 +786,26 @@ namespace CalculateVessels.Data.Properties {
         public static byte[] ConnToFlange3_Flat3_52857 {
             get {
                 object obj = ResourceManager.GetObject("ConnToFlange3_Flat3_52857", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConnToFlange3Dim {
+            get {
+                object obj = ResourceManager.GetObject("ConnToFlange3Dim", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConnToFlange4 {
+            get {
+                object obj = ResourceManager.GetObject("ConnToFlange4", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -873,6 +953,26 @@ namespace CalculateVessels.Data.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        public static byte[] ConnToFlange4Dim {
+            get {
+                object obj = ResourceManager.GetObject("ConnToFlange4Dim", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConnToFlange5 {
+            get {
+                object obj = ResourceManager.GetObject("ConnToFlange5", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         public static byte[] ConnToFlange5_Butt1 {
             get {
                 object obj = ResourceManager.GetObject("ConnToFlange5_Butt1", resourceCulture);
@@ -1006,6 +1106,16 @@ namespace CalculateVessels.Data.Properties {
         public static byte[] ConnToFlange5_Flat3_52857 {
             get {
                 object obj = ResourceManager.GetObject("ConnToFlange5_Flat3_52857", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConnToFlange5Dim {
+            get {
+                object obj = ResourceManager.GetObject("ConnToFlange5Dim", resourceCulture);
                 return ((byte[])(obj));
             }
         }
