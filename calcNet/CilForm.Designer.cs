@@ -160,7 +160,7 @@ namespace CalculateVessels
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(74, 46);
+            this.label2.Location = new System.Drawing.Point(74, 44);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(144, 15);
@@ -170,7 +170,7 @@ namespace CalculateVessels
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(69, 78);
+            this.label3.Location = new System.Drawing.Point(69, 73);
             this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(149, 15);
@@ -183,7 +183,7 @@ namespace CalculateVessels
             this.Gost_cb.FormattingEnabled = true;
             this.Gost_cb.Items.AddRange(new object[] {
             "ГОСТ 34233.2-2017"});
-            this.Gost_cb.Location = new System.Drawing.Point(225, 43);
+            this.Gost_cb.Location = new System.Drawing.Point(224, 41);
             this.Gost_cb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Gost_cb.Name = "Gost_cb";
             this.Gost_cb.Size = new System.Drawing.Size(139, 23);
@@ -192,7 +192,7 @@ namespace CalculateVessels
             // 
             // t_tb
             // 
-            this.t_tb.Location = new System.Drawing.Point(224, 75);
+            this.t_tb.Location = new System.Drawing.Point(224, 70);
             this.t_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.t_tb.Name = "t_tb";
             this.t_tb.Size = new System.Drawing.Size(46, 23);
@@ -202,7 +202,7 @@ namespace CalculateVessels
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(274, 78);
+            this.label4.Location = new System.Drawing.Point(274, 73);
             this.label4.Margin = new System.Windows.Forms.Padding(0, 0, 4, 0);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(20, 15);
@@ -261,7 +261,7 @@ namespace CalculateVessels
             this.dav_gb.Controls.Add(this.nar_rb);
             this.dav_gb.Controls.Add(this.p_tb);
             this.dav_gb.Controls.Add(this.vn_rb);
-            this.dav_gb.Location = new System.Drawing.Point(14, 104);
+            this.dav_gb.Location = new System.Drawing.Point(14, 99);
             this.dav_gb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.dav_gb.Name = "dav_gb";
             this.dav_gb.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -282,7 +282,7 @@ namespace CalculateVessels
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(110, 192);
+            this.label7.Location = new System.Drawing.Point(110, 185);
             this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(108, 15);
@@ -292,7 +292,7 @@ namespace CalculateVessels
             // steel_cb
             // 
             this.steel_cb.FormattingEnabled = true;
-            this.steel_cb.Location = new System.Drawing.Point(224, 189);
+            this.steel_cb.Location = new System.Drawing.Point(224, 182);
             this.steel_cb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.steel_cb.Name = "steel_cb";
             this.steel_cb.Size = new System.Drawing.Size(139, 23);
@@ -301,7 +301,7 @@ namespace CalculateVessels
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(42, 224);
+            this.label8.Location = new System.Drawing.Point(42, 215);
             this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(176, 15);
@@ -311,7 +311,7 @@ namespace CalculateVessels
             // sigma_d_tb
             // 
             this.sigma_d_tb.Enabled = false;
-            this.sigma_d_tb.Location = new System.Drawing.Point(224, 220);
+            this.sigma_d_tb.Location = new System.Drawing.Point(224, 211);
             this.sigma_d_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.sigma_d_tb.Name = "sigma_d_tb";
             this.sigma_d_tb.ReadOnly = true;
@@ -321,7 +321,7 @@ namespace CalculateVessels
             // E_tb
             // 
             this.E_tb.Enabled = false;
-            this.E_tb.Location = new System.Drawing.Point(224, 250);
+            this.E_tb.Location = new System.Drawing.Point(224, 240);
             this.E_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.E_tb.Name = "E_tb";
             this.E_tb.ReadOnly = true;
@@ -330,7 +330,7 @@ namespace CalculateVessels
             // 
             // fi_tb
             // 
-            this.fi_tb.Location = new System.Drawing.Point(224, 280);
+            this.fi_tb.Location = new System.Drawing.Point(224, 269);
             this.fi_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.fi_tb.Name = "fi_tb";
             this.fi_tb.Size = new System.Drawing.Size(46, 23);
@@ -339,7 +339,7 @@ namespace CalculateVessels
             // 
             // D_tb
             // 
-            this.D_tb.Location = new System.Drawing.Point(224, 310);
+            this.D_tb.Location = new System.Drawing.Point(224, 298);
             this.D_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.D_tb.Name = "D_tb";
             this.D_tb.Size = new System.Drawing.Size(46, 23);
@@ -349,7 +349,7 @@ namespace CalculateVessels
             // l_tb
             // 
             this.l_tb.Enabled = false;
-            this.l_tb.Location = new System.Drawing.Point(224, 340);
+            this.l_tb.Location = new System.Drawing.Point(224, 327);
             this.l_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.l_tb.Name = "l_tb";
             this.l_tb.Size = new System.Drawing.Size(46, 23);
@@ -357,7 +357,7 @@ namespace CalculateVessels
             // 
             // c1_tb
             // 
-            this.c1_tb.Location = new System.Drawing.Point(224, 370);
+            this.c1_tb.Location = new System.Drawing.Point(224, 356);
             this.c1_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.c1_tb.Name = "c1_tb";
             this.c1_tb.Size = new System.Drawing.Size(46, 23);
@@ -366,7 +366,7 @@ namespace CalculateVessels
             // 
             // c2_tb
             // 
-            this.c2_tb.Location = new System.Drawing.Point(224, 400);
+            this.c2_tb.Location = new System.Drawing.Point(224, 385);
             this.c2_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.c2_tb.Name = "c2_tb";
             this.c2_tb.Size = new System.Drawing.Size(46, 23);
@@ -375,7 +375,7 @@ namespace CalculateVessels
             // 
             // c3_tb
             // 
-            this.c3_tb.Location = new System.Drawing.Point(224, 430);
+            this.c3_tb.Location = new System.Drawing.Point(224, 414);
             this.c3_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.c3_tb.Name = "c3_tb";
             this.c3_tb.Size = new System.Drawing.Size(46, 23);
@@ -383,7 +383,7 @@ namespace CalculateVessels
             // 
             // c_tb
             // 
-            this.c_tb.Location = new System.Drawing.Point(224, 460);
+            this.c_tb.Location = new System.Drawing.Point(224, 443);
             this.c_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.c_tb.Name = "c_tb";
             this.c_tb.Size = new System.Drawing.Size(46, 23);
@@ -392,7 +392,7 @@ namespace CalculateVessels
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(23, 254);
+            this.label9.Location = new System.Drawing.Point(23, 244);
             this.label9.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(195, 15);
@@ -403,7 +403,7 @@ namespace CalculateVessels
             // 
             this.label10.AutoSize = true;
             this.label10.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.label10.Location = new System.Drawing.Point(26, 284);
+            this.label10.Location = new System.Drawing.Point(26, 273);
             this.label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(192, 15);
@@ -413,7 +413,7 @@ namespace CalculateVessels
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(23, 313);
+            this.label11.Location = new System.Drawing.Point(23, 301);
             this.label11.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(195, 15);
@@ -423,7 +423,7 @@ namespace CalculateVessels
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(51, 344);
+            this.label12.Location = new System.Drawing.Point(51, 331);
             this.label12.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(167, 15);
@@ -434,7 +434,7 @@ namespace CalculateVessels
             // 
             this.label13.AutoSize = true;
             this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label13.Location = new System.Drawing.Point(72, 374);
+            this.label13.Location = new System.Drawing.Point(72, 360);
             this.label13.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(146, 13);
@@ -444,7 +444,7 @@ namespace CalculateVessels
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(85, 404);
+            this.label14.Location = new System.Drawing.Point(85, 389);
             this.label14.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(133, 15);
@@ -454,7 +454,7 @@ namespace CalculateVessels
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(40, 434);
+            this.label15.Location = new System.Drawing.Point(40, 418);
             this.label15.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(178, 15);
@@ -464,7 +464,7 @@ namespace CalculateVessels
             // label16
             // 
             this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(102, 464);
+            this.label16.Location = new System.Drawing.Point(102, 447);
             this.label16.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(116, 15);
@@ -475,7 +475,7 @@ namespace CalculateVessels
             // 
             this.label17.AutoSize = true;
             this.label17.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.label17.Location = new System.Drawing.Point(87, 498);
+            this.label17.Location = new System.Drawing.Point(87, 483);
             this.label17.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(131, 15);
@@ -484,7 +484,7 @@ namespace CalculateVessels
             // 
             // s_tb
             // 
-            this.s_tb.Location = new System.Drawing.Point(224, 495);
+            this.s_tb.Location = new System.Drawing.Point(224, 480);
             this.s_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.s_tb.Name = "s_tb";
             this.s_tb.Size = new System.Drawing.Size(46, 23);
@@ -494,7 +494,7 @@ namespace CalculateVessels
             // label18
             // 
             this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(279, 224);
+            this.label18.Location = new System.Drawing.Point(279, 215);
             this.label18.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(33, 15);
@@ -503,7 +503,7 @@ namespace CalculateVessels
             // 
             // grtSigma_b
             // 
-            this.grtSigma_b.Location = new System.Drawing.Point(321, 220);
+            this.grtSigma_b.Location = new System.Drawing.Point(321, 211);
             this.grtSigma_b.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.grtSigma_b.Name = "grtSigma_b";
             this.grtSigma_b.Size = new System.Drawing.Size(43, 23);
@@ -514,7 +514,7 @@ namespace CalculateVessels
             // label19
             // 
             this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(278, 254);
+            this.label19.Location = new System.Drawing.Point(278, 244);
             this.label19.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(33, 15);
@@ -524,7 +524,7 @@ namespace CalculateVessels
             // getE_b
             // 
             this.getE_b.Enabled = false;
-            this.getE_b.Location = new System.Drawing.Point(321, 250);
+            this.getE_b.Location = new System.Drawing.Point(321, 240);
             this.getE_b.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.getE_b.Name = "getE_b";
             this.getE_b.Size = new System.Drawing.Size(43, 23);
@@ -535,7 +535,7 @@ namespace CalculateVessels
             // 
             // getFi_b
             // 
-            this.getFi_b.Location = new System.Drawing.Point(321, 280);
+            this.getFi_b.Location = new System.Drawing.Point(321, 269);
             this.getFi_b.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.getFi_b.Name = "getFi_b";
             this.getFi_b.Size = new System.Drawing.Size(43, 23);
@@ -547,7 +547,7 @@ namespace CalculateVessels
             // getL_b
             // 
             this.getL_b.Enabled = false;
-            this.getL_b.Location = new System.Drawing.Point(321, 336);
+            this.getL_b.Location = new System.Drawing.Point(320, 327);
             this.getL_b.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.getL_b.Name = "getL_b";
             this.getL_b.Size = new System.Drawing.Size(43, 23);
@@ -558,7 +558,7 @@ namespace CalculateVessels
             // defect_chb
             // 
             this.defect_chb.AutoSize = true;
-            this.defect_chb.Location = new System.Drawing.Point(14, 530);
+            this.defect_chb.Location = new System.Drawing.Point(13, 514);
             this.defect_chb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.defect_chb.Name = "defect_chb";
             this.defect_chb.Size = new System.Drawing.Size(201, 19);
@@ -570,7 +570,7 @@ namespace CalculateVessels
             // defect_b
             // 
             this.defect_b.Enabled = false;
-            this.defect_b.Location = new System.Drawing.Point(248, 525);
+            this.defect_b.Location = new System.Drawing.Point(247, 509);
             this.defect_b.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.defect_b.Name = "defect_b";
             this.defect_b.Size = new System.Drawing.Size(35, 27);
@@ -581,7 +581,7 @@ namespace CalculateVessels
             // button3
             // 
             this.button3.Enabled = false;
-            this.button3.Location = new System.Drawing.Point(13, 568);
+            this.button3.Location = new System.Drawing.Point(13, 542);
             this.button3.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(168, 27);
@@ -592,7 +592,7 @@ namespace CalculateVessels
             // button4
             // 
             this.button4.Enabled = false;
-            this.button4.Location = new System.Drawing.Point(189, 568);
+            this.button4.Location = new System.Drawing.Point(189, 542);
             this.button4.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(175, 27);
@@ -604,7 +604,7 @@ namespace CalculateVessels
             // 
             this.groupBox2.Controls.Add(this.stressHand_rb);
             this.groupBox2.Controls.Add(this.stressCalc_rb);
-            this.groupBox2.Location = new System.Drawing.Point(371, 254);
+            this.groupBox2.Location = new System.Drawing.Point(371, 249);
             this.groupBox2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -654,7 +654,7 @@ namespace CalculateVessels
             this.force_gb.Controls.Add(this.label20);
             this.force_gb.Controls.Add(this.fq_panel);
             this.force_gb.Enabled = false;
-            this.force_gb.Location = new System.Drawing.Point(371, 312);
+            this.force_gb.Location = new System.Drawing.Point(371, 307);
             this.force_gb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.force_gb.Name = "force_gb";
             this.force_gb.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -856,7 +856,7 @@ namespace CalculateVessels
             // 
             this.groupBox4.Controls.Add(this.p_d_l);
             this.groupBox4.Controls.Add(this.scalc_l);
-            this.groupBox4.Location = new System.Drawing.Point(371, 619);
+            this.groupBox4.Location = new System.Drawing.Point(371, 612);
             this.groupBox4.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -887,7 +887,7 @@ namespace CalculateVessels
             // 
             // predCalc_b
             // 
-            this.predCalc_b.Location = new System.Drawing.Point(14, 623);
+            this.predCalc_b.Location = new System.Drawing.Point(13, 612);
             this.predCalc_b.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.predCalc_b.Name = "predCalc_b";
             this.predCalc_b.Size = new System.Drawing.Size(130, 42);
@@ -899,7 +899,7 @@ namespace CalculateVessels
             // calc_b
             // 
             this.calc_b.Enabled = false;
-            this.calc_b.Location = new System.Drawing.Point(152, 636);
+            this.calc_b.Location = new System.Drawing.Point(151, 625);
             this.calc_b.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.calc_b.Name = "calc_b";
             this.calc_b.Size = new System.Drawing.Size(88, 27);
@@ -910,7 +910,7 @@ namespace CalculateVessels
             // 
             // cancel_b
             // 
-            this.cancel_b.Location = new System.Drawing.Point(247, 635);
+            this.cancel_b.Location = new System.Drawing.Point(246, 624);
             this.cancel_b.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cancel_b.Name = "cancel_b";
             this.cancel_b.Size = new System.Drawing.Size(88, 27);
@@ -933,7 +933,7 @@ namespace CalculateVessels
             // label21
             // 
             this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(279, 317);
+            this.label21.Location = new System.Drawing.Point(279, 301);
             this.label21.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(25, 15);
@@ -943,7 +943,7 @@ namespace CalculateVessels
             // label22
             // 
             this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(278, 464);
+            this.label22.Location = new System.Drawing.Point(278, 447);
             this.label22.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label22.Name = "label22";
             this.label22.Size = new System.Drawing.Size(25, 15);
@@ -953,7 +953,7 @@ namespace CalculateVessels
             // label23
             // 
             this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(278, 434);
+            this.label23.Location = new System.Drawing.Point(278, 418);
             this.label23.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label23.Name = "label23";
             this.label23.Size = new System.Drawing.Size(25, 15);
@@ -963,7 +963,7 @@ namespace CalculateVessels
             // label24
             // 
             this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(278, 404);
+            this.label24.Location = new System.Drawing.Point(278, 389);
             this.label24.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label24.Name = "label24";
             this.label24.Size = new System.Drawing.Size(25, 15);
@@ -973,7 +973,7 @@ namespace CalculateVessels
             // label25
             // 
             this.label25.AutoSize = true;
-            this.label25.Location = new System.Drawing.Point(278, 374);
+            this.label25.Location = new System.Drawing.Point(278, 360);
             this.label25.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label25.Name = "label25";
             this.label25.Size = new System.Drawing.Size(25, 15);
@@ -983,7 +983,7 @@ namespace CalculateVessels
             // label26
             // 
             this.label26.AutoSize = true;
-            this.label26.Location = new System.Drawing.Point(278, 344);
+            this.label26.Location = new System.Drawing.Point(278, 331);
             this.label26.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label26.Name = "label26";
             this.label26.Size = new System.Drawing.Size(25, 15);
@@ -993,7 +993,7 @@ namespace CalculateVessels
             // label27
             // 
             this.label27.AutoSize = true;
-            this.label27.Location = new System.Drawing.Point(278, 498);
+            this.label27.Location = new System.Drawing.Point(278, 483);
             this.label27.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label27.Name = "label27";
             this.label27.Size = new System.Drawing.Size(25, 15);
@@ -1004,7 +1004,7 @@ namespace CalculateVessels
             // 
             this.label28.AutoSize = true;
             this.label28.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.label28.Location = new System.Drawing.Point(0, 490);
+            this.label28.Location = new System.Drawing.Point(-1, 476);
             this.label28.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label28.MaximumSize = new System.Drawing.Size(0, 1);
             this.label28.MinimumSize = new System.Drawing.Size(350, 0);
@@ -1018,7 +1018,7 @@ namespace CalculateVessels
             this.M_gb.Controls.Add(this.label29);
             this.M_gb.Controls.Add(this.M_tb);
             this.M_gb.Enabled = false;
-            this.M_gb.Location = new System.Drawing.Point(371, 498);
+            this.M_gb.Location = new System.Drawing.Point(371, 492);
             this.M_gb.Name = "M_gb";
             this.M_gb.Size = new System.Drawing.Size(326, 54);
             this.M_gb.TabIndex = 60;
@@ -1047,7 +1047,7 @@ namespace CalculateVessels
             this.Q_gb.Controls.Add(this.label30);
             this.Q_gb.Controls.Add(this.Q_tb);
             this.Q_gb.Enabled = false;
-            this.Q_gb.Location = new System.Drawing.Point(371, 559);
+            this.Q_gb.Location = new System.Drawing.Point(371, 552);
             this.Q_gb.Name = "Q_gb";
             this.Q_gb.Size = new System.Drawing.Size(326, 54);
             this.Q_gb.TabIndex = 61;

@@ -73,7 +73,6 @@ namespace CalculateVessels.Core.HeatExchanger
         public double DE { get; set; }
         public double fip { get; set; }
         public double h1 { get; set; }
-        public double pp { get; set; }
         public double s1 { get; set; }
         public double s1p { get; set; }
         public double s2 { get; set; }

@@ -163,6 +163,7 @@ namespace CalculateVessels.Core.HeatExchanger
         private double _sp;
         private double _sp_5_5_1;
         private double _spp;
+        private double _pp;
         private double _spp_5_5_1;
         private double _t;
         private double _T1;
@@ -559,7 +560,7 @@ namespace CalculateVessels.Core.HeatExchanger
             _deltasigma1pk = _sigmap1;
             _deltasigma2pk = 0;
             _deltasigma3pk = 0.0;
-            _sigmaa_5_2_4k = CalculateSigmaa(_Ksigma, _deltasigma1pk, _deltasigma2pk, _deltasigma2pk);
+            _sigmaa_5_2_4k = CalculateSigmaa(_Ksigma, _deltasigma1pk, _deltasigma2pk, _deltasigma3pk);
 
             if (_sigmaa_5_2_4k > _sigmaa_dp)
             {
@@ -570,7 +571,7 @@ namespace CalculateVessels.Core.HeatExchanger
             _deltasigma1pp = _sigmap2;
             _deltasigma2pp = 0.0;
             _deltasigma3pp = 0.0;
-            _sigmaa_5_2_4p = CalculateSigmaa(1, _deltasigma1pp, _deltasigma1pp, _deltasigma1pp);
+            _sigmaa_5_2_4p = CalculateSigmaa(1, _deltasigma1pp, _deltasigma2pp, _deltasigma3pp);
 
             if (_sigmaa_5_2_4p > _sigmaa_dp)
             {
@@ -747,7 +748,8 @@ namespace CalculateVessels.Core.HeatExchanger
                 _errorList.Add("Условие прочности крепления трубы в решетке не выполняется");
             }
 
-            _spp_5_5_1 = 0.5 * _hedi.DE * Math.Sqrt(_hedi.pp / _sigmaa_dp);
+            _pp = Math.Max(_hedi.pM, Math.Max(_hedi.pT, Math.Abs(_hedi.pM - _hedi.pT)));
+            _spp_5_5_1 = 0.5 * _hedi.DE * Math.Sqrt(_pp / _sigmaa_dp);
             _sp_5_5_1 = _spp_5_5_1 + _hedi.c;
 
             if (_sp_5_5_1 > _hedi.sp)
@@ -1722,7 +1724,14 @@ namespace CalculateVessels.Core.HeatExchanger
             body.AddParagraph("При наличии беструбной зоны принятая толщина трубной решетки должна дополнительно удовлетворять условию");
 
             body.AddParagraph("")
-                .AppendEquation($"s_p≥0.5∙D_E∙√(p_p/[σ]_p)+c=0.5∙{_hedi.DE}∙√({_pp}/{_sigma_dp})+{_hedi.c}={_sp_5_5_1:f2} мм");
+                .AppendEquation("s_p≥0.5∙D_E∙√(p_p/[σ]_p)+c");
+
+            body.AddParagraph("где ")
+                .AppendEquation($"p_p={_pp} МПа")
+                .AddRun(" - расчетное давление, действующее на решетку кожухотрубчатого теплообменного аппа­рата.Принимается равным максимально возможному перепаду давлений, действую­щих на решетку");
+
+            body.AddParagraph("")
+                .AppendEquation($"s_p=0.5∙{_hedi.DE}∙√({_pp}/{_sigma_dp})+{_hedi.c}={_sp_5_5_1:f2} мм");
 
             if (_sp_5_5_1 >= _hedi.sp)
             {
