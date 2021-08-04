@@ -10,8 +10,8 @@ namespace CalculateVessels.Core.HeatExchanger.Enums
     {
         WeldedInShell,
         SimplyFlange,
-        SimplyFlangeWithShell,
         FlangeWithFlanging,
+        SimplyFlangeWithShell,
         WeldedInFlange,
         BetweenFlange
     }

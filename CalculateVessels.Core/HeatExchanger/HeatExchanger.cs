@@ -148,6 +148,7 @@ namespace CalculateVessels.Core.HeatExchanger
         private double _sigmaa_dK;
         private double _sigmaa_dp;
         private double _sigmaa_dT;
+        private double _a;
         private double _sigmaaK;
         private double _sigmaaT;
         private double _sigmaIfi;
@@ -187,6 +188,13 @@ namespace CalculateVessels.Core.HeatExchanger
         private double _fper;
         private double _sper;
         private double _sigma_dper;
+        private double _ED2;
+        private double _E12;
+        private double _E22;
+        private double _sigma_dp2;
+        private double _Rmp2;
+        private double _AForSigmaap2;
+        private double _sigmaa_dp2;
 
         public bool IsCriticalError { get; private set; }
 
@@ -206,49 +214,50 @@ namespace CalculateVessels.Core.HeatExchanger
         {
             //TODO: Get phisycal parameters
             //ET
-            if (!Physical.TryGetE(_hedi.SteelT, _hedi.tT, ref _ET, ref _errorList))
+            if (!Physical.TryGetE(_hedi.SteelT, _hedi.TT, ref _ET, ref _errorList))
             {
                 IsCriticalError = true;
                 return;
             }
 
             //EK
-            if (!Physical.TryGetE(_hedi.SteelK, _hedi.tK, ref _EK, ref _errorList))
+            if (!Physical.TryGetE(_hedi.SteelK, _hedi.TK, ref _EK, ref _errorList))
             {
                 IsCriticalError = true;
                 return;
             }
 
             //ED
-            if (!Physical.TryGetE(_hedi.SteelD, _hedi.tT, ref _ED, ref _errorList))
+            if (!Physical.TryGetE(_hedi.FirstTubePlate.SteelD, _hedi.TT, ref _ED, ref _errorList))
             {
                 IsCriticalError = true;
                 return;
             }
 
-            //Ep
             if (_hedi.IsDifferentTubePlate)
             {
-                if (!Physical.TryGetE(_hedi.Steelp1, _hedi.tK, ref _Ep1, ref _errorList))
+                if (!Physical.TryGetE(_hedi.SecondTubePlate.SteelD, _hedi.TT, ref _ED2, ref _errorList))
                 {
                     IsCriticalError = true;
                     return;
                 }
+            }
 
-                if (!Physical.TryGetE(_hedi.Steelp2, _hedi.tK, ref _Ep2, ref _errorList))
-                {
-                    IsCriticalError = true;
-                    return;
-                }
-            }
-            else
+            //Ep
+            if (!Physical.TryGetE(_hedi.FirstTubePlate.Steelp, _hedi.TK, ref _Ep, ref _errorList))
             {
-                if (!Physical.TryGetE(_hedi.Steelp, _hedi.tK, ref _Ep, ref _errorList))
+                IsCriticalError = true;
+                return;
+            }
+            if (_hedi.IsDifferentTubePlate)
+            {
+                if (!Physical.TryGetE(_hedi.SecondTubePlate.Steelp, _hedi.TK, ref _Ep2, ref _errorList))
                 {
                     IsCriticalError = true;
                     return;
                 }
             }
+
 
             //TODO: Get E1 for condition if two different tube piate and flange not with tube plate
             //E1
@@ -258,24 +267,47 @@ namespace CalculateVessels.Core.HeatExchanger
             }
             else
             {
-                if (!Physical.TryGetE(_hedi.Steel1, _hedi.tK, ref _E1, ref _errorList))
+                if (!Physical.TryGetE(_hedi.FirstTubePlate.Steel1, _hedi.TK, ref _E1, ref _errorList))
+                {
+                    IsCriticalError = true;
+                    return;
+                }
+            }
+            if (_hedi.IsDifferentTubePlate)
+            {
+                if (true)
+                {
+                    _E12 = _Ep2;
+                }
+                else
+                {
+                    if (!Physical.TryGetE(_hedi.SecondTubePlate.Steel1, _hedi.TK, ref _E1, ref _errorList))
+                    {
+                        IsCriticalError = true;
+                        return;
+                    }
+                }
+            }
+
+            //E2         
+            if (!Physical.TryGetE(_hedi.FirstTubePlate.Steel2, _hedi.TK, ref _E2, ref _errorList))
+            {
+                IsCriticalError = true;
+                return;
+            }
+            if (_hedi.IsDifferentTubePlate)
+            {
+                if (!Physical.TryGetE(_hedi.SecondTubePlate.Steel2, _hedi.TK, ref _E22, ref _errorList))
                 {
                     IsCriticalError = true;
                     return;
                 }
             }
 
-            //E2         
-            if (!Physical.TryGetE(_hedi.Steel2, _hedi.tK, ref _E2, ref _errorList))
-            {
-                IsCriticalError = true;
-                return;
-            }
-
             //Ekom
             if (_hedi.IsNeedKcompensatorCalculate)
             {
-                if (!Physical.TryGetE(_hedi.Steelkom, _hedi.tK, ref _Ekom, ref _errorList))
+                if (!Physical.TryGetE(_hedi.Steelkom, _hedi.TK, ref _Ekom, ref _errorList))
                 {
                     IsCriticalError = true;
                     return;
@@ -283,44 +315,60 @@ namespace CalculateVessels.Core.HeatExchanger
             }
 
             //[]p
-            if (Physical.Gost34233_1.TryGetSigma(_hedi.Steelp, _hedi.tK, ref _sigma_dp, ref _errorList))
+            if (Physical.Gost34233_1.TryGetSigma(_hedi.FirstTubePlate.Steelp, _hedi.TK, ref _sigma_dp, ref _errorList))
             {
                 IsCriticalError = true;
                 return;
             }
+            if (_hedi.IsDifferentTubePlate)
+            {
+                if (Physical.Gost34233_1.TryGetSigma(_hedi.SecondTubePlate.Steelp, _hedi.TK, ref _sigma_dp2, ref _errorList))
+                {
+                    IsCriticalError = true;
+                    return;
+                }
+            }
 
             //[]K
-            if (Physical.Gost34233_1.TryGetSigma(_hedi.SteelK, _hedi.tK, ref _sigma_dK, ref _errorList))
+            if (Physical.Gost34233_1.TryGetSigma(_hedi.SteelK, _hedi.TK, ref _sigma_dK, ref _errorList))
             {
                 IsCriticalError = true;
                 return;
             }
 
             //[]T
-            if (Physical.Gost34233_1.TryGetSigma(_hedi.SteelT, _hedi.tT, ref _sigma_dT, ref _errorList))
+            if (Physical.Gost34233_1.TryGetSigma(_hedi.SteelT, _hedi.TT, ref _sigma_dT, ref _errorList))
             {
                 IsCriticalError = true;
                 return;
             }
 
-            //alfap
-            if (Physical.TryGetAlfa(_hedi.SteelK, _hedi.tK, ref _alfaK, ref _errorList))
+            //alfaK
+            if (Physical.TryGetAlfa(_hedi.SteelK, _hedi.TK, ref _alfaK, ref _errorList))
             {
                 IsCriticalError = true;
                 return;
             }
 
             //alfaT
-            if (Physical.TryGetAlfa(_hedi.SteelT, _hedi.tT, ref _alfaT, ref _errorList))
+            if (Physical.TryGetAlfa(_hedi.SteelT, _hedi.TT, ref _alfaT, ref _errorList))
             {
                 IsCriticalError = true;
                 return;
             }
 
-            if (Physical.Gost34233_1.TryGetRm(_hedi.Steelp, _hedi.tK, ref _Rmp, ref _errorList))
+            if (Physical.Gost34233_1.TryGetRm(_hedi.FirstTubePlate.Steelp, _hedi.TK, ref _Rmp, ref _errorList))
             {
                 IsCriticalError = true;
                 return;
+            }
+            if (_hedi.IsDifferentTubePlate)
+            {
+                if (Physical.Gost34233_1.TryGetRm(_hedi.SecondTubePlate.Steelp, _hedi.TK, ref _Rmp2, ref _errorList))
+                {
+                    IsCriticalError = true;
+                    return;
+                }
             }
 
             //TODO: sigmaa for different matireals Al,Cu, Tt
@@ -328,13 +376,20 @@ namespace CalculateVessels.Core.HeatExchanger
             _nNForSigmaa = 10.0;
             _nsigmaForSigmaa = 2.0;
 
-            _CtForSigmaa = (2300.0 - _hedi.tp) / 2300.0;
+            _CtForSigmaa = (2300.0 - _hedi.TK) / 2300.0;
 
-            _AForSigmaap = (Physical.Gost34233_1.GetSteelType(_hedi.Steelp, ref _errorList) is (SteelType.Carbon or SteelType.Austenitic) and not SteelType.Undefined) ? 60000.0 : 45000.0;
+            _AForSigmaap = (Physical.Gost34233_1.GetSteelType(_hedi.FirstTubePlate.Steelp, ref _errorList) is (SteelType.Carbon or SteelType.Austenitic) and not SteelType.Undefined) ? 60000.0 : 45000.0;
 
             _BForSigmaa = 0.4 * _Rmp;
 
             _sigmaa_dp = (_CtForSigmaa * _AForSigmaap / Math.Sqrt(_nNForSigmaa * _hedi.N)) + (_BForSigmaa / _nsigmaForSigmaa);
+
+            if (_hedi.IsDifferentTubePlate)
+            {
+                _AForSigmaap2 = (Physical.Gost34233_1.GetSteelType(_hedi.FirstTubePlate.Steelp, ref _errorList) is (SteelType.Carbon or SteelType.Austenitic) and not SteelType.Undefined) ? 60000.0 : 45000.0;
+
+                _sigmaa_dp2 = (_CtForSigmaa * _AForSigmaap2 / Math.Sqrt(_nNForSigmaa * _hedi.N)) + (_BForSigmaa / _nsigmaForSigmaa);
+            }
 
             _AForSigmaaK = (Physical.Gost34233_1.GetSteelType(_hedi.SteelK, ref _errorList) is (SteelType.Carbon or SteelType.Austenitic) and not SteelType.Undefined) ? 60000.0 : 45000.0;
             _sigmaa_dK = (_CtForSigmaa * _AForSigmaaK / Math.Sqrt(_nNForSigmaa * _hedi.N)) + (_BForSigmaa / _nsigmaForSigmaa);
@@ -342,7 +397,9 @@ namespace CalculateVessels.Core.HeatExchanger
             _AForSigmaaT = (Physical.Gost34233_1.GetSteelType(_hedi.SteelT, ref _errorList) is (SteelType.Carbon or SteelType.Austenitic) and not SteelType.Undefined) ? 60000.0 : 45000.0;
             _sigmaa_dT = (_CtForSigmaa * _AForSigmaaT / Math.Sqrt(_nNForSigmaa * _hedi.N)) + (_BForSigmaa / _nsigmaForSigmaa);
 
-            _mn = _hedi.a / _hedi.a1;
+            _a = _hedi.D / 2.0; 
+
+            _mn = _a / _hedi.a1;
             _etaM = 1 - (_hedi.i * Math.Pow(_hedi.dT, 2) / (4 * Math.Pow(_hedi.a1, 2)));
             _etaT = 1 - (_hedi.i * Math.Pow(_hedi.dT - (2 * _hedi.sT), 2) / (4 * Math.Pow(_hedi.a1, 2)));
 
@@ -372,9 +429,9 @@ namespace CalculateVessels.Core.HeatExchanger
                         _Kkom = _hedi.Kkom;
                     }
 
-                    _Kqz = Math.PI * _hedi.a * _EK * _hedi.sK / (_hedi.l * _Kkom);
+                    _Kqz = Math.PI * _a * _EK * _hedi.sK / (_hedi.l * _Kkom);
                     _Kpz = Math.PI * (Math.Pow(_hedi.Dkom, 2) - Math.Pow(_hedi.dkom, 2)) * _EK * _hedi.sK /
-                        (4.8 * _hedi.l * _hedi.a * _Kkom);
+                        (4.8 * _hedi.l * _a * _Kkom);
                     break;
                 case CompensatorType.Expander:
 
@@ -389,9 +446,9 @@ namespace CalculateVessels.Core.HeatExchanger
                             (1 - 5.0 / 2.0 * (1 - _betap) + 61.0 / 30.0 * Math.Pow(1 - _betap, 2) -
                             11.0 / 20.0 * Math.Pow(1 - _betap, 3));
                         _Kpac = _EK * Math.Pow(_hedi.deltap, 3) * _Ap / Math.Pow(_hedi.D, 2);
-                        _Kqz = _hedi.a * _hedi.sK / _hedi.l *
+                        _Kqz = _a * _hedi.sK / _hedi.l *
                             ((Math.PI * _EK / _Kpac) + (_hedi.Lpac / (_hedi.deltap * _hedi.D1)));
-                        _Kpz = _hedi.a * _hedi.sK / (_hedi.l * Math.Pow(_betap, 2)) *
+                        _Kpz = _a * _hedi.sK / (_hedi.l * Math.Pow(_betap, 2)) *
                             (((1 - Math.Pow(_betap, 2)) / 4.8 * ((Math.PI * _EK / _Kpac) + (_hedi.Lpac / (_hedi.deltap * _hedi.D1)))) - (0.5 * Math.PI * _hedi.Lpac / (_hedi.deltap * _hedi.D1)));
                     }
                     else if (_hedi.beta0 >= 15 && _hedi.beta0 <= 60)
@@ -411,9 +468,9 @@ namespace CalculateVessels.Core.HeatExchanger
                         _Bp2 = 0.965 * Math.Pow(Math.Sin(DegToRad(_hedi.beta0)), 2) /
                             Math.Pow(Math.Cos(DegToRad(_hedi.beta0)), 3.0 / 2.0 *
                             ((1.0 / Math.Pow(_betap, 2)) - 1));
-                        _Kqz = ((_hedi.a * (_Ap1 + (_Ap2 * Math.Sqrt(_hedi.D1 / _hedi.sK)))) -
+                        _Kqz = ((_a * (_Ap1 + (_Ap2 * Math.Sqrt(_hedi.D1 / _hedi.sK)))) -
                             (0.5 * (1 - _betap) * _hedi.Lpac)) / _hedi.l;
-                        _Kpz = (_Bp1 + (_Bp2 * Math.Sqrt(_hedi.D1 / _hedi.sK))) * _hedi.a / _hedi.l;
+                        _Kpz = (_Bp1 + (_Bp2 * Math.Sqrt(_hedi.D1 / _hedi.sK))) * _a / _hedi.l;
                     }
                     break;
                 case CompensatorType.CompensatorOnExpander:
@@ -427,9 +484,9 @@ namespace CalculateVessels.Core.HeatExchanger
             _psi0 = Math.Pow(_etaT, 7.0 / 3.0);
 
             _beta = _hedi.IsDifferentTubePlate
-                ? 1.53 * Math.Pow((_Ky / _psi0) * ((1 / (_Ep1 * Math.Pow(_hedi.sp1, 3))) +
+                ? 1.53 * Math.Pow((_Ky / _psi0) * ((1 / (_Ep * Math.Pow(_hedi.sp1, 3))) +
                 (1 / (_Ep2 * Math.Pow(_hedi.sp2, 3)))), 1.0 / 4.0)
-                : 1.82 / _hedi.sp * Math.Pow(_Ky * _hedi.sp / (_psi0 * _Ep), 1.0 / 4.0);
+                : 1.82 / _hedi.FirstTubePlate.sp * Math.Pow(_Ky * _hedi.FirstTubePlate.sp / (_psi0 * _Ep), 1.0 / 4.0);
 
             _omega = _beta * _hedi.a1;
 
@@ -442,14 +499,14 @@ namespace CalculateVessels.Core.HeatExchanger
 
             //UNDONE: Check calculation for _b2, _R2 fo different tube plate
 
-            _beta1 = 1.3 / Math.Pow(_hedi.a * _hedi.s1, 0.5);
-            _beta2 = 1.3 / Math.Pow(_hedi.a * _hedi.s2, 0.5);
-            _K1 = _beta1 * _hedi.a * _EK * Math.Pow(_hedi.s1, 3) / (5.5 * _R1);
-            _K2 = _beta2 * _hedi.a * _ED * Math.Pow(_hedi.s2, 3) / (5.5 * _R2);
-            _KF1 = (_E1 * Math.Pow(_hedi.h1, 3) * _b1 / (12.0 * Math.Pow(_R1, 2))) +
-                (_K1 * (1.0 + (_beta1 * _hedi.h1 / 2.0)));
-            _KF2 = (_E2 * Math.Pow(_hedi.h2, 3) * _b2 / (12.0 * Math.Pow(_R2, 2))) +
-                (_K2 * (1.0 + (_beta2 * _hedi.h2 / 2.0)));
+            _beta1 = 1.3 / Math.Pow(_a * _hedi.FirstTubePlate.s1, 0.5);
+            _beta2 = 1.3 / Math.Pow(_a * _hedi.FirstTubePlate.s2, 0.5);
+            _K1 = _beta1 * _a * _EK * Math.Pow(_hedi.FirstTubePlate.s1, 3) / (5.5 * _R1);
+            _K2 = _beta2 * _a * _ED * Math.Pow(_hedi.FirstTubePlate.s2, 3) / (5.5 * _R2);
+            _KF1 = (_E1 * Math.Pow(_hedi.FirstTubePlate.h1, 3) * _b1 / (12.0 * Math.Pow(_R1, 2))) +
+                (_K1 * (1.0 + (_beta1 * _hedi.FirstTubePlate.h1 / 2.0)));
+            _KF2 = (_E2 * Math.Pow(_hedi.FirstTubePlate.h2, 3) * _b2 / (12.0 * Math.Pow(_R2, 2))) +
+                (_K2 * (1.0 + (_beta2 * _hedi.FirstTubePlate.h2 / 2.0)));
             _KF = _KF1 + _KF2;
 
             _mcp = 0.15 * _hedi.i * Math.Pow(_hedi.dT - _hedi.sT, 2) / Math.Pow(_hedi.a1, 2);
@@ -458,7 +515,7 @@ namespace CalculateVessels.Core.HeatExchanger
                 ((_etaT - 1.0 + _mcp + (_mn * (_mn + (0.5 * _ro * _Kq)))) * _hedi.pT) -
                 ((_etaM - 1.0 + _mcp + (_mn * (_mn + (0.3 * _ro * _Kp)))) * _hedi.pM);
 
-            _ro1 = _Ky * _hedi.a * _hedi.a1 / (Math.Pow(_beta, 2) * _KF * _R1);
+            _ro1 = _Ky * _a * _hedi.a1 / (Math.Pow(_beta, 2) * _KF * _R1);
 
             if (!Physical.Gost34233_7.TryGetPhi1Phi2Phi3(_omega, ref _Phi1, ref _Phi2, ref _Phi3, ref _errorList))
             {
@@ -479,8 +536,8 @@ namespace CalculateVessels.Core.HeatExchanger
             //    return;
             //}
 
-            _m1 = (1 + (_beta1 * _hedi.h1)) / (2 * Math.Pow(_beta1, 2));
-            _m2 = (1 + (_beta2 * _hedi.h2)) / (2 * Math.Pow(_beta2, 2));
+            _m1 = (1 + (_beta1 * _hedi.FirstTubePlate.h1)) / (2 * Math.Pow(_beta1, 2));
+            _m2 = (1 + (_beta2 * _hedi.FirstTubePlate.h2)) / (2 * Math.Pow(_beta2, 2));
             _p1 = _Ky / (_beta * _KF) * ((_m1 * _hedi.pM) - (_m2 * _hedi.pT));
 
             _MP = _hedi.a1 / _beta * ((_p1 * (_T1 + (_ro * _Kq))) - (_p0 * _T2)) /
@@ -489,7 +546,7 @@ namespace CalculateVessels.Core.HeatExchanger
             _QP = _hedi.a1 * ((_p0 * (_T3 + _ro1)) - (_p1 * _T2)) /
                 (((_T1 + (_ro * _Kq)) * (_T3 + _ro1)) - Math.Pow(_T2, 2));
 
-            _Ma = _MP + ((_hedi.a - _hedi.a1) * _QP);
+            _Ma = _MP + ((_a - _hedi.a1) * _QP);
             _Qa = _mn * _QP;
 
             _NT = Math.PI * _hedi.a1 / _hedi.i * ((((_etaM * _hedi.pM) - (_etaT * _hedi.pT)) * _hedi.a1) +
@@ -499,7 +556,7 @@ namespace CalculateVessels.Core.HeatExchanger
             _MT = _ET * _JT * _beta / (_Ky * _hedi.a1 * _lpr) *
                 ((_Phi2 * _Qa) + (_Phi3 * _beta * _Ma));
 
-            _QK = (_hedi.a / 2.0 * _hedi.pT) - _QP;
+            _QK = (_a / 2.0 * _hedi.pT) - _QP;
             _MK = (_K1 / (_ro1 * _KF * _beta) * ((_T2 * _QP) + (_T3 * _beta * _MP))) -
                 (_hedi.pM / (2 * Math.Pow(_beta1, 2)));
 
@@ -531,15 +588,17 @@ namespace CalculateVessels.Core.HeatExchanger
                 _Mmax = _B * Math.Abs(_Ma);
             }
 
+            
+
             _pfip = 1 - (_hedi.d0 / _hedi.tp);
 
-            _sigmap2 = 6 * _Mmax / _pfip * Math.Pow(_hedi.sp - _hedi.c, 2);
-            _taup2 = Math.Abs(_Qa) / _pfip * (_hedi.sp - _hedi.c);
+            _sigmap2 = 6 * _Mmax / _pfip * Math.Pow(_hedi.FirstTubePlate.sp - _hedi.c, 2);
+            _taup2 = Math.Abs(_Qa) / _pfip * (_hedi.FirstTubePlate.sp - _hedi.c);
 
-            _sigmaMX = Math.Abs(_QK) / (_hedi.s1 - _hedi.cK);
-            _sigmaIX = 6 * Math.Abs(_MK) / Math.Pow(_hedi.s1 - _hedi.cK, 2);
+            _sigmaMX = Math.Abs(_QK) / (_hedi.FirstTubePlate.s1 - _hedi.cK);
+            _sigmaIX = 6 * Math.Abs(_MK) / Math.Pow(_hedi.FirstTubePlate.s1 - _hedi.cK, 2);
 
-            _sigmaMfi = Math.Abs(_hedi.pM) * _hedi.a / (_hedi.s1 - _hedi.cK);
+            _sigmaMfi = Math.Abs(_hedi.pM) * _a / (_hedi.FirstTubePlate.s1 - _hedi.cK);
             _sigmaIfi = 0.3 * _sigmaIX;
 
             _sigma1T = Math.Abs(_NT) / (Math.PI * (_hedi.dT - _hedi.sT) * _hedi.sT);
@@ -581,9 +640,9 @@ namespace CalculateVessels.Core.HeatExchanger
 
             if (!_hedi.IsOneGo)
             {
-                _spp = (_hedi.sp - _hedi.c) * _sigma_dp / _sigmaa_dp;
+                _spp = (_hedi.FirstTubePlate.sp - _hedi.c) * _sigma_dp / _sigmaa_dp;
                 _sp = _spp + _hedi.c;
-                if (_sp > _hedi.sp)
+                if (_sp > _hedi.FirstTubePlate.sp)
                 {
                     IsError = true;
                     _errorList.Add("Толщина трубной решетки меньше расчетной");
@@ -591,7 +650,7 @@ namespace CalculateVessels.Core.HeatExchanger
 
                 _snp1 = 1 - Math.Sqrt(_hedi.d0 / _hedi.BP * (_hedi.tP / _hedi.tp - 1.0));
                 _snp2 = Math.Sqrt(_fip);
-                _snp = (_hedi.sp - _hedi.c) * Math.Max(_snp1, _snp2);
+                _snp = (_hedi.FirstTubePlate.sp - _hedi.c) * Math.Max(_snp1, _snp2);
                 _sn = _snp + _hedi.c;
 
                 if (_sn > _hedi.sn)
@@ -752,7 +811,7 @@ namespace CalculateVessels.Core.HeatExchanger
             _spp_5_5_1 = 0.5 * _hedi.DE * Math.Sqrt(_pp / _sigmaa_dp);
             _sp_5_5_1 = _spp_5_5_1 + _hedi.c;
 
-            if (_sp_5_5_1 > _hedi.sp)
+            if (_sp_5_5_1 > _hedi.FirstTubePlate.sp)
             {
                 IsError = true;
                 _errorList.Add("Толщина трубной решетки меньше расчетной");
@@ -976,7 +1035,7 @@ namespace CalculateVessels.Core.HeatExchanger
             body.AddParagraph("Относительную характеристику беструбного края трубной решетки вычисляют по формуле");
 
             body.AddParagraph("")
-                .AppendEquation($"m_n=a/a_1={_hedi.a}/{_hedi.a1}={_mn:f2}");
+                .AppendEquation($"m_n=a/a_1={_a}/{_hedi.a1}={_mn:f2}");
 
             body.AddParagraph("Коэффициенты влияния давления на трубную решетку вычисляют по формулам:");
             body.AddParagraph("- со стороны межтрубного пространства");
@@ -1052,13 +1111,13 @@ namespace CalculateVessels.Core.HeatExchanger
             if (!_hedi.IsDifferentTubePlate)
             {
                 body.AddParagraph("")
-                    .AppendEquation($"β=1.82/s_p∙∜((K_y∙s_p)/(ψ_0∙E_p))=1.82/{_hedi.sp}∙∜(({_Ky:f2}∙{_hedi.sp})/({_psi0:f2}∙{_Ep}))={_beta:f2}");
+                    .AppendEquation($"β=1.82/s_p∙∜((K_y∙s_p)/(ψ_0∙E_p))=1.82/{_hedi.FirstTubePlate.sp}∙∜(({_Ky:f2}∙{_hedi.FirstTubePlate.sp})/({_psi0:f2}∙{_Ep}))={_beta:f2}");
             }
             else
             {
                 body.AddParagraph("")
                     .AppendEquation($"β=1.53∙∜(K_y/ψ_0∙(1/(E_p1∙s_p1^3)+1/(E_p2∙s_p2^3))" +
-                    $"=1.53∙∜({_Ky:f2}/{_psi0:f2}∙(1/({_Ep1}∙{_hedi.sp1}^3)+1/({_Ep2}∙{_hedi.sp2}^3))={_beta:f2}");
+                    $"=1.53∙∜({_Ky:f2}/{_psi0:f2}∙(1/({_Ep}∙{_hedi.sp1}^3)+1/({_Ep2}∙{_hedi.sp2}^3))={_beta:f2}");
             }
 
             body.AddParagraph("Безразмерный параметр системы решетка — трубы вычисляют по формуле");
@@ -1067,11 +1126,11 @@ namespace CalculateVessels.Core.HeatExchanger
 
             body.AddParagraph("Коэффициент системы кожух — решетка");
             body.AddParagraph("")
-                .AppendEquation($"β_1=1.3/√(a∙s_1)=1.3/√({_hedi.a}∙{_hedi.s1})={_beta1:f2}");
+                .AppendEquation($"β_1=1.3/√(a∙s_1)=1.3/√({_a}∙{_hedi.FirstTubePlate.s1})={_beta1:f2}");
 
             body.AddParagraph("Коэффициент системы обечайка — фланец камеры");
             body.AddParagraph("")
-                .AppendEquation($"β_2=1.3/√(a∙s_2)=1.3/√({_hedi.a}∙{_hedi.s2})={_beta2:f2}");
+                .AppendEquation($"β_2=1.3/√(a∙s_2)=1.3/√({_a}∙{_hedi.FirstTubePlate.s2})={_beta2:f2}");
 
             body.AddParagraph("Коэффициент жесткости фланцевого соединения при изгибе");
             body.AddParagraph("")
@@ -1081,19 +1140,19 @@ namespace CalculateVessels.Core.HeatExchanger
                 .AppendEquation("K_Φ1=(E_1∙h_1^3∙b_1)/(12∙R_1^2)+K_1∙(1+(β_1∙h_1)/2)");
 
             body.AddParagraph("")
-                .AppendEquation($"K_1=(β_1∙a∙E_K∙s_1^3)/(5.5∙R_1)=({_beta1:f2}∙{_hedi.a}∙{_EK}∙{_hedi.s1}^3)/(5.5∙{_R1:f2})={_K1:f2}");
+                .AppendEquation($"K_1=(β_1∙a∙E_K∙s_1^3)/(5.5∙R_1)=({_beta1:f2}∙{_a}∙{_EK}∙{_hedi.FirstTubePlate.s1}^3)/(5.5∙{_R1:f2})={_K1:f2}");
 
             body.AddParagraph("")
-                .AppendEquation($"K_Φ1=({_E1}∙{_hedi.h1}^3∙{_b1:f2})/(12∙{_R1:f2}^2)+{_K1:f2}∙(1+({_beta1:f2}∙{_hedi.h1:f2})/2)={_KF1:f2}");
+                .AppendEquation($"K_Φ1=({_E1}∙{_hedi.FirstTubePlate.h1}^3∙{_b1:f2})/(12∙{_R1:f2}^2)+{_K1:f2}∙(1+({_beta1:f2}∙{_hedi.FirstTubePlate.h1:f2})/2)={_KF1:f2}");
 
             body.AddParagraph("")
                 .AppendEquation("K_Φ2=(E_2∙h_2^3∙b_2)/(12∙R_2^2)+K_2∙(1+(β_2∙h_2)/2)");
 
             body.AddParagraph("")
-                .AppendEquation($"K_2=(β_2∙a∙E_D∙s_2^3)/(5.5∙R_2)=({_beta2:f2}∙{_hedi.a}∙{_ED}∙{_hedi.s2}^3)/(5.5∙{_R2:f2})={_K2:f2}");
+                .AppendEquation($"K_2=(β_2∙a∙E_D∙s_2^3)/(5.5∙R_2)=({_beta2:f2}∙{_a}∙{_ED}∙{_hedi.FirstTubePlate.s2}^3)/(5.5∙{_R2:f2})={_K2:f2}");
 
             body.AddParagraph("")
-                .AppendEquation($"K_Φ1=({_E2}∙{_hedi.h2}^3∙{_b2:f2})/(12∙{_R2:f2}^2)+{_K2:f2}∙(1+({_beta2:f2}∙{_hedi.h2:f2})/2)={_KF2:f2}");
+                .AppendEquation($"K_Φ1=({_E2}∙{_hedi.FirstTubePlate.h2}^3∙{_b2:f2})/(12∙{_R2:f2}^2)+{_K2:f2}∙(1+({_beta2:f2}∙{_hedi.FirstTubePlate.h2:f2})/2)={_KF2:f2}");
 
             body.AddParagraph("")
                 .AppendEquation($"K_Φ={_KF1:f2}+{_KF2:f2}={_KF:f2}");
@@ -1120,7 +1179,7 @@ namespace CalculateVessels.Core.HeatExchanger
             body.AddParagraph("Приведенное отношение жесткости труб к жесткости фланцевого соединения вычисляют по формуле");
 
             body.AddParagraph("")
-                .AppendEquation($"ρ_1=(K_y∙a∙a_1)/(β_2∙K_Φ∙R_1)=({_Ky:f2}∙{_hedi.a}∙{_hedi.a1})/({_beta2:f2}∙{_KF:f2}∙{_R1:f2})={_ro1:f2}");
+                .AppendEquation($"ρ_1=(K_y∙a∙a_1)/(β_2∙K_Φ∙R_1)=({_Ky:f2}∙{_a}∙{_hedi.a1})/({_beta2:f2}∙{_KF:f2}∙{_R1:f2})={_ro1:f2}");
 
             body.AddParagraph("Коэффициенты, учитывающие поддерживающее влияние труб ")
                 .AppendEquation($"Φ_1={_Phi1}, Φ_2={_Phi2}, Φ_3={_Phi3}")
@@ -1160,10 +1219,10 @@ namespace CalculateVessels.Core.HeatExchanger
                 .AppendEquation("p_1=K_y/(β∙K_Φ)∙(m_1∙p_M-m_2∙p_T)");
 
             body.AddParagraph("")
-                .AppendEquation($"m_1=(1-β_1∙h_1)/(2∙β_1^2)=(1-{_beta1:f2}∙{_hedi.h1})/(2∙{_beta1:f2}^2)={_m1:f2}");
+                .AppendEquation($"m_1=(1-β_1∙h_1)/(2∙β_1^2)=(1-{_beta1:f2}∙{_hedi.FirstTubePlate.h1})/(2∙{_beta1:f2}^2)={_m1:f2}");
 
             body.AddParagraph("")
-                .AppendEquation($"m_2=(1-β_2∙h_2)/(2∙β_2^2)=(1-{_beta2:f2}∙{_hedi.h2})/(2∙{_beta2:f2}^2)={_m2:f2}");
+                .AppendEquation($"m_2=(1-β_2∙h_2)/(2∙β_2^2)=(1-{_beta2:f2}∙{_hedi.FirstTubePlate.h2})/(2∙{_beta2:f2}^2)={_m2:f2}");
 
             body.AddParagraph("")
                 .AppendEquation($"p_1={_Ky:f2}/({_beta:f2}∙{_KF:f2})∙({_m1:f2}∙{_hedi.pM}-{_m2:f2}∙{_hedi.pT})={_p1:f2}");
@@ -1177,7 +1236,7 @@ namespace CalculateVessels.Core.HeatExchanger
             body.AddParagraph("Изгибающий момент и перерезывающие силы, распределенные по периметру перфорированной зоны решетки, вычисляют по формулам:");
             body.AddParagraph("- для изгибающего момента");
             body.AddParagraph("")
-                .AppendEquation($"M_a=M_Π+(a-a_1)∙Q_Π={_MP:f2}+({_hedi.a}-{_hedi.a1})={_Ma:f2} (Н∙мм)/мм");
+                .AppendEquation($"M_a=M_Π+(a-a_1)∙Q_Π={_MP:f2}+({_a}-{_hedi.a1})={_Ma:f2} (Н∙мм)/мм");
 
             body.AddParagraph("- для перерезывающей силы");
             body.AddParagraph("")
@@ -1223,7 +1282,7 @@ namespace CalculateVessels.Core.HeatExchanger
 
             body.AddParagraph("- усилие, распределенное по периметру кожуха");
             body.AddParagraph("")
-                .AppendEquation($"Q_K=a/2∙p_T-Q_Π={_hedi.a}/2∙{_hedi.pT}-{_QP:f2}={_QK:f2} H");
+                .AppendEquation($"Q_K=a/2∙p_T-Q_Π={_a}/2∙{_hedi.pT}-{_QP:f2}={_QK:f2} H");
 
             body.AddParagraph("- изгибающий момент, распределенный по периметру кожуха");
             body.AddParagraph("")
@@ -1335,17 +1394,17 @@ namespace CalculateVessels.Core.HeatExchanger
 
             body.AddParagraph("мембранные");
             body.AddParagraph("")
-                .AppendEquation($"σ_MX=|Q_K|/(s_1-c_K)=|{_QK:f2}|/({_hedi.s1}-{_hedi.cK})={_sigmaMX:f2} МПа");
+                .AppendEquation($"σ_MX=|Q_K|/(s_1-c_K)=|{_QK:f2}|/({_hedi.FirstTubePlate.s1}-{_hedi.cK})={_sigmaMX:f2} МПа");
 
             body.AddParagraph("изгибные");
             body.AddParagraph("")
-                .AppendEquation($"σ_ИX=(6∙|M_K|)/(s_1-c_K)^2=(6∙|{_MK:f2}|)/({_hedi.s1}-{_hedi.cK})^2={_sigmaIX:f2} МПа");
+                .AppendEquation($"σ_ИX=(6∙|M_K|)/(s_1-c_K)^2=(6∙|{_MK:f2}|)/({_hedi.FirstTubePlate.s1}-{_hedi.cK})^2={_sigmaIX:f2} МПа");
 
             body.AddParagraph("- в окружном направлении:");
 
             body.AddParagraph("мембранные");
             body.AddParagraph("")
-                .AppendEquation($"σ_Mφ=(|p_M|∙a)/(s_1-c_K)=(|{_hedi.pM}|∙{_hedi.a})/({_hedi.s1}-{_hedi.cK})={_sigmaMfi:f2} МПа");
+                .AppendEquation($"σ_Mφ=(|p_M|∙a)/(s_1-c_K)=(|{_hedi.pM}|∙{_a})/({_hedi.FirstTubePlate.s1}-{_hedi.cK})={_sigmaMfi:f2} МПа");
 
             body.AddParagraph("изгибные");
             body.AddParagraph("")
@@ -1423,7 +1482,7 @@ namespace CalculateVessels.Core.HeatExchanger
 
 
                 body.AddParagraph("")
-                    .AppendEquation($"s_n=({_hedi.sp}-{_hedi.c})∙max{{{_snp1:f2};{_snp2:f2}}}+{_hedi.c}={_sn:f2} мм");
+                    .AppendEquation($"s_n=({_hedi.FirstTubePlate.sp}-{_hedi.c})∙max{{{_snp1:f2};{_snp2:f2}}}+{_hedi.c}={_sn:f2} мм");
 
                 if (_sn >= _hedi.sn)
                 {
@@ -1733,18 +1792,18 @@ namespace CalculateVessels.Core.HeatExchanger
             body.AddParagraph("")
                 .AppendEquation($"s_p=0.5∙{_hedi.DE}∙√({_pp}/{_sigma_dp})+{_hedi.c}={_sp_5_5_1:f2} мм");
 
-            if (_sp_5_5_1 >= _hedi.sp)
+            if (_sp_5_5_1 >= _hedi.FirstTubePlate.sp)
             {
                 body.AddParagraph("Принятая толщина ")
                     .Bold()
-                    .AppendEquation($"s_p={_hedi.sp} мм");
+                    .AppendEquation($"s_p={_hedi.FirstTubePlate.sp} мм");
             }
             else
             {
                 body.AddParagraph("Принятая толщина ")
                     .Bold()
                     .Color(System.Drawing.Color.Red)
-                    .AppendEquation($"s_p={_hedi.sp} мм");
+                    .AppendEquation($"s_p={_hedi.FirstTubePlate.sp} мм");
             }
 
 

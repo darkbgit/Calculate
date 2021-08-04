@@ -187,13 +187,13 @@
   <data name="ConeVert" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\pic\Nozzle\ConeVert.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="ConnToCase1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="ConnToFlange0" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ConnToCase1.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="ConnToCase1Dim" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="ConnToFlange0Dim" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ConnToCase1Dim.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="ConnToCase1_offset" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="ConnToFlange0_offset" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ConnToCase1 offset.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="ConnToFlange1" type="System.Resources.ResXFileRef, System.Windows.Forms">

@@ -293,9 +293,9 @@ namespace CalculateVessels.Data.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        public static byte[] ConnToCase1 {
+        public static byte[] ConnToFlange0 {
             get {
-                object obj = ResourceManager.GetObject("ConnToCase1", resourceCulture);
+                object obj = ResourceManager.GetObject("ConnToFlange0", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -303,9 +303,9 @@ namespace CalculateVessels.Data.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        public static byte[] ConnToCase1_offset {
+        public static byte[] ConnToFlange0_offset {
             get {
-                object obj = ResourceManager.GetObject("ConnToCase1_offset", resourceCulture);
+                object obj = ResourceManager.GetObject("ConnToFlange0_offset", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -313,9 +313,9 @@ namespace CalculateVessels.Data.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        public static byte[] ConnToCase1Dim {
+        public static byte[] ConnToFlange0Dim {
             get {
-                object obj = ResourceManager.GetObject("ConnToCase1Dim", resourceCulture);
+                object obj = ResourceManager.GetObject("ConnToFlange0Dim", resourceCulture);
                 return ((byte[])(obj));
             }
         }
