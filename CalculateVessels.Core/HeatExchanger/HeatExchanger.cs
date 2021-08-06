@@ -484,8 +484,8 @@ namespace CalculateVessels.Core.HeatExchanger
             _psi0 = Math.Pow(_etaT, 7.0 / 3.0);
 
             _beta = _hedi.IsDifferentTubePlate
-                ? 1.53 * Math.Pow((_Ky / _psi0) * ((1 / (_Ep * Math.Pow(_hedi.sp1, 3))) +
-                (1 / (_Ep2 * Math.Pow(_hedi.sp2, 3)))), 1.0 / 4.0)
+                ? 1.53 * Math.Pow((_Ky / _psi0) * ((1 / (_Ep * Math.Pow(_hedi.FirstTubePlate.sp, 3))) +
+                (1 / (_Ep2 * Math.Pow(_hedi.SecondTubePlate.sp, 3)))), 1.0 / 4.0)
                 : 1.82 / _hedi.FirstTubePlate.sp * Math.Pow(_Ky * _hedi.FirstTubePlate.sp / (_psi0 * _Ep), 1.0 / 4.0);
 
             _omega = _beta * _hedi.a1;
@@ -562,8 +562,8 @@ namespace CalculateVessels.Core.HeatExchanger
 
             _F = Math.PI * _hedi.D * _QK;
 
-            _sigmap1 = 6 * Math.Abs(_MP) / Math.Pow(_hedi.s1p - _hedi.c, 2);
-            _taup1 = Math.Abs(_QP) / (_hedi.s1p - _hedi.c);
+            _sigmap1 = 6 * Math.Abs(_MP) / Math.Pow(_hedi.FirstTubePlate.s1p - _hedi.FirstTubePlate.c, 2);
+            _taup1 = Math.Abs(_QP) / (_hedi.FirstTubePlate.s1p - _hedi.FirstTubePlate.c);
 
 
             _mA = _beta * _Ma / _Qa;
@@ -592,8 +592,8 @@ namespace CalculateVessels.Core.HeatExchanger
 
             _pfip = 1 - (_hedi.d0 / _hedi.tp);
 
-            _sigmap2 = 6 * _Mmax / _pfip * Math.Pow(_hedi.FirstTubePlate.sp - _hedi.c, 2);
-            _taup2 = Math.Abs(_Qa) / _pfip * (_hedi.FirstTubePlate.sp - _hedi.c);
+            _sigmap2 = 6 * _Mmax / _pfip * Math.Pow(_hedi.FirstTubePlate.sp - _hedi.FirstTubePlate.c, 2);
+            _taup2 = Math.Abs(_Qa) / _pfip * (_hedi.FirstTubePlate.sp - _hedi.FirstTubePlate.c);
 
             _sigmaMX = Math.Abs(_QK) / (_hedi.FirstTubePlate.s1 - _hedi.cK);
             _sigmaIX = 6 * Math.Abs(_MK) / Math.Pow(_hedi.FirstTubePlate.s1 - _hedi.cK, 2);
@@ -640,27 +640,27 @@ namespace CalculateVessels.Core.HeatExchanger
 
             if (!_hedi.IsOneGo)
             {
-                _spp = (_hedi.FirstTubePlate.sp - _hedi.c) * _sigma_dp / _sigmaa_dp;
-                _sp = _spp + _hedi.c;
+                _spp = (_hedi.FirstTubePlate.sp - _hedi.FirstTubePlate.c) * _sigma_dp / _sigmaa_dp;
+                _sp = _spp + _hedi.FirstTubePlate.c;
                 if (_sp > _hedi.FirstTubePlate.sp)
                 {
                     IsError = true;
                     _errorList.Add("Толщина трубной решетки меньше расчетной");
                 }
 
-                _snp1 = 1 - Math.Sqrt(_hedi.d0 / _hedi.BP * (_hedi.tP / _hedi.tp - 1.0));
+                _snp1 = 1 - Math.Sqrt(_hedi.d0 / _hedi.FirstTubePlate.BP * (_hedi.tP / _hedi.tp - 1.0));
                 _snp2 = Math.Sqrt(_fip);
-                _snp = (_hedi.FirstTubePlate.sp - _hedi.c) * Math.Max(_snp1, _snp2);
-                _sn = _snp + _hedi.c;
+                _snp = (_hedi.FirstTubePlate.sp - _hedi.FirstTubePlate.c) * Math.Max(_snp1, _snp2);
+                _sn = _snp + _hedi.FirstTubePlate.c;
 
-                if (_sn > _hedi.sn)
+                if (_sn > _hedi.FirstTubePlate.sn)
                 {
                     IsError = true;
                     _errorList.Add("Толщина трубной решетки в месте паза под перегородку меньше расчетной");
                 }
             }
 
-            if (_hedi.IsNeedCheckHardnessTubePlate)
+            if (_hedi.FirstTubePlate.IsNeedCheckHardnessTubePlate)
             {
                 _W = 1.2 / (_Ky * _hedi.a1) * Math.Abs((_T1 * _QP) + (_T2 * _beta * _MP));
 
@@ -758,7 +758,7 @@ namespace CalculateVessels.Core.HeatExchanger
                 }
             }
 
-            switch (_hedi.TubeRolling)
+            switch (_hedi.FirstTubePlate.TubeRolling)
             {
                 case TubeRollingType.RollingWithoutGroove:
                     _Ntp_d = 0.5 * Math.PI * _hedi.sT * (_hedi.dT - _hedi.sT) * Math.Min(_hedi.lB / _hedi.dT, 1.6) *
@@ -779,7 +779,7 @@ namespace CalculateVessels.Core.HeatExchanger
             _tau = ((Math.Abs(_NT) * _hedi.dT) + (4 * Math.Abs(_MT))) /
                     (Math.PI * Math.Pow(_hedi.dT, 2) * _hedi.delta);
 
-            switch (_hedi.FixTubeInTubePlate)
+            switch (_hedi.FirstTubePlate.FixTubeInTubePlate)
             {
                 case FixTubeInTubePlateType.OnlyRolling:
 
@@ -809,7 +809,7 @@ namespace CalculateVessels.Core.HeatExchanger
 
             _pp = Math.Max(_hedi.pM, Math.Max(_hedi.pT, Math.Abs(_hedi.pM - _hedi.pT)));
             _spp_5_5_1 = 0.5 * _hedi.DE * Math.Sqrt(_pp / _sigmaa_dp);
-            _sp_5_5_1 = _spp_5_5_1 + _hedi.c;
+            _sp_5_5_1 = _spp_5_5_1 + _hedi.FirstTubePlate.c;
 
             if (_sp_5_5_1 > _hedi.FirstTubePlate.sp)
             {
@@ -1117,7 +1117,7 @@ namespace CalculateVessels.Core.HeatExchanger
             {
                 body.AddParagraph("")
                     .AppendEquation($"β=1.53∙∜(K_y/ψ_0∙(1/(E_p1∙s_p1^3)+1/(E_p2∙s_p2^3))" +
-                    $"=1.53∙∜({_Ky:f2}/{_psi0:f2}∙(1/({_Ep}∙{_hedi.sp1}^3)+1/({_Ep2}∙{_hedi.sp2}^3))={_beta:f2}");
+                    $"=1.53∙∜({_Ky:f2}/{_psi0:f2}∙(1/({_Ep}∙{_hedi.FirstTubePlate.sp}^3)+1/({_Ep2}∙{_hedi.SecondTubePlate.sp}^3))={_beta:f2}");
             }
 
             body.AddParagraph("Безразмерный параметр системы решетка — трубы вычисляют по формуле");
@@ -1333,11 +1333,11 @@ namespace CalculateVessels.Core.HeatExchanger
 
             body.AddParagraph("- изгибные");
             body.AddParagraph("")
-                .AppendEquation($"σ_p1=(6∙|M_Π|)/(s_1p-c)^2=(6∙|{_MP:f2}|)/({_hedi.s1p}-{_hedi.c})^2={_sigmap1:f2} МПа");
+                .AppendEquation($"σ_p1=(6∙|M_Π|)/(s_1p-c)^2=(6∙|{_MP:f2}|)/({_hedi.FirstTubePlate.s1p}-{_hedi.FirstTubePlate.c})^2={_sigmap1:f2} МПа");
 
             body.AddParagraph("- касательные");
             body.AddParagraph("")
-                .AppendEquation($"τ_p1=|Q_Π|/(s_1p-c)=|{_QP:f2}|/({_hedi.s1p}-{_hedi.c})={_taup1:f2} МПа");
+                .AppendEquation($"τ_p1=|Q_Π|/(s_1p-c)=|{_QP:f2}|/({_hedi.FirstTubePlate.s1p}-{_hedi.FirstTubePlate.c})={_taup1:f2} МПа");
 
             body.AddParagraph("Напряжения в перфорированной части трубной решетки вычисляют по формулам:");
 
@@ -1382,11 +1382,11 @@ namespace CalculateVessels.Core.HeatExchanger
             }
 
             body.AddParagraph("")
-                .AppendEquation($"σ_p2=(6∙{_Mmax:f2})/({_fip:f2}∙({_hedi.s1p}-{_hedi.c})^2)={_sigmap2:f2} МПа");
+                .AppendEquation($"σ_p2=(6∙{_Mmax:f2})/({_fip:f2}∙({_hedi.FirstTubePlate.s1p}-{_hedi.FirstTubePlate.c})^2)={_sigmap2:f2} МПа");
 
             body.AddParagraph("- касательные");
             body.AddParagraph("")
-                .AppendEquation($"τ_p2=|Q_a|/(φ_p∙(s_1p-c))=|{_QP:f2}|/({_fip:f2}∙({_hedi.s1p}-{_hedi.c}))={_taup2:f2} МПа");
+                .AppendEquation($"τ_p2=|Q_a|/(φ_p∙(s_1p-c))=|{_QP:f2}|/({_fip:f2}∙({_hedi.FirstTubePlate.s1p}-{_hedi.FirstTubePlate.c}))={_taup2:f2} МПа");
 
             body.AddParagraph("Напряжения в кожухе в месте присоединения к решетке вычисляют по формулам:");
 
@@ -1475,31 +1475,31 @@ namespace CalculateVessels.Core.HeatExchanger
                     .AppendEquation("s_n≥(s_p-c)∙max{[1-√(d_0/B_Π∙(t_Π/t_p-1))];√(φ_p)}+c");
 
                 body.AddParagraph("")
-                    .AppendEquation($"1-√(d_0/B_Π∙(t_Π/t_p-1))=1-√({_hedi.d0}/{_hedi.BP}∙({_hedi.tP}/{_hedi.tp}-1))={_snp1:f2}");
+                    .AppendEquation($"1-√(d_0/B_Π∙(t_Π/t_p-1))=1-√({_hedi.d0}/{_hedi.FirstTubePlate.BP}∙({_hedi.tP}/{_hedi.tp}-1))={_snp1:f2}");
 
                 body.AddParagraph("")
                     .AppendEquation($"√(φ_p)=√({_fip:f2})={_snp2:f2}");
 
 
                 body.AddParagraph("")
-                    .AppendEquation($"s_n=({_hedi.FirstTubePlate.sp}-{_hedi.c})∙max{{{_snp1:f2};{_snp2:f2}}}+{_hedi.c}={_sn:f2} мм");
+                    .AppendEquation($"s_n=({_hedi.FirstTubePlate.sp}-{_hedi.FirstTubePlate.c})∙max{{{_snp1:f2};{_snp2:f2}}}+{_hedi.FirstTubePlate.c}={_sn:f2} мм");
 
-                if (_sn >= _hedi.sn)
+                if (_sn >= _hedi.FirstTubePlate.sn)
                 {
                     body.AddParagraph("Принятая толщина ")
                         .Bold()
-                        .AppendEquation($"s_n={_hedi.sn} мм");
+                        .AppendEquation($"s_n={_hedi.FirstTubePlate.sn} мм");
                 }
                 else
                 {
                     body.AddParagraph("Принятая толщина ")
                         .Bold()
                         .Color(System.Drawing.Color.Red)
-                        .AppendEquation($"s_n={_hedi.sn} мм");
+                        .AppendEquation($"s_n={_hedi.FirstTubePlate.sn} мм");
                 }
             }
 
-            if (_hedi.IsNeedCheckHardnessTubePlate)
+            if (_hedi.FirstTubePlate.IsNeedCheckHardnessTubePlate)
             {
                 body.AddParagraph("Проверка жесткости трубных решеток").Alignment(AlignmentType.Center);
 
@@ -1686,7 +1686,7 @@ namespace CalculateVessels.Core.HeatExchanger
                 .AppendEquation("[N]_TP")
                 .AddRun(" определяют на основании испытаний или по нормативным документам. При отсутствии данных о прочности вальцовочного соединения вычисляем значение по формуле");
 
-            switch (_hedi.TubeRolling)
+            switch (_hedi.FirstTubePlate.TubeRolling)
             {
                 case TubeRollingType.RollingWithoutGroove:
                     body.AddParagraph("- для гладкозавальцованных труб");
@@ -1708,7 +1708,7 @@ namespace CalculateVessels.Core.HeatExchanger
                     break;
             }
 
-            switch (_hedi.FixTubeInTubePlate)
+            switch (_hedi.FirstTubePlate.FixTubeInTubePlate)
             {
                 case FixTubeInTubePlateType.OnlyRolling:
                     body.AddParagraph("Если трубы крепятся в решетке с помощью развальцовки, должно выполняться условие");
@@ -1790,7 +1790,7 @@ namespace CalculateVessels.Core.HeatExchanger
                 .AddRun(" - расчетное давление, действующее на решетку кожухотрубчатого теплообменного аппа­рата.Принимается равным максимально возможному перепаду давлений, действую­щих на решетку");
 
             body.AddParagraph("")
-                .AppendEquation($"s_p=0.5∙{_hedi.DE}∙√({_pp}/{_sigma_dp})+{_hedi.c}={_sp_5_5_1:f2} мм");
+                .AppendEquation($"s_p=0.5∙{_hedi.DE}∙√({_pp}/{_sigma_dp})+{_hedi.FirstTubePlate.c}={_sp_5_5_1:f2} мм");
 
             if (_sp_5_5_1 >= _hedi.FirstTubePlate.sp)
             {

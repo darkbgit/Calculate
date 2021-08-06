@@ -15,28 +15,27 @@ namespace CalculateVessels.Core.HeatExchanger
         public List<string> ErrorList { get; private set; } = new();
 
         public string Name { get; set; } //+
-        public bool IsOneGo { get; set; }
-        public bool IsWorkCondition { get; set; }
+        public bool IsOneGo { get; set; }//+
+        public bool IsWorkCondition { get; set; }//+
         public double t0 { get; set; } //+
         public int N { get; set; } //+
 
         //public double a { get; set; }
-        public double a1 { get; set; }
+        public double a1 { get; set; }//+
 
         //tube
-        public bool IsNeedCheckHardnessTube { get; set; }
-        public bool IsTubeOnlyWelding { get; set; }
-        public double delta { get; set; }
-        public double dT { get; set; }
-        public double l { get; set; } //UNDONE: l - half long tube
-        public double lB { get; set; }
+        public bool IsNeedCheckHardnessTube { get; set; }//+
+        public double delta { get; set; }//+
+        public double dT { get; set; }//+
+        public double l { get; set; } //+ UNDONE: l - half long tube
+        public double lB { get; set; }//+
         public double pT { get; set; } //+
-        public double sT { get; set; }
+        public double sT { get; set; }//+
         public double tT { get; set; } //+
         public double TT { get; set; } //+
-        public int i { get; set; }
-        public string SteelT { get; set; }
-        public TubeRollingType TubeRolling { get; set; }
+        public int i { get; set; }//+
+        public string SteelT { get; set; }//+
+        
 
         //shell
         public double cK { get; set; } //+
@@ -49,7 +48,7 @@ namespace CalculateVessels.Core.HeatExchanger
 
         //compensator
         public bool IsNeedKcompensatorCalculate { get; set; }
-        public CompensatorType CompensatorType { get; set; }
+        public CompensatorType CompensatorType { get; set; }//+
         public double beta0 { get; set; }
         public double deltakom { get; set; }
         public double Dkom { get; set; }
@@ -57,7 +56,7 @@ namespace CalculateVessels.Core.HeatExchanger
         public double Kkom { get; set; }
         public double rkom { get; set; }
         public int nkom { get; set; }
-        public string Steelkom { get; internal set; }
+        public string Steelkom { get; set; }
 
         //extender
         public double D1 { get; set; }
@@ -65,33 +64,25 @@ namespace CalculateVessels.Core.HeatExchanger
         public double Lpac { get; set; }
 
         //tube plate
-        public bool IsDifferentTubePlate { get; set; }
-        public bool IsNeedCheckHardnessTubePlate { get; set; }
-        public double BP { get; set; }
-        public double c { get; set; }
-        public double d0 { get; set; }
-        public double DE { get; set; }
-        public double fip { get; set; }
-        public double h1 { get; set; }
-        //public double s1 { get; set; }
-        public double s1p { get; set; }
-        //public double s2 { get; set; }
-        public double sn { get; set; }
-        //public double sp { get; set; }
-        public double sp1 { get; set; }
-        public double sp2 { get; set; }
-        public double tp { get; set; }
-        public double tP { get; set; } //distance over hole both side from hole
+        public bool IsDifferentTubePlate { get; set; }//+
+        
+        
+
+        public double d0 { get; set; }//+
+        public double DE { get; set; }//+
+
+        public double tp { get; set; }//+
+        public double tP { get; set; }//+ distance over hole both side from hole
         //public string Steelp { get; set; }
 
         public ConnectionTubePlate FirstTubePlate { get; set; } = new();
         public ConnectionTubePlate SecondTubePlate { get; set; } = new();
 
         //flange
-        public double DH { get; set; }
+        public double DH { get; set; }//+
         
     
-        public FixTubeInTubePlateType FixTubeInTubePlate { get; internal set; }
+        
 
         //partitions
         public bool IsWithPartitions { get; set; } //+
@@ -106,30 +97,28 @@ namespace CalculateVessels.Core.HeatExchanger
     public class ConnectionTubePlate
     {
         public TubePlateType TubePlateType{ get; set; }
-        public bool IsNeedCheckHardnessTubePlate { get; set; }
+        public bool IsNeedCheckHardnessTubePlate { get; set; }//+
+        public FixTubeInTubePlateType FixTubeInTubePlate { get; set; }
+        public TubeRollingType TubeRolling { get; set; }
 
         //Tube plate
         public string Steelp { get; set; } 
         
 
-        public double BP { get; set; }
-        public double c { get; set; }
-        public double d0 { get; set; }
-        public double DE { get; set; }
-        public double fip { get; set; }
+        public double BP { get; set; }//+
+        public double c { get; set; }//+
+
+
+        public double fiP { get; set; }
         
         public double pp { get; set; }
         
-        public double s1p { get; set; }
+        public double s1p { get; set; }//+
         
-        public double sn { get; set; }
+        public double sn { get; set; }//+
 
         public double sp { get; set; }//+
 
-        public double sp1 { get; set; }
-        public double sp2 { get; set; }
-        public double tp { get; set; }
-        public double tP { get; set; } //distance over hole both side from hole
 
         //shell for tube plate
         public double s1 { get; set; } //+

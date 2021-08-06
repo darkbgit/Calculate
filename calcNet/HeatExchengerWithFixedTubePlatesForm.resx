@@ -57,4 +57,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <metadata name="TooTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <data name="isNeedHardnessTubePlate_cb.ToolTip" xml:space="preserve">
+    <value>Проверку проводят, когда к жесткости трубных решеток предъявляются
+ какие-либо дополнительные требования,
+ например для аппаратов со стекающей пленкой,
+ с перегородками по трубному пространству, если недопустим переток между ходами.</value>
+  </data>
 </root>
