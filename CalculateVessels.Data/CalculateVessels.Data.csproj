@@ -20,6 +20,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="PhysicalData\Gost34233_1\Steels - Copy.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="PhysicalData\Gost34233_4\Gaskets.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

@@ -1,6 +1,9 @@
-﻿using CalculateVessels.Core.HeatExchanger;
+﻿using CalculateVessels.Core.Bottoms.Enums;
+using CalculateVessels.Core.HeatExchanger;
+using CalculateVessels.Core.HeatExchanger.Enums;
 using CalculateVessels.Core.Shells;
 using CalculateVessels.Core.Shells.DataIn;
+using CalculateVessels.Data.PhysicalData;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -29,6 +32,25 @@ namespace CalculateVessels
             secondTubePlate_pb.Image = (Bitmap)new ImageConverter().ConvertFrom(Data.Properties.Resources.ConnToFlange1);
             shell_pb.Image = (Bitmap)new ImageConverter().ConvertFrom(Data.Properties.Resources.Fixed_2_2);
             chamberFlange_pb.Image = (Bitmap)new ImageConverter().ConvertFrom(Data.Properties.Resources.ConnToFlange1_Flat1);
+
+            var steels = Physical.Gost34233_1.GetSteelsList()?.ToArray();
+            if (steels != null)
+            {
+                steel1_cb.Items.AddRange(steels);
+                steel2_cb.Items.AddRange(steels);
+                steelK_cb.Items.AddRange(steels);
+                steelT_cb.Items.AddRange(steels);
+                steelD_cb.Items.AddRange(steels);
+                steelp_cb.Items.AddRange(steels);
+                steel1_cb.SelectedIndex = 0;
+                steel2_cb.SelectedIndex = 0;
+                steelK_cb.SelectedIndex = 0;
+                steelT_cb.SelectedIndex = 0;
+                steelD_cb.SelectedIndex = 0;
+                steelp_cb.SelectedIndex = 0;
+
+            }
+
         }
 
         private void label3_Click(object sender, EventArgs e)
@@ -118,7 +140,7 @@ namespace CalculateVessels
             CheckBox cb = sender as CheckBox;
             string type = cb.Checked ? "_Butt" : "_Flat";
 
-            chamberFlange_rb4.Enabled = cb.Checked;
+            chamberFlange_rb3.Enabled = cb.Checked;
 
             var a = firstTubePlate_gb.Controls
                 .OfType<RadioButton>()
@@ -171,7 +193,7 @@ namespace CalculateVessels
 
         private void button1_Click(object sender, EventArgs e)
         {
-
+            heatExchengerDataIn = new();
 
             List<string> dataInErr = new();
 
@@ -298,93 +320,441 @@ namespace CalculateVessels
                 }
             }
 
+            //t0
+            {
+                if (double.TryParse(t0_tb.Text, NumberStyles.AllowDecimalPoint,
+                CultureInfo.InvariantCulture, out double t0))
+                {
+                    heatExchengerDataIn.t0 = t0;
+                }
+                else
+                {
+                    dataInErr.Add("t0 неверный ввод");
+                }
+            }
+
+            //N
+            {
+                if (int.TryParse(N_tb.Text, NumberStyles.Integer,
+                CultureInfo.InvariantCulture, out int N))
+                {
+                    heatExchengerDataIn.N = N;
+                }
+                else
+                {
+                    dataInErr.Add("N неверный ввод");
+                }
+            }
+
             heatExchengerDataIn.IsWorkCondition = isWorkCondition_cb.Checked;
 
             heatExchengerDataIn.IsOneGo = !isNotOneGo_cb.Checked;
 
-            if (stressHand_rb.Checked)
+            heatExchengerDataIn.IsWithPartitions = isWithPartitions_cb.Checked;
+
+            if (heatExchengerDataIn.IsWithPartitions)
             {
-                //Q
+                //l1R
                 {
-                    if (double.TryParse(Q_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
-                System.Globalization.CultureInfo.InvariantCulture, out double Q))
+                    if (double.TryParse(l1R_tb.Text, NumberStyles.AllowDecimalPoint,
+                    CultureInfo.InvariantCulture, out double l1R))
                     {
-                        heatExchengerDataIn.Q = Q;
+                        heatExchengerDataIn.l1R = l1R;
                     }
                     else
                     {
-                        dataInErr.Add("Q неверный ввод");
+                        dataInErr.Add("l1R неверный ввод");
                     }
                 }
 
-                //M
+                //l2R
                 {
-                    if (double.TryParse(M_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
-                System.Globalization.CultureInfo.InvariantCulture, out double M))
+                    if (double.TryParse(l2R_tb.Text, NumberStyles.AllowDecimalPoint,
+                    CultureInfo.InvariantCulture, out double l2R))
                     {
-                        heatExchengerDataIn.M = M;
+                        heatExchengerDataIn.l2R = l2R;
                     }
                     else
                     {
-                        dataInErr.Add("M неверный ввод");
+                        dataInErr.Add("l2R неверный ввод");
                     }
                 }
 
-                heatExchengerDataIn.IsFTensile = forceStretch_rb.Checked;
-
-                //F
+                //cper
                 {
-                    if (double.TryParse(F_tb.Text, NumberStyles.AllowDecimalPoint,
-                        CultureInfo.InvariantCulture, out double F))
+                    if (double.TryParse(cper_tb.Text, NumberStyles.AllowDecimalPoint,
+                    CultureInfo.InvariantCulture, out double cper))
                     {
-                        heatExchengerDataIn.F = F;
+                        heatExchengerDataIn.cper = cper;
                     }
                     else
                     {
-                        dataInErr.Add("F неверный ввод");
+                        dataInErr.Add("cper неверный ввод");
                     }
                 }
 
-                if (!heatExchengerDataIn.IsFTensile)
+                //sper
                 {
-                    var idx = force_gb.Controls.OfType<RadioButton>().FirstOrDefault(rb => rb.Checked)?.Text;
-                    if (int.TryParse(idx, NumberStyles.Integer, CultureInfo.InvariantCulture, out int i))
+                    if (double.TryParse(sper_tb.Text, NumberStyles.AllowDecimalPoint,
+                    CultureInfo.InvariantCulture, out double sper))
                     {
-                        heatExchengerDataIn.FCalcSchema = i;
+                        heatExchengerDataIn.sper = sper;
+                    }
+                    else
+                    {
+                        dataInErr.Add("sper неверный ввод");
+                    }
+                }
+            }
 
-                        switch (i)
+            heatExchengerDataIn.FirstTubePlate.TubePlateType = (TubePlateType)Convert.ToInt32(firstTubePlate_gb.Controls.OfType<RadioButton>().FirstOrDefault(r => r.Checked).Name.Last().ToString());
+
+
+            heatExchengerDataIn.SecondTubePlate.TubePlateType = (TubePlateType)Convert.ToInt32(secondTubePlate_gb.Controls.OfType<RadioButton>().FirstOrDefault(r => r.Checked).Name.Last().ToString());
+
+            heatExchengerDataIn.FirstTubePlate.Steel2 = steel2_cb.Text;
+
+            //h2
+            {
+                if (double.TryParse(h2_tb.Text, NumberStyles.AllowDecimalPoint,
+                CultureInfo.InvariantCulture, out double h2))
+                {
+                    heatExchengerDataIn.FirstTubePlate.h2 = h2;
+                }
+                else
+                {
+                    dataInErr.Add("h2 неверный ввод");
+                }
+            }
+
+            heatExchengerDataIn.FirstTubePlate.SteelD = steelD_cb.Text;
+
+            //s2
+            {
+                if (double.TryParse(s2_tb.Text, NumberStyles.AllowDecimalPoint,
+                CultureInfo.InvariantCulture, out double s2))
+                {
+                    heatExchengerDataIn.FirstTubePlate.s2 = s2;
+                }
+                else
+                {
+                    dataInErr.Add("s2 неверный ввод");
+                }
+            }
+
+            heatExchengerDataIn.FirstTubePlate.Steel1 = steel1_cb.Text;
+
+            //h1
+            {
+                if (double.TryParse(h1_tb.Text, NumberStyles.AllowDecimalPoint,
+                CultureInfo.InvariantCulture, out double h1))
+                {
+                    heatExchengerDataIn.FirstTubePlate.h1 = h1;
+                }
+                else
+                {
+                    dataInErr.Add("h1 неверный ввод");
+                }
+            }
+
+            //s1
+            {
+                if (double.TryParse(s1_tb.Text, NumberStyles.AllowDecimalPoint,
+                CultureInfo.InvariantCulture, out double s1))
+                {
+                    heatExchengerDataIn.FirstTubePlate.s1 = s1;
+                }
+                else
+                {
+                    dataInErr.Add("s1 неверный ввод");
+                }
+            }
+
+            //DH
+            {
+                if (double.TryParse(DH_tb.Text, NumberStyles.AllowDecimalPoint,
+                CultureInfo.InvariantCulture, out double DH))
+                {
+                    heatExchengerDataIn.FirstTubePlate.DH = DH;
+                }
+                else
+                {
+                    dataInErr.Add("s1 неверный ввод");
+                }
+            }
+
+            heatExchengerDataIn.FirstTubePlate.IsChamberFlangeSkirt = isChamberFlangeScirt_cb.Checked;
+
+            heatExchengerDataIn.FirstTubePlate.FlangeFace =
+                (FlangeFaceType)Convert.ToInt32(flange_gb.Controls
+                                                .OfType<RadioButton>()
+                                                .FirstOrDefault(r => r.Checked)
+                                                .Name.Last().ToString());
+
+            heatExchengerDataIn.FirstTubePlate.Steelp = steelp_cb.Text;
+
+            //sp
+            {
+                if (double.TryParse(sp_tb.Text, NumberStyles.AllowDecimalPoint,
+                CultureInfo.InvariantCulture, out double sp))
+                {
+                    heatExchengerDataIn.FirstTubePlate.sp = sp;
+                }
+                else
+                {
+                    dataInErr.Add("sp неверный ввод");
+                }
+            }
+
+            //c
+            {
+                if (double.TryParse(c_tb.Text, NumberStyles.AllowDecimalPoint,
+                CultureInfo.InvariantCulture, out double c))
+                {
+                    heatExchengerDataIn.FirstTubePlate.c = c;
+                }
+                else
+                {
+                    dataInErr.Add("c неверный ввод");
+                }
+            }
+
+            heatExchengerDataIn.IsNeedCheckHardnessTube = isNeedCheckTHardnessTube_cb.Checked;
+
+            heatExchengerDataIn.IsDifferentTubePlate = isDifferentTubePlate_cb.Checked;
+
+            //a1
+            {
+                if (double.TryParse(a1_tb.Text, NumberStyles.AllowDecimalPoint,
+                CultureInfo.InvariantCulture, out double a1))
+                {
+                    heatExchengerDataIn.a1 = a1;
+                }
+                else
+                {
+                    dataInErr.Add("a1 неверный ввод");
+                }
+            }
+
+            //DE
+            {
+                if (double.TryParse(DE_tb.Text, NumberStyles.AllowDecimalPoint,
+                CultureInfo.InvariantCulture, out double DE))
+                {
+                    heatExchengerDataIn.DE = DE;
+                }
+                else
+                {
+                    dataInErr.Add("DE неверный ввод");
+                }
+            }
+
+            //i
+            {
+                if (int.TryParse(i_tb.Text, NumberStyles.Integer,
+                CultureInfo.InvariantCulture, out int i))
+                {
+                    heatExchengerDataIn.i = i;
+                }
+                else
+                {
+                    dataInErr.Add("i неверный ввод");
+                }
+            }
+
+            //d0
+            {
+                if (double.TryParse(d0_tb.Text, NumberStyles.AllowDecimalPoint,
+                CultureInfo.InvariantCulture, out double d0))
+                {
+                    heatExchengerDataIn.d0 = d0;
+                }
+                else
+                {
+                    dataInErr.Add("d0 неверный ввод");
+                }
+            }
+
+            //tp
+            {
+                if (double.TryParse(tp_tb.Text, NumberStyles.AllowDecimalPoint,
+                CultureInfo.InvariantCulture, out double tp))
+                {
+                    heatExchengerDataIn.tp = tp;
+                }
+                else
+                {
+                    dataInErr.Add("tp неверный ввод");
+                }
+            }
+
+            heatExchengerDataIn.IsNeedCheckHardnessTube = isNeedCheckTHardnessTube_cb.Checked;
+
+            heatExchengerDataIn.SteelT = steelT_cb.Text;
+
+            //dT
+            {
+                if (double.TryParse(dT_tb.Text, NumberStyles.AllowDecimalPoint,
+                CultureInfo.InvariantCulture, out double dT))
+                {
+                    heatExchengerDataIn.dT = dT;
+                }
+                else
+                {
+                    dataInErr.Add("dT неверный ввод");
+                }
+            }
+
+            //sT
+            {
+                if (double.TryParse(sT_tb.Text, NumberStyles.AllowDecimalPoint,
+                CultureInfo.InvariantCulture, out double sT))
+                {
+                    heatExchengerDataIn.sT = sT;
+                }
+                else
+                {
+                    dataInErr.Add("sT неверный ввод");
+                }
+            }
+
+            //l
+            {
+                if (double.TryParse(l_tb.Text, NumberStyles.AllowDecimalPoint,
+                CultureInfo.InvariantCulture, out double l))
+                {
+                    heatExchengerDataIn.l = l;
+                }
+                else
+                {
+                    dataInErr.Add("l неверный ввод");
+                }
+            }
+
+            var tubeRolling = tubeFirstTubePlateFix_gb.Controls.OfType<RadioButton>().FirstOrDefault(r => r.Checked).Name;
+
+            switch (tubeRolling)
+            {
+                case "rollingWithout_rb":
+                    heatExchengerDataIn.FirstTubePlate.FixTubeInTubePlate = isWithWeld_cb.Checked
+                        ? FixTubeInTubePlateType.RollingWithWelding :
+                        FixTubeInTubePlateType.OnlyRolling;
+                    heatExchengerDataIn.FirstTubePlate.TubeRolling = TubeRollingType.RollingWithoutGroove;
+                    break;
+                case "rollingWithOne_rb":
+                    heatExchengerDataIn.FirstTubePlate.FixTubeInTubePlate = isWithWeld_cb.Checked
+                        ? FixTubeInTubePlateType.RollingWithWelding :
+                        FixTubeInTubePlateType.OnlyRolling;
+                    heatExchengerDataIn.FirstTubePlate.TubeRolling = TubeRollingType.RollingWithOneGroove;
+                    break;
+                case "rollingWithTwo_rb":
+                    heatExchengerDataIn.FirstTubePlate.FixTubeInTubePlate = isWithWeld_cb.Checked
+                        ? FixTubeInTubePlateType.RollingWithWelding :
+                        FixTubeInTubePlateType.OnlyRolling;
+                    heatExchengerDataIn.FirstTubePlate.TubeRolling = TubeRollingType.RollingWithMoreThenOneGroove;
+                    break;
+                case "welded_rb":
+                    heatExchengerDataIn.FirstTubePlate.FixTubeInTubePlate = FixTubeInTubePlateType.OnlyWelding;
+                    break;
+            }
+
+            if (heatExchengerDataIn.FirstTubePlate.FixTubeInTubePlate != FixTubeInTubePlateType.OnlyWelding)
+            {
+                //lB
+                {
+                    if (double.TryParse(lB_tb.Text, NumberStyles.AllowDecimalPoint,
+                    CultureInfo.InvariantCulture, out double lB))
+                    {
+                        heatExchengerDataIn.FirstTubePlate.lB = lB;
+                    }
+                    else
+                    {
+                        dataInErr.Add("lB неверный ввод");
+                    }
+                }
+            }
+
+            if (heatExchengerDataIn.FirstTubePlate.FixTubeInTubePlate == FixTubeInTubePlateType.OnlyWelding || isWithWeld_cb.Checked)
+            {
+                //delta
+                {
+                    if (double.TryParse(delta_tb.Text, NumberStyles.AllowDecimalPoint,
+                    CultureInfo.InvariantCulture, out double delta))
+                    {
+                        heatExchengerDataIn.FirstTubePlate.delta = delta;
+                    }
+                    else
+                    {
+                        dataInErr.Add("delta неверный ввод");
+                    }
+                }
+            }
+
+            heatExchengerDataIn.FirstTubePlate.IsWithGroove = isWithPartitionFirstTubePlate_cb.Checked;
+
+            if (!heatExchengerDataIn.IsOneGo && heatExchengerDataIn.FirstTubePlate.IsWithGroove)
+            {
+                //sn
+                {
+                    if (double.TryParse(sn_tb.Text, NumberStyles.AllowDecimalPoint,
+                    CultureInfo.InvariantCulture, out double sn))
+                    {
+                        heatExchengerDataIn.FirstTubePlate.sn = sn;
+                    }
+                    else
+                    {
+                        dataInErr.Add("sn неверный ввод");
+                    }
+                }
+
+                //s1p
+                {
+                    if (double.TryParse(s1p_tb.Text, NumberStyles.AllowDecimalPoint,
+                    CultureInfo.InvariantCulture, out double s1p))
+                    {
+                        heatExchengerDataIn.FirstTubePlate.s1p = s1p;
+                    }
+                    else
+                    {
+                        dataInErr.Add("s1p неверный ввод");
+                    }
+                }
+
+
+                //BP
+                {
+                    if (double.TryParse(BP_tb.Text, NumberStyles.AllowDecimalPoint,
+                    CultureInfo.InvariantCulture, out double BP))
+                    {
+                        heatExchengerDataIn.FirstTubePlate.BP = BP;
+                    }
+                    else
+                    {
+                        dataInErr.Add("BP неверный ввод");
+                    }
+                }
+
+                //tP
+                {
+                    if (double.TryParse(partition_tP_tb.Text, NumberStyles.AllowDecimalPoint,
+                    CultureInfo.InvariantCulture, out double tP))
+                    {
+                        if (tP > heatExchengerDataIn.tp)
                         {
-                            case 5:
-                                if (double.TryParse(F_tb.Text, NumberStyles.AllowDecimalPoint,
-                                    CultureInfo.InvariantCulture, out double q))
-                                {
-                                    heatExchengerDataIn.q = q;
-                                }
-                                else
-                                {
-                                    dataInErr.Add("q неверный ввод");
-                                }
-                                break;
-                            case 6:
-                            case 7:
-                                if (double.TryParse(F_tb.Text, NumberStyles.AllowDecimalPoint,
-                                    CultureInfo.InvariantCulture, out double f))
-                                {
-                                    heatExchengerDataIn.f = f;
-                                }
-                                else
-                                {
-                                    dataInErr.Add("f неверный ввод");
-                                }
-                                break;
+                            heatExchengerDataIn.tP = tP;
+                        }
+                        else
+                        {
+                            dataInErr.Add("tP должно быть больше tp");
                         }
                     }
                     else
                     {
-                        dataInErr.Add("Не возможно определить тип сжимающего усилия");
+                        dataInErr.Add("tP неверный ввод");
                     }
                 }
             }
+
 
             bool isNotError = dataInErr.Count == 0 && heatExchengerDataIn.IsDataGood;
 
@@ -421,5 +791,7 @@ namespace CalculateVessels
                 MessageBox.Show(string.Join<string>(Environment.NewLine, dataInErr.Union(heatExchengerDataIn.ErrorList)));
             }
         }
+
+        //private void SetValue()
     }
 }

@@ -1,4 +1,5 @@
-﻿using CalculateVessels.Core.HeatExchanger.Enums;
+﻿using CalculateVessels.Core.Bottoms.Enums;
+using CalculateVessels.Core.HeatExchanger.Enums;
 using CalculateVessels.Core.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -25,10 +26,8 @@ namespace CalculateVessels.Core.HeatExchanger
 
         //tube
         public bool IsNeedCheckHardnessTube { get; set; }//+
-        public double delta { get; set; }//+
         public double dT { get; set; }//+
         public double l { get; set; } //+ UNDONE: l - half long tube
-        public double lB { get; set; }//+
         public double pT { get; set; } //+
         public double sT { get; set; }//+
         public double tT { get; set; } //+
@@ -78,26 +77,23 @@ namespace CalculateVessels.Core.HeatExchanger
         public ConnectionTubePlate FirstTubePlate { get; set; } = new();
         public ConnectionTubePlate SecondTubePlate { get; set; } = new();
 
-        //flange
-        public double DH { get; set; }//+
-        
-    
-        
+          
 
         //partitions
         public bool IsWithPartitions { get; set; } //+
         public double l1R { get; set; } //+
         public double l2R { get; set; } //+
 
-        public int Bper { get; internal set; }
-        public int Lper { get; internal set; }
-        public double cper { get; internal set; }
+        public int Bper { get; set; }
+        public int Lper { get; set; }
+        public double cper { get; set; }
+        public double sper { get; set; }
     }
 
     public class ConnectionTubePlate
     {
-        public TubePlateType TubePlateType{ get; set; }
         public bool IsNeedCheckHardnessTubePlate { get; set; }//+
+        public TubePlateType TubePlateType{ get; set; }
         public FixTubeInTubePlateType FixTubeInTubePlate { get; set; }
         public TubeRollingType TubeRolling { get; set; }
 
@@ -119,6 +115,9 @@ namespace CalculateVessels.Core.HeatExchanger
 
         public double sp { get; set; }//+
 
+        public bool IsWithGroove {  get; set; }//+
+
+
 
         //shell for tube plate
         public double s1 { get; set; } //+
@@ -127,6 +126,7 @@ namespace CalculateVessels.Core.HeatExchanger
         //flange for tube plate
         public string Steel1 { get; set; } //+
         public double h1 { get; set; } //+
+        public double DH { get; set; }//+
 
         //shell for chamber
         public string SteelD { get; set; }
@@ -136,6 +136,11 @@ namespace CalculateVessels.Core.HeatExchanger
         public string Steel2 { get; set; } //+
         public double h2 { get; set; } //+
         public bool IsChamberFlangeSkirt { get; set; }//+
+        public FlangeFaceType FlangeFace {  get; set; }
+
+        //tube
+        public double lB { get; set; }//+
+        public double delta { get; set; }//+
 
     }
 }

@@ -1,6 +1,6 @@
 [
   {
-    "omega": 0.5,
+    "Omega": 0.5,
     "mAnBList": [
       {
         "Value": -1.0,
@@ -110,7 +110,7 @@
     ]
   },
   {
-    "omega": 1.0,
+    "Omega": 1.0,
     "mAnBList": [
       {
         "Value": -1.0,
@@ -220,7 +220,7 @@
     ]
   },
   {
-    "omega": 1.5,
+    "Omega": 1.5,
     "mAnBList": [
       {
         "Value": -1.0,
@@ -330,7 +330,7 @@
     ]
   },
   {
-    "omega": 2.0,
+    "Omega": 2.0,
     "mAnBList": [
       {
         "Value": -1.0,
@@ -440,7 +440,7 @@
     ]
   },
   {
-    "omega": 3.0,
+    "Omega": 3.0,
     "mAnBList": [
       {
         "Value": -1.0,
@@ -550,7 +550,7 @@
     ]
   },
   {
-    "omega": 4.0,
+    "Omega": 4.0,
     "mAnBList": [
       {
         "Value": -1.0,
@@ -660,7 +660,7 @@
     ]
   },
   {
-    "omega": 5.0,
+    "Omega": 5.0,
     "mAnBList": [
       {
         "Value": -1.0,
@@ -770,7 +770,7 @@
     ]
   },
   {
-    "omega": 10.0,
+    "Omega": 10.0,
     "mAnBList": [
       {
         "Value": -1.0,
