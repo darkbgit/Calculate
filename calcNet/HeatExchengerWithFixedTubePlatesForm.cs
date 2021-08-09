@@ -50,7 +50,6 @@ namespace CalculateVessels
                 steelp_cb.SelectedIndex = 0;
 
             }
-
         }
 
         private void label3_Click(object sender, EventArgs e)
@@ -99,9 +98,6 @@ namespace CalculateVessels
                 shell_pb.Image = (Bitmap)new ImageConverter().ConvertFrom(Data.Properties.Resources.ResourceManager.GetObject("Fixed_" + one + "_" + two));
 
             }
-
-            
-
         }
 
         private void SecondTubePlate_rb_CheckedChanged(object sender, EventArgs e)
@@ -148,16 +144,14 @@ namespace CalculateVessels
 
             if (a == "0") a = "1";
 
-            
-
             var name = flange_gb.Controls
                 .OfType<RadioButton>()
                 .FirstOrDefault(r => r.Checked)?.Name.Last().ToString();
 
+            name = (Convert.ToInt32(name) + 1).ToString();
+
             chamberFlange_pb.Image = (Bitmap)new ImageConverter()
                     .ConvertFrom(Data.Properties.Resources.ResourceManager.GetObject("ConnToFlange" + a + type + name));
-
-
         }
 
         private void HeatExchengerWithFixedTubePlatesForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -185,6 +179,8 @@ namespace CalculateVessels
                 string type = isChamberFlangeScirt_cb.Checked ? "_Butt" : "_Flat";
 
                 var name = rb.Name.Last().ToString();
+
+                name = (Convert.ToInt32(name) + 1).ToString();
 
                 chamberFlange_pb.Image = (Bitmap)new ImageConverter()
                         .ConvertFrom(Data.Properties.Resources.ResourceManager.GetObject("ConnToFlange" + a + type + name));
@@ -719,7 +715,6 @@ namespace CalculateVessels
                         dataInErr.Add("s1p неверный ввод");
                     }
                 }
-
 
                 //BP
                 {

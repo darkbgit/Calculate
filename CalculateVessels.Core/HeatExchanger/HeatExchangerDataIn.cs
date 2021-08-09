@@ -72,12 +72,10 @@ namespace CalculateVessels.Core.HeatExchanger
 
         public double tp { get; set; }//+
         public double tP { get; set; }//+ distance over hole both side from hole
-        //public string Steelp { get; set; }
 
         public ConnectionTubePlate FirstTubePlate { get; set; } = new();
         public ConnectionTubePlate SecondTubePlate { get; set; } = new();
-
-          
+         
 
         //partitions
         public bool IsWithPartitions { get; set; } //+
@@ -100,10 +98,8 @@ namespace CalculateVessels.Core.HeatExchanger
         //Tube plate
         public string Steelp { get; set; } 
         
-
         public double BP { get; set; }//+
         public double c { get; set; }//+
-
 
         public double fiP { get; set; }
         
@@ -112,11 +108,8 @@ namespace CalculateVessels.Core.HeatExchanger
         public double s1p { get; set; }//+
         
         public double sn { get; set; }//+
-
         public double sp { get; set; }//+
-
         public bool IsWithGroove {  get; set; }//+
-
 
 
         //shell for tube plate

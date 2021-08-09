@@ -304,6 +304,8 @@ namespace CalculateVessels
             // isNotOneGo_cb
             // 
             this.isNotOneGo_cb.AutoSize = true;
+            this.isNotOneGo_cb.Checked = true;
+            this.isNotOneGo_cb.CheckState = System.Windows.Forms.CheckState.Checked;
             this.isNotOneGo_cb.Location = new System.Drawing.Point(133, 469);
             this.isNotOneGo_cb.Name = "isNotOneGo_cb";
             this.isNotOneGo_cb.Size = new System.Drawing.Size(109, 19);
@@ -687,7 +689,7 @@ namespace CalculateVessels
             this.l2R_tb.Name = "l2R_tb";
             this.l2R_tb.Size = new System.Drawing.Size(46, 23);
             this.l2R_tb.TabIndex = 64;
-            this.l2R_tb.Text = "1000";
+            this.l2R_tb.Text = "592";
             // 
             // label35
             // 
@@ -716,7 +718,7 @@ namespace CalculateVessels
             this.l1R_tb.Name = "l1R_tb";
             this.l1R_tb.Size = new System.Drawing.Size(46, 23);
             this.l1R_tb.TabIndex = 61;
-            this.l1R_tb.Text = "1000";
+            this.l1R_tb.Text = "700";
             // 
             // groupBox1
             // 
@@ -788,7 +790,7 @@ namespace CalculateVessels
             this.tT_tb.Name = "tT_tb";
             this.tT_tb.Size = new System.Drawing.Size(50, 23);
             this.tT_tb.TabIndex = 50;
-            this.tT_tb.Text = "100";
+            this.tT_tb.Text = "75";
             // 
             // label16
             // 
@@ -814,7 +816,7 @@ namespace CalculateVessels
             this.tK_tb.Name = "tK_tb";
             this.tK_tb.Size = new System.Drawing.Size(50, 23);
             this.tK_tb.TabIndex = 47;
-            this.tK_tb.Text = "100";
+            this.tK_tb.Text = "25";
             // 
             // label15
             // 
@@ -840,7 +842,7 @@ namespace CalculateVessels
             this.TCalculateT_tb.Name = "TCalculateT_tb";
             this.TCalculateT_tb.Size = new System.Drawing.Size(50, 23);
             this.TCalculateT_tb.TabIndex = 44;
-            this.TCalculateT_tb.Text = "100";
+            this.TCalculateT_tb.Text = "150";
             // 
             // label32
             // 
@@ -857,7 +859,7 @@ namespace CalculateVessels
             this.TCalculateK_tb.Name = "TCalculateK_tb";
             this.TCalculateK_tb.Size = new System.Drawing.Size(50, 23);
             this.TCalculateK_tb.TabIndex = 42;
-            this.TCalculateK_tb.Text = "100";
+            this.TCalculateK_tb.Text = "150";
             // 
             // label33
             // 
@@ -883,7 +885,7 @@ namespace CalculateVessels
             this.pT_tb.Name = "pT_tb";
             this.pT_tb.Size = new System.Drawing.Size(50, 23);
             this.pT_tb.TabIndex = 39;
-            this.pT_tb.Text = "1";
+            this.pT_tb.Text = "0.6";
             // 
             // label19
             // 
@@ -900,7 +902,7 @@ namespace CalculateVessels
             this.pM_tb.Name = "pM_tb";
             this.pM_tb.Size = new System.Drawing.Size(50, 23);
             this.pM_tb.TabIndex = 37;
-            this.pM_tb.Text = "1";
+            this.pM_tb.Text = "2.5";
             // 
             // label18
             // 
@@ -1331,7 +1333,7 @@ namespace CalculateVessels
             this.sp_tb.Name = "sp_tb";
             this.sp_tb.Size = new System.Drawing.Size(50, 23);
             this.sp_tb.TabIndex = 45;
-            this.sp_tb.Text = "50";
+            this.sp_tb.Text = "45";
             // 
             // label10
             // 
@@ -1370,7 +1372,7 @@ namespace CalculateVessels
             this.s1_tb.Name = "s1_tb";
             this.s1_tb.Size = new System.Drawing.Size(50, 23);
             this.s1_tb.TabIndex = 47;
-            this.s1_tb.Text = "8";
+            this.s1_tb.Text = "10";
             // 
             // label11
             // 
@@ -1444,7 +1446,7 @@ namespace CalculateVessels
             this.h1_tb.Name = "h1_tb";
             this.h1_tb.Size = new System.Drawing.Size(50, 23);
             this.h1_tb.TabIndex = 51;
-            this.h1_tb.Text = "45";
+            this.h1_tb.Text = "34";
             // 
             // label13
             // 
@@ -1609,7 +1611,7 @@ namespace CalculateVessels
             this.h2_tb.Name = "h2_tb";
             this.h2_tb.Size = new System.Drawing.Size(50, 23);
             this.h2_tb.TabIndex = 68;
-            this.h2_tb.Text = "45";
+            this.h2_tb.Text = "32";
             // 
             // label14
             // 
@@ -1779,7 +1781,7 @@ namespace CalculateVessels
             this.partition_tP_tb.Name = "partition_tP_tb";
             this.partition_tP_tb.Size = new System.Drawing.Size(50, 23);
             this.partition_tP_tb.TabIndex = 88;
-            this.partition_tP_tb.Text = "40";
+            this.partition_tP_tb.Text = "55";
             // 
             // label73
             // 
@@ -1806,7 +1808,7 @@ namespace CalculateVessels
             this.s1p_tb.Name = "s1p_tb";
             this.s1p_tb.Size = new System.Drawing.Size(50, 23);
             this.s1p_tb.TabIndex = 85;
-            this.s1p_tb.Text = "45";
+            this.s1p_tb.Text = "40";
             // 
             // label71
             // 
@@ -1843,7 +1845,7 @@ namespace CalculateVessels
             this.sn_tb.Name = "sn_tb";
             this.sn_tb.Size = new System.Drawing.Size(50, 23);
             this.sn_tb.TabIndex = 82;
-            this.sn_tb.Text = "45";
+            this.sn_tb.Text = "40";
             // 
             // label69
             // 
@@ -2022,7 +2024,7 @@ namespace CalculateVessels
             this.DE_tb.Name = "DE_tb";
             this.DE_tb.Size = new System.Drawing.Size(50, 23);
             this.DE_tb.TabIndex = 75;
-            this.DE_tb.Text = "30";
+            this.DE_tb.Text = "70";
             // 
             // label59
             // 
@@ -2315,7 +2317,7 @@ namespace CalculateVessels
             this.a1_tb.Name = "a1_tb";
             this.a1_tb.Size = new System.Drawing.Size(50, 23);
             this.a1_tb.TabIndex = 47;
-            this.a1_tb.Text = "270";
+            this.a1_tb.Text = "279";
             // 
             // label2
             // 
