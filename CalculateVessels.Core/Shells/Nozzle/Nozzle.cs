@@ -291,7 +291,7 @@ namespace CalculateVessels.Core.Shells.Nozzle
                 case NozzleKind.WithRingAndInPart:
                 case NozzleKind.WithFlanging:
                     _nozzleDataIn.s0 = _nozzleDataIn.ShellDataIn.s;
-                    _nozzleDataIn.steel4 = _nozzleDataIn.steel1;
+                    //_nozzleDataIn.steel4 = _nozzleDataIn.steel1;
                     break;
             }
 
@@ -557,6 +557,8 @@ namespace CalculateVessels.Core.Shells.Nozzle
             {
                 var table = body.AddTable();
 
+                //table.
+
                 table.AddRow()
                     .AddCell("Материал несущего элемента:")
                     .AddCell($"{_nozzleDataIn.ShellDataIn.Steel}");
@@ -686,14 +688,23 @@ namespace CalculateVessels.Core.Shells.Nozzle
                     .AddCell("Минимальный размер сварного шва, Δ:")
                     .AddCell($"{_nozzleDataIn.delta} мм");
 
+                table.AddRowWithOneCell("Коэффициенты прочности сварных швов");
+
+                table.AddRow()
+                    .AddCell("Продольный шов штуцера ")
+                    .AppendEquation("φ_1")
+                    .AppendText(":")
+                    .AddCell($"{_nozzleDataIn.fi1}");
+
+                table.AddRow()
+                    .AddCell("Шов обечайки в зоне врезки штуцера ")
+                    .AppendEquation("φ")
+                    .AppendText(":")
+                    .AddCell($"{_nozzleDataIn.fi}");
+
+
                 body.InsertTable(table);
             }
-
-            body.AddParagraph("");
-
-            body.AddParagraph("Коэффициенты прочности сварных швов:");
-            body.AddParagraph("Продольный шов штуцера ").AppendEquation($"φ_1={_nozzleDataIn.fi1}");
-            body.AddParagraph("Шов обечайки в зоне врезки штуцера ").AppendEquation($"φ={_nozzleDataIn.fi}");
 
             body.AddParagraph("");
             body.AddParagraph("Условия нагружения").Alignment(AlignmentType.Center);
@@ -726,7 +737,7 @@ namespace CalculateVessels.Core.Shells.Nozzle
                         .AppendText(":")
                         .AddCell($"{_nozzleDataIn.E1} МПа");
                 }
-                if (_nozzleDataIn.steel1 != _nozzleDataIn.steel2)
+                if (!string.IsNullOrEmpty(_nozzleDataIn.steel2) && _nozzleDataIn.steel1 != _nozzleDataIn.steel2)
                 {
                     table.AddRow()
                         .AddCell($"Допускаемое напряжение для материала {_nozzleDataIn.steel2} при расчетной температуре, ")
@@ -743,7 +754,7 @@ namespace CalculateVessels.Core.Shells.Nozzle
                             .AddCell($"{_nozzleDataIn.E2} МПа");
                     }
                 }
-                if (_nozzleDataIn.steel1 != _nozzleDataIn.steel3)
+                if (!string.IsNullOrEmpty(_nozzleDataIn.steel3) && _nozzleDataIn.steel1 != _nozzleDataIn.steel3)
                 {
                     table.AddRow()
                         .AddCell($"Допускаемое напряжение для материала {_nozzleDataIn.steel3} при расчетной температуре, ")
@@ -760,7 +771,7 @@ namespace CalculateVessels.Core.Shells.Nozzle
                             .AddCell($"{_nozzleDataIn.E3} МПа");
                     }
                 }
-                if (_nozzleDataIn.steel1 != _nozzleDataIn.steel4)
+                if (!string.IsNullOrEmpty(_nozzleDataIn.steel4) && _nozzleDataIn.steel1 != _nozzleDataIn.steel4)
                 {
                     table.AddRow()
                         .AddCell($"Допускаемое напряжение для материала {_nozzleDataIn.steel4} при расчетной температуре, ")

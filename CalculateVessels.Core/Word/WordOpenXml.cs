@@ -365,6 +365,28 @@ namespace CalculateVessels.Core.Word
             return tr;
         }
 
+        public static TableRow AddRowWithOneCell(this Table table, string text, JustificationValues justification = JustificationValues.Right)
+        {
+            TableRow tr = new();
+
+            TableCell tc = new();
+
+            tc.AppendChild(new TableCellProperties(
+                new GridSpan { Val = table.LastChild.ChildElements.Count },
+                new Justification { Val = justification }));
+
+            tc.AppendChild(new Paragraph(new Run(new Text(text)
+            {
+                Space = SpaceProcessingModeValues.Preserve
+            })));
+
+            tr.AppendChild(tc);
+
+            table.AppendChild(tr);
+            return tr;
+
+        }
+
         public static TableRow AddCell(this TableRow tr, string text)
         {
             // Create a cell.
@@ -381,6 +403,7 @@ namespace CalculateVessels.Core.Word
 
             return tr;
         }
+
 
         public static TableRow AppendText(this TableRow tr, string text)
         {

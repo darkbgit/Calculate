@@ -289,7 +289,7 @@ namespace CalculateVessels.Data.PhysicalData
 
                 try
                 {
-                    using StreamReader file = new("PhysicalData/Gost34233_4/ScrewSquare.json");
+                    using StreamReader file = new(TABLE_D1);
                     var json = file.ReadToEnd();
                     file.Close();
                     fbs = JsonSerializer.Deserialize<List<PhysicalData.Gost34233_4.Fb>>(json);

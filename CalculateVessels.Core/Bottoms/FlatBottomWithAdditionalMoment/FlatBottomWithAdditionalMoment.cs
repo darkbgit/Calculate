@@ -177,19 +177,19 @@ namespace CalculateVessels.Core.Bottoms.FlatBottomWithAdditionalMoment
             }
 
 
-            if (!Physical.TryGetE(_fbdi.FlangeSteel, 20, ref _E20, ref _errorList))
+            if (!Physical.TryGetE(_fbdi.FlangeSteel, 20, ref _E20, ref _errorList, "Gost34233_4"))
             {
                 IsCriticalError = true;
                 return;
             }
 
-            if (!Physical.TryGetE(_fbdi.FlangeSteel, _tf, ref _E, ref _errorList))
+            if (!Physical.TryGetE(_fbdi.FlangeSteel, _tf, ref _E, ref _errorList, "Gost34233_4"))
             {
                 IsCriticalError = true;
                 return;
             }
 
-            if (!Physical.TryGetAlfa(_fbdi.FlangeSteel, _fbdi.t, ref _alfaf, ref _errorList))
+            if (!Physical.TryGetAlfa(_fbdi.FlangeSteel, _fbdi.t, ref _alfaf, ref _errorList, "Gost34233_4"))
             {
                 IsCriticalError = true;
                 return;
@@ -523,12 +523,9 @@ namespace CalculateVessels.Core.Bottoms.FlatBottomWithAdditionalMoment
 
             //table
             {
-                body.AddParagraph("Крышка");
-
                 var table = body.AddTable();
 
-                //table.AddRow().
-                //  AddCell("");
+                table.AddRowWithOneCell("Крышка");
 
                 table.AddRow()
                     .AddCell("Марка стали")
@@ -619,17 +616,9 @@ namespace CalculateVessels.Core.Bottoms.FlatBottomWithAdditionalMoment
                             .AddCell($"{_fbdi.di} мм");
                         break;
                 }
-                body.InsertTable(table);
 
-            }
 
-            {
-                body.AddParagraph("Фланец");
-
-                var table = body.AddTable();
-
-                //table.AddRow().
-                //    AddCell("Фланец");
+                table.AddRowWithOneCell("Фланец");
 
                 table.AddRow()
                     .AddCell("Марка стали")
@@ -706,14 +695,11 @@ namespace CalculateVessels.Core.Bottoms.FlatBottomWithAdditionalMoment
                     .AddCell($"{_fbdi.l} мм");
                 }
                 body.InsertTable(table);
-            }
 
-            {
-                body.AddParagraph("Прокладка");
 
-                var table = body.AddTable();
-                //table.AddRow().
-                //    AddCell("Прокладка");
+
+                table.AddRowWithOneCell("Прокладка");
+
 
                 table.AddRow()
                     .AddCell("Материал")
@@ -737,16 +723,9 @@ namespace CalculateVessels.Core.Bottoms.FlatBottomWithAdditionalMoment
                 .AppendText(":")
                 .AddCell($"{_fbdi.Dcp} мм");
 
-                body.InsertTable(table);
-            }
 
-            {
-                body.AddParagraph("Крепеж");
+                table.AddRowWithOneCell("Крепеж");
 
-                var table = body.AddTable();
-
-                //table.AddRow().
-                //    AddCell("Крепеж");
 
                 table.AddRow()
                     .AddCell("Материал")
@@ -807,15 +786,8 @@ namespace CalculateVessels.Core.Bottoms.FlatBottomWithAdditionalMoment
                              : "наружное") + " давление, p:")
                     .AddCell($"{_fbdi.p} МПа");
 
-                body.InsertTable(table);
-            }
 
-            {
-                body.AddParagraph("Крышка");
-
-                var table = body.AddTable();
-                //table.AddRow().
-                //    AddCell("Крышка");
+                table.AddRowWithOneCell("Крышка");
 
                 table.AddRow()
                     .AddCell($"Допускаемое напряжение для материала {_fbdi.CoverSteel} при расчетной температуре, [σ]:")
@@ -838,16 +810,9 @@ namespace CalculateVessels.Core.Bottoms.FlatBottomWithAdditionalMoment
                     .AddCell($"{_alfakr:f7} ")
                     .AppendEquation("°C^-1");
 
-                body.InsertTable(table);
-            }
 
-            {
-                body.AddParagraph("Фланец");
 
-                var table = body.AddTable();
-
-                //table.AddRow().
-                //    AddCell("Фланец");
+                table.AddRowWithOneCell("Фланец");
 
                 table.AddRow()
                     .AddCell("Модуль продольной упругости при температуре 20°C, ")
@@ -868,16 +833,8 @@ namespace CalculateVessels.Core.Bottoms.FlatBottomWithAdditionalMoment
                     .AddCell($"{_alfa:f7} ")
                     .AppendEquation("°C^-1");
 
-                body.InsertTable(table);
-            }
 
-            {
-                body.AddParagraph("Крепеж");
-
-                var table = body.AddTable();
-
-                //table.AddRow().
-                //    AddCell("Крепеж");
+                table.AddRowWithOneCell("Крепеж");
 
                 table.AddRow()
                     .AddCell($"Допускаемое напряжение при расчетной температуре, ")
@@ -906,8 +863,7 @@ namespace CalculateVessels.Core.Bottoms.FlatBottomWithAdditionalMoment
 
                 if (_fbdi.IsWasher)
                 {
-                    table.AddRow().
-                        AddCell("Шайба");
+                    table.AddRowWithOneCell("Шайба");
 
                     table.AddRow()
                         .AddCell("Коэффициент линейного расширения,")
