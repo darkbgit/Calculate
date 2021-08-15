@@ -1,0 +1,160 @@
+﻿[
+	{
+		"Name": [ "Ст3", "09Г2С", "16ГС", "20", "20К", "10", "10Г2", "09Г2", "17ГС", "17Г1С", "10Г2С1" ],
+		"Values": [
+			{
+				"Temperature": 20,
+				"EValue": 199000
+			},
+			{
+				"Temperature": 100,
+				"EValue": 191000
+			},
+			{
+				"Temperature": 150,
+				"EValue": 186000
+			},
+			{
+				"Temperature": 200,
+				"EValue": 181000
+			},
+			{
+				"Temperature": 250,
+				"EValue": 176000
+			},
+			{
+				"Temperature": 300,
+				"EValue": 171000
+			},
+			{
+				"Temperature": 350,
+				"EValue": 164000
+			},
+			{
+				"Temperature": 400,
+				"EValue": 155000
+			},
+			{
+				"Temperature": 450,
+				"EValue": 140000
+			}
+		]
+	},
+	{
+		"Name": [ "12ХМ", "12МХ", "15ХМ", "15Х5М", "15Х5М-У", "10Х2М1А-А" ],
+		"Values": [
+			{
+				"Temperature": 20,
+				"EValue": 215000
+			},
+			{
+				"Temperature": 100,
+				"EValue": 215000
+			},
+			{
+				"Temperature": 150,
+				"EValue": 205000
+			},
+			{
+				"Temperature": 200,
+				"EValue": 198000
+			},
+			{
+				"Temperature": 250,
+				"EValue": 195000
+			},
+			{
+				"Temperature": 300,
+				"EValue": 190000
+			},
+			{
+				"Temperature": 350,
+				"EValue": 184000
+			},
+			{
+				"Temperature": 400,
+				"EValue": 178000
+			},
+			{
+				"Temperature": 450,
+				"EValue": 171000
+			},
+			{
+				"Temperature": 500,
+				"EValue": 163000
+			},
+			{
+				"Temperature": 550,
+				"EValue": 154000
+			},
+			{
+				"Temperature": 600,
+				"EValue": 140000
+			}
+		]
+	},
+	{
+		"Name": [ "12Х18Н10Т", "12Х18Н12Т", "03Х17Н14М3", "10Х17Н13М2Т", "10Х17Н13М3Т", "08Х18Н10Т", "08Х18Н12Т", "03Х18Н11", "08Х17Н13М2Т", "08Х17Н15М3Т", "10Х14Г14Н4Т", "03Х21Н21М4ГБ" ],
+		"Values": [
+			{
+				"Temperature": 20,
+				"EValue": 200000
+			},
+			{
+				"Temperature": 100,
+				"EValue": 200000
+			},
+			{
+				"Temperature": 150,
+				"EValue": 199000
+			},
+			{
+				"Temperature": 200,
+				"EValue": 197000
+			},
+			{
+				"Temperature": 250,
+				"EValue": 194000
+			},
+			{
+				"Temperature": 300,
+				"EValue": 190000
+			},
+			{
+				"Temperature": 350,
+				"EValue": 185000
+			},
+			{
+				"Temperature": 400,
+				"EValue": 180000
+			},
+			{
+				"Temperature": 450,
+				"EValue": 174000
+			},
+			{
+				"Temperature": 500,
+				"EValue": 167000
+			},
+			{
+				"Temperature": 550,
+				"EValue": 160000
+			},
+			{
+				"Temperature": 600,
+				"EValue": 152000
+			},
+			{
+				"Temperature": 650,
+				"EValue": 143000
+			},
+			{
+				"Temperature": 700,
+				"EValue": 132000
+			}
+		]
+	}
+]
+
+	
+

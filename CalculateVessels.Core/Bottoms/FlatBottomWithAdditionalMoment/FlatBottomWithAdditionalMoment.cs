@@ -177,19 +177,19 @@ namespace CalculateVessels.Core.Bottoms.FlatBottomWithAdditionalMoment
             }
 
 
-            if (!Physical.TryGetE(_fbdi.FlangeSteel, 20, ref _E20, ref _errorList, "Gost34233_4"))
+            if (!Physical.TryGetE(_fbdi.FlangeSteel, 20, ref _E20, ref _errorList))
             {
                 IsCriticalError = true;
                 return;
             }
 
-            if (!Physical.TryGetE(_fbdi.FlangeSteel, _tf, ref _E, ref _errorList, "Gost34233_4"))
+            if (!Physical.TryGetE(_fbdi.FlangeSteel, _tf, ref _E, ref _errorList))
             {
                 IsCriticalError = true;
                 return;
             }
 
-            if (!Physical.TryGetAlfa(_fbdi.FlangeSteel, _fbdi.t, ref _alfaf, ref _errorList, "Gost34233_4"))
+            if (!Physical.TryGetAlfa(_fbdi.FlangeSteel, _fbdi.t, ref _alfaf, ref _errorList))
             {
                 IsCriticalError = true;
                 return;
@@ -213,6 +213,8 @@ namespace CalculateVessels.Core.Bottoms.FlatBottomWithAdditionalMoment
                 return;
             }
 
+
+            // GOST 34233.4 add G
             _sigma_d_krm = _fbdi.sigma_d * 1.5 / 1.1;
 
             _tkr = _fbdi.t;
@@ -254,7 +256,12 @@ namespace CalculateVessels.Core.Bottoms.FlatBottomWithAdditionalMoment
                 return;
             }
 
-            _sigma_dnb = Physical.Gost34233_4.GetSigma(_fbdi.ScrewSteel, _tb);
+            if (!Physical.Gost34233_4.TryGetSigma(_fbdi.ScrewSteel, _tb, ref _sigma_dnb, ref _errorList))
+            {
+                IsCriticalError = true;
+                return;
+            }
+
 
 
             _S0 = _fbdi.IsFlangeFlat ? _fbdi.s : _fbdi.S0;
@@ -525,7 +532,7 @@ namespace CalculateVessels.Core.Bottoms.FlatBottomWithAdditionalMoment
             {
                 var table = body.AddTable();
 
-                table.AddRowWithOneCell("Крышка");
+                table.AddRowWithOneCell("Крышка", gridSpanCount: 2);
 
                 table.AddRow()
                     .AddCell("Марка стали")
@@ -694,8 +701,6 @@ namespace CalculateVessels.Core.Bottoms.FlatBottomWithAdditionalMoment
                     .AddCell("Длина конической втулки приварного встык фланца, l:")
                     .AddCell($"{_fbdi.l} мм");
                 }
-                body.InsertTable(table);
-
 
 
                 table.AddRowWithOneCell("Прокладка");
@@ -786,8 +791,18 @@ namespace CalculateVessels.Core.Bottoms.FlatBottomWithAdditionalMoment
                              : "наружное") + " давление, p:")
                     .AddCell($"{_fbdi.p} МПа");
 
+                body.InsertTable(table);
+            }
 
-                table.AddRowWithOneCell("Крышка");
+            body.AddParagraph("");
+            body.AddParagraph("Физические параметры материала")
+                .Alignment(AlignmentType.Center);
+
+            //table
+            {
+                var table = body.AddTable();
+
+                table.AddRowWithOneCell("Крышка", gridSpanCount: 2);
 
                 table.AddRow()
                     .AddCell($"Допускаемое напряжение для материала {_fbdi.CoverSteel} при расчетной температуре, [σ]:")
@@ -809,7 +824,6 @@ namespace CalculateVessels.Core.Bottoms.FlatBottomWithAdditionalMoment
                     .AppendText(":")
                     .AddCell($"{_alfakr:f7} ")
                     .AppendEquation("°C^-1");
-
 
 
                 table.AddRowWithOneCell("Фланец");

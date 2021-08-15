@@ -1,6 +1,7 @@
 ﻿using CalculateVessels.Data.PhysicalData;
 using System;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace CalculateVessels
@@ -24,7 +25,7 @@ namespace CalculateVessels
 
         private void PldnForm_Load(object sender, EventArgs e)
         {
-            var steels = Physical.Gost34233_1.GetSteelsList();
+            var steels = Physical.Gost34233_1.GetSteelsList()?.ToArray();
             if (steels != null)
             {
                 steel_cb.Items.AddRange(steels);

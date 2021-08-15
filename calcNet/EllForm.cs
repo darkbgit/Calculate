@@ -25,7 +25,7 @@ namespace CalculateVessels
 
         private void EllForm_Load(object sender, EventArgs e)
         {
-            var steels = Physical.Gost34233_1.GetSteelsList();
+            var steels = Physical.Gost34233_1.GetSteelsList()?.ToArray();
             if (steels != null)
             {
                 steel_cb.Items.AddRange(steels);

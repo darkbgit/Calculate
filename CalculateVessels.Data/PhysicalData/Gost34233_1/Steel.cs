@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CalculateVessels.Data.PhysicalData.Gost34233_4
+namespace CalculateVessels.Data.PhysicalData.Gost34233_1
 {
     public class Steel
     {

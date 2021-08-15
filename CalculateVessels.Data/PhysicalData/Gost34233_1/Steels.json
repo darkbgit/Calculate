@@ -273,7 +273,7 @@
 		]
 	},
 	{
-		"Name": "Сталь 20",
+		"Name": "20",
 		"IsCouldBigThickness": false,
 		"SteelType": 0,
 		"Values": [
@@ -370,7 +370,7 @@
 		]
 	},
 	{
-		"Name": "Сталь 20К",
+		"Name": "20К",
 		"IsCouldBigThickness": false,
 		"SteelType": 0,
 		"Values": [
@@ -467,7 +467,7 @@
 		]
 	},
 	{
-		"Name": "Сталь 10",
+		"Name": "10",
 		"IsCouldBigThickness": false,
 		"SteelType": 0,
 		"Values": [

@@ -294,7 +294,7 @@ namespace CalculateVessels.Core.Shells
             if (_esdi.EllipticalBottomType == EllipticalBottomType.Elliptical &&
                 Math.Abs(_esdi.D - _ellR) < 0.00001)
             {
-                body.AddParagraph($"R=D={_esdi.D} мм - для эллиптичекских днищ с H=0.25D");
+                body.AddParagraph($"R=D={_esdi.D} мм - для эллиптических днищ с H=0.25D");
             }
             else if (_esdi.EllipticalBottomType == EllipticalBottomType.Hemispherical &&
                 Math.Abs(0.5 * _esdi.D - _ellR) < 0.00001)

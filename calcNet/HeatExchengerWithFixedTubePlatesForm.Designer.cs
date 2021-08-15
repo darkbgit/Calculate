@@ -754,7 +754,7 @@ namespace CalculateVessels
             // 
             this.N_tb.Location = new System.Drawing.Point(337, 153);
             this.N_tb.Name = "N_tb";
-            this.N_tb.Size = new System.Drawing.Size(57, 23);
+            this.N_tb.Size = new System.Drawing.Size(50, 23);
             this.N_tb.TabIndex = 54;
             this.N_tb.Text = "1000";
             // 
@@ -771,7 +771,7 @@ namespace CalculateVessels
             // 
             this.t0_tb.Location = new System.Drawing.Point(337, 124);
             this.t0_tb.Name = "t0_tb";
-            this.t0_tb.Size = new System.Drawing.Size(57, 23);
+            this.t0_tb.Size = new System.Drawing.Size(50, 23);
             this.t0_tb.TabIndex = 52;
             this.t0_tb.Text = "20";
             // 

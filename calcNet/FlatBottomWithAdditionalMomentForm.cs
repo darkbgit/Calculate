@@ -66,6 +66,9 @@ namespace CalculateVessels
             {
                 steel_cb.Items.AddRange(steels);
                 steel_cb.SelectedIndex = 0;
+
+                flangeSteel_cb.Items.AddRange(steels);
+                flangeSteel_cb.SelectedIndex = 0;
             }
 
             Gost_cb.SelectedIndex = 0;
@@ -88,17 +91,18 @@ namespace CalculateVessels
                 screwd_cb.SelectedIndex = 0;
             }
 
-            var screwSteels = Physical.Gost34233_4.GetSteelsList()?.ToArray();
+            var screwSteels = Physical.Gost34233_4.GetSteelsList("screw")?.ToArray();
             if (screwSteels != null)
             {
                 screwSteel_cb.Items.AddRange(screwSteels);
                 screwSteel_cb.SelectedIndex = 0;
+            }
 
-                washerSteel_cb.Items.AddRange(screwSteels);
+            var washerSteels = Physical.Gost34233_4.GetSteelsList("washer")?.ToArray();
+            if (washerSteels != null)
+            {
+                washerSteel_cb.Items.AddRange(washerSteels);
                 washerSteel_cb.SelectedIndex = 0;
-
-                flangeSteel_cb.Items.AddRange(screwSteels);
-                flangeSteel_cb.SelectedIndex = 0;
             }
 
         }

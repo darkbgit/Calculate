@@ -17,20 +17,29 @@ namespace CalculateVessels.Data.PhysicalData
         public static class Gost34233_1
         {
             private const string TABLE_STEELS = "PhysicalData/Gost34233_1/Steels.json";
+            private const string TABLE_SIGMA = "PhysicalData/Gost34233_1/SteelsSigma.json";
 
-            public static string[] GetSteelsList()
+
+            public static IEnumerable<string> GetSteelsList()
             {
-                using StreamReader file = new(TABLE_STEELS);
+                List<PhysicalData.Gost34233_1.Steel> steels = new();
+
+                using StreamReader file = new(TABLE_SIGMA);
                 try
                 {
                     var json = file.ReadToEnd();
-                    var steels = JsonSerializer.Deserialize<List<PhysicalData.Gost34233_1.SteelForSigma>>(json);
-                    return steels.Select(l => l.Name).ToArray();
+                    steels = JsonSerializer.Deserialize<List<PhysicalData.Gost34233_1.Steel>>(json);
                 }
                 catch
                 {
                     return null;
                 }
+
+                IEnumerable<string> result = Enumerable.Empty<string>();
+                steels?.ForEach(s => result = result.Union(s.Name));
+                result = result.OrderBy(s => s);
+
+                return result;
             }
 
             public static SteelType GetSteelType (string steelName, ref List<string> errorList)
@@ -69,7 +78,7 @@ namespace CalculateVessels.Data.PhysicalData
 
                 try
                 {
-                    using StreamReader file = new(TABLE_STEELS);
+                    using StreamReader file = new(TABLE_SIGMA);
                     var json = file.ReadToEnd();
                     file.Close();
                     steels = JsonSerializer.Deserialize<List<PhysicalData.Gost34233_1.SteelForSigma>>(json);
@@ -95,7 +104,7 @@ namespace CalculateVessels.Data.PhysicalData
                     accessI = 3;
                 }
 
-                var steel = steels?.FirstOrDefault(s => s.Name.Equals(steelName));
+                var steel = steels?.FirstOrDefault(s => s.Name.Contains(steelName));
 
                 if (steel == null)
                 {
@@ -250,7 +259,11 @@ namespace CalculateVessels.Data.PhysicalData
 
         public static class Gost34233_4
         {
-            private const string TABLE_D1 = "PhysicalData/Gost34233_4/TableD1.json";
+            private const string TABLE_D1_SCREW_M = "PhysicalData/Gost34233_4/TableD1.json";
+            private const string TABLE_E = "PhysicalData/Gost34233_4/SteelsE.json";
+            private const string TABLE_SIGMA = "PhysicalData/Gost34233_4/SteelsSigma.json";
+            private const string TABLE_GASKET = "PhysicalData/Gost34233_4/Gaskets.json";
+
 
             public static bool TryGetfb(int M, bool isGroove, ref double fb, ref List<string> errorList)
             {
@@ -258,14 +271,14 @@ namespace CalculateVessels.Data.PhysicalData
 
                 try
                 {
-                    using StreamReader file = new(TABLE_D1);
+                    using StreamReader file = new(TABLE_D1_SCREW_M);
                     var json = file.ReadToEnd();
                     file.Close();
                     fbs = JsonSerializer.Deserialize<List<PhysicalData.Gost34233_4.Fb>>(json);
                 }
                 catch
                 {
-                    errorList.Add($"Error open file {TABLE_D1} for fb");
+                    errorList.Add($"Error open file {TABLE_D1_SCREW_M} for fb");
                     return false;
                 }
 
@@ -273,14 +286,12 @@ namespace CalculateVessels.Data.PhysicalData
 
                 if (fbValue == null)
                 {
-                    errorList.Add($"Error find value for fb for M {M} in file {TABLE_D1}");
+                    errorList.Add($"Error find value for fb for M {M} in file {TABLE_D1_SCREW_M}");
                     return false;
                 }
-                else
-                {
-                    fb = isGroove ? fbValue.fb_groove : fbValue.fb;
-                    return true;
-                }
+
+                fb = isGroove ? fbValue.fb_groove : fbValue.fb;
+                return true;
             }
 
             public static IEnumerable<string> GetScrewDs()
@@ -289,7 +300,7 @@ namespace CalculateVessels.Data.PhysicalData
 
                 try
                 {
-                    using StreamReader file = new(TABLE_D1);
+                    using StreamReader file = new(TABLE_D1_SCREW_M);
                     var json = file.ReadToEnd();
                     file.Close();
                     fbs = JsonSerializer.Deserialize<List<PhysicalData.Gost34233_4.Fb>>(json);
@@ -309,7 +320,7 @@ namespace CalculateVessels.Data.PhysicalData
 
                 try
                 {
-                    using StreamReader file = new("PhysicalData/Gost34233_4/Gaskets.json");
+                    using StreamReader file = new(TABLE_GASKET);
                     var json = file.ReadToEnd();
                     file.Close();
                     gaskets = JsonSerializer.Deserialize<List<PhysicalData.Gost34233_4.Gasket>>(json);
@@ -331,27 +342,34 @@ namespace CalculateVessels.Data.PhysicalData
                 }
             }
 
-            public static double GetSigma(string steelName, double temperature)
+            public static bool TryGetSigma(string steelName, double temperature, ref double sigma_d, ref List<string> errorList)
             {
                 var steels = new List<PhysicalData.Gost34233_4.SteelForSigma>();
 
                 try
                 {
-                    using StreamReader file = new("PhysicalData/Gost34233_4/Steels.json");
+                    using StreamReader file = new(TABLE_SIGMA);
                     var json = file.ReadToEnd();
                     file.Close();
                     steels = JsonSerializer.Deserialize<List<PhysicalData.Gost34233_4.SteelForSigma>>(json);
                 }
                 catch
                 {
-                    return 0;
+                    errorList.Add($"Error open file {TABLE_SIGMA} for sigma of stell {steelName}");
+                    return false;
                 }
 
-                var steel = steels.FirstOrDefault(s => s.Name.Equals(steelName));
+                var steel = steels.FirstOrDefault(s => s.Name.Contains(steelName));
+
+                if (steel == null)
+                {
+                    errorList.Add($"Error find steel {steelName} in file {TABLE_SIGMA}");
+                    return false;
+                }
 
                 steel.Values = steel.Values.Where(v => v.SigmaValue != 0).ToList();
 
-                double sigma_d, sigmaLittle = 0, sigmaBig = 0;
+                double sigmaLittle = 0, sigmaBig = 0;
                 double tempLittle = 0, tempBig = 0;
 
                 for (var i = 0; i < steel.Values.Count; i++)
@@ -359,7 +377,8 @@ namespace CalculateVessels.Data.PhysicalData
                     if ((i == 0 && steel.Values[i].Temperature > temperature) ||
                         steel.Values[i].Temperature == temperature)
                     {
-                        return steel.Values[i].SigmaValue;
+                        sigma_d = steel.Values[i].SigmaValue;
+                        return true;
                     }
                     else if (steel.Values[i].Temperature > temperature)
                     {
@@ -369,9 +388,9 @@ namespace CalculateVessels.Data.PhysicalData
                     }
                     else if (i == steel.Values.Count - 1)
                     {
-                        //dataInErr.Add($"Температура {temperature} °С, больше чем максимальная температура {tempBig} °С " +
-                        //  $"для стали {steelName} при которой определяется модуль  продольной упругости по ГОСТ 34233.1-2017");
-                        return 0;
+                        errorList.Add($"Температура {temperature} °С, больше чем максимальная температура {tempBig} °С " +
+                            $"для стали {steelName} при которой определяется допускаемое напряжениу по ГОСТ 34233.4-2017");
+                        return false;
                     }
                     else
                     {
@@ -385,7 +404,7 @@ namespace CalculateVessels.Data.PhysicalData
                 sigma_d = Math.Truncate(sigma_d / 5);
                 sigma_d *= 0.5;
 
-                return sigma_d;
+                return true;
             }
 
             public static IEnumerable<string> GetGasketsList()
@@ -394,7 +413,7 @@ namespace CalculateVessels.Data.PhysicalData
 
                 try
                 {
-                    using StreamReader file = new("PhysicalData/Gost34233_4/Gaskets.json");
+                    using StreamReader file = new(TABLE_GASKET);
                     var json = file.ReadToEnd();
                     file.Close();
                     gaskets = JsonSerializer.Deserialize<List<PhysicalData.Gost34233_4.Gasket>>(json);
@@ -407,13 +426,27 @@ namespace CalculateVessels.Data.PhysicalData
                 return gaskets?.Select(g => g.Material);
             }
 
-            public static IEnumerable<string> GetSteelsList()
+            public static IEnumerable<string> GetSteelsList(string type)
             {
+                string table;
+
+                switch (type)
+                {
+                    case "screw":
+                        table = TABLE_SIGMA;
+                        break;
+                    case "washer":
+                        table = TABLE_E;
+                        break;
+                    default:
+                        return null;
+                }
+
                 List<PhysicalData.Gost34233_4.Steel> steels;
 
                 try
                 {
-                    using StreamReader file = new("PhysicalData/Gost34233_4/Steels.json");
+                    using StreamReader file = new(table);
                     var json = file.ReadToEnd();
                     file.Close();
                     steels = JsonSerializer.Deserialize<List<PhysicalData.Gost34233_4.Steel>>(json);
@@ -423,10 +456,13 @@ namespace CalculateVessels.Data.PhysicalData
                     return null;
                 }
 
-                return steels?.Select(s => s.Name);
+                List<string> result = new();
+                steels?.ForEach(s => result = result.Union(s.Name).ToList());
+
+                return result;
             }
         }
-    
+
 
         public static class Gost34233_7
         {
@@ -723,7 +759,7 @@ namespace CalculateVessels.Data.PhysicalData
 
             try
             {
-                using StreamReader file = new($"PhysicalData/{gost}/Steels.json");
+                using StreamReader file = new($"PhysicalData/{gost}/SteelsAlfa.json");
                 var json = file.ReadToEnd();
                 file.Close();
                 steels = JsonSerializer.Deserialize<List<SteelForAlfa>>(json);
@@ -735,7 +771,7 @@ namespace CalculateVessels.Data.PhysicalData
             }
 
             var alfaList = steels
-                .FirstOrDefault(s => s.Name.Equals(steelName))
+                .FirstOrDefault(s => s.Name.Contains(steelName))
                 ?.Values
                 .Where(v => v.AlfaValue != 0).ToList();
 
@@ -764,7 +800,7 @@ namespace CalculateVessels.Data.PhysicalData
 
             try
             {
-                using StreamReader file = new($"PhysicalData/{gost}/Steels.json");
+                using StreamReader file = new($"PhysicalData/{gost}/SteelsE.json");
                 var json = file.ReadToEnd();
                 file.Close();
                 steels = JsonSerializer.Deserialize<List<SteelForE>>(json);
@@ -776,7 +812,7 @@ namespace CalculateVessels.Data.PhysicalData
             }
 
             var Elist = steels
-                .FirstOrDefault(s => s.Name.Equals(steelName))
+                .FirstOrDefault(s => s.Name.Contains(steelName))
                 ?.Values
                 .Where(v => v.EValue != 0).ToList();
 
@@ -815,7 +851,6 @@ namespace CalculateVessels.Data.PhysicalData
 
             return true;
         }
-
 
 
     }

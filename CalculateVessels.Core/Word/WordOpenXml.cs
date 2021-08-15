@@ -365,24 +365,25 @@ namespace CalculateVessels.Core.Word
             return tr;
         }
 
-        public static TableRow AddRowWithOneCell(this Table table, string text, JustificationValues justification = JustificationValues.Right)
+        public static TableRow AddRowWithOneCell(this Table table, string text, JustificationValues justification = JustificationValues.Center, int gridSpanCount = 0)
         {
             TableRow tr = new();
 
             TableCell tc = new();
 
-            tc.AppendChild(new TableCellProperties(
-                new GridSpan { Val = table.LastChild.ChildElements.Count },
-                new Justification { Val = justification }));
+            tc.Append(new TableCellProperties(
+                new GridSpan { Val = gridSpanCount == 0 ? table.LastChild.ChildElements.Count : gridSpanCount }),
+                //new Justification { Val = justification }),
+                new Paragraph(
+                    new ParagraphProperties(new Justification() { Val = justification }),
+                    new Run(new Text(text)
+                    {
+                        Space = SpaceProcessingModeValues.Preserve
+                    })));
+            
+            tr.Append(tc);
 
-            tc.AppendChild(new Paragraph(new Run(new Text(text)
-            {
-                Space = SpaceProcessingModeValues.Preserve
-            })));
-
-            tr.AppendChild(tc);
-
-            table.AppendChild(tr);
+            table.Append(tr);
             return tr;
 
         }
