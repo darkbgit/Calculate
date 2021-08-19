@@ -377,7 +377,7 @@ namespace CalculateVessels.Core.Supports.Saddle
             }
         }
 
-        private double K1(double v1, double v2) =>
+        private static double K1(double v1, double v2) =>
             (1 - Math.Pow(v2, 2)) /
         (1.0 / 3.0 + v1 * v2 + Math.Sqrt(Math.Pow(1.0 / 3.0 + v1 * v2, 2) +
                                          (1 - Math.Pow(v2, 2)) * Math.Pow(v1, 2)));
@@ -393,7 +393,7 @@ namespace CalculateVessels.Core.Supports.Saddle
                 filename = DEFAULT_FILE_NAME;
             }
 
-            using WordprocessingDocument package = WordprocessingDocument.Open(filename, true);
+            using var package = WordprocessingDocument.Open(filename, true);
 
             var mainPart = package.MainDocumentPart;
             var body = mainPart?.Document.Body;

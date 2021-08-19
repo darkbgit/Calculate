@@ -37,23 +37,6 @@ namespace CalculateVessels
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label25 = new System.Windows.Forms.Label();
             this.label24 = new System.Windows.Forms.Label();
-            this.type_gb = new System.Windows.Forms.GroupBox();
-            this.rb15 = new System.Windows.Forms.RadioButton();
-            this.rb14 = new System.Windows.Forms.RadioButton();
-            this.rb13 = new System.Windows.Forms.RadioButton();
-            this.rb12 = new System.Windows.Forms.RadioButton();
-            this.rb11 = new System.Windows.Forms.RadioButton();
-            this.rb10 = new System.Windows.Forms.RadioButton();
-            this.rb9 = new System.Windows.Forms.RadioButton();
-            this.rb8 = new System.Windows.Forms.RadioButton();
-            this.rb7 = new System.Windows.Forms.RadioButton();
-            this.rb6 = new System.Windows.Forms.RadioButton();
-            this.rb5 = new System.Windows.Forms.RadioButton();
-            this.rb4 = new System.Windows.Forms.RadioButton();
-            this.rb3 = new System.Windows.Forms.RadioButton();
-            this.rb2 = new System.Windows.Forms.RadioButton();
-            this.rb1 = new System.Windows.Forms.RadioButton();
-            this.type_pb = new System.Windows.Forms.PictureBox();
             this.getFi_b = new System.Windows.Forms.Button();
             this.getE_b = new System.Windows.Forms.Button();
             this.label19 = new System.Windows.Forms.Label();
@@ -63,20 +46,14 @@ namespace CalculateVessels
             this.label13 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
-            this.c2_tb = new System.Windows.Forms.TextBox();
+            this.b_tb = new System.Windows.Forms.TextBox();
             this.c_tb = new System.Windows.Forms.TextBox();
             this.fi_tb = new System.Windows.Forms.TextBox();
             this.E_tb = new System.Windows.Forms.TextBox();
             this.sigma_d_tb = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
-            this.dav_gb = new System.Windows.Forms.GroupBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.nar_rb = new System.Windows.Forms.RadioButton();
-            this.vn_rb = new System.Windows.Forms.RadioButton();
             this.label4 = new System.Windows.Forms.Label();
-            this.t_tb = new System.Windows.Forms.TextBox();
             this.Gost_cb = new System.Windows.Forms.ComboBox();
-            this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.name_tb = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -92,21 +69,43 @@ namespace CalculateVessels
             this.label15 = new System.Windows.Forms.Label();
             this.D_tb = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.isAssembly_cb = new System.Windows.Forms.CheckBox();
             this.N_cb = new System.Windows.Forms.ComboBox();
             this.isNotPressureIn_cb = new System.Windows.Forms.CheckBox();
             this.label43 = new System.Windows.Forms.Label();
-            this.TCalculateK_tb = new System.Windows.Forms.TextBox();
+            this.t_tb = new System.Windows.Forms.TextBox();
             this.label33 = new System.Windows.Forms.Label();
             this.label23 = new System.Windows.Forms.Label();
             this.p_tb = new System.Windows.Forms.TextBox();
             this.label27 = new System.Windows.Forms.Label();
-            this.isAssembly_cb = new System.Windows.Forms.CheckBox();
+            this.shellReinforcement_gb = new System.Windows.Forms.GroupBox();
+            this.ring_rb = new System.Windows.Forms.RadioButton();
+            this.sheet_rb = new System.Windows.Forms.RadioButton();
+            this.nothing_rb = new System.Windows.Forms.RadioButton();
+            this.fixing_gb = new System.Windows.Forms.GroupBox();
+            this.fix_rb = new System.Windows.Forms.RadioButton();
+            this.move_rb = new System.Windows.Forms.RadioButton();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.ringLocation_gb = new System.Windows.Forms.GroupBox();
+            this.out_rb = new System.Windows.Forms.RadioButton();
+            this.in_rb = new System.Windows.Forms.RadioButton();
+            this.saddle_pb = new System.Windows.Forms.PictureBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.delta1_tb = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label21 = new System.Windows.Forms.Label();
+            this.label22 = new System.Windows.Forms.Label();
+            this.l0_tb = new System.Windows.Forms.TextBox();
             this.otv_gb.SuspendLayout();
-            this.type_gb.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.type_pb)).BeginInit();
-            this.dav_gb.SuspendLayout();
             this.shell_gb.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            this.shellReinforcement_gb.SuspendLayout();
+            this.fixing_gb.SuspendLayout();
+            this.ringLocation_gb.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.saddle_pb)).BeginInit();
             this.SuspendLayout();
             // 
             // otv_cb
@@ -184,217 +183,12 @@ namespace CalculateVessels
             // label24
             // 
             this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(657, 607);
+            this.label24.Location = new System.Drawing.Point(277, 577);
             this.label24.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label24.Name = "label24";
             this.label24.Size = new System.Drawing.Size(25, 15);
             this.label24.TabIndex = 147;
             this.label24.Text = "мм";
-            // 
-            // type_gb
-            // 
-            this.type_gb.Controls.Add(this.rb15);
-            this.type_gb.Controls.Add(this.rb14);
-            this.type_gb.Controls.Add(this.rb13);
-            this.type_gb.Controls.Add(this.rb12);
-            this.type_gb.Controls.Add(this.rb11);
-            this.type_gb.Controls.Add(this.rb10);
-            this.type_gb.Controls.Add(this.rb9);
-            this.type_gb.Controls.Add(this.rb8);
-            this.type_gb.Controls.Add(this.rb7);
-            this.type_gb.Controls.Add(this.rb6);
-            this.type_gb.Controls.Add(this.rb5);
-            this.type_gb.Controls.Add(this.rb4);
-            this.type_gb.Controls.Add(this.rb3);
-            this.type_gb.Controls.Add(this.rb2);
-            this.type_gb.Controls.Add(this.rb1);
-            this.type_gb.Controls.Add(this.type_pb);
-            this.type_gb.Location = new System.Drawing.Point(371, 40);
-            this.type_gb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.type_gb.Name = "type_gb";
-            this.type_gb.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.type_gb.Size = new System.Drawing.Size(367, 244);
-            this.type_gb.TabIndex = 146;
-            this.type_gb.TabStop = false;
-            this.type_gb.Text = "Конструкция днищ и крышек";
-            // 
-            // rb15
-            // 
-            this.rb15.AutoSize = true;
-            this.rb15.Location = new System.Drawing.Point(322, 211);
-            this.rb15.Name = "rb15";
-            this.rb15.Size = new System.Drawing.Size(37, 19);
-            this.rb15.TabIndex = 16;
-            this.rb15.TabStop = true;
-            this.rb15.Text = "15";
-            this.rb15.UseVisualStyleBackColor = true;
-            // 
-            // rb14
-            // 
-            this.rb14.AutoSize = true;
-            this.rb14.Location = new System.Drawing.Point(322, 185);
-            this.rb14.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.rb14.Name = "rb14";
-            this.rb14.Size = new System.Drawing.Size(37, 19);
-            this.rb14.TabIndex = 15;
-            this.rb14.Text = "14";
-            this.rb14.UseVisualStyleBackColor = true;
-            // 
-            // rb13
-            // 
-            this.rb13.AutoSize = true;
-            this.rb13.Location = new System.Drawing.Point(322, 157);
-            this.rb13.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.rb13.Name = "rb13";
-            this.rb13.Size = new System.Drawing.Size(37, 19);
-            this.rb13.TabIndex = 14;
-            this.rb13.Text = "13";
-            this.rb13.UseVisualStyleBackColor = true;
-            // 
-            // rb12
-            // 
-            this.rb12.AutoSize = true;
-            this.rb12.Location = new System.Drawing.Point(321, 130);
-            this.rb12.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.rb12.Name = "rb12";
-            this.rb12.Size = new System.Drawing.Size(37, 19);
-            this.rb12.TabIndex = 13;
-            this.rb12.Text = "12";
-            this.rb12.UseVisualStyleBackColor = true;
-            // 
-            // rb11
-            // 
-            this.rb11.AutoSize = true;
-            this.rb11.Location = new System.Drawing.Point(321, 105);
-            this.rb11.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.rb11.Name = "rb11";
-            this.rb11.Size = new System.Drawing.Size(37, 19);
-            this.rb11.TabIndex = 12;
-            this.rb11.Text = "11";
-            this.rb11.UseVisualStyleBackColor = true;
-            // 
-            // rb10
-            // 
-            this.rb10.AutoSize = true;
-            this.rb10.Location = new System.Drawing.Point(321, 77);
-            this.rb10.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.rb10.Name = "rb10";
-            this.rb10.Size = new System.Drawing.Size(37, 19);
-            this.rb10.TabIndex = 11;
-            this.rb10.Text = "10";
-            this.rb10.UseVisualStyleBackColor = true;
-            // 
-            // rb9
-            // 
-            this.rb9.AutoSize = true;
-            this.rb9.Location = new System.Drawing.Point(321, 49);
-            this.rb9.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.rb9.Name = "rb9";
-            this.rb9.Size = new System.Drawing.Size(31, 19);
-            this.rb9.TabIndex = 10;
-            this.rb9.Text = "9";
-            this.rb9.UseVisualStyleBackColor = true;
-            // 
-            // rb8
-            // 
-            this.rb8.AutoSize = true;
-            this.rb8.Location = new System.Drawing.Point(320, 22);
-            this.rb8.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.rb8.Name = "rb8";
-            this.rb8.Size = new System.Drawing.Size(31, 19);
-            this.rb8.TabIndex = 9;
-            this.rb8.Text = "8";
-            this.rb8.UseVisualStyleBackColor = true;
-            // 
-            // rb7
-            // 
-            this.rb7.AutoSize = true;
-            this.rb7.Location = new System.Drawing.Point(283, 185);
-            this.rb7.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.rb7.Name = "rb7";
-            this.rb7.Size = new System.Drawing.Size(31, 19);
-            this.rb7.TabIndex = 8;
-            this.rb7.Text = "7";
-            this.rb7.UseVisualStyleBackColor = true;
-            // 
-            // rb6
-            // 
-            this.rb6.AutoSize = true;
-            this.rb6.Location = new System.Drawing.Point(283, 157);
-            this.rb6.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.rb6.Name = "rb6";
-            this.rb6.Size = new System.Drawing.Size(31, 19);
-            this.rb6.TabIndex = 7;
-            this.rb6.Text = "6";
-            this.rb6.UseVisualStyleBackColor = true;
-            // 
-            // rb5
-            // 
-            this.rb5.AutoSize = true;
-            this.rb5.Location = new System.Drawing.Point(282, 130);
-            this.rb5.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.rb5.Name = "rb5";
-            this.rb5.Size = new System.Drawing.Size(31, 19);
-            this.rb5.TabIndex = 6;
-            this.rb5.Text = "5";
-            this.rb5.UseVisualStyleBackColor = true;
-            // 
-            // rb4
-            // 
-            this.rb4.AutoSize = true;
-            this.rb4.Location = new System.Drawing.Point(282, 105);
-            this.rb4.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.rb4.Name = "rb4";
-            this.rb4.Size = new System.Drawing.Size(31, 19);
-            this.rb4.TabIndex = 5;
-            this.rb4.Text = "4";
-            this.rb4.UseVisualStyleBackColor = true;
-            // 
-            // rb3
-            // 
-            this.rb3.AutoSize = true;
-            this.rb3.Location = new System.Drawing.Point(282, 77);
-            this.rb3.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.rb3.Name = "rb3";
-            this.rb3.Size = new System.Drawing.Size(31, 19);
-            this.rb3.TabIndex = 4;
-            this.rb3.Text = "3";
-            this.rb3.UseVisualStyleBackColor = true;
-            // 
-            // rb2
-            // 
-            this.rb2.AutoSize = true;
-            this.rb2.Location = new System.Drawing.Point(282, 49);
-            this.rb2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.rb2.Name = "rb2";
-            this.rb2.Size = new System.Drawing.Size(31, 19);
-            this.rb2.TabIndex = 3;
-            this.rb2.Text = "2";
-            this.rb2.UseVisualStyleBackColor = true;
-            // 
-            // rb1
-            // 
-            this.rb1.AutoSize = true;
-            this.rb1.Checked = true;
-            this.rb1.Location = new System.Drawing.Point(281, 22);
-            this.rb1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.rb1.Name = "rb1";
-            this.rb1.Size = new System.Drawing.Size(31, 19);
-            this.rb1.TabIndex = 2;
-            this.rb1.TabStop = true;
-            this.rb1.Text = "1";
-            this.rb1.UseVisualStyleBackColor = true;
-            // 
-            // type_pb
-            // 
-            this.type_pb.InitialImage = null;
-            this.type_pb.Location = new System.Drawing.Point(9, 22);
-            this.type_pb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.type_pb.Name = "type_pb";
-            this.type_pb.Size = new System.Drawing.Size(255, 200);
-            this.type_pb.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.type_pb.TabIndex = 1;
-            this.type_pb.TabStop = false;
             // 
             // getFi_b
             // 
@@ -450,12 +244,12 @@ namespace CalculateVessels
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(464, 607);
+            this.label14.Location = new System.Drawing.Point(107, 577);
             this.label14.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(133, 15);
+            this.label14.Size = new System.Drawing.Size(108, 15);
             this.label14.TabIndex = 140;
-            this.label14.Text = "Минусовой допуск, c2:";
+            this.label14.Text = "Ширина опоры, b:";
             // 
             // label13
             // 
@@ -490,14 +284,14 @@ namespace CalculateVessels
             this.label9.TabIndex = 137;
             this.label9.Text = "Модуль продольной упругости, E:";
             // 
-            // c2_tb
+            // b_tb
             // 
-            this.c2_tb.Location = new System.Drawing.Point(603, 603);
-            this.c2_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.c2_tb.Name = "c2_tb";
-            this.c2_tb.Size = new System.Drawing.Size(50, 23);
-            this.c2_tb.TabIndex = 132;
-            this.c2_tb.Text = "1";
+            this.b_tb.Location = new System.Drawing.Point(223, 573);
+            this.b_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.b_tb.Name = "b_tb";
+            this.b_tb.Size = new System.Drawing.Size(50, 23);
+            this.b_tb.TabIndex = 132;
+            this.b_tb.Text = "1";
             // 
             // c_tb
             // 
@@ -547,53 +341,6 @@ namespace CalculateVessels
             this.label8.TabIndex = 134;
             this.label8.Text = "Допускаемое напряжение, [σ]:";
             // 
-            // dav_gb
-            // 
-            this.dav_gb.Controls.Add(this.label5);
-            this.dav_gb.Controls.Add(this.nar_rb);
-            this.dav_gb.Controls.Add(this.vn_rb);
-            this.dav_gb.Location = new System.Drawing.Point(391, 437);
-            this.dav_gb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.dav_gb.Name = "dav_gb";
-            this.dav_gb.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.dav_gb.Size = new System.Drawing.Size(350, 77);
-            this.dav_gb.TabIndex = 127;
-            this.dav_gb.TabStop = false;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(7, 14);
-            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(134, 15);
-            this.label5.TabIndex = 9;
-            this.label5.Text = "Расчетное давление, p:";
-            // 
-            // nar_rb
-            // 
-            this.nar_rb.AutoSize = true;
-            this.nar_rb.Location = new System.Drawing.Point(185, 45);
-            this.nar_rb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.nar_rb.Name = "nar_rb";
-            this.nar_rb.Size = new System.Drawing.Size(80, 19);
-            this.nar_rb.TabIndex = 6;
-            this.nar_rb.Text = "наружное";
-            this.nar_rb.UseVisualStyleBackColor = true;
-            // 
-            // vn_rb
-            // 
-            this.vn_rb.AutoSize = true;
-            this.vn_rb.Checked = true;
-            this.vn_rb.Location = new System.Drawing.Point(81, 45);
-            this.vn_rb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.vn_rb.Name = "vn_rb";
-            this.vn_rb.Size = new System.Drawing.Size(88, 19);
-            this.vn_rb.TabIndex = 5;
-            this.vn_rb.TabStop = true;
-            this.vn_rb.Text = "внутреннее";
-            this.vn_rb.UseVisualStyleBackColor = true;
-            // 
             // label4
             // 
             this.label4.AutoSize = true;
@@ -603,15 +350,6 @@ namespace CalculateVessels
             this.label4.Size = new System.Drawing.Size(20, 15);
             this.label4.TabIndex = 129;
             this.label4.Text = "°C";
-            // 
-            // t_tb
-            // 
-            this.t_tb.Location = new System.Drawing.Point(559, 408);
-            this.t_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.t_tb.Name = "t_tb";
-            this.t_tb.Size = new System.Drawing.Size(50, 23);
-            this.t_tb.TabIndex = 125;
-            this.t_tb.Text = "50";
             // 
             // Gost_cb
             // 
@@ -625,16 +363,6 @@ namespace CalculateVessels
             this.Gost_cb.Size = new System.Drawing.Size(139, 23);
             this.Gost_cb.TabIndex = 123;
             this.Gost_cb.Tag = "";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(404, 411);
-            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(149, 15);
-            this.label3.TabIndex = 126;
-            this.label3.Text = "Расчетная температура, t:";
             // 
             // label2
             // 
@@ -786,11 +514,14 @@ namespace CalculateVessels
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.label6);
+            this.groupBox1.Controls.Add(this.textBox2);
+            this.groupBox1.Controls.Add(this.label7);
             this.groupBox1.Controls.Add(this.isAssembly_cb);
             this.groupBox1.Controls.Add(this.N_cb);
             this.groupBox1.Controls.Add(this.isNotPressureIn_cb);
             this.groupBox1.Controls.Add(this.label43);
-            this.groupBox1.Controls.Add(this.TCalculateK_tb);
+            this.groupBox1.Controls.Add(this.t_tb);
             this.groupBox1.Controls.Add(this.label33);
             this.groupBox1.Controls.Add(this.label23);
             this.groupBox1.Controls.Add(this.p_tb);
@@ -798,10 +529,46 @@ namespace CalculateVessels
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Location = new System.Drawing.Point(12, 239);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(350, 115);
+            this.groupBox1.Size = new System.Drawing.Size(350, 140);
             this.groupBox1.TabIndex = 153;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Условия нагружения";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(277, 111);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(16, 15);
+            this.label6.TabIndex = 134;
+            this.label6.Text = "H";
+            // 
+            // textBox2
+            // 
+            this.textBox2.Location = new System.Drawing.Point(221, 108);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(50, 23);
+            this.textBox2.TabIndex = 133;
+            this.textBox2.Text = "2.5";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(8, 112);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(207, 15);
+            this.label7.TabIndex = 132;
+            this.label7.Text = "Собственный вес с содержимым, G:";
+            // 
+            // isAssembly_cb
+            // 
+            this.isAssembly_cb.AutoSize = true;
+            this.isAssembly_cb.Location = new System.Drawing.Point(260, 74);
+            this.isAssembly_cb.Name = "isAssembly_cb";
+            this.isAssembly_cb.Size = new System.Drawing.Size(78, 34);
+            this.isAssembly_cb.TabIndex = 131;
+            this.isAssembly_cb.Text = "Условия\r\n монтажа";
+            this.isAssembly_cb.UseVisualStyleBackColor = true;
             // 
             // N_cb
             // 
@@ -835,13 +602,13 @@ namespace CalculateVessels
             this.label43.Text = "Число циклов нагружения \r\nза срок службы, N:";
             this.label43.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
-            // TCalculateK_tb
+            // t_tb
             // 
-            this.TCalculateK_tb.Location = new System.Drawing.Point(165, 51);
-            this.TCalculateK_tb.Name = "TCalculateK_tb";
-            this.TCalculateK_tb.Size = new System.Drawing.Size(50, 23);
-            this.TCalculateK_tb.TabIndex = 42;
-            this.TCalculateK_tb.Text = "150";
+            this.t_tb.Location = new System.Drawing.Point(165, 51);
+            this.t_tb.Name = "t_tb";
+            this.t_tb.Size = new System.Drawing.Size(50, 23);
+            this.t_tb.TabIndex = 42;
+            this.t_tb.Text = "150";
             // 
             // label33
             // 
@@ -878,21 +645,213 @@ namespace CalculateVessels
             this.label27.TabIndex = 36;
             this.label27.Text = "Расчетное давление, p:";
             // 
-            // isAssembly_cb
+            // shellReinforcement_gb
             // 
-            this.isAssembly_cb.AutoSize = true;
-            this.isAssembly_cb.Location = new System.Drawing.Point(260, 74);
-            this.isAssembly_cb.Name = "isAssembly_cb";
-            this.isAssembly_cb.Size = new System.Drawing.Size(78, 34);
-            this.isAssembly_cb.TabIndex = 131;
-            this.isAssembly_cb.Text = "Условия\r\n монтажа";
-            this.isAssembly_cb.UseVisualStyleBackColor = true;
+            this.shellReinforcement_gb.Controls.Add(this.ring_rb);
+            this.shellReinforcement_gb.Controls.Add(this.sheet_rb);
+            this.shellReinforcement_gb.Controls.Add(this.nothing_rb);
+            this.shellReinforcement_gb.Location = new System.Drawing.Point(12, 385);
+            this.shellReinforcement_gb.Name = "shellReinforcement_gb";
+            this.shellReinforcement_gb.Size = new System.Drawing.Size(172, 100);
+            this.shellReinforcement_gb.TabIndex = 154;
+            this.shellReinforcement_gb.TabStop = false;
+            this.shellReinforcement_gb.Text = "Укрепление обечайки";
+            // 
+            // ring_rb
+            // 
+            this.ring_rb.AutoSize = true;
+            this.ring_rb.Location = new System.Drawing.Point(10, 72);
+            this.ring_rb.Name = "ring_rb";
+            this.ring_rb.Size = new System.Drawing.Size(135, 19);
+            this.ring_rb.TabIndex = 2;
+            this.ring_rb.Text = "Кольцом жесткости";
+            this.ring_rb.UseVisualStyleBackColor = true;
+            this.ring_rb.CheckedChanged += new System.EventHandler(this.ShellReinforcement_rb_CheckedChanged);
+            // 
+            // sheet_rb
+            // 
+            this.sheet_rb.AutoSize = true;
+            this.sheet_rb.Location = new System.Drawing.Point(10, 47);
+            this.sheet_rb.Name = "sheet_rb";
+            this.sheet_rb.Size = new System.Drawing.Size(141, 19);
+            this.sheet_rb.TabIndex = 1;
+            this.sheet_rb.Text = "Подкладным листом";
+            this.sheet_rb.UseVisualStyleBackColor = true;
+            this.sheet_rb.CheckedChanged += new System.EventHandler(this.ShellReinforcement_rb_CheckedChanged);
+            // 
+            // nothing_rb
+            // 
+            this.nothing_rb.AutoSize = true;
+            this.nothing_rb.Checked = true;
+            this.nothing_rb.Location = new System.Drawing.Point(10, 22);
+            this.nothing_rb.Name = "nothing_rb";
+            this.nothing_rb.Size = new System.Drawing.Size(111, 19);
+            this.nothing_rb.TabIndex = 0;
+            this.nothing_rb.TabStop = true;
+            this.nothing_rb.Text = "Без укрепления";
+            this.nothing_rb.UseVisualStyleBackColor = true;
+            this.nothing_rb.CheckedChanged += new System.EventHandler(this.ShellReinforcement_rb_CheckedChanged);
+            // 
+            // fixing_gb
+            // 
+            this.fixing_gb.Controls.Add(this.fix_rb);
+            this.fixing_gb.Controls.Add(this.move_rb);
+            this.fixing_gb.Location = new System.Drawing.Point(12, 491);
+            this.fixing_gb.Name = "fixing_gb";
+            this.fixing_gb.Size = new System.Drawing.Size(172, 76);
+            this.fixing_gb.TabIndex = 155;
+            this.fixing_gb.TabStop = false;
+            this.fixing_gb.Text = "Закрепление";
+            // 
+            // fix_rb
+            // 
+            this.fix_rb.AutoSize = true;
+            this.fix_rb.Location = new System.Drawing.Point(6, 47);
+            this.fix_rb.Name = "fix_rb";
+            this.fix_rb.Size = new System.Drawing.Size(101, 19);
+            this.fix_rb.TabIndex = 1;
+            this.fix_rb.Text = "Неподвижная";
+            this.fix_rb.UseVisualStyleBackColor = true;
+            // 
+            // move_rb
+            // 
+            this.move_rb.AutoSize = true;
+            this.move_rb.Checked = true;
+            this.move_rb.Location = new System.Drawing.Point(6, 22);
+            this.move_rb.Name = "move_rb";
+            this.move_rb.Size = new System.Drawing.Size(88, 19);
+            this.move_rb.TabIndex = 0;
+            this.move_rb.TabStop = true;
+            this.move_rb.Text = "Подвижная";
+            this.move_rb.UseVisualStyleBackColor = true;
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Location = new System.Drawing.Point(190, 385);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(172, 100);
+            this.groupBox2.TabIndex = 156;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Распорные ребра";
+            // 
+            // ringLocation_gb
+            // 
+            this.ringLocation_gb.Controls.Add(this.out_rb);
+            this.ringLocation_gb.Controls.Add(this.in_rb);
+            this.ringLocation_gb.Enabled = false;
+            this.ringLocation_gb.Location = new System.Drawing.Point(190, 491);
+            this.ringLocation_gb.Name = "ringLocation_gb";
+            this.ringLocation_gb.Size = new System.Drawing.Size(172, 76);
+            this.ringLocation_gb.TabIndex = 157;
+            this.ringLocation_gb.TabStop = false;
+            this.ringLocation_gb.Text = "Расположение кольца";
+            // 
+            // out_rb
+            // 
+            this.out_rb.AutoSize = true;
+            this.out_rb.Location = new System.Drawing.Point(6, 47);
+            this.out_rb.Name = "out_rb";
+            this.out_rb.Size = new System.Drawing.Size(131, 19);
+            this.out_rb.TabIndex = 1;
+            this.out_rb.Text = "Снаружи обечайки";
+            this.out_rb.UseVisualStyleBackColor = true;
+            this.out_rb.CheckedChanged += new System.EventHandler(this.InOut_rb_CheckedChanged);
+            // 
+            // in_rb
+            // 
+            this.in_rb.AutoSize = true;
+            this.in_rb.Checked = true;
+            this.in_rb.Location = new System.Drawing.Point(6, 22);
+            this.in_rb.Name = "in_rb";
+            this.in_rb.Size = new System.Drawing.Size(120, 19);
+            this.in_rb.TabIndex = 0;
+            this.in_rb.TabStop = true;
+            this.in_rb.Text = "Внутри обечайки";
+            this.in_rb.UseVisualStyleBackColor = true;
+            this.in_rb.CheckedChanged += new System.EventHandler(this.InOut_rb_CheckedChanged);
+            // 
+            // saddle_pb
+            // 
+            this.saddle_pb.Location = new System.Drawing.Point(369, 35);
+            this.saddle_pb.Name = "saddle_pb";
+            this.saddle_pb.Size = new System.Drawing.Size(372, 198);
+            this.saddle_pb.TabIndex = 158;
+            this.saddle_pb.TabStop = false;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(81, 606);
+            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(134, 15);
+            this.label5.TabIndex = 160;
+            this.label5.Text = "Угол охвата опоры, δ1:";
+            // 
+            // delta1_tb
+            // 
+            this.delta1_tb.Location = new System.Drawing.Point(223, 602);
+            this.delta1_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.delta1_tb.Name = "delta1_tb";
+            this.delta1_tb.Size = new System.Drawing.Size(50, 23);
+            this.delta1_tb.TabIndex = 159;
+            this.delta1_tb.Text = "1";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(277, 606);
+            this.label3.Margin = new System.Windows.Forms.Padding(0, 0, 4, 0);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(12, 15);
+            this.label3.TabIndex = 161;
+            this.label3.Text = "°";
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(277, 635);
+            this.label21.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(25, 15);
+            this.label21.TabIndex = 164;
+            this.label21.Text = "мм";
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Location = new System.Drawing.Point(29, 635);
+            this.label22.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(186, 15);
+            this.label22.TabIndex = 163;
+            this.label22.Text = "Расстояние от края элемента, l0:";
+            // 
+            // l0_tb
+            // 
+            this.l0_tb.Location = new System.Drawing.Point(223, 631);
+            this.l0_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.l0_tb.Name = "l0_tb";
+            this.l0_tb.Size = new System.Drawing.Size(50, 23);
+            this.l0_tb.TabIndex = 162;
+            this.l0_tb.Text = "1";
             // 
             // SaddleForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 655);
+            this.ClientSize = new System.Drawing.Size(755, 769);
+            this.Controls.Add(this.label21);
+            this.Controls.Add(this.label22);
+            this.Controls.Add(this.l0_tb);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.delta1_tb);
+            this.Controls.Add(this.saddle_pb);
+            this.Controls.Add(this.ringLocation_gb);
+            this.Controls.Add(this.groupBox2);
+            this.Controls.Add(this.fixing_gb);
+            this.Controls.Add(this.shellReinforcement_gb);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.shell_gb);
             this.Controls.Add(this.nameShell_tb);
@@ -900,37 +859,36 @@ namespace CalculateVessels
             this.Controls.Add(this.otv_cb);
             this.Controls.Add(this.otv_gb);
             this.Controls.Add(this.label24);
-            this.Controls.Add(this.type_gb);
             this.Controls.Add(this.getE_b);
             this.Controls.Add(this.label19);
             this.Controls.Add(this.grtSigma_b);
             this.Controls.Add(this.label18);
             this.Controls.Add(this.label14);
             this.Controls.Add(this.label9);
-            this.Controls.Add(this.c2_tb);
+            this.Controls.Add(this.b_tb);
             this.Controls.Add(this.E_tb);
             this.Controls.Add(this.sigma_d_tb);
             this.Controls.Add(this.label8);
-            this.Controls.Add(this.dav_gb);
-            this.Controls.Add(this.t_tb);
             this.Controls.Add(this.Gost_cb);
-            this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.name_tb);
             this.Controls.Add(this.label1);
             this.Name = "SaddleForm";
             this.Text = "SaddleForm";
+            this.Load += new System.EventHandler(this.SaddleForm_Load);
             this.otv_gb.ResumeLayout(false);
             this.otv_gb.PerformLayout();
-            this.type_gb.ResumeLayout(false);
-            this.type_gb.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.type_pb)).EndInit();
-            this.dav_gb.ResumeLayout(false);
-            this.dav_gb.PerformLayout();
             this.shell_gb.ResumeLayout(false);
             this.shell_gb.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.shellReinforcement_gb.ResumeLayout(false);
+            this.shellReinforcement_gb.PerformLayout();
+            this.fixing_gb.ResumeLayout(false);
+            this.fixing_gb.PerformLayout();
+            this.ringLocation_gb.ResumeLayout(false);
+            this.ringLocation_gb.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.saddle_pb)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -946,23 +904,6 @@ namespace CalculateVessels
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label label25;
         private System.Windows.Forms.Label label24;
-        private System.Windows.Forms.GroupBox type_gb;
-        private System.Windows.Forms.RadioButton rb15;
-        private System.Windows.Forms.RadioButton rb14;
-        private System.Windows.Forms.RadioButton rb13;
-        private System.Windows.Forms.RadioButton rb12;
-        private System.Windows.Forms.RadioButton rb11;
-        private System.Windows.Forms.RadioButton rb10;
-        private System.Windows.Forms.RadioButton rb9;
-        private System.Windows.Forms.RadioButton rb8;
-        private System.Windows.Forms.RadioButton rb7;
-        private System.Windows.Forms.RadioButton rb6;
-        private System.Windows.Forms.RadioButton rb5;
-        private System.Windows.Forms.RadioButton rb4;
-        private System.Windows.Forms.RadioButton rb3;
-        private System.Windows.Forms.RadioButton rb2;
-        private System.Windows.Forms.RadioButton rb1;
-        private System.Windows.Forms.PictureBox type_pb;
         private System.Windows.Forms.Button getFi_b;
         private System.Windows.Forms.Button getE_b;
         private System.Windows.Forms.Label label19;
@@ -972,20 +913,14 @@ namespace CalculateVessels
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.TextBox c2_tb;
+        private System.Windows.Forms.TextBox b_tb;
         private System.Windows.Forms.TextBox c_tb;
         internal System.Windows.Forms.TextBox fi_tb;
         private System.Windows.Forms.TextBox E_tb;
         private System.Windows.Forms.TextBox sigma_d_tb;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.GroupBox dav_gb;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.RadioButton nar_rb;
-        private System.Windows.Forms.RadioButton vn_rb;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox t_tb;
         private System.Windows.Forms.ComboBox Gost_cb;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox name_tb;
         private System.Windows.Forms.Label label1;
@@ -1003,12 +938,33 @@ namespace CalculateVessels
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.CheckBox isNotPressureIn_cb;
         private System.Windows.Forms.Label label43;
-        private System.Windows.Forms.TextBox TCalculateK_tb;
+        private System.Windows.Forms.TextBox t_tb;
         private System.Windows.Forms.Label label33;
         private System.Windows.Forms.Label label23;
         private System.Windows.Forms.TextBox p_tb;
         private System.Windows.Forms.Label label27;
         private System.Windows.Forms.ComboBox N_cb;
         private System.Windows.Forms.CheckBox isAssembly_cb;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.GroupBox shellReinforcement_gb;
+        private System.Windows.Forms.RadioButton ring_rb;
+        private System.Windows.Forms.RadioButton sheet_rb;
+        private System.Windows.Forms.RadioButton nothing_rb;
+        private System.Windows.Forms.GroupBox fixing_gb;
+        private System.Windows.Forms.RadioButton fix_rb;
+        private System.Windows.Forms.RadioButton move_rb;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.GroupBox ringLocation_gb;
+        private System.Windows.Forms.RadioButton out_rb;
+        private System.Windows.Forms.RadioButton in_rb;
+        private System.Windows.Forms.PictureBox saddle_pb;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TextBox delta1_tb;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.TextBox l0_tb;
     }
 }

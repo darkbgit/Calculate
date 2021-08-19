@@ -376,6 +376,7 @@ namespace CalculateVessels
             // 
             // button10
             // 
+            this.button10.Enabled = false;
             this.button10.Location = new System.Drawing.Point(399, 31);
             this.button10.Name = "button10";
             this.button10.Size = new System.Drawing.Size(186, 27);
@@ -386,6 +387,7 @@ namespace CalculateVessels
             // 
             // button11
             // 
+            this.button11.Enabled = false;
             this.button11.Location = new System.Drawing.Point(207, 64);
             this.button11.Name = "button11";
             this.button11.Size = new System.Drawing.Size(186, 27);
@@ -395,6 +397,7 @@ namespace CalculateVessels
             // 
             // button12
             // 
+            this.button12.Enabled = false;
             this.button12.Location = new System.Drawing.Point(207, 97);
             this.button12.Name = "button12";
             this.button12.Size = new System.Drawing.Size(186, 27);
@@ -404,6 +407,7 @@ namespace CalculateVessels
             // 
             // button13
             // 
+            this.button13.Enabled = false;
             this.button13.Location = new System.Drawing.Point(206, 130);
             this.button13.Name = "button13";
             this.button13.Size = new System.Drawing.Size(186, 27);
@@ -413,6 +417,7 @@ namespace CalculateVessels
             // 
             // button14
             // 
+            this.button14.Enabled = false;
             this.button14.Location = new System.Drawing.Point(207, 163);
             this.button14.Name = "button14";
             this.button14.Size = new System.Drawing.Size(186, 27);
@@ -435,6 +440,7 @@ namespace CalculateVessels
             // 
             // button16
             // 
+            this.button16.Enabled = false;
             this.button16.Location = new System.Drawing.Point(206, 427);
             this.button16.Name = "button16";
             this.button16.Size = new System.Drawing.Size(186, 27);
@@ -444,6 +450,7 @@ namespace CalculateVessels
             // 
             // button17
             // 
+            this.button17.Enabled = false;
             this.button17.Location = new System.Drawing.Point(206, 394);
             this.button17.Name = "button17";
             this.button17.Size = new System.Drawing.Size(186, 27);
@@ -453,6 +460,7 @@ namespace CalculateVessels
             // 
             // button18
             // 
+            this.button18.Enabled = false;
             this.button18.Location = new System.Drawing.Point(205, 361);
             this.button18.Name = "button18";
             this.button18.Size = new System.Drawing.Size(186, 27);
@@ -462,6 +470,7 @@ namespace CalculateVessels
             // 
             // button19
             // 
+            this.button19.Enabled = false;
             this.button19.Location = new System.Drawing.Point(206, 328);
             this.button19.Name = "button19";
             this.button19.Size = new System.Drawing.Size(186, 27);
@@ -471,6 +480,7 @@ namespace CalculateVessels
             // 
             // button20
             // 
+            this.button20.Enabled = false;
             this.button20.Location = new System.Drawing.Point(206, 295);
             this.button20.Name = "button20";
             this.button20.Size = new System.Drawing.Size(186, 27);
@@ -480,6 +490,7 @@ namespace CalculateVessels
             // 
             // button21
             // 
+            this.button21.Enabled = false;
             this.button21.Location = new System.Drawing.Point(206, 262);
             this.button21.Name = "button21";
             this.button21.Size = new System.Drawing.Size(186, 27);
@@ -489,6 +500,7 @@ namespace CalculateVessels
             // 
             // button22
             // 
+            this.button22.Enabled = false;
             this.button22.Location = new System.Drawing.Point(399, 394);
             this.button22.Name = "button22";
             this.button22.Size = new System.Drawing.Size(186, 27);
@@ -498,6 +510,7 @@ namespace CalculateVessels
             // 
             // button23
             // 
+            this.button23.Enabled = false;
             this.button23.Location = new System.Drawing.Point(399, 361);
             this.button23.Name = "button23";
             this.button23.Size = new System.Drawing.Size(186, 27);
@@ -507,6 +520,7 @@ namespace CalculateVessels
             // 
             // button24
             // 
+            this.button24.Enabled = false;
             this.button24.Location = new System.Drawing.Point(398, 328);
             this.button24.Name = "button24";
             this.button24.Size = new System.Drawing.Size(186, 27);
@@ -516,6 +530,7 @@ namespace CalculateVessels
             // 
             // button25
             // 
+            this.button25.Enabled = false;
             this.button25.Location = new System.Drawing.Point(399, 295);
             this.button25.Name = "button25";
             this.button25.Size = new System.Drawing.Size(186, 27);
@@ -525,6 +540,7 @@ namespace CalculateVessels
             // 
             // button26
             // 
+            this.button26.Enabled = false;
             this.button26.Location = new System.Drawing.Point(399, 262);
             this.button26.Name = "button26";
             this.button26.Size = new System.Drawing.Size(186, 27);
@@ -534,6 +550,7 @@ namespace CalculateVessels
             // 
             // button27
             // 
+            this.button27.Enabled = false;
             this.button27.Location = new System.Drawing.Point(399, 229);
             this.button27.Name = "button27";
             this.button27.Size = new System.Drawing.Size(186, 27);
@@ -543,6 +560,7 @@ namespace CalculateVessels
             // 
             // button28
             // 
+            this.button28.Enabled = false;
             this.button28.Location = new System.Drawing.Point(399, 196);
             this.button28.Name = "button28";
             this.button28.Size = new System.Drawing.Size(186, 27);
@@ -552,6 +570,7 @@ namespace CalculateVessels
             // 
             // button29
             // 
+            this.button29.Enabled = false;
             this.button29.Location = new System.Drawing.Point(399, 163);
             this.button29.Name = "button29";
             this.button29.Size = new System.Drawing.Size(186, 27);
@@ -561,6 +580,7 @@ namespace CalculateVessels
             // 
             // button30
             // 
+            this.button30.Enabled = false;
             this.button30.Location = new System.Drawing.Point(398, 130);
             this.button30.Name = "button30";
             this.button30.Size = new System.Drawing.Size(186, 27);
@@ -570,6 +590,7 @@ namespace CalculateVessels
             // 
             // button31
             // 
+            this.button31.Enabled = false;
             this.button31.Location = new System.Drawing.Point(399, 97);
             this.button31.Name = "button31";
             this.button31.Size = new System.Drawing.Size(186, 27);
@@ -579,6 +600,7 @@ namespace CalculateVessels
             // 
             // button32
             // 
+            this.button32.Enabled = false;
             this.button32.Location = new System.Drawing.Point(399, 64);
             this.button32.Name = "button32";
             this.button32.Size = new System.Drawing.Size(186, 27);
