@@ -916,7 +916,6 @@ namespace CalculateVessels
             // 
             // a_tb
             // 
-            this.a_tb.Enabled = false;
             this.a_tb.Location = new System.Drawing.Point(650, 574);
             this.a_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.a_tb.Name = "a_tb";
@@ -973,6 +972,7 @@ namespace CalculateVessels
             this.calc_btn.TabIndex = 169;
             this.calc_btn.Text = "Расчет";
             this.calc_btn.UseVisualStyleBackColor = true;
+            this.calc_btn.Click += new System.EventHandler(this.Calc_btn_Click);
             // 
             // cancel_btn
             // 

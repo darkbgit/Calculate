@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using CalculateVessels.Core.Supports.Enums;
 using CalculateVessels.Core.Supports.Saddle;
 using CalculateVessels.Data.PhysicalData;
+using CalculateVessels.Data.Properties;
 
 namespace CalculateVessels
 {
@@ -382,5 +383,49 @@ namespace CalculateVessels
 
         }
 
+        private void Calc_btn_Click(object sender, EventArgs e)
+        {
+
+            List<string> dataInErr = new();
+
+            //name
+            saddleDataIn.Name = name_tb.Text;
+
+            //shell name
+            saddleDataIn.NameShell = nameShell_tb.Text;
+
+            if (saddleDataIn.IsDataGood)
+            {
+                Saddle saddle = new(saddleDataIn);
+                saddle.Calculate();
+                if (!saddle.IsCriticalError)
+                {
+                    if (this.Owner is MainForm main)
+                    {
+                        main.Word_lv.Items.Add(saddle.ToString());
+                        Elements.ElementsList.Add(saddle);
+                    }
+                    else
+                    {
+                        System.Windows.Forms.MessageBox.Show("MainForm Error");
+                    }
+
+                    if (saddle.IsError)
+                    {
+                        MessageBox.Show(string.Join<string>(Environment.NewLine, saddle.ErrorList));
+                    }
+
+                    MessageBox.Show(Resources.CalcComplete);
+                }
+                else
+                {
+                    MessageBox.Show(string.Join<string>(Environment.NewLine, saddle.ErrorList));
+                }
+            }
+            else
+            {
+                MessageBox.Show(string.Join<string>(Environment.NewLine, dataInErr.Union(saddleDataIn.ErrorList)));
+            }
+        }
     }
 }

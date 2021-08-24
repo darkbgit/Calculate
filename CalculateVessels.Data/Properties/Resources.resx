@@ -1105,4 +1105,7 @@
   <data name="TubeSheet_UserDef_UTube" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\TubeSheet UserDef UTube.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="CalcComplete" xml:space="preserve">
+	  <value>Calculation complete</value>
+  </data>
 </root>

@@ -26,11 +26,9 @@ namespace CalculateVessels.Core.Supports.Saddle
         public double G { get; set; }
         public double H { get; set; }
         public double L { get; set; }
-        public double Lob { get; set; }
         public double p { get; set; }
         public double s { get; set; }
         public double s2 { get; set; }
-        public double Temp { get; set; }
         public SaddleType Type { get; set; }
         public string Name { get; set; }
         public string NameShell { get; set; }

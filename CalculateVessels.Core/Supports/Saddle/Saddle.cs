@@ -25,7 +25,6 @@ namespace CalculateVessels.Core.Supports.Saddle
         public bool IsCriticalError { get; private set; }
         public bool IsError {get; private set; }
         public List<string> ErrorList { get => _errorList; private set => _errorList = value; }
-        public bool IsConditionUseFormulas { get; private set; }
         public List<string> Bibliography { get; } = new()
         {
             Data.Properties.Resources.GOST_34233_1,
@@ -74,7 +73,7 @@ namespace CalculateVessels.Core.Supports.Saddle
         private double _v1_2;
         private double _v1_3;
         private double _v21_2;
-        private double _v21_3 = 0;
+        private double _v21_3;
         private double _v22_2;
         private double _v22_3;
         private double _K2;
@@ -97,6 +96,7 @@ namespace CalculateVessels.Core.Supports.Saddle
         private double _E;
         private List<string> _errorList = new();
         private double _ny;
+        private bool _isConditionUseFormulas;
 
 
         public void Calculate()
@@ -386,16 +386,16 @@ namespace CalculateVessels.Core.Supports.Saddle
             }
 
 
-            IsConditionUseFormulas = true;
+            _isConditionUseFormulas = true;
 
-            if (_saddleDataIn.delta1 <= 60 || _saddleDataIn.delta1 >= 180)
+            if (_saddleDataIn.delta1 is <= 60 or >= 180)
             {
-                IsConditionUseFormulas = false;
+                _isConditionUseFormulas = false;
                 ErrorList.Add("delta1 должно быть в пределах 60-180");
             }
             if ((_saddleDataIn.s - _saddleDataIn.c) / _saddleDataIn.D > 0.05)
             {
-                IsConditionUseFormulas = false;
+                _isConditionUseFormulas = false;
                 ErrorList.Add("Условие применения формул не выполняется");
             }
 
@@ -405,13 +405,13 @@ namespace CalculateVessels.Core.Supports.Saddle
                 {
                     if (_saddleDataIn.delta2 < _saddleDataIn.delta1 + 20)
                     {
-                        IsConditionUseFormulas = false;
+                        _isConditionUseFormulas = false;
                         ErrorList.Add("Угол обхвата подкладного листа должен быть delta2>=delta1+20");
                     }
 
                     if (_saddleDataIn.s2 < _saddleDataIn.s)
                     {
-                        IsConditionUseFormulas = false;
+                        _isConditionUseFormulas = false;
                         ErrorList.Add("Толщина подкладного листа должна быть s2>=s");
                     }
 
@@ -422,7 +422,7 @@ namespace CalculateVessels.Core.Supports.Saddle
                     _Ak = (_saddleDataIn.s - _saddleDataIn.c) * Math.Sqrt(_saddleDataIn.D * (_saddleDataIn.s - _saddleDataIn.c));
                     if (_saddleDataIn.Ak < _Ak)
                     {
-                        IsConditionUseFormulas = false;
+                        _isConditionUseFormulas = false;
                         ErrorList.Add("Условие применения формул не выполняется");
                     }
 
@@ -496,10 +496,8 @@ namespace CalculateVessels.Core.Supports.Saddle
                     .AddCell($"{_saddleDataIn.c} мм");
 
                 table.AddRow()
-                    .AddCell("Длина обечайки, ")
-                    .AppendEquation("L_ob")
-                    .AppendText(":")
-                    .AddCell($"{_saddleDataIn.Lob} мм");
+                    .AddCell("Длина цилиндрической части сосуда, включая длину цилиндрической отбортовки днища, L:")
+                    .AddCell($"{_saddleDataIn.L} мм");
 
                 table.AddRow()
                     .AddCell("Коэффициент прочности сварного шва, φ:")
@@ -520,8 +518,8 @@ namespace CalculateVessels.Core.Supports.Saddle
                     .AddCell($"{_saddleDataIn.delta1} °");
 
                 table.AddRow()
-                    .AddCell("Длина свободно выступающей части, e:")
-                    .AddCell($"{_E} мм");
+                    .AddCell("Длина свободно выступающей части сосуда, e:")
+                    .AddCell($"{_saddleDataIn.e} мм");
 
                 table.AddRow()
                     .AddCell("Длина выступающей цилиндрической части сосуда, включая отбортовку днища, a")
@@ -539,7 +537,7 @@ namespace CalculateVessels.Core.Supports.Saddle
                         .AddCell($"{_saddleDataIn.s2} мм");
 
                     table.AddRow()
-                        .AddCell("Ширина подкладного листа, мм")
+                        .AddCell("Ширина подкладного листа, ")
                         .AppendEquation("b_2")
                         .AppendText(":")
                         .AddCell($"{_saddleDataIn.b2} мм");
@@ -567,7 +565,7 @@ namespace CalculateVessels.Core.Supports.Saddle
 
                 table.AddRow()
                     .AddCell("Расчетная температура, Т:")
-                    .AddCell($"{_saddleDataIn.Temp} °С");
+                    .AddCell($"{_saddleDataIn.t} °С");
 
                 table.AddRow()
                     .AddCell("Расчетное " + 
@@ -656,7 +654,8 @@ namespace CalculateVessels.Core.Supports.Saddle
                     .AppendEquation($"{_conditionStrength1_1:f2}≤{_conditionStrength1_2:f2}");
                 if (_conditionStrength1_1 <= _conditionStrength1_2)
                 {
-                    body.AddParagraph("Условие прочности выполняется");
+                    body.AddParagraph("Условие прочности выполняется")
+                        .Bold();
                 }
                 else
                 {
@@ -675,7 +674,8 @@ namespace CalculateVessels.Core.Supports.Saddle
 
                 if (_conditionStability1 <= 1)
                 {
-                    body.AddParagraph("Условие устойчивости выполняется");
+                    body.AddParagraph("Условие устойчивости выполняется")
+                        .Bold();
                 }
                 else
                 {
@@ -688,6 +688,8 @@ namespace CalculateVessels.Core.Supports.Saddle
             {
                 body.AddParagraph("Проверка несущей способности обечайки в сечении между опорами не требуется");
             }
+
+            body.AddParagraph("");
 
             switch (_saddleDataIn.Type)
             {
@@ -791,11 +793,11 @@ namespace CalculateVessels.Core.Supports.Saddle
 
                     body.AddParagraph("Для ")
                         .AppendEquation("ϑ_2")
-                        .AddRun("принимают одно из значений ")
+                        .AddRun(" принимают одно из значений ")
                         .AppendEquation("ϑ_(2,1)")
                         .AddRun(" или ")
                         .AppendEquation("ϑ_(2,2)")
-                        .AddRun(", для которого предельное напряжение изгибабудет наименьшим.");
+                        .AddRun(", для которого предельное напряжение изгиба будет наименьшим.");
 
                     body.AddParagraph("")
                         .AppendEquation(_K1_2For_v21 < _K1_2For_v22
@@ -822,11 +824,11 @@ namespace CalculateVessels.Core.Supports.Saddle
 
                     body.AddParagraph("Для ")
                         .AppendEquation("ϑ_2")
-                        .AddRun("принимают одно из значений ")
+                        .AddRun(" принимают одно из значений ")
                         .AppendEquation("ϑ_(2,1)")
                         .AddRun(" или ")
                         .AppendEquation("ϑ_(2,2)")
-                        .AddRun(", для которого предельное напряжение изгибабудет наименьшим.");
+                        .AddRun(", для которого предельное напряжение изгиба будет наименьшим.");
 
                     body.AddParagraph("").AppendEquation(_K1_3For_v21 < _K1_3For_v22
                         ? $"ϑ_2=ϑ_(2,1)={_v21_3:f2}"
@@ -841,11 +843,12 @@ namespace CalculateVessels.Core.Supports.Saddle
                         .AppendEquation($"[F]_3=(0.9∙{_sigmai2:f2}∙({_saddleDataIn.s}-{_saddleDataIn.c})∙√({_saddleDataIn.D}∙({_saddleDataIn.s}-{_saddleDataIn.c})))/({_K14:f2}∙{_K16:f2}∙{_K17:f2})={_F_d3:f2}");
 
                     body.AddParagraph("")
-                        .AppendEquation($"{_F1:f2}≤min{{{_F_d2:f2};{_F_d3:f2}}}");
+                        .AppendEquation($"{_F1:f2}≤min{{{_F_d2:f2};{_F_d3:f2}}}={_conditionStrength2:f2}");
 
                     if (_F1 <= Math.Min(_F_d2, _F_d3))
                     {
-                        body.AddParagraph("Условие прочности выполняется");
+                        body.AddParagraph("Условие прочности выполняется")
+                            .Bold();
                     }
                     else
                     {
@@ -853,6 +856,8 @@ namespace CalculateVessels.Core.Supports.Saddle
                             .Bold()
                             .Color(System.Drawing.Color.Red);
                     }
+
+                    body.AddParagraph("");
 
                     body.AddParagraph("Условие устойчивости");
 
@@ -869,14 +874,13 @@ namespace CalculateVessels.Core.Supports.Saddle
                                         $"={_F1:f2}∙π/4∙{_K13:f2}∙{_K15:f2}∙√({_saddleDataIn.D}/({_saddleDataIn.s}-{_saddleDataIn.c}))={_Fe:f2}");
 
                     body.AddParagraph("")
-                        .AppendEquation(_saddleDataIn.IsPressureIn
-                    ? "0"
-                    : $"{_saddleDataIn.p}/{_p_d}" + 
-                      $"+{_M1:f2}/{_M_d:f2}+{_Fe:f2}/{_F_d:f2}+({_Q1:f2}/{_Q_d:f2})^2={_conditionStability2:f2}≤1");
+                        .AppendEquation((_saddleDataIn.IsPressureIn ? "" : $"{_saddleDataIn.p}/{_p_d}") +
+                                        $"+{_M1:f2}/{_M_d:f2}+{_Fe:f2}/{_F_d:f2}+({_Q1:f2}/{_Q_d:f2})^2={_conditionStability2:f2}≤1");
 
                     if (_conditionStability2 <= 1)
                     {
-                        body.AddParagraph("Условие устойчивости выполняется");
+                        body.AddParagraph("Условие устойчивости выполняется")
+                            .Bold();
                     }
                     else
                     {
@@ -898,7 +902,7 @@ namespace CalculateVessels.Core.Supports.Saddle
                     body.AddParagraph("Параметр, определяемый расстоянием от середины опоры до днища");
                     body.AddParagraph("")
                         .AppendEquation("γ=2.83∙a/D∙√(s_ef/D)" +
-                                        $"=2.83∙{_saddleDataIn.a}/{_saddleDataIn.D}∙√({_sef:f2})/{_saddleDataIn.D})={_gamma:f2}");
+                                        $"=2.83∙{_saddleDataIn.a}/{_saddleDataIn.D}∙√({_sef:f2}/{_saddleDataIn.D})={_gamma:f2}");
 
                     body.AddParagraph("Параметр, определяемый шириной пояса опоры");
                     body.AddParagraph("")
@@ -991,11 +995,11 @@ namespace CalculateVessels.Core.Supports.Saddle
 
                     body.AddParagraph("Для ")
                         .AppendEquation("ϑ_2")
-                        .AddRun("принимают одно из значений ")
+                        .AddRun(" принимают одно из значений ")
                         .AppendEquation("ϑ_(2,1)")
                         .AddRun(" или ")
                         .AppendEquation("ϑ_(2,2)")
-                        .AddRun(", для которого предельное напряжение изгибабудет наименьшим.");
+                        .AddRun(", для которого предельное напряжение изгиба будет наименьшим.");
 
                     body.AddParagraph("")
                         .AppendEquation(_K1_2For_v21 < _K1_2For_v22
@@ -1022,11 +1026,11 @@ namespace CalculateVessels.Core.Supports.Saddle
 
                     body.AddParagraph("Для ")
                         .AppendEquation("ϑ_2")
-                        .AddRun("принимают одно из значений ")
+                        .AddRun(" принимают одно из значений ")
                         .AppendEquation("ϑ_(2,1)")
                         .AddRun(" или ")
                         .AppendEquation("ϑ_(2,2)")
-                        .AddRun(", для которого предельное напряжение изгибабудет наименьшим.");
+                        .AddRun(", для которого предельное напряжение изгиба будет наименьшим.");
 
                     body.AddParagraph("").AppendEquation(_K1_3For_v21 < _K1_3For_v22
                         ? $"ϑ_2=ϑ_(2,1)={_v21_3:f2}"
@@ -1041,11 +1045,12 @@ namespace CalculateVessels.Core.Supports.Saddle
                         .AppendEquation($"[F]_3=(0.9∙{_sigmai2:f2}∙{_sef:f2}∙√({_saddleDataIn.D}∙{_sef:f2}))/({_K14:f2}∙{_K16:f2}∙{_K17:f2})={_F_d3:f2}");
 
                     body.AddParagraph("")
-                        .AppendEquation($"{_F1:f2}≤min{{{_F_d2:f2};{_F_d3:f2}}}");
+                        .AppendEquation($"{_F1:f2}≤min{{{_F_d2:f2};{_F_d3:f2}}}={_conditionStrength2:f2}");
 
                     if (_F1 <= Math.Min(_F_d2, _F_d3))
                     {
-                        body.AddParagraph("Условие прочности выполняется");
+                        body.AddParagraph("Условие прочности выполняется")
+                            .Bold();
                     }
                     else
                     {
@@ -1069,14 +1074,13 @@ namespace CalculateVessels.Core.Supports.Saddle
                                         $"={_F1:f2}∙π/4∙{_K13:f2}∙{_K15:f2}∙√({_saddleDataIn.D}/{_sef:f2})={_Fe:f2}");
 
                     body.AddParagraph("")
-                        .AppendEquation(_saddleDataIn.IsPressureIn
-                    ? "0"
-                    : $"{_saddleDataIn.p}/{_p_d}" +
-                        $"+{_M1:f2}/{_M_d:f2}+{_Fe:f2}/{_F_d:f2}+({_Q1:f2}/{_Q_d:f2})^2={_conditionStability2:f2}≤1");
+                        .AppendEquation((_saddleDataIn.IsPressureIn ? "" : $"{_saddleDataIn.p}/{_p_d}") +
+                                        $"+{_M1:f2}/{_M_d:f2}+{_Fe:f2}/{_F_d:f2}+({_Q1:f2}/{_Q_d:f2})^2={_conditionStability2:f2}≤1");
 
                     if (_conditionStability2 <= 1)
                     {
-                        body.AddParagraph("Условие устойчивости выполняется");
+                        body.AddParagraph("Условие устойчивости выполняется")
+                            .Bold();
                     }
                     else
                     {
@@ -1090,7 +1094,7 @@ namespace CalculateVessels.Core.Supports.Saddle
 
             body.AddParagraph("Условия применения расчетных формул ");
 
-            if (IsConditionUseFormulas)
+            if (_isConditionUseFormulas)
             {
                 body.AddParagraph("Условия применения формул");
             }

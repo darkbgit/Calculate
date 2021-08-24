@@ -141,6 +141,15 @@ namespace CalculateVessels.Data.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Calculation complete.
+        /// </summary>
+        public static string CalcComplete {
+            get {
+                return ResourceManager.GetString("CalcComplete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
         public static byte[] Cil {
