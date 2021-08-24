@@ -9,6 +9,7 @@ using CalculateVessels.Core.Supports.Enums;
 using DocumentFormat.OpenXml.Packaging;
 using CalculateVessels.Core.Word;
 using CalculateVessels.Core.Word.Enums;
+using CalculateVessels.Data.PhysicalData;
 
 namespace CalculateVessels.Core.Supports.Saddle
 {
@@ -22,13 +23,9 @@ namespace CalculateVessels.Core.Supports.Saddle
         }
 
         public bool IsCriticalError { get; private set; }
-
         public bool IsError {get; private set; }
-
-        public List<string> ErrorList { get; private set; } = new ();
-
+        public List<string> ErrorList { get => _errorList; private set => _errorList = value; }
         public bool IsConditionUseFormulas { get; private set; }
-
         public List<string> Bibliography { get; } = new()
         {
             Data.Properties.Resources.GOST_34233_1,
@@ -96,8 +93,11 @@ namespace CalculateVessels.Core.Supports.Saddle
         private double _Fe;
         private double _sef;
         private double _Ak;
+        private double _sigma_d;
+        private double _E;
+        private List<string> _errorList = new();
+        private double _ny;
 
-        
 
         public void Calculate()
         {
@@ -108,20 +108,74 @@ namespace CalculateVessels.Core.Supports.Saddle
                 return;
             }
 
-            _M_d = (0.0000089 * _saddleDataIn.E) / _saddleDataIn.ny * Math.Pow(_saddleDataIn.D, 3) *
-                   Math.Pow((100 * (_saddleDataIn.s - _saddleDataIn.c)) / _saddleDataIn.D, 2.5);
-            //UNDONE: проверить формулу для расчета [F]
-            _F_d = (0.0000031 * _saddleDataIn.E) / _saddleDataIn.ny * Math.Pow(_saddleDataIn.D, 2) *
-                   Math.Pow((100 * (_saddleDataIn.s - _saddleDataIn.c)) / _saddleDataIn.D, 2.5);
-            _Q_d = (2.4 * _saddleDataIn.E * Math.Pow(_saddleDataIn.s - _saddleDataIn.c, 2)) / _saddleDataIn.ny *
-                (0.18 + 3.3 * _saddleDataIn.D * (_saddleDataIn.s - _saddleDataIn.c)) / Math.Pow(_saddleDataIn.L, 2);
-            _B1_2 = 9.45 * (_saddleDataIn.D / _saddleDataIn.L) * Math.Sqrt(_saddleDataIn.D / (100 * (_saddleDataIn.s - _saddleDataIn.c)));
-            _B1 = Math.Min(1, _B1_2);
-            _p_d = (0.00000208 * _saddleDataIn.E) / (_saddleDataIn.ny * _B1) * (_saddleDataIn.D / _saddleDataIn.L) *
+            if (!Physical.Gost34233_1.TryGetSigma(_saddleDataIn.Steel, _saddleDataIn.t, ref _sigma_d, ref _errorList))
+            {
+                IsCriticalError = true;
+                return;
+            }
+
+
+            if (!Physical.TryGetE(_saddleDataIn.Steel, _saddleDataIn.t, ref _E, ref _errorList))
+            {
+                IsCriticalError = true;
+                return;
+            }
+
+            _ny = _saddleDataIn.IsAssembly ? 1.8 : 2.4;
+
+            if (_saddleDataIn.IsPressureIn)
+            {
+                _p_d = 2 * _sigma_d * _saddleDataIn.fi * (_saddleDataIn.s - _saddleDataIn.c) /
+                       (_saddleDataIn.D + (_saddleDataIn.s - _saddleDataIn.c));
+            }
+            else
+            {
+                _B1_2 = 9.45 * (_saddleDataIn.D / _saddleDataIn.L) *
+                        Math.Sqrt(_saddleDataIn.D / (100 * (_saddleDataIn.s - _saddleDataIn.c)));
+                _B1 = Math.Min(1, _B1_2);
+                var p_de = (0.0000208 * _E) / (_ny * _B1) * (_saddleDataIn.D / _saddleDataIn.L) *
                    Math.Pow(100 * (_saddleDataIn.s - _saddleDataIn.c) / _saddleDataIn.D, 2.5);
+                var p_dp = 2 * _sigma_d * (_saddleDataIn.s - _saddleDataIn.c) /
+                       (_saddleDataIn.D + (_saddleDataIn.s - _saddleDataIn.c));
+                _p_d = p_dp / Math.Sqrt(1 + Math.Pow(p_dp / p_de, 2));
+            }
+            
+            //UNDONE: проверить формулу для расчета [F]
+            if (true)
+            {
+                _F_d = Math.PI * (_saddleDataIn.D + (_saddleDataIn.s - _saddleDataIn.c)) *
+                       (_saddleDataIn.s - _saddleDataIn.c) * _sigma_d * _saddleDataIn.fi;
+            }
+            else
+            {
+                var F_dp = Math.PI * (_saddleDataIn.D + (_saddleDataIn.s - _saddleDataIn.c)) *
+                           (_saddleDataIn.s - _saddleDataIn.c) * _sigma_d;
+                var F_de = 0.00031 * _E / _ny * Math.Pow(_saddleDataIn.D, 2) *
+                           Math.Pow(100 * (_saddleDataIn.s - _saddleDataIn.c) / _saddleDataIn.D, 2.5);
+                if (_saddleDataIn.L > _saddleDataIn.D * 10)
+                {
+
+                }
+                _F_d = F_dp / Math.Sqrt(1 + Math.Pow(F_dp / F_de, 2));
+            }
+
+            var M_dp = Math.PI / 4.0 * _saddleDataIn.D * (_saddleDataIn.D + (_saddleDataIn.s - _saddleDataIn.c)) *
+                (_saddleDataIn.s - _saddleDataIn.c) * _sigma_d;
+            var M_de = 0.000089 * _E / _ny * Math.Pow(_saddleDataIn.D, 3) *
+                       Math.Pow(100 * (_saddleDataIn.s - _saddleDataIn.c) / _saddleDataIn.D, 2.5);
+
+            _M_d = M_dp / Math.Sqrt(1 + Math.Pow(M_dp / M_de, 2));
+
+            var Q_dp = 0.25 * _sigma_d * Math.PI * _saddleDataIn.D * (_saddleDataIn.s - _saddleDataIn.c);
+
+            var Q_de = 2.4 * _E * Math.Pow(_saddleDataIn.s - _saddleDataIn.c, 2) / _ny *
+                (0.18 + 3.3 * _saddleDataIn.D * (_saddleDataIn.s - _saddleDataIn.c) / Math.Pow(_saddleDataIn.L, 2));
+
+            _Q_d = Q_dp / Math.Sqrt(1 + Math.Pow(Q_dp / Q_de, 2));
 
 
-            _q = _saddleDataIn.G / (_saddleDataIn.L + (4.0 / 3.0) * _saddleDataIn.H);
+
+            _q = _saddleDataIn.G / (_saddleDataIn.L + ((4.0 / 3.0) * _saddleDataIn.H));
             _M0 = _q * (Math.Pow(_saddleDataIn.D, 2) / 16.0);
             // UNDONE: Make calculate for non symmetrical saddle
             _F1 = _saddleDataIn.G / 2.0;
@@ -147,7 +201,7 @@ namespace CalculateVessels.Core.Supports.Saddle
                                         (4 * (_saddleDataIn.s - _saddleDataIn.c)) +
                                         4 * _M12 * _K9 / (Math.PI * Math.Pow(_saddleDataIn.D, 2) * (_saddleDataIn.s - _saddleDataIn.c));
                 // UNDONE: if fi<1 check condition
-                _conditionStrength1_2 = _saddleDataIn.sigma_d * _saddleDataIn.fi;
+                _conditionStrength1_2 = _sigma_d * _saddleDataIn.fi;
                 if (_conditionStrength1_1 > _conditionStrength1_2)
                 {
                     ErrorList.Add("Несущая способность обечайки в сечении между опорами. Условие прочности не выполняется");
@@ -195,15 +249,15 @@ namespace CalculateVessels.Core.Supports.Saddle
 
                     _K2 = _saddleDataIn.IsAssembly ? 1.05 : 1.25;
 
-                    _v21_2 = - _sigma_mx / (_K2 * _saddleDataIn.sigma_d);
+                    _v21_2 = - _sigma_mx / (_K2 * _sigma_d);
                     _v21_3 = 0;
 
                     _v22_2 = (_saddleDataIn.p * _saddleDataIn.D /
                               (4 * (_saddleDataIn.s - _saddleDataIn.c)) -
-                              _sigma_mx) / (_K2 * _saddleDataIn.sigma_d);
+                              _sigma_mx) / (_K2 * _sigma_d);
                     _v22_3 = (_saddleDataIn.p * _saddleDataIn.D /
                               (2 * (_saddleDataIn.s - _saddleDataIn.c))) /
-                             (_K2 * _saddleDataIn.sigma_d);
+                             (_K2 * _sigma_d);
 
                     _K1_2For_v21 = K1(_v1_2, _v21_2); 
                     _K1_2For_v22 = K1(_v1_2, _v22_2);
@@ -213,12 +267,12 @@ namespace CalculateVessels.Core.Supports.Saddle
                     _K1_3For_v22 = K1(_v1_3, _v22_3);
                     _K1_3 = Math.Min(_K1_3For_v21, _K1_3For_v22);
 
-                    _sigmai2_1 = _K1_2For_v21 * _K2 * _saddleDataIn.sigma_d;
-                    _sigmai2_2 = _K1_2For_v22 * _K2 * _saddleDataIn.sigma_d;
+                    _sigmai2_1 = _K1_2For_v21 * _K2 * _sigma_d;
+                    _sigmai2_2 = _K1_2For_v22 * _K2 * _sigma_d;
                     _sigmai2 = Math.Min(_sigmai2_1, _sigmai2_2);
 
-                    _sigmai3_1 = _K1_3For_v21 * _K2 * _saddleDataIn.sigma_d;
-                    _sigmai3_2 = _K1_3For_v22 * _K2 * _saddleDataIn.sigma_d;
+                    _sigmai3_1 = _K1_3For_v21 * _K2 * _sigma_d;
+                    _sigmai3_2 = _K1_3For_v22 * _K2 * _sigma_d;
                     _sigmai3 = Math.Min(_sigmai3_1, _sigmai3_2);
 
                     _F_d2 = 0.7 * _sigmai2 * (_saddleDataIn.s - _saddleDataIn.c) *
@@ -277,13 +331,13 @@ namespace CalculateVessels.Core.Supports.Saddle
 
                     _K2 = _saddleDataIn.IsAssembly ? 1.05 : 1.25;
 
-                    _v21_2 = -_sigma_mx / (_K2 * _saddleDataIn.sigma_d);
+                    _v21_2 = -_sigma_mx / (_K2 * _sigma_d);
                     _v21_3 = 0;
 
                     _v22_2 = (_saddleDataIn.p * _saddleDataIn.D / (4 * _sef) - _sigma_mx) /
-                             (_K2 * _saddleDataIn.sigma_d);
+                             (_K2 * _sigma_d);
                     _v22_3 = (_saddleDataIn.p * _saddleDataIn.D / (2 * _sef)) /
-                             (_K2 * _saddleDataIn.sigma_d);
+                             (_K2 * _sigma_d);
 
                     _K1_2For_v21 = K1(_v1_2, _v21_2);
                     _K1_2For_v22 = K1(_v1_2, _v22_2);
@@ -293,12 +347,12 @@ namespace CalculateVessels.Core.Supports.Saddle
                     _K1_3For_v22 = K1(_v1_3, _v22_3);
                     _K1_3 = Math.Min(_K1_3For_v21, _K1_3For_v22);
 
-                    _sigmai2_1 = _K1_2For_v21 * _K2 * _saddleDataIn.sigma_d;
-                    _sigmai2_2 = _K1_2For_v22 * _K2 * _saddleDataIn.sigma_d;
+                    _sigmai2_1 = _K1_2For_v21 * _K2 * _sigma_d;
+                    _sigmai2_2 = _K1_2For_v22 * _K2 * _sigma_d;
                     _sigmai2 = Math.Min(_sigmai2_1, _sigmai2_2);
 
-                    _sigmai3_1 = _K1_3For_v21 * _K2 * _saddleDataIn.sigma_d;
-                    _sigmai3_2 = _K1_3For_v22 * _K2 * _saddleDataIn.sigma_d;
+                    _sigmai3_1 = _K1_3For_v21 * _K2 * _sigma_d;
+                    _sigmai3_2 = _K1_3For_v22 * _K2 * _sigma_d;
                     _sigmai3 = Math.Min(_sigmai3_1, _sigmai3_2);
 
                     _F_d2 = 0.7 * _sigmai2 * _sef * Math.Sqrt(_saddleDataIn.D * _sef) / (_K10 * _K12);
@@ -467,7 +521,7 @@ namespace CalculateVessels.Core.Supports.Saddle
 
                 table.AddRow()
                     .AddCell("Длина свободно выступающей части, e:")
-                    .AddCell($"{_saddleDataIn.e} мм");
+                    .AddCell($"{_E} мм");
 
                 table.AddRow()
                     .AddCell("Длина выступающей цилиндрической части сосуда, включая отбортовку днища, a")
@@ -524,13 +578,13 @@ namespace CalculateVessels.Core.Supports.Saddle
 
                 table.AddRow()
                     .AddCell($"Допускаемое напряжение для материала {_saddleDataIn.Steel} при расчетной температуре, [σ]:")
-                    .AddCell($"{_saddleDataIn.sigma_d} МПа");
+                    .AddCell($"{_sigma_d} МПа");
 
                 if (!_saddleDataIn.IsPressureIn)
                 {
                     table.AddRow()
                         .AddCell("Модуль продольной упругости при расчетной температуре, E:")
-                        .AddCell($"{_saddleDataIn.E} МПа");
+                        .AddCell($"{_E} МПа");
                 }
                 body.InsertTable(table);
             }
@@ -561,7 +615,7 @@ namespace CalculateVessels.Core.Supports.Saddle
             body.AddParagraph("Изгибающий момент над опорами");
             body.AddParagraph("")
                 .AppendEquation("M_1=M_2=(q∙e^2)/2-M_0" +
-                                $"=({_q:f2}∙{_saddleDataIn.e:f2}^2)/2-{_M0:f2}={_M1:f2} Н∙мм");
+                                $"=({_q:f2}∙{_E:f2}^2)/2-{_M0:f2}={_M1:f2} Н∙мм");
 
             body.AddParagraph("Максимальный изгибающий момент между опорами");
             body.AddParagraph("")
@@ -597,7 +651,7 @@ namespace CalculateVessels.Core.Supports.Saddle
                 body.AddParagraph("")
                     .AppendEquation($"(p∙D)/(4∙(s-c))+(4∙M_12∙K_9)/(π∙D^2∙(s-c))=({_saddleDataIn.p}∙{_saddleDataIn.D})/(4∙({_saddleDataIn.s}-{_saddleDataIn.c}))+(4∙{_M12:f2}∙{_K9:f2})/(π∙{_saddleDataIn.D}^2∙({_saddleDataIn.s}-{_saddleDataIn.c}))={_conditionStrength1_1:f2}");
                 body.AddParagraph("")
-                    .AppendEquation($"[σ]∙φ={_saddleDataIn.sigma_d}∙{_saddleDataIn.fi}={_conditionStrength1_2:f2}");
+                    .AppendEquation($"[σ]∙φ={_sigma_d}∙{_saddleDataIn.fi}={_conditionStrength1_2:f2}");
                 body.AddParagraph("")
                     .AppendEquation($"{_conditionStrength1_1:f2}≤{_conditionStrength1_2:f2}");
                 if (_conditionStrength1_1 <= _conditionStrength1_2)
@@ -616,7 +670,7 @@ namespace CalculateVessels.Core.Supports.Saddle
                 body.AddParagraph("где [M] - допускаемый изгибающий момент из условия устойчивости");
                 body.AddParagraph("")
                     .AppendEquation("[M]=(8.9∙10^-5∙E)/n_y∙D^3∙[(100∙(s-c))/D]^2.5" +
-                                    $"=(8.9∙10^-5∙{_saddleDataIn.E})/{_saddleDataIn.ny}∙{_saddleDataIn.D}^3∙[(100∙({_saddleDataIn.s}-{_saddleDataIn.c}))/{_saddleDataIn.D}]^2.5={_M_d:f2} Н∙мм");
+                                    $"=(8.9∙10^-5∙{_E})/{_ny}∙{_saddleDataIn.D}^3∙[(100∙({_saddleDataIn.s}-{_saddleDataIn.c}))/{_saddleDataIn.D}]^2.5={_M_d:f2} Н∙мм");
                 body.AddParagraph("").AppendEquation($"|{_M12:f2}|/{_M_d:f2}={_conditionStability1:f2}≤1");
 
                 if (_conditionStability1 <= 1)
@@ -751,7 +805,7 @@ namespace CalculateVessels.Core.Supports.Saddle
                     body.AddParagraph("").AppendEquation($"K_1={_K1_2:f2}");
 
                     body.AddParagraph("")
-                        .AppendEquation($"[σ_i]_2={_K1_2:f2}∙{_K2:f2}∙{_saddleDataIn.sigma_d}={_sigmai2:f2}");
+                        .AppendEquation($"[σ_i]_2={_K1_2:f2}∙{_K2:f2}∙{_sigma_d}={_sigmai2:f2}");
 
                     body.AddParagraph("")
                         .AppendEquation($"[F]_2=(0.7∙{_sigmai2:f2}∙({_saddleDataIn.s}-{_saddleDataIn.c})∙√({_saddleDataIn.D}∙({_saddleDataIn.s}-{_saddleDataIn.c})))/({_K10:f2}∙{_K12:f2})={_F_d2:f2}");
@@ -781,7 +835,7 @@ namespace CalculateVessels.Core.Supports.Saddle
                     body.AddParagraph("").AppendEquation($"K_1={_K1_3:f2}");
 
                     body.AddParagraph("")
-                        .AppendEquation($"[σ_i]_3={_K1_3:f2}∙{_K2:f2}∙{_saddleDataIn.sigma_d}={_sigmai3:f2}");
+                        .AppendEquation($"[σ_i]_3={_K1_3:f2}∙{_K2:f2}∙{_sigma_d}={_sigmai3:f2}");
 
                     body.AddParagraph("")
                         .AppendEquation($"[F]_3=(0.9∙{_sigmai2:f2}∙({_saddleDataIn.s}-{_saddleDataIn.c})∙√({_saddleDataIn.D}∙({_saddleDataIn.s}-{_saddleDataIn.c})))/({_K14:f2}∙{_K16:f2}∙{_K17:f2})={_F_d3:f2}");
@@ -951,7 +1005,7 @@ namespace CalculateVessels.Core.Supports.Saddle
                     body.AddParagraph("").AppendEquation($"K_1={_K1_2:f2}");
 
                     body.AddParagraph("")
-                        .AppendEquation($"[σ_i]_2={_K1_2:f2}∙{_K2:f2}∙{_saddleDataIn.sigma_d}={_sigmai2:f2}");
+                        .AppendEquation($"[σ_i]_2={_K1_2:f2}∙{_K2:f2}∙{_sigma_d}={_sigmai2:f2}");
 
                     body.AddParagraph("")
                         .AppendEquation($"[F]_2=(0.7∙{_sigmai2:f2}∙{_sef:f2}∙√({_saddleDataIn.D}∙{_sef:f2}))/({_K10:f2}∙{_K12:f2})={_F_d2:f2}");
@@ -981,7 +1035,7 @@ namespace CalculateVessels.Core.Supports.Saddle
                     body.AddParagraph("").AppendEquation($"K_1={_K1_3:f2}");
 
                     body.AddParagraph("")
-                        .AppendEquation($"[σ_i]_3={_K1_3:f2}∙{_K2:f2}∙{_saddleDataIn.sigma_d}={_sigmai3:f2}");
+                        .AppendEquation($"[σ_i]_3={_K1_3:f2}∙{_K2:f2}∙{_sigma_d}={_sigmai3:f2}");
 
                     body.AddParagraph("")
                         .AppendEquation($"[F]_3=(0.9∙{_sigmai2:f2}∙{_sef:f2}∙√({_saddleDataIn.D}∙{_sef:f2}))/({_K14:f2}∙{_K16:f2}∙{_K17:f2})={_F_d3:f2}");

@@ -894,7 +894,7 @@ namespace CalculateVessels
             this.predCalc_b.TabIndex = 16;
             this.predCalc_b.Text = "Предварительный\r\nрасчет";
             this.predCalc_b.UseVisualStyleBackColor = true;
-            this.predCalc_b.Click += new System.EventHandler(this.PredCalc_b_Click);
+            this.predCalc_b.Click += new System.EventHandler(this.PreCalc_b_Click);
             // 
             // calc_b
             // 

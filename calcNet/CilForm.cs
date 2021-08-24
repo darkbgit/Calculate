@@ -21,9 +21,7 @@ namespace CalculateVessels
 
         private void Cancel_b_Click(object sender, EventArgs e)
         {
-            //pictureBox1.Image.Dispose();
-            //f_pb.Image.Dispose();
-            this.Hide();
+            Hide();
         }
 
         private void Force_rb_CheckedChanged(object sender, EventArgs e)
@@ -65,7 +63,7 @@ namespace CalculateVessels
             }
         }
 
-        private void PredCalc_b_Click(object sender, EventArgs e)
+        private void PreCalc_b_Click(object sender, EventArgs e)
         {
             c_tb.Text = "";
             scalc_l.Text = "";
@@ -482,7 +480,7 @@ namespace CalculateVessels
         {
             if (sender is not CilForm) return;
 
-            if (this.Owner is MainForm { cylindricalForm: { }} main)
+            if (Owner is MainForm { cylindricalForm: { } } main)
             {
                 main.cylindricalForm = null;
             }

@@ -25,17 +25,13 @@ namespace CalculateVessels.Core.Bottoms.FlatBottomWithAdditionalMoment
         }
 
         public bool IsCriticalError { get; private set; }
-
         public bool IsError { get; private set; }
-
         public List<string> ErrorList { get => _errorList; private set => _errorList = value; }
-
         public List<string> Bibliography { get; } = new()
         {
             Data.Properties.Resources.GOST_34233_1,
             Data.Properties.Resources.GOST_34233_2
         };
-
         public double PressurePermissible => _p_d;
 
         private double _Ab;
