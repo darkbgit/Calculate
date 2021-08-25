@@ -216,6 +216,18 @@ namespace CalculateVessels
             //
             dataIn.IsPressureIn = !pressureOut_cb.Checked;
 
+            //s1
+            {
+                if (double.TryParse(s1_tb.Text, NumberStyles.AllowDecimalPoint,
+                    CultureInfo.InvariantCulture, out var s1))
+                {
+                    dataIn.s1 = s1;
+                }
+                else
+                {
+                    dataInErr.Add("s1 неверный ввод");
+                }
+            }
 
             if (dataIn.IsDataGood)
             {
@@ -227,7 +239,7 @@ namespace CalculateVessels
                         if (Physical.Gost34233_1.TryGetSigma(dataIn.CoverSteel,
                                                     dataIn.t,
                                                     ref sigma_d,
-                                                    ref dataInErr))
+                                                    ref dataInErr, s:dataIn.s1))
                         {
                             sigma_d_tb.ReadOnly = false;
                             sigma_d_tb.Text = sigma_d.ToString(CultureInfo.CurrentCulture);
@@ -394,18 +406,7 @@ namespace CalculateVessels
                     }
                 }
 
-                //s1
-                {
-                    if (double.TryParse(s1_tb.Text, NumberStyles.AllowDecimalPoint,
-                    CultureInfo.InvariantCulture, out var s1))
-                    {
-                        dataIn.s1 = s1;
-                    }
-                    else
-                    {
-                        dataInErr.Add("s1 неверный ввод");
-                    }
-                }
+                
 
                 //s2
                 {

@@ -1,0 +1,291 @@
+﻿[
+	{
+		"Name": [ "Ст3" ],
+		"IsCouldBigThickness": true,
+		"BigThickness": 20,
+		"Values": [
+			{
+				"Temperature": 20,
+				"RmValue" : [ 460, 380 ]
+			},
+			{
+				"Temperature": 100,
+				"RmValue": [ 435, 360 ]
+			},
+			{
+				"Temperature": 150,
+				"RmValue": [ 460, 390 ]
+			},
+			{
+				"Temperature": 200,
+				"RmValue": [ 505, 420 ]
+			},
+			{
+				"Temperature": 250,
+				"RmValue": [ 510, 435 ]
+			},
+			{
+				"Temperature": 300,
+				"RmValue": [ 520, 440 ]
+			},
+			{
+				"Temperature": 350,
+				"RmValue": [ 480, 420 ]
+			},
+			{
+				"Temperature": 375,
+				"RmValue": [ 450, 402 ]
+			}
+		]
+	},
+	{
+		"Name": [ "09Г2С", "16ГС" ],
+		"IsCouldBigThickness": true,
+		"BigThickness": 32,
+		"Values": [
+			{
+				"Temperature": 20,
+				"RmValue": [ 470, 440 ]
+			},
+			{
+				"Temperature": 100,
+				"RmValue": [ 425, 385 ]
+			},
+			{
+				"Temperature": 150,
+				"RmValue": [ 430, 430 ]
+			},
+			{
+				"Temperature": 200,
+				"RmValue": [ 439, 439 ]
+			},
+			{
+				"Temperature": 250,
+				"RmValue": [ 444, 444 ]
+			},
+			{
+				"Temperature": 300,
+				"RmValue": [ 445, 445 ]
+			},
+			{
+				"Temperature": 350,
+				"RmValue": [ 441, 441 ]
+			},
+			{
+				"Temperature": 375,
+				"RmValue": [ 425, 425 ]
+			}
+		]
+	},
+	{
+		"Name": [ "20", "20К" ],
+		"IsCouldBigThickness": false,
+		"Values": [
+			{
+				"Temperature": 20,
+				"RmValue": [ 410 ]
+			},
+			{
+				"Temperature": 100,
+				"RmValue": [ 380 ]
+			},
+			{
+				"Temperature": 150,
+				"RmValue": [ 425 ]
+			},
+			{
+				"Temperature": 200,
+				"RmValue": [ 460 ]
+			},
+			{
+				"Temperature": 250,
+				"RmValue": [ 460 ]
+			},
+			{
+				"Temperature": 300,
+				"RmValue": [ 460 ]
+			},
+			{
+				"Temperature": 350,
+				"RmValue": [ 430 ]
+			},
+			{
+				"Temperature": 375,
+				"RmValue": [ 410 ]
+			}
+		]
+	},
+	{
+		"Name": "10",
+		"IsCouldBigThickness": false,
+		"Values": [
+			{
+				"Temperature": 20,
+				"RmValue": [ 340 ]
+			},
+			{
+				"Temperature": 100,
+				"RmValue": [ 310 ]
+			},
+			{
+				"Temperature": 150,
+				"RmValue": [ 340 ]
+			},
+			{
+				"Temperature": 200,
+				"RmValue": [ 382 ]
+			},
+			{
+				"Temperature": 250,
+				"RmValue": [ 400 ]
+			},
+			{
+				"Temperature": 300,
+				"RmValue": [ 374 ]
+			},
+			{
+				"Temperature": 350,
+				"RmValue": [ 360 ]
+			},
+			{
+				"Temperature": 375,
+				"RmValue": [ 330 ]
+			}
+		]
+	},
+	{
+		"Name": [ "10Г2", "09Г2", "17ГС", "17Г1С", "10Г2С1" ],
+		"IsCouldBigThickness": false,
+		"Values": [
+			{
+				"Temperature": 20,
+				"RmValue": [ 440 ]
+			},
+			{
+				"Temperature": 100,
+				"RmValue": [ 385 ]
+			},
+			{
+				"Temperature": 150,
+				"RmValue": [ 430 ]
+			},
+			{
+				"Temperature": 200,
+				"RmValue": [ 439 ]
+			},
+			{
+				"Temperature": 250,
+				"RmValue": [ 444 ]
+			},
+			{
+				"Temperature": 300,
+				"RmValue": [ 445 ]
+			},
+			{
+				"Temperature": 350,
+				"RmValue": [ 441 ]
+			},
+			{
+				"Temperature": 375,
+				"RmValue": [ 425 ]
+			}
+		]
+	},
+	{
+		"Name": [ "12Х18Н10Т", "12Х18Н12Т", "10Х17Н13М2Т", "10Х17Н13М3Т" ],
+		"IsCouldBigThickness": false,
+		"Values": [
+			{
+				"Temperature": 20,
+				"RmValue": [ 540 ]
+			},
+			{
+				"Temperature": 100,
+				"RmValue": [ 500 ]
+			},
+			{
+				"Temperature": 150,
+				"RmValue": [ 475 ]
+			},
+			{
+				"Temperature": 200,
+				"RmValue": [ 450 ]
+			},
+			{
+				"Temperature": 250,
+				"RmValue": [ 443 ]
+			},
+			{
+				"Temperature": 300,
+				"RmValue": [ 440 ]
+			},
+			{
+				"Temperature": 350,
+				"RmValue": [ 438 ]
+			},
+			{
+				"Temperature": 375,
+				"RmValue": [ 437 ]
+			},
+			{
+				"Temperature": 400,
+				"RmValue": [ 436 ]
+			},
+			{
+				"Temperature": 410,
+				"RmValue": [ 434 ]
+			},
+			{
+				"Temperature": 420,
+				"RmValue": [ 432 ]
+			},
+			{
+				"Temperature": 430,
+				"RmValue": [ 431 ]
+			},
+			{
+				"Temperature": 440,
+				"RmValue": [ 430 ]
+			},
+			{
+				"Temperature": 450,
+				"RmValue": [ 428 ]
+			},
+			{
+				"Temperature": 460,
+				"RmValue": [ 426 ]
+			},
+			{
+				"Temperature": 470,
+				"RmValue": [ 424 ]
+			},
+			{
+				"Temperature": 480,
+				"RmValue": [ 422 ]
+			},
+			{
+				"Temperature": 490,
+				"RmValue": [ 421 ]
+			},
+			{
+				"Temperature": 500,
+				"RmValue": [ 420 ]
+			},
+			{
+				"Temperature": 510,
+				"RmValue": [ 418 ]
+			},
+			{
+				"Temperature": 520,
+				"RmValue": [ 416 ]
+			},
+			{
+				"Temperature": 530,
+				"RmValue": [ 412 ]
+			}
+		]
+	}
+]
+
+	
+

@@ -27,7 +27,7 @@ namespace CalculateVessels.Core.Shells.Nozzle
         private readonly IElement _element;
 
 
-        private List<string> errorList = new();
+        
 
 
         private string _name;
@@ -41,11 +41,9 @@ namespace CalculateVessels.Core.Shells.Nozzle
         public string Steel2 { get => _steel2; set => _steel2 = value; }
         public string Steel3 { get => _steel3; set => _steel3 = value; }
         public string Steel4 { get => _steel4; set => _steel4 = value; }
-
         public bool IsCriticalError { get; private set; }
         public bool IsError { get; private set; }
         public List<string> ErrorList { get; private set; } = new();
-
         public double p_d { get => _p_d; }
         public double d0 { get => _d0; }
         public double b { get => _b; }
@@ -55,81 +53,72 @@ namespace CalculateVessels.Core.Shells.Nozzle
             Data.Properties.Resources.GOST_34233_3
         };
 
-        private double _E2;
-        private double _E3;
-        private double _E4;
-
-
-
-
-        private double _p_d;
-        private double _p_dp;
-        private double _p_de;
-
-        private double _Dp;
-        private double _dp;
-        private double _d0p;
-        private double _s1p;
+        private bool isConditionUseFormulas;
+        private double _alfa1;
         private double _b;
+        private double _B1n;
+        private double _c;
+        private double _conditionUseFormulas1;
+        private double _conditionUseFormulas2;
+        private double _conditionUseFormulas2_2;
         private double _d0;
         private double _d01;
         private double _d02;
+        private double _d0p;
+        private double _Dk;
         private double _dmax;
-        private double _sp;
-        private double _spn;
-        private double _ppn;
-        private double _pen;
-        private int _K1;
-        private double _lp;
+        private double _Dp;
+        private double _dp;
+        private double _E2;
+        private double _E3;
+        private double _E4;
+        private double _ellH;
+        private double _L0;
         private double _l1p;
         private double _l1p2;
         private double _l2p;
         private double _l2p2;
         private double _l3p;
         private double _l3p2;
-        private double _L0;
+        private double _lp;
+        private double _p_d;
+        private double _p_de;
+        private double _p_deShell;
+        private double _p_dp;
+        private double _pen;
+        private double _ppn;
         private double _psi1;
         private double _psi2;
         private double _psi3;
         private double _psi4 = 1;
-
+        private double _s1p;
+        private double _sp;
+        private double _spn;
         private double _V;
         private double _V1;
         private double _V2;
-        private double _yslyk1;
-        private double _yslyk2;
-        private double _B1n;
-
-
-        private bool isConditionUseFormulas;
-        private double _conditionUseFormulas1;
-        private double _conditionUseFormulas2;
-        private double _conditionUseFormulas2_2;
-
-
-        private double _c;
-        private double _s_p;
-        private double _Dk;
-        private double _p_deShell;
-        private double _alfa1;
-        private double _ellH;
+        private double _conditionStrengthening1;
+        private double _conditionStrengthening2;
+        private int _K1;
+        private List<string> errorList = new();
 
 
 
         public void Calculate()
         {
             _c = (_element as Shell).c;
-            _s_p = (_element as Shell).s_p;
-            if (!_nozzleDataIn.ShellDataIn.IsPressureIn) _p_deShell = (_element as Shell).p_de;
-            if (_nozzleDataIn.ShellDataIn.ShellType == ShellType.Conical)
-            {
-                _Dk = (_element as ConicalShell).Dk;
-                _alfa1 = (_nozzleDataIn.ShellDataIn as ConicalShellDataIn).alfa1;
-            }
 
-            if (_nozzleDataIn.ShellDataIn.ShellType == ShellType.Elliptical)
+            if (!_nozzleDataIn.ShellDataIn.IsPressureIn) _p_deShell = (_element as Shell).p_de;
+
+            switch (_nozzleDataIn.ShellDataIn.ShellType)
             {
-                _ellH = (_nozzleDataIn.ShellDataIn as EllipticalShellDataIn).ellH;
+                case ShellType.Conical:
+                    _Dk = (_element as ConicalShell).Dk;
+                    _alfa1 = (_nozzleDataIn.ShellDataIn as ConicalShellDataIn).alfa1;
+                    break;
+                case ShellType.Elliptical:
+                    _ellH = (_nozzleDataIn.ShellDataIn as EllipticalShellDataIn).ellH;
+                    break;
             }
 
             // расчет Dp, dp
@@ -142,19 +131,19 @@ namespace CalculateVessels.Core.Shells.Nozzle
                     }
                 case ShellType.Conical:
                     {
-                        _Dp = _nozzleDataIn.ShellDataIn.D / Math.Cos(Math.PI * 100 * _alfa1);
+                        _Dp = _Dk / Math.Cos(Math.PI * 100 * _alfa1);
                         break;
                     }
                 case ShellType.Elliptical:
                     {
-                        if (_ellH * 100 == _nozzleDataIn.ShellDataIn.D * 25)
+                        if (Math.Abs(_ellH * 100 - _nozzleDataIn.ShellDataIn.D * 25) < 0.000001)
                         {
-                            _Dp = _nozzleDataIn.ShellDataIn.D * 2 * Math.Sqrt(1 - 3 * Math.Pow(_nozzleDataIn.ellx / _nozzleDataIn.ShellDataIn.D, 2));
+                            _Dp = _nozzleDataIn.ShellDataIn.D * 2 * Math.Sqrt(1.0 - 3.0 * Math.Pow(_nozzleDataIn.ellx / _nozzleDataIn.ShellDataIn.D, 2));
                         }
                         else
                         {
                             _Dp = Math.Pow(_nozzleDataIn.ShellDataIn.D, 2) / (_ellH * 2) *
-                                Math.Sqrt(1 - 4 * (Math.Pow(_nozzleDataIn.ShellDataIn.D, 2) - 4 *
+                                Math.Sqrt(1.0 - 4.0 * (Math.Pow(_nozzleDataIn.ShellDataIn.D, 2) - 4 *
                                 Math.Pow(_ellH, 2)) * Math.Pow(_nozzleDataIn.ellx, 2) /
                                     Math.Pow(_nozzleDataIn.ShellDataIn.D, 4));
                         }
@@ -295,9 +284,6 @@ namespace CalculateVessels.Core.Shells.Nozzle
                     break;
             }
 
-            {
-
-            }
 
             _psi1 = Math.Min(1, _nozzleDataIn.sigma_d1 / _nozzleDataIn.ShellDataIn.sigma_d);
             _psi2 = Math.Min(1, _nozzleDataIn.sigma_d2 / _nozzleDataIn.ShellDataIn.sigma_d);
@@ -309,6 +295,7 @@ namespace CalculateVessels.Core.Shells.Nozzle
                 Math.Min(1, _nozzleDataIn.sigma_d4 / _nozzleDataIn.ShellDataIn.sigma_d),
                 _ => 1,
             };
+
             _d0p = 0.4 * Math.Sqrt(_Dp * (_nozzleDataIn.ShellDataIn.s - _c));
 
             _b = Math.Sqrt(_Dp * (_nozzleDataIn.ShellDataIn.s - _c)) + Math.Sqrt(_Dp * (_nozzleDataIn.ShellDataIn.s - _c));
@@ -361,8 +348,8 @@ namespace CalculateVessels.Core.Shells.Nozzle
                 //_B1n = Math.Min(1, 9.45 * (_nozzleDataIn.ShellDataIn.D / d_out.l) * Math.Sqrt(_nozzleDataIn.ShellDataIn.D / (100 * (_nozzleDataIn.ShellDataIn.s - _c))));
                 //_pen = 2.08 * 0.00001 * _nozzleDataIn.ShellDataIn.E / (_nozzleDataIn.ny * _B1n) * (_nozzleDataIn.ShellDataIn.D / d_out.l) * Math.Pow(100 * (_nozzleDataIn.ShellDataIn.s - _c) / _nozzleDataIn.ShellDataIn.D, 2.5);
                 _pen = _p_deShell;
-                _ppn = _nozzleDataIn.ShellDataIn.p / Math.Sqrt(1 - Math.Pow(_nozzleDataIn.ShellDataIn.p / _pen, 2));
-                _spn = _ppn * _Dp / (2 * _K1 * _nozzleDataIn.ShellDataIn.sigma_d - _ppn);
+                _ppn = _nozzleDataIn.ShellDataIn.p / Math.Sqrt(1.0 - Math.Pow(_nozzleDataIn.ShellDataIn.p / _pen, 2));
+                _spn = _ppn * _Dp / (2.0 * _K1 * _nozzleDataIn.ShellDataIn.sigma_d - _ppn);
             }
 
 
@@ -372,9 +359,9 @@ namespace CalculateVessels.Core.Shells.Nozzle
 
             if (_dp > _d0)
             {
-                _yslyk1 = _l1p * (_nozzleDataIn.s1 - _s1p - _nozzleDataIn.cs) * _psi1 + _l2p * _nozzleDataIn.s2 * _psi2 + _l3p * (_nozzleDataIn.s3 - _nozzleDataIn.cs - _nozzleDataIn.cs1) * _psi3 + _lp * (_nozzleDataIn.ShellDataIn.s - _s_p - _c) * _psi4;
-                _yslyk2 = 0.5 * (_dp - _d0p) * _s_p;
-                if (_yslyk1 < _yslyk2)
+                _conditionStrengthening1 = _l1p * (_nozzleDataIn.s1 - _s1p - _nozzleDataIn.cs) * _psi1 + _l2p * _nozzleDataIn.s2 * _psi2 + _l3p * (_nozzleDataIn.s3 - _nozzleDataIn.cs - _nozzleDataIn.cs1) * _psi3 + _lp * (_nozzleDataIn.ShellDataIn.s - _sp - _c) * _psi4;
+                _conditionStrengthening2 = 0.5 * (_dp - _d0p) * _sp;
+                if (_conditionStrengthening1 < _conditionStrengthening2)
                 {
                     IsError = true;
                     ErrorList.Add("Условие укрепления одиночного отверстия не выполняется");
@@ -384,16 +371,19 @@ namespace CalculateVessels.Core.Shells.Nozzle
 
 
             _V1 = (_nozzleDataIn.s0 - _c) / (_nozzleDataIn.ShellDataIn.s - _c);
-            _V2 = (_psi4 + (_l1p * (_nozzleDataIn.s1 - _nozzleDataIn.cs) * _psi1 + _l2p * _nozzleDataIn.s2 * _psi2 + _l3p * (_nozzleDataIn.s3 - _nozzleDataIn.cs - _nozzleDataIn.cs1) * _psi3) / _lp * (_nozzleDataIn.ShellDataIn.s - _c)) / (1 + 0.5 * (_dp - _d0p) / _lp + _K1 * (_nozzleDataIn.d + 2 * _nozzleDataIn.cs) / _Dp * (_nozzleDataIn.fi / _nozzleDataIn.fi1) * (_l1p / _lp));
+            _V2 = (_psi4 + (_l1p * (_nozzleDataIn.s1 - _nozzleDataIn.cs) * _psi1 + _l2p * _nozzleDataIn.s2 * _psi2 + _l3p * (_nozzleDataIn.s3 - _nozzleDataIn.cs - _nozzleDataIn.cs1) * _psi3) / _lp * (_nozzleDataIn.ShellDataIn.s - _c)) / 
+                  (1.0 + 0.5 * (_dp - _d0p) / _lp + _K1 * (_nozzleDataIn.d + 2 * _nozzleDataIn.cs) / _Dp * (_nozzleDataIn.fi / _nozzleDataIn.fi1) * (_l1p / _lp));
             _V = Math.Min(_V1, _V2);
 
             if (_nozzleDataIn.ShellDataIn.IsPressureIn)
             {
-                _p_d = 2 * _K1 * _nozzleDataIn.fi * _nozzleDataIn.ShellDataIn.sigma_d * (_nozzleDataIn.ShellDataIn.s - _c) * _V / (_Dp + (_nozzleDataIn.ShellDataIn.s - _c) * _V);
+                _p_d = 2 * _K1 * _nozzleDataIn.fi * _nozzleDataIn.ShellDataIn.sigma_d * (_nozzleDataIn.ShellDataIn.s - _c) * _V /
+                       (_Dp + (_nozzleDataIn.ShellDataIn.s - _c) * _V);
             }
             else
             {
-                _p_dp = 2 * _K1 * _nozzleDataIn.fi * _nozzleDataIn.ShellDataIn.sigma_d * (_nozzleDataIn.ShellDataIn.s - _c) * _V / (_Dp + (_nozzleDataIn.ShellDataIn.s - _c) * _V);
+                _p_dp = 2 * _K1 * _nozzleDataIn.fi * _nozzleDataIn.ShellDataIn.sigma_d * (_nozzleDataIn.ShellDataIn.s - _c) * _V /
+                        (_Dp + (_nozzleDataIn.ShellDataIn.s - _c) * _V);
                 _p_de = _p_deShell;
                 _p_d = _p_dp / Math.Sqrt(1 + Math.Pow(_p_dp / _p_de, 2));
             }
@@ -447,7 +437,7 @@ namespace CalculateVessels.Core.Shells.Nozzle
                 filename = DEFAULT_FILE_NAME;
             }
 
-            using WordprocessingDocument package = WordprocessingDocument.Open(filename, true);
+            using var package = WordprocessingDocument.Open(filename, true);
 
             var mainPart = package.MainDocumentPart;
             var body = mainPart?.Document.Body;
@@ -702,29 +692,23 @@ namespace CalculateVessels.Core.Shells.Nozzle
                     .AppendText(":")
                     .AddCell($"{_nozzleDataIn.fi}");
 
+                table.AddRowWithOneCell("Условия нагружения");
 
-                body.InsertTable(table);
-            }
-
-            body.AddParagraph("");
-            body.AddParagraph("Условия нагружения").Alignment(AlignmentType.Center);
-
-            //table
-            {
-                var table = body.AddTable();
 
                 table.AddRow()
-                    .AddCell("Расчетная температура, Т:")
-                    .AddCell($"{_nozzleDataIn.ShellDataIn.t} °С");
+                        .AddCell("Расчетная температура, Т:")
+                        .AddCell($"{_nozzleDataIn.ShellDataIn.t} °С");
 
                 table.AddRow()
                     .AddCell(_nozzleDataIn.ShellDataIn.IsPressureIn
-                    ? "Расчетное внутреннее избыточное давление, p:"
-                    : "Расчетное наружное давление, p:")
+                        ? "Расчетное внутреннее избыточное давление, p:"
+                        : "Расчетное наружное давление, p:")
                     .AddCell($"{_nozzleDataIn.ShellDataIn.p} МПа");
 
+                table.AddRowWithOneCell($"Характеристики материала {_nozzleDataIn.steel1}");
+
                 table.AddRow()
-                    .AddCell($"Допускаемое напряжение для материала {_nozzleDataIn.steel1} при расчетной температуре, ")
+                    .AddCell("Допускаемое напряжение при расчетной температуре, ")
                     .AppendEquation("[σ]_1")
                     .AppendText(":")
                     .AddCell($"{_nozzleDataIn.sigma_d1} МПа");
@@ -737,10 +721,14 @@ namespace CalculateVessels.Core.Shells.Nozzle
                         .AppendText(":")
                         .AddCell($"{_nozzleDataIn.E1} МПа");
                 }
+
                 if (!string.IsNullOrEmpty(_nozzleDataIn.steel2) && _nozzleDataIn.steel1 != _nozzleDataIn.steel2)
                 {
+                    table.AddRowWithOneCell($"Характеристики материала {_nozzleDataIn.steel2}");
+
                     table.AddRow()
-                        .AddCell($"Допускаемое напряжение для материала {_nozzleDataIn.steel2} при расчетной температуре, ")
+                        .AddCell(
+                            "Допускаемое напряжение для при расчетной температуре, ")
                         .AppendEquation("[σ]_2")
                         .AppendText(":")
                         .AddCell($"{_nozzleDataIn.sigma_d2} МПа");
@@ -754,10 +742,13 @@ namespace CalculateVessels.Core.Shells.Nozzle
                             .AddCell($"{_nozzleDataIn.E2} МПа");
                     }
                 }
+
                 if (!string.IsNullOrEmpty(_nozzleDataIn.steel3) && _nozzleDataIn.steel1 != _nozzleDataIn.steel3)
                 {
+                    table.AddRowWithOneCell($"Характеристики материала {_nozzleDataIn.steel3}");
+
                     table.AddRow()
-                        .AddCell($"Допускаемое напряжение для материала {_nozzleDataIn.steel3} при расчетной температуре, ")
+                        .AddCell("Допускаемое напряжение при расчетной температуре, ")
                         .AppendEquation("[σ]_3")
                         .AppendText(":")
                         .AddCell($"{_nozzleDataIn.sigma_d3} МПа");
@@ -771,10 +762,13 @@ namespace CalculateVessels.Core.Shells.Nozzle
                             .AddCell($"{_nozzleDataIn.E3} МПа");
                     }
                 }
+
                 if (!string.IsNullOrEmpty(_nozzleDataIn.steel4) && _nozzleDataIn.steel1 != _nozzleDataIn.steel4)
                 {
+                    table.AddRowWithOneCell($"Характеристики материала {_nozzleDataIn.steel4}");
+
                     table.AddRow()
-                        .AddCell($"Допускаемое напряжение для материала {_nozzleDataIn.steel4} при расчетной температуре, ")
+                        .AddCell("Допускаемое напряжение при расчетной температуре, ")
                         .AppendEquation("[σ]_4")
                         .AppendText(":")
                         .AddCell($"{_nozzleDataIn.sigma_d4} МПа");
@@ -788,8 +782,11 @@ namespace CalculateVessels.Core.Shells.Nozzle
                             .AddCell($"{_nozzleDataIn.E4} МПа");
                     }
                 }
+
                 body.InsertTable(table);
             }
+
+            
 
             body.AddParagraph("");
             body.AddParagraph("Результаты расчета").Alignment(AlignmentType.Center);
@@ -1114,12 +1111,12 @@ namespace CalculateVessels.Core.Shells.Nozzle
                 body.AddParagraph("")
                     .AppendEquation("l_1p∙(s_1-s_1p-c_s)∙χ_1+l_2p∙s_2∙χ_2+l_3p∙(s_3-c_s-c_s1)∙χ_3+l1p∙(s-s_p-c)∙χ_4=");
                 body.AddParagraph("")
-                    .AppendEquation($"{_l1p:f2}∙({_nozzleDataIn.s1}-{_s1p:f2}-{_nozzleDataIn.cs})∙{_psi1}+{_l2p:f2}∙{_nozzleDataIn.s2}∙{_psi2}+{_l3p:f2}∙({_nozzleDataIn.s3}-{_nozzleDataIn.cs}-{_nozzleDataIn.cs1})∙{_psi3:f2}+{_lp:f2}∙({_nozzleDataIn.ShellDataIn.s}-{_sp:f2}-{_c:f2})∙{_psi4}={_yslyk1:f2}");
+                    .AppendEquation($"{_l1p:f2}∙({_nozzleDataIn.s1}-{_s1p:f2}-{_nozzleDataIn.cs})∙{_psi1:f2}+{_l2p:f2}∙{_nozzleDataIn.s2}∙{_psi2:f2}+{_l3p:f2}∙({_nozzleDataIn.s3}-{_nozzleDataIn.cs}-{_nozzleDataIn.cs1})∙{_psi3:f2}+{_lp:f2}∙({_nozzleDataIn.ShellDataIn.s}-{_sp:f2}-{_c:f2})∙{_psi4:f2}={_conditionStrengthening1:f2}");
                 body.AddParagraph("")
-                    .AppendEquation($"0.5∙(d_p-d_0p)∙s_p=0.5∙({_dp:f2}-{_d0p:f2})∙{_sp:f2}={_yslyk2:f2}");
+                    .AppendEquation($"0.5∙(d_p-d_0p)∙s_p=0.5∙({_dp:f2}-{_d0p:f2})∙{_sp:f2}={_conditionStrengthening2:f2}");
                 body.AddParagraph("")
-                    .AppendEquation($"{_yslyk1:f2}≥{_yslyk2:f2}");
-                if (_yslyk1 >= _yslyk2)
+                    .AppendEquation($"{_conditionStrengthening1:f2}≥{_conditionStrengthening2:f2}");
+                if (_conditionStrengthening1 >= _conditionStrengthening2)
                 {
                     body.AddParagraph("Условие прочности выполняется").Bold();
                 }

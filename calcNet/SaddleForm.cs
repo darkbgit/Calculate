@@ -415,6 +415,7 @@ namespace CalculateVessels
                         MessageBox.Show(string.Join<string>(Environment.NewLine, saddle.ErrorList));
                     }
 
+                    Hide();
                     MessageBox.Show(Resources.CalcComplete);
                 }
                 else

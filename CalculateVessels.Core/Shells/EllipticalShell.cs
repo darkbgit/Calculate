@@ -40,15 +40,15 @@ namespace CalculateVessels.Core.Shells
                 {
                     //Condition use formulas
                     {
-                        const double CONDITION_USE_FORMULS_1_MIN = 0.002,
-                            CONDITION_USE_FORMULS_1_MAX = 0.1,
-                            CONDITION_USE_FORMULS_2_MIN = 0.2,
-                            CONDITION_USE_FORMULS_2_MAX = 0.5;
+                        const double CONDITION_USE_FORMULAS_1_MIN = 0.002,
+                            CONDITION_USE_FORMULAS_1_MAX = 0.1,
+                            CONDITION_USE_FORMULAS_2_MIN = 0.2,
+                            CONDITION_USE_FORMULAS_2_MAX = 0.5;
 
-                        if ((_esdi.s - _c) / _esdi.D <= CONDITION_USE_FORMULS_1_MAX &
-                            (_esdi.s - _c) / _esdi.D >= CONDITION_USE_FORMULS_1_MIN &
-                            _esdi.ellH / _esdi.D < CONDITION_USE_FORMULS_2_MAX &
-                            _esdi.ellH / _esdi.D >= CONDITION_USE_FORMULS_2_MIN |
+                        if ((_esdi.s - _c) / _esdi.D <= CONDITION_USE_FORMULAS_1_MAX &
+                            (_esdi.s - _c) / _esdi.D >= CONDITION_USE_FORMULAS_1_MIN &
+                            _esdi.ellH / _esdi.D < CONDITION_USE_FORMULAS_2_MAX &
+                            _esdi.ellH / _esdi.D >= CONDITION_USE_FORMULAS_2_MIN |
                             _esdi.s == 0)
                         {
                             IsConditionUseFormulas = true;
@@ -84,15 +84,12 @@ namespace CalculateVessels.Core.Shells
                     }
                     else
                     {
-                        switch (_esdi.EllipticalBottomType)
+                        _ellKePrev = _esdi.EllipticalBottomType switch
                         {
-                            case EllipticalBottomType.Elliptical:
-                                _ellKePrev = 0.9;
-                                break;
-                            case EllipticalBottomType.Hemispherical:
-                                _ellKePrev = 1.0;
-                                break;
-                        }
+                            EllipticalBottomType.Elliptical => 0.9,
+                            EllipticalBottomType.Hemispherical => 1.0,
+                            _ => _ellKePrev
+                        };
 
                         _s_p_1 = _ellKePrev * _ellR / 161 * Math.Sqrt(_esdi.ny * _esdi.p / (0.00001 * _esdi.E));
                         _s_p_2 = 1.2 * _esdi.p * _ellR / (2.0 * _esdi.sigma_d);
@@ -239,16 +236,7 @@ namespace CalculateVessels.Core.Shells
                     .AppendText(":")
                     .AddCell($"{_esdi.fi}");
 
-
-                body.InsertTable(table);
-            }
-
-            body.AddParagraph("");
-            body.AddParagraph("Условия нагружения").Alignment(AlignmentType.Center);
-
-            //table
-            {
-                var table = body.AddTable();
+                table.AddRowWithOneCell("Условия нагружения");
 
                 table.AddRow()
                     .AddCell("Расчетная температура, Т:")
@@ -256,12 +244,13 @@ namespace CalculateVessels.Core.Shells
 
                 table.AddRow()
                     .AddCell(_esdi.IsPressureIn ? "Расчетное внутреннее избыточное давление, p:"
-                    : "Расчетное наружное давление, p:")
+                        : "Расчетное наружное давление, p:")
                     .AddCell($"{_esdi.p} МПа");
 
+                table.AddRowWithOneCell($"Характеристики материала сталь {_esdi.Steel}");
+
                 table.AddRow()
-                    .AddCell($"Допускаемое напряжение для материала {_esdi.Steel} " +
-                             "при расчетной температуре, [σ]:")
+                    .AddCell("Допускаемое напряжение при расчетной температуре, [σ]:")
                     .AddCell($"{_esdi.sigma_d} МПа");
 
                 if (!_esdi.IsPressureIn)
@@ -273,6 +262,7 @@ namespace CalculateVessels.Core.Shells
 
                 body.InsertTable(table);
             }
+
 
             body.AddParagraph("");
             body.AddParagraph("Результаты расчета").Alignment(AlignmentType.Center);

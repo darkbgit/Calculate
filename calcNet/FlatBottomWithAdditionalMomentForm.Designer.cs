@@ -613,7 +613,7 @@ namespace CalculateVessels
             this.s1_tb.Name = "s1_tb";
             this.s1_tb.Size = new System.Drawing.Size(46, 23);
             this.s1_tb.TabIndex = 136;
-            this.s1_tb.Text = "31";
+            this.s1_tb.Text = "36";
             // 
             // button4
             // 

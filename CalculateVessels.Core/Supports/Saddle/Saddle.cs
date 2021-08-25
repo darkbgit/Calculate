@@ -747,7 +747,7 @@ namespace CalculateVessels.Core.Supports.Saddle
                     body.AddParagraph("Общее мембранное меридиональное напряжение изгиба от весовых нагрузок, действующее в области опорного узла");
                     body.AddParagraph("")
                         .AppendEquation("σ_mx=4∙M_i/(π∙D^2∙(s-c))" +
-                                        $"=4∙{_M1}/(π∙{_saddleDataIn.D}^2∙({_saddleDataIn.s}-{_saddleDataIn.c}))={_sigma_mx:f2}");
+                                        $"=4∙{_M1:f2}/(π∙{_saddleDataIn.D}^2∙({_saddleDataIn.s}-{_saddleDataIn.c}))={_sigma_mx:f2}");
 
                     body.AddParagraph("Условие прочности");
                     body.AddParagraph("").AppendEquation("F_1≤min{[F]_2;[F]_3}");
@@ -949,7 +949,7 @@ namespace CalculateVessels.Core.Supports.Saddle
                     body.AddParagraph("Общее мембранное меридиональное напряжение изгиба от весовых нагрузок, действующее в области опорного узла");
                     body.AddParagraph("")
                         .AppendEquation("σ_mx=4∙M_i/(π∙D^2∙s_ef)" +
-                                        $"=4∙{_M1}/(π∙{_saddleDataIn.D}^2∙{_sef:f2})={_sigma_mx:f2}");
+                                        $"=4∙{_M1:f2}/(π∙{_saddleDataIn.D}^2∙{_sef:f2})={_sigma_mx:f2}");
 
                     body.AddParagraph("Условие прочности");
                     body.AddParagraph("").AppendEquation("F_1≤min{[F]_2;[F]_3}");
@@ -987,10 +987,10 @@ namespace CalculateVessels.Core.Supports.Saddle
                                         $"={_v1_2:f2}");
 
                     body.AddParagraph("")
-                        .AppendEquation("ϑ_(2,1)=- ̅σ_mx∙1/(K_2∙[σ])" +
+                        .AppendEquation("ϑ_(2,1)=-¯σ_mx∙1/(K_2∙[σ])" +
                                         $"={_v21_2:f2}");
                     body.AddParagraph("")
-                        .AppendEquation("ϑ_(2,2)=[(p∙D)/(4∙s_ef)- ̅σ_mx]∙1/(K_2∙[σ])" +
+                        .AppendEquation("ϑ_(2,2)=[(p∙D)/(4∙s_ef)-¯σ_mx]∙1/(K_2∙[σ])" +
                                         $"={_v22_2:f2}");
 
                     body.AddParagraph("Для ")
@@ -1106,20 +1106,21 @@ namespace CalculateVessels.Core.Supports.Saddle
                 .AppendEquation($"60°≤δ_1={_saddleDataIn.delta1}°≤180°");
             body.AddParagraph("")
                 .AppendEquation($"(s-c)/D=({_saddleDataIn.s}-{_saddleDataIn.c})/{_saddleDataIn.D}={(_saddleDataIn.s - _saddleDataIn.c) / _saddleDataIn.D:f2}≤0.05");
-            if (_saddleDataIn.Type == SaddleType.SaddleWithoutRingWithSheet)
-            {
-                body.AddParagraph("").AppendEquation("s_2≥s");
-                body.AddParagraph("").AppendEquation($"{_saddleDataIn.s2} мм ≥ {_saddleDataIn.s} мм");
-                body.AddParagraph("").AppendEquation("δ_2≥δ_1+20°");
-                body.AddParagraph("")
-                    .AppendEquation(
-                        $"{_saddleDataIn.delta2}°≥{_saddleDataIn.delta1}°+20°={_saddleDataIn.delta1 + 20}°");
-            }
 
-            if (_saddleDataIn.Type == SaddleType.SaddleWithRing)
+            switch (_saddleDataIn.Type)
             {
-                body.AddParagraph("").AppendEquation("A_k≥(s-c)√(D∙(s-c))");
-                body.AddParagraph("").AppendEquation($"{_saddleDataIn.Ak:f2}≥({_saddleDataIn.s}-{_saddleDataIn.c})√({_saddleDataIn.D}∙({_saddleDataIn.s}-{_saddleDataIn.c}))={_Ak:f2}");
+                case SaddleType.SaddleWithoutRingWithSheet:
+                    body.AddParagraph("").AppendEquation("s_2≥s");
+                    body.AddParagraph("").AppendEquation($"{_saddleDataIn.s2} мм ≥ {_saddleDataIn.s} мм");
+                    body.AddParagraph("").AppendEquation("δ_2≥δ_1+20°");
+                    body.AddParagraph("")
+                        .AppendEquation(
+                            $"{_saddleDataIn.delta2}°≥{_saddleDataIn.delta1}°+20°={_saddleDataIn.delta1 + 20}°");
+                    break;
+                case SaddleType.SaddleWithRing:
+                    body.AddParagraph("").AppendEquation("A_k≥(s-c)√(D∙(s-c))");
+                    body.AddParagraph("").AppendEquation($"{_saddleDataIn.Ak:f2}≥({_saddleDataIn.s}-{_saddleDataIn.c})√({_saddleDataIn.D}∙({_saddleDataIn.s}-{_saddleDataIn.c}))={_Ak:f2}");
+                    break;
             }
 
             package.Close();

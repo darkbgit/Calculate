@@ -727,7 +727,6 @@ namespace CalculateVessels.Core.Bottoms.FlatBottomWithAdditionalMoment
 
                 table.AddRowWithOneCell("Крепеж");
 
-
                 table.AddRow()
                     .AddCell("Материал")
                     .AddCell($"{_fbdi.ScrewSteel}");
@@ -765,16 +764,8 @@ namespace CalculateVessels.Core.Bottoms.FlatBottomWithAdditionalMoment
                         .AddCell($"{_fbdi.hsh} мм");
                 }
 
-                body.InsertTable(table);
-            }
+                table.AddRowWithOneCell("Условия нагружения");
 
-            body.AddParagraph("");
-            body.AddParagraph("Условия нагружения")
-                .Alignment(AlignmentType.Center);
-
-            //table
-            {
-                var table = body.AddTable();
 
                 table.AddRow()
                     .AddCell("Расчетная температура, Т:")
@@ -783,25 +774,15 @@ namespace CalculateVessels.Core.Bottoms.FlatBottomWithAdditionalMoment
                 table.AddRow()
                     .AddCell("Расчетное " +
                              (_fbdi.IsPressureIn
-                             ? "внутреннее избыточное"
-                             : "наружное") + " давление, p:")
+                                 ? "внутреннее избыточное"
+                                 : "наружное") + " давление, p:")
                     .AddCell($"{_fbdi.p} МПа");
 
-                body.InsertTable(table);
-            }
 
-            body.AddParagraph("");
-            body.AddParagraph("Физические параметры материала")
-                .Alignment(AlignmentType.Center);
-
-            //table
-            {
-                var table = body.AddTable();
-
-                table.AddRowWithOneCell("Крышка", gridSpanCount: 2);
+                table.AddRowWithOneCell($"Крышка сталь {_fbdi.CoverSteel}");
 
                 table.AddRow()
-                    .AddCell($"Допускаемое напряжение для материала {_fbdi.CoverSteel} при расчетной температуре, [σ]:")
+                    .AddCell("Допускаемое напряжение при расчетной температуре, [σ]:")
                     .AddCell($"{_fbdi.sigma_d} МПа");
 
                 table.AddRow()
@@ -822,7 +803,7 @@ namespace CalculateVessels.Core.Bottoms.FlatBottomWithAdditionalMoment
                     .AppendEquation("°C^-1");
 
 
-                table.AddRowWithOneCell("Фланец");
+                table.AddRowWithOneCell($"Фланец сталь {_fbdi.FlangeSteel}");
 
                 table.AddRow()
                     .AddCell("Модуль продольной упругости при температуре 20°C, ")
@@ -844,10 +825,10 @@ namespace CalculateVessels.Core.Bottoms.FlatBottomWithAdditionalMoment
                     .AppendEquation("°C^-1");
 
 
-                table.AddRowWithOneCell("Крепеж");
+                table.AddRowWithOneCell($"Крепеж сталь {_fbdi.ScrewSteel}");
 
                 table.AddRow()
-                    .AddCell($"Допускаемое напряжение при расчетной температуре, ")
+                    .AddCell("Допускаемое напряжение при расчетной температуре, ")
                     .AppendEquation("[σ]_б")
                     .AppendText(":")
                     .AddCell($"{_sigma_dnb:f1} МПа");
@@ -873,7 +854,7 @@ namespace CalculateVessels.Core.Bottoms.FlatBottomWithAdditionalMoment
 
                 if (_fbdi.IsWasher)
                 {
-                    table.AddRowWithOneCell("Шайба");
+                    table.AddRowWithOneCell($"Шайба сталь {_fbdi.WasherSteel}");
 
                     table.AddRow()
                         .AddCell("Коэффициент линейного расширения,")
@@ -883,9 +864,11 @@ namespace CalculateVessels.Core.Bottoms.FlatBottomWithAdditionalMoment
                         .AppendEquation("°C^-1");
                 }
 
+
                 body.InsertTable(table);
             }
 
+ 
             body.AddParagraph("");
             body.AddParagraph("Результаты расчета").Alignment(AlignmentType.Center);
             body.AddParagraph("");

@@ -7,7 +7,9 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
+using CalculateVessels.Data.PhysicalData.Gost34233_1;
 using CalculateVessels.Data.PhysicalData.Gost34233_7;
+using SteelForE = CalculateVessels.Data.PhysicalData.Common.SteelForE;
 
 
 namespace CalculateVessels.Data.PhysicalData
@@ -18,7 +20,8 @@ namespace CalculateVessels.Data.PhysicalData
         {
             private const string TABLE_STEELS = "PhysicalData/Gost34233_1/Steels.json";
             private const string TABLE_SIGMA = "PhysicalData/Gost34233_1/SteelsSigma.json";
-
+            private const string TABLE_RM = "PhysicalData/Gost34233_1/SteelsRm.json";
+            //private const string TABLE_TYPE = "PhysicalData/Gost34233_1/SteelsType.json";
 
             public static IEnumerable<string> GetSteelsList()
             {
@@ -63,7 +66,7 @@ namespace CalculateVessels.Data.PhysicalData
 
                 if (steel == null)
                 {
-                    errorList.Add($"Error find stell {steelName}");
+                    errorList.Add($"Error find steel {steelName}");
                     return SteelType.Undefined;
                 }
 
@@ -72,8 +75,19 @@ namespace CalculateVessels.Data.PhysicalData
 
             public static bool TryGetSigma(string steelName, double temperature,
                 ref double sigma_d, ref List<string> errorList,
-                bool isBigThickness = false, bool isBigResource = false)
+                double s = 0, int N = 1000)
             {
+                bool isBigThickness = false;
+
+
+                var isBigResource = N switch
+                {
+                    1000 => false,
+                    2000 => true,
+                    _ => true
+                };
+
+
                 List<PhysicalData.Gost34233_1.SteelForSigma> steels;
 
                 try
@@ -89,6 +103,22 @@ namespace CalculateVessels.Data.PhysicalData
                     return false;
                 }
 
+               
+
+                var steel = steels?.FirstOrDefault(st => st.Name.Contains(steelName));
+
+                if (steel == null)
+                {
+                    errorList.Add($"Error find steel {steelName}");
+                    return false;
+                }
+
+
+                if (steel.IsCouldBigThickness)
+                {
+                    isBigThickness = steel.BigThickness < s;
+                }
+
                 var accessI = 0;
 
                 if (isBigResource & !isBigThickness)
@@ -102,14 +132,6 @@ namespace CalculateVessels.Data.PhysicalData
                 else if (isBigResource & isBigThickness)
                 {
                     accessI = 3;
-                }
-
-                var steel = steels?.FirstOrDefault(s => s.Name.Contains(steelName));
-
-                if (steel == null)
-                {
-                    errorList.Add($"Error find stell {steelName}");
-                    return false;
                 }
 
                 double sigmaLittle = 0, sigmaBig = 0;
@@ -152,13 +174,13 @@ namespace CalculateVessels.Data.PhysicalData
 
             public static bool TryGetRm(string steelName, double temperature,
                 ref double Rm, ref List<string> errorList,
-                bool isBigThickness = false)
+                double s = 0)
             {
-                var steels = new List<PhysicalData.Gost34233_1.SteelForRm>();
+                List<SteelForRm> steels;
 
                 try
                 {
-                    using StreamReader file = new(TABLE_STEELS);
+                    using StreamReader file = new(TABLE_RM);
                     var json = file.ReadToEnd();
                     file.Close();
                     steels = JsonSerializer.Deserialize<List<PhysicalData.Gost34233_1.SteelForRm>>(json);
@@ -169,9 +191,23 @@ namespace CalculateVessels.Data.PhysicalData
                     return false;
                 }
 
-                var accessI = isBigThickness ? 1 : 0;
+                
 
-                var steel = steels.FirstOrDefault(s => s.Name.Equals(steelName));
+                var steel = steels?.FirstOrDefault(st => st.Name.Equals(steelName));
+
+                if (steel == null)
+                {
+                    errorList.Add($"Error find steel {steelName}");
+                    return false;
+                }
+
+                var accessI = 0;
+
+                if (steel.IsCouldBigThickness && steel.BigThickness < s)
+                {
+                    accessI = 1;
+                }
+                
 
                 double RmLittle = 0, RmBig = 0;
                 double tempLittle = 0, tempBig = 0;
@@ -796,7 +832,7 @@ namespace CalculateVessels.Data.PhysicalData
 
         public static bool TryGetE(string steelName, double temperature, ref double E, ref List<string> errorList, string gost = "GOST34233_1")
         {
-            var steels = new List<SteelForE>();
+            List<SteelForE> steels;
 
             try
             {
@@ -807,14 +843,20 @@ namespace CalculateVessels.Data.PhysicalData
             }
             catch
             {
-                errorList.Add($"Cannt open file for E for steel {steelName} in GOST {gost}");
+                errorList.Add($"Cannot open file for E for steel {steelName} in GOST {gost}");
                 return false;
             }
 
             var Elist = steels
-                .FirstOrDefault(s => s.Name.Contains(steelName))
+                ?.FirstOrDefault(s => s.Name.Contains(steelName))
                 ?.Values
-                .Where(v => v.EValue != 0).ToList();
+                ?.Where(v => v.EValue != 0).ToList();
+
+            if (Elist == null)
+            {
+                errorList.Add($"Error find steel {steelName}");
+                return false;
+            }
 
             double ELittle = 0, EBig = 0;
             double tempLittle = 0, tempBig = 0;

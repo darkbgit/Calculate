@@ -17,7 +17,6 @@ namespace CalculateVessels.Core.Bottoms.FlatBottomWithAdditionalMoment
         //shell
         public double D { get; set; }
         public double s { get; set; }
-
         public double c1 { get; set; }
         public double c2 { get; set; }
         public double c3 { get; set; }
@@ -25,7 +24,6 @@ namespace CalculateVessels.Core.Bottoms.FlatBottomWithAdditionalMoment
         //cover
         public double D2 { get; set; }
         public double D3 { get; set; }
-
         public double s1 { get; set; }
         public double s2 { get; set; }
         public double s3 { get; set; }
@@ -42,7 +40,6 @@ namespace CalculateVessels.Core.Bottoms.FlatBottomWithAdditionalMoment
         public double F { get; set; }
         public double M { get; set; }
         public bool IsPressureIn { get; set; }
-
         public double fi { get; set; }
         public double sigma_d { get; set; }
 
@@ -52,7 +49,6 @@ namespace CalculateVessels.Core.Bottoms.FlatBottomWithAdditionalMoment
         public string ScrewSteel { get; set; }
         public double Lb0 { get; set; }
         public int Screwd { get; set; }
-
         public int n { get; set; }
 
         //gasket

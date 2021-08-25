@@ -312,15 +312,7 @@ namespace CalculateVessels.Core.Shells
                     .AppendText(":")
                     .AddCell($"{_csdi.fi}");
 
-                body.InsertTable(table);
-            }
-
-            body.AddParagraph("");
-            body.AddParagraph("Условия нагружения").Alignment(AlignmentType.Center);
-
-            //table
-            {
-                var table = body.AddTable();
+                table.AddRowWithOneCell("Условия нагружения");
 
                 table.AddRow()
                     .AddCell("Расчетная температура, Т:")
@@ -331,8 +323,10 @@ namespace CalculateVessels.Core.Shells
                                           + " давление, p:")
                     .AddCell($"{_csdi.p} МПа");
 
+                table.AddRowWithOneCell($"Характеристики материала {_csdi.Steel}");
+
                 table.AddRow()
-                    .AddCell($"Допускаемое напряжение для материала {_csdi.Steel} при расчетной температуре, [σ]:")
+                    .AddCell("Допускаемое напряжение при расчетной температуре, [σ]:")
                     .AddCell($"{_csdi.sigma_d} МПа");
 
                 if (!_csdi.IsPressureIn)
@@ -343,6 +337,7 @@ namespace CalculateVessels.Core.Shells
                 }
                 body.InsertTable(table);
             }
+          
 
             body.AddParagraph("");
             body.AddParagraph("Результаты расчета").Alignment(AlignmentType.Center);
