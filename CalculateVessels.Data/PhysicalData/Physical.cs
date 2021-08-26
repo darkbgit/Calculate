@@ -193,7 +193,7 @@ namespace CalculateVessels.Data.PhysicalData
 
                 
 
-                var steel = steels?.FirstOrDefault(st => st.Name.Equals(steelName));
+                var steel = steels?.FirstOrDefault(st => st.Name.Contains(steelName));
 
                 if (steel == null)
                 {

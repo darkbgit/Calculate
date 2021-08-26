@@ -211,7 +211,7 @@ namespace CalculateVessels.Core.HeatExchanger
 
         public void Calculate()
         {
-            //TODO: Get phisycal parameters
+            //TODO: Get physical parameters
             //ET
             if (!Physical.TryGetE(_hedi.SteelT, _hedi.TT, ref _ET, ref _errorList))
             {
@@ -258,7 +258,7 @@ namespace CalculateVessels.Core.HeatExchanger
             }
 
 
-            //TODO: Get E1 for condition if two different tube piate and flange not with tube plate
+            //TODO: Get E1 for condition if two different tube plate and flange not with tube plate
             //E1
             if (true)
             {
@@ -370,14 +370,14 @@ namespace CalculateVessels.Core.HeatExchanger
                 }
             }
 
-            //TODO: sigmaa for different matireals Al,Cu, Tt
+            //TODO: sigmaa for different materials Al,Cu, Tt
 
             _nNForSigmaa = 10.0;
             _nsigmaForSigmaa = 2.0;
 
             _CtForSigmaa = (2300.0 - _hedi.TK) / 2300.0;
 
-            _AForSigmaap = (Physical.Gost34233_1.GetSteelType(_hedi.FirstTubePlate.Steelp, ref _errorList) is (SteelType.Carbon or SteelType.Austenitic) and not SteelType.Undefined) ? 60000.0 : 45000.0;
+            _AForSigmaap = (Physical.Gost34233_1.GetSteelType(_hedi.FirstTubePlate.Steelp, ref _errorList) is (SteelType.Carbon or SteelType.Austenitiс) and not SteelType.Undefined) ? 60000.0 : 45000.0;
 
             _BForSigmaa = 0.4 * _Rmp;
 
@@ -385,15 +385,15 @@ namespace CalculateVessels.Core.HeatExchanger
 
             if (_hedi.IsDifferentTubePlate)
             {
-                _AForSigmaap2 = (Physical.Gost34233_1.GetSteelType(_hedi.FirstTubePlate.Steelp, ref _errorList) is (SteelType.Carbon or SteelType.Austenitic) and not SteelType.Undefined) ? 60000.0 : 45000.0;
+                _AForSigmaap2 = (Physical.Gost34233_1.GetSteelType(_hedi.FirstTubePlate.Steelp, ref _errorList) is (SteelType.Carbon or SteelType.Austenitiс) and not SteelType.Undefined) ? 60000.0 : 45000.0;
 
                 _sigmaa_dp2 = (_CtForSigmaa * _AForSigmaap2 / Math.Sqrt(_nNForSigmaa * _hedi.N)) + (_BForSigmaa / _nsigmaForSigmaa);
             }
 
-            _AForSigmaaK = (Physical.Gost34233_1.GetSteelType(_hedi.SteelK, ref _errorList) is (SteelType.Carbon or SteelType.Austenitic) and not SteelType.Undefined) ? 60000.0 : 45000.0;
+            _AForSigmaaK = (Physical.Gost34233_1.GetSteelType(_hedi.SteelK, ref _errorList) is (SteelType.Carbon or SteelType.Austenitiс) and not SteelType.Undefined) ? 60000.0 : 45000.0;
             _sigmaa_dK = (_CtForSigmaa * _AForSigmaaK / Math.Sqrt(_nNForSigmaa * _hedi.N)) + (_BForSigmaa / _nsigmaForSigmaa);
 
-            _AForSigmaaT = (Physical.Gost34233_1.GetSteelType(_hedi.SteelT, ref _errorList) is (SteelType.Carbon or SteelType.Austenitic) and not SteelType.Undefined) ? 60000.0 : 45000.0;
+            _AForSigmaaT = (Physical.Gost34233_1.GetSteelType(_hedi.SteelT, ref _errorList) is (SteelType.Carbon or SteelType.Austenitiс) and not SteelType.Undefined) ? 60000.0 : 45000.0;
             _sigmaa_dT = (_CtForSigmaa * _AForSigmaaT / Math.Sqrt(_nNForSigmaa * _hedi.N)) + (_BForSigmaa / _nsigmaForSigmaa);
 
             _Ksigma = _hedi.FirstTubePlate.TubePlateType switch
@@ -460,7 +460,7 @@ namespace CalculateVessels.Core.HeatExchanger
                         _Kpz = _a * _hedi.sK / (_hedi.l * Math.Pow(_betap, 2)) *
                             (((1 - Math.Pow(_betap, 2)) / 4.8 * ((Math.PI * _EK / _Kpac) + (_hedi.Lpac / (_hedi.deltap * _hedi.D1)))) - (0.5 * Math.PI * _hedi.Lpac / (_hedi.deltap * _hedi.D1)));
                     }
-                    else if (_hedi.beta0 >= 15 && _hedi.beta0 <= 60)
+                    else if (_hedi.beta0 is >= 15 and <= 60)
                     {
                         _Ap1 = 2 /
                             (Math.Sin(DegToRad(_hedi.beta0)) * Math.Pow(Math.Cos(DegToRad(_hedi.beta0)), 2)) *
@@ -483,7 +483,7 @@ namespace CalculateVessels.Core.HeatExchanger
                     }
                     break;
                 case CompensatorType.CompensatorOnExpander:
-                    //TODO: Make calculation compensator on expeander 
+                    //TODO: Make calculation compensator on expander 
                     break;
             }
 
@@ -530,7 +530,7 @@ namespace CalculateVessels.Core.HeatExchanger
                 return;
             }
 
-            //TODO: Calculete values of _Phi1, _Phi2, _Phi3
+            //TODO: Calculate values of _Phi1, _Phi2, _Phi3
 
             _t = 1 + (1.4 * _omega * (_mn - 1));
             _T1 = _Phi1 * (_mn + (0.5 * (1 + (_mn * _t)) * (_t - 1)));
@@ -986,14 +986,8 @@ namespace CalculateVessels.Core.HeatExchanger
                     .AddCell("Колличество ходов")
                     .AddCell(_hedi.IsOneGo ? "Одноходовой" : "Многоходовой");
 
-                body.InsertTable(table);
-            }
 
-            //table
-            {
-                body.AddParagraph("Кожух");
-
-                var table = body.AddTable();
+                table.AddRowWithOneCell("Кожух");
 
                 table.AddRow()
                     .AddCell("Материал:")
@@ -1034,14 +1028,8 @@ namespace CalculateVessels.Core.HeatExchanger
                         .AddCell($"{_hedi.l2R} мм");
 
                 }
-                body.InsertTable(table);
-            }
 
-            //table
-            {
-                body.AddParagraph("Трубная решетка");
-
-                var table = body.AddTable();
+                table.AddRowWithOneCell("Трубная решетка");
 
                 table.AddRow()
                         .AddCell("Расстояние от оси кожуха до оси наиболее удаленной трубы, ")
@@ -1195,14 +1183,8 @@ namespace CalculateVessels.Core.HeatExchanger
                         .AddCell("Проверка жесткости трубных решеток")
                         .AddCell(_hedi.FirstTubePlate.IsNeedCheckHardnessTubePlate ? "Да" : "Нет");
 
-                body.InsertTable(table);
-            }
 
-            //table
-            {
-                body.AddParagraph("Трубы");
-
-                var table = body.AddTable();
+                table.AddRowWithOneCell("Трубы");
 
                 table.AddRow()
                     .AddCell("Материал:")
@@ -1271,14 +1253,10 @@ namespace CalculateVessels.Core.HeatExchanger
                         .AppendText(":")
                         .AddCell($"{_hedi.FirstTubePlate.delta} мм");
                 }
-                body.InsertTable(table);
-            }
 
-            body.AddParagraph("Условия нагружения");
 
-            //table
-            {
-                var table = body.AddTable();
+                table.AddRowWithOneCell("Условия нагружения");
+
 
                 table.AddRow()
                     .AddCell("Межтрубное пространство")
@@ -1334,14 +1312,10 @@ namespace CalculateVessels.Core.HeatExchanger
                     .AddCell("Число циклов нагружения за расчетный срок службы, N:")
                     .AddCell($"{_hedi.N}");
 
-                body.InsertTable(table);
-            }
 
-            body.AddParagraph("Прочностные характеристики материалов");
 
-            //table
-            {
-                var table = body.AddTable();
+                table.AddRowWithOneCell("Прочностные характеристики материалов");
+
 
                 table.AddRow()
                     .AddCell("Кожух")
@@ -1352,7 +1326,7 @@ namespace CalculateVessels.Core.HeatExchanger
                     .AddCell($"{_hedi.SteelK}");
 
                 table.AddRow()
-                    .AddCell($"Допускаемое напряжение при расчетной температуре, ")
+                    .AddCell("Допускаемое напряжение при расчетной температуре, ")
                     .AppendEquation("[σ]_K")
                     .AppendText(":")
                     .AddCell($"{_sigma_dK} МПа");
@@ -1374,7 +1348,7 @@ namespace CalculateVessels.Core.HeatExchanger
                     .AddCell("Допускаемая амплитуда напряжений, ")
                     .AppendEquation("[σ_a]_K")
                     .AppendText(":")
-                    .AddCell($"{_sigmaa_dK} МПа");
+                    .AddCell($"{_sigmaa_dK:f2} МПа");
 
 
                 table.AddRow()
@@ -1408,7 +1382,7 @@ namespace CalculateVessels.Core.HeatExchanger
                     .AddCell("Допускаемая амплитуда напряжений, ")
                     .AppendEquation("[σ_a]_T")
                     .AppendText(":")
-                    .AddCell($"{_sigmaa_dT} МПа");
+                    .AddCell($"{_sigmaa_dT:f2} МПа");
 
                 table.AddRow()
                     .AddCell("Первая трубная решетка")
@@ -1434,7 +1408,7 @@ namespace CalculateVessels.Core.HeatExchanger
                     .AddCell("Допускаемая амплитуда напряжений, ")
                     .AppendEquation("[σ_a]_p")
                     .AppendText(":")
-                    .AddCell($"{_sigmaa_dp} МПа");
+                    .AddCell($"{_sigmaa_dp:f2} МПа");
 
                 table.AddRow()
                     .AddCell("")
@@ -1466,7 +1440,7 @@ namespace CalculateVessels.Core.HeatExchanger
 
                 table.AddRow()
                     .AddCell("")
-                    .AddCell("Смежный элемент фланеца камеры");
+                    .AddCell("Смежный элемент фланца камеры");
 
                 table.AddRow()
                     .AddCell("Материал:")
@@ -1545,7 +1519,7 @@ namespace CalculateVessels.Core.HeatExchanger
                     }
                     break;
                 case CompensatorType.CompensatorOnExpander:
-                    //TODO: Make calculation compensator on expeander 
+                    //TODO: Make calculation compensator on expander 
                     break;
             }
 
