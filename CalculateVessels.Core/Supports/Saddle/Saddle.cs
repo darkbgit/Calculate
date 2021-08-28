@@ -548,16 +548,8 @@ namespace CalculateVessels.Core.Supports.Saddle
                         .AppendText(":")
                         .AddCell($"{_saddleDataIn.delta2} °");
                 }
-                body.InsertTable(table);
-            }
-
-            body.AddParagraph("");
-            body.AddParagraph("Условия нагружения")
-                .Alignment(AlignmentType.Center);
-
-            //table
-            {
-                var table = body.AddTable();
+                
+                table.AddRowWithOneCell("Условия нагружения");
 
                 table.AddRow()
                     .AddCell("Собственный вес с содержимым, G:")

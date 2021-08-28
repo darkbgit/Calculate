@@ -383,7 +383,6 @@ namespace CalculateVessels
             this.button10.TabIndex = 20;
             this.button10.Text = "button10";
             this.button10.UseVisualStyleBackColor = true;
-            this.button10.Click += new System.EventHandler(this.button10_Click);
             // 
             // button11
             // 
@@ -436,7 +435,7 @@ namespace CalculateVessels
             this.heatExchengerWithFixedTubePlate_b.Text = "Теплообменный аппарат\r\n с неподвижными\r\n трубными решетками";
             this.heatExchengerWithFixedTubePlate_b.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
             this.heatExchengerWithFixedTubePlate_b.UseVisualStyleBackColor = true;
-            this.heatExchengerWithFixedTubePlate_b.Click += new System.EventHandler(this.HeatExchengerWithFixedTubePlate_b_Click);
+            this.heatExchengerWithFixedTubePlate_b.Click += new System.EventHandler(this.HeatExchangerWithFixedTubePlate_b_Click);
             // 
             // button16
             // 

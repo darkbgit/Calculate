@@ -494,7 +494,7 @@ namespace CalculateVessels
                         CultureInfo.InvariantCulture,
                         out var flangeFaceInt))
                 {
-                    dataIn.FlangeFace = (FlangeFaceType)flangeFaceInt;
+                    dataIn.FlangeFace = (FlangeFaceType)(flangeFaceInt - 1);
                 }
                 else
                 {

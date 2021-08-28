@@ -31,9 +31,6 @@ namespace CalculateVessels
 
         
 
-
-        
-
         private void MakeWord_b_Click(object sender, EventArgs e)
         {
             if (Word_lv.Items.Count > 0)
@@ -63,7 +60,7 @@ namespace CalculateVessels
                         }
                         catch
                         {
-                            System.Windows.Forms.MessageBox.Show("Закройте" + f + "и нажмите OK");
+                            System.Windows.Forms.MessageBox.Show("Нет шаблона temp.docx");
                         }
                     }
                     var bibliography = new List<string>();
@@ -78,7 +75,7 @@ namespace CalculateVessels
 
                         catch (Exception)
                         {
-                            System.Windows.Forms.MessageBox.Show($"Couldnt create word file for element {element}" + e.ToString());
+                            System.Windows.Forms.MessageBox.Show($"Couldn't create word file for element {element}" + e.ToString());
                         }
                     }
 
@@ -89,7 +86,7 @@ namespace CalculateVessels
                     }
                     catch
                     {
-                        System.Windows.Forms.MessageBox.Show("Couldnt create word file for bibliography" + e.ToString());
+                        System.Windows.Forms.MessageBox.Show("Couldn't create word file for bibliography" + e.ToString());
                     }
 
 
@@ -153,10 +150,8 @@ namespace CalculateVessels
 
         private void Saddle_b_Click(object sender, EventArgs e)
         {
-            //CilForm cf = (CilForm) Application.OpenForms["CilForm"]; // создаем
             if (saddleForm == null)
             {
-                //cf.Dispose();
                 saddleForm = new SaddleForm { Owner = this };
                 saddleForm.Show();
             }
@@ -192,6 +187,20 @@ namespace CalculateVessels
             {
                 flatBottomWithAdditionalMomentForm.Owner = this;
                 flatBottomWithAdditionalMomentForm.Show();
+            }
+        }
+
+        private void HeatExchangerWithFixedTubePlate_b_Click(object sender, EventArgs e)
+        {
+            if (heatExchengerWithFixedTubePlatesForm == null)
+            {
+                heatExchengerWithFixedTubePlatesForm = new HeatExchengerWithFixedTubePlatesForm { Owner = this };
+                heatExchengerWithFixedTubePlatesForm.Show();
+            }
+            else
+            {
+                heatExchengerWithFixedTubePlatesForm.Owner = this;
+                heatExchengerWithFixedTubePlatesForm.Show();
             }
         }
 
@@ -233,17 +242,16 @@ namespace CalculateVessels
                 {
                     lv.BeginUpdate();
 
-                    int selitem = idx + offset;
+                    int selectItem = idx + offset;
                     for (int i = 0; i < lv.Items[idx].SubItems.Count; i++)
                     {
-                        string cache = lv.Items[selitem].SubItems[i].Text;
-                        lv.Items[selitem].SubItems[i].Text = lv.Items[idx].SubItems[i].Text;
-                        lv.Items[idx].SubItems[i].Text = cache;
+                        (lv.Items[selectItem].SubItems[i].Text, lv.Items[idx].SubItems[i].Text) = 
+                            (lv.Items[idx].SubItems[i].Text, lv.Items[selectItem].SubItems[i].Text);
                     }
 
                     lv.Focus();
-                    lv.Items[selitem].Selected = true;
-                    lv.EnsureVisible(selitem);
+                    lv.Items[selectItem].Selected = true;
+                    lv.EnsureVisible(selectItem);
 
                     lv.EndUpdate();
                 }
@@ -253,26 +261,28 @@ namespace CalculateVessels
         private void Up_b_Click(object sender, EventArgs e)
         {
             int idx = Word_lv.SelectedItems[0].Index;
-            MoveSelectedItemListView(Word_lv, idx,  true);
-            var temp = Elements.ElementsList[idx];
-            Elements.ElementsList[idx] = Elements.ElementsList[idx - 1];
-            Elements.ElementsList[idx - 1] = temp;
 
+            MoveSelectedItemListView(Word_lv, idx,  true);
+
+            (Elements.ElementsList[idx], Elements.ElementsList[idx - 1]) = 
+                (Elements.ElementsList[idx - 1], Elements.ElementsList[idx]);
         }
 
         private void Down_b_Click(object sender, EventArgs e)
         {
             int idx = Word_lv.SelectedItems[0].Index;
+
             MoveSelectedItemListView(Word_lv, idx, false);
-            var temp = Elements.ElementsList[idx];
-            Elements.ElementsList[idx] = Elements.ElementsList[idx + 1];
-            Elements.ElementsList[idx + 1] = temp;
+
+            (Elements.ElementsList[idx], Elements.ElementsList[idx + 1]) = 
+                (Elements.ElementsList[idx + 1], Elements.ElementsList[idx]);
         }
 
         private void Del_b_Click(object sender, EventArgs e)
         {
             int idx = Word_lv.SelectedItems[0].Index;
-            Word_lv.SelectedItems[0].Remove();
+
+            Word_lv.Items.RemoveAt(idx);
             Elements.ElementsList.RemoveAt(idx);
             //Word_lv.SelectedItems.Clear();
         }
@@ -303,55 +313,15 @@ namespace CalculateVessels
 
         private void AboutToolStripMenuItem_Click(object sender, System.EventArgs e)
         {
-            if (sender is ToolStripItem it && it.Name == "AboutToolStripMenuItem")
+            if (sender is ToolStripItem {Name: "AboutToolStripMenuItem"})
             {
                 var abf = new AboutBox();
                 abf.ShowDialog();
             }
         }
 
-        private void button10_Click(object sender, EventArgs e)
-        {
-            //var steels = Physical.Gost34233_1.GetSteelsList();
-            //MessageBox.Show(string.Join<string>(Environment.NewLine, steels));
 
-            List<string> _errorList = new();
 
-            //var (_T1, _T2, _T3) = Physical.Gost34233_7.GetT1T2T3(3.2, 1.27, ref _errorList);
 
-            //if ((_T1, _T2, _T3) == default)
-            //{
-            //    MessageBox.Show(string.Join<string>(Environment.NewLine, _errorList));
-            //}
-            //else
-            //{
-            //    MessageBox.Show(_T1.ToString() + _T2 + _T3);
-            //}
-
-            double w = default;
-            
-            if (!Physical.Gost34233_7.TryGetpW_d(1450, ref w, ref _errorList))
-            {
-                MessageBox.Show(string.Join<string>(Environment.NewLine, _errorList));
-            }
-            else
-            {
-                MessageBox.Show(w.ToString());
-            }
-        }
-
-        private void HeatExchengerWithFixedTubePlate_b_Click(object sender, EventArgs e)
-        {
-            if (heatExchengerWithFixedTubePlatesForm == null)
-            {
-                heatExchengerWithFixedTubePlatesForm = new HeatExchengerWithFixedTubePlatesForm { Owner = this };
-                heatExchengerWithFixedTubePlatesForm.Show();
-            }
-            else
-            {
-                heatExchengerWithFixedTubePlatesForm.Owner = this;
-                heatExchengerWithFixedTubePlatesForm.Show();
-            }
-        }
     }
 }
