@@ -24,7 +24,7 @@ namespace CalculateVessels
         public NozzleForm nf = null;
         public PldnForm pdf = null;
         public SaddleForm saddleForm = null;
-        public HeatExchengerWithFixedTubePlatesForm heatExchengerWithFixedTubePlatesForm = null;
+        public HeatExchengerWithFixedTubePlatesForm heatExchangerWithFixedTubePlatesForm = null;
 
 
         // TODO: KonForm 
@@ -192,15 +192,15 @@ namespace CalculateVessels
 
         private void HeatExchangerWithFixedTubePlate_b_Click(object sender, EventArgs e)
         {
-            if (heatExchengerWithFixedTubePlatesForm == null)
+            if (heatExchangerWithFixedTubePlatesForm == null)
             {
-                heatExchengerWithFixedTubePlatesForm = new HeatExchengerWithFixedTubePlatesForm { Owner = this };
-                heatExchengerWithFixedTubePlatesForm.Show();
+                heatExchangerWithFixedTubePlatesForm = new HeatExchengerWithFixedTubePlatesForm { Owner = this };
+                heatExchangerWithFixedTubePlatesForm.Show();
             }
             else
             {
-                heatExchengerWithFixedTubePlatesForm.Owner = this;
-                heatExchengerWithFixedTubePlatesForm.Show();
+                heatExchangerWithFixedTubePlatesForm.Owner = this;
+                heatExchangerWithFixedTubePlatesForm.Show();
             }
         }
 

@@ -271,14 +271,12 @@ namespace CalculateVessels.Core.Bottoms.FlatBottomWithAdditionalMoment
             {
                 (_m, _qobj, _q_d, _Kobj, _Ep, _isGasketFlat, _isGasketMetal) = Physical.Gost34233_4.GetGasketParameters(_fbdi.GasketType);
 
-                if (_Ep == -1)
+                _Ep = _Ep switch
                 {
-                    _Ep = 0.00003 * (1 + _fbdi.bp / (2 * _fbdi.hp));
-                }
-                else if (_Ep == -2)
-                {
-                    _Ep = 0.00004 * (1 + _fbdi.bp / (2 * _fbdi.hp));
-                }
+                    -1 => 0.00003 * (1 + _fbdi.bp / (2 * _fbdi.hp)),
+                    -2 => 0.00004 * (1 + _fbdi.bp / (2 * _fbdi.hp)),
+                    _ => _Ep
+                };
             }
 
             if (_isGasketFlat)

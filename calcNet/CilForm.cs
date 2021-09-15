@@ -17,7 +17,7 @@ namespace CalculateVessels
             InitializeComponent();
         }
 
-        private CylindricalShellDataIn cylindricalShellDataIn;
+        private CylindricalShellDataIn _cylindricalShellDataIn;
 
         private void Cancel_b_Click(object sender, EventArgs e)
         {
@@ -69,7 +69,7 @@ namespace CalculateVessels
             scalc_l.Text = "";
             calc_b.Enabled = false;
 
-            cylindricalShellDataIn = new CylindricalShellDataIn();
+            _cylindricalShellDataIn = new CylindricalShellDataIn();
 
             var dataInErr = new List<string>();
 
@@ -78,7 +78,7 @@ namespace CalculateVessels
                 if (double.TryParse(t_tb.Text, System.Globalization.NumberStyles.Integer,
                     System.Globalization.CultureInfo.InvariantCulture, out double t))
                 {
-                    cylindricalShellDataIn.t = t;
+                    _cylindricalShellDataIn.t = t;
                 }
                 else
                 {
@@ -87,21 +87,21 @@ namespace CalculateVessels
             }
 
             //steel
-            cylindricalShellDataIn.Steel = steel_cb.Text;
+            _cylindricalShellDataIn.Steel = steel_cb.Text;
 
             //
-            cylindricalShellDataIn.IsPressureIn = vn_rb.Checked;
+            _cylindricalShellDataIn.IsPressureIn = vn_rb.Checked;
 
 
-            if (cylindricalShellDataIn.IsDataGood)
+            if (_cylindricalShellDataIn.IsDataGood)
             {
                 //[σ]
                 {
                     double sigma_d = 0.0;
                     if (sigma_d_tb.ReadOnly)
                     {
-                        if (Physical.Gost34233_1.TryGetSigma(cylindricalShellDataIn.Steel,
-                                                    cylindricalShellDataIn.t,
+                        if (Physical.Gost34233_1.TryGetSigma(_cylindricalShellDataIn.Steel,
+                                                    _cylindricalShellDataIn.t,
                                                     ref sigma_d,
                                                     ref dataInErr))
                         {
@@ -118,11 +118,11 @@ namespace CalculateVessels
                             dataInErr.Add("[σ] неверный ввод");
                         }
                     }
-                    cylindricalShellDataIn.sigma_d = sigma_d;
+                    _cylindricalShellDataIn.sigma_d = sigma_d;
                 }
 
 
-                if (!cylindricalShellDataIn.IsPressureIn)
+                if (!_cylindricalShellDataIn.IsPressureIn)
                 {
                     //E
                     //InputClass.GetInput_E(E_tb, ref d_in, ref dataInErr);
@@ -130,8 +130,8 @@ namespace CalculateVessels
                         double E = 0.0;
                         if (E_tb.ReadOnly)
                         {
-                            if (Physical.TryGetE(cylindricalShellDataIn.Steel,
-                                                cylindricalShellDataIn.t,
+                            if (Physical.TryGetE(_cylindricalShellDataIn.Steel,
+                                                _cylindricalShellDataIn.t,
                                                 ref E,
                                                 ref dataInErr))
                             {
@@ -146,7 +146,7 @@ namespace CalculateVessels
                             if (double.TryParse(E_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
                             System.Globalization.CultureInfo.InvariantCulture, out E))
                             {
-                                cylindricalShellDataIn.E = E;
+                                _cylindricalShellDataIn.E = E;
                             }
                             else
                             {
@@ -161,7 +161,7 @@ namespace CalculateVessels
                         if (double.TryParse(l_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
                         System.Globalization.CultureInfo.InvariantCulture, out var l))
                         {
-                            cylindricalShellDataIn.l = l;
+                            _cylindricalShellDataIn.l = l;
                         }
                         else
                         {
@@ -176,7 +176,7 @@ namespace CalculateVessels
                     if (double.TryParse(p_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
                     System.Globalization.CultureInfo.InvariantCulture, out var p))
                     {
-                        cylindricalShellDataIn.p = p;
+                        _cylindricalShellDataIn.p = p;
                     }
                     else
                     {
@@ -190,7 +190,7 @@ namespace CalculateVessels
                     if (double.TryParse(fi_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
                     System.Globalization.CultureInfo.InvariantCulture, out var fi))
                     {
-                        cylindricalShellDataIn.fi = fi;
+                        _cylindricalShellDataIn.fi = fi;
                     }
                     else
                     {
@@ -204,7 +204,7 @@ namespace CalculateVessels
                     if (double.TryParse(D_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
                     System.Globalization.CultureInfo.InvariantCulture, out var D))
                     {
-                        cylindricalShellDataIn.D = D;
+                        _cylindricalShellDataIn.D = D;
                     }
                     else
                     {
@@ -218,7 +218,7 @@ namespace CalculateVessels
                     if (double.TryParse(c1_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
                     System.Globalization.CultureInfo.InvariantCulture, out var c1))
                     {
-                        cylindricalShellDataIn.c1 = c1;
+                        _cylindricalShellDataIn.c1 = c1;
                     }
                     else
                     {
@@ -231,12 +231,12 @@ namespace CalculateVessels
                 {
                     if (c2_tb.Text == "")
                     {
-                        cylindricalShellDataIn.c2 = 0;
+                        _cylindricalShellDataIn.c2 = 0;
                     }
                     else if (double.TryParse(c2_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
                     System.Globalization.CultureInfo.InvariantCulture, out var c2))
                     {
-                        cylindricalShellDataIn.c2 = c2;
+                        _cylindricalShellDataIn.c2 = c2;
                     }
                     else
                     {
@@ -248,12 +248,12 @@ namespace CalculateVessels
                 {
                     if (c3_tb.Text == "")
                     {
-                        cylindricalShellDataIn.c3 = 0;
+                        _cylindricalShellDataIn.c3 = 0;
                     }
                     else if (double.TryParse(c3_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
                     System.Globalization.CultureInfo.InvariantCulture, out var c3))
                     {
-                        cylindricalShellDataIn.c3 = c3;
+                        _cylindricalShellDataIn.c3 = c3;
                     }
                     else
                     {
@@ -262,11 +262,11 @@ namespace CalculateVessels
                 }
 
 
-                var isNotError = dataInErr.Count == 0 && cylindricalShellDataIn.IsDataGood;
+                var isNotError = dataInErr.Count == 0 && _cylindricalShellDataIn.IsDataGood;
 
                 if (isNotError)
                 {
-                    var cyl = new CylindricalShell(cylindricalShellDataIn);
+                    var cyl = new CylindricalShell(_cylindricalShellDataIn);
                     cyl.Calculate();
                     if (!cyl.IsCriticalError)
                     {
@@ -285,7 +285,7 @@ namespace CalculateVessels
                 }
                 else
                 {
-                    MessageBox.Show(string.Join<string>(Environment.NewLine, dataInErr.Union(cylindricalShellDataIn.ErrorList)));
+                    MessageBox.Show(string.Join<string>(Environment.NewLine, dataInErr.Union(_cylindricalShellDataIn.ErrorList)));
                 }
             }
             else
@@ -304,14 +304,14 @@ namespace CalculateVessels
             List<string> dataInErr = new();
 
             //name
-            cylindricalShellDataIn.Name = Name_tb.Text;
+            _cylindricalShellDataIn.Name = Name_tb.Text;
 
             //s
             {
                 if (double.TryParse(s_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
                 System.Globalization.CultureInfo.InvariantCulture, out double s))
                 {
-                    cylindricalShellDataIn.s = s;
+                    _cylindricalShellDataIn.s = s;
                 }
                 else
                 {
@@ -326,7 +326,7 @@ namespace CalculateVessels
                     if (double.TryParse(Q_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
                 System.Globalization.CultureInfo.InvariantCulture, out double Q))
                     {
-                        cylindricalShellDataIn.Q = Q;
+                        _cylindricalShellDataIn.Q = Q;
                     }
                     else
                     {
@@ -339,7 +339,7 @@ namespace CalculateVessels
                     if (double.TryParse(M_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
                 System.Globalization.CultureInfo.InvariantCulture, out double M))
                     {
-                        cylindricalShellDataIn.M = M;
+                        _cylindricalShellDataIn.M = M;
                     }
                     else
                     {
@@ -347,14 +347,14 @@ namespace CalculateVessels
                     }
                 }
 
-                cylindricalShellDataIn.IsFTensile = forceStretch_rb.Checked;
+                _cylindricalShellDataIn.IsFTensile = forceStretch_rb.Checked;
 
                 //F
                 {
                     if (double.TryParse(F_tb.Text, NumberStyles.AllowDecimalPoint,
                         CultureInfo.InvariantCulture, out double F))
                     {
-                        cylindricalShellDataIn.F = F;
+                        _cylindricalShellDataIn.F = F;
                     }
                     else
                     {
@@ -362,12 +362,12 @@ namespace CalculateVessels
                     }
                 }
 
-                if (!cylindricalShellDataIn.IsFTensile)
+                if (!_cylindricalShellDataIn.IsFTensile)
                 {
                     var idx = force_gb.Controls.OfType<RadioButton>().FirstOrDefault(rb => rb.Checked)?.Text;
                     if (int.TryParse(idx, NumberStyles.Integer, CultureInfo.InvariantCulture, out int i))
                     {
-                        cylindricalShellDataIn.FCalcSchema = i;
+                        _cylindricalShellDataIn.FCalcSchema = i;
 
                         switch (i)
                         {
@@ -375,7 +375,7 @@ namespace CalculateVessels
                                 if (double.TryParse(F_tb.Text, NumberStyles.AllowDecimalPoint,
                                     CultureInfo.InvariantCulture, out double q))
                                 {
-                                    cylindricalShellDataIn.q = q;
+                                    _cylindricalShellDataIn.q = q;
                                 }
                                 else
                                 {
@@ -387,7 +387,7 @@ namespace CalculateVessels
                                 if (double.TryParse(F_tb.Text, NumberStyles.AllowDecimalPoint,
                                     CultureInfo.InvariantCulture, out double f))
                                 {
-                                    cylindricalShellDataIn.f = f;
+                                    _cylindricalShellDataIn.f = f;
                                 }
                                 else
                                 {
@@ -403,11 +403,11 @@ namespace CalculateVessels
                 }
             }
 
-            bool isNotError = dataInErr.Count == 0 && cylindricalShellDataIn.IsDataGood;
+            bool isNotError = dataInErr.Count == 0 && _cylindricalShellDataIn.IsDataGood;
 
             if (isNotError)
             {
-                CylindricalShell cylindricalShell = new(cylindricalShellDataIn);
+                CylindricalShell cylindricalShell = new(_cylindricalShellDataIn);
                 cylindricalShell.Calculate();
                 if (!cylindricalShell.IsCriticalError)
                 {
@@ -431,7 +431,7 @@ namespace CalculateVessels
 
                     MessageBox.Show("Calculation complete");
 
-                    MessageBoxCheckBox mbcb = new(cylindricalShell, cylindricalShellDataIn) { Owner = this };
+                    MessageBoxCheckBox mbcb = new(cylindricalShell, _cylindricalShellDataIn) { Owner = this };
                     mbcb.ShowDialog();
                 }
                 else
@@ -441,7 +441,7 @@ namespace CalculateVessels
             }
             else
             {
-                MessageBox.Show(string.Join<string>(Environment.NewLine, dataInErr.Union(cylindricalShellDataIn.ErrorList)));
+                MessageBox.Show(string.Join<string>(Environment.NewLine, dataInErr.Union(_cylindricalShellDataIn.ErrorList)));
             }
 
 

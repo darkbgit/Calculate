@@ -158,9 +158,9 @@ namespace CalculateVessels
         {
             if (sender is not HeatExchengerWithFixedTubePlatesForm) return;
 
-            if (this.Owner is MainForm { heatExchengerWithFixedTubePlatesForm: { } } main)
+            if (this.Owner is MainForm { heatExchangerWithFixedTubePlatesForm: { } } main)
             {
-                main.heatExchengerWithFixedTubePlatesForm = null;
+                main.heatExchangerWithFixedTubePlatesForm = null;
             }
         }
 

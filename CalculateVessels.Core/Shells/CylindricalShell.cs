@@ -19,30 +19,29 @@ namespace CalculateVessels.Core.Shells
 
         private readonly CylindricalShellDataIn _csdi;
 
-        //internal CylindricalShellDataIn Csdi { get => _csdi; }
 
-        private double _l;
-        private double _s_pf;
-        private double _s_f;
         private double _b;
         private double _b_2;
         private double _B1;
         private double _B1_2;
+        private double _conditionStability;
+        private double _F;
         private double _F_d;
-        private double _F_dp;
         private double _F_de;
         private double _F_de1;
         private double _F_de2;
+        private double _F_dp;
+        private double _l;
         private double _lambda;
-        private double _M_d;
-        private double _M_dp;
-        private double _M_de;
-        private double _Q_d;
-        private double _Q_dp;
-        private double _Q_de;
         private double _lpr;
-        private double _conditionStability;
-        private double _F;
+        private double _M_d;
+        private double _M_de;
+        private double _M_dp;
+        private double _Q_d;
+        private double _Q_de;
+        private double _Q_dp;
+        private double _s_f;
+        private double _s_pf;
 
         public void Calculate()
         {
@@ -81,6 +80,7 @@ namespace CalculateVessels.Core.Shells
                         {
                             IsCriticalError = true;
                             ErrorList.Add("Принятая толщина меньше расчетной");
+                            return;
                         }
                     }
                 }
@@ -102,14 +102,15 @@ namespace CalculateVessels.Core.Shells
                             _B1_2 = 9.45 * (_csdi.D / _l) * Math.Sqrt(_csdi.D / (100 * (_csdi.s - _c)));
                             _B1 = Math.Min(1.0, _B1_2);
                             _p_de = 2.08 * 0.00001 * _csdi.E / (_csdi.ny * _B1) * (_csdi.D / _l) * Math.Pow(100 * (_csdi.s - _c) / _csdi.D, 2.5);
+                            _p_d = _p_dp / Math.Sqrt(1 + Math.Pow(_p_dp / _p_de, 2));
                         }
                         else
                         {
                             IsCriticalError = true;
                             ErrorList.Add("Принятая толщина меньше расчетной");
+                            return;
                         }
                     }
-                    _p_d = _p_dp / Math.Sqrt(1 + Math.Pow(_p_dp / _p_de, 2));
                 }
                 if (_p_d < _csdi.p && _csdi.s != 0)
                 {
@@ -133,6 +134,7 @@ namespace CalculateVessels.Core.Shells
                     {
                         IsCriticalError = true;
                         ErrorList.Add("Принятая толщина меньше расчетной от нагрузки осевым сжимающим усилием");
+                        return;
                     }
                 }
                 else
@@ -166,7 +168,7 @@ namespace CalculateVessels.Core.Shells
                             case 6:
                                 double fDivl6 = _csdi.f / _csdi.l;
                                 fDivl6 *= 10;
-                                fDivl6 = Math.Round(fDivl6 / 2);
+                                fDivl6 = Math.Round(fDivl6 / 2.0);
                                 fDivl6 *= 0.2;
                                 _lpr = fDivl6 switch
                                 {
@@ -242,7 +244,7 @@ namespace CalculateVessels.Core.Shells
         public void MakeWord(string filename)
         {
 
-            using WordprocessingDocument package = WordprocessingDocument.Open(filename, true);
+            using var package = WordprocessingDocument.Open(filename, true);
 
             var mainPart = package.MainDocumentPart;
             var body = mainPart?.Document.Body;

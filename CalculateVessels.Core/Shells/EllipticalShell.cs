@@ -154,7 +154,7 @@ namespace CalculateVessels.Core.Shells
                 filename = DEFAULT_FILE_NAME;
             }
 
-            using WordprocessingDocument package = WordprocessingDocument.Open(filename, true);
+            using var package = WordprocessingDocument.Open(filename, true);
 
             var mainPart = package.MainDocumentPart;
             var body = mainPart?.Document.Body;
@@ -385,7 +385,7 @@ namespace CalculateVessels.Core.Shells
 
             body.AddParagraph("Условия применения расчетных формул");
 
-            // эллептические днища
+            // elliptical bottom
             body.AddParagraph("")
                 .AppendEquation("0.002≤(s_1-c)/(D)" +
                                 $"=({_esdi.s}-{_c:f2})/({_esdi.D})={(_esdi.s - _c) / _esdi.D:f3}≤0.1");

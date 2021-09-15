@@ -11,6 +11,7 @@
 	<Company>DBSoft</Company>
 	<Authors>Alex</Authors>
 	<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+	<IsPublishable>False</IsPublishable>
   </PropertyGroup>
 
   <ItemGroup>

@@ -19,17 +19,13 @@ namespace CalculateVessels.Core.Shells.Nozzle
         public Nozzle(IElement element, NozzleDataIn nozzleDataIn)
         {
             _nozzleDataIn = nozzleDataIn;
-            //this.shellData = (shell as Shell).ShellDataIn;
             _element = element;
         }
 
         private readonly NozzleDataIn _nozzleDataIn;
         private readonly IElement _element;
 
-
-        
-
-
+       
         private string _name;
         private string _steel1;
         private string _steel2;
@@ -58,6 +54,8 @@ namespace CalculateVessels.Core.Shells.Nozzle
         private double _b;
         private double _B1n;
         private double _c;
+        private double _conditionStrengthening1;
+        private double _conditionStrengthening2;
         private double _conditionUseFormulas1;
         private double _conditionUseFormulas2;
         private double _conditionUseFormulas2_2;
@@ -67,8 +65,8 @@ namespace CalculateVessels.Core.Shells.Nozzle
         private double _d0p;
         private double _Dk;
         private double _dmax;
-        private double _Dp;
         private double _dp;
+        private double _Dp;
         private double _E2;
         private double _E3;
         private double _E4;
@@ -97,8 +95,6 @@ namespace CalculateVessels.Core.Shells.Nozzle
         private double _V;
         private double _V1;
         private double _V2;
-        private double _conditionStrengthening1;
-        private double _conditionStrengthening2;
         private int _K1;
         private List<string> errorList = new();
 
@@ -106,18 +102,18 @@ namespace CalculateVessels.Core.Shells.Nozzle
 
         public void Calculate()
         {
-            _c = (_element as Shell).c;
+            _c = ((Shell) _element).c;
 
-            if (!_nozzleDataIn.ShellDataIn.IsPressureIn) _p_deShell = (_element as Shell).p_de;
+            if (!_nozzleDataIn.ShellDataIn.IsPressureIn) _p_deShell = ((Shell) _element).p_de;
 
             switch (_nozzleDataIn.ShellDataIn.ShellType)
             {
                 case ShellType.Conical:
-                    _Dk = (_element as ConicalShell).Dk;
-                    _alfa1 = (_nozzleDataIn.ShellDataIn as ConicalShellDataIn).alfa1;
+                    _Dk = ((ConicalShell) _element).Dk;
+                    _alfa1 = ((ConicalShellDataIn) _nozzleDataIn.ShellDataIn).alfa1;
                     break;
                 case ShellType.Elliptical:
-                    _ellH = (_nozzleDataIn.ShellDataIn as EllipticalShellDataIn).ellH;
+                    _ellH = ((EllipticalShellDataIn) _nozzleDataIn.ShellDataIn).ellH;
                     break;
             }
 
@@ -169,7 +165,7 @@ namespace CalculateVessels.Core.Shells.Nozzle
             }
             else
             {
-                _sp = (_element as Shell).s_p;
+                _sp = ((Shell) _element).s_p;
             }
 
             if (!_nozzleDataIn.IsOval)
@@ -819,7 +815,7 @@ namespace CalculateVessels.Core.Shells.Nozzle
                     }
                 case ShellType.Elliptical:
                     {
-                        if ((_nozzleDataIn.ShellDataIn as EllipticalShellDataIn).ellH * 100 == _nozzleDataIn.ShellDataIn.D * 25)
+                        if (((EllipticalShellDataIn) _nozzleDataIn.ShellDataIn).ellH * 100 == _nozzleDataIn.ShellDataIn.D * 25)
                         {
                             body.Elements<Paragraph>().Last()
                                 .AddRun("(для эллиптического днища при H=0.25D)");
@@ -833,7 +829,7 @@ namespace CalculateVessels.Core.Shells.Nozzle
                                 .AddRun("для эллиптического днища");
                             body.AddParagraph("")
                                 .AppendEquation("D_p=D^2/(2∙H)∙√(1-(D^2-4∙H^2)/D^4∙x^2)" +
-                                                $"={_nozzleDataIn.ShellDataIn.D}^2/(2∙{(_nozzleDataIn.ShellDataIn as EllipticalShellDataIn).ellH})∙√(1-({_nozzleDataIn.ShellDataIn.D}^2-4∙{(_nozzleDataIn.ShellDataIn as EllipticalShellDataIn).ellH}^2)/{_nozzleDataIn.ShellDataIn.D}^4∙{_nozzleDataIn.ellx}^2)={_Dp:f2} мм");
+                                                $"={_nozzleDataIn.ShellDataIn.D}^2/(2∙{((EllipticalShellDataIn) _nozzleDataIn.ShellDataIn).ellH})∙√(1-({_nozzleDataIn.ShellDataIn.D}^2-4∙{((EllipticalShellDataIn) _nozzleDataIn.ShellDataIn).ellH}^2)/{_nozzleDataIn.ShellDataIn.D}^4∙{_nozzleDataIn.ellx}^2)={_Dp:f2} мм");
                         }
                         break;
                     }
@@ -844,7 +840,7 @@ namespace CalculateVessels.Core.Shells.Nozzle
                             .AddRun("(для сферических и торосферических днищ вне зоны отбортовки)");
                         body.AddParagraph("")
                             .AppendEquation("D_p=2∙R" +
-                                            $"=2∙{(_element as EllipticalShell).EllR}={_Dp:f2}");
+                                            $"=2∙{((EllipticalShell) _element).EllR}={_Dp:f2}");
                         break;
                     }
             }
@@ -863,7 +859,7 @@ namespace CalculateVessels.Core.Shells.Nozzle
                     body.AddParagraph("Расчетный диаметр отверстия в стенке цилиндрической обечайки или конической обечайки при наличии наклонного штуцера, ось которого лежит в плоскости поперечного сечения укрепляемой обечайки");
                     body.AddParagraph("")
                         .AppendEquation("d_p=max{d;0.5∙t}+2∙c_s");
-                    //TODO Add parametr t
+                    //TODO Add parameter t
                     //body.AddParagraph().AppendEquation($"d_p={_nozzleDataIn.d}+2∙{_nozzleDataIn.cs}={_dp:f2} мм");
                     break;
                 case NozzleLocation.LocationAccordingToParagraph_5_2_2_3:
@@ -871,7 +867,7 @@ namespace CalculateVessels.Core.Shells.Nozzle
                         body.AddParagraph("Расчетный диаметр отверстия в стенке эллиптического днища при наличии смещенного штуцера, ось которого параллельна оси днища");
                         body.AddParagraph("")
                             .AppendEquation("d_p=(d+2∙c_s)/√(1-((2∙x)/D_p)^2)");
-                        //TODO: Add parametr x 
+                        //TODO: Add parameter x 
                         //body.AddParagraph().AppendEquation($"d_p={_nozzleDataIn.d}+2∙{_nozzleDataIn.cs}={_dp:f2} мм");
                         break;
                     }

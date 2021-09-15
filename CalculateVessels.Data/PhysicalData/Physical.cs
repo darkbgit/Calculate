@@ -40,7 +40,7 @@ namespace CalculateVessels.Data.PhysicalData
 
                 IEnumerable<string> result = Enumerable.Empty<string>();
                 steels?.ForEach(s => result = result.Union(s.Name));
-                result = result.OrderBy(s => s);
+                result = result.OrderByDescending(s => s);
 
                 return result;
             }
@@ -229,7 +229,7 @@ namespace CalculateVessels.Data.PhysicalData
                     else if (i == steel.Values.Count - 1)
                     {
                         errorList.Add($"Температура {temperature} °С, больше чем максимальная температура {tempBig} °С " +
-                                      $"для стали {steelName} при которой определяется значение времменного сопротивления по ГОСТ 34233.1-2017");
+                                      $"для стали {steelName} при которой определяется значение временного сопротивления по ГОСТ 34233.1-2017");
                         return false;
                     }
                     else
