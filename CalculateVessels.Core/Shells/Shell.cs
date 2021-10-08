@@ -22,7 +22,7 @@ namespace CalculateVessels.Core.Shells
 
         public bool IsCriticalError { get; protected set; }
         public bool IsError { get; protected set; }
-        public List<string> ErrorList { get; protected set; } = new();
+        public List<string> ErrorList => _errorList;
 
         public bool IsConditionUseFormulas { get; protected set; }
 
@@ -34,6 +34,8 @@ namespace CalculateVessels.Core.Shells
         protected double _p_de;
         protected double _p_dp;
         protected double _p_d;
+
+        protected List<string> _errorList = new();
 
         public List<string> Bibliography { get; } = new() 
         {

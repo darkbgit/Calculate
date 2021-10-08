@@ -844,10 +844,13 @@ namespace CalculateVessels.Core.HeatExchanger
                 filename = DEFAULT_FILE_NAME;
             }
 
-            using WordprocessingDocument package = WordprocessingDocument.Open(filename, true);
+            using var package = WordprocessingDocument.Open(filename, true);
 
             var mainPart = package.MainDocumentPart;
-            var body = mainPart?.Document.Body;
+
+            if (mainPart == null) return;
+
+            var body = mainPart.Document.Body;
 
             if (body == null) return;
 
@@ -1513,7 +1516,7 @@ namespace CalculateVessels.Core.HeatExchanger
                     {
 
                     }
-                    else if (_hedi.beta0 >= 15 && _hedi.beta0 <= 60)
+                    else if (_hedi.beta0 is >= 15 and <= 60)
                     {
 
                     }

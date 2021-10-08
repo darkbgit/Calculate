@@ -1,12 +1,12 @@
-﻿using System;
+﻿using CalculateVessels.Core.Shells;
+using CalculateVessels.Core.Shells.DataIn;
+using CalculateVessels.Data.PhysicalData;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
-using CalculateVessels.Core.Shells;
-using CalculateVessels.Core.Shells.DataIn;
-using CalculateVessels.Data.PhysicalData;
 
 namespace CalculateVessels
 {
@@ -92,205 +92,168 @@ namespace CalculateVessels
             //
             _cylindricalShellDataIn.IsPressureIn = vn_rb.Checked;
 
-
-            if (_cylindricalShellDataIn.IsDataGood)
+            //[σ]
+            if (sigmaHandle_cb.Checked)
             {
-                //[σ]
+                if (double.TryParse(sigma_d_tb.Text, NumberStyles.AllowDecimalPoint,
+                    CultureInfo.InvariantCulture, out  var sigmaAllow))
                 {
-                    double sigma_d = 0.0;
-                    if (sigma_d_tb.ReadOnly)
+                    _cylindricalShellDataIn.sigma_d = sigmaAllow;
+                }
+                else
+                {
+                    dataInErr.Add("[σ] неверный ввод");
+                }
+            }
+            
+            if (!_cylindricalShellDataIn.IsPressureIn)
+            {
+                //E
+                if (EHandle_cb.Checked)
+                {
+                    if (double.TryParse(sigma_d_tb.Text, NumberStyles.AllowDecimalPoint,
+                        CultureInfo.InvariantCulture, out var E))
                     {
-                        if (Physical.Gost34233_1.TryGetSigma(_cylindricalShellDataIn.Steel,
-                                                    _cylindricalShellDataIn.t,
-                                                    ref sigma_d,
-                                                    ref dataInErr))
-                        {
-                            sigma_d_tb.ReadOnly = false;
-                            sigma_d_tb.Text = sigma_d.ToString(CultureInfo.CurrentCulture);
-                            sigma_d_tb.ReadOnly = true;
-                        }
+                        _cylindricalShellDataIn.E = E;
                     }
                     else
                     {
-                        if (!double.TryParse(sigma_d_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
-                        System.Globalization.CultureInfo.InvariantCulture, out sigma_d))
-                        {
-                            dataInErr.Add("[σ] неверный ввод");
-                        }
-                    }
-                    _cylindricalShellDataIn.sigma_d = sigma_d;
-                }
-
-
-                if (!_cylindricalShellDataIn.IsPressureIn)
-                {
-                    //E
-                    //InputClass.GetInput_E(E_tb, ref d_in, ref dataInErr);
-                    {
-                        double E = 0.0;
-                        if (E_tb.ReadOnly)
-                        {
-                            if (Physical.TryGetE(_cylindricalShellDataIn.Steel,
-                                                _cylindricalShellDataIn.t,
-                                                ref E,
-                                                ref dataInErr))
-                            {
-                                E_tb.ReadOnly = false;
-                                E_tb.Text = E.ToString();
-                                E_tb.ReadOnly = true;
-                            }
-                        }
-                        else
-                        {
-
-                            if (double.TryParse(E_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
-                            System.Globalization.CultureInfo.InvariantCulture, out E))
-                            {
-                                _cylindricalShellDataIn.E = E;
-                            }
-                            else
-                            {
-                                dataInErr.Add("E неверный ввод");
-                            }
-                        }
-                    }
-
-                    //l
-                    //InputClass.GetInput_l(l_tb, ref d_in, ref dataInErr);
-                    {
-                        if (double.TryParse(l_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
-                        System.Globalization.CultureInfo.InvariantCulture, out var l))
-                        {
-                            _cylindricalShellDataIn.l = l;
-                        }
-                        else
-                        {
-                            dataInErr.Add("l неверный ввод");
-                        }
-                    }
-                }
-
-                //p
-                //    InputClass.GetInput_p(p_tb, ref d_in, ref dataInErr);
-                {
-                    if (double.TryParse(p_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
-                    System.Globalization.CultureInfo.InvariantCulture, out var p))
-                    {
-                        _cylindricalShellDataIn.p = p;
-                    }
-                    else
-                    {
-                        dataInErr.Add("p неверный ввод");
-                    }
-                }
-
-                //fi
-                //    InputClass.GetInput_fi(fi_tb, ref d_in, ref dataInErr);
-                {
-                    if (double.TryParse(fi_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
-                    System.Globalization.CultureInfo.InvariantCulture, out var fi))
-                    {
-                        _cylindricalShellDataIn.fi = fi;
-                    }
-                    else
-                    {
-                        dataInErr.Add("φ неверный ввод");
-                    }
-                }
-
-                //D
-                //    InputClass.GetInput_D(D_tb, ref d_in, ref dataInErr);
-                {
-                    if (double.TryParse(D_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
-                    System.Globalization.CultureInfo.InvariantCulture, out var D))
-                    {
-                        _cylindricalShellDataIn.D = D;
-                    }
-                    else
-                    {
-                        dataInErr.Add("D неверный ввод");
-                    }
-                }
-
-                //c1
-                //    InputClass.GetInput_c1(c1_tb, ref d_in, ref dataInErr);
-                {
-                    if (double.TryParse(c1_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
-                    System.Globalization.CultureInfo.InvariantCulture, out var c1))
-                    {
-                        _cylindricalShellDataIn.c1 = c1;
-                    }
-                    else
-                    {
-                        dataInErr.Add("c1 неверный ввод");
-                    }
-                }
-
-                //c2
-                //    InputClass.GetInput_c2(c2_tb, ref d_in, ref dataInErr);
-                {
-                    if (c2_tb.Text == "")
-                    {
-                        _cylindricalShellDataIn.c2 = 0;
-                    }
-                    else if (double.TryParse(c2_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
-                    System.Globalization.CultureInfo.InvariantCulture, out var c2))
-                    {
-                        _cylindricalShellDataIn.c2 = c2;
-                    }
-                    else
-                    {
-                        dataInErr.Add("c2 неверный ввод");
-                    }
-                }
-
-                //c3
-                {
-                    if (c3_tb.Text == "")
-                    {
-                        _cylindricalShellDataIn.c3 = 0;
-                    }
-                    else if (double.TryParse(c3_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
-                    System.Globalization.CultureInfo.InvariantCulture, out var c3))
-                    {
-                        _cylindricalShellDataIn.c3 = c3;
-                    }
-                    else
-                    {
-                        dataInErr.Add("c3 неверный ввод");
+                        dataInErr.Add("E неверный ввод");
                     }
                 }
 
 
-                var isNotError = dataInErr.Count == 0 && _cylindricalShellDataIn.IsDataGood;
-
-                if (isNotError)
+                //l
+                //InputClass.GetInput_l(l_tb, ref d_in, ref dataInErr);
                 {
-                    var cyl = new CylindricalShell(_cylindricalShellDataIn);
-                    cyl.Calculate();
-                    if (!cyl.IsCriticalError)
+                    if (double.TryParse(l_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
+                    System.Globalization.CultureInfo.InvariantCulture, out var l))
                     {
-                        c_tb.Text = $"{cyl.c:f2}";
-                        scalc_l.Text = $"sp={cyl.s:f3} мм";
-                        calc_b.Enabled = true;
-                        if (cyl.IsError)
-                        {
-                            MessageBox.Show(string.Join<string>(Environment.NewLine, cyl.ErrorList));
-                        }
+                        _cylindricalShellDataIn.l = l;
                     }
                     else
+                    {
+                        dataInErr.Add("l неверный ввод");
+                    }
+                }
+            }
+
+            //p
+            //    InputClass.GetInput_p(p_tb, ref d_in, ref dataInErr);
+            {
+                if (double.TryParse(p_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
+                System.Globalization.CultureInfo.InvariantCulture, out var p))
+                {
+                    _cylindricalShellDataIn.p = p;
+                }
+                else
+                {
+                    dataInErr.Add("p неверный ввод");
+                }
+            }
+
+            //fi
+            //    InputClass.GetInput_fi(fi_tb, ref d_in, ref dataInErr);
+            {
+                if (double.TryParse(fi_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
+                System.Globalization.CultureInfo.InvariantCulture, out var fi))
+                {
+                    _cylindricalShellDataIn.fi = fi;
+                }
+                else
+                {
+                    dataInErr.Add("φ неверный ввод");
+                }
+            }
+
+            //D
+            //    InputClass.GetInput_D(D_tb, ref d_in, ref dataInErr);
+            {
+                if (double.TryParse(D_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
+                System.Globalization.CultureInfo.InvariantCulture, out var D))
+                {
+                    _cylindricalShellDataIn.D = D;
+                }
+                else
+                {
+                    dataInErr.Add("D неверный ввод");
+                }
+            }
+
+            //c1
+            //    InputClass.GetInput_c1(c1_tb, ref d_in, ref dataInErr);
+            {
+                if (double.TryParse(c1_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
+                System.Globalization.CultureInfo.InvariantCulture, out var c1))
+                {
+                    _cylindricalShellDataIn.c1 = c1;
+                }
+                else
+                {
+                    dataInErr.Add("c1 неверный ввод");
+                }
+            }
+
+            //c2
+            //    InputClass.GetInput_c2(c2_tb, ref d_in, ref dataInErr);
+            {
+                if (c2_tb.Text == "")
+                {
+                    _cylindricalShellDataIn.c2 = 0;
+                }
+                else if (double.TryParse(c2_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
+                System.Globalization.CultureInfo.InvariantCulture, out var c2))
+                {
+                    _cylindricalShellDataIn.c2 = c2;
+                }
+                else
+                {
+                    dataInErr.Add("c2 неверный ввод");
+                }
+            }
+
+            //c3
+            {
+                if (c3_tb.Text == "")
+                {
+                    _cylindricalShellDataIn.c3 = 0;
+                }
+                else if (double.TryParse(c3_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
+                System.Globalization.CultureInfo.InvariantCulture, out var c3))
+                {
+                    _cylindricalShellDataIn.c3 = c3;
+                }
+                else
+                {
+                    dataInErr.Add("c3 неверный ввод");
+                }
+            }
+
+
+            var isNotError = dataInErr.Count == 0 && _cylindricalShellDataIn.IsDataGood;
+
+            if (isNotError)
+            {
+                var cyl = new CylindricalShell(_cylindricalShellDataIn);
+                cyl.Calculate();
+                if (!cyl.IsCriticalError)
+                {
+                    c_tb.Text = $"{cyl.c:f2}";
+                    scalc_l.Text = $"sp={cyl.s:f3} мм";
+                    calc_b.Enabled = true;
+                    if (cyl.IsError)
                     {
                         MessageBox.Show(string.Join<string>(Environment.NewLine, cyl.ErrorList));
                     }
                 }
                 else
                 {
-                    MessageBox.Show(string.Join<string>(Environment.NewLine, dataInErr.Union(_cylindricalShellDataIn.ErrorList)));
+                    MessageBox.Show(string.Join<string>(Environment.NewLine, cyl.ErrorList));
                 }
             }
             else
             {
-                MessageBox.Show(string.Join<string>(Environment.NewLine, dataInErr));
+                MessageBox.Show(string.Join<string>(Environment.NewLine, dataInErr.Union(_cylindricalShellDataIn.ErrorList)));
             }
         }
 
@@ -519,6 +482,26 @@ namespace CalculateVessels
             }
         }
 
+        private void SigmaHandle_cb_CheckedChanged(object sender, EventArgs e)
+        {
+            if (sender is CheckBox cb)
+            {
+                sigma_d_tb.Enabled = cb.Checked;
+            }
+        }
+
+        private void EHandle_cb_CheckedChanged(object sender, EventArgs e)
+        {
+            if (sender is CheckBox cb)
+            {
+                E_tb.Enabled = cb.Checked;
+            }
+        }
+
+        private void DisabledCalculateBtn(object sender, EventArgs e)
+        {
+            calc_b.Enabled = false;
+        }
     }
 }
 
