@@ -88,7 +88,7 @@ namespace CalculateVessels.Core.Shells
                 if (!IsConditionUseFormulas)
                 {
                     IsError = true;
-                    ErrorList.Add("Условие применения формул не выполняется");
+                    _errorList.Add("Условие применения формул не выполняется");
                 }
             }
 
@@ -137,7 +137,7 @@ namespace CalculateVessels.Core.Shells
                     else
                     {
                         IsCriticalError = true;
-                        ErrorList.Add("Принятая толщина меньше расчетной");
+                        _errorList.Add("Принятая толщина меньше расчетной");
                     }
                 }
                 else
@@ -174,13 +174,13 @@ namespace CalculateVessels.Core.Shells
                     else
                     {
                         IsCriticalError = true;
-                        ErrorList.Add("Принятая толщина меньше расчетной");
+                        _errorList.Add("Принятая толщина меньше расчетной");
                     }
                 }
                 if (_p_d < _csdi.p && _csdi.s != 0)
                 {
                     IsError = true;
-                    ErrorList.Add("[p] меньше p");
+                    _errorList.Add("[p] меньше p");
                 }
                 if (_csdi.ConnectionType != ConicalConnectionType.WithoutConnection)
                 {
@@ -188,7 +188,7 @@ namespace CalculateVessels.Core.Shells
                     {
                         IsConditionUseFormulas = false;
                         IsError = true;
-                        ErrorList.Add("Угол должен быть меньше либо равен 70 градусам");
+                        _errorList.Add("Угол должен быть меньше либо равен 70 градусам");
                     }
                     switch (_csdi.ConnectionType)
                     {
@@ -197,7 +197,7 @@ namespace CalculateVessels.Core.Shells
                             {
                                 IsConditionUseFormulas = false;
                                 IsError = true;
-                                ErrorList.Add("Условие присменения формул не выполняется");
+                                _errorList.Add("Условие присменения формул не выполняется");
                             }
                             _chi_1 = _csdi.sigma_d_1 / _csdi.sigma_d_2;
                             _beta = 0.4 * Math.Sqrt(_csdi.D / (_csdi.s2 - _c)) * _tgAlfa1
@@ -215,7 +215,7 @@ namespace CalculateVessels.Core.Shells
                             else
                             {
                                 IsCriticalError = true;
-                                ErrorList.Add("Принятая толщина переходной зоны меньше расчетной");
+                                _errorList.Add("Принятая толщина переходной зоны меньше расчетной");
                             }
                             break;
                         case ConicalConnectionType.WithRingPicture25b:
@@ -223,7 +223,7 @@ namespace CalculateVessels.Core.Shells
                             {
                                 IsConditionUseFormulas = false;
                                 IsError = true;
-                                ErrorList.Add("Условие применения формул не выполняется");
+                                _errorList.Add("Условие применения формул не выполняется");
                             }
                             _chi_1 = _csdi.sigma_d_1 / _csdi.sigma_d_2;
                             _beta = 0.4 * Math.Sqrt(_csdi.D / (_csdi.s2 - _c)) * _tgAlfa1
@@ -255,7 +255,7 @@ namespace CalculateVessels.Core.Shells
                             {
                                 IsConditionUseFormulas = false;
                                 IsError = true;
-                                ErrorList.Add("Условие применения формул не выполняется");
+                                _errorList.Add("Условие применения формул не выполняется");
                             }
                             _chi_1 = _csdi.sigma_d_1 / _csdi.sigma_d_2;
                             _beta = 0.4 * Math.Sqrt(_csdi.D / (_csdi.s2 - _c)) * _tgAlfa1
@@ -275,7 +275,7 @@ namespace CalculateVessels.Core.Shells
                     if (_p_dBig < _csdi.p && _csdi.s != 0)
                     {
                         IsError = true;
-                        ErrorList.Add("[p] для переходной части меньше p");
+                        _errorList.Add("[p] для переходной части меньше p");
                     }
                     if(_csdi.IsConnectionWithLittle)
                     {

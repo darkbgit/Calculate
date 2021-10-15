@@ -10,9 +10,11 @@ namespace CalculateVessels.Core.Bottoms.FlatBottomWithAdditionalMoment
 {
     public class FlatBottomWithAdditionalMomentDataIn : IDataIn
     {
-        public bool IsDataGood => !ErrorList.Any();
+        //public bool IsDataGood => !ErrorList.Any();
 
-        public List<string> ErrorList { get; private set; } = new();
+        public IEnumerable<string> ErrorList => _errorList;
+
+        private List<string> _errorList = new();
 
         //shell
         public double D { get; set; }

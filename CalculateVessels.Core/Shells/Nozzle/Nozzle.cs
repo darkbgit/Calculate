@@ -39,16 +39,17 @@ namespace CalculateVessels.Core.Shells.Nozzle
         public string Steel4 { get => _steel4; set => _steel4 = value; }
         public bool IsCriticalError { get; private set; }
         public bool IsError { get; private set; }
-        public List<string> ErrorList { get; private set; } = new();
+        public IEnumerable<string> ErrorList => _errorList;
         public double p_d { get => _p_d; }
         public double d0 { get => _d0; }
         public double b { get => _b; }
 
-        public List<string> Bibliography { get; } = new()
+        public IEnumerable<string> Bibliography { get; } = new List<string>()
         {
             Data.Properties.Resources.GOST_34233_3
         };
 
+        private List<string> _errorList = new();
         private bool isConditionUseFormulas;
         private double _alfa1;
         private double _b;
@@ -154,7 +155,7 @@ namespace CalculateVessels.Core.Shells.Nozzle
                 default:
                 {
                     IsCriticalError = true;
-                    ErrorList.Add("Ошибка вида укрепляемого элемента");
+                    _errorList.Add("Ошибка вида укрепляемого элемента");
                     break;
                 }
             }
@@ -223,7 +224,7 @@ namespace CalculateVessels.Core.Shells.Nozzle
                 default:
                     {
                         IsCriticalError = true;
-                        ErrorList.Add("Ошибка места расположения штуцера");
+                        _errorList.Add("Ошибка места расположения штуцера");
                         break;
                     }
             }
@@ -360,7 +361,7 @@ namespace CalculateVessels.Core.Shells.Nozzle
                 if (_conditionStrengthening1 < _conditionStrengthening2)
                 {
                     IsError = true;
-                    ErrorList.Add("Условие укрепления одиночного отверстия не выполняется");
+                    _errorList.Add("Условие укрепления одиночного отверстия не выполняется");
                 }
             }
 
@@ -386,7 +387,7 @@ namespace CalculateVessels.Core.Shells.Nozzle
             if (_p_d < _nozzleDataIn.ShellDataIn.p)
             {
                 IsError = true;
-                ErrorList.Add("Допускаемое давление меньше расчетного");
+                _errorList.Add("Допускаемое давление меньше расчетного");
             }
 
             switch (_nozzleDataIn.ShellDataIn.ShellType)
@@ -420,7 +421,7 @@ namespace CalculateVessels.Core.Shells.Nozzle
             if (!isConditionUseFormulas)
             {
                 IsError = true;
-                ErrorList.Add("Условие применения формул не выполняется");
+                _errorList.Add("Условие применения формул не выполняется");
             }
 
         }

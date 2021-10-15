@@ -1,7 +1,7 @@
 ﻿
 namespace CalculateVessels
 {
-    partial class HeatExchengerWithFixedTubePlatesForm
+    partial class HeatExchangerWithFixedTubePlatesForm
     {
         /// <summary>
         /// Required designer variable.
@@ -30,7 +30,7 @@ namespace CalculateVessels
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(HeatExchengerWithFixedTubePlatesForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(HeatExchangerWithFixedTubePlatesForm));
             this.tabControl = new System.Windows.Forms.TabControl();
             this.shell_page = new System.Windows.Forms.TabPage();
             this.isNotOneGo_cb = new System.Windows.Forms.CheckBox();
@@ -2367,7 +2367,7 @@ namespace CalculateVessels
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // HeatExchengerWithFixedTubePlatesForm
+            // HeatExchangerWithFixedTubePlatesForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -2375,10 +2375,10 @@ namespace CalculateVessels
             this.Controls.Add(this.button1);
             this.Controls.Add(this.tabControl);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Name = "HeatExchengerWithFixedTubePlatesForm";
+            this.Name = "HeatExchangerWithFixedTubePlatesForm";
             this.Text = "HeatExchengerWithFixedTubePlates";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.HeatExchengerWithFixedTubePlatesForm_FormClosing);
-            this.Load += new System.EventHandler(this.HeatExchengerWithFixedTubePlatesForm_Load);
+            this.Load += new System.EventHandler(this.HeatExchangerWithFixedTubePlatesForm_Load);
             this.tabControl.ResumeLayout(false);
             this.shell_page.ResumeLayout(false);
             this.shell_page.PerformLayout();

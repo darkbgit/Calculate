@@ -11,9 +11,11 @@ namespace CalculateVessels.Core.HeatExchanger
 {
     public class HeatExchangerDataIn : IDataIn
     {
-        public bool IsDataGood => !ErrorList.Any();
+        //public bool IsDataGood => !ErrorList.Any();
 
-        public List<string> ErrorList { get; private set; } = new();
+        public IEnumerable<string> ErrorList => _errorList;
+
+        private List<string> _errorList = new();
 
         public string Name { get; set; } //+
         public bool IsOneGo { get; set; }//+

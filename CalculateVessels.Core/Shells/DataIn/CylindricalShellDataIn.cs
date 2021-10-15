@@ -23,8 +23,7 @@ namespace CalculateVessels.Core.Shells.DataIn
                 }
                 else
                 {
-                    isError = true;
-                    ErrorList.Add("l должно быть больше 0");
+                    _errorList.Add("l должно быть больше 0");
                 }
             }
         }
@@ -45,14 +44,13 @@ namespace CalculateVessels.Core.Shells.DataIn
             get => _FCalcSchema;
             set
             {
-                if (value > 0 && value <= 7)
+                if (value is > 0 and <= 7)
                 {
                     _FCalcSchema = value;
                 }
                 else
                 {
-                    isError = true;
-                    ErrorList.Add("Тип схемы расчета F должен быть 1-7");
+                    _errorList.Add("Тип схемы расчета F должен быть 1-7");
                 }
             }
         } //1-7

@@ -23,6 +23,7 @@ namespace CalculateVessels
             
         }
 
+        public IDataIn DataIn => nozzleData;
         private NozzleDataIn nozzleData;
 
         private readonly ShellDataIn shellDataIn;
@@ -1239,7 +1240,7 @@ namespace CalculateVessels
             nozzleData.steel1 = steel1_cb.Text;
 
 
-            if (nozzleData.IsDataGood)
+            if (DataIn.IsDataGood)
             {
                 {
                     double sigma_d1 = default;
@@ -1609,7 +1610,7 @@ namespace CalculateVessels
             }
 
 
-            bool isNotError = dataInErr.Count == 0 && nozzleData.IsDataGood;
+            bool isNotError = dataInErr.Count == 0 && DataIn.IsDataGood;
 
             if (isNotError)
             {

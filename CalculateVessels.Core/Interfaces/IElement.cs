@@ -16,9 +16,11 @@ namespace CalculateVessels.Core.Interfaces
 
         bool IsError { get; }
 
-        List<string> ErrorList { get; }
+        IEnumerable<string> ErrorList { get; }
 
-        List<string> Bibliography { get; }
+        IEnumerable<string> Bibliography { get; }
+
+
     }
 
 }

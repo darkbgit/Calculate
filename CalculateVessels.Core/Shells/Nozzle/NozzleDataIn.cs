@@ -17,15 +17,9 @@ namespace CalculateVessels.Core.Shells.Nozzle
         }
 
 
-        public bool IsDataGood => !ErrorList.Any();
+        public IEnumerable<string> ErrorList => _errorList;
 
-        public string Error
-        {
-            get => error;
-            set => error += value;
-        }
-
-        public List<string> ErrorList { get => errorList; }
+        private List<string> _errorList = new();
 
         private readonly ShellDataIn shellDataIn;
 
@@ -145,9 +139,6 @@ namespace CalculateVessels.Core.Shells.Nozzle
         public double sigma_d3 { get; set; }
         public double sigma_d4 { get; set; }
         public byte l { get; set; }
-
-        private string error;
-        private List<string> errorList = new List<string>();
 
         private double _t;
         private string _steel1;

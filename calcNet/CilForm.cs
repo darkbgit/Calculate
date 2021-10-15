@@ -1,6 +1,8 @@
-﻿using CalculateVessels.Core.Shells;
+﻿using CalculateVessels.Core.Interfaces;
+using CalculateVessels.Core.Shells;
 using CalculateVessels.Core.Shells.DataIn;
 using CalculateVessels.Data.PhysicalData;
+using CalculateVessels.Models;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -17,6 +19,7 @@ namespace CalculateVessels
             InitializeComponent();
         }
 
+        public IDataIn DataIn => _cylindricalShellDataIn;
         private CylindricalShellDataIn _cylindricalShellDataIn;
 
         private void Cancel_b_Click(object sender, EventArgs e)
@@ -230,7 +233,7 @@ namespace CalculateVessels
             }
 
 
-            var isNotError = dataInErr.Count == 0 && _cylindricalShellDataIn.IsDataGood;
+            var isNotError = !dataInErr.Any() && ((IDataIn)_cylindricalShellDataIn).IsDataGood;
 
             if (isNotError)
             {
@@ -366,40 +369,48 @@ namespace CalculateVessels
                 }
             }
 
-            bool isNotError = dataInErr.Count == 0 && _cylindricalShellDataIn.IsDataGood;
+            bool isNotError = !dataInErr.Any() && DataIn.IsDataGood;
 
             if (isNotError)
             {
-                CylindricalShell cylindricalShell = new(_cylindricalShellDataIn);
-                cylindricalShell.Calculate();
-                if (!cylindricalShell.IsCriticalError)
+                IElement cylinder = new CylindricalShell(_cylindricalShellDataIn);
+
+                CalculatedElement calculatedElement = new(cylinder);
+
+                calculatedElement.Element.Calculate();
+
+                if (!calculatedElement.Element.IsCriticalError)
                 {
-                    scalc_l.Text = $"sp={cylindricalShell.s:f3} мм";
-                    p_d_l.Text = $"pd={cylindricalShell.p_d:f3} МПа";
+                    scalc_l.Text = $"sp={((CylindricalShell)calculatedElement.Element).s:f3} мм";
+                    p_d_l.Text =
+                        $"pd={((CylindricalShell)calculatedElement.Element).p_d:f2} МПа";
 
                     if (this.Owner is MainForm main)
                     {
-                        main.Word_lv.Items.Add(cylindricalShell.ToString());
-                        Elements.ElementsList.Add(cylindricalShell);
+                        main.Word_lv.Items.Add(calculatedElement.Element.ToString());
+                        main.ElementsCollection.Elements.Add(calculatedElement);
+
+                        this.Hide();
                     }
                     else
                     {
-                        System.Windows.Forms.MessageBox.Show("MainForm Error");
+                        MessageBox.Show("MainForm Error");
                     }
 
-                    if (cylindricalShell.IsError)
+                    if (calculatedElement.Element.IsError)
                     {
-                        MessageBox.Show(string.Join<string>(Environment.NewLine, cylindricalShell.ErrorList));
+                        MessageBox.Show(string.Join<string>(Environment.NewLine, calculatedElement.Element.ErrorList));
                     }
 
                     MessageBox.Show("Calculation complete");
 
-                    MessageBoxCheckBox mbcb = new(cylindricalShell, _cylindricalShellDataIn) { Owner = this };
+                    MessageBoxCheckBox mbcb = new(calculatedElement.Element, _cylindricalShellDataIn) { Owner = this };
                     mbcb.ShowDialog();
+
                 }
                 else
                 {
-                    MessageBox.Show(string.Join<string>(Environment.NewLine, cylindricalShell.ErrorList));
+                    MessageBox.Show(string.Join<string>(Environment.NewLine, calculatedElement.Element.ErrorList));
                 }
             }
             else

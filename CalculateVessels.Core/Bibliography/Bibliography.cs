@@ -11,7 +11,7 @@ namespace CalculateVessels.Core.Bibliography
 {
     public static class Bibliography
     {
-        public static void AddBibliography(List<string> bibliography, string filename)
+        public static void AddBibliography(IEnumerable<string> bibliography, string filename)
         {
             using WordprocessingDocument package = WordprocessingDocument.Open(filename, true);
 
@@ -26,7 +26,7 @@ namespace CalculateVessels.Core.Bibliography
 
             body.AddParagraph("");
 
-            bibliography.Sort();
+            bibliography = bibliography.OrderBy(b => b);
 
             var i = 1;
             foreach (var biblio in bibliography)

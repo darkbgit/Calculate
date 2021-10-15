@@ -12,9 +12,9 @@ namespace CalculateVessels.Core.Shells.DataIn
             this.ShellType = shellType;
         }
 
-        public bool IsDataGood => !isError;
-        
-        protected bool isError;
+        public IEnumerable<string> ErrorList => _errorList;
+
+        protected List<string> _errorList = new();
 
         public string Name { get; set; }
         public string Steel { get; set; }
@@ -32,8 +32,7 @@ namespace CalculateVessels.Core.Shells.DataIn
                 }
                 else
                 {
-                    isError = true;
-                    ErrorList.Add("c1 должно быть больше 0");
+                    _errorList.Add("c1 должно быть больше 0");
                 }
             }
         }
@@ -48,8 +47,7 @@ namespace CalculateVessels.Core.Shells.DataIn
                 }
                 else
                 {
-                    isError = true;
-                    ErrorList.Add("D должен быть больше 0");
+                    _errorList.Add("D должен быть больше 0");
                 }
             }
         }
@@ -64,8 +62,7 @@ namespace CalculateVessels.Core.Shells.DataIn
                 }
                 else
                 {
-                    isError = true;
-                    ErrorList.Add("c1 должно быть больше либо равно 0");
+                    _errorList.Add("c1 должно быть больше либо равно 0");
                 }
             }
         }
@@ -82,8 +79,7 @@ namespace CalculateVessels.Core.Shells.DataIn
                 }
                 else
                 {
-                    isError = true;
-                    ErrorList.Add("p должно быть больше 0");
+                    _errorList.Add("p должно быть больше 0");
                 }
             }
         }
@@ -100,8 +96,7 @@ namespace CalculateVessels.Core.Shells.DataIn
                 }
                 else
                 {
-                    isError = true;
-                    ErrorList.Add($"T должна быть в диапазоне {MIN_TEMPERATURE} - {MAX_TEMPERATURE}");
+                    _errorList.Add($"T должна быть в диапазоне {MIN_TEMPERATURE} - {MAX_TEMPERATURE}");
                 }
             }
         }
@@ -116,8 +111,7 @@ namespace CalculateVessels.Core.Shells.DataIn
                 }
                 else
                 {
-                    isError = true;
-                    ErrorList.Add("E должно быть больше 0");
+                    _errorList.Add("E должно быть больше 0");
                 }
             }
         }
@@ -135,8 +129,7 @@ namespace CalculateVessels.Core.Shells.DataIn
                     }
                     else
                     {
-                        isError = true;
-                        ErrorList.Add("[σ] должно быть больше 0");
+                        _errorList.Add("[σ] должно быть больше 0");
                     }
                 }
             }
@@ -148,14 +141,13 @@ namespace CalculateVessels.Core.Shells.DataIn
             {
                 const int MIN_FI = 0,
                             MAX_FI = 1;
-                if (value > MIN_FI && value <= MAX_FI)
+                if (value is > MIN_FI and <= MAX_FI)
                 {
                     _fi = value;
                 }
                 else
                 {
-                    isError = true;
-                    ErrorList.Add($"φ должен быть в диапазоне {MIN_FI} - {MAX_FI}");
+                    _errorList.Add($"φ должен быть в диапазоне {MIN_FI} - {MAX_FI}");
                 }
             }
         }
@@ -172,8 +164,6 @@ namespace CalculateVessels.Core.Shells.DataIn
         public double Q { get; set; }
 
         public bool IsPressureIn { get; set; }
-
-        public List<string> ErrorList { get; set; } = new();
 
 
         private double _c1;

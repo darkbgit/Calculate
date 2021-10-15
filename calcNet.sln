@@ -1,9 +1,12 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30804.86
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31808.319
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CalculateVessels", "calcNet\CalculateVessels.csproj", "{3ECD9EF6-E379-4998-B020-28B88DDBF8AF}"
+	ProjectSection(ProjectDependencies) = postProject
+		{30CB0A13-DAE0-40C2-86F4-853150294C05} = {30CB0A13-DAE0-40C2-86F4-853150294C05}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CalculateVessels.Core", "CalculateVessels.Core\CalculateVessels.Core.csproj", "{83652CA4-5166-4224-BB48-72258C2660E5}"
 EndProject

@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using CalculateVessels.Core.Interfaces;
 
 namespace CalculateVessels
 {
@@ -21,7 +22,9 @@ namespace CalculateVessels
             InitializeComponent();
         }
 
-        EllipticalShellDataIn ellipticalShellDataIn = new();
+        public IDataIn DataIn => _ellipticalShellDataIn;
+
+        EllipticalShellDataIn _ellipticalShellDataIn = new();
 
         private void EllForm_Load(object sender, EventArgs e)
         {
@@ -41,12 +44,9 @@ namespace CalculateVessels
 
         private void EllForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (sender is EllForm && this.Owner is MainForm main)
+            if (sender is EllForm && this.Owner is MainForm {ef: { }} main)
             {
-                if (main.ef != null)
-                {
-                    main.ef = null;
-                }
+                main.ef = null;
             }
 
         }
@@ -61,7 +61,7 @@ namespace CalculateVessels
                 if (double.TryParse(t_tb.Text, System.Globalization.NumberStyles.Integer,
                     System.Globalization.CultureInfo.InvariantCulture, out double t))
                 {
-                    ellipticalShellDataIn.t = t;
+                    _ellipticalShellDataIn.t = t;
                 }
                 else
                 {
@@ -70,13 +70,13 @@ namespace CalculateVessels
             }
 
             //steel
-            ellipticalShellDataIn.Steel = steel_cb.Text;
+            _ellipticalShellDataIn.Steel = steel_cb.Text;
 
             //pressure
-            ellipticalShellDataIn.IsPressureIn = vn_rb.Checked;
+            _ellipticalShellDataIn.IsPressureIn = vn_rb.Checked;
 
 
-            if (ellipticalShellDataIn.IsDataGood)
+            if (((IDataIn)_ellipticalShellDataIn).IsDataGood)
             {
                 //[σ]
                 //InputClass.GetInput_sigma_d(sigma_d_tb, ref d_in, ref dataInErr);
@@ -84,8 +84,8 @@ namespace CalculateVessels
                     double sigma_d = 0.0;
                     if (sigma_d_tb.ReadOnly)
                     {
-                        if (Physical.Gost34233_1.TryGetSigma(ellipticalShellDataIn.Steel,
-                                                    ellipticalShellDataIn.t,
+                        if (Physical.Gost34233_1.TryGetSigma(_ellipticalShellDataIn.Steel,
+                                                    _ellipticalShellDataIn.t,
                                                     ref sigma_d,
                                                     ref dataInErr))
                         {
@@ -102,18 +102,18 @@ namespace CalculateVessels
                             dataInErr.Add("[σ]"+ WRONG_INPUT);
                         }
                     }
-                    ellipticalShellDataIn.sigma_d = sigma_d;
+                    _ellipticalShellDataIn.sigma_d = sigma_d;
                 }
 
 
-                if (!ellipticalShellDataIn.IsPressureIn)
+                if (!_ellipticalShellDataIn.IsPressureIn)
                 {
                     //E
                     {
                         if (double.TryParse(E_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
                             System.Globalization.CultureInfo.InvariantCulture, out double E))
                         {
-                            ellipticalShellDataIn.E = E;
+                            _ellipticalShellDataIn.E = E;
                         }
                         else
                         {
@@ -127,7 +127,7 @@ namespace CalculateVessels
                     if (double.TryParse(p_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
                         System.Globalization.CultureInfo.InvariantCulture, out double p))
                     {
-                        ellipticalShellDataIn.p = p;
+                        _ellipticalShellDataIn.p = p;
                     }
                     else
                     {
@@ -140,7 +140,7 @@ namespace CalculateVessels
                     if (double.TryParse(fi_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
                         System.Globalization.CultureInfo.InvariantCulture, out double fi))
                     {
-                        ellipticalShellDataIn.fi = fi;
+                        _ellipticalShellDataIn.fi = fi;
                     }
                     else
                     {
@@ -153,7 +153,7 @@ namespace CalculateVessels
                     if (double.TryParse(D_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
                         System.Globalization.CultureInfo.InvariantCulture, out double D))
                     {
-                        ellipticalShellDataIn.D = D;
+                        _ellipticalShellDataIn.D = D;
                     }
                     else
                     {
@@ -166,7 +166,7 @@ namespace CalculateVessels
                     if (double.TryParse(H_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
                         System.Globalization.CultureInfo.InvariantCulture, out double H))
                     {
-                        ellipticalShellDataIn.ellH = H;
+                        _ellipticalShellDataIn.ellH = H;
                     }
                     else
                     {
@@ -180,7 +180,7 @@ namespace CalculateVessels
                     if (double.TryParse(h1_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
                         System.Globalization.CultureInfo.InvariantCulture, out double h1))
                     {
-                        ellipticalShellDataIn.ellh1 = h1;
+                        _ellipticalShellDataIn.ellh1 = h1;
                     }
                     else
                     {
@@ -194,7 +194,7 @@ namespace CalculateVessels
                     if (double.TryParse(c1_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
                         System.Globalization.CultureInfo.InvariantCulture, out double c1))
                     {
-                        ellipticalShellDataIn.c1 = c1;
+                        _ellipticalShellDataIn.c1 = c1;
                     }
                     else
                     {
@@ -207,12 +207,12 @@ namespace CalculateVessels
                 {
                     if (c2_tb.Text == "")
                     {
-                        ellipticalShellDataIn.c2 = 0;
+                        _ellipticalShellDataIn.c2 = 0;
                     }
                     else if (double.TryParse(c2_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
                         System.Globalization.CultureInfo.InvariantCulture, out double c2))
                     {
-                        ellipticalShellDataIn.c2 = c2;
+                        _ellipticalShellDataIn.c2 = c2;
                     }
                     else
                     {
@@ -224,12 +224,12 @@ namespace CalculateVessels
                 {
                     if (c3_tb.Text == "")
                     {
-                        ellipticalShellDataIn.c3 = 0;
+                        _ellipticalShellDataIn.c3 = 0;
                     }
                     else if (double.TryParse(c3_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
                         System.Globalization.CultureInfo.InvariantCulture, out double c3))
                     {
-                        ellipticalShellDataIn.c3 = c3;
+                        _ellipticalShellDataIn.c3 = c3;
                     }
                     else
                     {
@@ -237,14 +237,14 @@ namespace CalculateVessels
                     }
                 }
 
-                ellipticalShellDataIn.EllipticalBottomType = ell_rb.Checked ? EllipticalBottomType.Elliptical : EllipticalBottomType.Hemispherical;
+                _ellipticalShellDataIn.EllipticalBottomType = ell_rb.Checked ? EllipticalBottomType.Elliptical : EllipticalBottomType.Hemispherical;
 
 
-                bool isNotError = dataInErr.Count == 0 && ellipticalShellDataIn.IsDataGood;
+                bool isNotError = dataInErr.Count == 0 && DataIn.IsDataGood;
 
                 if (isNotError)
                 {
-                    EllipticalShell ell = new(ellipticalShellDataIn);
+                    EllipticalShell ell = new(_ellipticalShellDataIn);
                     ell.Calculate();
                     if (!ell.IsCriticalError)
                     {
@@ -259,7 +259,7 @@ namespace CalculateVessels
                 }
                 else
                 {
-                    MessageBox.Show(string.Join<string>(Environment.NewLine, dataInErr.Union(ellipticalShellDataIn.ErrorList)));
+                    MessageBox.Show(string.Join<string>(Environment.NewLine, dataInErr.Union(_ellipticalShellDataIn.ErrorList)));
                 }
             }
             else
@@ -288,14 +288,14 @@ namespace CalculateVessels
             List<string> dataInErr = new ();
 
             //name
-            ellipticalShellDataIn.Name = name_tb.Text;
+            _ellipticalShellDataIn.Name = name_tb.Text;
 
             //s
             {
                 if (double.TryParse(s_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
                 System.Globalization.CultureInfo.InvariantCulture, out double s))
                 {
-                    ellipticalShellDataIn.s = s;
+                    _ellipticalShellDataIn.s = s;
                 }
                 else
                 {
@@ -304,11 +304,11 @@ namespace CalculateVessels
             }
 
 
-            bool isNotError = dataInErr.Count == 0 && ellipticalShellDataIn.IsDataGood;
+            bool isNotError = dataInErr.Count == 0 && DataIn.IsDataGood;
 
             if (isNotError)
             {
-                EllipticalShell ellipticalShell = new(ellipticalShellDataIn);
+                EllipticalShell ellipticalShell = new(_ellipticalShellDataIn);
                 ellipticalShell.Calculate();
                 if (!ellipticalShell.IsCriticalError)
                 {
@@ -332,7 +332,7 @@ namespace CalculateVessels
 
                     System.Windows.Forms.MessageBox.Show("Calculation complete");
 
-                    MessageBoxCheckBox mbcb = new(ellipticalShell, ellipticalShellDataIn) { Owner = this };
+                    MessageBoxCheckBox mbcb = new(ellipticalShell, _ellipticalShellDataIn) { Owner = this };
                     mbcb.ShowDialog();
                 }
                 else
@@ -342,7 +342,7 @@ namespace CalculateVessels
             }
             else
             {
-                MessageBox.Show(string.Join<string>(Environment.NewLine, dataInErr.Union(ellipticalShellDataIn.ErrorList)));
+                MessageBox.Show(string.Join<string>(Environment.NewLine, dataInErr.Union(_ellipticalShellDataIn.ErrorList)));
             }
             
         }

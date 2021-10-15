@@ -2971,6 +2971,26 @@ namespace CalculateVessels.Data.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        public static byte[] pldn14 {
+            get {
+                object obj = ResourceManager.GetObject("pldn14", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] pldn15 {
+            get {
+                object obj = ResourceManager.GetObject("pldn15", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         public static byte[] pldn2 {
             get {
                 object obj = ResourceManager.GetObject("pldn2", resourceCulture);

@@ -95,7 +95,7 @@ namespace CalculateVessels.Core.Shells
             if (!IsConditionUseFormulas)
             {
                 IsError = true;
-                ErrorList.Add("Условие применения формул не выполняется");
+                _errorList.Add("Условие применения формул не выполняется");
             }
 
             if (_csdi.p > 0)
@@ -115,7 +115,7 @@ namespace CalculateVessels.Core.Shells
                         else
                         {
                             IsCriticalError = true;
-                            ErrorList.Add("Принятая толщина меньше расчетной");
+                            _errorList.Add("Принятая толщина меньше расчетной");
                             return;
                         }
                     }
@@ -143,7 +143,7 @@ namespace CalculateVessels.Core.Shells
                         else
                         {
                             IsCriticalError = true;
-                            ErrorList.Add("Принятая толщина меньше расчетной");
+                            _errorList.Add("Принятая толщина меньше расчетной");
                             return;
                         }
                     }
@@ -151,7 +151,7 @@ namespace CalculateVessels.Core.Shells
                 if (_p_d < _csdi.p && _csdi.s != 0)
                 {
                     IsError = true;
-                    ErrorList.Add("[p] меньше p");
+                    _errorList.Add("[p] меньше p");
                 }
             }
 
@@ -169,7 +169,7 @@ namespace CalculateVessels.Core.Shells
                     else
                     {
                         IsCriticalError = true;
-                        ErrorList.Add("Принятая толщина меньше расчетной от нагрузки осевым сжимающим усилием");
+                        _errorList.Add("Принятая толщина меньше расчетной от нагрузки осевым сжимающим усилием");
                         return;
                     }
                 }
@@ -273,7 +273,7 @@ namespace CalculateVessels.Core.Shells
             if (_conditionStability > 1)
             {
                 IsError = true;
-                ErrorList.Add("Условие устойчивости для совместного действия усилий не выполняется");
+                _errorList.Add("Условие устойчивости для совместного действия усилий не выполняется");
             }
         }
 

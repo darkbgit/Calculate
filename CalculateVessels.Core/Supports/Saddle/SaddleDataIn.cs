@@ -7,9 +7,11 @@ namespace CalculateVessels.Core.Supports.Saddle
 {
     public class SaddleDataIn : IDataIn
     {
-        public bool IsDataGood => !ErrorList.Any();
 
-        public List<string> ErrorList { get; } = new();
+
+        public IEnumerable<string> ErrorList => _errorList;
+
+        private List<string> _errorList = new();
 
         public bool IsAssembly { get; set; }
         public bool IsPressureIn { get; set; }

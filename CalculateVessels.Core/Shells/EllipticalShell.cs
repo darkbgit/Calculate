@@ -57,7 +57,7 @@ namespace CalculateVessels.Core.Shells
                         {
                             IsError = true;
                             IsConditionUseFormulas = false;
-                            ErrorList.Add("Условие применения формул не выполняется");
+                            _errorList.Add("Условие применения формул не выполняется");
                         }
                     }
 
@@ -79,7 +79,7 @@ namespace CalculateVessels.Core.Shells
                         else
                         {
                             IsCriticalError = true;
-                            ErrorList.Add("Принятая толщина меньше расчетной");
+                            _errorList.Add("Принятая толщина меньше расчетной");
                         }
                     }
                     else
@@ -120,7 +120,7 @@ namespace CalculateVessels.Core.Shells
                         else
                         {
                             IsCriticalError = true;
-                            ErrorList.Add("Принятая толщина меньше расчетной");
+                            _errorList.Add("Принятая толщина меньше расчетной");
                         }
                     }
                     break;
@@ -140,7 +140,7 @@ namespace CalculateVessels.Core.Shells
                 default:
                 {
                     IsCriticalError = true;
-                    ErrorList.Add("Неверный тип днища");
+                    _errorList.Add("Неверный тип днища");
                     break;
                 }
             }

@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace CalculateVessels.Core.Interfaces
 {
     public interface IDataIn
     {
-        public bool IsDataGood { get; }
+        public bool IsDataGood => !ErrorList.Any();
 
-        public List<string> ErrorList { get; }
+        public IEnumerable<string> ErrorList { get; }
     }
 
 }

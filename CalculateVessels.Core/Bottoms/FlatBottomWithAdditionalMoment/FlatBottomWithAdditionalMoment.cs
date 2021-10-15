@@ -26,8 +26,8 @@ namespace CalculateVessels.Core.Bottoms.FlatBottomWithAdditionalMoment
 
         public bool IsCriticalError { get; private set; }
         public bool IsError { get; private set; }
-        public List<string> ErrorList { get => _errorList; private set => _errorList = value; }
-        public List<string> Bibliography { get; } = new()
+        public IEnumerable<string> ErrorList => _errorList;
+        public IEnumerable<string> Bibliography { get; } = new List<string>()
         {
             Data.Properties.Resources.GOST_34233_1,
             Data.Properties.Resources.GOST_34233_2
@@ -399,13 +399,13 @@ namespace CalculateVessels.Core.Bottoms.FlatBottomWithAdditionalMoment
                     if (_fbdi.di > 0.7 * _Dp)
                     {
                         IsError = true;
-                        ErrorList.Add("Слишком много отверстий");
+                        _errorList.Add("Слишком много отверстий");
                     }
                     _K0 = Math.Sqrt((1 - Math.Pow(_fbdi.di / _Dp, 3)) / (1 - _fbdi.di / _Dp));
                     break;
                 default:
                     IsError = true;
-                    ErrorList.Add("Ошибка определения колличества отверстий");
+                    _errorList.Add("Ошибка определения колличества отверстий");
                     break;
             }
 
@@ -444,13 +444,13 @@ namespace CalculateVessels.Core.Bottoms.FlatBottomWithAdditionalMoment
                 if (_Kp * _p_d < _fbdi.p)
                 {
                     IsError = true;
-                    ErrorList.Add("Допускаемое давление меньше расчетного");
+                    _errorList.Add("Допускаемое давление меньше расчетного");
                 }
             }
             else
             {
                 IsCriticalError = true;
-                ErrorList.Add("Принятая толщина s1, s2, s3 меньше расчетной");
+                _errorList.Add("Принятая толщина s1, s2, s3 меньше расчетной");
             }
         }
      

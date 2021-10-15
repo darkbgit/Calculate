@@ -24,8 +24,8 @@ namespace CalculateVessels.Core.Supports.Saddle
 
         public bool IsCriticalError { get; private set; }
         public bool IsError {get; private set; }
-        public List<string> ErrorList { get => _errorList; private set => _errorList = value; }
-        public List<string> Bibliography { get; } = new()
+        public IEnumerable<string> ErrorList => _errorList;
+        public IEnumerable<string> Bibliography { get; } = new List<string>()
         {
             Data.Properties.Resources.GOST_34233_1,
             Data.Properties.Resources.GOST_34233_5
@@ -101,12 +101,12 @@ namespace CalculateVessels.Core.Supports.Saddle
 
         public void Calculate()
         {
-            if (!_saddleDataIn.IsDataGood)
-            {
-                IsCriticalError = true;
-                ErrorList.Add("Входные данные не верны");
-                return;
-            }
+            //if (!_saddleDataIn.IsDataGood)
+            //{
+            //    IsCriticalError = true;
+            //    _errorList.Add("Входные данные не верны");
+            //    return;
+            //}
 
             if (!Physical.Gost34233_1.TryGetSigma(_saddleDataIn.Steel, _saddleDataIn.t, ref _sigma_d, ref _errorList))
             {
@@ -204,7 +204,7 @@ namespace CalculateVessels.Core.Supports.Saddle
                 _conditionStrength1_2 = _sigma_d * _saddleDataIn.fi;
                 if (_conditionStrength1_1 > _conditionStrength1_2)
                 {
-                    ErrorList.Add("Несущая способность обечайки в сечении между опорами. Условие прочности не выполняется");
+                    _errorList.Add("Несущая способность обечайки в сечении между опорами. Условие прочности не выполняется");
                     IsError = true;
                 }
                 _conditionStability1 =
@@ -212,7 +212,7 @@ namespace CalculateVessels.Core.Supports.Saddle
                         _saddleDataIn.p / _p_d + Math.Abs(_M12) / _M_d;
                 if (_conditionStability1 > 1)
                 {
-                    ErrorList.Add("Несущая способность обечайки в сечении между опорами. Условие устойчивости не выполняется");
+                    _errorList.Add("Несущая способность обечайки в сечении между опорами. Условие устойчивости не выполняется");
                     IsError = true;
                 }
             }
@@ -284,7 +284,7 @@ namespace CalculateVessels.Core.Supports.Saddle
 
                     if (_F1 > _conditionStrength2)
                     {
-                        ErrorList.Add("Несущая способность обечайки, не укрепленной кольцами жесткости в области опорного узла. Условие прочности не выполняется");
+                        _errorList.Add("Несущая способность обечайки, не укрепленной кольцами жесткости в области опорного узла. Условие прочности не выполняется");
                         IsError = true;
                     }
 
@@ -297,7 +297,7 @@ namespace CalculateVessels.Core.Supports.Saddle
                         : _saddleDataIn.p / _p_d + Math.Abs(_M1) / _M_d + _Fe / _F_d + Math.Pow(_Q1 / _Q_d, 2);
                     if (_conditionStability2 > 1)
                     {
-                        ErrorList.Add("Несущая способность обечайки, не укрепленной кольцами жесткости в области опорного узла. Условие устойчивости не выполняется");
+                        _errorList.Add("Несущая способность обечайки, не укрепленной кольцами жесткости в области опорного узла. Условие устойчивости не выполняется");
                         IsError = true;
                     }
                     break;
@@ -362,7 +362,7 @@ namespace CalculateVessels.Core.Supports.Saddle
 
                     if (_F1 > _conditionStrength2)
                     {
-                        ErrorList.Add("Несущая способность обечайки, не укрепленной кольцами жесткости в области опорного узла. Условие прочности не выполняется");
+                        _errorList.Add("Несущая способность обечайки, не укрепленной кольцами жесткости в области опорного узла. Условие прочности не выполняется");
                         IsError = true;
                     }
 
@@ -373,7 +373,7 @@ namespace CalculateVessels.Core.Supports.Saddle
                         : _saddleDataIn.p / _p_d + Math.Abs(_M1) / _M_d + _Fe / _F_d + Math.Pow(_Q1 / _Q_d, 2);
                     if (_conditionStability2 > 1)
                     {
-                        ErrorList.Add("Несущая способность обечайки, не укрепленной кольцами жесткости в области опорного узла с подкладным листом. Условие устойчивости не выполняется");
+                        _errorList.Add("Несущая способность обечайки, не укрепленной кольцами жесткости в области опорного узла с подкладным листом. Условие устойчивости не выполняется");
                         IsError = true;
                     }
                     break;
@@ -391,12 +391,12 @@ namespace CalculateVessels.Core.Supports.Saddle
             if (_saddleDataIn.delta1 is <= 60 or >= 180)
             {
                 _isConditionUseFormulas = false;
-                ErrorList.Add("delta1 должно быть в пределах 60-180");
+                _errorList.Add("delta1 должно быть в пределах 60-180");
             }
             if ((_saddleDataIn.s - _saddleDataIn.c) / _saddleDataIn.D > 0.05)
             {
                 _isConditionUseFormulas = false;
-                ErrorList.Add("Условие применения формул не выполняется");
+                _errorList.Add("Условие применения формул не выполняется");
             }
 
             switch (_saddleDataIn.Type)
@@ -406,13 +406,13 @@ namespace CalculateVessels.Core.Supports.Saddle
                     if (_saddleDataIn.delta2 < _saddleDataIn.delta1 + 20)
                     {
                         _isConditionUseFormulas = false;
-                        ErrorList.Add("Угол обхвата подкладного листа должен быть delta2>=delta1+20");
+                        _errorList.Add("Угол обхвата подкладного листа должен быть delta2>=delta1+20");
                     }
 
                     if (_saddleDataIn.s2 < _saddleDataIn.s)
                     {
                         _isConditionUseFormulas = false;
-                        ErrorList.Add("Толщина подкладного листа должна быть s2>=s");
+                        _errorList.Add("Толщина подкладного листа должна быть s2>=s");
                     }
 
                     break;
@@ -423,7 +423,7 @@ namespace CalculateVessels.Core.Supports.Saddle
                     if (_saddleDataIn.Ak < _Ak)
                     {
                         _isConditionUseFormulas = false;
-                        ErrorList.Add("Условие применения формул не выполняется");
+                        _errorList.Add("Условие применения формул не выполняется");
                     }
 
                     break;

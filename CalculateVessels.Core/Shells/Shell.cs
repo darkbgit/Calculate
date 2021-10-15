@@ -22,7 +22,7 @@ namespace CalculateVessels.Core.Shells
 
         public bool IsCriticalError { get; protected set; }
         public bool IsError { get; protected set; }
-        public List<string> ErrorList => _errorList;
+        public IEnumerable<string> ErrorList => _errorList;
 
         public bool IsConditionUseFormulas { get; protected set; }
 
@@ -37,7 +37,7 @@ namespace CalculateVessels.Core.Shells
 
         protected List<string> _errorList = new();
 
-        public List<string> Bibliography { get; } = new() 
+        public IEnumerable<string> Bibliography { get; } = new List<string>() 
         {
             Data.Properties.Resources.GOST_34233_1,
             Data.Properties.Resources.GOST_34233_2

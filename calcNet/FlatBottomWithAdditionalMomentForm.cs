@@ -11,12 +11,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using CalculateVessels.Core.Interfaces;
 
 namespace CalculateVessels
 {
     public partial class FlatBottomWithAdditionalMomentForm : Form
     {
-        private FlatBottomWithAdditionalMomentDataIn dataIn;
+        public IDataIn DataIn => _dataIn;
+        private FlatBottomWithAdditionalMomentDataIn _dataIn;
 
         public FlatBottomWithAdditionalMomentForm()
         {
@@ -194,7 +196,7 @@ namespace CalculateVessels
             scalc_l.Text = "";
             calc_b.Enabled = false;
 
-            dataIn = new FlatBottomWithAdditionalMomentDataIn();
+            _dataIn = new FlatBottomWithAdditionalMomentDataIn();
 
             var dataInErr = new List<string>();
 
@@ -202,7 +204,7 @@ namespace CalculateVessels
             {
                 if (double.TryParse(t_tb.Text, NumberStyles.Integer, CultureInfo.InvariantCulture, out double t))
                 {
-                    dataIn.t = t;
+                    _dataIn.t = t;
                 }
                 else
                 {
@@ -211,17 +213,17 @@ namespace CalculateVessels
             }
 
             //steel
-            dataIn.CoverSteel = steel_cb.Text;
+            _dataIn.CoverSteel = steel_cb.Text;
 
             //
-            dataIn.IsPressureIn = !pressureOut_cb.Checked;
+            _dataIn.IsPressureIn = !pressureOut_cb.Checked;
 
             //s1
             {
                 if (double.TryParse(s1_tb.Text, NumberStyles.AllowDecimalPoint,
                     CultureInfo.InvariantCulture, out var s1))
                 {
-                    dataIn.s1 = s1;
+                    _dataIn.s1 = s1;
                 }
                 else
                 {
@@ -229,531 +231,528 @@ namespace CalculateVessels
                 }
             }
 
-            if (dataIn.IsDataGood)
+
+            //[σ]
             {
-                //[σ]
+                double sigma_d = default;
+                if (sigma_d_tb.ReadOnly)
                 {
-                    double sigma_d = default;
-                    if (sigma_d_tb.ReadOnly)
+                    if (Physical.Gost34233_1.TryGetSigma(_dataIn.CoverSteel,
+                        _dataIn.t,
+                        ref sigma_d,
+                        ref dataInErr, s: _dataIn.s1))
                     {
-                        if (Physical.Gost34233_1.TryGetSigma(dataIn.CoverSteel,
-                                                    dataIn.t,
-                                                    ref sigma_d,
-                                                    ref dataInErr, s:dataIn.s1))
-                        {
-                            sigma_d_tb.ReadOnly = false;
-                            sigma_d_tb.Text = sigma_d.ToString(CultureInfo.CurrentCulture);
-                            sigma_d_tb.ReadOnly = true;
-                        }
+                        sigma_d_tb.ReadOnly = false;
+                        sigma_d_tb.Text = sigma_d.ToString(CultureInfo.CurrentCulture);
+                        sigma_d_tb.ReadOnly = true;
                     }
-                    else
-                    {
-                        if (!double.TryParse(sigma_d_tb.Text, NumberStyles.AllowDecimalPoint,
+                }
+                else
+                {
+                    if (!double.TryParse(sigma_d_tb.Text, NumberStyles.AllowDecimalPoint,
                         CultureInfo.InvariantCulture, out sigma_d))
-                        {
-                            dataInErr.Add("[σ] неверный ввод");
-                        }
-                    }
-                    dataIn.sigma_d = sigma_d;
-                }
-
-                //if (!dataIn.IsPressureIn)
-                //{
-                //    //E
-                //    {
-                //        double E;
-                //        if (E_tb.ReadOnly)
-                //        {
-                //            E = Physical.Gost34233_1.GetE(dataIn.CoverSteel,
-                //                                dataIn.t,
-                //                                ref dataInErr);
-                //            E_tb.ReadOnly = false;
-                //            E_tb.Text = E.ToString();
-                //            E_tb.ReadOnly = true;
-                //        }
-                //        else
-                //        {
-
-                //            if (double.TryParse(E_tb.Text, NumberStyles.AllowDecimalPoint,
-                //            CultureInfo.InvariantCulture, out E))
-                //            {
-                //                dataIn.E = E;
-                //            }
-                //            else
-                //            {
-                //                dataInErr.Add("E неверный ввод");
-                //            }
-                //        }
-                //    }
-                //}
-
-                //p
-                {
-                    if (double.TryParse(p_tb.Text, NumberStyles.AllowDecimalPoint,
-                        CultureInfo.InvariantCulture, out var p))
                     {
-                        dataIn.p = p;
-                    }
-                    else
-                    {
-                        dataInErr.Add("p неверный ввод");
+                        dataInErr.Add("[σ] неверный ввод");
                     }
                 }
 
-                //M
-                {
-                    if (double.TryParse(M_tb.Text, NumberStyles.AllowDecimalPoint,
-                        CultureInfo.InvariantCulture, out var M))
-                    {
-                        dataIn.M = M;
-                    }
-                    else
-                    {
-                        dataInErr.Add("M неверный ввод");
-                    }
-                }
+                _dataIn.sigma_d = sigma_d;
+            }
 
-                //F
-                {
-                    if (double.TryParse(F_tb.Text, NumberStyles.AllowDecimalPoint,
-                        CultureInfo.InvariantCulture, out var F))
-                    {
-                        dataIn.F = F;
-                    }
-                    else
-                    {
-                        dataInErr.Add("F неверный ввод");
-                    }
-                }
+            //if (!_dataIn.IsPressureIn)
+            //{
+            //    //E
+            //    {
+            //        double E;
+            //        if (E_tb.ReadOnly)
+            //        {
+            //            E = Physical.Gost34233_1.GetE(_dataIn.CoverSteel,
+            //                                _dataIn.t,
+            //                                ref dataInErr);
+            //            E_tb.ReadOnly = false;
+            //            E_tb.Text = E.ToString();
+            //            E_tb.ReadOnly = true;
+            //        }
+            //        else
+            //        {
 
-                //fi
+            //            if (double.TryParse(E_tb.Text, NumberStyles.AllowDecimalPoint,
+            //            CultureInfo.InvariantCulture, out E))
+            //            {
+            //                _dataIn.E = E;
+            //            }
+            //            else
+            //            {
+            //                dataInErr.Add("E неверный ввод");
+            //            }
+            //        }
+            //    }
+            //}
+
+            //p
+            {
+                if (double.TryParse(p_tb.Text, NumberStyles.AllowDecimalPoint,
+                    CultureInfo.InvariantCulture, out var p))
                 {
-                    if (double.TryParse(fi_tb.Text, NumberStyles.AllowDecimalPoint,
+                    _dataIn.p = p;
+                }
+                else
+                {
+                    dataInErr.Add("p неверный ввод");
+                }
+            }
+
+            //M
+            {
+                if (double.TryParse(M_tb.Text, NumberStyles.AllowDecimalPoint,
+                    CultureInfo.InvariantCulture, out var M))
+                {
+                    _dataIn.M = M;
+                }
+                else
+                {
+                    dataInErr.Add("M неверный ввод");
+                }
+            }
+
+            //F
+            {
+                if (double.TryParse(F_tb.Text, NumberStyles.AllowDecimalPoint,
+                    CultureInfo.InvariantCulture, out var F))
+                {
+                    _dataIn.F = F;
+                }
+                else
+                {
+                    dataInErr.Add("F неверный ввод");
+                }
+            }
+
+            //fi
+            {
+                if (double.TryParse(fi_tb.Text, NumberStyles.AllowDecimalPoint,
                     CultureInfo.InvariantCulture, out var fi))
-                    {
-                        dataIn.fi = fi;
-                    }
-                    else
-                    {
-                        dataInErr.Add("φ неверный ввод");
-                    }
-                }
-
-                //c1
                 {
-                    if (double.TryParse(c1_tb.Text, NumberStyles.AllowDecimalPoint,
+                    _dataIn.fi = fi;
+                }
+                else
+                {
+                    dataInErr.Add("φ неверный ввод");
+                }
+            }
+
+            //c1
+            {
+                if (double.TryParse(c1_tb.Text, NumberStyles.AllowDecimalPoint,
                     CultureInfo.InvariantCulture, out var c1))
-                    {
-                        dataIn.c1 = c1;
-                    }
-                    else
-                    {
-                        dataInErr.Add("c1 неверный ввод");
-                    }
-                }
-
-                //c2
                 {
-                    if (c2_tb.Text == "")
-                    {
-                        dataIn.c2 = 0;
-                    }
-                    else if (double.TryParse(c2_tb.Text, NumberStyles.AllowDecimalPoint,
+                    _dataIn.c1 = c1;
+                }
+                else
+                {
+                    dataInErr.Add("c1 неверный ввод");
+                }
+            }
+
+            //c2
+            {
+                if (c2_tb.Text == "")
+                {
+                    _dataIn.c2 = 0;
+                }
+                else if (double.TryParse(c2_tb.Text, NumberStyles.AllowDecimalPoint,
                     CultureInfo.InvariantCulture, out var c2))
-                    {
-                        dataIn.c2 = c2;
-                    }
-                    else
-                    {
-                        dataInErr.Add("c2 неверный ввод");
-                    }
-                }
-
-                //c3
                 {
-                    if (c3_tb.Text == "")
-                    {
-                        dataIn.c3 = 0;
-                    }
-                    else if (double.TryParse(c3_tb.Text, NumberStyles.AllowDecimalPoint,
+                    _dataIn.c2 = c2;
+                }
+                else
+                {
+                    dataInErr.Add("c2 неверный ввод");
+                }
+            }
+
+            //c3
+            {
+                if (c3_tb.Text == "")
+                {
+                    _dataIn.c3 = 0;
+                }
+                else if (double.TryParse(c3_tb.Text, NumberStyles.AllowDecimalPoint,
                     CultureInfo.InvariantCulture, out var c3))
-                    {
-                        dataIn.c3 = c3;
-                    }
-                    else
-                    {
-                        dataInErr.Add("c3 неверный ввод");
-                    }
-                }
-
-                dataIn.IsCoverFlat = flatCover_rb.Checked;
-
-                dataIn.IsCoverWithGroove = grooveCover_cb.Checked;
-
-                if (dataIn.IsCoverWithGroove)
                 {
-                    //s4
-                    {
-                        if (double.TryParse(s4_tb.Text, NumberStyles.AllowDecimalPoint,
+                    _dataIn.c3 = c3;
+                }
+                else
+                {
+                    dataInErr.Add("c3 неверный ввод");
+                }
+            }
+
+            _dataIn.IsCoverFlat = flatCover_rb.Checked;
+
+            _dataIn.IsCoverWithGroove = grooveCover_cb.Checked;
+
+            if (_dataIn.IsCoverWithGroove)
+            {
+                //s4
+                {
+                    if (double.TryParse(s4_tb.Text, NumberStyles.AllowDecimalPoint,
                         CultureInfo.InvariantCulture, out var s4))
-                        {
-                            dataIn.s4 = s4;
-                        }
-                        else
-                        {
-                            dataInErr.Add("s4 неверный ввод");
-                        }
+                    {
+                        _dataIn.s4 = s4;
+                    }
+                    else
+                    {
+                        dataInErr.Add("s4 неверный ввод");
                     }
                 }
+            }
 
-                
 
-                //s2
-                {
-                    if (double.TryParse(s2_tb.Text, NumberStyles.AllowDecimalPoint,
+
+            //s2
+            {
+                if (double.TryParse(s2_tb.Text, NumberStyles.AllowDecimalPoint,
                     CultureInfo.InvariantCulture, out var s2))
-                    {
-                        dataIn.s2 = s2;
-                    }
-                    else
-                    {
-                        dataInErr.Add("s2 неверный ввод");
-                    }
-                }
-
-                //s3
                 {
-                    if (double.TryParse(s3_tb.Text, NumberStyles.AllowDecimalPoint,
+                    _dataIn.s2 = s2;
+                }
+                else
+                {
+                    dataInErr.Add("s2 неверный ввод");
+                }
+            }
+
+            //s3
+            {
+                if (double.TryParse(s3_tb.Text, NumberStyles.AllowDecimalPoint,
                     CultureInfo.InvariantCulture, out var s3))
-                    {
-                        dataIn.s3 = s3;
-                    }
-                    else
-                    {
-                        dataInErr.Add("s3 неверный ввод");
-                    }
-                }
-
-                //D2
                 {
-                    if (double.TryParse(D2_tb.Text, NumberStyles.AllowDecimalPoint,
+                    _dataIn.s3 = s3;
+                }
+                else
+                {
+                    dataInErr.Add("s3 неверный ввод");
+                }
+            }
+
+            //D2
+            {
+                if (double.TryParse(D2_tb.Text, NumberStyles.AllowDecimalPoint,
                     CultureInfo.InvariantCulture, out var D2))
-                    {
-                        dataIn.D2 = D2;
-                    }
-                    else
-                    {
-                        dataInErr.Add("D2 неверный ввод");
-                    }
-                }
-
-                //D3
                 {
-                    if (double.TryParse(D3_tb.Text, NumberStyles.AllowDecimalPoint,
+                    _dataIn.D2 = D2;
+                }
+                else
+                {
+                    dataInErr.Add("D2 неверный ввод");
+                }
+            }
+
+            //D3
+            {
+                if (double.TryParse(D3_tb.Text, NumberStyles.AllowDecimalPoint,
                     CultureInfo.InvariantCulture, out var D3))
-                    {
-                        dataIn.D3 = D3;
-                    }
-                    else
-                    {
-                        dataInErr.Add("D3 неверный ввод");
-                    }
-                }
-
-                if (!hole_cb.Checked)
                 {
-                    dataIn.Hole = Core.Bottoms.Enums.HoleInFlatBottom.WithoutHole;
+                    _dataIn.D3 = D3;
                 }
                 else
                 {
-                    if (double.TryParse(holed_tb.Text, NumberStyles.AllowDecimalPoint,
-                            CultureInfo.InvariantCulture, out var d))
-                    {
-                        if (oneHole_rb.Checked)
-                        {
-                            dataIn.Hole = Core.Bottoms.Enums.HoleInFlatBottom.OneHole;
-                            dataIn.d = d;
-                        }
-                        else
-                        {
-                            dataIn.Hole = Core.Bottoms.Enums.HoleInFlatBottom.MoreThenOneHole;
-                            dataIn.di = d;
-                        }
-                            
-                    }
-                    else
-                    {
-                        dataInErr.Add("d неверный ввод");
-                    }
+                    dataInErr.Add("D3 неверный ввод");
                 }
+            }
 
-                if (int.TryParse(flange_gb.Controls
-                .OfType<RadioButton>()
-                .FirstOrDefault(r => r.Checked == true)?.Name[1].ToString(),
-                        NumberStyles.Integer,
-                        CultureInfo.InvariantCulture,
-                        out var flangeFaceInt))
-                {
-                    dataIn.FlangeFace = (FlangeFaceType)(flangeFaceInt - 1);
-                }
-                else
-                {
-                    dataInErr.Add("Не возможно определить уплотнительную поверхность фланца");
-                }
-
-
-                dataIn.FlangeSteel = flangeSteel_cb.Text;
-
-                dataIn.IsFlangeFlat = !scirtFlange_cb.Checked;
-
-                dataIn.IsFlangeIsolated = isolatedFlange_cb.Checked;
-
-                //D
-                {
-                    if (double.TryParse(D_tb.Text, NumberStyles.AllowDecimalPoint,
-                    CultureInfo.InvariantCulture, out var D))
-                    {
-                        dataIn.D = D;
-                    }
-                    else
-                    {
-                        dataInErr.Add("D неверный ввод");
-                    }
-                }
-
-                //Dn
-                {
-                    if (double.TryParse(Dn_tb.Text, NumberStyles.AllowDecimalPoint,
-                    CultureInfo.InvariantCulture, out var Dn))
-                    {
-                        dataIn.Dn = Dn;
-                    }
-                    else
-                    {
-                        dataInErr.Add("Dn неверный ввод");
-                    }
-                }
-
-                //Db
-                {
-                    if (double.TryParse(Db_tb.Text, NumberStyles.AllowDecimalPoint,
-                    CultureInfo.InvariantCulture, out var Db))
-                    {
-                        dataIn.Db = Db;
-                    }
-                    else
-                    {
-                        dataInErr.Add("Db неверный ввод");
-                    }
-                }
-
-                //h
-                {
-                    if (double.TryParse(h_tb.Text, NumberStyles.AllowDecimalPoint,
-                    CultureInfo.InvariantCulture, out var h))
-                    {
-                        dataIn.h = h;
-                    }
-                    else
-                    {
-                        dataInErr.Add("h неверный ввод");
-                    }
-                }
-
-                //Lbo
-                {
-                    if (double.TryParse(h_tb.Text, NumberStyles.AllowDecimalPoint,
-                    CultureInfo.InvariantCulture, out var Lb0))
-                    {
-                        dataIn.Lb0 = Lb0;
-                    }
-                    else
-                    {
-                        dataInErr.Add("Lb0 неверный ввод");
-                    }
-                }
-
-                if(dataIn.IsFlangeFlat)
-                {
-                    //s
-                    {
-                        if (double.TryParse(s_tb.Text, NumberStyles.AllowDecimalPoint,
-                        CultureInfo.InvariantCulture, out var s))
-                        {
-                            dataIn.s = s;
-                        }
-                        else
-                        {
-                            dataInErr.Add("s неверный ввод");
-                        }
-                    }
-                }
-                else
-                {
-                    //S0
-                    {
-                        if (double.TryParse(S0_tb.Text, NumberStyles.AllowDecimalPoint,
-                        CultureInfo.InvariantCulture, out var S0))
-                        {
-                            dataIn.S0 = S0;
-                        }
-                        else
-                        {
-                            dataInErr.Add("S0 неверный ввод");
-                        }
-                    }
-
-                    //S1
-                    {
-                        if (double.TryParse(s1scirt_tb.Text, NumberStyles.AllowDecimalPoint,
-                        CultureInfo.InvariantCulture, out var S1))
-                        {
-                            dataIn.S1 = S1;
-                        }
-                        else
-                        {
-                            dataInErr.Add("S1 неверный ввод");
-                        }
-                    }
-
-                    //l
-                    {
-                        if (double.TryParse(l_tb.Text, NumberStyles.AllowDecimalPoint,
-                        CultureInfo.InvariantCulture, out var l))
-                        {
-                            dataIn.l = l;
-                        }
-                        else
-                        {
-                            dataInErr.Add("l неверный ввод");
-                        }
-                    }
-                }
-
-                dataIn.GasketType = gasketType_cb.Text;
-
-                //hp
-                {
-                    if (double.TryParse(hp_tb.Text, NumberStyles.AllowDecimalPoint,
-                    CultureInfo.InvariantCulture, out var hp))
-                    {
-                        dataIn.hp = hp;
-                    }
-                    else
-                    {
-                        dataInErr.Add("hp неверный ввод");
-                    }
-                }
-
-                //bp
-                {
-                    if (double.TryParse(bp_tb.Text, NumberStyles.AllowDecimalPoint,
-                    CultureInfo.InvariantCulture, out var bp))
-                    {
-                        dataIn.bp = bp;
-                    }
-                    else
-                    {
-                        dataInErr.Add("bp неверный ввод");
-                    }
-                }
-
-                //Dcp
-                {
-                    if (double.TryParse(Dcp_tb.Text, NumberStyles.AllowDecimalPoint,
-                    CultureInfo.InvariantCulture, out var Dnp))
-                    {
-                        dataIn.Dcp = Dnp;
-                    }
-                    else
-                    {
-                        dataInErr.Add("Dnp неверный ввод");
-                    }
-                }
-
-                dataIn.ScrewSteel = screwSteel_cb.Text;
-
-                //d
-                {
-                    if (int.TryParse(screwd_cb.Text, NumberStyles.Integer,
+            if (!hole_cb.Checked)
+            {
+                _dataIn.Hole = Core.Bottoms.Enums.HoleInFlatBottom.WithoutHole;
+            }
+            else
+            {
+                if (double.TryParse(holed_tb.Text, NumberStyles.AllowDecimalPoint,
                     CultureInfo.InvariantCulture, out var d))
+                {
+                    if (oneHole_rb.Checked)
                     {
-                        dataIn.Screwd = d;
+                        _dataIn.Hole = Core.Bottoms.Enums.HoleInFlatBottom.OneHole;
+                        _dataIn.d = d;
                     }
                     else
                     {
-                        dataInErr.Add("d болта неверный ввод");
+                        _dataIn.Hole = Core.Bottoms.Enums.HoleInFlatBottom.MoreThenOneHole;
+                        _dataIn.di = d;
+                    }
+
+                }
+                else
+                {
+                    dataInErr.Add("d неверный ввод");
+                }
+            }
+
+            if (int.TryParse(flange_gb.Controls
+                    .OfType<RadioButton>()
+                    .FirstOrDefault(r => r.Checked == true)?.Name[1].ToString(),
+                NumberStyles.Integer,
+                CultureInfo.InvariantCulture,
+                out var flangeFaceInt))
+            {
+                _dataIn.FlangeFace = (FlangeFaceType) (flangeFaceInt - 1);
+            }
+            else
+            {
+                dataInErr.Add("Не возможно определить уплотнительную поверхность фланца");
+            }
+
+
+            _dataIn.FlangeSteel = flangeSteel_cb.Text;
+
+            _dataIn.IsFlangeFlat = !scirtFlange_cb.Checked;
+
+            _dataIn.IsFlangeIsolated = isolatedFlange_cb.Checked;
+
+            //D
+            {
+                if (double.TryParse(D_tb.Text, NumberStyles.AllowDecimalPoint,
+                    CultureInfo.InvariantCulture, out var D))
+                {
+                    _dataIn.D = D;
+                }
+                else
+                {
+                    dataInErr.Add("D неверный ввод");
+                }
+            }
+
+            //Dn
+            {
+                if (double.TryParse(Dn_tb.Text, NumberStyles.AllowDecimalPoint,
+                    CultureInfo.InvariantCulture, out var Dn))
+                {
+                    _dataIn.Dn = Dn;
+                }
+                else
+                {
+                    dataInErr.Add("Dn неверный ввод");
+                }
+            }
+
+            //Db
+            {
+                if (double.TryParse(Db_tb.Text, NumberStyles.AllowDecimalPoint,
+                    CultureInfo.InvariantCulture, out var Db))
+                {
+                    _dataIn.Db = Db;
+                }
+                else
+                {
+                    dataInErr.Add("Db неверный ввод");
+                }
+            }
+
+            //h
+            {
+                if (double.TryParse(h_tb.Text, NumberStyles.AllowDecimalPoint,
+                    CultureInfo.InvariantCulture, out var h))
+                {
+                    _dataIn.h = h;
+                }
+                else
+                {
+                    dataInErr.Add("h неверный ввод");
+                }
+            }
+
+            //Lbo
+            {
+                if (double.TryParse(h_tb.Text, NumberStyles.AllowDecimalPoint,
+                    CultureInfo.InvariantCulture, out var Lb0))
+                {
+                    _dataIn.Lb0 = Lb0;
+                }
+                else
+                {
+                    dataInErr.Add("Lb0 неверный ввод");
+                }
+            }
+
+            if (_dataIn.IsFlangeFlat)
+            {
+                //s
+                {
+                    if (double.TryParse(s_tb.Text, NumberStyles.AllowDecimalPoint,
+                        CultureInfo.InvariantCulture, out var s))
+                    {
+                        _dataIn.s = s;
+                    }
+                    else
+                    {
+                        dataInErr.Add("s неверный ввод");
+                    }
+                }
+            }
+            else
+            {
+                //S0
+                {
+                    if (double.TryParse(S0_tb.Text, NumberStyles.AllowDecimalPoint,
+                        CultureInfo.InvariantCulture, out var S0))
+                    {
+                        _dataIn.S0 = S0;
+                    }
+                    else
+                    {
+                        dataInErr.Add("S0 неверный ввод");
                     }
                 }
 
-                //n
+                //S1
                 {
-                    if (int.TryParse(n_tb.Text, NumberStyles.Integer,
+                    if (double.TryParse(s1scirt_tb.Text, NumberStyles.AllowDecimalPoint,
+                        CultureInfo.InvariantCulture, out var S1))
+                    {
+                        _dataIn.S1 = S1;
+                    }
+                    else
+                    {
+                        dataInErr.Add("S1 неверный ввод");
+                    }
+                }
+
+                //l
+                {
+                    if (double.TryParse(l_tb.Text, NumberStyles.AllowDecimalPoint,
+                        CultureInfo.InvariantCulture, out var l))
+                    {
+                        _dataIn.l = l;
+                    }
+                    else
+                    {
+                        dataInErr.Add("l неверный ввод");
+                    }
+                }
+            }
+
+            _dataIn.GasketType = gasketType_cb.Text;
+
+            //hp
+            {
+                if (double.TryParse(hp_tb.Text, NumberStyles.AllowDecimalPoint,
+                    CultureInfo.InvariantCulture, out var hp))
+                {
+                    _dataIn.hp = hp;
+                }
+                else
+                {
+                    dataInErr.Add("hp неверный ввод");
+                }
+            }
+
+            //bp
+            {
+                if (double.TryParse(bp_tb.Text, NumberStyles.AllowDecimalPoint,
+                    CultureInfo.InvariantCulture, out var bp))
+                {
+                    _dataIn.bp = bp;
+                }
+                else
+                {
+                    dataInErr.Add("bp неверный ввод");
+                }
+            }
+
+            //Dcp
+            {
+                if (double.TryParse(Dcp_tb.Text, NumberStyles.AllowDecimalPoint,
+                    CultureInfo.InvariantCulture, out var Dnp))
+                {
+                    _dataIn.Dcp = Dnp;
+                }
+                else
+                {
+                    dataInErr.Add("Dnp неверный ввод");
+                }
+            }
+
+            _dataIn.ScrewSteel = screwSteel_cb.Text;
+
+            //d
+            {
+                if (int.TryParse(screwd_cb.Text, NumberStyles.Integer,
+                    CultureInfo.InvariantCulture, out var d))
+                {
+                    _dataIn.Screwd = d;
+                }
+                else
+                {
+                    dataInErr.Add("d болта неверный ввод");
+                }
+            }
+
+            //n
+            {
+                if (int.TryParse(n_tb.Text, NumberStyles.Integer,
                     CultureInfo.InvariantCulture, out var n))
-                    {
-                        dataIn.n = n;
-                    }
-                    else
-                    {
-                        dataInErr.Add("n неверный ввод");
-                    }
-                }
-
-                dataIn.IsScrewWithGroove = isScrewWithGroove_cb.Checked;
-
-                dataIn.IsStud = isStud_cb.Checked;
-
-                dataIn.IsWasher = isWasher_cb.Checked;
-
-                if(isWasher_cb.Checked)
                 {
-                    dataIn.WasherSteel = washerSteel_cb.Text;
+                    _dataIn.n = n;
+                }
+                else
+                {
+                    dataInErr.Add("n неверный ввод");
+                }
+            }
 
-                    //hsh
-                    {
-                        if (double.TryParse(hsh_tb.Text, NumberStyles.AllowDecimalPoint,
+            _dataIn.IsScrewWithGroove = isScrewWithGroove_cb.Checked;
+
+            _dataIn.IsStud = isStud_cb.Checked;
+
+            _dataIn.IsWasher = isWasher_cb.Checked;
+
+            if (isWasher_cb.Checked)
+            {
+                _dataIn.WasherSteel = washerSteel_cb.Text;
+
+                //hsh
+                {
+                    if (double.TryParse(hsh_tb.Text, NumberStyles.AllowDecimalPoint,
                         CultureInfo.InvariantCulture, out var hsh))
-                        {
-                            dataIn.hsh = hsh;
-                        }
-                        else
-                        {
-                            dataInErr.Add("hsh неверный ввод");
-                        }
-                    }
-                }
-
-
-                var isNotError = dataInErr.Count == 0 && dataIn.IsDataGood;
-
-                if (isNotError)
-                {
-                    var bottom = new FlatBottomWithAdditionalMoment(dataIn);
-                    bottom.Calculate();
-                    if (!bottom.IsCriticalError)
                     {
-                        //c_tb.Text = $"{bottom.c:f2}";
-                        p_d_l.Text = $"p={bottom.PressurePermissible:f3} МПа";
-                        calc_b.Enabled = true;
-                        if (bottom.IsError)
-                        {
-                            MessageBox.Show(string.Join<string>(Environment.NewLine, bottom.ErrorList));
-                        }
+                        _dataIn.hsh = hsh;
                     }
                     else
+                    {
+                        dataInErr.Add("hsh неверный ввод");
+                    }
+                }
+            }
+
+
+            var isNotError = dataInErr.Count == 0 && ((IDataIn)_dataIn).IsDataGood;
+
+            if (isNotError)
+            {
+                var bottom = new FlatBottomWithAdditionalMoment(_dataIn);
+                bottom.Calculate();
+                if (!bottom.IsCriticalError)
+                {
+                    //c_tb.Text = $"{bottom.c:f2}";
+                    p_d_l.Text = $"p={bottom.PressurePermissible:f3} МПа";
+                    calc_b.Enabled = true;
+                    if (bottom.IsError)
                     {
                         MessageBox.Show(string.Join<string>(Environment.NewLine, bottom.ErrorList));
                     }
                 }
                 else
                 {
-                    MessageBox.Show(string.Join<string>(Environment.NewLine, dataInErr.Union(dataIn.ErrorList)));
+                    MessageBox.Show(string.Join<string>(Environment.NewLine, bottom.ErrorList));
                 }
             }
             else
             {
-                MessageBox.Show(string.Join<string>(Environment.NewLine, dataInErr));
+                MessageBox.Show(string.Join<string>(Environment.NewLine, dataInErr.Union(_dataIn.ErrorList)));
             }
+
+
         }
 
         private void Calc_b_Click(object sender, EventArgs e)
@@ -763,14 +762,14 @@ namespace CalculateVessels
             List<string> dataInErr = new();
 
             //name
-            dataIn.Name = name_tb.Text;
+            _dataIn.Name = name_tb.Text;
             
 
-            bool isNotError = dataInErr.Count == 0 && dataIn.IsDataGood;
+            bool isNotError = dataInErr.Count == 0 && DataIn.IsDataGood;
 
             if (isNotError)
             {
-                FlatBottomWithAdditionalMoment bottom = new(dataIn);
+                FlatBottomWithAdditionalMoment bottom = new(_dataIn);
                 bottom.Calculate();
                 if (!bottom.IsCriticalError)
                 {
@@ -802,7 +801,7 @@ namespace CalculateVessels
             }
             else
             {
-                MessageBox.Show(string.Join<string>(Environment.NewLine, dataInErr.Union(dataIn.ErrorList)));
+                MessageBox.Show(string.Join<string>(Environment.NewLine, dataInErr.Union(_dataIn.ErrorList)));
             }
 
         }

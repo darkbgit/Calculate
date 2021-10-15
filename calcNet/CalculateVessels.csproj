@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CalculateVessels.Core\CalculateVessels.Core.csproj" />
+    <ProjectReference Include="..\CalculateVessels.Data\CalculateVessels.Data.csproj" />
   </ItemGroup>
 
   <ItemGroup>

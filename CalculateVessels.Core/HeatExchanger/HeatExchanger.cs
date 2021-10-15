@@ -199,8 +199,8 @@ namespace CalculateVessels.Core.HeatExchanger
 
         public bool IsError { get; private set; }
 
-        public List<string> ErrorList { get => _errorList; private set => _errorList = value; }
-        public List<string> Bibliography { get; } = new()
+        public IEnumerable<string> ErrorList => _errorList;
+        public IEnumerable<string> Bibliography { get; } = new List<string>()
         {
             Data.Properties.Resources.GOST_34233_1,
             Data.Properties.Resources.GOST_34233_6,

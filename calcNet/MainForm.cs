@@ -5,13 +5,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using CalculateVessels.Data.PhysicalData;
-
+using CalculateVessels.Models;
 
 namespace CalculateVessels
 {
     public partial class MainForm : Form
     {
-              
+
         public MainForm()
         {
             InitializeComponent();
@@ -22,86 +22,179 @@ namespace CalculateVessels
         public EllForm ef = null;
         public FlatBottomWithAdditionalMomentForm flatBottomWithAdditionalMomentForm = null;
         public NozzleForm nf = null;
-        public PldnForm pdf = null;
+        public FlatBottomForm pdf = null;
         public SaddleForm saddleForm = null;
-        public HeatExchengerWithFixedTubePlatesForm heatExchangerWithFixedTubePlatesForm = null;
+        public HeatExchangerWithFixedTubePlatesForm heatExchangerWithFixedTubePlatesForm = null;
 
+        public ElementsCollection ElementsCollection { get; set; } = new();
 
         // TODO: KonForm 
 
-        
+
+
+        //private void MakeWord_b_Click(object sender, EventArgs e)
+        //{
+        //    if (Word_lv.Items.Count > 0)
+        //    {
+        //        string f = file_tb.Text;
+        //        if (f != "")
+        //        {
+        //            f += ".docx";
+        //            if (System.IO.File.Exists(f))
+        //            {
+        //                try
+        //                {
+        //                    var f1 = System.IO.File.Open(f, System.IO.FileMode.Append);
+        //                    f1.Close();
+        //                }
+        //                catch
+        //                {
+        //                    System.Windows.Forms.MessageBox.Show("Закройте" + f + "и нажмите OK");
+        //                }
+
+        //            }
+        //            else
+        //            {
+        //                try
+        //                {
+        //                    System.IO.File.Copy("temp.docx", f);
+        //                }
+        //                catch
+        //                {
+        //                    System.Windows.Forms.MessageBox.Show("Нет шаблона temp.docx");
+        //                }
+        //            }
+        //            var bibliography = new List<string>();
+
+        //            foreach (IElement element in Elements.ElementsList)
+        //            {
+        //                try
+        //                {
+        //                    element.MakeWord(f);
+        //                    bibliography = bibliography.Union(element.Bibliography).ToList();
+        //                }
+
+        //                catch (Exception)
+        //                {
+        //                    System.Windows.Forms.MessageBox.Show($"Couldn't create word file for element {element}" + e.ToString());
+        //                }
+        //            }
+
+        //            try
+        //            {
+        //                Bibliography.AddBibliography(bibliography, f);
+        //                System.Windows.Forms.MessageBox.Show("OK");
+        //            }
+        //            catch
+        //            {
+        //                System.Windows.Forms.MessageBox.Show("Couldn't create word file for bibliography" + e.ToString());
+        //            }
+
+
+        //        }
+        //        else
+        //        {
+        //            System.Windows.Forms.MessageBox.Show("Введите имя файла");
+        //        }
+        //    }
+        //    else
+        //    {
+        //        System.Windows.Forms.MessageBox.Show("Данных для вывода нет");
+        //    }
+
+        //}
 
         private void MakeWord_b_Click(object sender, EventArgs e)
         {
-            if (Word_lv.Items.Count > 0)
+            var path = GetFilePath(file_tb.Text);
+
+            if (path == null) return;
+
+            if (!ElementsCollection.Elements.Any())
             {
-                string f = file_tb.Text;
-                if (f != "")
+                MessageBox.Show("Данных для вывода нет");
+            }
+
+            MakeWord(ElementsCollection, path);
+        }
+
+        private static string GetFilePath(string filePath)
+        {
+            if (filePath == "")
+            {
+                MessageBox.Show("Введите место сохранения файла");
+                return null;
+            }
+
+            if (filePath.Last() == '\\')
+            {
+                MessageBox.Show("Введите имя файла");
+                return null;
+            }
+
+            filePath += ".docx";
+            if (System.IO.File.Exists(filePath))
+            {
+                var bad = true;
+                while (bad)
                 {
-                    f += ".docx";
-                    if (System.IO.File.Exists(f))
-                    {
-                        try
-                        {
-                            var f1 = System.IO.File.Open(f, System.IO.FileMode.Append);
-                            f1.Close();
-                        }
-                        catch
-                        {
-                            System.Windows.Forms.MessageBox.Show("Закройте" + f + "и нажмите OK");
-                        }
-
-                    }
-                    else
-                    {
-                        try
-                        {
-                            System.IO.File.Copy("temp.docx", f);
-                        }
-                        catch
-                        {
-                            System.Windows.Forms.MessageBox.Show("Нет шаблона temp.docx");
-                        }
-                    }
-                    var bibliography = new List<string>();
-
-                    foreach (IElement element in Elements.ElementsList)
-                    {
-                        try
-                        {
-                            element.MakeWord(f);
-                            bibliography = bibliography.Union(element.Bibliography).ToList();
-                        }
-
-                        catch (Exception)
-                        {
-                            System.Windows.Forms.MessageBox.Show($"Couldn't create word file for element {element}" + e.ToString());
-                        }
-                    }
-
+                    bad = false;
                     try
                     {
-                        Bibliography.AddBibliography(bibliography, f);
-                        System.Windows.Forms.MessageBox.Show("OK");
+                        var f1 = System.IO.File.Open(filePath, System.IO.FileMode.Append);
+                        f1.Close();
                     }
                     catch
                     {
-                        System.Windows.Forms.MessageBox.Show("Couldn't create word file for bibliography" + e.ToString());
+                        MessageBox.Show("Закройте" + filePath + "и нажмите OK");
+                        bad = true;
                     }
-
-
-                }
-                else
-                {
-                    System.Windows.Forms.MessageBox.Show("Введите имя файла");
                 }
             }
             else
             {
-                System.Windows.Forms.MessageBox.Show("Данных для вывода нет");
+                try
+                {
+                    System.IO.File.Copy("temp.docx", filePath);
+                }
+                catch
+                {
+                    MessageBox.Show("Нет шаблона temp.docx");
+                    return null;
+                }
             }
-            
-            
+            return filePath;
+        }
+    
+
+        private static void MakeWord(ElementsCollection elements, string filePath)
+        {
+            if (!elements.Elements.Any()) return;
+
+            List<string> bibliography = new();
+
+            foreach (var elementForCalculate in elements.Elements)
+            {
+                try
+                {
+                    elementForCalculate.Element.MakeWord(filePath);
+                    bibliography = bibliography.Union(elementForCalculate.Element.Bibliography).ToList();
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show($"Couldn't create word file for element {elementForCalculate.Element}" + e.ToString());
+                }
+            }
+
+            try
+            {
+                Bibliography.AddBibliography(bibliography, filePath);
+                MessageBox.Show("OK");
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Couldn't create word file for bibliography" + e.ToString());
+            }
         }
 
         private void Cil_b_Click(object sender, EventArgs e)
@@ -166,7 +259,7 @@ namespace CalculateVessels
         {
             if (pdf == null)
             {
-                pdf = new PldnForm { Owner = this };
+                pdf = new FlatBottomForm { Owner = this };
                 pdf.Show();
             }
             else
@@ -194,7 +287,7 @@ namespace CalculateVessels
         {
             if (heatExchangerWithFixedTubePlatesForm == null)
             {
-                heatExchangerWithFixedTubePlatesForm = new HeatExchengerWithFixedTubePlatesForm { Owner = this };
+                heatExchangerWithFixedTubePlatesForm = new HeatExchangerWithFixedTubePlatesForm { Owner = this };
                 heatExchangerWithFixedTubePlatesForm.Show();
             }
             else
@@ -264,8 +357,8 @@ namespace CalculateVessels
 
             MoveSelectedItemListView(Word_lv, idx,  true);
 
-            (Elements.ElementsList[idx], Elements.ElementsList[idx - 1]) = 
-                (Elements.ElementsList[idx - 1], Elements.ElementsList[idx]);
+            (ElementsCollection.Elements[idx], ElementsCollection.Elements[idx - 1]) = 
+                (ElementsCollection.Elements[idx - 1], ElementsCollection.Elements[idx]);
         }
 
         private void Down_b_Click(object sender, EventArgs e)
@@ -274,8 +367,9 @@ namespace CalculateVessels
 
             MoveSelectedItemListView(Word_lv, idx, false);
 
-            (Elements.ElementsList[idx], Elements.ElementsList[idx + 1]) = 
-                (Elements.ElementsList[idx + 1], Elements.ElementsList[idx]);
+            (ElementsCollection.Elements[idx], ElementsCollection.Elements[idx + 1]) =
+                (ElementsCollection.Elements[idx + 1], ElementsCollection.Elements[idx]);
+
         }
 
         private void Del_b_Click(object sender, EventArgs e)
@@ -283,7 +377,7 @@ namespace CalculateVessels
             int idx = Word_lv.SelectedItems[0].Index;
 
             Word_lv.Items.RemoveAt(idx);
-            Elements.ElementsList.RemoveAt(idx);
+            ElementsCollection.Elements.RemoveAt(idx);
             //Word_lv.SelectedItems.Clear();
         }
 

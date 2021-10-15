@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using CalculateVessels.Core.Interfaces;
 using CalculateVessels.Core.Supports.Enums;
 using CalculateVessels.Core.Supports.Saddle;
 using CalculateVessels.Data.PhysicalData;
@@ -16,6 +17,8 @@ namespace CalculateVessels
         {
             InitializeComponent();
         }
+
+        public IDataIn DataIn => saddleDataIn;
 
         private SaddleDataIn saddleDataIn;
 
@@ -357,7 +360,7 @@ namespace CalculateVessels
                 }
             }
 
-            var isNotError = dataInErr.Count == 0 && saddleDataIn.IsDataGood;
+            var isNotError = dataInErr.Count == 0 && DataIn.IsDataGood;
 
             if (isNotError)
             {
@@ -394,7 +397,7 @@ namespace CalculateVessels
             //shell name
             saddleDataIn.NameShell = nameShell_tb.Text;
 
-            if (saddleDataIn.IsDataGood)
+            if (DataIn.IsDataGood)
             {
                 Saddle saddle = new(saddleDataIn);
                 saddle.Calculate();
