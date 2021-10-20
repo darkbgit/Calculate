@@ -34,6 +34,8 @@ namespace CalculateVessels.Core.Shells
         protected double _p_de;
         protected double _p_dp;
         protected double _p_d;
+        protected double _sigmaAllow;
+        public double SigmaAllow => _sigmaAllow;
 
         protected List<string> _errorList = new();
 

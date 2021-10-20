@@ -44,7 +44,7 @@ namespace CalculateVessels.Core.Shells
         private double _s_f;
         private double _s_pf;
 
-        private double _sigmaAllow;
+
         private double _E;
 
         public void Calculate()

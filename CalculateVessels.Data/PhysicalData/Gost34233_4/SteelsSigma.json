@@ -189,7 +189,36 @@
 				"SigmaValue": 113.0
 			}
 		]
-	}
+	},
+  {
+    "Name": [ "14Х17Н2" ],
+    "Values": [
+      {
+        "Temperature": 20,
+        "SigmaValue": 232.0
+      },
+      {
+        "Temperature": 100,
+        "SigmaValue": 230.0
+      },
+      {
+        "Temperature": 200,
+        "SigmaValue": 220.0
+      },
+      {
+        "Temperature": 250,
+        "SigmaValue": 218.0
+      },
+      {
+        "Temperature": 300,
+        "SigmaValue": 209.0
+      },
+      {
+        "Temperature": 350,
+        "SigmaValue": 207.0
+      }
+    ]
+  }
 ]
 
 	

@@ -463,15 +463,15 @@ namespace CalculateVessels.Core.Bottoms.FlatBottom
                     body.AddParagraph("")
                         .AppendEquation($"D_p=D={_Dp} мм");
                     body.AddParagraph("")
-                        .AppendEquation($"при (s-c)/(s_1-c)=({_fbdi.s}-{_c})/({_fbdi.s1}-{_c})={(_fbdi.s-_c)/(_fbdi.s1-_c)}" +
-                        ((_fbdi.s - _c) / (_fbdi.s1 - _c) < 0.25 ? "<0.25" : "≥0.25") + $"K={_K}");
+                        .AppendEquation($"при (s-c)/(s_1-c)=({_fbdi.s}-{_c})/({_fbdi.s1}-{_c})={(_fbdi.s-_c)/(_fbdi.s1-_c):f2}" +
+                        ((_fbdi.s - _c) / (_fbdi.s1 - _c) < 0.25 ? "<0.25" : "≥0.25") + $"  K={_K}");
                     break;
                 case 4:
                     body.AddParagraph("")
                         .AppendEquation($"D_p=D={_Dp} мм");
                     body.AddParagraph("")
-                        .AppendEquation($"при (s-c)/(s_1-c)=({_fbdi.s}-{_c})/({_fbdi.s1}-{_c})={(_fbdi.s - _c) / (_fbdi.s1 - _c)}" +
-                        ((_fbdi.s - _c) / (_fbdi.s1 - _c) < 0.5 ? "<0.5" : "≥0.5") + $"K={_K}");
+                        .AppendEquation($"при (s-c)/(s_1-c)=({_fbdi.s}-{_c})/({_fbdi.s1}-{_c})={(_fbdi.s - _c) / (_fbdi.s1 - _c):f2}" +
+                        ((_fbdi.s - _c) / (_fbdi.s1 - _c) < 0.5 ? "<0.5" : "≥0.5") + $"  K={_K}");
                     break;
                 case 5:
                     goto case 3;
@@ -509,7 +509,7 @@ namespace CalculateVessels.Core.Bottoms.FlatBottom
                 case HoleInFlatBottom.OneHole:
                     body.AddParagraph("Коэффициент ")
                        .AppendEquation("K_0")
-                       .AddRun(" - для крышекек, имеющих одно отверстие, вычисляют по формул");
+                       .AddRun(" - для крышек, имеющих одно отверстие, вычисляют по формул");
                     body.AddParagraph("")
                         .AppendEquation("K_0=√(1+d/D_p+(d/D_p)^2)" +
                         $"=√(1+{_fbdi.d}/{_Dp:f2}+({_fbdi.d}/{_Dp:f2})^2)={_K0:f2}");
@@ -517,7 +517,7 @@ namespace CalculateVessels.Core.Bottoms.FlatBottom
                 case HoleInFlatBottom.MoreThenOneHole:
                     body.AddParagraph("Коэффициент ")
                        .AppendEquation("K_0")
-                       .AddRun(" - для крышекек, имеющих несколько отверстий, вычисляют по формул");
+                       .AddRun(" - для крышек, имеющих несколько отверстий, вычисляют по формул");
                     body.AddParagraph("")
                         .AppendEquation("K_0=√((1-(Σd_i/D_p)^3)/(1-(Σd_i/D_p)))" +
                         $"=√((1-({_fbdi.di}/{_Dp:f2})^3)/(1-({_fbdi.di}/{_Dp:f2})))={_K0:f2}");
@@ -632,32 +632,38 @@ namespace CalculateVessels.Core.Bottoms.FlatBottom
                     .Color(System.Drawing.Color.Red);
             }
 
-            body.AddParagraph("Условия закрепления");
 
-            switch (_fbdi.Type)
+            if (_fbdi.Type is 1 or 2 or 6 or 9 or 10)
             {
-                case 1:
-                    body.AddParagraph("")
-                        .AppendEquation($"a≥1.7∙s={_fbdi.a}≥1.7∙{_fbdi.s}={1.7 * _fbdi.s:f2}");
-                    break;
-                case 2:
-                case 6:
-                    body.AddParagraph("")
-                        .AppendEquation($"a≥0.85∙s={_fbdi.a}≥0.85∙{_fbdi.s}={0.85 * _fbdi.s:f2}");
-                    break;
-                case 9:
-                    body.AddParagraph("")
-                        .AppendEquation("max{s;0.25∙s_1}≤r≤min{s_1;0.1∙D}");
-                    body.AddParagraph("")
-                        .AppendEquation($"{Math.Max(_fbdi.s, 0.25 * _fbdi.s1):f2}≤{_fbdi.r}≤{Math.Min(_fbdi.s1,0.1 * _fbdi.D):f2}");
-                    body.AddParagraph("")
-                        .AppendEquation($"h_1={_fbdi.h1}≥r={_fbdi.r}");
-                    break;
-                case 10:
-                    body.AddParagraph("")
-                        .AppendEquation($"a≥1.7∙s={_fbdi.a}≥1.7∙{_fbdi.s}={1.7 * _fbdi.s:f2}");
-                    break;
+                body.AddParagraph("Условия закрепления");
+
+                switch (_fbdi.Type)
+                {
+                    case 1:
+                        body.AddParagraph("")
+                            .AppendEquation($"a≥1.7∙s={_fbdi.a}≥1.7∙{_fbdi.s}={1.7 * _fbdi.s:f2}");
+                        break;
+                    case 2:
+                    case 6:
+                        body.AddParagraph("")
+                            .AppendEquation($"a≥0.85∙s={_fbdi.a}≥0.85∙{_fbdi.s}={0.85 * _fbdi.s:f2}");
+                        break;
+                    case 9:
+                        body.AddParagraph("")
+                            .AppendEquation("max{s;0.25∙s_1}≤r≤min{s_1;0.1∙D}");
+                        body.AddParagraph("")
+                            .AppendEquation(
+                                $"{Math.Max(_fbdi.s, 0.25 * _fbdi.s1):f2}≤{_fbdi.r}≤{Math.Min(_fbdi.s1, 0.1 * _fbdi.D):f2}");
+                        body.AddParagraph("")
+                            .AppendEquation($"h_1={_fbdi.h1}≥r={_fbdi.r}");
+                        break;
+                    case 10:
+                        body.AddParagraph("")
+                            .AppendEquation($"a≥1.7∙s={_fbdi.a}≥1.7∙{_fbdi.s}={1.7 * _fbdi.s:f2}");
+                        break;
+                }
             }
+
 
 
             if (_isConditionFixed)

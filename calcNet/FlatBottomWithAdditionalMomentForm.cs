@@ -12,6 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using CalculateVessels.Core.Interfaces;
+using CalculateVessels.Models;
 
 namespace CalculateVessels
 {
@@ -730,21 +731,26 @@ namespace CalculateVessels
 
             if (isNotError)
             {
-                var bottom = new FlatBottomWithAdditionalMoment(_dataIn);
-                bottom.Calculate();
-                if (!bottom.IsCriticalError)
+                IElement bottom = new FlatBottomWithAdditionalMoment(_dataIn);
+
+                CalculatedElement calculatedElement = new(bottom);
+
+                calculatedElement.Element.Calculate();
+
+
+                if (!calculatedElement.Element.IsCriticalError)
                 {
                     //c_tb.Text = $"{bottom.c:f2}";
-                    p_d_l.Text = $"p={bottom.PressurePermissible:f3} МПа";
+                    p_d_l.Text = $"p={((FlatBottomWithAdditionalMoment)calculatedElement.Element).PressurePermissible:f3} МПа";
                     calc_b.Enabled = true;
-                    if (bottom.IsError)
+                    if (calculatedElement.Element.IsError)
                     {
-                        MessageBox.Show(string.Join<string>(Environment.NewLine, bottom.ErrorList));
+                        MessageBox.Show(string.Join<string>(Environment.NewLine, calculatedElement.Element.ErrorList));
                     }
                 }
                 else
                 {
-                    MessageBox.Show(string.Join<string>(Environment.NewLine, bottom.ErrorList));
+                    MessageBox.Show(string.Join<string>(Environment.NewLine, calculatedElement.Element.ErrorList));
                 }
             }
             else
@@ -769,16 +775,21 @@ namespace CalculateVessels
 
             if (isNotError)
             {
-                FlatBottomWithAdditionalMoment bottom = new(_dataIn);
-                bottom.Calculate();
-                if (!bottom.IsCriticalError)
+                IElement bottom = new FlatBottomWithAdditionalMoment(_dataIn);
+
+                CalculatedElement calculatedElement = new(bottom);
+
+                calculatedElement.Element.Calculate();
+
+
+                if (!calculatedElement.Element.IsCriticalError)
                 {
-                    p_d_l.Text = $"pd={bottom.PressurePermissible:f2} МПа";
+                    p_d_l.Text = $"pd={((FlatBottomWithAdditionalMoment)calculatedElement.Element).PressurePermissible:f2} МПа";
 
                     if (this.Owner is MainForm main)
                     {
-                        main.Word_lv.Items.Add(bottom.ToString());
-                        Elements.ElementsList.Add(bottom);
+                        main.Word_lv.Items.Add(calculatedElement.Element.ToString());
+                        main.ElementsCollection.Elements.Add(calculatedElement);
                         this.Hide();
                     }
                     else
@@ -786,9 +797,9 @@ namespace CalculateVessels
                         System.Windows.Forms.MessageBox.Show("MainForm Error");
                     }
 
-                    if (bottom.IsError)
+                    if (calculatedElement.Element.IsError)
                     {
-                        MessageBox.Show(string.Join<string>(Environment.NewLine, bottom.ErrorList));
+                        MessageBox.Show(string.Join<string>(Environment.NewLine, calculatedElement.Element.ErrorList));
                     }
 
                     MessageBox.Show("Calculation complete");
@@ -796,7 +807,7 @@ namespace CalculateVessels
                 }
                 else
                 {
-                    MessageBox.Show(string.Join<string>(Environment.NewLine, bottom.ErrorList));
+                    MessageBox.Show(string.Join<string>(Environment.NewLine, calculatedElement.Element.ErrorList));
                 }
             }
             else

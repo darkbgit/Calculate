@@ -299,6 +299,7 @@ namespace CalculateVessels.Data.PhysicalData
             private const string TABLE_E = "PhysicalData/Gost34233_4/SteelsE.json";
             private const string TABLE_SIGMA = "PhysicalData/Gost34233_4/SteelsSigma.json";
             private const string TABLE_GASKET = "PhysicalData/Gost34233_4/Gaskets.json";
+            private const string TABLE_ALFA = "PhysicalData/Gost34233_4/SteelsAlfa.json";
 
 
             public static bool TryGetfb(int M, bool isGroove, ref double fb, ref List<string> errorList)
@@ -802,7 +803,7 @@ namespace CalculateVessels.Data.PhysicalData
             }
             catch
             {
-                errorList.Add($"Cannt open file for alfa for steel {steelName} in GOST {gost}");
+                errorList.Add($"Can't open file for alfa for steel {steelName} in GOST {gost}");
                 return false;
             }
 
@@ -813,7 +814,7 @@ namespace CalculateVessels.Data.PhysicalData
 
             if (alfaList == null)
             {
-                errorList.Add($"Coudnt find alfa values for steel={steelName} in GOST {gost}");
+                errorList.Add($"Couldn't find alfa values for steel={steelName} in GOST {gost}");
                 return false;
             }
 
@@ -826,11 +827,11 @@ namespace CalculateVessels.Data.PhysicalData
                 }
             }
 
-            errorList.Add($"Coudnt find alfa value for steel={steelName} on temperature {temperature} in GOST {gost}");
+            errorList.Add($"Couldn't find alfa value for steel={steelName} on temperature {temperature} in GOST {gost}");
             return false;
         }
 
-        public static bool TryGetE(string steelName, double temperature, ref double E, ref List<string> errorList, string gost = "GOST34233_1")
+        public static bool TryGetE(string steelName, double temperature, ref double E, ref List<string> errorList, string gost = "Gost34233_1")
         {
             List<SteelForE> steels;
 
@@ -843,7 +844,7 @@ namespace CalculateVessels.Data.PhysicalData
             }
             catch
             {
-                errorList.Add($"Cannot open file for E for steel {steelName} in GOST {gost}");
+                errorList.Add($"Can't open file for E for steel {steelName} in GOST {gost}");
                 return false;
             }
 

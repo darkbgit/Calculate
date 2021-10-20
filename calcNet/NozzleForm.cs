@@ -9,6 +9,7 @@ using CalculateVessels.Core.Shells.Enums;
 using CalculateVessels.Core.Shells.Nozzle;
 using CalculateVessels.Core.Shells.Nozzle.Enums;
 using CalculateVessels.Data.PhysicalData;
+using CalculateVessels.Models;
 
 namespace CalculateVessels
 {
@@ -1583,10 +1584,10 @@ namespace CalculateVessels
                         case ShellType.Elliptical:
                         case ShellType.Conical:
                             nozzleData.omega =
-                                Convert.ToDouble((place_gb.Controls["pn"].Controls["omega_tb"] as TextBox)
+                                Convert.ToDouble((place_gb.Controls["pn"].Controls["omega_tb"] as TextBox)?
                                     .Text);
                             nozzleData.gamma =
-                                Convert.ToDouble((place_gb.Controls["pn"].Controls["gamma_tb"] as TextBox)
+                                Convert.ToDouble((place_gb.Controls["pn"].Controls["gamma_tb"] as TextBox)?
                                     .Text);
                             nozzleData.Location = nozzleData.omega == 0 ? NozzleLocation.LocationAccordingToParagraph_5_2_2_5 : NozzleLocation.LocationAccordingToParagraph_5_2_2_4;
 
@@ -1595,8 +1596,7 @@ namespace CalculateVessels
                         case ShellType.Torospherical:
                             nozzleData.omega = 0;
                             nozzleData.gamma =
-                                Convert.ToDouble((place_gb.Controls["pn"].Controls["gamma_tb"] as TextBox)
-                                    .Text);
+                                Convert.ToDouble((place_gb.Controls["pn"].Controls["gamma_tb"] as TextBox)?.Text);
                             nozzleData.Location = NozzleLocation.LocationAccordingToParagraph_5_2_2_5;
                             break;
                     }
@@ -1614,23 +1614,29 @@ namespace CalculateVessels
 
             if (isNotError)
             {
-                Nozzle nozzle = new(element, nozzleData);
-                nozzle.Calculate();
-                if (!nozzle.IsCriticalError)
+
+                IElement nozzle = new Nozzle(element, nozzleData);
+
+                CalculatedElement calculatedElement = new(nozzle);
+
+                calculatedElement.Element.Calculate();
+
+
+                if (!calculatedElement.Element.IsCriticalError)
                 {
 
-                    d0_l.Text = $"d0={nozzle.d0:f2} мм";
-                    p_d_l.Text = $"[p]={nozzle.p_d:f2} МПа";
-                    b_l.Text = $"b={nozzle.b:f2} мм";
+                    d0_l.Text = $"d0={((Nozzle)calculatedElement.Element).d0:f2} мм";
+                    p_d_l.Text = $"[p]={((Nozzle)calculatedElement.Element).p_d:f2} МПа";
+                    b_l.Text = $"b={((Nozzle)calculatedElement.Element).b:f2} мм";
                     calc_b.Enabled = true;
-                    if (nozzle.IsError)
+                    if (calculatedElement.Element.IsError)
                     {
-                        System.Windows.Forms.MessageBox.Show(string.Join<string>(Environment.NewLine, nozzle.ErrorList));
+                        System.Windows.Forms.MessageBox.Show(string.Join<string>(Environment.NewLine, calculatedElement.Element.ErrorList));
                     }
                 }
                 else
                 {
-                    System.Windows.Forms.MessageBox.Show(string.Join<string>(Environment.NewLine, nozzle.ErrorList));
+                    System.Windows.Forms.MessageBox.Show(string.Join<string>(Environment.NewLine, calculatedElement.Element.ErrorList));
                 }
             }
             else
@@ -1646,18 +1652,25 @@ namespace CalculateVessels
             
        
 
-                var nozzle = new Nozzle(element, nozzleData);
-                nozzle.Calculate();
-            if (!nozzle.IsCriticalError)
+            IElement nozzle = new Nozzle(element, nozzleData);
+
+            CalculatedElement calculatedElement = new(nozzle);
+
+            calculatedElement.Element.Calculate();
+
+
+            if (!calculatedElement.Element.IsCriticalError)
             {
 
-                d0_l.Text = $"d0={nozzle.d0:f2} мм";
-                p_d_l.Text = $"[p]={nozzle.p_d:f2} МПа";
-                b_l.Text = $"b={nozzle.b:f2} мм";
+                d0_l.Text = $"d0={((Nozzle)calculatedElement.Element).d0:f2} мм";
+                p_d_l.Text = $"[p]={((Nozzle)calculatedElement.Element).p_d:f2} МПа";
+                b_l.Text = $"b={((Nozzle)calculatedElement.Element).b:f2} мм";
                 if (this.Owner.Owner is MainForm main)
                 {
-                    main.Word_lv.Items.Add(nozzle.ToString());
-                    Elements.ElementsList.Add(nozzle);
+                    main.Word_lv.Items.Add(calculatedElement.Element.ToString());
+                    main.ElementsCollection.Elements.Add(calculatedElement);
+
+
                     System.Windows.Forms.MessageBox.Show("Calculation complete");
                     this.Hide();
                 }
@@ -1665,14 +1678,14 @@ namespace CalculateVessels
                 {
                     System.Windows.Forms.MessageBox.Show("MainForm Error");
                 }
-                if (nozzle.IsError)
+                if (calculatedElement.Element.IsError)
                 {
-                    System.Windows.Forms.MessageBox.Show(string.Join<string>(Environment.NewLine, nozzle.ErrorList));
+                    System.Windows.Forms.MessageBox.Show(string.Join<string>(Environment.NewLine, calculatedElement.Element.ErrorList));
                 }
             }
             else
             {
-                System.Windows.Forms.MessageBox.Show(string.Join<string>(Environment.NewLine, nozzle.ErrorList));
+                System.Windows.Forms.MessageBox.Show(string.Join<string>(Environment.NewLine, calculatedElement.Element.ErrorList));
             }
         }
     }

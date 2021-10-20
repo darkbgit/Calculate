@@ -57,7 +57,32 @@
 				"AlfaValue": 0.0000118
 			}
 		]
-	}
+	},
+  {
+    "Name": [ "14Х17Н2" ],
+		"Values": [
+			{
+				"Temperature": 100,
+				"AlfaValue": 0.0000106
+			},
+			{
+				"Temperature": 200,
+				"AlfaValue": 0.0000108
+			},
+			{
+				"Temperature": 300,
+				"AlfaValue": 0.000011
+			},
+			{
+				"Temperature": 400,
+				"AlfaValue": 0.0000111
+			},
+			{
+				"Temperature": 500,
+				"AlfaValue": 0.0000113
+      }
+		]
+  }
 ]
 
 	

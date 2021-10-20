@@ -210,7 +210,7 @@ namespace CalculateVessels.Core.Bottoms.FlatBottomWithAdditionalMoment
             }
 
 
-            // GOST 34233.4 add G
+            // Gost 34233.4 add G
             _sigma_d_krm = _fbdi.sigma_d * 1.5 / 1.1;
 
             _tkr = _fbdi.t;
@@ -228,13 +228,13 @@ namespace CalculateVessels.Core.Bottoms.FlatBottomWithAdditionalMoment
                 _alfash2 = _alfash1;
             }
 
-            if (!Physical.TryGetE(_fbdi.ScrewSteel, 20, ref _Eb20, ref _errorList, "GOST34233_4"))
+            if (!Physical.TryGetE(_fbdi.ScrewSteel, 20, ref _Eb20, ref _errorList, "Gost34233_4"))
             {
                 IsCriticalError = true;
                 return;
             }
 
-            if (!Physical.TryGetE(_fbdi.ScrewSteel, _tb, ref _Eb, ref _errorList, "GOST34233_4"))
+            if (!Physical.TryGetE(_fbdi.ScrewSteel, _tb, ref _Eb, ref _errorList, "Gost34233_4"))
             {
                 IsCriticalError = true;
                 return;
