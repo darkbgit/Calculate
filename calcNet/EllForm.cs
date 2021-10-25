@@ -12,6 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using CalculateVessels.Core.Interfaces;
+using CalculateVessels.Core.Models;
 
 namespace CalculateVessels
 {
@@ -308,36 +309,39 @@ namespace CalculateVessels
 
             if (isNotError)
             {
-                EllipticalShell ellipticalShell = new(_ellipticalShellDataIn);
-                ellipticalShell.Calculate();
-                if (!ellipticalShell.IsCriticalError)
+                IElement ellipticalShell = new EllipticalShell(_ellipticalShellDataIn);
+                CalculatedElement calculatedElement = new(ellipticalShell);
+
+                calculatedElement.Element.Calculate();
+
+                if (!calculatedElement.Element.IsCriticalError)
                 {
-                    scalc_l.Text = $"sp={ellipticalShell.s:f3} мм";
-                    p_d_l.Text = $"pd={ellipticalShell.p_d:f3} МПа";
+                    scalc_l.Text = $"sp={((EllipticalShell)calculatedElement.Element).s:f3} мм";
+                    p_d_l.Text = $"pd={((EllipticalShell)calculatedElement.Element).p_d:f3} МПа";
 
                     if (this.Owner is MainForm main)
                     {
-                        main.Word_lv.Items.Add(ellipticalShell.ToString());
-                        Elements.ElementsList.Add(ellipticalShell);
+                        main.Word_lv.Items.Add(calculatedElement.Element.ToString());
+                        main.ElementsCollection.Add(calculatedElement);
                     }
                     else
                     {
-                        System.Windows.Forms.MessageBox.Show("MainForm Error");
+                        MessageBox.Show("MainForm Error");
                     }
 
-                    if (ellipticalShell.IsError)
+                    if (calculatedElement.Element.IsError)
                     {
-                        MessageBox.Show(string.Join<string>(Environment.NewLine, ellipticalShell.ErrorList));
+                        MessageBox.Show(string.Join<string>(Environment.NewLine, calculatedElement.Element.ErrorList));
                     }
 
-                    System.Windows.Forms.MessageBox.Show("Calculation complete");
+                    MessageBox.Show("Calculation complete");
 
-                    MessageBoxCheckBox mbcb = new(ellipticalShell, _ellipticalShellDataIn) { Owner = this };
+                    MessageBoxCheckBox mbcb = new(calculatedElement.Element, _ellipticalShellDataIn) { Owner = this };
                     mbcb.ShowDialog();
                 }
                 else
                 {
-                    MessageBox.Show(string.Join<string>(Environment.NewLine, ellipticalShell.ErrorList));
+                    MessageBox.Show(string.Join<string>(Environment.NewLine, calculatedElement.Element.ErrorList));
                 }
             }
             else

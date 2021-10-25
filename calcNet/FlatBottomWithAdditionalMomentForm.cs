@@ -12,7 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using CalculateVessels.Core.Interfaces;
-using CalculateVessels.Models;
+using CalculateVessels.Core.Models;
 
 namespace CalculateVessels
 {
@@ -789,7 +789,7 @@ namespace CalculateVessels
                     if (this.Owner is MainForm main)
                     {
                         main.Word_lv.Items.Add(calculatedElement.Element.ToString());
-                        main.ElementsCollection.Elements.Add(calculatedElement);
+                        main.ElementsCollection.Add(calculatedElement);
                         this.Hide();
                     }
                     else

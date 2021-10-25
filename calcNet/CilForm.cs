@@ -1,8 +1,8 @@
 ﻿using CalculateVessels.Core.Interfaces;
+using CalculateVessels.Core.Models;
 using CalculateVessels.Core.Shells;
 using CalculateVessels.Core.Shells.DataIn;
 using CalculateVessels.Data.PhysicalData;
-using CalculateVessels.Models;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -388,7 +388,7 @@ namespace CalculateVessels
                     if (this.Owner is MainForm main)
                     {
                         main.Word_lv.Items.Add(calculatedElement.Element.ToString());
-                        main.ElementsCollection.Elements.Add(calculatedElement);
+                        main.ElementsCollection.Add(calculatedElement);
 
                         this.Hide();
                     }

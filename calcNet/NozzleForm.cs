@@ -4,12 +4,12 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using CalculateVessels.Core.Interfaces;
+using CalculateVessels.Core.Models;
 using CalculateVessels.Core.Shells.DataIn;
 using CalculateVessels.Core.Shells.Enums;
 using CalculateVessels.Core.Shells.Nozzle;
 using CalculateVessels.Core.Shells.Nozzle.Enums;
 using CalculateVessels.Data.PhysicalData;
-using CalculateVessels.Models;
 
 namespace CalculateVessels
 {
@@ -1668,7 +1668,7 @@ namespace CalculateVessels
                 if (this.Owner.Owner is MainForm main)
                 {
                     main.Word_lv.Items.Add(calculatedElement.Element.ToString());
-                    main.ElementsCollection.Elements.Add(calculatedElement);
+                    main.ElementsCollection.Add(calculatedElement);
 
 
                     System.Windows.Forms.MessageBox.Show("Calculation complete");

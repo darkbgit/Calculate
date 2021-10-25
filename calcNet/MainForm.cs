@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using CalculateVessels.Data.PhysicalData;
-using CalculateVessels.Models;
+using CalculateVessels.Core.Models;
 
 namespace CalculateVessels
 {
@@ -26,7 +26,7 @@ namespace CalculateVessels
         public SaddleForm saddleForm = null;
         public HeatExchangerWithFixedTubePlatesForm heatExchangerWithFixedTubePlatesForm = null;
 
-        public ElementsCollection ElementsCollection { get; set; } = new();
+        public ElementsCollection<CalculatedElement> ElementsCollection { get; set; } = new();
 
         // TODO: KonForm 
 
@@ -110,7 +110,7 @@ namespace CalculateVessels
 
             if (path == null) return;
 
-            if (!ElementsCollection.Elements.Any())
+            if (!ElementsCollection.Any())
             {
                 MessageBox.Show("Данных для вывода нет");
             }
@@ -167,13 +167,13 @@ namespace CalculateVessels
         }
     
 
-        private static void MakeWord(ElementsCollection elements, string filePath)
+        private static void MakeWord(ElementsCollection<CalculatedElement> elements, string filePath)
         {
-            if (!elements.Elements.Any()) return;
+            if (!elements.Any()) return;
 
             List<string> bibliography = new();
 
-            foreach (var elementForCalculate in elements.Elements)
+            foreach (var elementForCalculate in elements)
             {
                 try
                 {
@@ -182,7 +182,7 @@ namespace CalculateVessels
                 }
                 catch (Exception e)
                 {
-                    MessageBox.Show($"Couldn't create word file for element {elementForCalculate.Element}" + e.ToString());
+                    MessageBox.Show($"Couldn't create word file for element {elementForCalculate}" + e.ToString());
                 }
             }
 
@@ -357,8 +357,8 @@ namespace CalculateVessels
 
             MoveSelectedItemListView(Word_lv, idx,  true);
 
-            (ElementsCollection.Elements[idx], ElementsCollection.Elements[idx - 1]) = 
-                (ElementsCollection.Elements[idx - 1], ElementsCollection.Elements[idx]);
+            (ElementsCollection[idx], ElementsCollection[idx - 1]) = 
+                (ElementsCollection[idx - 1], ElementsCollection[idx]);
         }
 
         private void Down_b_Click(object sender, EventArgs e)
@@ -367,8 +367,8 @@ namespace CalculateVessels
 
             MoveSelectedItemListView(Word_lv, idx, false);
 
-            (ElementsCollection.Elements[idx], ElementsCollection.Elements[idx + 1]) =
-                (ElementsCollection.Elements[idx + 1], ElementsCollection.Elements[idx]);
+            (ElementsCollection[idx], ElementsCollection[idx + 1]) =
+                (ElementsCollection[idx + 1], ElementsCollection[idx]);
 
         }
 
@@ -377,7 +377,7 @@ namespace CalculateVessels
             int idx = Word_lv.SelectedItems[0].Index;
 
             Word_lv.Items.RemoveAt(idx);
-            ElementsCollection.Elements.RemoveAt(idx);
+            ElementsCollection.RemoveAt(idx);
             //Word_lv.SelectedItems.Clear();
         }
 

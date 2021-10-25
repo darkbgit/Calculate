@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CalculateVessels.Models
+namespace CalculateVessels.Core.Models
 {
     public class CalculatedElement
     {
