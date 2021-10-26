@@ -1014,7 +1014,7 @@ namespace CalculateVessels
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "FlatBottomForm";
             this.Text = "Pldn";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.PldnForm_FormClosing);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FlatBottomForm_FormClosing);
             this.Load += new System.EventHandler(this.FlatBottomForm_Load);
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();

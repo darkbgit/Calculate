@@ -78,8 +78,8 @@ namespace CalculateVessels.Core.Models
 
         public T this[int index]
         {
-            get { return _elements[index]; }
-            set { _elements[index] = value; }
+            get => _elements[index];
+            set => _elements[index] = value;
         }
     }
 }

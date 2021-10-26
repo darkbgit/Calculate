@@ -45,7 +45,7 @@ namespace CalculateVessels
             Type_Draw(rb1);
         }
 
-        private void PldnForm_FormClosing(object sender, FormClosingEventArgs e)
+        private void FlatBottomForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (sender is FlatBottomForm)
             {
@@ -1467,30 +1467,14 @@ namespace CalculateVessels
             {
                 IElement bottom = new FlatBottom(_flatBottomDataIn);
 
-                //ICalculateProvider = new FlatBottomCalculeteProvider();
+                CalculatedElement calculatedElement = new CalculateElement(bottom, this).Calculate(true);
 
-                CalculatedElement calculatedElement = new(bottom);
-
-
-
-                calculatedElement.Element.Calculate();
-
-                if (!calculatedElement.Element.IsCriticalError)
+                if (calculatedElement != null)
                 {
-                    scalc_l.Text = $"s1={((FlatBottom)calculatedElement.Element).S1Calculated:f3} мм";
-                    p_d_l.Text =
-                        $"[p]={((FlatBottom)calculatedElement.Element).PressurePermissible:f2} МПа";
-
                     calc_btn.Enabled = true;
-
-                    if (calculatedElement.Element.IsError)
-                    {
-                        MessageBox.Show(string.Join<string>(Environment.NewLine, calculatedElement.Element.ErrorList));
-                    }
-                }
-                else
-                {
-                    MessageBox.Show(string.Join<string>(Environment.NewLine, calculatedElement.Element.ErrorList));
+                    scalc_l.Text = $"sp={((FlatBottom)calculatedElement.Element).S1Calculated:f3} мм";
+                    p_d_l.Text =
+                        $"pd={((FlatBottom)calculatedElement.Element).PressurePermissible:f2} МПа";
                 }
             }
             else
@@ -1533,38 +1517,14 @@ namespace CalculateVessels
 
                 IElement bottom = new FlatBottom(_flatBottomDataIn);
 
-                CalculatedElement calculatedElement = new(bottom);
+                CalculatedElement calculatedElement = new CalculateElement(bottom, this).Calculate(false);
 
-                calculatedElement.Element.Calculate();
-
-                if (!calculatedElement.Element.IsCriticalError)
+                if (calculatedElement != null)
                 {
+                    calc_btn.Enabled = true;
+                    scalc_l.Text = $"sp={((FlatBottom)calculatedElement.Element).S1Calculated:f3} мм";
                     p_d_l.Text =
                         $"pd={((FlatBottom)calculatedElement.Element).PressurePermissible:f2} МПа";
-
-                    if (this.Owner is MainForm main)
-                    {
-                        main.Word_lv.Items.Add(calculatedElement.Element.ToString());
-                        main.ElementsCollection.Add(calculatedElement);
-
-                        this.Hide();
-                    }
-                    else
-                    {
-                        MessageBox.Show("MainForm Error");
-                    }
-
-                    if (calculatedElement.Element.IsError)
-                    {
-                        MessageBox.Show(string.Join<string>(Environment.NewLine, calculatedElement.Element.ErrorList));
-                    }
-
-                    MessageBox.Show("Calculation complete");
-
-                }
-                else
-                {
-                    MessageBox.Show(string.Join<string>(Environment.NewLine, calculatedElement.Element.ErrorList));
                 }
             }
             else

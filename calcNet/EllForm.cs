@@ -52,7 +52,7 @@ namespace CalculateVessels
 
         }
 
-        private void PredCalc_b_Click(object sender, EventArgs e)
+        private void PreCalc_b_Click(object sender, EventArgs e)
         {
             const string WRONG_INPUT = " неверный ввод";
             List<string> dataInErr = new();
@@ -245,17 +245,17 @@ namespace CalculateVessels
 
                 if (isNotError)
                 {
-                    EllipticalShell ell = new(_ellipticalShellDataIn);
-                    ell.Calculate();
-                    if (!ell.IsCriticalError)
+                    IElement ellipse = new EllipticalShell(_ellipticalShellDataIn);
+
+                    CalculatedElement calculatedElement = new CalculateElement(ellipse, this).Calculate(true);
+
+                    if (calculatedElement != null)
                     {
-                        c_tb.Text = $"{ell.c:f2}";
-                        scalc_l.Text = $"sp={ell.s:f3} мм";
                         calc_b.Enabled = true;
-                    }
-                    else
-                    {
-                        MessageBox.Show(string.Join<string>(Environment.NewLine, ell.ErrorList));
+                        scalc_l.Text = $"sp={((CylindricalShell)calculatedElement.Element).s:f3} мм";
+                        p_d_l.Text =
+                            $"pd={((CylindricalShell)calculatedElement.Element).p_d:f2} МПа";
+
                     }
                 }
                 else
@@ -309,40 +309,21 @@ namespace CalculateVessels
 
             if (isNotError)
             {
-                IElement ellipticalShell = new EllipticalShell(_ellipticalShellDataIn);
-                CalculatedElement calculatedElement = new(ellipticalShell);
 
-                calculatedElement.Element.Calculate();
+                IElement ellipse = new EllipticalShell(_ellipticalShellDataIn);
 
-                if (!calculatedElement.Element.IsCriticalError)
+                CalculatedElement calculatedElement = new CalculateElement(ellipse, this).Calculate(false);
+
+                if (calculatedElement != null)
                 {
                     scalc_l.Text = $"sp={((EllipticalShell)calculatedElement.Element).s:f3} мм";
-                    p_d_l.Text = $"pd={((EllipticalShell)calculatedElement.Element).p_d:f3} МПа";
-
-                    if (this.Owner is MainForm main)
-                    {
-                        main.Word_lv.Items.Add(calculatedElement.Element.ToString());
-                        main.ElementsCollection.Add(calculatedElement);
-                    }
-                    else
-                    {
-                        MessageBox.Show("MainForm Error");
-                    }
-
-                    if (calculatedElement.Element.IsError)
-                    {
-                        MessageBox.Show(string.Join<string>(Environment.NewLine, calculatedElement.Element.ErrorList));
-                    }
-
-                    MessageBox.Show("Calculation complete");
+                    p_d_l.Text =
+                        $"pd={((EllipticalShell)calculatedElement.Element).p_d:f2} МПа";
 
                     MessageBoxCheckBox mbcb = new(calculatedElement.Element, _ellipticalShellDataIn) { Owner = this };
                     mbcb.ShowDialog();
                 }
-                else
-                {
-                    MessageBox.Show(string.Join<string>(Environment.NewLine, calculatedElement.Element.ErrorList));
-                }
+
             }
             else
             {

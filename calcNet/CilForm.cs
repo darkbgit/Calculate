@@ -237,21 +237,17 @@ namespace CalculateVessels
 
             if (isNotError)
             {
-                var cyl = new CylindricalShell(_cylindricalShellDataIn);
-                cyl.Calculate();
-                if (!cyl.IsCriticalError)
+                IElement cylinder = new CylindricalShell(_cylindricalShellDataIn);
+
+                CalculatedElement calculatedElement = new CalculateElement(cylinder, this).Calculate(true);
+
+                if (calculatedElement != null)
                 {
-                    c_tb.Text = $"{cyl.c:f2}";
-                    scalc_l.Text = $"sp={cyl.s:f3} мм";
                     calc_b.Enabled = true;
-                    if (cyl.IsError)
-                    {
-                        MessageBox.Show(string.Join<string>(Environment.NewLine, cyl.ErrorList));
-                    }
-                }
-                else
-                {
-                    MessageBox.Show(string.Join<string>(Environment.NewLine, cyl.ErrorList));
+                    scalc_l.Text = $"sp={((CylindricalShell)calculatedElement.Element).s:f3} мм";
+                    p_d_l.Text =
+                        $"pd={((CylindricalShell)calculatedElement.Element).p_d:f2} МПа";
+
                 }
             }
             else
@@ -375,42 +371,16 @@ namespace CalculateVessels
             {
                 IElement cylinder = new CylindricalShell(_cylindricalShellDataIn);
 
-                CalculatedElement calculatedElement = new(cylinder);
+                CalculatedElement calculatedElement = new CalculateElement(cylinder, this).Calculate(false);
 
-                calculatedElement.Element.Calculate();
-
-                if (!calculatedElement.Element.IsCriticalError)
+                if (calculatedElement != null)
                 {
                     scalc_l.Text = $"sp={((CylindricalShell)calculatedElement.Element).s:f3} мм";
                     p_d_l.Text =
                         $"pd={((CylindricalShell)calculatedElement.Element).p_d:f2} МПа";
 
-                    if (this.Owner is MainForm main)
-                    {
-                        main.Word_lv.Items.Add(calculatedElement.Element.ToString());
-                        main.ElementsCollection.Add(calculatedElement);
-
-                        this.Hide();
-                    }
-                    else
-                    {
-                        MessageBox.Show("MainForm Error");
-                    }
-
-                    if (calculatedElement.Element.IsError)
-                    {
-                        MessageBox.Show(string.Join<string>(Environment.NewLine, calculatedElement.Element.ErrorList));
-                    }
-
-                    MessageBox.Show("Calculation complete");
-
                     MessageBoxCheckBox mbcb = new(calculatedElement.Element, _cylindricalShellDataIn) { Owner = this };
                     mbcb.ShowDialog();
-
-                }
-                else
-                {
-                    MessageBox.Show(string.Join<string>(Environment.NewLine, calculatedElement.Element.ErrorList));
                 }
             }
             else

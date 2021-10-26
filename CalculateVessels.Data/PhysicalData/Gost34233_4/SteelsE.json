@@ -64,7 +64,113 @@
 				"EValue": 179000
 			}
 		]
-	}
+	},
+	{
+		"Name": [ "12Х18Н10Т", "08Х18Н10Т", "08Х16Н13М2Б", "31Х19Н9МВБТ", "ХН35ВТ" ],
+		"Values": [
+			{
+				"Temperature": 20,
+				"EValue": 205000
+			},
+			{
+				"Temperature": 100,
+				"EValue": 202000
+			},
+			{
+				"Temperature": 200,
+				"EValue": 197000
+			},
+			{
+				"Temperature": 300,
+				"EValue": 190000
+			},
+			{
+				"Temperature": 400,
+				"EValue": 181000
+			},
+			{
+				"Temperature": 450,
+				"EValue": 180000
+			},
+			{
+				"Temperature": 500,
+				"EValue": 173000
+			},
+			{
+				"Temperature": 550,
+				"EValue": 170000
+			},
+			{
+				"Temperature": 600,
+				"EValue": 165000
+			},
+			{
+				"Temperature": 650,
+				"EValue": 160000
+			}
+		]
+	},
+	{
+		"Name": [ "14Х17Н2" ],
+		"Values": [
+			{
+				"Temperature": 20,
+				"EValue": 200000
+			},
+			{
+				"Temperature": 100,
+				"EValue": 200000
+			},
+			{
+				"Temperature": 150,
+				"EValue": 199000
+			},
+			{
+				"Temperature": 200,
+				"EValue": 197000
+			},
+			{
+				"Temperature": 250,
+				"EValue": 194000
+			},
+			{
+				"Temperature": 300,
+				"EValue": 190000
+			},
+			{
+				"Temperature": 350,
+				"EValue": 185000
+			},
+			{
+				"Temperature": 400,
+				"EValue": 180000
+			},
+			{
+				"Temperature": 450,
+				"EValue": 174000
+			},
+			{
+				"Temperature": 500,
+				"EValue": 167000
+			},
+			{
+				"Temperature": 550,
+				"EValue": 160000
+			},
+			{
+				"Temperature": 600,
+				"EValue": 152000
+			},
+			{
+				"Temperature": 650,
+				"EValue": 143000
+			},
+			{
+        "Temperature": 700,
+        "EValue": 132000
+      }
+		]
+  }
 
 ]
 

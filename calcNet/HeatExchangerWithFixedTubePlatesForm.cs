@@ -15,6 +15,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using CalculateVessels.Core.Interfaces;
+using CalculateVessels.Core.Models;
 
 namespace CalculateVessels
 {
@@ -758,31 +759,15 @@ namespace CalculateVessels
 
             if (isNotError)
             {
-                HeatExchanger heatExchanger = new(_heatExchangerDataIn);
-                heatExchanger.Calculate();
-                if (!heatExchanger.IsCriticalError)
-                {
-                    if (this.Owner is MainForm main)
-                    {
-                        main.Word_lv.Items.Add(heatExchanger.ToString());
-                        Elements.ElementsList.Add(heatExchanger);
-                    }
-                    else
-                    {
-                        System.Windows.Forms.MessageBox.Show("MainForm Error");
-                    }
+                IElement heatExchanger = new HeatExchanger(_heatExchangerDataIn);
 
-                    if (heatExchanger.IsError)
-                    {
-                        MessageBox.Show(string.Join<string>(Environment.NewLine, heatExchanger.ErrorList));
-                    }
+                CalculatedElement calculatedElement = new CalculateElement(heatExchanger, this).Calculate(false);
 
-                    MessageBox.Show("Calculation complete");
-                }
-                else
+                if (calculatedElement != null)
                 {
-                    MessageBox.Show(string.Join<string>(Environment.NewLine, heatExchanger.ErrorList));
+                    //
                 }
+
             }
             else
             {

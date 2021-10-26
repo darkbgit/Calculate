@@ -4,6 +4,8 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using CalculateVessels.Core.Interfaces;
+using CalculateVessels.Core.Models;
+using CalculateVessels.Core.Shells;
 using CalculateVessels.Core.Supports.Enums;
 using CalculateVessels.Core.Supports.Saddle;
 using CalculateVessels.Data.PhysicalData;
@@ -364,19 +366,13 @@ namespace CalculateVessels
 
             if (isNotError)
             {
-                var saddle = new Saddle(saddleDataIn);
-                saddle.Calculate();
-                if (!saddle.IsCriticalError)
+                IElement saddle = new Saddle(saddleDataIn);
+
+                CalculatedElement calculatedElement = new CalculateElement(saddle, this).Calculate(true);
+
+                if (calculatedElement != null)
                 {
                     calc_btn.Enabled = true;
-                    if (saddle.ErrorList.Any())
-                    {
-                        MessageBox.Show(string.Join<string>(Environment.NewLine, saddle.ErrorList));
-                    }
-                }
-                else
-                {
-                    MessageBox.Show(string.Join<string>(Environment.NewLine, saddle.ErrorList));
                 }
             }
             else
@@ -399,32 +395,10 @@ namespace CalculateVessels
 
             if (DataIn.IsDataGood)
             {
-                Saddle saddle = new(saddleDataIn);
-                saddle.Calculate();
-                if (!saddle.IsCriticalError)
-                {
-                    if (this.Owner is MainForm main)
-                    {
-                        main.Word_lv.Items.Add(saddle.ToString());
-                        Elements.ElementsList.Add(saddle);
-                    }
-                    else
-                    {
-                        System.Windows.Forms.MessageBox.Show("MainForm Error");
-                    }
+                IElement saddle = new Saddle(saddleDataIn);
 
-                    if (saddle.IsError)
-                    {
-                        MessageBox.Show(string.Join<string>(Environment.NewLine, saddle.ErrorList));
-                    }
+                CalculatedElement calculatedElement = new CalculateElement(saddle, this).Calculate(false);
 
-                    Hide();
-                    MessageBox.Show(Resources.CalcComplete);
-                }
-                else
-                {
-                    MessageBox.Show(string.Join<string>(Environment.NewLine, saddle.ErrorList));
-                }
             }
             else
             {

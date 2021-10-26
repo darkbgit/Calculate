@@ -57,6 +57,8 @@ namespace CalculateVessels.Core.Bottoms.FlatBottom
         private bool _isConditionUseFormulas;
         private bool _isConditionFixed = true;
 
+        public override string ToString() => $"Плоское донышко {_fbdi.Name}";
+
         public void Calculate()
         {
             //[]p

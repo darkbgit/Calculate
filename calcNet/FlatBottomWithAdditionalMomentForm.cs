@@ -733,24 +733,13 @@ namespace CalculateVessels
             {
                 IElement bottom = new FlatBottomWithAdditionalMoment(_dataIn);
 
-                CalculatedElement calculatedElement = new(bottom);
+                CalculatedElement calculatedElement = new CalculateElement(bottom, this).Calculate(true);
 
-                calculatedElement.Element.Calculate();
-
-
-                if (!calculatedElement.Element.IsCriticalError)
+                if (calculatedElement != null)
                 {
-                    //c_tb.Text = $"{bottom.c:f2}";
-                    p_d_l.Text = $"p={((FlatBottomWithAdditionalMoment)calculatedElement.Element).PressurePermissible:f3} МПа";
                     calc_b.Enabled = true;
-                    if (calculatedElement.Element.IsError)
-                    {
-                        MessageBox.Show(string.Join<string>(Environment.NewLine, calculatedElement.Element.ErrorList));
-                    }
-                }
-                else
-                {
-                    MessageBox.Show(string.Join<string>(Environment.NewLine, calculatedElement.Element.ErrorList));
+                    p_d_l.Text =
+                        $"pd={((FlatBottomWithAdditionalMoment)calculatedElement.Element).PressurePermissible:f2} МПа";
                 }
             }
             else
@@ -777,37 +766,12 @@ namespace CalculateVessels
             {
                 IElement bottom = new FlatBottomWithAdditionalMoment(_dataIn);
 
-                CalculatedElement calculatedElement = new(bottom);
+                CalculatedElement calculatedElement = new CalculateElement(bottom, this).Calculate(false);
 
-                calculatedElement.Element.Calculate();
-
-
-                if (!calculatedElement.Element.IsCriticalError)
+                if (calculatedElement != null)
                 {
-                    p_d_l.Text = $"pd={((FlatBottomWithAdditionalMoment)calculatedElement.Element).PressurePermissible:f2} МПа";
-
-                    if (this.Owner is MainForm main)
-                    {
-                        main.Word_lv.Items.Add(calculatedElement.Element.ToString());
-                        main.ElementsCollection.Add(calculatedElement);
-                        this.Hide();
-                    }
-                    else
-                    {
-                        System.Windows.Forms.MessageBox.Show("MainForm Error");
-                    }
-
-                    if (calculatedElement.Element.IsError)
-                    {
-                        MessageBox.Show(string.Join<string>(Environment.NewLine, calculatedElement.Element.ErrorList));
-                    }
-
-                    MessageBox.Show("Calculation complete");
-
-                }
-                else
-                {
-                    MessageBox.Show(string.Join<string>(Environment.NewLine, calculatedElement.Element.ErrorList));
+                    p_d_l.Text =
+                        $"pd={((FlatBottomWithAdditionalMoment)calculatedElement.Element).PressurePermissible:f2} МПа";
                 }
             }
             else

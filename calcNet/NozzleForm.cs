@@ -1617,31 +1617,15 @@ namespace CalculateVessels
 
                 IElement nozzle = new Nozzle(element, nozzleData);
 
-                CalculatedElement calculatedElement = new(nozzle);
+                CalculatedElement calculatedElement = new CalculateElement(nozzle, this).Calculate(true);
 
-                calculatedElement.Element.Calculate();
-
-
-                if (!calculatedElement.Element.IsCriticalError)
+                if (calculatedElement != null)
                 {
-
-                    d0_l.Text = $"d0={((Nozzle)calculatedElement.Element).d0:f2} мм";
-                    p_d_l.Text = $"[p]={((Nozzle)calculatedElement.Element).p_d:f2} МПа";
-                    b_l.Text = $"b={((Nozzle)calculatedElement.Element).b:f2} мм";
                     calc_b.Enabled = true;
-                    if (calculatedElement.Element.IsError)
-                    {
-                        System.Windows.Forms.MessageBox.Show(string.Join<string>(Environment.NewLine, calculatedElement.Element.ErrorList));
-                    }
+                    d0_l.Text = $"d0={((Nozzle) calculatedElement.Element).d0:f2} мм";
+                    p_d_l.Text = $"[p]={((Nozzle) calculatedElement.Element).p_d:f2} МПа";
+                    b_l.Text = $"b={((Nozzle) calculatedElement.Element).b:f2} мм";
                 }
-                else
-                {
-                    System.Windows.Forms.MessageBox.Show(string.Join<string>(Environment.NewLine, calculatedElement.Element.ErrorList));
-                }
-            }
-            else
-            {
-                MessageBox.Show(string.Join<string>(Environment.NewLine, dataInErr.Union(nozzleData.ErrorList)));
             }
         }
 
@@ -1649,43 +1633,17 @@ namespace CalculateVessels
         {
 
             nozzleData.Name = name_tb.Text;
-            
        
-
             IElement nozzle = new Nozzle(element, nozzleData);
 
-            CalculatedElement calculatedElement = new(nozzle);
+            CalculatedElement calculatedElement = new CalculateElement(nozzle, this).Calculate(false);
 
-            calculatedElement.Element.Calculate();
-
-
-            if (!calculatedElement.Element.IsCriticalError)
+            if (calculatedElement != null)
             {
-
+                calc_b.Enabled = true;
                 d0_l.Text = $"d0={((Nozzle)calculatedElement.Element).d0:f2} мм";
                 p_d_l.Text = $"[p]={((Nozzle)calculatedElement.Element).p_d:f2} МПа";
                 b_l.Text = $"b={((Nozzle)calculatedElement.Element).b:f2} мм";
-                if (this.Owner.Owner is MainForm main)
-                {
-                    main.Word_lv.Items.Add(calculatedElement.Element.ToString());
-                    main.ElementsCollection.Add(calculatedElement);
-
-
-                    System.Windows.Forms.MessageBox.Show("Calculation complete");
-                    this.Hide();
-                }
-                else
-                {
-                    System.Windows.Forms.MessageBox.Show("MainForm Error");
-                }
-                if (calculatedElement.Element.IsError)
-                {
-                    System.Windows.Forms.MessageBox.Show(string.Join<string>(Environment.NewLine, calculatedElement.Element.ErrorList));
-                }
-            }
-            else
-            {
-                System.Windows.Forms.MessageBox.Show(string.Join<string>(Environment.NewLine, calculatedElement.Element.ErrorList));
             }
         }
     }
