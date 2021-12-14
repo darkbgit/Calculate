@@ -111,15 +111,15 @@ namespace CalculateVessels
                 {
                     //E
                     {
-                        if (double.TryParse(E_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
-                            System.Globalization.CultureInfo.InvariantCulture, out double E))
-                        {
-                            _ellipticalShellDataIn.E = E;
-                        }
-                        else
-                        {
-                            dataInErr.Add(nameof(E) + WRONG_INPUT);
-                        }
+                        //if (double.TryParse(E_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
+                        //    System.Globalization.CultureInfo.InvariantCulture, out double E))
+                        //{
+                        //    _ellipticalShellDataIn.E = E;
+                        //}
+                        //else
+                        //{
+                        //    dataInErr.Add(nameof(E) + WRONG_INPUT);
+                        //}
                     }
                 }
 
@@ -252,9 +252,9 @@ namespace CalculateVessels
                     if (calculatedElement != null)
                     {
                         calc_b.Enabled = true;
-                        scalc_l.Text = $"sp={((CylindricalShell)calculatedElement.Element).s:f3} мм";
+                        scalc_l.Text = $"sp={((EllipticalShell)calculatedElement.Element).s:f3} мм";
                         p_d_l.Text =
-                            $"pd={((CylindricalShell)calculatedElement.Element).p_d:f2} МПа";
+                            $"pd={((EllipticalShell)calculatedElement.Element).p_d:f2} МПа";
 
                     }
                 }

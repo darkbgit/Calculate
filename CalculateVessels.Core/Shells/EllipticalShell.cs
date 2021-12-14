@@ -7,6 +7,7 @@ using DocumentFormat.OpenXml.Packaging;
 using CalculateVessels.Core.Word;
 using CalculateVessels.Core.Word.Enums;
 using System.IO;
+using CalculateVessels.Data.PhysicalData;
 
 namespace CalculateVessels.Core.Shells
 {
@@ -28,8 +29,40 @@ namespace CalculateVessels.Core.Shells
         public double EllR => _ellR;
         //public bool IsCriticalError { get => isCriticalError; }
 
+        private double _E;
+
         public void Calculate()
         {
+
+            //E
+            if (_esdi.E > 0)
+            {
+                _E = _esdi.E;
+
+            }
+            else
+            {
+                if (!Physical.TryGetE(_esdi.Steel, _esdi.t, ref _E, ref _errorList))
+                {
+                    IsCriticalError = true;
+                    return;
+                }
+            }
+
+            //[]p
+            if (_esdi.sigma_d > 0)
+            {
+                _sigmaAllow = _esdi.sigma_d;
+            }
+            else
+            {
+                if (!Physical.Gost34233_1.TryGetSigma(_esdi.Steel, _esdi.t, ref _sigmaAllow, ref _errorList))
+                {
+                    IsCriticalError = true;
+                    return;
+                }
+            }
+
             //Data_out d_out = new Data_out { err = "" };
             _c = _esdi.c1 + _esdi.c2 + _esdi.c3;
 
@@ -91,7 +124,7 @@ namespace CalculateVessels.Core.Shells
                             _ => _ellKePrev
                         };
 
-                        _s_p_1 = _ellKePrev * _ellR / 161 * Math.Sqrt(_esdi.ny * _esdi.p / (0.00001 * _esdi.E));
+                        _s_p_1 = _ellKePrev * _ellR / 161 * Math.Sqrt(_esdi.ny * _esdi.p / (0.00001 * _E));
                         _s_p_2 = 1.2 * _esdi.p * _ellR / (2.0 * _esdi.sigma_d);
 
                         _s_p = Math.Max(_s_p_1, _s_p_2);
@@ -102,7 +135,7 @@ namespace CalculateVessels.Core.Shells
                             _ellx = 10.0 * (_s_p / _esdi.D) *
                                     (_esdi.D / (2.0 * _esdi.ellH) - 2.0 * _esdi.ellH / _esdi.D);
                             _ellKe = (1.0 + (2.4 + 8.0 * _ellx) * _ellx) / (1.0 + (3.0 + 10.0 * _ellx) * _ellx);
-                            _p_de = 2.6 * 0.00001 * _esdi.E / _esdi.ny *
+                            _p_de = 2.6 * 0.00001 * _E / _esdi.ny *
                                     Math.Pow(100.0 * _s_p / (_ellKe * _ellR), 2);
                             _p_d = _p_dp / Math.Sqrt(1.0 + Math.Pow(_p_dp / _p_de, 2));
 
@@ -113,7 +146,7 @@ namespace CalculateVessels.Core.Shells
                             _ellx = 10.0 * ((_esdi.s - _c) / _esdi.D) *
                                     (_esdi.D / (2.0 * _esdi.ellH) - 2.0 * _esdi.ellH / _esdi.D);
                             _ellKe = (1.0 + (2.4 + 8.0 * _ellx) * _ellx) / (1.0 + (3.0 + 10.0 * _ellx) * _ellx);
-                            _p_de = 2.6 * 0.00001 * _esdi.E / _esdi.ny *
+                            _p_de = 2.6 * 0.00001 * _E / _esdi.ny *
                                     Math.Pow(100 * (_esdi.s - _c) / (_ellKe * _ellR), 2);
                             _p_d = _p_dp / Math.Sqrt(1.0 + Math.Pow(_p_dp / _p_de, 2));
                         }
@@ -257,7 +290,7 @@ namespace CalculateVessels.Core.Shells
                 {
                     table.AddRow()
                         .AddCell("Модуль продольной упругости при расчетной температуре, E:")
-                        .AddCell($"{_esdi.E} МПа");
+                        .AddCell($"{_E} МПа");
                 }
 
                 body.InsertTable(table);
@@ -312,7 +345,7 @@ namespace CalculateVessels.Core.Shells
                         ? " для эллиптических днищ"
                         : " для полусферических днищ");
                 body.AddParagraph("")
-                    .AppendEquation($"({_ellKePrev}∙{_ellR:f2})/(161)∙√(({_esdi.ny}∙{_esdi.p})/(10^-5∙{_esdi.E}))=" +
+                    .AppendEquation($"({_ellKePrev}∙{_ellR:f2})/(161)∙√(({_esdi.ny}∙{_esdi.p})/(10^-5∙{_E}))=" +
                                                     $"{_s_p_1:f2}");
                 body.AddParagraph("").AppendEquation($"(1.2∙{_esdi.p}∙{_ellR:f2})/(2∙{_esdi.sigma_d})={_s_p_2:f2}");
                 body.AddParagraph("").AppendEquation($"s_1p=max({_s_p_1:f2};{_s_p_2:f2})={_s_p:f2} мм");
@@ -363,7 +396,7 @@ namespace CalculateVessels.Core.Shells
                 body.AddParagraph("")
                     .AppendEquation($"К_Э=(1+(2.4+8∙{_ellx})∙{_ellx})/(1+(3+10∙{_ellx})∙{_ellx}={_ellKe:f2}");
                 body.AddParagraph("")
-                    .AppendEquation($"[p]_E=(2.6∙10^-5∙{_esdi.E})/{_esdi.ny}∙" +
+                    .AppendEquation($"[p]_E=(2.6∙10^-5∙{_E})/{_esdi.ny}∙" +
                                     $"[(100∙({_esdi.s}-{_c:f2}))/({_ellKe:f2}∙{_ellR:f2})]^2={_p_de:f2} МПа");
                 body.AddParagraph("")
                     .AppendEquation($"[p]={_p_dp:f2}/√(1+({_p_dp:f2}/{_p_de:f2})^2)={_p_d:f2} МПа");

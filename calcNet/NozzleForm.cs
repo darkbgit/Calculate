@@ -1636,7 +1636,7 @@ namespace CalculateVessels
        
             IElement nozzle = new Nozzle(element, nozzleData);
 
-            CalculatedElement calculatedElement = new CalculateElement(nozzle, this).Calculate(false);
+            CalculatedElement calculatedElement = new CalculateElement(nozzle, Owner).Calculate(false);
 
             if (calculatedElement != null)
             {

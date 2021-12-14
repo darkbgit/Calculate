@@ -569,6 +569,8 @@ namespace CalculateVessels.Core.HeatExchanger
 
             _F = Math.PI * _hedi.D * _QK;
 
+            _hedi.FirstTubePlate.s1p = _hedi.FirstTubePlate.sp; //UNDONE: сделана просто заглушка s1p зависит от типа трубной решетки
+
             _sigmap1 = 6 * Math.Abs(_MP) / Math.Pow(_hedi.FirstTubePlate.s1p - _hedi.FirstTubePlate.c, 2);
             _taup1 = Math.Abs(_QP) / (_hedi.FirstTubePlate.s1p - _hedi.FirstTubePlate.c);
 
@@ -1211,7 +1213,7 @@ namespace CalculateVessels.Core.HeatExchanger
 
                 table.AddRow()
                         .AddCell("Половина длины трубы теплообменного аппарата, l:")
-                        .AddCell($"{_hedi.i} мм");
+                        .AddCell($"{_hedi.l} мм");
 
                 table.AddRow()
                         .AddCell("Тип крепления трубы в трубной решетке")

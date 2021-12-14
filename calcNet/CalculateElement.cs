@@ -41,7 +41,7 @@ namespace CalculateVessels
                         main.Word_lv.Items.Add(calculatedElement.Element.ToString());
                         main.ElementsCollection.Add(calculatedElement);
 
-                        _form.Hide();
+                        //_form.Hide();
                     }
                     else
                     {
