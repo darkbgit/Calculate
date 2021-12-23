@@ -1098,7 +1098,7 @@ namespace CalculateVessels.Core.Shells.Nozzle
             {
                 body.AddParagraph("Условие прочности выполняется").Bold();
                 body.Elements<Paragraph>().Last()
-                    .AddRun(", следовательно дальнейших расчетов укрепления отверстия не требуется");
+                    .AddRun(", следовательно, дальнейших расчетов укрепления отверстия не требуется");
             }
             else
             {
@@ -1211,7 +1211,7 @@ namespace CalculateVessels.Core.Shells.Nozzle
                 body.AddParagraph("")
                     .AppendEquation("[p]_E")
                     .AddRun(" - допускаемое наружное давление из условия устойчивости в пределах упругости, определяемое по ГОСТ 34233.2 для соответствующих обечайки и днища без отверстий");
-                body.AddParagraph("").AppendEquation($"[p]_E={_p_de:f2} МПа)");
+                body.AddParagraph("").AppendEquation($"[p]_E={_p_de:f2} МПа");
                 body.AddParagraph("")
                     .AppendEquation($"[p]={_p_dp:f2}/√(1+({_p_dp:f2}/{_p_de:f2})^2)={_p_d:f2} МПа");
             }
