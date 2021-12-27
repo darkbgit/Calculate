@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace CalculateVessels.Core.Interfaces
 {
-    internal interface ICalculateProvider
+    internal interface IWordProvider
     {
-        ICalculatedData Calculate(IInputData inputData);
+        void MakeWord(string filePath, ICalculatedData data);
     }
 }
