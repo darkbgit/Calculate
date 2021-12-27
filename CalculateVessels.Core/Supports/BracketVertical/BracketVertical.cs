@@ -1,6 +1,7 @@
 ﻿using CalculateVessels.Core.Interfaces;
 using System;
 using System.Collections.Generic;
+using CalculateVessels.Core.Exceptions;
 
 namespace CalculateVessels.Core.Supports.BracketVertical
 {
@@ -14,9 +15,6 @@ namespace CalculateVessels.Core.Supports.BracketVertical
 
         public BracketVertical(IInputData inputData)
         {
-            if (!inputData.IsDataGood)
-                throw new ArgumentException("");
-
             _inputData = inputData;
 
             _calculateProvider = new BracketVerticalCalculateProvider();
@@ -35,10 +33,14 @@ namespace CalculateVessels.Core.Supports.BracketVertical
 
         public bool IsCalculated { get; private set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <exception cref="CalculateException"></exception>
         public void Calculate()
         {
             if (!_inputData.IsDataGood)
-                throw new ArgumentException();
+                throw new CalculateException("Error. Wrong input data.");
 
             CalculatedData = _calculateProvider.Calculate(_inputData);
             IsCalculated = true;

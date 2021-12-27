@@ -57,6 +57,8 @@ namespace CalculateVessels.Core.Supports.BracketVertical
         public BracketVerticalType Type { get; set; }
         public double b4 { get; set; }
         public double b3 { get; set; }
+
+        public double SigmaAlloy { get; set; }
       
     }
 }
