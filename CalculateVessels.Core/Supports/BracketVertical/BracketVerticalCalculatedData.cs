@@ -36,7 +36,7 @@ namespace CalculateVessels.Core.Supports.BracketVertical
         public double K81 { get; internal set; }
         public double K82 { get; internal set; }
         public double K8 { get; internal set; }
-        public IEnumerable<string> ErrorList { get; internal set; }
+        public ICollection<string> ErrorList { get; internal set; }
         public bool IsConditionUseFormulas { get; internal set; }
         public double ConditionUseFormulas1 { get; internal set; }
         public double ConditionUseFormulas2 { get; internal set; }
