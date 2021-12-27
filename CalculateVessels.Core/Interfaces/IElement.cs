@@ -8,15 +8,15 @@ namespace CalculateVessels.Core.Interfaces
 
         void Calculate();
 
-        void MakeWord(string filename);
+        void MakeWord(string filePath);
 
-        string ToString();
+        bool IsCalculated { get; }
 
-        bool IsCriticalError { get; }
+        //bool IsCriticalError { get; }
 
-        bool IsError { get; }
+        //bool IsError { get; }
 
-        IEnumerable<string> ErrorList { get; }
+        //IEnumerable<string> ErrorList { get; }
 
         IEnumerable<string> Bibliography { get; }
 

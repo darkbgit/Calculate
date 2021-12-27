@@ -5,10 +5,8 @@ using System.Linq;
 
 namespace CalculateVessels.Core.Supports.BracketVertical
 {
-    public class BracketVerticalDataIn : IDataIn
+    public class BracketVerticalInputData : IInputData
     {
-
-
         public IEnumerable<string> ErrorList => _errorList;
 
         private List<string> _errorList = new();
@@ -31,7 +29,6 @@ namespace CalculateVessels.Core.Supports.BracketVertical
         public double p { get; set; }
         public double s { get; set; }
         public double s2 { get; set; }
-        public SaddleType Type { get; set; }
         public string Name { get; set; }
         public string NameShell { get; set; }
         public string Steel { get; set; }
@@ -57,5 +54,9 @@ namespace CalculateVessels.Core.Supports.BracketVertical
         public double h1 { get; set; }
 
         public double g { get; set; }
+        public BracketVerticalType Type { get; set; }
+        public double b4 { get; set; }
+        public double b3 { get; set; }
+      
     }
 }
