@@ -2,10 +2,10 @@
 
 namespace CalculateVessels.Data.PhysicalData.Common
 {
-    public class SteelForAlfa
+    public class SteelForAlpha
     {
         public List<string> Name { get; set; }
 
-        public List<Alfa> Values { get; set; }
+        public List<Alpha> Values { get; set; }
     }
 }
