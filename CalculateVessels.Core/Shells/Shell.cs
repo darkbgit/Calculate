@@ -39,7 +39,7 @@ namespace CalculateVessels.Core.Shells
 
         protected List<string> _errorList = new();
 
-        public IEnumerable<string> Bibliography { get; } = new List<string>() 
+        public IEnumerable<string> Bibliography { get; } = new List<string> 
         {
             Data.Properties.Resources.GOST_34233_1,
             Data.Properties.Resources.GOST_34233_2

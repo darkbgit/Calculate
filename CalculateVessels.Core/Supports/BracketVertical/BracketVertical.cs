@@ -13,6 +13,8 @@ namespace CalculateVessels.Core.Supports.BracketVertical
 
         private readonly IWordProvider _wordProvider;
 
+        
+
         public BracketVertical(IInputData inputData)
         {
             _inputData = inputData;

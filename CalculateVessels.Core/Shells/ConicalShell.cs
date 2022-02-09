@@ -122,16 +122,16 @@ namespace CalculateVessels.Core.Shells
                 if (_csdi.IsPressureIn)
                 {
 
-                    _s_p = _csdi.p * Dk / (2 * _csdi.sigma_d * _csdi.fi - _csdi.p)
+                    _s_p = _csdi.p * Dk / (2 * _csdi.SigmaAllow * _csdi.fi - _csdi.p)
                         * (1 / _cosAlfa1);
                     _s = _s_p + _c;
                     if (_csdi.s == 0)
                     {
-                        _p_d = 2 * _csdi.sigma_d * _csdi.fi * _s_p / (Dk / _cosAlfa1 + _s_p);
+                        _p_d = 2 * _csdi.SigmaAllow * _csdi.fi * _s_p / (Dk / _cosAlfa1 + _s_p);
                     }
                     else if (_csdi.s >= _s)
                     {
-                        _p_d = 2 * _csdi.sigma_d * _csdi.fi * (_csdi.s - _c)
+                        _p_d = 2 * _csdi.SigmaAllow * _csdi.fi * (_csdi.s - _c)
                             / (Dk / _cosAlfa1 + (_csdi.s - _c));
                     }
                     else
@@ -152,20 +152,20 @@ namespace CalculateVessels.Core.Shells
 
                     _s_p_1 = 1.06 * (0.01 * _DE / _B1)
                         * Math.Pow(_csdi.p / (0.00001 * _csdi.E) * (_lE / _DE), 0.4);
-                    _s_p_2 = 1.2 * _csdi.p * Dk / (2 * _csdi.fi * _csdi.sigma_d - _csdi.p)
+                    _s_p_2 = 1.2 * _csdi.p * Dk / (2 * _csdi.fi * _csdi.SigmaAllow - _csdi.p)
                         * (1 / _cosAlfa1);
                     _s_p = Math.Max(_s_p_1, _s_p_2);
                     _s = _s_p + _c;
                     if (_csdi.s == 0)
                     {
-                        _p_dp = 2 * _csdi.sigma_d * _s_p / (Dk / _cosAlfa1 + _s_p);
+                        _p_dp = 2 * _csdi.SigmaAllow * _s_p / (Dk / _cosAlfa1 + _s_p);
                         _p_de = 2.08 * 0.00001 * _csdi.E / (_csdi.ny * _B1) * (_DE / _lE)
                             * Math.Pow(100 * _s_p / _DE, 2.5);
                         _p_d = _p_dp / Math.Sqrt(1 + Math.Pow(_p_dp / _p_de, 2));
                     }
                     else if (_csdi.s >= _s)
                     {
-                        _p_dp = 2 * _csdi.sigma_d * (_csdi.s - _c)
+                        _p_dp = 2 * _csdi.SigmaAllow * (_csdi.s - _c)
                             / (Dk / _cosAlfa1 + _csdi.s - _c);
                         _p_de = 2.08 * 0.00001 * _csdi.E / (_csdi.ny * _B1) * (_DE / _lE)
                             * Math.Pow(100 * (_csdi.s - _c) / _DE, 2.5);
@@ -267,8 +267,8 @@ namespace CalculateVessels.Core.Shells
                                 (1 / Math.Sqrt(_cosAlfa1) + 1));
                             //TODO: Check alfa1 in beta_t in degree or in radians
                             _beta_3 = Math.Max(0.5, Math.Max(_beta, _beta_t));
-                            _s_tp = _csdi.p * _csdi.D * _beta_3 / (2 * _csdi.fi * _csdi.sigma_d - _csdi.p);
-                            _p_dBig = 2 * _csdi.sigma_d * _csdi.fi * (_csdi.sT - _c) /
+                            _s_tp = _csdi.p * _csdi.D * _beta_3 / (2 * _csdi.fi * _csdi.SigmaAllow - _csdi.p);
+                            _p_dBig = 2 * _csdi.SigmaAllow * _csdi.fi * (_csdi.sT - _c) /
                                 (_csdi.D * _beta_3 + (_csdi.sT - _c));
                             break;
                     }
@@ -309,15 +309,15 @@ namespace CalculateVessels.Core.Shells
 
             //if (_csdi.F > 0)
             //{
-            //    _s_calcrf = _csdi.F / (Math.PI * _csdi.D * _csdi.sigma_d * _csdi.fit);
+            //    _s_calcrf = _csdi.F / (Math.PI * _csdi.D * _csdi.SigmaAllow * _csdi.fit);
             //    _s_calcf = _s_calcrf + _c;
             //    if (_csdi.isFTensile)
             //    {
-            //        _F_d = Math.PI * (_csdi.D + _csdi.s - _c) * (_csdi.s - _c) * _csdi.sigma_d * _csdi.fit;
+            //        _F_d = Math.PI * (_csdi.D + _csdi.s - _c) * (_csdi.s - _c) * _csdi.SigmaAllow * _csdi.fit;
             //    }
             //    else
             //    {
-            //        _F_dp = Math.PI * (_csdi.D + _csdi.s - _c) * (_csdi.s - _c) * _csdi.sigma_d;
+            //        _F_dp = Math.PI * (_csdi.D + _csdi.s - _c) * (_csdi.s - _c) * _csdi.SigmaAllow;
             //        _F_de1 = 0.000031 * _csdi.E / _csdi.ny * Math.Pow(_csdi.D, 2) * Math.Pow(100 * (_csdi.s - _c) / _csdi.D, 2.5);
 
             //        const int L_MORE_THEN_D = 10;
@@ -415,14 +415,14 @@ namespace CalculateVessels.Core.Shells
 
             //if (_csdi.M > 0)
             //{
-            //    _M_dp = Math.PI / 4 * _csdi.D * (_csdi.D + _csdi.s - _c) * (_csdi.s - _c) * _csdi.sigma_d;
+            //    _M_dp = Math.PI / 4 * _csdi.D * (_csdi.D + _csdi.s - _c) * (_csdi.s - _c) * _csdi.SigmaAllow;
             //    _M_de = 0.000089 * _csdi.E / _csdi.ny * Math.Pow(_csdi.D, 3) * Math.Pow(100 * (_csdi.s - _c) / _csdi.D, 2.5);
             //    _M_d = _M_dp / Math.Sqrt(1 + Math.Pow(_M_dp / _M_de, 2));
             //}
 
             //if (_csdi.Q > 0)
             //{
-            //    _Q_dp = 0.25 * _csdi.sigma_d * Math.PI * _csdi.D * (_csdi.s - _c);
+            //    _Q_dp = 0.25 * _csdi.SigmaAllow * Math.PI * _csdi.D * (_csdi.s - _c);
             //    _Q_de = 2.4 * _csdi.E * Math.Pow(_csdi.s - _c, 2) / _csdi.ny *
             //        (0.18 + 3.3 * _csdi.D * (_csdi.s - _c) / Math.Pow(_csdi.l, 2));
             //    _Q_d = _Q_dp / Math.Sqrt(1 + Math.Pow(_Q_dp / _Q_de, 2));
@@ -536,7 +536,7 @@ namespace CalculateVessels.Core.Shells
 
                 table.AddRow()
                     .AddCell($"Допускаемое напряжение для материала {_csdi.Steel} при расчетной температуре, [σ]:")
-                    .AddCell($"{_csdi.sigma_d} МПа");
+                    .AddCell($"{_csdi.SigmaAllow} МПа");
 
                 if (!_csdi.IsPressureIn)
                 {
@@ -619,7 +619,7 @@ namespace CalculateVessels.Core.Shells
             {
                 body.AddParagraph("")
                     .AppendEquation("s_k.p=(p∙D_k)/(2∙φ_p∙[σ]-p)(1/cosα_1)" +
-                                    $"=({_csdi.p}∙{Dk:f2})/(2∙{_csdi.fi}∙{_csdi.sigma_d}-{_csdi.p})(1/cos{_csdi.alfa1})={_s_p:f2} мм");
+                                    $"=({_csdi.p}∙{Dk:f2})/(2∙{_csdi.fi}∙{_csdi.SigmaAllow}-{_csdi.p})(1/cos{_csdi.alfa1})={_s_p:f2} мм");
             }
             else
             {
@@ -652,7 +652,7 @@ namespace CalculateVessels.Core.Shells
                 body.AddParagraph("")
                     .AppendEquation($"1.06∙(10^-2∙{_DE:f2})/{_B1:f2}∙({_csdi.p}/(10^-5∙{_csdi.E})∙{_lE:f2}/{_DE:f2})^0.4={_s_p_1:f2}");
                 body.AddParagraph("")
-                    .AppendEquation($"(1.2∙{_csdi.p}∙{Dk:f2})/(2∙{_csdi.fi}∙{_csdi.sigma_d}-{_csdi.p})(1/cos{_csdi.alfa1})={_s_p_2:f2}");
+                    .AppendEquation($"(1.2∙{_csdi.p}∙{Dk:f2})/(2∙{_csdi.fi}∙{_csdi.SigmaAllow}-{_csdi.p})(1/cos{_csdi.alfa1})={_s_p_2:f2}");
                 body.AddParagraph("")
                     .AppendEquation($"s_p=max{{{_s_p_1:f2};{_s_p_2:f2}}}={_s_p:f2} мм");
             }
@@ -678,7 +678,7 @@ namespace CalculateVessels.Core.Shells
                 body.AddParagraph("Допускаемое внутреннее избыточное давление вычисляют по формуле:");
                 body.AddParagraph("")
                     .AppendEquation("[p]=(2∙[σ]∙φ_p∙(s_k-c))/(D_k/cosα_1+(s_k-c))"
-                                    + $"=(2∙{_csdi.sigma_d}∙{_csdi.fi}∙({_csdi.s}-{_c:f2}))/({Dk:f2}/cos{_csdi.alfa1}+({_csdi.s}-{_c:f2}))={_p_d:f2} МПа");
+                                    + $"=(2∙{_csdi.SigmaAllow}∙{_csdi.fi}∙({_csdi.s}-{_c:f2}))/({Dk:f2}/cos{_csdi.alfa1}+({_csdi.s}-{_c:f2}))={_p_d:f2} МПа");
             }
             else
             {
@@ -688,7 +688,7 @@ namespace CalculateVessels.Core.Shells
                 body.AddParagraph("допускаемое давление из условия прочности вычисляют по формуле:");
                 body.AddParagraph("")
                     .AppendEquation("[p]_П=(2∙[σ]∙φ_p∙(s_k-c))/(D_k/cosα_1+(s_k-c))" +
-                                    $"=(2∙{_csdi.sigma_d}∙{_csdi.fi}∙({_csdi.s}-{_c:f2}))/({Dk:f2}/cos{_csdi.alfa1}+({_csdi.s}-{_c:f2}))={_p_dp:f2} МПа");
+                                    $"=(2∙{_csdi.SigmaAllow}∙{_csdi.fi}∙({_csdi.s}-{_c:f2}))/({Dk:f2}/cos{_csdi.alfa1}+({_csdi.s}-{_c:f2}))={_p_dp:f2} МПа");
                 body.AddParagraph("допускаемое давление из условия устойчивости в пределах упругости вычисляют по формуле:");
                 body.AddParagraph("")
                     .AppendEquation("[p]_E=(2.08∙10^-5∙E)/(n_y∙B_1)∙D_E/l_E∙[(100∙(s_k-c))/D_E]^2.5" +
@@ -737,7 +737,7 @@ namespace CalculateVessels.Core.Shells
                         body.AddParagraph("")
                             .AppendEquation($"β_1=max{{0.5;{_beta:f2}}}={_beta_1:f2}");
                         body.AddParagraph("")
-                            .AppendEquation($"s_2p=({_csdi.p}∙{_csdi.D}∙{_beta_1:f2})/(2∙{_csdi.sigma_d}∙{_csdi.fi}-{_csdi.p})={_s_2p:f2} мм");
+                            .AppendEquation($"s_2p=({_csdi.p}∙{_csdi.D}∙{_beta_1:f2})/(2∙{_csdi.SigmaAllow}∙{_csdi.fi}-{_csdi.p})={_s_2p:f2} мм");
                         body.AddParagraph("Допускаемое " +
                             (_csdi.IsPressureIn ? "внутреннее избыточное" : "наружное") +
                             "давление из условия прочности переходной части вычисляют по формуле");

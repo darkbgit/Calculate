@@ -15,6 +15,7 @@ namespace CalculateVessels
         public MainForm()
         {
             InitializeComponent();
+            ElementsCollection = new ElementsCollection<IElement>();
         }
 
 
@@ -26,7 +27,7 @@ namespace CalculateVessels
         public SaddleForm saddleForm = null;
         public HeatExchangerWithFixedTubePlatesForm heatExchangerWithFixedTubePlatesForm = null;
 
-        public ElementsCollection<CalculatedElement> ElementsCollection { get; set; } = new();
+        public ElementsCollection<IElement> ElementsCollection { get; set; }
 
         // TODO: KonForm 
 

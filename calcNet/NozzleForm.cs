@@ -15,20 +15,18 @@ namespace CalculateVessels
 {
     public partial class NozzleForm : Form
     {
-        public NozzleForm(IElement element, ShellDataIn shellDataIn)
+        public NozzleForm(IElement shellElement)
         {
             InitializeComponent();
             this.shellDataIn = shellDataIn;
-            this.element = element;
+            _shellElement = shellElement;
             nozzleData = new NozzleDataIn(shellDataIn);
-            
         }
 
         public IDataIn DataIn => nozzleData;
         private NozzleDataIn nozzleData;
 
-        private readonly ShellDataIn shellDataIn;
-        private readonly IElement element;
+        private readonly IElement _shellElement;
 
         private const string PERPENDICULAR = "Перпендикулярно\n поверхности";
         private const string TRANSVERSELY = "В плоскости\nпопер. сечения";

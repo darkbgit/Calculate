@@ -1,12 +1,12 @@
-﻿using System;
-using CalculateVessels.Core.Interfaces;
+﻿using CalculateVessels.Core.Interfaces;
+using CalculateVessels.Core.Shells.DataIn;
 using CalculateVessels.Core.Shells.Enums;
 
-namespace CalculateVessels.Core.Shells.DataIn
+namespace CalculateVessels.Core.Shells.CylindricalShell
 {
-    public class CylindricalShellDataIn : ShellDataIn, IDataIn
+    public class CylindricalShellInputData : ShellDataIn, IInputData
     {
-        public CylindricalShellDataIn()
+        public CylindricalShellInputData()
             : base(ShellType.Cylindrical)
         {
 

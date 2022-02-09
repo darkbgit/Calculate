@@ -50,9 +50,9 @@ namespace CalculateVessels.Core.Shells
             }
 
             //[]p
-            if (_esdi.sigma_d > 0)
+            if (_esdi.SigmaAllow > 0)
             {
-                _sigmaAllow = _esdi.sigma_d;
+                _sigmaAllow = _esdi.SigmaAllow;
             }
             else
             {
@@ -97,16 +97,16 @@ namespace CalculateVessels.Core.Shells
                     _ellR = Math.Pow(_esdi.D, 2) / (4.0 * _esdi.ellH);
                     if (_esdi.IsPressureIn)
                     {
-                        _s_p = _esdi.p * _ellR / (2.0 * _esdi.sigma_d * _esdi.fi - 0.5 * _esdi.p);
+                        _s_p = _esdi.p * _ellR / (2.0 * _esdi.SigmaAllow * _esdi.fi - 0.5 * _esdi.p);
                         _s = _s_p + _c;
                         if (_esdi.s == 0.0)
                         {
-                            _p_d = 2.0 * _esdi.sigma_d * _esdi.fi * _s_p /
+                            _p_d = 2.0 * _esdi.SigmaAllow * _esdi.fi * _s_p /
                                    (_ellR + 0.5 * _s_p);
                         }
                         else if (_esdi.s >= _s)
                         {
-                            _p_d = 2.0 * _esdi.sigma_d * _esdi.fi * (_esdi.s - _c) /
+                            _p_d = 2.0 * _esdi.SigmaAllow * _esdi.fi * (_esdi.s - _c) /
                                    (_ellR + 0.5 * (_esdi.s - _c));
                         }
                         else
@@ -125,13 +125,13 @@ namespace CalculateVessels.Core.Shells
                         };
 
                         _s_p_1 = _ellKePrev * _ellR / 161 * Math.Sqrt(_esdi.ny * _esdi.p / (0.00001 * _E));
-                        _s_p_2 = 1.2 * _esdi.p * _ellR / (2.0 * _esdi.sigma_d);
+                        _s_p_2 = 1.2 * _esdi.p * _ellR / (2.0 * _esdi.SigmaAllow);
 
                         _s_p = Math.Max(_s_p_1, _s_p_2);
                         _s = _s_p + _c;
                         if (_esdi.s == 0.0)
                         {
-                            _p_dp = 2.0 * _esdi.sigma_d * _s_p / (_ellR + 0.5 * _s_p);
+                            _p_dp = 2.0 * _esdi.SigmaAllow * _s_p / (_ellR + 0.5 * _s_p);
                             _ellx = 10.0 * (_s_p / _esdi.D) *
                                     (_esdi.D / (2.0 * _esdi.ellH) - 2.0 * _esdi.ellH / _esdi.D);
                             _ellKe = (1.0 + (2.4 + 8.0 * _ellx) * _ellx) / (1.0 + (3.0 + 10.0 * _ellx) * _ellx);
@@ -142,7 +142,7 @@ namespace CalculateVessels.Core.Shells
                         }
                         else if (_esdi.s >= _s)
                         {
-                            _p_dp = 2.0 * _esdi.sigma_d * (_esdi.s - _c) / (_ellR + 0.5 * (_esdi.s - _c));
+                            _p_dp = 2.0 * _esdi.SigmaAllow * (_esdi.s - _c) / (_ellR + 0.5 * (_esdi.s - _c));
                             _ellx = 10.0 * ((_esdi.s - _c) / _esdi.D) *
                                     (_esdi.D / (2.0 * _esdi.ellH) - 2.0 * _esdi.ellH / _esdi.D);
                             _ellKe = (1.0 + (2.4 + 8.0 * _ellx) * _ellx) / (1.0 + (3.0 + 10.0 * _ellx) * _ellx);
@@ -284,7 +284,7 @@ namespace CalculateVessels.Core.Shells
 
                 table.AddRow()
                     .AddCell("Допускаемое напряжение при расчетной температуре, [σ]:")
-                    .AddCell($"{_esdi.sigma_d} МПа");
+                    .AddCell($"{_esdi.SigmaAllow} МПа");
 
                 if (!_esdi.IsPressureIn)
                 {
@@ -335,7 +335,7 @@ namespace CalculateVessels.Core.Shells
             if (_esdi.IsPressureIn)
             {
                 body.AddParagraph("")
-                    .AppendEquation($"s_p=({_esdi.p}∙{_ellR:f2})/(2∙{_esdi.sigma_d}∙{_esdi.fi}-0.5{_esdi.p})={_s_p:f2} мм");
+                    .AppendEquation($"s_p=({_esdi.p}∙{_ellR:f2})/(2∙{_esdi.SigmaAllow}∙{_esdi.fi}-0.5{_esdi.p})={_s_p:f2} мм");
             }
             else
             {
@@ -347,7 +347,7 @@ namespace CalculateVessels.Core.Shells
                 body.AddParagraph("")
                     .AppendEquation($"({_ellKePrev}∙{_ellR:f2})/(161)∙√(({_esdi.ny}∙{_esdi.p})/(10^-5∙{_E}))=" +
                                                     $"{_s_p_1:f2}");
-                body.AddParagraph("").AppendEquation($"(1.2∙{_esdi.p}∙{_ellR:f2})/(2∙{_esdi.sigma_d})={_s_p_2:f2}");
+                body.AddParagraph("").AppendEquation($"(1.2∙{_esdi.p}∙{_ellR:f2})/(2∙{_esdi.SigmaAllow})={_s_p_2:f2}");
                 body.AddParagraph("").AppendEquation($"s_1p=max({_s_p_1:f2};{_s_p_2:f2})={_s_p:f2} мм");
             }
             body.AddParagraph("c - сумма прибавок к расчетной толщине");
@@ -371,7 +371,7 @@ namespace CalculateVessels.Core.Shells
                 body.AddParagraph("Допускаемое внутреннее избыточное давление вычисляют по формуле:");
                 body.AddParagraph("")
                     .AppendEquation("[p]=(2∙[σ]∙φ∙(s_1-c))/(R+0.5∙(s-c))" +
-                                    $"=(2∙{_esdi.sigma_d}∙{_esdi.fi}∙({_esdi.s}-{_c:f2}))/" +
+                                    $"=(2∙{_esdi.SigmaAllow}∙{_esdi.fi}∙({_esdi.s}-{_c:f2}))/" +
                                     $"({_ellR:f2}+0.5∙({_esdi.s}-{_c:f2}))={_p_d:f2} МПа");
             }
             else
@@ -382,7 +382,7 @@ namespace CalculateVessels.Core.Shells
                 body.AddParagraph("допускаемое давление из условия прочности вычисляют по формуле:");
                 body.AddParagraph("")
                     .AppendEquation("[p]_П=(2∙[σ]∙(s_1-c))/(R+0.5(s_1-c))" +
-                                    $"=(2∙{_esdi.sigma_d}∙({_esdi.s}-{_c:f2}))/({_ellR}+0.5({_esdi.s}-{_c:f2}))={_p_dp:f2} МПа");
+                                    $"=(2∙{_esdi.SigmaAllow}∙({_esdi.s}-{_c:f2}))/({_ellR}+0.5({_esdi.s}-{_c:f2}))={_p_dp:f2} МПа");
                 body.AddParagraph("допускаемое давление из условия устойчивости в пределах упругости вычисляют по формуле:");
                 body.AddParagraph("")
                     .AppendEquation("[p]_E=(2.6∙10^-5∙E)/n_y∙[(100∙(s_1-c))/(К_Э∙R)]^2");
