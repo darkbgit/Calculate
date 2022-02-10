@@ -117,15 +117,15 @@ namespace CalculateVessels.Core.Shells.DataIn
         }
         public double s { get; set; }
 
-        public double sigma_d
+        public double SigmaAllow
         {
-            get => _sigma_d;
+            get => _sigmaAllow;
             set
             {
                 {
                     if (value > 0)
                     {
-                        _sigma_d = value;
+                        _sigmaAllow = value;
                     }
                     else
                     {
@@ -173,7 +173,7 @@ namespace CalculateVessels.Core.Shells.DataIn
         private double _E;
         private double _t;
 
-        private double _sigma_d;
+        private double _sigmaAllow;
         private double _fi;
 
 
