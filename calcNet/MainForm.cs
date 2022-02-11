@@ -168,22 +168,22 @@ namespace CalculateVessels
         }
     
 
-        private static void MakeWord(ElementsCollection<CalculatedElement> elements, string filePath)
+        private static void MakeWord(ElementsCollection<IElement> elements, string filePath)
         {
             if (!elements.Any()) return;
 
             List<string> bibliography = new();
 
-            foreach (var elementForCalculate in elements)
+            foreach (var element in elements)
             {
                 try
                 {
-                    elementForCalculate.Element.MakeWord(filePath);
-                    bibliography = bibliography.Union(elementForCalculate.Element.Bibliography).ToList();
+                    element.MakeWord(filePath);
+                    bibliography = bibliography.Union(element.Bibliography).ToList();
                 }
                 catch (Exception e)
                 {
-                    MessageBox.Show($"Couldn't create word file for element {elementForCalculate}" + e.ToString());
+                    MessageBox.Show($"Couldn't create word file for element {element}" + e.ToString());
                 }
             }
 
