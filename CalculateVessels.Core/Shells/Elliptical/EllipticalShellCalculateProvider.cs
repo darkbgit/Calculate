@@ -19,7 +19,7 @@ namespace CalculateVessels.Core.Shells.Elliptical
             {
                 try
                 {
-                    data.SigmaAllow = Physical.Gost34233_1.GetSigma(data.InputData.Steel, data.InputData.t);
+                    data.SigmaAllow = Physical.Gost34233_1.GetSigma(dataIn.Steel, dataIn.t);
                 }
                 catch (PhysicalDataException e)
                 {
@@ -35,7 +35,7 @@ namespace CalculateVessels.Core.Shells.Elliptical
             {
                 try
                 {
-                    data.E = Physical.GetE(data.InputData.Steel, data.InputData.t);
+                    data.E = Physical.GetE(dataIn.Steel, dataIn.t);
                 }
                 catch (PhysicalDataException e)
                 {
@@ -48,9 +48,9 @@ namespace CalculateVessels.Core.Shells.Elliptical
             }
 
 
-            data.c = data.InputData.c1 + data.InputData.c2 + data.InputData.c3;
+            data.c = dataIn.c1 + dataIn.c2 + dataIn.c3;
 
-            switch (data.InputData.EllipticalBottomType)
+            switch (dataIn.EllipticalBottomType)
             {
                 case EllipticalBottomType.Elliptical:
                 case EllipticalBottomType.Hemispherical:
@@ -61,38 +61,38 @@ namespace CalculateVessels.Core.Shells.Elliptical
                         CONDITION_USE_FORMULAS_2_MAX = 0.5;
 
                     data.IsConditionUseFormulas =
-                        (data.InputData.s - data.c) / data.InputData.D <= CONDITION_USE_FORMULAS_1_MAX &
-                        (data.InputData.s - data.c) / data.InputData.D >= CONDITION_USE_FORMULAS_1_MIN &
-                        data.InputData.EllipseH / data.InputData.D < CONDITION_USE_FORMULAS_2_MAX &
-                        data.InputData.EllipseH / data.InputData.D >= CONDITION_USE_FORMULAS_2_MIN |
-                        data.InputData.s == 0;
+                        (dataIn.s - data.c) / dataIn.D <= CONDITION_USE_FORMULAS_1_MAX &
+                        (dataIn.s - data.c) / dataIn.D >= CONDITION_USE_FORMULAS_1_MIN &
+                        dataIn.EllipseH / dataIn.D < CONDITION_USE_FORMULAS_2_MAX &
+                        dataIn.EllipseH / dataIn.D >= CONDITION_USE_FORMULAS_2_MIN |
+                        dataIn.s == 0;
 
                     if (!data.IsConditionUseFormulas)
                     {
                         data.ErrorList.Add("Условие применения формул не выполняется");
                     }
 
-                    data.EllipseR = Math.Pow(data.InputData.D, 2) / (4.0 * data.InputData.EllipseH);
+                    data.EllipseR = Math.Pow(dataIn.D, 2) / (4.0 * dataIn.EllipseH);
 
-                    if (data.InputData.IsPressureIn)
+                    if (dataIn.IsPressureIn)
                     {
-                        data.s_p = data.InputData.p * data.EllipseR /
-                                   (2.0 * data.InputData.SigmaAllow * data.InputData.fi - 0.5 * data.InputData.p);
+                        data.s_p = dataIn.p * data.EllipseR /
+                                   (2.0 * dataIn.SigmaAllow * dataIn.fi - 0.5 * dataIn.p);
                         data.s = data.s_p + data.c;
 
-                        if (data.InputData.s != 0.0)
+                        if (dataIn.s != 0.0)
                         {
-                            if (data.s < data.InputData.s)
+                            if (data.s < dataIn.s)
                                 throw new CalculateException("Принятая толщина меньше расчетной.");
 
-                            data.p_d = 2.0 * data.InputData.SigmaAllow * data.InputData.fi *
-                                       (data.InputData.s - data.c) /
-                                       (data.EllipseR + 0.5 * (data.InputData.s - data.c));
+                            data.p_d = 2.0 * dataIn.SigmaAllow * dataIn.fi *
+                                       (dataIn.s - data.c) /
+                                       (data.EllipseR + 0.5 * (dataIn.s - data.c));
                         }
                     }
                     else
                     {
-                        data.EllipseKePrev = data.InputData.EllipticalBottomType switch
+                        data.EllipseKePrev = dataIn.EllipticalBottomType switch
                         {
                             EllipticalBottomType.Elliptical => 0.9,
                             EllipticalBottomType.Hemispherical => 1.0,
@@ -100,26 +100,26 @@ namespace CalculateVessels.Core.Shells.Elliptical
                         };
 
                         data.s_p_1 = data.EllipseKePrev * data.EllipseR / 161 *
-                                     Math.Sqrt(data.InputData.ny * data.InputData.p / (0.00001 * data.E));
-                        data.s_p_2 = 1.2 * data.InputData.p * data.EllipseR / (2.0 * data.InputData.SigmaAllow);
+                                     Math.Sqrt(dataIn.ny * dataIn.p / (0.00001 * data.E));
+                        data.s_p_2 = 1.2 * dataIn.p * data.EllipseR / (2.0 * dataIn.SigmaAllow);
 
                         data.s_p = Math.Max(data.s_p_1, data.s_p_2);
                         data.s = data.s_p + data.c;
 
-                        if (data.InputData.s != 0.0)
+                        if (dataIn.s != 0.0)
                         {
-                            if (data.s < data.InputData.s)
+                            if (data.s < dataIn.s)
                                 throw new CalculateException("Принятая толщина меньше расчетной.");
 
-                            data.p_dp = 2.0 * data.InputData.SigmaAllow * (data.InputData.s - data.c) /
-                                        (data.EllipseR + 0.5 * (data.InputData.s - data.c));
-                            data.Ellipsex = 10.0 * ((data.InputData.s - data.c) / data.InputData.D) *
-                                            (data.InputData.D / (2.0 * data.InputData.EllipseH) -
-                                             2.0 * data.InputData.EllipseH / data.InputData.D);
+                            data.p_dp = 2.0 * dataIn.SigmaAllow * (dataIn.s - data.c) /
+                                        (data.EllipseR + 0.5 * (dataIn.s - data.c));
+                            data.Ellipsex = 10.0 * ((dataIn.s - data.c) / dataIn.D) *
+                                            (dataIn.D / (2.0 * dataIn.EllipseH) -
+                                             2.0 * dataIn.EllipseH / dataIn.D);
                             data.EllipseKe = (1.0 + (2.4 + 8.0 * data.Ellipsex) * data.Ellipsex) /
                                              (1.0 + (3.0 + 10.0 * data.Ellipsex) * data.Ellipsex);
-                            data.p_de = 2.6 * 0.00001 * data.E / data.InputData.ny *
-                                        Math.Pow(100 * (data.InputData.s - data.c) / (data.EllipseKe * data.EllipseR),
+                            data.p_de = 2.6 * 0.00001 * data.E / dataIn.ny *
+                                        Math.Pow(100 * (dataIn.s - data.c) / (data.EllipseKe * data.EllipseR),
                                             2);
                             data.p_d = data.p_dp / Math.Sqrt(1.0 + Math.Pow(data.p_dp / data.p_de, 2));
                         }

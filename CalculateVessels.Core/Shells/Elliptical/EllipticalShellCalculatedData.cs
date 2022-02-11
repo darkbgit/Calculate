@@ -13,7 +13,7 @@ namespace CalculateVessels.Core.Shells.Elliptical
             ErrorList = new List<string>();
         }
 
-        public EllipticalShellInputData InputData { get; }
+        public IInputData InputData { get; }
 
         public double b { get; set; }
         public double b_2 { get; set; }
