@@ -4,7 +4,7 @@ using CalculateVessels.Core.Shells.Enums;
 
 namespace CalculateVessels.Core.Shells.Base
 {
-    public abstract class ShellDataIn : IDataIn
+    public abstract class ShellDataIn
     {
         protected ShellDataIn(ShellType shellType)
         {
