@@ -1,9 +1,8 @@
-﻿using CalculateVessels.Core.Interfaces;
+﻿using System.Collections.Generic;
+using CalculateVessels.Core.Interfaces;
 using CalculateVessels.Core.Shells.Enums;
-using System.Collections.Generic;
-using System.Linq;
 
-namespace CalculateVessels.Core.Shells.DataIn
+namespace CalculateVessels.Core.Shells.Base
 {
     public abstract class ShellDataIn : IDataIn
     {

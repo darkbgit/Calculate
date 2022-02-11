@@ -8,5 +8,7 @@ namespace CalculateVessels.Core.Interfaces
         bool IsDataGood => !ErrorList.Any();
 
         IEnumerable<string> ErrorList { get; }
+
+        string Name { get; }
     }
 }

@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 
-namespace CalculateVessels.Core.Shells
+namespace CalculateVessels.Core.Shells.Base
 {
     public abstract class Shell
     {
