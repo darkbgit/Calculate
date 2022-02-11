@@ -1,8 +1,9 @@
 ﻿using CalculateVessels.Core.Bottoms.Enums;
 using CalculateVessels.Core.Bottoms.FlatBottom;
+using CalculateVessels.Core.Exceptions;
 using CalculateVessels.Core.Interfaces;
-using CalculateVessels.Core.Models;
 using CalculateVessels.Data.PhysicalData;
+using CalculateVessels.Data.Properties;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -14,16 +15,19 @@ namespace CalculateVessels
 {
     public partial class FlatBottomForm : Form
     {
+        private FlatBottomInputData _inputData;
+
         public FlatBottomForm()
         {
             InitializeComponent();
         }
 
-        private FlatBottomDataIn _flatBottomDataIn;
+        public IInputData InputData => _inputData;
+
 
         private void Rb_CheckedChanged(object sender, EventArgs e)
         {
-            if (sender is RadioButton {Checked: true} rb)
+            if (sender is RadioButton { Checked: true } rb)
             {
                 type_pb.Image = (Bitmap)new ImageConverter().ConvertFrom(Data.Properties.Resources.ResourceManager.GetObject("pldn" + rb.Text));
                 Type_Draw(sender);
@@ -72,7 +76,7 @@ namespace CalculateVessels
 
         private void Type_Draw(object sender)
         {
-            RadioButton rb = sender as RadioButton;
+            var rb = sender as RadioButton;
 
             if (!rb.Checked) return;
 
@@ -835,16 +839,16 @@ namespace CalculateVessels
             p_d_l.Text = "";
             calc_btn.Enabled = false;
 
-            _flatBottomDataIn = new FlatBottomDataIn();
+            _inputData = new FlatBottomInputData();
 
             var dataInErr = new List<string>();
 
             //t
             {
                 if (double.TryParse(t_tb.Text, NumberStyles.Integer,
-                    CultureInfo.InvariantCulture, out double t))
+                        CultureInfo.InvariantCulture, out var t))
                 {
-                    _flatBottomDataIn.t = t;
+                    _inputData.t = t;
                 }
                 else
                 {
@@ -855,9 +859,9 @@ namespace CalculateVessels
             //p
             {
                 if (double.TryParse(p_tb.Text, NumberStyles.AllowDecimalPoint,
-                CultureInfo.InvariantCulture, out var p))
+                        CultureInfo.InvariantCulture, out var p))
                 {
-                    _flatBottomDataIn.p = p;
+                    _inputData.p = p;
                 }
                 else
                 {
@@ -866,7 +870,7 @@ namespace CalculateVessels
             }
 
             //steel
-            _flatBottomDataIn.Steel = steel_cb.Text;
+            _inputData.Steel = steel_cb.Text;
 
             //
             //_cylindricalShellDataIn.IsPressureIn = vn_rb.Checked;
@@ -875,9 +879,9 @@ namespace CalculateVessels
             if (sigmaHandle_cb.Checked)
             {
                 if (double.TryParse(sigma_d_tb.Text, NumberStyles.AllowDecimalPoint,
-                    CultureInfo.InvariantCulture, out var sigmaAllow))
+                        CultureInfo.InvariantCulture, out var sigmaAllow))
                 {
-                    _flatBottomDataIn.sigma_d = sigmaAllow;
+                    _inputData.SigmaAllow = sigmaAllow;
                 }
                 else
                 {
@@ -885,7 +889,7 @@ namespace CalculateVessels
                 }
             }
 
-            //if (!_flatBottomDataIn.IsPressureIn)
+            //if (!_inputData.IsPressureIn)
             //{
             //    //E
             //    if (EHandle_cb.Checked)
@@ -893,7 +897,7 @@ namespace CalculateVessels
             //        if (double.TryParse(sigma_d_tb.Text, NumberStyles.AllowDecimalPoint,
             //            CultureInfo.InvariantCulture, out var E))
             //        {
-            //            _flatBottomDataIn.E = E;
+            //            _inputData.E = E;
             //        }
             //        else
             //        {
@@ -906,9 +910,9 @@ namespace CalculateVessels
             //fi
             {
                 if (double.TryParse(fi_tb.Text, NumberStyles.AllowDecimalPoint,
-                CultureInfo.InvariantCulture, out var fi))
+                        CultureInfo.InvariantCulture, out var fi))
                 {
-                    _flatBottomDataIn.fi = fi;
+                    _inputData.fi = fi;
                 }
                 else
                 {
@@ -919,9 +923,9 @@ namespace CalculateVessels
             //c1
             {
                 if (double.TryParse(c1_tb.Text, NumberStyles.AllowDecimalPoint,
-                CultureInfo.InvariantCulture, out var c1))
+                        CultureInfo.InvariantCulture, out var c1))
                 {
-                    _flatBottomDataIn.c1 = c1;
+                    _inputData.c1 = c1;
                 }
                 else
                 {
@@ -933,12 +937,12 @@ namespace CalculateVessels
             {
                 if (c2_tb.Text == "")
                 {
-                    _flatBottomDataIn.c2 = 0;
+                    _inputData.c2 = 0;
                 }
                 else if (double.TryParse(c2_tb.Text, NumberStyles.AllowDecimalPoint,
-                CultureInfo.InvariantCulture, out var c2))
+                             CultureInfo.InvariantCulture, out var c2))
                 {
-                    _flatBottomDataIn.c2 = c2;
+                    _inputData.c2 = c2;
                 }
                 else
                 {
@@ -950,12 +954,12 @@ namespace CalculateVessels
             {
                 if (c3_tb.Text == "")
                 {
-                    _flatBottomDataIn.c3 = 0;
+                    _inputData.c3 = 0;
                 }
                 else if (double.TryParse(c3_tb.Text, NumberStyles.AllowDecimalPoint,
-                CultureInfo.InvariantCulture, out var c3))
+                             CultureInfo.InvariantCulture, out var c3))
                 {
-                    _flatBottomDataIn.c3 = c3;
+                    _inputData.c3 = c3;
                 }
                 else
                 {
@@ -963,11 +967,12 @@ namespace CalculateVessels
                 }
             }
 
-            _flatBottomDataIn.Type =
-                Convert.ToInt32(type_gb.Controls.OfType<RadioButton>()
-                .FirstOrDefault(rb => rb.Checked).Text);
+            _inputData.Type =
+                Convert.ToInt32(type_gb.Controls
+                    .OfType<RadioButton>()
+                    .FirstOrDefault(rb => rb.Checked)?.Text);
 
-            switch (_flatBottomDataIn.Type)
+            switch (_inputData.Type)
             {
                 case 1:
                 case 2:
@@ -981,9 +986,9 @@ namespace CalculateVessels
                         else
                         {
                             if (double.TryParse(valueD, NumberStyles.AllowDecimalPoint,
-                            CultureInfo.InvariantCulture, out var D))
+                                    CultureInfo.InvariantCulture, out var D))
                             {
-                                _flatBottomDataIn.D = D;
+                                _inputData.D = D;
                             }
                             else
                             {
@@ -1002,9 +1007,9 @@ namespace CalculateVessels
                         else
                         {
                             if (double.TryParse(values, NumberStyles.AllowDecimalPoint,
-                            CultureInfo.InvariantCulture, out var s))
+                                    CultureInfo.InvariantCulture, out var s))
                             {
-                                _flatBottomDataIn.s = s;
+                                _inputData.s = s;
                             }
                             else
                             {
@@ -1023,9 +1028,9 @@ namespace CalculateVessels
                         else
                         {
                             if (double.TryParse(valuea, NumberStyles.AllowDecimalPoint,
-                            CultureInfo.InvariantCulture, out var a))
+                                    CultureInfo.InvariantCulture, out var a))
                             {
-                                _flatBottomDataIn.a = a;
+                                _inputData.a = a;
                             }
                             else
                             {
@@ -1048,9 +1053,9 @@ namespace CalculateVessels
                         else
                         {
                             if (double.TryParse(valueD, NumberStyles.AllowDecimalPoint,
-                            CultureInfo.InvariantCulture, out var D))
+                                    CultureInfo.InvariantCulture, out var D))
                             {
-                                _flatBottomDataIn.D = D;
+                                _inputData.D = D;
                             }
                             else
                             {
@@ -1069,9 +1074,9 @@ namespace CalculateVessels
                         else
                         {
                             if (double.TryParse(values, NumberStyles.AllowDecimalPoint,
-                            CultureInfo.InvariantCulture, out var s))
+                                    CultureInfo.InvariantCulture, out var s))
                             {
-                                _flatBottomDataIn.s = s;
+                                _inputData.s = s;
                             }
                             else
                             {
@@ -1096,9 +1101,9 @@ namespace CalculateVessels
                         else
                         {
                             if (double.TryParse(valueD, NumberStyles.AllowDecimalPoint,
-                            CultureInfo.InvariantCulture, out var D))
+                                    CultureInfo.InvariantCulture, out var D))
                             {
-                                _flatBottomDataIn.D = D;
+                                _inputData.D = D;
                             }
                             else
                             {
@@ -1117,9 +1122,9 @@ namespace CalculateVessels
                         else
                         {
                             if (double.TryParse(values, NumberStyles.AllowDecimalPoint,
-                            CultureInfo.InvariantCulture, out var s))
+                                    CultureInfo.InvariantCulture, out var s))
                             {
-                                _flatBottomDataIn.s = s;
+                                _inputData.s = s;
                             }
                             else
                             {
@@ -1138,9 +1143,9 @@ namespace CalculateVessels
                         else
                         {
                             if (double.TryParse(valuer, NumberStyles.AllowDecimalPoint,
-                            CultureInfo.InvariantCulture, out var r))
+                                    CultureInfo.InvariantCulture, out var r))
                             {
-                                _flatBottomDataIn.r = r;
+                                _inputData.r = r;
                             }
                             else
                             {
@@ -1159,9 +1164,9 @@ namespace CalculateVessels
                         else
                         {
                             if (double.TryParse(valueh1, NumberStyles.AllowDecimalPoint,
-                            CultureInfo.InvariantCulture, out var h1))
+                                    CultureInfo.InvariantCulture, out var h1))
                             {
-                                _flatBottomDataIn.h1 = h1;
+                                _inputData.h1 = h1;
                             }
                             else
                             {
@@ -1182,9 +1187,9 @@ namespace CalculateVessels
                         else
                         {
                             if (double.TryParse(valueD, NumberStyles.AllowDecimalPoint,
-                            CultureInfo.InvariantCulture, out var D))
+                                    CultureInfo.InvariantCulture, out var D))
                             {
-                                _flatBottomDataIn.D = D;
+                                _inputData.D = D;
                             }
                             else
                             {
@@ -1203,9 +1208,9 @@ namespace CalculateVessels
                         else
                         {
                             if (double.TryParse(values, NumberStyles.AllowDecimalPoint,
-                            CultureInfo.InvariantCulture, out var s))
+                                    CultureInfo.InvariantCulture, out var s))
                             {
-                                _flatBottomDataIn.s = s;
+                                _inputData.s = s;
                             }
                             else
                             {
@@ -1224,9 +1229,9 @@ namespace CalculateVessels
                         else
                         {
                             if (double.TryParse(valuer, NumberStyles.AllowDecimalPoint,
-                            CultureInfo.InvariantCulture, out var r))
+                                    CultureInfo.InvariantCulture, out var r))
                             {
-                                _flatBottomDataIn.r = r;
+                                _inputData.r = r;
                             }
                             else
                             {
@@ -1237,7 +1242,8 @@ namespace CalculateVessels
 
                     //gamma
                     {
-                        var valuegamma = typePanel.Controls.OfType<TextBox>().FirstOrDefault(tb => tb.Name == "gamma_tb")?.Text;
+                        var valuegamma = typePanel.Controls.OfType<TextBox>().FirstOrDefault(tb => tb.Name == "gamma_tb")
+                            ?.Text;
                         if (valuegamma == null)
                         {
                             dataInErr.Add("gamma невозможно найти");
@@ -1245,9 +1251,9 @@ namespace CalculateVessels
                         else
                         {
                             if (double.TryParse(valuegamma, NumberStyles.AllowDecimalPoint,
-                            CultureInfo.InvariantCulture, out var gamma))
+                                    CultureInfo.InvariantCulture, out var gamma))
                             {
-                                _flatBottomDataIn.gamma = gamma;
+                                _inputData.gamma = gamma;
                             }
                             else
                             {
@@ -1266,9 +1272,9 @@ namespace CalculateVessels
                         else
                         {
                             if (double.TryParse(values2, NumberStyles.AllowDecimalPoint,
-                            CultureInfo.InvariantCulture, out var s2))
+                                    CultureInfo.InvariantCulture, out var s2))
                             {
-                                _flatBottomDataIn.s2 = s2;
+                                _inputData.s2 = s2;
                             }
                             else
                             {
@@ -1290,9 +1296,9 @@ namespace CalculateVessels
                         else
                         {
                             if (double.TryParse(valueD2, NumberStyles.AllowDecimalPoint,
-                            CultureInfo.InvariantCulture, out var D2))
+                                    CultureInfo.InvariantCulture, out var D2))
                             {
-                                _flatBottomDataIn.D2 = D2;
+                                _inputData.D2 = D2;
                             }
                             else
                             {
@@ -1311,9 +1317,9 @@ namespace CalculateVessels
                         else
                         {
                             if (double.TryParse(valueD3, NumberStyles.AllowDecimalPoint,
-                            CultureInfo.InvariantCulture, out var D3))
+                                    CultureInfo.InvariantCulture, out var D3))
                             {
-                                _flatBottomDataIn.D3 = D3;
+                                _inputData.D3 = D3;
                             }
                             else
                             {
@@ -1332,9 +1338,9 @@ namespace CalculateVessels
                         else
                         {
                             if (double.TryParse(values2, NumberStyles.AllowDecimalPoint,
-                            CultureInfo.InvariantCulture, out var s2))
+                                    CultureInfo.InvariantCulture, out var s2))
                             {
-                                _flatBottomDataIn.s2 = s2;
+                                _inputData.s2 = s2;
                             }
                             else
                             {
@@ -1356,9 +1362,9 @@ namespace CalculateVessels
                         else
                         {
                             if (double.TryParse(valueD2, NumberStyles.AllowDecimalPoint,
-                            CultureInfo.InvariantCulture, out var D2))
+                                    CultureInfo.InvariantCulture, out var D2))
                             {
-                                _flatBottomDataIn.D2 = D2;
+                                _inputData.D2 = D2;
                             }
                             else
                             {
@@ -1377,9 +1383,9 @@ namespace CalculateVessels
                         else
                         {
                             if (double.TryParse(valueDcp, NumberStyles.AllowDecimalPoint,
-                            CultureInfo.InvariantCulture, out var Dcp))
+                                    CultureInfo.InvariantCulture, out var Dcp))
                             {
-                                _flatBottomDataIn.Dcp = Dcp;
+                                _inputData.Dcp = Dcp;
                             }
                             else
                             {
@@ -1398,9 +1404,9 @@ namespace CalculateVessels
                         else
                         {
                             if (double.TryParse(values2, NumberStyles.AllowDecimalPoint,
-                            CultureInfo.InvariantCulture, out var s2))
+                                    CultureInfo.InvariantCulture, out var s2))
                             {
-                                _flatBottomDataIn.s2 = s2;
+                                _inputData.s2 = s2;
                             }
                             else
                             {
@@ -1415,11 +1421,14 @@ namespace CalculateVessels
                 case 15:
                     dataInErr.Add("Type 13, 14, 15 unsupported");
                     break;
+                default:
+                    dataInErr.Add("Type error");
+                    break;
             }
 
             if (!hole_cb.Checked)
             {
-                _flatBottomDataIn.Hole = HoleInFlatBottom.WithoutHole;
+                _inputData.Hole = HoleInFlatBottom.WithoutHole;
             }
             else
             {
@@ -1428,13 +1437,13 @@ namespace CalculateVessels
                 {
                     if (oneHole_rb.Checked)
                     {
-                        _flatBottomDataIn.Hole = HoleInFlatBottom.OneHole;
-                        _flatBottomDataIn.d = d;
+                        _inputData.Hole = HoleInFlatBottom.OneHole;
+                        _inputData.d = d;
                     }
                     else
                     {
-                        _flatBottomDataIn.Hole = HoleInFlatBottom.MoreThenOneHole;
-                        _flatBottomDataIn.di = d;
+                        _inputData.Hole = HoleInFlatBottom.MoreThenOneHole;
+                        _inputData.di = d;
                     }
                 }
                 else
@@ -1447,12 +1456,12 @@ namespace CalculateVessels
             {
                 if (s1_tb.Text == "")
                 {
-                    _flatBottomDataIn.s1 = 0;
+                    _inputData.s1 = 0;
                 }
                 else if (double.TryParse(s1_tb.Text, NumberStyles.AllowDecimalPoint,
-                CultureInfo.InvariantCulture, out var s1))
+                             CultureInfo.InvariantCulture, out var s1))
                 {
-                    _flatBottomDataIn.s1 = s1;
+                    _inputData.s1 = s1;
                 }
                 else
                 {
@@ -1461,25 +1470,38 @@ namespace CalculateVessels
             }
 
 
-            var isNotError = !dataInErr.Any() && ((IDataIn)_flatBottomDataIn).IsDataGood;
+            var isError = dataInErr.Any() || !InputData.IsDataGood;
 
-            if (isNotError)
+            if (isError)
             {
-                IElement bottom = new FlatBottom(_flatBottomDataIn);
-
-                CalculatedElement calculatedElement = new CalculateElement(bottom, this).Calculate(true);
-
-                if (calculatedElement != null)
-                {
-                    calc_btn.Enabled = true;
-                    scalc_l.Text = $"sp={((FlatBottom)calculatedElement.Element).S1Calculated:f3} мм";
-                    p_d_l.Text =
-                        $"pd={((FlatBottom)calculatedElement.Element).PressurePermissible:f2} МПа";
-                }
+                MessageBox.Show(string.Join<string>(Environment.NewLine, dataInErr.Union(_inputData.ErrorList)));
+                return;
             }
-            else
+
+            IElement bottom = new FlatBottom(_inputData);
+
+            try
             {
-                MessageBox.Show(string.Join<string>(Environment.NewLine, dataInErr.Union(_flatBottomDataIn.ErrorList)));
+                bottom.Calculate();
+            }
+            catch (CalculateException ex)
+            {
+                MessageBox.Show(ex.Message);
+                return;
+            }
+
+            if (bottom.IsCalculated)
+            {
+                if (bottom.CalculatedData.ErrorList.Any())
+                {
+                    MessageBox.Show(string.Join<string>(Environment.NewLine, bottom.CalculatedData.ErrorList));
+                }
+
+                calc_btn.Enabled = true;
+                scalc_l.Text = $@"sp={((FlatBottomCalculatedData)bottom.CalculatedData).s1:f3} мм";
+                p_d_l.Text =
+                    $@"pd={((FlatBottomCalculatedData)bottom.CalculatedData).p_d:f2} МПа";
+                MessageBox.Show(Resources.CalcComplete);
             }
         }
 
@@ -1490,18 +1512,18 @@ namespace CalculateVessels
             List<string> dataInErr = new();
 
             //name
-            _flatBottomDataIn.Name = name_tb.Text;
+            _inputData.Name = name_tb.Text;
 
             //s1
             {
                 if (s1_tb.Text == "")
                 {
-                    _flatBottomDataIn.s1 = 0;
+                    _inputData.s1 = 0;
                 }
                 else if (double.TryParse(s1_tb.Text, NumberStyles.AllowDecimalPoint,
                 CultureInfo.InvariantCulture, out var s1))
                 {
-                    _flatBottomDataIn.s1 = s1;
+                    _inputData.s1 = s1;
                 }
                 else
                 {
@@ -1510,28 +1532,51 @@ namespace CalculateVessels
             }
 
 
-            bool isNotError = !dataInErr.Any() && ((IDataIn)_flatBottomDataIn).IsDataGood;
+            var isError = dataInErr.Any() || InputData.IsDataGood;
 
-            if (isNotError)
+            if (isError)
             {
+                MessageBox.Show(string.Join<string>(Environment.NewLine, dataInErr.Union(_inputData.ErrorList)));
+                return;
+            }
 
-                IElement bottom = new FlatBottom(_flatBottomDataIn);
+            IElement bottom = new FlatBottom(_inputData);
 
-                CalculatedElement calculatedElement = new CalculateElement(bottom, this).Calculate(false);
+            try
+            {
+                bottom.Calculate();
+            }
+            catch (CalculateException ex)
+            {
+                MessageBox.Show(ex.Message);
+                return;
+            }
 
-                if (calculatedElement != null)
-                {
-                    calc_btn.Enabled = true;
-                    scalc_l.Text = $"sp={((FlatBottom)calculatedElement.Element).S1Calculated:f3} мм";
-                    p_d_l.Text =
-                        $"pd={((FlatBottom)calculatedElement.Element).PressurePermissible:f2} МПа";
-                }
+            if (Owner is MainForm main)
+            {
+                main.Word_lv.Items.Add(bottom.ToString());
+                main.ElementsCollection.Add(bottom);
+
+                //_form.Hide();
             }
             else
             {
-                MessageBox.Show(string.Join<string>(Environment.NewLine, dataInErr.Union(_flatBottomDataIn.ErrorList)));
+                MessageBox.Show("MainForm Error");
             }
 
+            if (bottom.IsCalculated)
+            {
+                if (bottom.CalculatedData.ErrorList.Any())
+                {
+                    MessageBox.Show(string.Join<string>(Environment.NewLine, bottom.CalculatedData.ErrorList));
+                }
+
+                calc_btn.Enabled = true;
+                scalc_l.Text = $@"sp={((FlatBottomCalculatedData)bottom.CalculatedData).s1:f3} мм";
+                p_d_l.Text =
+                    $@"pd={((FlatBottomCalculatedData)bottom.CalculatedData).p_d:f2} МПа";
+                MessageBox.Show(Resources.CalcComplete);
+            }
         }
     }
 }
