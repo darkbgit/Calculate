@@ -5,7 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using CalculateVessels.Core.Exceptions;
 using CalculateVessels.Core.Interfaces;
-using CalculateVessels.Core.Shells.DataIn;
+using CalculateVessels.Core.Shells.Base;
+using CalculateVessels.Core.Shells.Conical;
 using CalculateVessels.Core.Shells.Elliptical;
 using CalculateVessels.Core.Shells.Enums;
 using CalculateVessels.Core.Shells.Nozzle.Enums;
@@ -31,8 +32,8 @@ namespace CalculateVessels.Core.Shells.Nozzle
             switch (dataIn.ShellDataIn.ShellType)
             {
                 case ShellType.Conical:
-                    data.Dk = ((ConicalShell)dataIn.Element).Dk;
-                    data.alfa1 = ((ConicalShellDataIn)dataIn.ShellDataIn).alfa1;
+                    data.Dk = ((ConicalShellCalculatedData)dataIn.Element.CalculatedData).Dk;
+                    data.alfa1 = ((ConicalShellInputData)dataIn.ShellDataIn).alfa1;
                     break;
                 case ShellType.Elliptical:
                     data.EllipseH = ((EllipticalShellInputData)dataIn.ShellDataIn).EllipseH;
