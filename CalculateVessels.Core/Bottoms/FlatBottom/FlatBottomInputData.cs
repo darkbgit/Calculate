@@ -1,14 +1,10 @@
-﻿using CalculateVessels.Core.Interfaces;
-using System;
+﻿using CalculateVessels.Core.Bottoms.Enums;
+using CalculateVessels.Core.Interfaces;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CalculateVessels.Core.Bottoms.Enums;
 
 namespace CalculateVessels.Core.Bottoms.FlatBottom
 {
-    public class FlatBottomDataIn : IDataIn
+    public class FlatBottomInputData : IInputData
     {
         //public bool IsDataGood => !ErrorList.Any();
 
@@ -34,7 +30,7 @@ namespace CalculateVessels.Core.Bottoms.FlatBottom
         public double s { get; set; }
         public double s1 { get; set; }
         public double s2 { get; set; }
-        public double sigma_d { get; set; }
+        public double SigmaAllow { get; set; }
         public double t { get; set; }
         public string Steel { get; set; }
         public double E { get; set; }
