@@ -1,6 +1,7 @@
 ﻿using CalculateVessels.Core.Exceptions;
 using CalculateVessels.Core.Interfaces;
 using System;
+using CalculateVessels.Core.Shells.Base;
 
 namespace CalculateVessels.Core.Shells.CylindricalShell
 {
@@ -47,5 +48,8 @@ namespace CalculateVessels.Core.Shells.CylindricalShell
 
             _wordProvider.MakeWord(filePath, CalculatedData);
         }
+
+        public override string ToString() => $"Цилиндрическая обечайка {_inputData.Name}";
+
     }
 }
