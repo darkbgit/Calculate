@@ -1,11 +1,11 @@
 ﻿using CalculateVessels.Core.Interfaces;
-using CalculateVessels.Core.Shells.DataIn;
 using CalculateVessels.Core.Shells.Nozzle.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CalculateVessels.Core.Shells.Base;
 
 namespace CalculateVessels.Core.Shells.Nozzle
 {
