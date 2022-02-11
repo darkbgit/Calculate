@@ -25,7 +25,7 @@ namespace CalculateVessels.Core.Supports.BracketVertical
             {
                 try
                 {
-                    data.SigmaAlloy = Physical.Gost34233_1.GetSigma(data.InputData.Steel, data.InputData.t);
+                    data.SigmaAlloy = Physical.Gost34233_1.GetSigma(dataIn.Steel, dataIn.t);
                 }
                 catch (PhysicalDataException e)
                 {
@@ -38,35 +38,35 @@ namespace CalculateVessels.Core.Supports.BracketVertical
                 data.SigmaAlloy = dataIn.SigmaAlloy;
             }
 
-            data.Dp = data.InputData.D; //TODO make Dp for different types of shells
+            data.Dp = dataIn.D; //TODO make Dp for different types of shells
 
-            data.e1 = data.InputData.e1 == 0 ? data.InputData.e1 : 5.0 / 6.0 * data.InputData.l1;
+            data.e1 = dataIn.e1 == 0 ? dataIn.e1 : 5.0 / 6.0 * dataIn.l1;
 
-            data.F1 = data.InputData.n switch
+            data.F1 = dataIn.n switch
             {
-                4 when data.InputData.PreciseMontage => data.InputData.G / 4.0 + data.InputData.M /
-                    (data.Dp + 2 * (data.e1 + data.InputData.s + data.InputData.s2)),
-                2 or 4 => data.InputData.G / 2.0 + data.InputData.M /
-                    (data.Dp + 2 * (data.e1 + data.InputData.s + data.InputData.s2)),
-                3 => data.InputData.G / 3.0 + data.InputData.M / 0.75 *
-                    (data.Dp + 2 * (data.e1 + data.InputData.s + data.InputData.s2)),
+                4 when dataIn.PreciseMontage => dataIn.G / 4.0 + dataIn.M /
+                    (data.Dp + 2 * (data.e1 + dataIn.s + dataIn.s2)),
+                2 or 4 => dataIn.G / 2.0 + dataIn.M /
+                    (data.Dp + 2 * (data.e1 + dataIn.s + dataIn.s2)),
+                3 => dataIn.G / 3.0 + dataIn.M / 0.75 *
+                    (data.Dp + 2 * (data.e1 + dataIn.s + dataIn.s2)),
                 _ => throw new CalculateException("Error number of vertical brackets.")
             };
 
-            data.Q1 = data.InputData.Q / data.InputData.n;
+            data.Q1 = dataIn.Q / dataIn.n;
 
-            data.e1e = data.e1 + data.Q1 * data.InputData.h / data.F1;
+            data.e1e = data.e1 + data.Q1 * dataIn.h / data.F1;
 
-            data.x = Math.Log(data.Dp / (2 * (data.InputData.c - data.InputData.c)));
+            data.x = Math.Log(data.Dp / (2 * (dataIn.c - dataIn.c)));
 
-            data.y = Math.Log(data.InputData.h1 / data.Dp);
+            data.y = Math.Log(dataIn.h1 / data.Dp);
 
 
-            if (!data.InputData.ReinforceingPad)
+            if (!dataIn.ReinforceingPad)
             {
-                data.z = Math.Log(data.InputData.b4 / data.Dp);
+                data.z = Math.Log(dataIn.b4 / data.Dp);
 
-                switch (data.InputData.Type)
+                switch (dataIn.Type)
                 {
                     case BracketVerticalType.A:
                     case BracketVerticalType.C:
@@ -104,28 +104,28 @@ namespace CalculateVessels.Core.Supports.BracketVertical
                         throw new CalculateException("Error bracket vertical type.");
                 }
 
-                data.K2 = data.InputData.IsAssembly ? 1.05 : 1.25;
+                data.K2 = dataIn.IsAssembly ? 1.05 : 1.25;
 
                 data.v1 = 0.3;
 
-                switch (data.InputData.Type)
+                switch (dataIn.Type)
                 {
                     case BracketVerticalType.A:
                     case BracketVerticalType.B:
                     case BracketVerticalType.C:
-                        data.sigma_m = data.InputData.p * data.Dp /
-                                       (2 * (data.InputData.s - data.InputData.c));
+                        data.sigma_m = dataIn.p * data.Dp /
+                                       (2 * (dataIn.s - dataIn.c));
                         break;
                     case BracketVerticalType.D:
-                        data.sigma_m = data.InputData.p * data.Dp / (4 * (data.InputData.s - data.InputData.c)) +
-                                       1 / (Math.PI * data.Dp * (data.InputData.s - data.InputData.c)) *
-                                       (data.F1 + 4 * data.InputData.M / data.Dp);
+                        data.sigma_m = dataIn.p * data.Dp / (4 * (dataIn.s - dataIn.c)) +
+                                       1 / (Math.PI * data.Dp * (dataIn.s - dataIn.c)) *
+                                       (data.F1 + 4 * dataIn.M / data.Dp);
                         break;
                     default:
                         throw new CalculateException("Error bracket vertical type.");
                 }
 
-                data.v2 = -data.sigma_m / (data.K2 * data.SigmaAlloy * data.InputData.fi);
+                data.v2 = -data.sigma_m / (data.K2 * data.SigmaAlloy * dataIn.fi);
 
                 data.K1 = (1 - Math.Pow(data.v2, 2)) /
                           (1.0 / 3.0 + data.v1 * data.v2 +
@@ -134,17 +134,17 @@ namespace CalculateVessels.Core.Supports.BracketVertical
 
                 data.sigmaid = data.K1 * data.K2 * data.SigmaAlloy;
 
-                data.F1Alloy = data.sigmaid * data.InputData.h1 *
-                    Math.Pow(data.InputData.s - data.InputData.c, 2) / (data.K7 * data.e1e);
+                data.F1Alloy = data.sigmaid * dataIn.h1 *
+                    Math.Pow(dataIn.s - dataIn.c, 2) / (data.K7 * data.e1e);
 
-                if (data.InputData.g / data.InputData.h1 < 0.5)
+                if (dataIn.g / dataIn.h1 < 0.5)
                 {
-                    data.F1Alloy *= 0.5 + data.InputData.g / data.InputData.h1;
+                    data.F1Alloy *= 0.5 + dataIn.g / dataIn.h1;
                 }
             }
             else
             {
-                data.y1 = Math.Log(data.InputData.b3 / data.Dp);
+                data.y1 = Math.Log(dataIn.b3 / data.Dp);
 
                 data.K81 = Math.Exp((-49.919 - 39.119 * data.x - 107.01 * data.y1 -
                                         1.693 * Math.Pow(data.x, 2) - 11.92 * data.x * data.y1 -
@@ -162,14 +162,14 @@ namespace CalculateVessels.Core.Supports.BracketVertical
 
                 data.K8 = Math.Min(data.K81, data.K82);
 
-                data.K2 = data.InputData.IsAssembly ? 1.05 : 1.25;
+                data.K2 = dataIn.IsAssembly ? 1.05 : 1.25;
 
                 data.v1 = 0.4;
 
-                data.sigma_m = data.InputData.p * data.Dp /
-                               (2 * (data.InputData.s - data.InputData.c));
+                data.sigma_m = dataIn.p * data.Dp /
+                               (2 * (dataIn.s - dataIn.c));
 
-                data.v2 = -data.sigma_m / (data.K2 * data.SigmaAlloy * data.InputData.fi);
+                data.v2 = -data.sigma_m / (data.K2 * data.SigmaAlloy * dataIn.fi);
 
                 data.K1 = (1 - Math.Pow(data.v2, 2)) /
                           (1.0 / 3.0 + data.v1 * data.v2 +
@@ -178,76 +178,76 @@ namespace CalculateVessels.Core.Supports.BracketVertical
 
                 data.sigmaid = data.K1 * data.K2 * data.SigmaAlloy;
 
-                data.F1Alloy = data.sigmaid * data.InputData.b3 *
-                    Math.Pow(data.InputData.s - data.InputData.c, 2) / (data.K8 * (data.e1e + data.InputData.s2));
+                data.F1Alloy = data.sigmaid * dataIn.b3 *
+                    Math.Pow(dataIn.s - dataIn.c, 2) / (data.K8 * (data.e1e + dataIn.s2));
 
-                if (data.InputData.b2 / data.InputData.b3 < 0.6)
+                if (dataIn.b2 / dataIn.b3 < 0.6)
                 {
-                    data.F1Alloy *= 0.4 + data.InputData.b2 / data.InputData.b3;
+                    data.F1Alloy *= 0.4 + dataIn.b2 / dataIn.b3;
                 }
             }
 
             if (data.F1 > data.F1Alloy)
             {
                 data.ErrorList.Add("Несущая способность обечайки в месте приварки опорной лапы " +
-                               (data.InputData.ReinforceingPad ? "с подкладным листом" : "без подкладного листа.") +
+                               (dataIn.ReinforceingPad ? "с подкладным листом" : "без подкладного листа.") +
                                " Условие прочности не выполняется");
             }
 
             data.IsConditionUseFormulas = true;
 
-            data.ConditionUseFormulas1 = (data.InputData.s - data.InputData.c) / data.Dp;
+            data.ConditionUseFormulas1 = (dataIn.s - dataIn.c) / data.Dp;
             if (data.ConditionUseFormulas1 > 0.05)
             {
                 data.IsConditionUseFormulas = false;
                 data.ErrorList.Add("Условие применения формул не выполняется");
             }
 
-            data.ConditionUseFormulas2 = 0.2 * data.InputData.h1;
-            if (data.ConditionUseFormulas2 > data.InputData.g)
+            data.ConditionUseFormulas2 = 0.2 * dataIn.h1;
+            if (data.ConditionUseFormulas2 > dataIn.g)
             {
                 data.IsConditionUseFormulas = false;
                 data.ErrorList.Add("Условие применения формул не выполняется");
             }
 
-            data.ConditionUseFormulas3 = data.InputData.h1 / data.Dp;
+            data.ConditionUseFormulas3 = dataIn.h1 / data.Dp;
             if (data.ConditionUseFormulas3 is < 0.04 or > 0.5)
             {
                 data.IsConditionUseFormulas = false;
                 data.ErrorList.Add("Условие применения формул не выполняется");
             }
 
-            data.ConditionUseFormulas4 = data.InputData.b4 / data.Dp;
+            data.ConditionUseFormulas4 = dataIn.b4 / data.Dp;
             if (data.ConditionUseFormulas4 is < 0.04 or > 0.5)
             {
                 data.IsConditionUseFormulas = false;
                 data.ErrorList.Add("Условие применения формул не выполняется");
             }
 
-            if (data.InputData.ReinforceingPad)
+            if (dataIn.ReinforceingPad)
             {
-                data.ConditionUseFormulas5 = data.InputData.b3 / data.Dp;
+                data.ConditionUseFormulas5 = dataIn.b3 / data.Dp;
                 if (data.ConditionUseFormulas5 is < 0.04 or > 0.8)
                 {
                     data.IsConditionUseFormulas = false;
                     data.ErrorList.Add("Условие применения формул не выполняется");
                 }
 
-                data.ConditionUseFormulas6 = 0.6 * data.InputData.b3;
-                if (data.ConditionUseFormulas6 > data.InputData.b2)
+                data.ConditionUseFormulas6 = 0.6 * dataIn.b3;
+                if (data.ConditionUseFormulas6 > dataIn.b2)
                 {
                     data.IsConditionUseFormulas = false;
                     data.ErrorList.Add("Условие применения формул не выполняется");
                 }
 
-                data.ConditionUseFormulas7 = 1.5 * data.InputData.h1;
-                if (data.ConditionUseFormulas7 < data.InputData.b3)
+                data.ConditionUseFormulas7 = 1.5 * dataIn.h1;
+                if (data.ConditionUseFormulas7 < dataIn.b3)
                 {
                     data.IsConditionUseFormulas = false;
                     data.ErrorList.Add("Условие применения формул не выполняется");
                 }
 
-                if (data.InputData.s2 < data.InputData.s)
+                if (dataIn.s2 < dataIn.s)
                 {
                     data.IsConditionUseFormulas = false;
                     data.ErrorList.Add("Условие применения формул не выполняется");

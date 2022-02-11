@@ -10,7 +10,7 @@ namespace CalculateVessels.Core.Supports.BracketVertical
             InputData = inputData;
         }
 
-        internal BracketVerticalInputData InputData { get; }
+        public IInputData InputData { get; }
         public double SigmaAlloy { get; internal set; }
         public double E { get; internal set; }
         public double ny { get; internal set; }

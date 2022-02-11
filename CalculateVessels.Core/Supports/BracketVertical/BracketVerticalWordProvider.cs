@@ -19,6 +19,8 @@ namespace CalculateVessels.Core.Supports.BracketVertical
             if (calculatedData is not BracketVerticalCalculatedData data)
                 throw new NullReferenceException();
 
+            var dataIn = (BracketVerticalInputData) data.InputData;
+
             if (string.IsNullOrWhiteSpace(filePath))
             {
                 const string DEFAULT_FILE_NAME = "temp.docx";
@@ -34,7 +36,7 @@ namespace CalculateVessels.Core.Supports.BracketVertical
             if (body == null)
                 throw new ArgumentException();
 
-            body.AddParagraph($"Расчет на прочность обечайки {data.InputData.NameShell} от воздействия опорных нагрузок. Опорные лапы")
+            body.AddParagraph($"Расчет на прочность обечайки {dataIn.NameShell} от воздействия опорных нагрузок. Опорные лапы")
                 .Heading(HeadingType.Heading1)
                 .Alignment(AlignmentType.Center);
 
@@ -44,7 +46,7 @@ namespace CalculateVessels.Core.Supports.BracketVertical
 
             //TODO make picture
 
-            byte[] bytes = data.InputData.Type switch
+            byte[] bytes = dataIn.Type switch
             {
                 BracketVerticalType.A =>
                     Data.Properties.Resources.SaddleNothingElem,
@@ -69,55 +71,55 @@ namespace CalculateVessels.Core.Supports.BracketVertical
 
                 table.AddRow()
                     .AddCell("Внутренний диаметр обечайки, D:")
-                    .AddCell($"{data.InputData.D} мм");
+                    .AddCell($"{dataIn.D} мм");
 
                 table.AddRow()
                     .AddCell("Толщина стенки обечайки, s:")
-                    .AddCell($"{data.InputData.s} мм");
+                    .AddCell($"{dataIn.s} мм");
 
                 table.AddRow()
                     .AddCell("Прибавка к расчетной толщине, c:")
-                    .AddCell($"{data.InputData.c} мм");
+                    .AddCell($"{dataIn.c} мм");
 
                 table.AddRow()
                     .AddCell("Коэффициент прочности сварного шва, φ:")
-                    .AddCell($"{data.InputData.fi}");
+                    .AddCell($"{dataIn.fi}");
 
                 table.AddRow()
                     .AddCell("Материал обечайки")
-                    .AddCell($"{data.InputData.Steel}");
+                    .AddCell($"{dataIn.Steel}");
 
                 table.AddRow()
                     .AddCell("Количество опор")
-                    .AddCell($"{data.InputData.n}");
+                    .AddCell($"{dataIn.n}");
 
                 table.AddRow()
                     .AddCell("Ширина плиты основания опорной лапы, ")
                     .AppendEquation("b_4")
                     .AppendText(":")
-                    .AddCell($"{data.InputData.b4} мм");
+                    .AddCell($"{dataIn.b4} мм");
 
                 table.AddRow()
                     .AddCell("Высота опорной лапы, ")
                     .AppendEquation("h_1")
                     .AppendText(":")
-                    .AddCell($"{data.InputData.h1} мм");
+                    .AddCell($"{dataIn.h1} мм");
 
                 table.AddRow()
                     .AddCell("Расстояние между средними линиями ребер, g:")
-                    .AddCell($"{data.InputData.g} мм");
+                    .AddCell($"{dataIn.g} мм");
 
                 table.AddRow()
                     .AddCell("Длина опорной лапы, ")
                     .AppendEquation("l_1")
                     .AppendText(":")
-                    .AddCell($"{data.InputData.l1} мм");
+                    .AddCell($"{dataIn.l1} мм");
 
-                if (data.InputData.e1 != 0)
+                if (dataIn.e1 != 0)
                 {
                     table.AddRow()
                         .AddCell("Расстояние между точкой приложения усилия и " +
-                                 (data.InputData.ReinforceingPad ? " подкладным листом" : "обечайкой") + ", ")
+                                 (dataIn.ReinforceingPad ? " подкладным листом" : "обечайкой") + ", ")
                         .AppendEquation("e_1")
                         .AppendText(":")
                         .AddCell($"{data.e1} мм");
@@ -125,53 +127,53 @@ namespace CalculateVessels.Core.Supports.BracketVertical
 
                 table.AddRow()
                     .AddCell("Подкладной лист")
-                    .AddCell(data.InputData.ReinforceingPad ? "да" : "нет");
+                    .AddCell(dataIn.ReinforceingPad ? "да" : "нет");
 
-                if (data.InputData.ReinforceingPad)
+                if (dataIn.ReinforceingPad)
                 {
                     table.AddRow()
                         .AddCell("Толщина подкладного листа, ")
                         .AppendEquation("s_2")
                         .AppendText(":")
-                        .AddCell($"{data.InputData.s2} мм");
+                        .AddCell($"{dataIn.s2} мм");
 
                     table.AddRow()
                         .AddCell("Ширина подкладного листа, ")
                         .AppendEquation("b_2")
                         .AppendText(":")
-                        .AddCell($"{data.InputData.b2} мм");
+                        .AddCell($"{dataIn.b2} мм");
 
                     table.AddRow()
                         .AddCell("Длина подкладного листа, ")
                         .AppendEquation("b_3")
                         .AppendText(":")
-                        .AddCell($"{data.InputData.b3} мм");
+                        .AddCell($"{dataIn.b3} мм");
                 }
 
                 table.AddRowWithOneCell("Условия нагружения");
 
                 table.AddRow()
                     .AddCell("Собственный вес с содержимым, G:")
-                    .AddCell($"{data.InputData.G} H");
+                    .AddCell($"{dataIn.G} H");
 
                 table.AddRow()
                     .AddCell("Расчетный изгибающий момент, M:")
-                    .AddCell($"{data.InputData.M} H∙мм");
+                    .AddCell($"{dataIn.M} H∙мм");
 
                 table.AddRow()
                     .AddCell("Расчетная поперечная сила, Q:")
-                    .AddCell($"{data.InputData.Q} H");
+                    .AddCell($"{dataIn.Q} H");
 
                 table.AddRow()
                     .AddCell("Расчетная температура, Т:")
-                    .AddCell($"{data.InputData.t} °С");
+                    .AddCell($"{dataIn.t} °С");
 
                 table.AddRow()
                     .AddCell("Расчетное давление, p:")
-                    .AddCell($"{data.InputData.p} МПа");
+                    .AddCell($"{dataIn.p} МПа");
 
                 table.AddRow()
-                    .AddCell($"Допускаемое напряжение для материала {data.InputData.Steel} при расчетной температуре, [σ]:")
+                    .AddCell($"Допускаемое напряжение для материала {dataIn.Steel} при расчетной температуре, [σ]:")
                     .AddCell($"{data.SigmaAlloy} МПа");
 
                 body.InsertTable(table);
@@ -185,37 +187,37 @@ namespace CalculateVessels.Core.Supports.BracketVertical
             body.AddParagraph("Расчет усилий").Alignment(AlignmentType.Center);
             body.AddParagraph("");
 
-            if (data.InputData.e1 == 0)
+            if (dataIn.e1 == 0)
             {
                 body.AddParagraph("Если неизвестно точное значение расстояния между точкой приложения усилия и " +
-                                  (data.InputData.ReinforceingPad ? "подкладным листом" : "обечайкой") + ", то ");
+                                  (dataIn.ReinforceingPad ? "подкладным листом" : "обечайкой") + ", то ");
 
                 body.AddParagraph("")
                     .AppendEquation("e_1=5/(6∙l_1H)" +
-                                    $"=5/(6∙{data.InputData.l1})={data.e1:f2} мм");
+                                    $"=5/(6∙{dataIn.l1})={data.e1:f2} мм");
             }
 
             body.AddParagraph("Вертикальное усилие, действующее на опорную лапу, вычисляют по формуле");
 
-            switch (data.InputData.n)
+            switch (dataIn.n)
             {
-                case 4 when data.InputData.PreciseMontage:
+                case 4 when dataIn.PreciseMontage:
                     body.AddParagraph("При n=4, обеспечивающем равномерное распределение нагрузки между всеми опорными лапами (точный монтаж, установка прокладок, подливка бетона и т. д.)");
                     body.AddParagraph("")
                         .AppendEquation("F_1=G/4+M/(D_p+2∙(e_1+s+s_2))" +
-                                        $"={data.InputData.G}/4+{data.InputData.M}/({data.Dp}+2∙({data.e1:f2}+{data.InputData.s}+{data.InputData.s2}))={data.F1:f2} H");
+                                        $"={dataIn.G}/4+{dataIn.M}/({data.Dp}+2∙({data.e1:f2}+{dataIn.s}+{dataIn.s2}))={data.F1:f2} H");
                     break;
                 case 2 or 4:
                     body.AddParagraph("При n=2 или n=4");
                     body.AddParagraph("")
                         .AppendEquation("F_1=G/2+M/(D_p+2∙(e_1+s+s_2))" +
-                                        $"={data.InputData.G}/2+{data.InputData.M}/({data.Dp}+2∙({data.e1:f2}+{data.InputData.s}+{data.InputData.s2}))={data.F1:f2} H");
+                                        $"={dataIn.G}/2+{dataIn.M}/({data.Dp}+2∙({data.e1:f2}+{dataIn.s}+{dataIn.s2}))={data.F1:f2} H");
                     break;
                 case 3:
                     body.AddParagraph("При n=3");
                     body.AddParagraph("")
                         .AppendEquation("F_1=G/3+M/(0.75∙[D_p+2∙(e_1+s+s_2)])" +
-                                        $"={data.InputData.G}/3+{data.InputData.M}/([0.75∙{data.Dp}+2∙({data.e1:f2}+{data.InputData.s}+{data.InputData.s2})])={data.F1:f2} H");
+                                        $"={dataIn.G}/3+{dataIn.M}/([0.75∙{data.Dp}+2∙({data.e1:f2}+{dataIn.s}+{dataIn.s2})])={data.F1:f2} H");
                     break;
                 default:
                     throw new ArgumentException();
@@ -223,15 +225,15 @@ namespace CalculateVessels.Core.Supports.BracketVertical
 
             body.AddParagraph("Горизонтальное усилие, действующее в основании опорной лапы или в основании стойки, в случае приварки к ней опорной лапы вычисляют по формуле");
             body.AddParagraph("")
-                .AppendEquation("Q_1=Q/n" + $"={data.InputData.Q}/{data.InputData.n}={data.Q1:f2} H");
+                .AppendEquation("Q_1=Q/n" + $"={dataIn.Q}/{dataIn.n}={data.Q1:f2} H");
 
 
             body.AddParagraph("Эквивалентное плечо нагрузки ")
                 .AppendEquation("e_1Э");
             body.AddParagraph("")
-                .AppendEquation("e_1Э=e_1+Q_1∙h/F_1" + $"={data.InputData.e1}+{data.Q1:f2}∙{data.InputData.h}/{data.F1:f2}={data.e1e:f2} мм");
+                .AppendEquation("e_1Э=e_1+Q_1∙h/F_1" + $"={dataIn.e1}+{data.Q1:f2}∙{dataIn.h}/{data.F1:f2}={data.e1e:f2} мм");
 
-            if (!data.InputData.ReinforceingPad)
+            if (!dataIn.ReinforceingPad)
             {
                 body.AddParagraph("Несущая способность обечайки в месте приварки опорной лапы без подкладного листа должна удовлетворять условию");
                 body.AddParagraph("")
@@ -241,7 +243,7 @@ namespace CalculateVessels.Core.Supports.BracketVertical
                     .AddRun(" - вычисляют по формуле");
 
 
-                switch (data.InputData.Type)
+                switch (dataIn.Type)
                 {
                     case BracketVerticalType.A:
                     case BracketVerticalType.C:
@@ -262,19 +264,19 @@ namespace CalculateVessels.Core.Supports.BracketVertical
 
                 body.AddParagraph("где ");
                 body.AddParagraph("")
-                    .AppendEquation("x=ln(D_p/2∙(s-c))" + $"=ln({data.Dp}/2∙({data.InputData.s}-{data.InputData.c}))={data.x:f2}");
+                    .AppendEquation("x=ln(D_p/2∙(s-c))" + $"=ln({data.Dp}/2∙({dataIn.s}-{dataIn.c}))={data.x:f2}");
 
-                switch (data.InputData.Type)
+                switch (dataIn.Type)
                 {
                     case BracketVerticalType.A:
                     case BracketVerticalType.B:
                     case BracketVerticalType.C:
                         body.AddParagraph("")
-                            .AppendEquation("y=ln(h_1/D_p)" + $"=ln({data.InputData.h1}/{data.Dp})={data.y:f2}");
+                            .AppendEquation("y=ln(h_1/D_p)" + $"=ln({dataIn.h1}/{data.Dp})={data.y:f2}");
                         break;
                     case BracketVerticalType.D:
                         body.AddParagraph("")
-                            .AppendEquation("z=ln(b_4/D_p)" + $"=ln({data.InputData.b4}/{data.Dp})={data.z:f2}");
+                            .AppendEquation("z=ln(b_4/D_p)" + $"=ln({dataIn.b4}/{data.Dp})={data.z:f2}");
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();
@@ -295,7 +297,7 @@ namespace CalculateVessels.Core.Supports.BracketVertical
 
                 body.AddParagraph("")
                     .AppendEquation($"K_2={data.K2}")
-                    .AddRun(data.InputData.IsAssembly
+                    .AddRun(dataIn.IsAssembly
                     ? " - для условий испытания и монтажа"
                     : " - для рабочих условий");
 
@@ -305,25 +307,25 @@ namespace CalculateVessels.Core.Supports.BracketVertical
                 body.AddParagraph("")
                     .AppendEquation("ϑ_2=σ_m/(K_2∙[σ]∙φ)");
 
-                switch (data.InputData.Type)
+                switch (dataIn.Type)
                 {
                     case BracketVerticalType.A:
                     case BracketVerticalType.B:
                     case BracketVerticalType.C:
                         body.AddParagraph("")
-                            .AppendEquation("σ_m=σ_my=(p∙D_p)/(2∙(s-c))" + $"=({data.InputData.p}∙{data.Dp})/(2∙({data.InputData.s}-{data.InputData.c}))={data.sigma_m:f2}");
+                            .AppendEquation("σ_m=σ_my=(p∙D_p)/(2∙(s-c))" + $"=({dataIn.p}∙{data.Dp})/(2∙({dataIn.s}-{dataIn.c}))={data.sigma_m:f2}");
                         break;
                     case BracketVerticalType.D:
                         body.AddParagraph("")
                             .AppendEquation("σ_m=σ_mx=(p∙D_p)/(4∙(s-c))+1/(π∙D_p∙(s-c))∙(F+(4∙M)/D_p)" +
-                                            $"=({data.InputData.p}∙{data.Dp})/(4∙({data.InputData.s}-{data.InputData.c}))+1/(π∙{data.Dp}∙({data.InputData.s}-{data.InputData.c}))∙({data.F1}+(4∙{data.InputData.M})/{data.Dp})={data.sigma_m:f2}");
+                                            $"=({dataIn.p}∙{data.Dp})/(4∙({dataIn.s}-{dataIn.c}))+1/(π∙{data.Dp}∙({dataIn.s}-{dataIn.c}))∙({data.F1}+(4∙{dataIn.M})/{data.Dp})={data.sigma_m:f2}");
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();
                 }
 
                 body.AddParagraph("")
-                    .AppendEquation($"ϑ_2={data.sigma_m:f2}/({data.K2}∙{data.SigmaAlloy}∙{data.InputData.fi})={data.v2:f2}");
+                    .AppendEquation($"ϑ_2={data.sigma_m:f2}/({data.K2}∙{data.SigmaAlloy}∙{dataIn.fi})={data.v2:f2}");
 
                 body.AddParagraph("")
                     .AppendEquation($"K_1=(1-{data.v2:f2}^2)/((1/3+{data.v1:f2}∙{data.v2:f2})+√((1/3+{data.v1:f2}∙{data.v2:f2})^2+(1-{data.v2:f2}^2)∙{data.v1:f2}^2))={data.K1:f2}");
@@ -333,7 +335,7 @@ namespace CalculateVessels.Core.Supports.BracketVertical
 
 
                 body.AddParagraph("")
-                    .AppendEquation($"[F]_1=({data.sigmaid:f2}∙{data.InputData.h1}∙({data.InputData.s}-{data.InputData.c})^2)/({data.K7:f2}∙{data.e1e:f2})={data.F1Alloy:f2}");
+                    .AppendEquation($"[F]_1=({data.sigmaid:f2}∙{dataIn.h1}∙({dataIn.s}-{dataIn.c})^2)/({data.K7:f2}∙{data.e1e:f2})={data.F1Alloy:f2}");
             }
             else
             {
@@ -352,13 +354,13 @@ namespace CalculateVessels.Core.Supports.BracketVertical
 
                 body.AddParagraph("где ");
                 body.AddParagraph("")
-                    .AppendEquation("x=ln(D_p/2∙(s-c))" + $"=ln({data.Dp}/2∙({data.InputData.s}-{data.InputData.c}))={data.x:f2}");
+                    .AppendEquation("x=ln(D_p/2∙(s-c))" + $"=ln({data.Dp}/2∙({dataIn.s}-{dataIn.c}))={data.x:f2}");
 
                 body.AddParagraph("")
-                    .AppendEquation("y=ln(h_1/D_p)" + $"=ln({data.InputData.h1}/{data.Dp})={data.y:f2}");
+                    .AppendEquation("y=ln(h_1/D_p)" + $"=ln({dataIn.h1}/{data.Dp})={data.y:f2}");
 
                 body.AddParagraph("")
-                    .AppendEquation("y_1=ln(b_3/D_p)" + $"=ln({data.InputData.b3}/{data.Dp})={data.y1:f2}");
+                    .AppendEquation("y_1=ln(b_3/D_p)" + $"=ln({dataIn.b3}/{data.Dp})={data.y1:f2}");
 
                 body.AddParagraph("").AppendEquation($"K_8=min{{{data.K81:f2};{data.K82:f2}}}={data.K8:f2}");
 
@@ -374,7 +376,7 @@ namespace CalculateVessels.Core.Supports.BracketVertical
 
                 body.AddParagraph("")
                     .AppendEquation($"K_2={data.K2}")
-                    .AddRun(data.InputData.IsAssembly
+                    .AddRun(dataIn.IsAssembly
                     ? " - для условий испытания и монтажа"
                     : " - для рабочих условий");
 
@@ -387,10 +389,10 @@ namespace CalculateVessels.Core.Supports.BracketVertical
 
                 body.AddParagraph("")
                     .AppendEquation("σ_m=σ_my=(p∙D_p)/(2∙(s-c))" +
-                                    $"=({data.InputData.p}∙{data.Dp})/(2∙({data.InputData.s}-{data.InputData.c}))={data.sigma_m:f2}");
+                                    $"=({dataIn.p}∙{data.Dp})/(2∙({dataIn.s}-{dataIn.c}))={data.sigma_m:f2}");
 
                 body.AddParagraph("")
-                    .AppendEquation($"ϑ_2={data.sigma_m:f2}/({data.K2}∙{data.SigmaAlloy}∙{data.InputData.fi})={data.v2:f2}");
+                    .AppendEquation($"ϑ_2={data.sigma_m:f2}/({data.K2}∙{data.SigmaAlloy}∙{dataIn.fi})={data.v2:f2}");
 
                 body.AddParagraph("")
                     .AppendEquation($"K_1=(1-{data.v2:f2}^2)/((1/3+{data.v1:f2}∙{data.v2:f2})+√((1/3+{data.v1:f2}∙{data.v2:f2})^2+(1-{data.v2:f2}^2)∙{data.v1:f2}^2))={data.K1:f2}");
@@ -400,7 +402,7 @@ namespace CalculateVessels.Core.Supports.BracketVertical
 
 
                 body.AddParagraph("")
-                    .AppendEquation($"[F]_1=({data.sigmaid:f2}∙{data.InputData.h1}∙({data.InputData.s}-{data.InputData.c})^2)/({data.K7:f2}∙{data.e1e:f2})={data.F1Alloy:f2}");
+                    .AppendEquation($"[F]_1=({data.sigmaid:f2}∙{dataIn.h1}∙({dataIn.s}-{dataIn.c})^2)/({data.K7:f2}∙{data.e1e:f2})={data.F1Alloy:f2}");
             }
 
 
@@ -430,30 +432,30 @@ namespace CalculateVessels.Core.Supports.BracketVertical
                 body.AddParagraph("Условия применения формул не выполняются").Bold().Color(System.Drawing.Color.Red);
             }
             body.AddParagraph("")
-                .AppendEquation($"(s-c)/D=({data.InputData.s}-{data.InputData.c})/{data.Dp}={data.ConditionUseFormulas1:f3}≤0.05");
+                .AppendEquation($"(s-c)/D=({dataIn.s}-{dataIn.c})/{data.Dp}={data.ConditionUseFormulas1:f3}≤0.05");
 
             body.AddParagraph("")
-                .AppendEquation($"g={data.InputData.g}≥0.2∙h_1=0.2∙{data.InputData.h1}={data.ConditionUseFormulas2:f2}");
+                .AppendEquation($"g={dataIn.g}≥0.2∙h_1=0.2∙{dataIn.h1}={data.ConditionUseFormulas2:f2}");
 
             body.AddParagraph("")
-                .AppendEquation($"0.04≤h_1/D_p={data.InputData.h1}/{data.Dp}={data.ConditionUseFormulas3:f3}≤0.5");
+                .AppendEquation($"0.04≤h_1/D_p={dataIn.h1}/{data.Dp}={data.ConditionUseFormulas3:f3}≤0.5");
 
             body.AddParagraph("")
-                .AppendEquation($"0.04≤b_4/D_p={data.InputData.b4}/{data.Dp}={data.ConditionUseFormulas4:f3}≤0.5");
+                .AppendEquation($"0.04≤b_4/D_p={dataIn.b4}/{data.Dp}={data.ConditionUseFormulas4:f3}≤0.5");
 
-            if (data.InputData.ReinforceingPad)
+            if (dataIn.ReinforceingPad)
             {
                 body.AddParagraph("")
-                    .AppendEquation($"0.04≤b_3/D_p={data.InputData.b3}/{data.Dp}={data.ConditionUseFormulas5:f3}≤0.8");
+                    .AppendEquation($"0.04≤b_3/D_p={dataIn.b3}/{data.Dp}={data.ConditionUseFormulas5:f3}≤0.8");
 
                 body.AddParagraph("")
-                    .AppendEquation($"b_2={data.InputData.b2}≥0.6∙b_3=0.6∙{data.InputData.b3}={data.ConditionUseFormulas6:f2}");
+                    .AppendEquation($"b_2={dataIn.b2}≥0.6∙b_3=0.6∙{dataIn.b3}={data.ConditionUseFormulas6:f2}");
 
                 body.AddParagraph("")
-                    .AppendEquation($"b_3={data.InputData.b3}≤1.5∙h_1=1.5∙{data.InputData.h1}={data.ConditionUseFormulas7:f2}");
+                    .AppendEquation($"b_3={dataIn.b3}≤1.5∙h_1=1.5∙{dataIn.h1}={data.ConditionUseFormulas7:f2}");
 
                 body.AddParagraph("")
-                    .AppendEquation($"s_2={data.InputData.s2}≥s={data.InputData.s}");
+                    .AppendEquation($"s_2={dataIn.s2}≥s={dataIn.s}");
             }
 
             package.Close();
