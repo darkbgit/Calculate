@@ -1,6 +1,7 @@
 ﻿using CalculateVessels.Core.Exceptions;
 using CalculateVessels.Core.Interfaces;
 using System;
+using CalculateVessels.Core.Shells.Base;
 
 namespace CalculateVessels.Core.Shells.Elliptical
 {
@@ -47,5 +48,8 @@ namespace CalculateVessels.Core.Shells.Elliptical
 
             _wordProvider.MakeWord(filePath, CalculatedData);
         }
+
+        public override string ToString() => $"Эллиптическая обечайка {_inputData.Name}";
+
     }
 }
