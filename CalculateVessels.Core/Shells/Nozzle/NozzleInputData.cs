@@ -9,21 +9,25 @@ using System.Threading.Tasks;
 
 namespace CalculateVessels.Core.Shells.Nozzle
 {
-    public class NozzleDataIn : IDataIn
+    public class NozzleInputData : IInputData
     {
-        public NozzleDataIn(ShellDataIn shellDataIn)
+        private List<string> _errorList = new();
+
+        private readonly ICalculatedData _shellCalculatedData;
+
+        public NozzleInputData(ICalculatedData shellCalculatedData)
         {
-            this.shellDataIn = shellDataIn;
+            _shellCalculatedData = shellCalculatedData;
         }
 
 
         public IEnumerable<string> ErrorList => _errorList;
 
-        private List<string> _errorList = new();
+        
 
-        private readonly ShellDataIn shellDataIn;
+        public ICalculatedData ShellCalculatedData { get => _shellCalculatedData; }
 
-        public ShellDataIn ShellDataIn { get => shellDataIn; }
+        public ShellDataIn ShellDataIn => (ShellDataIn) _shellCalculatedData.InputData;
 
         public double t
         {
@@ -157,6 +161,8 @@ namespace CalculateVessels.Core.Shells.Nozzle
         private double _fi1;
 
         private bool isOval;
+
+        public IElement Element { get; set; }
 
     }
 }
