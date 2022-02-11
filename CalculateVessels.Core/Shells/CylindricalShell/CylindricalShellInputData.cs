@@ -1,5 +1,5 @@
 ﻿using CalculateVessels.Core.Interfaces;
-using CalculateVessels.Core.Shells.DataIn;
+using CalculateVessels.Core.Shells.Base;
 using CalculateVessels.Core.Shells.Enums;
 
 namespace CalculateVessels.Core.Shells.CylindricalShell
