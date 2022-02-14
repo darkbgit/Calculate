@@ -1,7 +1,6 @@
-﻿using System;
+﻿using CalculateVessels.Core.Interfaces;
+using System;
 using System.Windows.Forms;
-using CalculateVessels.Core.Interfaces;
-using CalculateVessels.Core.Shells.DataIn;
 
 namespace CalculateVessels
 {
@@ -14,18 +13,18 @@ namespace CalculateVessels
         }
 
         private readonly IElement _element;
-        
+
         private void OK_b_Click(object sender, EventArgs e)
         {
             Owner.Hide();
             Close();
             if (nozzle_cb.Checked)
             {
-                NozzleForm nf = new NozzleForm(_element)
+                var nf = new NozzleForm(_element)
                 {
                     Owner = this.Owner,
                 };
-               
+
                 nf.Show();
             }
         }
