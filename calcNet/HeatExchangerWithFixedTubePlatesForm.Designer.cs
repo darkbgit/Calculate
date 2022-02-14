@@ -1158,7 +1158,7 @@ namespace CalculateVessels
             this.isChamberFlangeScirt_cb.TabIndex = 5;
             this.isChamberFlangeScirt_cb.Text = "Приварной встык";
             this.isChamberFlangeScirt_cb.UseVisualStyleBackColor = true;
-            this.isChamberFlangeScirt_cb.CheckedChanged += new System.EventHandler(this.IsChamberFlangeScirt_cb_CheckedChanged);
+            this.isChamberFlangeScirt_cb.CheckedChanged += new System.EventHandler(this.IsChamberFlangeSkirt_cb_CheckedChanged);
             // 
             // chamberFlange_rb3
             // 
@@ -2377,7 +2377,7 @@ namespace CalculateVessels
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "HeatExchangerWithFixedTubePlatesForm";
             this.Text = "HeatExchengerWithFixedTubePlates";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.HeatExchengerWithFixedTubePlatesForm_FormClosing);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.HeatExchangerWithFixedTubePlatesForm_FormClosing);
             this.Load += new System.EventHandler(this.HeatExchangerWithFixedTubePlatesForm_Load);
             this.tabControl.ResumeLayout(false);
             this.shell_page.ResumeLayout(false);

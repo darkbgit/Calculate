@@ -1,21 +1,16 @@
 ﻿using CalculateVessels.Core.Bottoms.Enums;
+using CalculateVessels.Core.Exceptions;
 using CalculateVessels.Core.HeatExchanger;
 using CalculateVessels.Core.HeatExchanger.Enums;
-using CalculateVessels.Core.Shells;
-using CalculateVessels.Core.Shells.DataIn;
+using CalculateVessels.Core.Interfaces;
 using CalculateVessels.Data.PhysicalData;
+using CalculateVessels.Data.Properties;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using CalculateVessels.Core.Interfaces;
-using CalculateVessels.Core.Models;
 
 namespace CalculateVessels
 {
@@ -26,9 +21,9 @@ namespace CalculateVessels
             InitializeComponent();
         }
 
-        public IDataIn DataIn => _heatExchangerDataIn;
+        public IInputData DataIn => _heatExchangerDataIn;
 
-        private HeatExchangerDataIn _heatExchangerDataIn;
+        private HeatExchangerInputData _heatExchangerDataIn;
 
         private void HeatExchangerWithFixedTubePlatesForm_Load(object sender, EventArgs e)
         {
@@ -68,83 +63,74 @@ namespace CalculateVessels
 
         private void IsWithPartitions_cb_CheckedChanged(object sender, EventArgs e)
         {
-            CheckBox cb = sender as CheckBox;
-
-            partitions_gb.Enabled = cb.Checked;
+            if (sender is CheckBox cb) partitions_gb.Enabled = cb.Checked;
         }
 
         private void FirstTubePlate_rb_CheckedChanged(object sender, EventArgs e)
         {
-            RadioButton rb = sender as RadioButton;
+            if (sender is not RadioButton { Checked: true } rb) return;
 
-            if (rb.Checked == true)
+            var a = rb.Name.Last().ToString();
+
+            firstTubePlate_pb.Image = (Bitmap)new ImageConverter().ConvertFrom(Data.Properties.Resources.ResourceManager.GetObject("ConnToFlange" + a));
+
+            var one = a switch
             {
-                var a = rb.Name.Last().ToString();
+                "0" => "1",
+                _ => "2"
+            };
 
-                firstTubePlate_pb.Image = (Bitmap)new ImageConverter().ConvertFrom(Data.Properties.Resources.ResourceManager.GetObject("ConnToFlange" + a));
+            var b = secondTubePlate_gb.Controls.OfType<RadioButton>()
+                .FirstOrDefault(r => r.Checked)
+                ?.Name.LastOrDefault().ToString();
 
-                string one = a switch
-                {
-                    "0" => "1",
-                    _ => "2"
-                };
+            var two = b switch
+            {
+                "0" => "1",
+                _ => "2"
+            };
 
-                var b = secondTubePlate_gb.Controls.OfType<RadioButton>()
-                    .FirstOrDefault(r => r.Checked)
-                    .Name.Last().ToString();
-
-                string two = b switch
-                {
-                    "0" => "1",
-                    _ => "2"
-                };
-
-                shell_pb.Image = (Bitmap)new ImageConverter().ConvertFrom(Data.Properties.Resources.ResourceManager.GetObject("Fixed_" + one + "_" + two));
-
-            }
+            shell_pb.Image = (Bitmap)new ImageConverter().ConvertFrom(Data.Properties.Resources.ResourceManager.GetObject("Fixed_" + one + "_" + two));
         }
 
         private void SecondTubePlate_rb_CheckedChanged(object sender, EventArgs e)
         {
-            RadioButton rb = sender as RadioButton;
+            if (sender is not RadioButton { Checked: true } rb) return;
 
-            if (rb.Checked == true)
+            var b = rb.Name.Last().ToString();
+
+            secondTubePlate_pb.Image = (Bitmap)new ImageConverter().ConvertFrom(Data.Properties.Resources.ResourceManager.GetObject("ConnToFlange" + b));
+
+            var two = b switch
             {
-                var b = rb.Name.Last().ToString();
+                "0" => "1",
+                _ => "2"
+            };
 
-                secondTubePlate_pb.Image = (Bitmap)new ImageConverter().ConvertFrom(Data.Properties.Resources.ResourceManager.GetObject("ConnToFlange" + b));
+            var a = firstTubePlate_gb.Controls.OfType<RadioButton>()
+                .FirstOrDefault(r => r.Checked)
+                ?.Name.LastOrDefault().ToString();
 
-                string two = b switch
-                {
-                    "0" => "1",
-                    _ => "2"
-                };
+            var one = a switch
+            {
+                "0" => "1",
+                _ => "2"
+            };
 
-                var a = firstTubePlate_gb.Controls.OfType<RadioButton>()
-                    .FirstOrDefault(r => r.Checked)
-                    .Name.Last().ToString();
-
-                string one = a switch
-                {
-                    "0" => "1",
-                    _ => "2"
-                };
-
-                shell_pb.Image = (Bitmap)new ImageConverter().ConvertFrom(Data.Properties.Resources.ResourceManager.GetObject("Fixed_" + one + "_" + two));
-            }
+            shell_pb.Image = (Bitmap)new ImageConverter().ConvertFrom(Data.Properties.Resources.ResourceManager.GetObject("Fixed_" + one + "_" + two));
 
         }
 
-        private void IsChamberFlangeScirt_cb_CheckedChanged(object sender, EventArgs e)
+        private void IsChamberFlangeSkirt_cb_CheckedChanged(object sender, EventArgs e)
         {
-            CheckBox cb = sender as CheckBox;
-            string type = cb.Checked ? "_Butt" : "_Flat";
+            var cb = sender as CheckBox;
+            var type = cb.Checked ? "_Butt" : "_Flat";
 
             chamberFlange_rb3.Enabled = cb.Checked;
 
             var a = firstTubePlate_gb.Controls
                 .OfType<RadioButton>()
-                .FirstOrDefault(r => r.Checked).Name.Last().ToString();
+                .FirstOrDefault(r => r.Checked)?.Name.LastOrDefault().ToString();
 
             if (a == "0") a = "1";
 
@@ -158,7 +144,7 @@ namespace CalculateVessels
                     .ConvertFrom(Data.Properties.Resources.ResourceManager.GetObject("ConnToFlange" + a + type + name));
         }
 
-        private void HeatExchengerWithFixedTubePlatesForm_FormClosing(object sender, FormClosingEventArgs e)
+        private void HeatExchangerWithFixedTubePlatesForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (sender is not HeatExchangerWithFixedTubePlatesForm) return;
 
@@ -170,30 +156,28 @@ namespace CalculateVessels
 
         private void ChamberFlange_CheckedChanged(object sender, EventArgs e)
         {
-            RadioButton rb = sender as RadioButton;
+            if (sender is not RadioButton { Checked: true } rb) return;
 
-            if (rb.Checked)
-            {
-                var a = firstTubePlate_gb.Controls
-                    .OfType<RadioButton>()
-                    .FirstOrDefault(r => r.Checked).Name.Last().ToString();
+            var a = firstTubePlate_gb.Controls
+                .OfType<RadioButton>()
+                .FirstOrDefault(r => r.Checked)
+                ?.Name.LastOrDefault().ToString();
 
-                if (a == "0") a = "1";
+            if (a == "0") a = "1";
 
-                string type = isChamberFlangeScirt_cb.Checked ? "_Butt" : "_Flat";
+            var type = isChamberFlangeScirt_cb.Checked ? "_Butt" : "_Flat";
 
-                var name = rb.Name.Last().ToString();
+            var name = rb.Name.Last().ToString();
 
-                name = (Convert.ToInt32(name) + 1).ToString();
+            name = (Convert.ToInt32(name) + 1).ToString();
 
-                chamberFlange_pb.Image = (Bitmap)new ImageConverter()
-                        .ConvertFrom(Data.Properties.Resources.ResourceManager.GetObject("ConnToFlange" + a + type + name));
-            }
+            chamberFlange_pb.Image = (Bitmap)new ImageConverter()
+                .ConvertFrom(Data.Properties.Resources.ResourceManager.GetObject("ConnToFlange" + a + type + name));
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            _heatExchangerDataIn = new();
+            _heatExchangerDataIn = new HeatExchangerInputData();
 
             List<string> dataInErr = new();
 
@@ -206,7 +190,7 @@ namespace CalculateVessels
             //D
             {
                 if (double.TryParse(D_tb.Text, NumberStyles.AllowDecimalPoint,
-                CultureInfo.InvariantCulture, out double D))
+                CultureInfo.InvariantCulture, out var D))
                 {
                     _heatExchangerDataIn.D = D;
                 }
@@ -219,7 +203,7 @@ namespace CalculateVessels
             //sK
             {
                 if (double.TryParse(sK_tb.Text, NumberStyles.AllowDecimalPoint,
-                CultureInfo.InvariantCulture, out double sK))
+                CultureInfo.InvariantCulture, out var sK))
                 {
                     _heatExchangerDataIn.sK = sK;
                 }
@@ -232,7 +216,7 @@ namespace CalculateVessels
             //cK
             {
                 if (double.TryParse(cK_tb.Text, NumberStyles.AllowDecimalPoint,
-                CultureInfo.InvariantCulture, out double cK))
+                CultureInfo.InvariantCulture, out var cK))
                 {
                     _heatExchangerDataIn.cK = cK;
                 }
@@ -245,7 +229,7 @@ namespace CalculateVessels
             //pM
             {
                 if (double.TryParse(pM_tb.Text, NumberStyles.AllowDecimalPoint,
-                CultureInfo.InvariantCulture, out double pM))
+                CultureInfo.InvariantCulture, out var pM))
                 {
                     _heatExchangerDataIn.pM = pM;
                 }
@@ -258,7 +242,7 @@ namespace CalculateVessels
             //tK
             {
                 if (double.TryParse(tK_tb.Text, NumberStyles.AllowDecimalPoint,
-                CultureInfo.InvariantCulture, out double tK))
+                CultureInfo.InvariantCulture, out var tK))
                 {
                     _heatExchangerDataIn.tK = tK;
                 }
@@ -271,7 +255,7 @@ namespace CalculateVessels
             //TK
             {
                 if (double.TryParse(TCalculateK_tb.Text, NumberStyles.AllowDecimalPoint,
-                CultureInfo.InvariantCulture, out double TK))
+                CultureInfo.InvariantCulture, out var TK))
                 {
                     _heatExchangerDataIn.TK = TK;
                 }
@@ -284,7 +268,7 @@ namespace CalculateVessels
             //pT
             {
                 if (double.TryParse(pT_tb.Text, NumberStyles.AllowDecimalPoint,
-                CultureInfo.InvariantCulture, out double pT))
+                CultureInfo.InvariantCulture, out var pT))
                 {
                     _heatExchangerDataIn.pT = pT;
                 }
@@ -297,7 +281,7 @@ namespace CalculateVessels
             //tT
             {
                 if (double.TryParse(tT_tb.Text, NumberStyles.AllowDecimalPoint,
-                CultureInfo.InvariantCulture, out double tT))
+                CultureInfo.InvariantCulture, out var tT))
                 {
                     _heatExchangerDataIn.tT = tT;
                 }
@@ -310,7 +294,7 @@ namespace CalculateVessels
             //TT
             {
                 if (double.TryParse(TCalculateT_tb.Text, NumberStyles.AllowDecimalPoint,
-                CultureInfo.InvariantCulture, out double TT))
+                CultureInfo.InvariantCulture, out var TT))
                 {
                     _heatExchangerDataIn.TT = TT;
                 }
@@ -323,7 +307,7 @@ namespace CalculateVessels
             //t0
             {
                 if (double.TryParse(t0_tb.Text, NumberStyles.AllowDecimalPoint,
-                CultureInfo.InvariantCulture, out double t0))
+                CultureInfo.InvariantCulture, out var t0))
                 {
                     _heatExchangerDataIn.t0 = t0;
                 }
@@ -336,7 +320,7 @@ namespace CalculateVessels
             //N
             {
                 if (int.TryParse(N_tb.Text, NumberStyles.Integer,
-                CultureInfo.InvariantCulture, out int N))
+                CultureInfo.InvariantCulture, out var N))
                 {
                     _heatExchangerDataIn.N = N;
                 }
@@ -357,7 +341,7 @@ namespace CalculateVessels
                 //l1R
                 {
                     if (double.TryParse(l1R_tb.Text, NumberStyles.AllowDecimalPoint,
-                    CultureInfo.InvariantCulture, out double l1R))
+                    CultureInfo.InvariantCulture, out var l1R))
                     {
                         _heatExchangerDataIn.l1R = l1R;
                     }
@@ -370,7 +354,7 @@ namespace CalculateVessels
                 //l2R
                 {
                     if (double.TryParse(l2R_tb.Text, NumberStyles.AllowDecimalPoint,
-                    CultureInfo.InvariantCulture, out double l2R))
+                    CultureInfo.InvariantCulture, out var l2R))
                     {
                         _heatExchangerDataIn.l2R = l2R;
                     }
@@ -383,7 +367,7 @@ namespace CalculateVessels
                 //cper
                 {
                     if (double.TryParse(cper_tb.Text, NumberStyles.AllowDecimalPoint,
-                    CultureInfo.InvariantCulture, out double cper))
+                    CultureInfo.InvariantCulture, out var cper))
                     {
                         _heatExchangerDataIn.cper = cper;
                     }
@@ -396,7 +380,7 @@ namespace CalculateVessels
                 //sper
                 {
                     if (double.TryParse(sper_tb.Text, NumberStyles.AllowDecimalPoint,
-                    CultureInfo.InvariantCulture, out double sper))
+                    CultureInfo.InvariantCulture, out var sper))
                     {
                         _heatExchangerDataIn.sper = sper;
                     }
@@ -407,17 +391,19 @@ namespace CalculateVessels
                 }
             }
 
-            _heatExchangerDataIn.FirstTubePlate.TubePlateType = (TubePlateType)Convert.ToInt32(firstTubePlate_gb.Controls.OfType<RadioButton>().FirstOrDefault(r => r.Checked).Name.Last().ToString());
+            _heatExchangerDataIn.FirstTubePlate.TubePlateType = (TubePlateType)Convert.ToInt32(firstTubePlate_gb.Controls.OfType<RadioButton>().FirstOrDefault(r => r.Checked)
+                ?.Name.LastOrDefault().ToString());
 
 
-            _heatExchangerDataIn.SecondTubePlate.TubePlateType = (TubePlateType)Convert.ToInt32(secondTubePlate_gb.Controls.OfType<RadioButton>().FirstOrDefault(r => r.Checked).Name.Last().ToString());
+            _heatExchangerDataIn.SecondTubePlate.TubePlateType = (TubePlateType)Convert.ToInt32(secondTubePlate_gb.Controls.OfType<RadioButton>().FirstOrDefault(r => r.Checked)
+                ?.Name.LastOrDefault().ToString());
 
             _heatExchangerDataIn.FirstTubePlate.Steel2 = steel2_cb.Text;
 
             //h2
             {
                 if (double.TryParse(h2_tb.Text, NumberStyles.AllowDecimalPoint,
-                CultureInfo.InvariantCulture, out double h2))
+                CultureInfo.InvariantCulture, out var h2))
                 {
                     _heatExchangerDataIn.FirstTubePlate.h2 = h2;
                 }
@@ -432,7 +418,7 @@ namespace CalculateVessels
             //s2
             {
                 if (double.TryParse(s2_tb.Text, NumberStyles.AllowDecimalPoint,
-                CultureInfo.InvariantCulture, out double s2))
+                CultureInfo.InvariantCulture, out var s2))
                 {
                     _heatExchangerDataIn.FirstTubePlate.s2 = s2;
                 }
@@ -447,7 +433,7 @@ namespace CalculateVessels
             //h1
             {
                 if (double.TryParse(h1_tb.Text, NumberStyles.AllowDecimalPoint,
-                CultureInfo.InvariantCulture, out double h1))
+                CultureInfo.InvariantCulture, out var h1))
                 {
                     _heatExchangerDataIn.FirstTubePlate.h1 = h1;
                 }
@@ -460,7 +446,7 @@ namespace CalculateVessels
             //s1
             {
                 if (double.TryParse(s1_tb.Text, NumberStyles.AllowDecimalPoint,
-                CultureInfo.InvariantCulture, out double s1))
+                CultureInfo.InvariantCulture, out var s1))
                 {
                     _heatExchangerDataIn.FirstTubePlate.s1 = s1;
                 }
@@ -473,7 +459,7 @@ namespace CalculateVessels
             //DH
             {
                 if (double.TryParse(DH_tb.Text, NumberStyles.AllowDecimalPoint,
-                CultureInfo.InvariantCulture, out double DH))
+                CultureInfo.InvariantCulture, out var DH))
                 {
                     _heatExchangerDataIn.FirstTubePlate.DH = DH;
                 }
@@ -487,16 +473,16 @@ namespace CalculateVessels
 
             _heatExchangerDataIn.FirstTubePlate.FlangeFace =
                 (FlangeFaceType)Convert.ToInt32(flange_gb.Controls
-                                                .OfType<RadioButton>()
-                                                .FirstOrDefault(r => r.Checked)
-                                                .Name.Last().ToString());
+                    .OfType<RadioButton>()
+                    .FirstOrDefault(r => r.Checked)
+                    ?.Name.Last().ToString());
 
             _heatExchangerDataIn.FirstTubePlate.Steelp = steelp_cb.Text;
 
             //sp
             {
                 if (double.TryParse(sp_tb.Text, NumberStyles.AllowDecimalPoint,
-                CultureInfo.InvariantCulture, out double sp))
+                CultureInfo.InvariantCulture, out var sp))
                 {
                     _heatExchangerDataIn.FirstTubePlate.sp = sp;
                 }
@@ -509,7 +495,7 @@ namespace CalculateVessels
             //c
             {
                 if (double.TryParse(c_tb.Text, NumberStyles.AllowDecimalPoint,
-                CultureInfo.InvariantCulture, out double c))
+                CultureInfo.InvariantCulture, out var c))
                 {
                     _heatExchangerDataIn.FirstTubePlate.c = c;
                 }
@@ -526,7 +512,7 @@ namespace CalculateVessels
             //a1
             {
                 if (double.TryParse(a1_tb.Text, NumberStyles.AllowDecimalPoint,
-                CultureInfo.InvariantCulture, out double a1))
+                CultureInfo.InvariantCulture, out var a1))
                 {
                     _heatExchangerDataIn.a1 = a1;
                 }
@@ -539,7 +525,7 @@ namespace CalculateVessels
             //DE
             {
                 if (double.TryParse(DE_tb.Text, NumberStyles.AllowDecimalPoint,
-                CultureInfo.InvariantCulture, out double DE))
+                CultureInfo.InvariantCulture, out var DE))
                 {
                     _heatExchangerDataIn.DE = DE;
                 }
@@ -552,7 +538,7 @@ namespace CalculateVessels
             //i
             {
                 if (int.TryParse(i_tb.Text, NumberStyles.Integer,
-                CultureInfo.InvariantCulture, out int i))
+                CultureInfo.InvariantCulture, out var i))
                 {
                     _heatExchangerDataIn.i = i;
                 }
@@ -565,7 +551,7 @@ namespace CalculateVessels
             //d0
             {
                 if (double.TryParse(d0_tb.Text, NumberStyles.AllowDecimalPoint,
-                CultureInfo.InvariantCulture, out double d0))
+                CultureInfo.InvariantCulture, out var d0))
                 {
                     _heatExchangerDataIn.d0 = d0;
                 }
@@ -578,7 +564,7 @@ namespace CalculateVessels
             //tp
             {
                 if (double.TryParse(tp_tb.Text, NumberStyles.AllowDecimalPoint,
-                CultureInfo.InvariantCulture, out double tp))
+                CultureInfo.InvariantCulture, out var tp))
                 {
                     _heatExchangerDataIn.tp = tp;
                 }
@@ -595,7 +581,7 @@ namespace CalculateVessels
             //dT
             {
                 if (double.TryParse(dT_tb.Text, NumberStyles.AllowDecimalPoint,
-                CultureInfo.InvariantCulture, out double dT))
+                CultureInfo.InvariantCulture, out var dT))
                 {
                     _heatExchangerDataIn.dT = dT;
                 }
@@ -608,7 +594,7 @@ namespace CalculateVessels
             //sT
             {
                 if (double.TryParse(sT_tb.Text, NumberStyles.AllowDecimalPoint,
-                CultureInfo.InvariantCulture, out double sT))
+                CultureInfo.InvariantCulture, out var sT))
                 {
                     _heatExchangerDataIn.sT = sT;
                 }
@@ -621,7 +607,7 @@ namespace CalculateVessels
             //l
             {
                 if (double.TryParse(l_tb.Text, NumberStyles.AllowDecimalPoint,
-                CultureInfo.InvariantCulture, out double l))
+                CultureInfo.InvariantCulture, out var l))
                 {
                     _heatExchangerDataIn.l = l;
                 }
@@ -631,7 +617,7 @@ namespace CalculateVessels
                 }
             }
 
-            var tubeRolling = tubeFirstTubePlateFix_gb.Controls.OfType<RadioButton>().FirstOrDefault(r => r.Checked).Name;
+            var tubeRolling = tubeFirstTubePlateFix_gb.Controls.OfType<RadioButton>().FirstOrDefault(r => r.Checked)?.Name;
 
             switch (tubeRolling)
             {
@@ -656,6 +642,7 @@ namespace CalculateVessels
                 case "welded_rb":
                     _heatExchangerDataIn.FirstTubePlate.FixTubeInTubePlate = FixTubeInTubePlateType.OnlyWelding;
                     break;
+
             }
 
             if (_heatExchangerDataIn.FirstTubePlate.FixTubeInTubePlate != FixTubeInTubePlateType.OnlyWelding)
@@ -663,7 +650,7 @@ namespace CalculateVessels
                 //lB
                 {
                     if (double.TryParse(lB_tb.Text, NumberStyles.AllowDecimalPoint,
-                    CultureInfo.InvariantCulture, out double lB))
+                    CultureInfo.InvariantCulture, out var lB))
                     {
                         _heatExchangerDataIn.FirstTubePlate.lB = lB;
                     }
@@ -679,7 +666,7 @@ namespace CalculateVessels
                 //delta
                 {
                     if (double.TryParse(delta_tb.Text, NumberStyles.AllowDecimalPoint,
-                    CultureInfo.InvariantCulture, out double delta))
+                    CultureInfo.InvariantCulture, out var delta))
                     {
                         _heatExchangerDataIn.FirstTubePlate.delta = delta;
                     }
@@ -697,7 +684,7 @@ namespace CalculateVessels
                 //sn
                 {
                     if (double.TryParse(sn_tb.Text, NumberStyles.AllowDecimalPoint,
-                    CultureInfo.InvariantCulture, out double sn))
+                    CultureInfo.InvariantCulture, out var sn))
                     {
                         _heatExchangerDataIn.FirstTubePlate.sn = sn;
                     }
@@ -710,7 +697,7 @@ namespace CalculateVessels
                 //s1p
                 {
                     if (double.TryParse(s1p_tb.Text, NumberStyles.AllowDecimalPoint,
-                    CultureInfo.InvariantCulture, out double s1p))
+                    CultureInfo.InvariantCulture, out var s1p))
                     {
                         _heatExchangerDataIn.FirstTubePlate.s1p = s1p;
                     }
@@ -723,7 +710,7 @@ namespace CalculateVessels
                 //BP
                 {
                     if (double.TryParse(BP_tb.Text, NumberStyles.AllowDecimalPoint,
-                    CultureInfo.InvariantCulture, out double BP))
+                    CultureInfo.InvariantCulture, out var BP))
                     {
                         _heatExchangerDataIn.FirstTubePlate.BP = BP;
                     }
@@ -736,7 +723,7 @@ namespace CalculateVessels
                 //tP
                 {
                     if (double.TryParse(partition_tP_tb.Text, NumberStyles.AllowDecimalPoint,
-                    CultureInfo.InvariantCulture, out double tP))
+                    CultureInfo.InvariantCulture, out var tP))
                     {
                         if (tP > _heatExchangerDataIn.tp)
                         {
@@ -755,26 +742,46 @@ namespace CalculateVessels
             }
 
 
-            bool isNotError = dataInErr.Count == 0 && DataIn.IsDataGood;
+            var isError = dataInErr.Any() || !DataIn.IsDataGood;
 
-            if (isNotError)
-            {
-                IElement heatExchanger = new HeatExchanger(_heatExchangerDataIn);
-
-                CalculatedElement calculatedElement = new CalculateElement(heatExchanger, this).Calculate(false);
-
-                if (calculatedElement != null)
-                {
-                    //
-                }
-
-            }
-            else
+            if (isError)
             {
                 MessageBox.Show(string.Join<string>(Environment.NewLine, dataInErr.Union(_heatExchangerDataIn.ErrorList)));
             }
-        }
 
-        //private void SetValue()
+            IElement heatExchanger = new HeatExchanger(_heatExchangerDataIn);
+
+            try
+            {
+                heatExchanger.Calculate();
+            }
+            catch (CalculateException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+            if (Owner is MainForm main)
+            {
+                main.Word_lv.Items.Add(heatExchanger.ToString());
+                main.ElementsCollection.Add(heatExchanger);
+
+                Hide();
+            }
+            else
+            {
+                MessageBox.Show("MainForm Error");
+            }
+
+            if (heatExchanger.IsCalculated)
+            {
+                if (heatExchanger.CalculatedData.ErrorList.Any())
+                {
+                    MessageBox.Show(string.Join<string>(Environment.NewLine, heatExchanger.CalculatedData.ErrorList));
+                }
+
+                MessageBox.Show(Resources.CalcComplete);
+            }
+
+        }
     }
 }
