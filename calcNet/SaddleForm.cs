@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
+using CalculateVessels.Core.Exceptions;
 using CalculateVessels.Core.Interfaces;
 using CalculateVessels.Core.Models;
 using CalculateVessels.Core.Shells;
@@ -15,14 +17,16 @@ namespace CalculateVessels
 {
     public partial class SaddleForm : Form
     {
+        private SaddleInputData _saddleDataIn;
+
         public SaddleForm()
         {
             InitializeComponent();
         }
 
-        public IDataIn DataIn => saddleDataIn;
+        public IInputData DataIn => _saddleDataIn;
 
-        private SaddleDataIn saddleDataIn;
+        
 
         private void SaddleForm_Load(object sender, EventArgs e)
         {
@@ -94,16 +98,16 @@ namespace CalculateVessels
         private void PreCalc_btn_Click(object sender, EventArgs e)
         {
 
-            saddleDataIn = new SaddleDataIn();
+            _saddleDataIn = new SaddleInputData();
 
             var dataInErr = new List<string>();
 
             //D
             {
-                if (double.TryParse(D_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
-                System.Globalization.CultureInfo.InvariantCulture, out var D))
+                if (double.TryParse(D_tb.Text, NumberStyles.AllowDecimalPoint,
+                CultureInfo.InvariantCulture, out var D))
                 {
-                    saddleDataIn.D = D;
+                    _saddleDataIn.D = D;
                 }
                 else
                 {
@@ -113,10 +117,10 @@ namespace CalculateVessels
 
             //s
             {
-                if (double.TryParse(s_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
-                System.Globalization.CultureInfo.InvariantCulture, out var s))
+                if (double.TryParse(s_tb.Text, NumberStyles.AllowDecimalPoint,
+                CultureInfo.InvariantCulture, out var s))
                 {
-                    saddleDataIn.s = s;
+                    _saddleDataIn.s = s;
                 }
                 else
                 {
@@ -126,10 +130,10 @@ namespace CalculateVessels
 
             //c
             {
-                if (double.TryParse(c_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
-                System.Globalization.CultureInfo.InvariantCulture, out var c))
+                if (double.TryParse(c_tb.Text, NumberStyles.AllowDecimalPoint,
+                CultureInfo.InvariantCulture, out var c))
                 {
-                    saddleDataIn.c = c;
+                    _saddleDataIn.c = c;
                 }
                 else
                 {
@@ -139,10 +143,10 @@ namespace CalculateVessels
 
             //fi
             {
-                if (double.TryParse(fi_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
-                System.Globalization.CultureInfo.InvariantCulture, out var fi))
+                if (double.TryParse(fi_tb.Text, NumberStyles.AllowDecimalPoint,
+                CultureInfo.InvariantCulture, out var fi))
                 {
-                    saddleDataIn.fi = fi;
+                    _saddleDataIn.fi = fi;
                 }
                 else
                 {
@@ -151,14 +155,14 @@ namespace CalculateVessels
             }
 
             //steel
-            saddleDataIn.Steel = steel_cb.Text;
+            _saddleDataIn.Steel = steel_cb.Text;
 
             //p
             {
-                if (double.TryParse(p_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
-                System.Globalization.CultureInfo.InvariantCulture, out var p))
+                if (double.TryParse(p_tb.Text, NumberStyles.AllowDecimalPoint,
+                CultureInfo.InvariantCulture, out var p))
                 {
-                    saddleDataIn.p = p;
+                    _saddleDataIn.p = p;
                 }
                 else
                 {
@@ -167,14 +171,14 @@ namespace CalculateVessels
             }
 
             //
-            saddleDataIn.IsPressureIn = !isNotPressureIn_cb.Checked;
+            _saddleDataIn.IsPressureIn = !isNotPressureIn_cb.Checked;
 
             //t
             {
-                if (double.TryParse(t_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
-                    System.Globalization.CultureInfo.InvariantCulture, out double t))
+                if (double.TryParse(t_tb.Text, NumberStyles.AllowDecimalPoint,
+                    CultureInfo.InvariantCulture, out var t))
                 {
-                    saddleDataIn.t = t;
+                    _saddleDataIn.t = t;
                 }
                 else
                 {
@@ -184,10 +188,10 @@ namespace CalculateVessels
 
             //N
             {
-                if (int.TryParse(N_cb.Text, System.Globalization.NumberStyles.Integer,
-                    System.Globalization.CultureInfo.InvariantCulture, out int N))
+                if (int.TryParse(N_cb.Text, NumberStyles.Integer,
+                    CultureInfo.InvariantCulture, out var N))
                 {
-                    saddleDataIn.N = N;
+                    _saddleDataIn.N = N;
                 }
                 else
                 {
@@ -196,14 +200,14 @@ namespace CalculateVessels
             }
 
             //
-            saddleDataIn.IsAssembly = isAssembly_cb.Checked;
+            _saddleDataIn.IsAssembly = isAssembly_cb.Checked;
 
             //G
             {
-                if (double.TryParse(G_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
-                    System.Globalization.CultureInfo.InvariantCulture, out double G))
+                if (double.TryParse(G_tb.Text, NumberStyles.AllowDecimalPoint,
+                    CultureInfo.InvariantCulture, out var G))
                 {
-                    saddleDataIn.G = G;
+                    _saddleDataIn.G = G;
                 }
                 else
                 {
@@ -219,17 +223,17 @@ namespace CalculateVessels
             switch (reinforcementShell)
             {
                 case nameof(nothing_rb):
-                    saddleDataIn.Type = SaddleType.SaddleWithoutRingWithoutSheet;
+                    _saddleDataIn.Type = SaddleType.SaddleWithoutRingWithoutSheet;
                     break;
                 case nameof(sheet_rb):
-                    saddleDataIn.Type = SaddleType.SaddleWithoutRingWithSheet;
+                    _saddleDataIn.Type = SaddleType.SaddleWithoutRingWithSheet;
 
                     //s2
                     {
-                        if (double.TryParse(s2_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
-                            System.Globalization.CultureInfo.InvariantCulture, out double s2))
+                        if (double.TryParse(s2_tb.Text, NumberStyles.AllowDecimalPoint,
+                            CultureInfo.InvariantCulture, out var s2))
                         {
-                            saddleDataIn.s2 = s2;
+                            _saddleDataIn.s2 = s2;
                         }
                         else
                         {
@@ -239,10 +243,10 @@ namespace CalculateVessels
 
                     //b2
                     {
-                        if (double.TryParse(b2_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
-                            System.Globalization.CultureInfo.InvariantCulture, out double b2))
+                        if (double.TryParse(b2_tb.Text, NumberStyles.AllowDecimalPoint,
+                            CultureInfo.InvariantCulture, out var b2))
                         {
-                            saddleDataIn.b2 = b2;
+                            _saddleDataIn.b2 = b2;
                         }
                         else
                         {
@@ -252,10 +256,10 @@ namespace CalculateVessels
 
                     //delta2
                     {
-                        if (double.TryParse(delta2_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
-                            System.Globalization.CultureInfo.InvariantCulture, out double delta2))
+                        if (double.TryParse(delta2_tb.Text, NumberStyles.AllowDecimalPoint,
+                            CultureInfo.InvariantCulture, out var delta2))
                         {
-                            saddleDataIn.delta2 = delta2;
+                            _saddleDataIn.delta2 = delta2;
                         }
                         else
                         {
@@ -277,7 +281,7 @@ namespace CalculateVessels
                     //}
                     break;
                 case nameof(ring_rb):
-                    saddleDataIn.Type = SaddleType.SaddleWithRing;
+                    _saddleDataIn.Type = SaddleType.SaddleWithRing;
                     break;
                 default:
                     dataInErr.Add("Невозможно определить тип укрепления обечайки");
@@ -286,10 +290,10 @@ namespace CalculateVessels
 
             //b
             {
-                if (double.TryParse(b_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
-                    System.Globalization.CultureInfo.InvariantCulture, out double b))
+                if (double.TryParse(b_tb.Text, NumberStyles.AllowDecimalPoint,
+                    CultureInfo.InvariantCulture, out var b))
                 {
-                    saddleDataIn.b = b;
+                    _saddleDataIn.b = b;
                 }
                 else
                 {
@@ -299,10 +303,10 @@ namespace CalculateVessels
 
             //delta1
             {
-                if (double.TryParse(delta1_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
-                    System.Globalization.CultureInfo.InvariantCulture, out double delta1))
+                if (double.TryParse(delta1_tb.Text, NumberStyles.AllowDecimalPoint,
+                    CultureInfo.InvariantCulture, out var delta1))
                 {
-                    saddleDataIn.delta1 = delta1;
+                    _saddleDataIn.delta1 = delta1;
                 }
                 else
                 {
@@ -312,10 +316,10 @@ namespace CalculateVessels
 
             //a
             {
-                if (double.TryParse(a_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
-                System.Globalization.CultureInfo.InvariantCulture, out double a))
+                if (double.TryParse(a_tb.Text, NumberStyles.AllowDecimalPoint,
+                CultureInfo.InvariantCulture, out var a))
                 {
-                    saddleDataIn.a = a;
+                    _saddleDataIn.a = a;
                 }
                 else
                 {
@@ -325,10 +329,10 @@ namespace CalculateVessels
 
             //H
             {
-                if (double.TryParse(H_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
-                System.Globalization.CultureInfo.InvariantCulture, out double H))
+                if (double.TryParse(H_tb.Text, NumberStyles.AllowDecimalPoint,
+                CultureInfo.InvariantCulture, out var H))
                 {
-                    saddleDataIn.H = H;
+                    _saddleDataIn.H = H;
                 }
                 else
                 {
@@ -338,10 +342,10 @@ namespace CalculateVessels
 
             //L
             {
-                if (double.TryParse(L_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
-                    System.Globalization.CultureInfo.InvariantCulture, out double L))
+                if (double.TryParse(L_tb.Text, NumberStyles.AllowDecimalPoint,
+                    CultureInfo.InvariantCulture, out var L))
                 {
-                    saddleDataIn.L = L;
+                    _saddleDataIn.L = L;
                 }
                 else
                 {
@@ -351,10 +355,10 @@ namespace CalculateVessels
 
             //e
             {
-                if (double.TryParse(e_tb.Text, System.Globalization.NumberStyles.AllowDecimalPoint,
-                    System.Globalization.CultureInfo.InvariantCulture, out double eValue))
+                if (double.TryParse(e_tb.Text, NumberStyles.AllowDecimalPoint,
+                    CultureInfo.InvariantCulture, out var eValue))
                 {
-                    saddleDataIn.e = eValue;
+                    _saddleDataIn.e = eValue;
                 }
                 else
                 {
@@ -362,24 +366,34 @@ namespace CalculateVessels
                 }
             }
 
-            var isNotError = dataInErr.Count == 0 && DataIn.IsDataGood;
+            var isError = dataInErr.Any() || !DataIn.IsDataGood;
 
-            if (isNotError)
+            if (isError)
             {
-                IElement saddle = new Saddle(saddleDataIn);
+                MessageBox.Show(string.Join<string>(Environment.NewLine, dataInErr.Union(_saddleDataIn.ErrorList)));
+            }
 
-                CalculatedElement calculatedElement = new CalculateElement(saddle, this).Calculate(true);
+            IElement saddle = new Saddle(_saddleDataIn);
 
-                if (calculatedElement != null)
+            try
+            {
+                saddle.Calculate();
+            }
+            catch (CalculateException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+            if (saddle.IsCalculated)
+            {
+                if (saddle.CalculatedData.ErrorList.Any())
                 {
-                    calc_btn.Enabled = true;
+                    MessageBox.Show(string.Join<string>(Environment.NewLine, saddle.CalculatedData.ErrorList));
                 }
-            }
-            else
-            {
-                MessageBox.Show(string.Join<string>(Environment.NewLine, dataInErr.Union(saddleDataIn.ErrorList)));
-            }
 
+                calc_btn.Enabled = true;
+                MessageBox.Show(Resources.CalcComplete);
+            }
         }
 
         private void Calc_btn_Click(object sender, EventArgs e)
@@ -388,21 +402,51 @@ namespace CalculateVessels
             List<string> dataInErr = new();
 
             //name
-            saddleDataIn.Name = name_tb.Text;
+            _saddleDataIn.Name = name_tb.Text;
 
             //shell name
-            saddleDataIn.NameShell = nameShell_tb.Text;
+            _saddleDataIn.NameShell = nameShell_tb.Text;
 
-            if (DataIn.IsDataGood)
+            var isError = dataInErr.Any() || !DataIn.IsDataGood;
+
+            if (isError)
             {
-                IElement saddle = new Saddle(saddleDataIn);
+                MessageBox.Show(string.Join<string>(Environment.NewLine, dataInErr.Union(_saddleDataIn.ErrorList)));
+            }
 
-                CalculatedElement calculatedElement = new CalculateElement(saddle, this).Calculate(false);
+            IElement saddle = new Saddle(_saddleDataIn);
 
+            try
+            {
+                saddle.Calculate();
+            }
+            catch (CalculateException ex)
+            {
+                MessageBox.Show(ex.Message);
+                return;
+            }
+
+            if (Owner is MainForm main)
+            {
+                main.Word_lv.Items.Add(saddle.ToString());
+                main.ElementsCollection.Add(saddle);
+
+                //_form.Hide();
             }
             else
             {
-                MessageBox.Show(string.Join<string>(Environment.NewLine, dataInErr.Union(saddleDataIn.ErrorList)));
+                MessageBox.Show("MainForm Error");
+            }
+
+            if (saddle.IsCalculated)
+            {
+                if (saddle.CalculatedData.ErrorList.Any())
+                {
+                    MessageBox.Show(string.Join<string>(Environment.NewLine, saddle.CalculatedData.ErrorList));
+                }
+
+                calc_btn.Enabled = true;
+                MessageBox.Show(Resources.CalcComplete);
             }
         }
     }

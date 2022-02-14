@@ -5,10 +5,8 @@ using System.Linq;
 
 namespace CalculateVessels.Core.Supports.Saddle
 {
-    public class SaddleDataIn : IDataIn
+    public class SaddleInputData : IInputData
     {
-
-
         public IEnumerable<string> ErrorList => _errorList;
 
         private List<string> _errorList = new();
@@ -37,5 +35,7 @@ namespace CalculateVessels.Core.Supports.Saddle
         public string Steel { get; set; }
         public double t {  get; set; }
         public int N {  get; set; }
+        public double SigmaAllow { get; set; }
+        public double E { get; set; }
     }
 }
