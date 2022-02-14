@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace CalculateVessels.Core.HeatExchanger
 {
-    public class HeatExchangerDataIn : IDataIn
+    public class HeatExchangerInputData : IInputData
     {
         //public bool IsDataGood => !ErrorList.Any();
 
