@@ -1,18 +1,17 @@
-﻿using CalculateVessels.Core.Interfaces;
-using CalculateVessels.Core.Models;
-using CalculateVessels.Core.Shells.DataIn;
+﻿using CalculateVessels.Core.Exceptions;
+using CalculateVessels.Core.Interfaces;
 using CalculateVessels.Core.Shells.Enums;
 using CalculateVessels.Core.Shells.Nozzle;
 using CalculateVessels.Core.Shells.Nozzle.Enums;
 using CalculateVessels.Data.PhysicalData;
+using CalculateVessels.Data.Properties;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
-using CalculateVessels.Core.Exceptions;
-using CalculateVessels.Data.Properties;
+using CalculateVessels.Core.Shells.Base;
 
 namespace CalculateVessels
 {
@@ -41,30 +40,28 @@ namespace CalculateVessels
 
         private void Vid_rb_CheckedChanged(object sender, EventArgs e)
         {
-            RadioButton rb = sender as RadioButton;
-            if (rb.Checked)
-            {
-                int i = Convert.ToInt32(rb.Text[0].ToString());
-                vid_pictureBox.Image =
-                    (Bitmap)new ImageConverter()
+            if (sender is not RadioButton {Checked: true} rb) return;
+
+            var i = Convert.ToInt32(rb.Text[0].ToString());
+            vid_pictureBox.Image =
+                (Bitmap)new ImageConverter()
                     .ConvertFrom(CalculateVessels.Data.Properties.Resources.ResourceManager.GetObject("Nozzle" + i.ToString()));
 
-                ring_gb.Enabled = false;
-                in_gb.Enabled = false;
-                switch (i)
-                {
-                    case (int)NozzleKind.ImpassWithRing:
-                        ring_gb.Enabled = true;
-                        break;
-                    case (int)NozzleKind.PassWithoutRing:
-                        in_gb.Enabled = true;
-                        break;
-                    case (int)NozzleKind.PassWithRing:
-                    case (int)NozzleKind.WithRingAndInPart:
-                        ring_gb.Enabled = true;
-                        in_gb.Enabled = true;
-                        break;
-                }
+            ring_gb.Enabled = false;
+            in_gb.Enabled = false;
+            switch (i)
+            {
+                case (int)NozzleKind.ImpassWithRing:
+                    ring_gb.Enabled = true;
+                    break;
+                case (int)NozzleKind.PassWithoutRing:
+                    in_gb.Enabled = true;
+                    break;
+                case (int)NozzleKind.PassWithRing:
+                case (int)NozzleKind.WithRingAndInPart:
+                    ring_gb.Enabled = true;
+                    in_gb.Enabled = true;
+                    break;
             }
         }
 
@@ -570,13 +567,14 @@ namespace CalculateVessels
 
         private void Place_Draw(object sender)
         {
-            var rb = sender as RadioButton;
+            if (sender is not RadioButton rb) return;
+
 
             switch (_shellDataIn.ShellType)
             {
                 case ShellType.Cylindrical:
                     {
-                        if (rb == null || (rb.Checked && rb.Text == PERPENDICULAR))
+                        if (rb.Checked && rb.Text == PERPENDICULAR)
                         {
                             place_gb.Controls["pn"].Dispose();
                             Panel pn = new()
@@ -912,7 +910,7 @@ namespace CalculateVessels
                 //    }
                 case ShellType.Elliptical:
                     {
-                        if (rb == null || rb.Checked && rb.Text == PERPENDICULAR)
+                        if (rb.Checked && rb.Text == PERPENDICULAR)
                         {
                             if (Controls["place_gb"].Controls["corPn"] == null ||
                                 (Controls["place_gb"].Controls["corPn"].Controls["placePolar_rb"] as RadioButton).Checked == true)
@@ -951,7 +949,7 @@ namespace CalculateVessels
                         //    }
                         //}
 
-                        else if (rb == null || (rb.Checked && rb.Text == "Полярная"))
+                        else if (rb.Checked && rb.Text == "Полярная")
                         {
                             if (Controls["place_gb"] == null ||
                                 (Controls["place_gb"].Controls["placerb_1"] as RadioButton).Checked == true)
@@ -1503,109 +1501,109 @@ namespace CalculateVessels
                     }
                     break;
                 case TRANSVERSELY:
-                {
-                    _nozzleData.Location = NozzleLocation.LocationAccordingToParagraph_5_2_2_2;
-
-                    var text = (place_gb.Controls["pn"].Controls["t_tb"] as TextBox)?.Text;
-
-                    if (double.TryParse(text, NumberStyles.AllowDecimalPoint,
-                            CultureInfo.InvariantCulture, out var tTransversely))
                     {
-                        _nozzleData.tTransversely = tTransversely;
-                    }
-                    else
-                    {
-                        dataInErr.Add(nameof(tTransversely) + WRONG_INPUT);
-                    }
+                        _nozzleData.Location = NozzleLocation.LocationAccordingToParagraph_5_2_2_2;
 
-                    break;
-                }
+                        var text = (place_gb.Controls["pn"].Controls["t_tb"] as TextBox)?.Text;
+
+                        if (double.TryParse(text, NumberStyles.AllowDecimalPoint,
+                                CultureInfo.InvariantCulture, out var tTransversely))
+                        {
+                            _nozzleData.tTransversely = tTransversely;
+                        }
+                        else
+                        {
+                            dataInErr.Add(nameof(tTransversely) + WRONG_INPUT);
+                        }
+
+                        break;
+                    }
                 case OFFSET:
-                {
-                    switch (_shellDataIn.ShellType)
                     {
-                        case ShellType.Elliptical:
-                            _nozzleData.Location = NozzleLocation.LocationAccordingToParagraph_5_2_2_3;
+                        switch (_shellDataIn.ShellType)
+                        {
+                            case ShellType.Elliptical:
+                                _nozzleData.Location = NozzleLocation.LocationAccordingToParagraph_5_2_2_3;
 
-                            var text = (place_gb.Controls["pn"].Controls["Rsh_tb"] as TextBox)?.Text;
+                                var text = (place_gb.Controls["pn"].Controls["Rsh_tb"] as TextBox)?.Text;
 
-                            if (double.TryParse(text, NumberStyles.AllowDecimalPoint,
-                                    CultureInfo.InvariantCulture, out var ellx))
-                            {
-                                _nozzleData.ellx = ellx;
-                            }
-                            else
-                            {
-                                dataInErr.Add(nameof(ellx) + WRONG_INPUT);
-                            }
-                            break;
-                        case ShellType.Cylindrical:
-                            break;
+                                if (double.TryParse(text, NumberStyles.AllowDecimalPoint,
+                                        CultureInfo.InvariantCulture, out var ellx))
+                                {
+                                    _nozzleData.ellx = ellx;
+                                }
+                                else
+                                {
+                                    dataInErr.Add(nameof(ellx) + WRONG_INPUT);
+                                }
+                                break;
+                            case ShellType.Cylindrical:
+                                break;
+                        }
+
+                        break;
                     }
-
-                    break;
-                }
                 case SLANTED:
-                {
-                    switch (_shellDataIn.ShellType)
                     {
-                        case ShellType.Elliptical:
-                        case ShellType.Conical:
+                        switch (_shellDataIn.ShellType)
                         {
+                            case ShellType.Elliptical:
+                            case ShellType.Conical:
+                                {
 
-                            var omegaText = (place_gb.Controls["pn"].Controls["omega_tb"] as TextBox)?.Text;
+                                    var omegaText = (place_gb.Controls["pn"].Controls["omega_tb"] as TextBox)?.Text;
 
-                            if (double.TryParse(omegaText, NumberStyles.AllowDecimalPoint,
-                                    CultureInfo.InvariantCulture, out var omega))
-                            {
-                                _nozzleData.omega = omega;
-                            }
-                            else
-                            {
-                                dataInErr.Add(nameof(omega) + WRONG_INPUT);
-                            }
+                                    if (double.TryParse(omegaText, NumberStyles.AllowDecimalPoint,
+                                            CultureInfo.InvariantCulture, out var omega))
+                                    {
+                                        _nozzleData.omega = omega;
+                                    }
+                                    else
+                                    {
+                                        dataInErr.Add(nameof(omega) + WRONG_INPUT);
+                                    }
 
-                            var gammaText = (place_gb.Controls["pn"].Controls["gamma_tb"] as TextBox)?.Text;
+                                    var gammaText = (place_gb.Controls["pn"].Controls["gamma_tb"] as TextBox)?.Text;
 
-                            if (double.TryParse(gammaText, NumberStyles.AllowDecimalPoint,
-                                    CultureInfo.InvariantCulture, out var gamma))
-                            {
-                                _nozzleData.gamma = gamma;
-                            }
-                            else
-                            {
-                                dataInErr.Add(nameof(gamma) + WRONG_INPUT);
-                            }
+                                    if (double.TryParse(gammaText, NumberStyles.AllowDecimalPoint,
+                                            CultureInfo.InvariantCulture, out var gamma))
+                                    {
+                                        _nozzleData.gamma = gamma;
+                                    }
+                                    else
+                                    {
+                                        dataInErr.Add(nameof(gamma) + WRONG_INPUT);
+                                    }
 
-                            _nozzleData.Location = _nozzleData.omega == 0
-                                ? NozzleLocation.LocationAccordingToParagraph_5_2_2_5
-                                : NozzleLocation.LocationAccordingToParagraph_5_2_2_4;
+                                    _nozzleData.Location = _nozzleData.omega == 0
+                                        ? NozzleLocation.LocationAccordingToParagraph_5_2_2_5
+                                        : NozzleLocation.LocationAccordingToParagraph_5_2_2_4;
 
-                            break;
+                                    break;
+                                }
+                            case ShellType.Spherical:
+                            case ShellType.Torospherical:
+                                {
+                                    _nozzleData.omega = 0;
+                                    var gammaText = (place_gb.Controls["pn"].Controls["gamma_tb"] as TextBox)?.Text;
+
+                                    if (double.TryParse(gammaText, NumberStyles.AllowDecimalPoint,
+                                            CultureInfo.InvariantCulture, out var gamma))
+                                    {
+                                        _nozzleData.gamma = gamma;
+                                    }
+                                    else
+                                    {
+                                        dataInErr.Add(nameof(gamma) + WRONG_INPUT);
+                                    }
+
+                                    _nozzleData.Location = NozzleLocation.LocationAccordingToParagraph_5_2_2_5;
+                                    break;
+                                }
                         }
-                        case ShellType.Spherical:
-                        case ShellType.Torospherical:
-                        {
-                            _nozzleData.omega = 0;
-                            var gammaText = (place_gb.Controls["pn"].Controls["gamma_tb"] as TextBox)?.Text;
 
-                            if (double.TryParse(gammaText, NumberStyles.AllowDecimalPoint,
-                                    CultureInfo.InvariantCulture, out var gamma))
-                            {
-                                _nozzleData.gamma = gamma;
-                            }
-                            else
-                            {
-                                dataInErr.Add(nameof(gamma) + WRONG_INPUT);
-                            }
-
-                            _nozzleData.Location = NozzleLocation.LocationAccordingToParagraph_5_2_2_5;
-                            break;
-                        }
+                        break;
                     }
-
-                    break;
-                }
             }
 
             if ((_nozzleData.cs + _nozzleData.cs1 > _nozzleData.s3) & _nozzleData.s3 > 0)
@@ -1614,7 +1612,7 @@ namespace CalculateVessels
             }
 
 
-            bool isNotError = dataInErr.Any() && DataIn.IsDataGood;
+            var isNotError = dataInErr.Any() && DataIn.IsDataGood;
 
             if (isNotError)
             {
@@ -1687,9 +1685,9 @@ namespace CalculateVessels
                     MessageBox.Show(string.Join<string>(Environment.NewLine, nozzle.CalculatedData.ErrorList));
                 }
 
-                d0_l.Text = $@"d0={((NozzleCalculatedData) nozzle.CalculatedData).d0:f2} мм";
-                p_d_l.Text = $@"[p]={((NozzleCalculatedData) nozzle.CalculatedData).p_d:f2} МПа";
-                b_l.Text = $@"b={((NozzleCalculatedData) nozzle.CalculatedData).b:f2} мм";
+                d0_l.Text = $@"d0={((NozzleCalculatedData)nozzle.CalculatedData).d0:f2} мм";
+                p_d_l.Text = $@"[p]={((NozzleCalculatedData)nozzle.CalculatedData).p_d:f2} МПа";
+                b_l.Text = $@"b={((NozzleCalculatedData)nozzle.CalculatedData).b:f2} мм";
 
 
 
