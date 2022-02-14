@@ -1,14 +1,10 @@
-﻿using CalculateVessels.Core.Interfaces;
-using System;
+﻿using CalculateVessels.Core.Bottoms.Enums;
+using CalculateVessels.Core.Interfaces;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CalculateVessels.Core.Bottoms.Enums;
 
 namespace CalculateVessels.Core.Bottoms.FlatBottomWithAdditionalMoment
 {
-    public class FlatBottomWithAdditionalMomentDataIn : IDataIn
+    public class FlatBottomWithAdditionalMomentInputData : IInputData
     {
         //public bool IsDataGood => !ErrorList.Any();
 
@@ -84,5 +80,6 @@ namespace CalculateVessels.Core.Bottoms.FlatBottomWithAdditionalMoment
 
 
         public string Name { get; set; }
+        public double E { get; set; }
     }
- }
+}
