@@ -45,7 +45,7 @@ namespace CalculateVessels.Core.Shells.Conical
             }
             else
             {
-                data.SigmaAllow = dataIn.SigmaAllow;
+                data.E = dataIn.E;
             }
 
             //TODO: 
@@ -85,6 +85,11 @@ namespace CalculateVessels.Core.Shells.Conical
                     data.a1p = 0.7 * Math.Sqrt(dataIn.D * (dataIn.sT - data.c) / data.cosAlfa1);
                     data.a2p = 0.5 * Math.Sqrt(dataIn.D * (dataIn.sT - data.c));
                     break;
+                case ConicalConnectionType.WithoutConnection:
+                    data.a1p = 0.7 * Math.Sqrt(dataIn.D * (dataIn.s1 - data.c) / data.cosAlfa1);
+                    break;
+                default:
+                    throw new CalculateException("Conical connection type error.");
             }
 
             if (dataIn.IsConnectionWithLittle)
@@ -102,17 +107,17 @@ namespace CalculateVessels.Core.Shells.Conical
             {
                 if (dataIn.IsPressureIn)
                 {
-                    data.s_p = dataIn.p * data.Dk / (2 * dataIn.SigmaAllow * dataIn.fi - dataIn.p)
+                    data.s_p = dataIn.p * data.Dk / (2 * data.SigmaAllow * dataIn.fi - dataIn.p)
                         * (1 / data.cosAlfa1);
                     data.s = data.s_p + data.c;
 
 
                     if (dataIn.s != 0)
                     {
-                        if (data.s < dataIn.s)
+                        if (data.s > dataIn.s)
                             throw new CalculateException("Принятая толщина меньше расчетной.");
 
-                        data.p_d = 2 * dataIn.SigmaAllow * dataIn.fi * (dataIn.s - data.c)
+                        data.p_d = 2 * data.SigmaAllow * dataIn.fi * (dataIn.s - data.c)
                             / (data.Dk / data.cosAlfa1 + (dataIn.s - data.c));
                     }
                 }
@@ -127,28 +132,30 @@ namespace CalculateVessels.Core.Shells.Conical
                     data.B1 = Math.Min(1.0, data.B1_1);
 
                     data.s_p_1 = 1.06 * (0.01 * data.DE / data.B1)
-                        * Math.Pow(dataIn.p / (0.00001 * dataIn.E) * (data.lE / data.DE), 0.4);
-                    data.s_p_2 = 1.2 * dataIn.p * data.Dk / (2 * dataIn.fi * dataIn.SigmaAllow - dataIn.p)
+                        * Math.Pow(dataIn.p / (0.00001 * data.E) * (data.lE / data.DE), 0.4);
+                    data.s_p_2 = 1.2 * dataIn.p * data.Dk / (2 * dataIn.fi * data.SigmaAllow - dataIn.p)
                         * (1 / data.cosAlfa1);
                     data.s_p = Math.Max(data.s_p_1, data.s_p_2);
                     data.s = data.s_p + data.c;
 
                     if (dataIn.s != 0)
                     {
-                        if (data.s < dataIn.s)
+                        if (data.s > dataIn.s)
                             throw new CalculateException("Принятая толщина меньше расчетной.");
 
-                        data.p_dp = 2 * dataIn.SigmaAllow * (dataIn.s - data.c)
+                        data.p_dp = 2 * data.SigmaAllow * (dataIn.s - data.c)
                             / (data.Dk / data.cosAlfa1 + dataIn.s - data.c);
-                        data.p_de = 2.08 * 0.00001 * dataIn.E / (dataIn.ny * data.B1) * (data.DE / data.lE)
+                        data.p_de = 2.08 * 0.00001 * data.E / (dataIn.ny * data.B1) * (data.DE / data.lE)
                             * Math.Pow(100 * (dataIn.s - data.c) / data.DE, 2.5);
                         data.p_d = data.p_dp / Math.Sqrt(1 + Math.Pow(data.p_dp / data.p_de, 2));
                     }
                 }
+
                 if (data.p_d < dataIn.p && dataIn.s != 0)
                 {
                     data.ErrorList.Add("[p] меньше p");
                 }
+
                 if (dataIn.ConnectionType != ConicalConnectionType.WithoutConnection)
                 {
                     if (dataIn.alfa1 > 70)
@@ -230,8 +237,8 @@ namespace CalculateVessels.Core.Shells.Conical
                                 (1 / Math.Sqrt(data.cosAlfa1) + 1));
                             //TODO: Check alfa1 in betadata.t in degree or in radians
                             data.beta_3 = Math.Max(0.5, Math.Max(data.beta, data.beta_t));
-                            data.s_tp = dataIn.p * dataIn.D * data.beta_3 / (2 * dataIn.fi * dataIn.SigmaAllow - dataIn.p);
-                            data.p_dBig = 2 * dataIn.SigmaAllow * dataIn.fi * (dataIn.sT - data.c) /
+                            data.s_tp = dataIn.p * dataIn.D * data.beta_3 / (2 * dataIn.fi * data.SigmaAllow - dataIn.p);
+                            data.p_dBig = 2 * data.SigmaAllow * dataIn.fi * (dataIn.sT - data.c) /
                                 (dataIn.D * data.beta_3 + (dataIn.sT - data.c));
                             break;
                     }

@@ -12,6 +12,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CalculateVessels.Core", "Ca
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CalculateVessels.Data", "CalculateVessels.Data\CalculateVessels.Data.csproj", "{30CB0A13-DAE0-40C2-86F4-853150294C05}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalculateVessels.Tests", "CalculateVessels.Tests\CalculateVessels.Tests.csproj", "{D613AF8A-2C00-459C-9AE2-E89DE94132DD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,6 +32,10 @@ Global
 		{30CB0A13-DAE0-40C2-86F4-853150294C05}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{30CB0A13-DAE0-40C2-86F4-853150294C05}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{30CB0A13-DAE0-40C2-86F4-853150294C05}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D613AF8A-2C00-459C-9AE2-E89DE94132DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D613AF8A-2C00-459C-9AE2-E89DE94132DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D613AF8A-2C00-459C-9AE2-E89DE94132DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D613AF8A-2C00-459C-9AE2-E89DE94132DD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

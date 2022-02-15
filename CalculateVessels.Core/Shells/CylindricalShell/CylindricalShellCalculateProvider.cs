@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CalculateVessels.Core.Exceptions;
+﻿using CalculateVessels.Core.Exceptions;
 using CalculateVessels.Core.Interfaces;
 using CalculateVessels.Data.PhysicalData;
+using System;
 
 namespace CalculateVessels.Core.Shells.CylindricalShell
 {
@@ -47,26 +43,10 @@ namespace CalculateVessels.Core.Shells.CylindricalShell
             }
             else
             {
-                data.SigmaAllow = dataIn.SigmaAllow;
+                data.E = dataIn.E;
             }
-
-
 
             data.c = dataIn.c1 + dataIn.c2 + dataIn.c3;
-
-            // Condition use formulas
-            const int DIAMETER_BIG_LITTLE_BORDER = 200;
-            const double CONDITION_USE_FORMALS_BIG_DIAMETER = 0.1;
-            const double CONDITION_USE_FORMALS_LITTLE_DIAMETER = 0.3;
-
-            data.IsConditionUseFormulas = DIAMETER_BIG_LITTLE_BORDER < dataIn.D
-                ? (dataIn.s - data.c) / dataIn.D <= CONDITION_USE_FORMALS_BIG_DIAMETER
-                : (dataIn.s - data.c) / dataIn.D <= CONDITION_USE_FORMALS_LITTLE_DIAMETER;
-
-            if (!data.IsConditionUseFormulas)
-            {
-                data.ErrorList.Add("Условие применения формул не выполняется.");
-            }
 
             if (dataIn.p > 0)
             {
@@ -77,7 +57,7 @@ namespace CalculateVessels.Core.Shells.CylindricalShell
 
                     if (dataIn.s != 0.0)
                     {
-                        if (data.s < dataIn.s)
+                        if (data.s > dataIn.s)
                             throw new CalculateException("Принятая толщина меньше расчетной.");
 
                         data.p_d = 2 * data.SigmaAllow * dataIn.fi * (dataIn.s - data.c) /
@@ -89,14 +69,15 @@ namespace CalculateVessels.Core.Shells.CylindricalShell
                     data.l = dataIn.l + dataIn.l3;
                     data.b_2 = 0.47 * Math.Pow(dataIn.p / (0.00001 * data.E), 0.067) * Math.Pow(data.l / dataIn.D, 0.4);
                     data.b = Math.Max(1.0, data.b_2);
-                    data.s_p_1 = 1.06 * (0.01 * dataIn.D / data.b) * Math.Pow(dataIn.p / (0.00001 * data.E) * (data.l / dataIn.D), 0.4);
+                    data.s_p_1 = 1.06 * (0.01 * dataIn.D / data.b) *
+                                 Math.Pow(dataIn.p / (0.00001 * data.E) * (data.l / dataIn.D), 0.4);
                     data.s_p_2 = 1.2 * dataIn.p * dataIn.D / (2 * data.SigmaAllow - dataIn.p);
                     data.s_p = Math.Max(data.s_p_1, data.s_p_2);
                     data.s = data.s_p + data.c;
 
                     if (dataIn.s != 0.0)
                     {
-                        if (data.s < dataIn.s)
+                        if (data.s > dataIn.s)
                             throw new CalculateException("Принятая толщина меньше расчетной.");
 
 
@@ -118,14 +99,17 @@ namespace CalculateVessels.Core.Shells.CylindricalShell
                 }
             }
 
-            if (dataIn.F > 0 && dataIn.s != 0.0)
+            if (dataIn.s == 0)
+                return data;
+
+            if (dataIn.F > 0)
             {
                 if (dataIn.IsFTensile)
                 {
                     data.s_pf = dataIn.F / (Math.PI * dataIn.D * data.SigmaAllow * dataIn.fi_t);
                     data.s_f = data.s_pf + data.c;
 
-                    if (data.s_f < dataIn.s)
+                    if (data.s_f > dataIn.s)
                         throw new CalculateException(
                             "Принятая толщина меньше расчетной от нагрузки осевым сжимающим усилием.");
 
@@ -138,7 +122,7 @@ namespace CalculateVessels.Core.Shells.CylindricalShell
                 {
                     data.F_dp = Math.PI * (dataIn.D + dataIn.s - data.c) * (dataIn.s - data.c) * data.SigmaAllow;
                     data.F_de1 = 0.000031 * data.E / dataIn.ny * Math.Pow(dataIn.D, 2) *
-                             Math.Pow(100 * (dataIn.s - data.c) / dataIn.D, 2.5);
+                                 Math.Pow(100 * (dataIn.s - data.c) / dataIn.D, 2.5);
 
                     const int L_MORE_THEN_D = 10;
                     bool isLMoreThenD = dataIn.l / dataIn.D > L_MORE_THEN_D;
@@ -199,8 +183,9 @@ namespace CalculateVessels.Core.Shells.CylindricalShell
                         }
 
                         data.lambda = 2.83 * data.lpr / (dataIn.D + dataIn.s - data.c);
-                        data.F_de2 = Math.PI * (dataIn.D + dataIn.s - data.c) * (dataIn.s - data.c) * data.E / dataIn.ny *
-                                 Math.Pow(Math.PI / data.lambda, 2);
+                        data.F_de2 = Math.PI * (dataIn.D + dataIn.s - data.c) * (dataIn.s - data.c) * data.E /
+                                     dataIn.ny *
+                                     Math.Pow(Math.PI / data.lambda, 2);
                         data.F_de = Math.Min(data.F_de1, data.F_de2);
                     }
                     else
@@ -212,30 +197,43 @@ namespace CalculateVessels.Core.Shells.CylindricalShell
                 }
             }
 
-            if (dataIn.M > 0 && dataIn.s != 0.0)
+            if (dataIn.M > 0)
             {
-
-                data.M_dp = Math.PI / 4 * dataIn.D * (dataIn.D + dataIn.s - data.c) * (dataIn.s - data.c) * data.SigmaAllow;
-                data.M_de = 0.000089 * data.E / dataIn.ny * Math.Pow(dataIn.D, 3) * Math.Pow(100 * (dataIn.s - data.c) / dataIn.D, 2.5);
+                data.M_dp = Math.PI / 4 * dataIn.D * (dataIn.D + dataIn.s - data.c) * (dataIn.s - data.c) *
+                            data.SigmaAllow;
+                data.M_de = 0.000089 * data.E / dataIn.ny * Math.Pow(dataIn.D, 3) *
+                            Math.Pow(100 * (dataIn.s - data.c) / dataIn.D, 2.5);
                 data.M_d = data.M_dp / Math.Sqrt(1 + Math.Pow(data.M_dp / data.M_de, 2));
-
             }
 
-            if (dataIn.Q > 0 && dataIn.s != 0.0)
+            if (dataIn.Q > 0)
             {
                 data.Q_dp = 0.25 * data.SigmaAllow * Math.PI * dataIn.D * (dataIn.s - data.c);
                 data.Q_de = 2.4 * data.E * Math.Pow(dataIn.s - data.c, 2) / dataIn.ny *
-                        (0.18 + 3.3 * dataIn.D * (dataIn.s - data.c) / Math.Pow(dataIn.l, 2));
+                            (0.18 + 3.3 * dataIn.D * (dataIn.s - data.c) / Math.Pow(dataIn.l, 2));
                 data.Q_d = data.Q_dp / Math.Sqrt(1 + Math.Pow(data.Q_dp / data.Q_de, 2));
             }
 
             data.ConditionStability = dataIn.p / data.p_d +
-                                  (dataIn.FCalcSchema == 5 ? data.F : dataIn.F) / data.FAllow +
-                                  dataIn.M / data.M_d +
-                                  Math.Pow(dataIn.Q / data.Q_d, 2);
+                                      (dataIn.FCalcSchema == 5 ? data.F : dataIn.F) / data.FAllow +
+                                      dataIn.M / data.M_d +
+                                      Math.Pow(dataIn.Q / data.Q_d, 2);
             if (data.ConditionStability > 1)
             {
                 data.ErrorList.Add("Условие устойчивости для совместного действия усилий не выполняется");
+            }
+
+            // Condition use formulas
+            const int DIAMETER_BIG_LITTLE_BORDER = 200;
+            const double CONDITION_USE_FORMALS_BIG_DIAMETER = 0.1;
+            const double CONDITION_USE_FORMALS_LITTLE_DIAMETER = 0.3;
+            data.IsConditionUseFormulas = DIAMETER_BIG_LITTLE_BORDER < dataIn.D
+                ? (dataIn.s - data.c) / dataIn.D <= CONDITION_USE_FORMALS_BIG_DIAMETER
+                : (dataIn.s - data.c) / dataIn.D <= CONDITION_USE_FORMALS_LITTLE_DIAMETER;
+
+            if (!data.IsConditionUseFormulas)
+            {
+                data.ErrorList.Add("Условие применения формул не выполняется.");
             }
 
             return data;
