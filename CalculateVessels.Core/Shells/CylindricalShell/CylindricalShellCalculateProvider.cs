@@ -38,7 +38,7 @@ namespace CalculateVessels.Core.Shells.CylindricalShell
                 }
                 catch (PhysicalDataException e)
                 {
-                    throw new CalculateException("Error get sigma.", e);
+                    throw new CalculateException("Error get E.", e);
                 }
             }
             else

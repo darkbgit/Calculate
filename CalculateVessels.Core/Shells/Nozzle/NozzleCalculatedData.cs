@@ -39,9 +39,6 @@ namespace CalculateVessels.Core.Shells.Nozzle
         public double dmax { get; set; }
         public double dp { get; set; }
         public double Dp { get; set; }
-        private double _E2;
-        private double _E3;
-        private double _E4;
         public double EllipseH { get; set; }
         public double L0 { get; set; }
         public double l1p { get; set; }
@@ -68,8 +65,15 @@ namespace CalculateVessels.Core.Shells.Nozzle
         public double V1 { get; set; }
         public double V2 { get; set; }
         public int K1 { get; set; }
-
         public double SigmaAllowShell { get; set; }
+        public double SigmaAllow1 { get; set; }
+        public double SigmaAllow2 { get; set; }
+        public double SigmaAllow3 { get; set; }
+        public double SigmaAllow4 { get; set; }
+        public double E1 { get; set; }
+        public double E2 { get; set; }
+        public double E3 { get; set; }
+        public double E4 { get; set; }
 
     }
 }

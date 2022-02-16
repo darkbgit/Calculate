@@ -4,7 +4,7 @@ using CalculateVessels.Core.Shells.Enums;
 
 namespace CalculateVessels.Core.Shells.Conical
 {
-    public class ConicalShellInputData : ShellDataIn, IInputData
+    public class ConicalShellInputData : ShellInputData, IInputData
     {
         public ConicalShellInputData()
             : base(ShellType.Conical)

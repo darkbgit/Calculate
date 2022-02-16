@@ -25,9 +25,9 @@ namespace CalculateVessels.Core.Shells.Nozzle
 
         
 
-        public ICalculatedData ShellCalculatedData { get => _shellCalculatedData; }
+        public ICalculatedData ShellCalculatedData => _shellCalculatedData;
 
-        public ShellDataIn ShellDataIn => (ShellDataIn) _shellCalculatedData.InputData;
+        //public ShellDataIn ShellDataIn => (ShellDataIn) _shellCalculatedData.InputData;
 
         public double t
         {
@@ -41,10 +41,10 @@ namespace CalculateVessels.Core.Shells.Nozzle
             set => _steel1 = value;
         }
 
-        public double sigma_d1
+        public double SigmaAllow1
         {
-            get => _sigma_d1;
-            set => _sigma_d1 = value;
+            get => _sigmaAllow1;
+            set => _sigmaAllow1 = value;
         }
 
         public double E1
@@ -139,14 +139,14 @@ namespace CalculateVessels.Core.Shells.Nozzle
         public double d2 { get; set; }
         public double r { get; set; }
         public double s0 { get; set; }
-        public double sigma_d2 { get; set; }
-        public double sigma_d3 { get; set; }
-        public double sigma_d4 { get; set; }
+        public double SigmaAllow2 { get; set; }
+        public double SigmaAllow3 { get; set; }
+        public double SigmaAllow4 { get; set; }
         public byte l { get; set; }
 
         private double _t;
         private string _steel1;
-        private double _sigma_d1;
+        private double _sigmaAllow1;
 
         private double _E1;
         private double _d;
@@ -162,7 +162,7 @@ namespace CalculateVessels.Core.Shells.Nozzle
 
         private bool isOval;
 
-        public IElement Element { get; set; }
+        //public IElement Element { get; set; }
 
     }
 }

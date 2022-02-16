@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CalculateVessels.Core.Interfaces;
+using CalculateVessels.Core.Shells.Base;
 using CalculateVessels.Core.Shells.Elliptical;
 using CalculateVessels.Core.Shells.Enums;
 using CalculateVessels.Core.Shells.Nozzle.Enums;
@@ -24,6 +25,8 @@ namespace CalculateVessels.Core.Shells.Nozzle
 
             var nozzleDataIn = (NozzleInputData)calculatedData.InputData;
 
+            var shellDataIn = (ShellInputData)nozzleDataIn.ShellCalculatedData.InputData;
+
             if (string.IsNullOrWhiteSpace(filePath))
             {
                 const string DEFAULT_FILE_NAME = "temp.docx";
@@ -42,24 +45,24 @@ namespace CalculateVessels.Core.Shells.Nozzle
             body.AddParagraph($"Расчет на прочность узла врезки штуцера {nozzleDataIn.Name} в ")
                 .Heading(HeadingType.Heading1)
                 .Alignment(AlignmentType.Center);
-            switch (nozzleDataIn.ShellDataIn.ShellType)
+            switch (shellDataIn.ShellType)
             {
                 case ShellType.Cylindrical:
                     body.Elements<Paragraph>().Last()
-                        .AddRun($"обечайку {nozzleDataIn.ShellDataIn.Name}, нагруженную ");
+                        .AddRun($"обечайку {shellDataIn.Name}, нагруженную ");
                     break;
                 case ShellType.Conical:
                     body.Elements<Paragraph>().Last()
-                        .AddRun($"коническую обечайку {nozzleDataIn.ShellDataIn.Name}, нагруженную ");
+                        .AddRun($"коническую обечайку {shellDataIn.Name}, нагруженную ");
                     break;
                 case ShellType.Elliptical:
                     body.Elements<Paragraph>().Last()
-                        .AddRun($"эллиптическое днище {nozzleDataIn.ShellDataIn.Name}, нагруженное ");
+                        .AddRun($"эллиптическое днище {shellDataIn.Name}, нагруженное ");
                     break;
             }
 
             body.Elements<Paragraph>().Last()
-                .AddRun(nozzleDataIn.ShellDataIn.IsPressureIn
+                .AddRun(shellDataIn.IsPressureIn
                     ? "внутренним избыточным давлением"
                     : "наружным давлением");
             body.AddParagraph("");
@@ -75,11 +78,11 @@ namespace CalculateVessels.Core.Shells.Nozzle
 
                 table.AddRow()
                     .AddCell("Элемент несущий штуцер:")
-                    .AddCell($"{nozzleDataIn.ShellDataIn.Name}");
+                    .AddCell($"{shellDataIn.Name}");
 
                 table.AddRow()
                     .AddCell("Тип элемента, несущего штуцер:");
-                switch (nozzleDataIn.ShellDataIn.ShellType)
+                switch (shellDataIn.ShellType)
                 {
                     case ShellType.Cylindrical:
                         table.Elements<TableRow>().Last().AddCell("Обечайка цилиндрическая");
@@ -145,11 +148,11 @@ namespace CalculateVessels.Core.Shells.Nozzle
 
                 table.AddRow()
                     .AddCell("Материал несущего элемента:")
-                    .AddCell($"{nozzleDataIn.ShellDataIn.Steel}");
+                    .AddCell($"{shellDataIn.Steel}");
 
                 table.AddRow()
                     .AddCell("Толщина стенки несущего элемента, s:")
-                    .AddCell($"{nozzleDataIn.ShellDataIn.s} мм");
+                    .AddCell($"{shellDataIn.s} мм");
 
                 table.AddRow()
                     .AddCell("Сумма прибавок к стенке несущего элемента, c:")
@@ -171,7 +174,7 @@ namespace CalculateVessels.Core.Shells.Nozzle
 
                 table.AddRow()
                     .AddCell("Длина наружной части штуцера, ")
-                    .AppendEquation("s_1")
+                    .AppendEquation("l_1")
                     .AppendText(":")
                     .AddCell($"{nozzleDataIn.l1} мм");
 
@@ -291,13 +294,13 @@ namespace CalculateVessels.Core.Shells.Nozzle
 
                 table.AddRow()
                     .AddCell("Расчетная температура, Т:")
-                    .AddCell($"{nozzleDataIn.ShellDataIn.t} °С");
+                    .AddCell($"{shellDataIn.t} °С");
 
                 table.AddRow()
-                    .AddCell(nozzleDataIn.ShellDataIn.IsPressureIn
+                    .AddCell(shellDataIn.IsPressureIn
                         ? "Расчетное внутреннее избыточное давление, p:"
                         : "Расчетное наружное давление, p:")
-                    .AddCell($"{nozzleDataIn.ShellDataIn.p} МПа");
+                    .AddCell($"{shellDataIn.p} МПа");
 
                 table.AddRowWithOneCell($"Характеристики материала {nozzleDataIn.steel1}");
 
@@ -305,9 +308,9 @@ namespace CalculateVessels.Core.Shells.Nozzle
                     .AddCell("Допускаемое напряжение при расчетной температуре, ")
                     .AppendEquation("[σ]_1")
                     .AppendText(":")
-                    .AddCell($"{nozzleDataIn.sigma_d1} МПа");
+                    .AddCell($"{nozzleDataIn.SigmaAllow1} МПа");
 
-                if (!nozzleDataIn.ShellDataIn.IsPressureIn)
+                if (!shellDataIn.IsPressureIn)
                 {
                     table.AddRow()
                         .AddCell("Модуль продольной упругости при расчетной температуре, ")
@@ -325,9 +328,9 @@ namespace CalculateVessels.Core.Shells.Nozzle
                             "Допускаемое напряжение для при расчетной температуре, ")
                         .AppendEquation("[σ]_2")
                         .AppendText(":")
-                        .AddCell($"{nozzleDataIn.sigma_d2} МПа");
+                        .AddCell($"{nozzleDataIn.SigmaAllow2} МПа");
 
-                    if (!nozzleDataIn.ShellDataIn.IsPressureIn)
+                    if (!shellDataIn.IsPressureIn)
                     {
                         table.AddRow()
                             .AddCell("Модуль продольной упругости при расчетной температуре, ")
@@ -345,9 +348,9 @@ namespace CalculateVessels.Core.Shells.Nozzle
                         .AddCell("Допускаемое напряжение при расчетной температуре, ")
                         .AppendEquation("[σ]_3")
                         .AppendText(":")
-                        .AddCell($"{nozzleDataIn.sigma_d3} МПа");
+                        .AddCell($"{nozzleDataIn.SigmaAllow3} МПа");
 
-                    if (!nozzleDataIn.ShellDataIn.IsPressureIn)
+                    if (!shellDataIn.IsPressureIn)
                     {
                         table.AddRow()
                             .AddCell("Модуль продольной упругости при расчетной температуре, ")
@@ -365,9 +368,9 @@ namespace CalculateVessels.Core.Shells.Nozzle
                         .AddCell("Допускаемое напряжение при расчетной температуре, ")
                         .AppendEquation("[σ]_4")
                         .AppendText(":")
-                        .AddCell($"{nozzleDataIn.sigma_d4} МПа");
+                        .AddCell($"{nozzleDataIn.SigmaAllow4} МПа");
 
-                    if (!nozzleDataIn.ShellDataIn.IsPressureIn)
+                    if (!shellDataIn.IsPressureIn)
                     {
                         table.AddRow()
                             .AddCell("Модуль продольной упругости при расчетной температуре, ")
@@ -393,14 +396,14 @@ namespace CalculateVessels.Core.Shells.Nozzle
 
             body.AddParagraph("Расчетный диаметр укрепляемого элемента ");
 
-            switch (nozzleDataIn.ShellDataIn.ShellType)
+            switch (shellDataIn.ShellType)
             {
                 case ShellType.Cylindrical:
                 {
                     body.Elements<Paragraph>().Last()
                         .AddRun("(для цилиндрической обечайки)");
                     body.AddParagraph("")
-                        .AppendEquation($"D_p=D={nozzleDataIn.ShellDataIn.D} мм");
+                        .AppendEquation($"D_p=D={shellDataIn.D} мм");
                     break;
                 }
                 case ShellType.Conical:
@@ -413,15 +416,15 @@ namespace CalculateVessels.Core.Shells.Nozzle
                 }
                 case ShellType.Elliptical:
                 {
-                    var ellH = ((EllipticalShellInputData) nozzleDataIn.Element.CalculatedData.InputData).EllipseH;
+                    var ellH = ((EllipticalShellInputData)shellDataIn).EllipseH;
 
-                    if (Math.Abs(ellH * 100 - nozzleDataIn.ShellDataIn.D * 25) < 0.00001)
+                    if (Math.Abs(ellH * 100 - shellDataIn.D * 25) < 0.00001)
                     {
                         body.Elements<Paragraph>().Last()
                             .AddRun("(для эллиптического днища при H=0.25D)");
                         body.AddParagraph("")
                             .AppendEquation("D_p=2∙D∙√(1-3∙(x/D)^2)" +
-                                            $"=2∙{nozzleDataIn.ShellDataIn.D}∙√(1-3∙({nozzleDataIn.ellx}/{nozzleDataIn.ShellDataIn.D})^2)={data.Dp:f2} мм");
+                                            $"=2∙{shellDataIn.D}∙√(1-3∙({nozzleDataIn.ellx}/{shellDataIn.D})^2)={data.Dp:f2} мм");
                     }
                     else
                     {
@@ -429,7 +432,7 @@ namespace CalculateVessels.Core.Shells.Nozzle
                             .AddRun("для эллиптического днища");
                         body.AddParagraph("")
                             .AppendEquation("D_p=D^2/(2∙H)∙√(1-(D^2-4∙H^2)/D^4∙x^2)" +
-                                            $"={nozzleDataIn.ShellDataIn.D}^2/(2∙{ellH})∙√(1-({nozzleDataIn.ShellDataIn.D}^2-4∙{ellH}^2)/{nozzleDataIn.ShellDataIn.D}^4∙{nozzleDataIn.ellx}^2)={data.Dp:f2} мм");
+                                            $"={shellDataIn.D}^2/(2∙{ellH})∙√(1-({shellDataIn.D}^2-4∙{ellH}^2)/{shellDataIn.D}^4∙{nozzleDataIn.ellx}^2)={data.Dp:f2} мм");
                     }
 
                     break;
@@ -437,7 +440,7 @@ namespace CalculateVessels.Core.Shells.Nozzle
                 case ShellType.Spherical:
                 case ShellType.Torospherical:
                 {
-                    var ellR = ((EllipticalShellCalculatedData)nozzleDataIn.Element.CalculatedData).EllipseR;
+                    var ellR = ((EllipticalShellCalculatedData)nozzleDataIn.ShellCalculatedData).EllipseR;
 
                     body.Elements<Paragraph>().Last()
                         .AddRun("(для сферических и торосферических днищ вне зоны отбортовки)");
@@ -518,11 +521,11 @@ namespace CalculateVessels.Core.Shells.Nozzle
             }
 
             body.AddParagraph("Расчетная толщина стенки укрепляемого элемента");
-            if (nozzleDataIn.ShellDataIn.ShellType == ShellType.Elliptical && nozzleDataIn.ShellDataIn.IsPressureIn)
+            if (shellDataIn.ShellType == ShellType.Elliptical && shellDataIn.IsPressureIn)
             {
                 body.AddParagraph("")
                     .AppendEquation("s_p=(p∙D_p)/(4∙φ∙[σ]-p)" +
-                                    $"=({nozzleDataIn.ShellDataIn.p}∙{data.Dp:f2})/(4∙{nozzleDataIn.ShellDataIn.fi}∙{data.SigmaAllowShell}-{nozzleDataIn.ShellDataIn.p})={data.sp:f2} мм");
+                                    $"=({shellDataIn.p}∙{data.Dp:f2})/(4∙{shellDataIn.fi}∙{data.SigmaAllowShell}-{shellDataIn.p})={data.sp:f2} мм");
             }
             else
             {
@@ -533,7 +536,7 @@ namespace CalculateVessels.Core.Shells.Nozzle
             body.AddParagraph("Расчетная толщина стенки штуцера с круглым поперечным сечением");
             body.AddParagraph("")
                 .AppendEquation("s_1p=(p(d+2∙c_s))/(2∙φ_1∙[σ]_1-p)" +
-                                $"=({nozzleDataIn.ShellDataIn.p}({nozzleDataIn.d}+2∙{nozzleDataIn.cs}))/(2∙{nozzleDataIn.fi1}∙{nozzleDataIn.sigma_d1}-{nozzleDataIn.ShellDataIn.p})={data.s1p:f2} мм");
+                                $"=({shellDataIn.p}({nozzleDataIn.d}+2∙{nozzleDataIn.cs}))/(2∙{nozzleDataIn.fi1}∙{nozzleDataIn.SigmaAllow1}-{shellDataIn.p})={data.s1p:f2} мм");
 
             body.AddParagraph("Расчетная длина внешней части штуцера");
             body.AddParagraph("").AppendEquation("l_1p=min{l_1;1.25√((d+2∙c_s)(s_1-c_s))}");
@@ -555,7 +558,7 @@ namespace CalculateVessels.Core.Shells.Nozzle
             body.AddParagraph("Ширина зоны укрепления отверстия в цилиндрической обечайке");
             body.AddParagraph("")
                 .AppendEquation("L_0=√(D_p∙(s-c))" +
-                                $"=√({data.Dp}∙({nozzleDataIn.ShellDataIn.s}-{data.c:f2}))={data.L0:f2}");
+                                $"=√({data.Dp}∙({shellDataIn.s}-{data.c:f2}))={data.L0:f2}");
 
             body.AddParagraph("Расчетная ширина зоны укрепления отверстия в стенке цилиндрической обечайки");
 
@@ -582,7 +585,7 @@ namespace CalculateVessels.Core.Shells.Nozzle
                 body.AddParagraph("").AppendEquation("l_2p=min{l_2;√(D_p∙(s_2+s-c))}");
                 body.AddParagraph("")
                     .AppendEquation(
-                        $"√(D_p∙(s_2+s-c))=√({data.Dp:f2}∙({nozzleDataIn.s2}+{nozzleDataIn.ShellDataIn.s}-{data.c:f2}))={data.l2p2:f2} мм");
+                        $"√(D_p∙(s_2+s-c))=√({data.Dp:f2}∙({nozzleDataIn.s2}+{shellDataIn.s}-{data.c:f2}))={data.l2p2:f2} мм");
                 body.AddParagraph("").AppendEquation($"l_2p=min({nozzleDataIn.l2};{data.l2p2:f2})={data.l2p:f2} мм");
             }
 
@@ -591,39 +594,39 @@ namespace CalculateVessels.Core.Shells.Nozzle
                 body.AddParagraph("Учет применения различного материального исполнения");
             }
 
-            if (!string.IsNullOrEmpty(nozzleDataIn.steel1) && nozzleDataIn.ShellDataIn.Steel != nozzleDataIn.steel1)
+            if (!string.IsNullOrEmpty(nozzleDataIn.steel1) && shellDataIn.Steel != nozzleDataIn.steel1)
             {
                 body.AddParagraph("- для внешней части штуцера")
                     .AppendEquation(
-                        $"χ_1=min(1;[σ]_1/[σ])=min(1;{nozzleDataIn.sigma_d1}/{data.SigmaAllowShell})={data.psi1:f2}");
+                        $"χ_1=min(1;[σ]_1/[σ])=min(1;{nozzleDataIn.SigmaAllow1}/{data.SigmaAllowShell})={data.psi1:f2}");
             }
 
-            if (!string.IsNullOrEmpty(nozzleDataIn.steel2) && nozzleDataIn.ShellDataIn.Steel != nozzleDataIn.steel2)
+            if (!string.IsNullOrEmpty(nozzleDataIn.steel2) && shellDataIn.Steel != nozzleDataIn.steel2)
             {
                 body.AddParagraph("- для накладного кольца")
                     .AppendEquation(
-                        $"χ_2=min(1;[σ]_2/[σ])=min(1;{nozzleDataIn.sigma_d2}/{data.SigmaAllowShell})={data.psi2:f2}");
+                        $"χ_2=min(1;[σ]_2/[σ])=min(1;{nozzleDataIn.SigmaAllow2}/{data.SigmaAllowShell})={data.psi2:f2}");
             }
 
-            if (!string.IsNullOrEmpty(nozzleDataIn.steel3) && nozzleDataIn.ShellDataIn.Steel != nozzleDataIn.steel3)
+            if (!string.IsNullOrEmpty(nozzleDataIn.steel3) && shellDataIn.Steel != nozzleDataIn.steel3)
             {
                 body.AddParagraph("- для внутренней части штуцера")
                     .AppendEquation(
-                        $"χ_3=min(1;[σ]_3/[σ])=min(1;{nozzleDataIn.sigma_d3}/{data.SigmaAllowShell})={data.psi3:f2}");
+                        $"χ_3=min(1;[σ]_3/[σ])=min(1;{nozzleDataIn.SigmaAllow3}/{data.SigmaAllowShell})={data.psi3:f2}");
             }
 
-            if (!string.IsNullOrEmpty(nozzleDataIn.steel4) && nozzleDataIn.ShellDataIn.Steel != nozzleDataIn.steel4)
+            if (!string.IsNullOrEmpty(nozzleDataIn.steel4) && shellDataIn.Steel != nozzleDataIn.steel4)
             {
                 body.AddParagraph("- для торообразной вставки или вварного кольца")
                     .AppendEquation(
-                        $"χ_4=min(1;[σ]_4/[σ])=min(1;{nozzleDataIn.sigma_d4}/{data.SigmaAllowShell})={data.psi4:f2}");
+                        $"χ_4=min(1;[σ]_4/[σ])=min(1;{nozzleDataIn.SigmaAllow4}/{data.SigmaAllowShell})={data.psi4:f2}");
             }
 
             body.AddParagraph(
                 "Расчетный диаметр отверстия, не требующий укрепления в стенке цилиндрической обечайки при отсутствии избыточной толщины стенки сосуда и при наличии штуцера");
             body.AddParagraph("")
                 .AppendEquation("d_0p=0,4√(D_p∙(s-c))" +
-                                $"=0.4√({data.Dp}∙({nozzleDataIn.ShellDataIn.s}-{data.c:f2}))={data.d0p:f2} мм");
+                                $"=0.4√({data.Dp}∙({shellDataIn.s}-{data.c:f2}))={data.d0p:f2} мм");
 
             body.AddParagraph("Проверка условия необходимости проведения расчета укрепления отверстий");
             body.AddParagraph("").AppendEquation("d_p≤d_0");
@@ -638,12 +641,12 @@ namespace CalculateVessels.Core.Shells.Nozzle
                 .AppendEquation("d_max")
                 .AddRun(" - максимальный диаметр отверстия ");
 
-            switch (nozzleDataIn.ShellDataIn.ShellType)
+            switch (shellDataIn.ShellType)
             {
                 case ShellType.Cylindrical:
                 {
                     body.AddParagraph("")
-                        .AppendEquation($"d_max=D={nozzleDataIn.ShellDataIn.D} мм")
+                        .AppendEquation($"d_max=D={shellDataIn.D} мм")
                         .AddRun(" - для отверстий в цилиндрических обечайках");
                     break;
                 }
@@ -666,7 +669,7 @@ namespace CalculateVessels.Core.Shells.Nozzle
             }
 
 
-            if (nozzleDataIn.ShellDataIn.IsPressureIn)
+            if (shellDataIn.IsPressureIn)
             {
                 body.AddParagraph("")
                     .AppendEquation($"s_pn=s_p={data.sp:f2} мм")
@@ -676,7 +679,7 @@ namespace CalculateVessels.Core.Shells.Nozzle
             {
                 body.AddParagraph("")
                     .AppendEquation("s_pn=(p_pn∙D_p)/(2∙K_1∙[σ]-p_pn)");
-                switch (nozzleDataIn.ShellDataIn.ShellType)
+                switch (shellDataIn.ShellType)
                 {
                     case ShellType.Cylindrical:
                     case ShellType.Conical:
@@ -704,14 +707,14 @@ namespace CalculateVessels.Core.Shells.Nozzle
                         " -  допускаемое наружное давление из условия устойчивости в пределах упругости, определяемое по ГОСТ 34233.2 для обечайки без отверстий");
                 body.AddParagraph("")
                     .AppendEquation(
-                        $"p_pn={nozzleDataIn.ShellDataIn.p}/√(1-({nozzleDataIn.ShellDataIn.p}/{data.pen:f2})^2)={data.ppn:f2} МПа");
+                        $"p_pn={shellDataIn.p}/√(1-({shellDataIn.p}/{data.pen:f2})^2)={data.ppn:f2} МПа");
                 body.AddParagraph("")
                     .AppendEquation($"s_pn=({data.ppn:f2}∙{data.Dp:f2})/(2∙{data.K1}∙{data.SigmaAllowShell}-{data.ppn:f2})={data.spn:f2} мм");
             }
 
             body.AddParagraph("")
                 .AppendEquation(
-                    $"2∙((s-c)/s_pn-0.8)∙√(D_p∙(s-c))=2∙(({nozzleDataIn.ShellDataIn.s}-{data.c:f2})/{data.spn:f2}-0.8)∙√({data.Dp:f2}∙({nozzleDataIn.ShellDataIn.s}-{data.c:f2}))={data.d01:f2}");
+                    $"2∙((s-c)/s_pn-0.8)∙√(D_p∙(s-c))=2∙(({shellDataIn.s}-{data.c:f2})/{data.spn:f2}-0.8)∙√({data.Dp:f2}∙({shellDataIn.s}-{data.c:f2}))={data.d01:f2}");
             body.AddParagraph("")
                 .AppendEquation($"d_max+2∙c_s={data.dmax:f2}+2∙{nozzleDataIn.cs}={data.d02:f2}");
             body.AddParagraph("")
@@ -738,7 +741,7 @@ namespace CalculateVessels.Core.Shells.Nozzle
                     .AppendEquation("l_1p∙(s_1-s_1p-c_s)∙χ_1+l_2p∙s_2∙χ_2+l_3p∙(s_3-c_s-c_s1)∙χ_3+l1p∙(s-s_p-c)∙χ_4=");
                 body.AddParagraph("")
                     .AppendEquation(
-                        $"{data.l1p:f2}∙({nozzleDataIn.s1}-{data.s1p:f2}-{nozzleDataIn.cs})∙{data.psi1:f2}+{data.l2p:f2}∙{nozzleDataIn.s2}∙{data.psi2:f2}+{data.l3p:f2}∙({nozzleDataIn.s3}-{nozzleDataIn.cs}-{nozzleDataIn.cs1})∙{data.psi3:f2}+{data.lp:f2}∙({nozzleDataIn.ShellDataIn.s}-{data.sp:f2}-{data.c:f2})∙{data.psi4:f2}={data.ConditionStrengthening1:f2}");
+                        $"{data.l1p:f2}∙({nozzleDataIn.s1}-{data.s1p:f2}-{nozzleDataIn.cs})∙{data.psi1:f2}+{data.l2p:f2}∙{nozzleDataIn.s2}∙{data.psi2:f2}+{data.l3p:f2}∙({nozzleDataIn.s3}-{nozzleDataIn.cs}-{nozzleDataIn.cs1})∙{data.psi3:f2}+{data.lp:f2}∙({shellDataIn.s}-{data.sp:f2}-{data.c:f2})∙{data.psi4:f2}={data.ConditionStrengthening1:f2}");
                 body.AddParagraph("")
                     .AppendEquation(
                         $"0.5∙(d_p-d_0p)∙s_p=0.5∙({data.dp:f2}-{data.d0p:f2})∙{data.sp:f2}={data.ConditionStrengthening2:f2}");
@@ -758,7 +761,7 @@ namespace CalculateVessels.Core.Shells.Nozzle
 
             body.AddParagraph("");
 
-            if (nozzleDataIn.ShellDataIn.IsPressureIn)
+            if (shellDataIn.IsPressureIn)
             {
                 body.AddParagraph(
                     "Допускаемое внутреннее избыточное давление элемента сосуда с учетом ослабления стенки отверстием вычисляют по формуле");
@@ -776,7 +779,7 @@ namespace CalculateVessels.Core.Shells.Nozzle
                 body.AddParagraph("").AppendEquation("[p]_П=(2∙K_1∙φ∙[σ]∙(s-c)∙V)/(D_p+(s-c)∙V)");
             }
 
-            switch (nozzleDataIn.ShellDataIn.ShellType)
+            switch (shellDataIn.ShellType)
             {
                 case ShellType.Cylindrical:
                 case ShellType.Conical:
@@ -825,27 +828,27 @@ namespace CalculateVessels.Core.Shells.Nozzle
 
             body.AddParagraph("")
                 .AppendEquation(
-                    $"(s_0-c)/(s-c)=({nozzleDataIn.s0}-{data.c:f2})/({nozzleDataIn.ShellDataIn.s}-{data.c:f2})={data.V1:f2}");
+                    $"(s_0-c)/(s-c)=({nozzleDataIn.s0}-{data.c:f2})/({shellDataIn.s}-{data.c:f2})={data.V1:f2}");
             body.AddParagraph("")
                 .AppendEquation(
                     "(χ_4+(l_1p∙(s_1-c_s)∙χ_1+l_2p∙s_2∙χ_2+l_3p∙(s_3-c_s-c_s1)∙χ_3)/(l_p∙(s-c)))/(1+0.5∙(d_p-d_0p)/l_p+K_1∙(d+2∙c_s)/D_p∙(φ/φ_1)∙(l_1p/l_p))=");
             body.AddParagraph("")
                 .AppendEquation(
-                    $"({data.psi4:f2}+({data.l1p:f2}∙({nozzleDataIn.s1}-{nozzleDataIn.cs})∙{data.psi1:f2}+{data.l2p:f2}∙{nozzleDataIn.s2}∙{data.psi2:f2}+{data.l3p:f2}∙({nozzleDataIn.s3}-{nozzleDataIn.cs}-{nozzleDataIn.cs1})∙{data.psi3:f2})/({data.lp:f2}∙({nozzleDataIn.ShellDataIn.s}-{data.c:f2})))/(1+0.5∙({data.dp:f2}-{data.d0p:f2})/{data.lp:f2}+{data.K1}∙({nozzleDataIn.d}+2∙{nozzleDataIn.cs})/{data.Dp:f2}∙({nozzleDataIn.fi}/{nozzleDataIn.fi1})∙({data.l1p:f2}/{data.lp:f2}))={data.V2:f2}");
+                    $"({data.psi4:f2}+({data.l1p:f2}∙({nozzleDataIn.s1}-{nozzleDataIn.cs})∙{data.psi1:f2}+{data.l2p:f2}∙{nozzleDataIn.s2}∙{data.psi2:f2}+{data.l3p:f2}∙({nozzleDataIn.s3}-{nozzleDataIn.cs}-{nozzleDataIn.cs1})∙{data.psi3:f2})/({data.lp:f2}∙({shellDataIn.s}-{data.c:f2})))/(1+0.5∙({data.dp:f2}-{data.d0p:f2})/{data.lp:f2}+{data.K1}∙({nozzleDataIn.d}+2∙{nozzleDataIn.cs})/{data.Dp:f2}∙({nozzleDataIn.fi}/{nozzleDataIn.fi1})∙({data.l1p:f2}/{data.lp:f2}))={data.V2:f2}");
 
             body.AddParagraph("").AppendEquation($"V=min({data.V1:f2};{data.V2:f2})={data.V:f2} ");
 
-            if (nozzleDataIn.ShellDataIn.IsPressureIn)
+            if (shellDataIn.IsPressureIn)
             {
                 body.AddParagraph("")
                     .AppendEquation(
-                        $"[p]=(2∙{data.K1}∙{nozzleDataIn.fi}∙{data.SigmaAllowShell}∙({nozzleDataIn.ShellDataIn.s}-{data.c:f2})∙{data.V:f2})/({data.Dp:f2}+({nozzleDataIn.ShellDataIn.s}-{data.c:f2})∙{data.V:f2})={data.p_d:f2} МПа");
+                        $"[p]=(2∙{data.K1}∙{nozzleDataIn.fi}∙{data.SigmaAllowShell}∙({shellDataIn.s}-{data.c:f2})∙{data.V:f2})/({data.Dp:f2}+({shellDataIn.s}-{data.c:f2})∙{data.V:f2})={data.p_d:f2} МПа");
             }
             else
             {
                 body.AddParagraph("")
                     .AppendEquation(
-                        $"[p]_p=(2∙{data.K1}∙{nozzleDataIn.fi}∙{data.SigmaAllowShell}∙({nozzleDataIn.ShellDataIn.s}-{data.c:f2})∙{data.V:f2})/({data.Dp}+({nozzleDataIn.ShellDataIn.s}-{data.c:f2})∙{data.V:f2})={data.p_dp:f2} МПа");
+                        $"[p]_p=(2∙{data.K1}∙{nozzleDataIn.fi}∙{data.SigmaAllowShell}∙({shellDataIn.s}-{data.c:f2})∙{data.V:f2})/({data.Dp}+({shellDataIn.s}-{data.c:f2})∙{data.V:f2})={data.p_dp:f2} МПа");
                 body.AddParagraph("")
                     .AppendEquation("[p]_E")
                     .AddRun(
@@ -856,8 +859,8 @@ namespace CalculateVessels.Core.Shells.Nozzle
             }
 
             body.AddParagraph("").AppendEquation("[p]≥p");
-            body.AddParagraph("").AppendEquation($"{data.p_d:f2} МПа >= {nozzleDataIn.ShellDataIn.p} МПа");
-            if (data.p_d >= nozzleDataIn.ShellDataIn.p)
+            body.AddParagraph("").AppendEquation($"{data.p_d:f2} МПа >= {shellDataIn.p} МПа");
+            if (data.p_d >= shellDataIn.p)
             {
                 body.AddParagraph("Условие прочности выполняется").Bold();
             }
@@ -869,16 +872,16 @@ namespace CalculateVessels.Core.Shells.Nozzle
             }
 
             body.AddParagraph("Условия применения расчетных формул");
-            switch (nozzleDataIn.ShellDataIn.ShellType)
+            switch (shellDataIn.ShellType)
             {
                 case ShellType.Cylindrical:
                 {
                     body.AddParagraph("")
                         .AppendEquation("(d_p-2∙c_s)/D" +
-                                        $"=({data.dp:f2}-2∙{nozzleDataIn.cs})/{nozzleDataIn.ShellDataIn.D}={data.ConditionUseFormulas1:f2}≤1");
+                                        $"=({data.dp:f2}-2∙{nozzleDataIn.cs})/{shellDataIn.D}={data.ConditionUseFormulas1:f2}≤1");
                     body.AddParagraph("")
                         .AppendEquation("(s-c)/D" +
-                                        $"=({nozzleDataIn.ShellDataIn.s}-{data.c:f2})/({nozzleDataIn.ShellDataIn.D})={data.ConditionUseFormulas2:f2}≤0.1");
+                                        $"=({shellDataIn.s}-{data.c:f2})/({shellDataIn.D})={data.ConditionUseFormulas2:f2}≤0.1");
                     break;
                 }
                 case ShellType.Conical:
@@ -889,7 +892,7 @@ namespace CalculateVessels.Core.Shells.Nozzle
                     body.AddParagraph("")
                         .AppendEquation("(s-c)/D_K≤0.1/cosα");
                     body.AddParagraph("")
-                        .AppendEquation($"({nozzleDataIn.ShellDataIn.s}-{data.c:f2})/({data.Dk})={data.ConditionUseFormulas2:f2}");
+                        .AppendEquation($"({shellDataIn.s}-{data.c:f2})/({data.Dk})={data.ConditionUseFormulas2:f2}");
                     body.AddParagraph("")
                         .AppendEquation($"0.1/cos{data.alfa1}");
                     break;
@@ -900,10 +903,10 @@ namespace CalculateVessels.Core.Shells.Nozzle
                 {
                     body.AddParagraph("")
                         .AppendEquation("(d_p-2∙c_s)/D " +
-                                        $"=({data.dp:f2}-2∙{nozzleDataIn.cs})/{nozzleDataIn.ShellDataIn.D}={data.ConditionUseFormulas1:f2}≤0.6");
+                                        $"=({data.dp:f2}-2∙{nozzleDataIn.cs})/{shellDataIn.D}={data.ConditionUseFormulas1:f2}≤0.6");
                     body.AddParagraph("")
                         .AppendEquation("(s-c)/D" +
-                                        $"=({nozzleDataIn.ShellDataIn.s}-{data.c:f2})/({nozzleDataIn.ShellDataIn.D})={data.ConditionUseFormulas2:f2}≤0.1");
+                                        $"=({shellDataIn.s}-{data.c:f2})/({shellDataIn.D})={data.ConditionUseFormulas2:f2}≤0.1");
                     break;
                 }
             }

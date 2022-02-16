@@ -26,13 +26,13 @@ namespace CalculateVessels
 
         private readonly IElement _shellElement;
 
-        private readonly ShellDataIn _shellDataIn;
+        private readonly ShellInputData _shellDataIn;
 
         public NozzleForm(IElement shellElement)
         {
             InitializeComponent();
             _shellElement = shellElement;
-            _shellDataIn = (ShellDataIn)shellElement.CalculatedData.InputData;
+            _shellDataIn = (ShellInputData)shellElement.CalculatedData.InputData;
         }
 
         public IInputData DataIn => _nozzleData;
@@ -69,7 +69,7 @@ namespace CalculateVessels
         {
             if (sender is RadioButton { Checked: true } rb)
             {
-                switch (((ShellDataIn)_shellElement.CalculatedData.InputData).ShellType)
+                switch (((ShellInputData)_shellElement.CalculatedData.InputData).ShellType)
                 {
                     case ShellType.Cylindrical:
                         {
@@ -1210,20 +1210,27 @@ namespace CalculateVessels
             this.Hide();
         }
 
-        private void PredCalc_b_Click(object sender, EventArgs e)
+        private void PreCalc_b_Click(object sender, EventArgs e)
         {
             const string WRONG_INPUT = " неверный ввод";
 
             _nozzleData = new NozzleInputData(_shellElement.CalculatedData);
 
-            //NozzleDataIn nozzleData = new NozzleDataIn(shellDataIn);
-
             List<string> dataInErr = new();
 
             //NozzleKind
             {
-                var checkedButton = vid_gb.Controls.OfType<RadioButton>().FirstOrDefault(rb => rb.Checked);
-                _nozzleData.NozzleKind = (NozzleKind)Convert.ToInt32(checkedButton.Text.First().ToString());
+                var checkedButton = vid_gb.Controls
+                    .OfType<RadioButton>()
+                    .FirstOrDefault(rb => rb.Checked);
+                if (checkedButton != null)
+                {
+                    _nozzleData.NozzleKind = (NozzleKind)Convert.ToInt32(checkedButton.Text.First().ToString());
+                }
+                else
+                {
+                    dataInErr.Add("Невозможно определить тип штуцера");
+                }
             }
 
             //t
@@ -1246,16 +1253,15 @@ namespace CalculateVessels
             if (sigmaHandle_cb.Checked)
             {
                 if (double.TryParse(sigma_d1_tb.Text, NumberStyles.AllowDecimalPoint,
-                        CultureInfo.InvariantCulture, out var sigma_d1))
+                        CultureInfo.InvariantCulture, out var sigmaAllow1))
                 {
-                    _nozzleData.sigma_d1 = sigma_d1;
+                    _nozzleData.SigmaAllow1 = sigmaAllow1;
                 }
                 else
                 {
                     dataInErr.Add("[σ]" + WRONG_INPUT);
                 }
             }
-
 
             if (!_shellDataIn.IsPressureIn)
             {
@@ -1272,7 +1278,6 @@ namespace CalculateVessels
                         dataInErr.Add("E" + WRONG_INPUT);
                     }
                 }
-
             }
 
             //d

@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using CalculateVessels.Core.Interfaces;
+using CalculateVessels.Core.Shells.Base;
 
 namespace CalculateVessels.Core.Shells.Elliptical
 {
-    public class EllipticalShellCalculatedData : ICalculatedData
+    public class EllipticalShellCalculatedData : ShellCalculatedData, ICalculatedData
     {
 
 

@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using CalculateVessels.Core.Interfaces;
+using CalculateVessels.Core.Shells.Base;
 
 namespace CalculateVessels.Core.Shells.Conical
 {
-    public class ConicalShellCalculatedData : ICalculatedData
+    public class ConicalShellCalculatedData : ShellCalculatedData, ICalculatedData
     {
         public ConicalShellCalculatedData(ConicalShellInputData inputData)
         {
