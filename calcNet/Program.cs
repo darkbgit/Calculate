@@ -18,24 +18,6 @@ namespace CalculateVessels
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new MainForm());
-
-            
         }
-
-
-    }
-
-
-    enum CalculatedElementType
-    {
-        Cylindrical,
-        CylindricalWhithNozzle,
-        Elliptical,
-        EllipticalWhithNozzle,
-        Conical,
-        ConicalWhithNozzle,
-        Saddle,
-        FlatBottom,
-        Heatexchenge
     }
 }

@@ -1,55 +1,23 @@
-﻿using CalculateVessels.Core.Exceptions;
+﻿using CalculateVessels.Core.Base;
 using CalculateVessels.Core.Interfaces;
-using System;
-using CalculateVessels.Core.Shells.Base;
+using System.Collections.Generic;
 
 namespace CalculateVessels.Core.Shells.Elliptical
 {
-
-    public class EllipticalShell : Shell, IElement
+    public class EllipticalShell : Element, IElement
     {
-        private readonly IInputData _inputData;
-        private readonly ICalculateProvider _calculateProvider;
-        private readonly IWordProvider _wordProvider;
-
-        private bool _isCalculated;
-
-        private ICalculatedData _calculatedData;
-
         public EllipticalShell(IInputData inputData)
+        : base(inputData,
+            new EllipticalShellCalculateProvider(),
+            new EllipticalShellWordProvider())
         {
-            _inputData = inputData;
-            _calculateProvider = new EllipticalShellCalculateProvider();
-            _wordProvider = new EllipticalShellWordProvider();
+            Bibliography = new[]
+            {
+                Data.Properties.Resources.GOST_34233_1,
+                Data.Properties.Resources.GOST_34233_2
+            };
         }
 
-        public bool IsCalculated => _isCalculated;
-
-
-        public ICalculatedData CalculatedData
-        {
-            get => _isCalculated ? _calculatedData : null;
-            private set => _calculatedData = value;
-        }
-
-        public void Calculate()
-        {
-            if (!_inputData.IsDataGood)
-                throw new CalculateException("Error. Wrong input data.");
-
-            CalculatedData = _calculateProvider.Calculate(_inputData);
-            _isCalculated = true;
-        }
-
-        public void MakeWord(string filePath)
-        {
-            if (!IsCalculated)
-                throw new ArgumentException();
-
-            _wordProvider.MakeWord(filePath, CalculatedData);
-        }
-
-        public override string ToString() => $"Эллиптическая обечайка {_inputData.Name}";
-
+        public override string ToString() => $"Эллиптическая обечайка {CalculatedData.InputData.Name}";
     }
 }

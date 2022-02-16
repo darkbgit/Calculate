@@ -1,34 +1,30 @@
-﻿using CalculateVessels.Core.Exceptions;
+﻿using System;
+using System.Collections.Generic;
+using CalculateVessels.Core.Exceptions;
 using CalculateVessels.Core.Interfaces;
-using System;
-using CalculateVessels.Core.Shells.Base;
 
-namespace CalculateVessels.Core.Shells.CylindricalShell
+namespace CalculateVessels.Core.Base
 {
-    public class CylindricalShell : Shell, IElement
+    public abstract class Element
     {
         private readonly IInputData _inputData;
         private readonly ICalculateProvider _calculateProvider;
         private readonly IWordProvider _wordProvider;
-
-        private bool _isCalculated;
-
-        public CylindricalShell(IInputData inputData)
-        {
-            _inputData = inputData;
-            _calculateProvider = new CylindricalShellCalculateProvider();
-            _wordProvider = new CylindricalShellWordProvider();
-        }
-
-
+        
         private ICalculatedData _calculatedData;
 
-        public bool IsCalculated => _isCalculated;
+        protected Element(IInputData inputData, ICalculateProvider calculateProvider, IWordProvider wordProvider)
+        {
+            _inputData = inputData;
+            _calculateProvider = calculateProvider;
+            _wordProvider = wordProvider;
+        }
 
+        public bool IsCalculated { get; private set; }
 
         public ICalculatedData CalculatedData
         {
-            get => _isCalculated ? _calculatedData : null;
+            get => IsCalculated ? _calculatedData : null;
             private set => _calculatedData = value;
         }
 
@@ -38,18 +34,17 @@ namespace CalculateVessels.Core.Shells.CylindricalShell
                 throw new CalculateException("Error. Wrong input data.");
 
             CalculatedData = _calculateProvider.Calculate(_inputData);
-            _isCalculated = true;
+            IsCalculated = true;
         }
 
         public void MakeWord(string filePath)
         {
             if (!IsCalculated)
-                throw new ArgumentException();
+                throw new MakeWordException("Element didn't calculate.");
 
             _wordProvider.MakeWord(filePath, CalculatedData);
         }
 
-        public override string ToString() => $"Цилиндрическая обечайка {_inputData.Name}";
-
+        public IEnumerable<string> Bibliography { get; init; }
     }
 }

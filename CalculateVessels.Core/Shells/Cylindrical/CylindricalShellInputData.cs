@@ -2,7 +2,7 @@
 using CalculateVessels.Core.Shells.Base;
 using CalculateVessels.Core.Shells.Enums;
 
-namespace CalculateVessels.Core.Shells.CylindricalShell
+namespace CalculateVessels.Core.Shells.Cylindrical
 {
     public class CylindricalShellInputData : ShellInputData, IInputData
     {

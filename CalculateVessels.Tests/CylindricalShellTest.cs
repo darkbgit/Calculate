@@ -1,5 +1,5 @@
 using CalculateVessels.Core.Interfaces;
-using CalculateVessels.Core.Shells.CylindricalShell;
+using CalculateVessels.Core.Shells.Cylindrical;
 using Xunit;
 
 namespace CalculateVessels.Tests

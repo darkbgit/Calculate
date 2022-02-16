@@ -16,9 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Trash\data.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <Folder Include="Base\" />
   </ItemGroup>
 
 </Project>

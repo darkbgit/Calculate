@@ -1,9 +1,9 @@
-﻿using CalculateVessels.Core.Exceptions;
+﻿using System;
+using CalculateVessels.Core.Exceptions;
 using CalculateVessels.Core.Interfaces;
 using CalculateVessels.Data.PhysicalData;
-using System;
 
-namespace CalculateVessels.Core.Shells.CylindricalShell
+namespace CalculateVessels.Core.Shells.Cylindrical
 {
     internal class CylindricalShellCalculateProvider : ICalculateProvider
     {

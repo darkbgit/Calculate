@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using CalculateVessels.Core.Interfaces;
 using CalculateVessels.Core.Word;
 using CalculateVessels.Core.Word.Enums;
 using DocumentFormat.OpenXml.Packaging;
 
-namespace CalculateVessels.Core.Shells.CylindricalShell
+namespace CalculateVessels.Core.Shells.Cylindrical
 {
     internal class CylindricalShellWordProvider : IWordProvider
     {

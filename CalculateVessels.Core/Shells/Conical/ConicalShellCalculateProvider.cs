@@ -51,21 +51,21 @@ namespace CalculateVessels.Core.Shells.Conical
             //TODO: 
             data.SigmaAllow1 = 0;
             data.SigmaAllow2 = 0;
-            data.SigmaAllowk = 0;
+            data.SigmaAllowC = 0;
 
             data.c = dataIn.c1 + dataIn.c2 + dataIn.c3;
 
-            data.cosAlfa1 = Math.Cos(dataIn.alfa1 * Math.PI / 180);
-            data.tgAlfa1 = Math.Tan(dataIn.alfa1 * Math.PI / 180);
-            data.sinAlfa1 = Math.Sin(dataIn.alfa1 * Math.PI / 180);
+            data.cosAlpha1 = Math.Cos(dataIn.alfa1 * Math.PI / 180);
+            data.tgAlpha1 = Math.Tan(dataIn.alfa1 * Math.PI / 180);
+            data.sinAlpha1 = Math.Sin(dataIn.alfa1 * Math.PI / 180);
 
             // Condition use formals
             {
                 const double CONDITION_USE_FORMULAS_FROM = 0.001;
                 const double CONDITION_USE_FORMULAS_TO = 0.05;
 
-                data.IsConditionUseFormulas = dataIn.s1 * data.cosAlfa1 / dataIn.D >= CONDITION_USE_FORMULAS_FROM
-                    && dataIn.s1 * data.cosAlfa1 / dataIn.D <= CONDITION_USE_FORMULAS_TO;
+                data.IsConditionUseFormulas = dataIn.s1 * data.cosAlpha1 / dataIn.D >= CONDITION_USE_FORMULAS_FROM
+                    && dataIn.s1 * data.cosAlpha1 / dataIn.D <= CONDITION_USE_FORMULAS_TO;
 
                 if (!data.IsConditionUseFormulas)
                 {
@@ -78,15 +78,15 @@ namespace CalculateVessels.Core.Shells.Conical
                 case ConicalConnectionType.Simply:
                 case ConicalConnectionType.WithRingPicture25b:
                 case ConicalConnectionType.WithRingPicture29:
-                    data.a1p = 0.7 * Math.Sqrt(dataIn.D * (dataIn.s1 - data.c) / data.cosAlfa1);
+                    data.a1p = 0.7 * Math.Sqrt(dataIn.D * (dataIn.s1 - data.c) / data.cosAlpha1);
                     data.a2p = 0.7 * Math.Sqrt(dataIn.D * (dataIn.s2 - data.c));
                     break;
                 case ConicalConnectionType.Toroidal:
-                    data.a1p = 0.7 * Math.Sqrt(dataIn.D * (dataIn.sT - data.c) / data.cosAlfa1);
+                    data.a1p = 0.7 * Math.Sqrt(dataIn.D * (dataIn.sT - data.c) / data.cosAlpha1);
                     data.a2p = 0.5 * Math.Sqrt(dataIn.D * (dataIn.sT - data.c));
                     break;
                 case ConicalConnectionType.WithoutConnection:
-                    data.a1p = 0.7 * Math.Sqrt(dataIn.D * (dataIn.s1 - data.c) / data.cosAlfa1);
+                    data.a1p = 0.7 * Math.Sqrt(dataIn.D * (dataIn.s1 - data.c) / data.cosAlpha1);
                     break;
                 default:
                     throw new CalculateException("Conical connection type error.");
@@ -94,13 +94,13 @@ namespace CalculateVessels.Core.Shells.Conical
 
             if (dataIn.IsConnectionWithLittle)
             {
-                data.a1p_l = Math.Sqrt(dataIn.D1 * (dataIn.s1 - data.c) / data.cosAlfa1);
+                data.a1p_l = Math.Sqrt(dataIn.D1 * (dataIn.s1 - data.c) / data.cosAlpha1);
                 data.a2p_l = 1.25 * Math.Sqrt(dataIn.D1 * (dataIn.s2 - data.c));
             }
 
             data.Dk = dataIn.ConnectionType == ConicalConnectionType.Toroidal
-                ? dataIn.D - 2 * (dataIn.r * (1 - data.cosAlfa1) + 0.7 * data.a1p * data.sinAlfa1)
-                : dataIn.D - 1.4 * data.a1p * data.sinAlfa1;
+                ? dataIn.D - 2 * (dataIn.r * (1 - data.cosAlpha1) + 0.7 * data.a1p * data.sinAlpha1)
+                : dataIn.D - 1.4 * data.a1p * data.sinAlpha1;
 
 
             if (dataIn.p > 0)
@@ -108,7 +108,7 @@ namespace CalculateVessels.Core.Shells.Conical
                 if (dataIn.IsPressureIn)
                 {
                     data.s_p = dataIn.p * data.Dk / (2 * data.SigmaAllow * dataIn.fi - dataIn.p)
-                        * (1 / data.cosAlfa1);
+                        * (1 / data.cosAlpha1);
                     data.s = data.s_p + data.c;
 
 
@@ -118,15 +118,15 @@ namespace CalculateVessels.Core.Shells.Conical
                             throw new CalculateException("Принятая толщина меньше расчетной.");
 
                         data.p_d = 2 * data.SigmaAllow * dataIn.fi * (dataIn.s - data.c)
-                            / (data.Dk / data.cosAlfa1 + (dataIn.s - data.c));
+                            / (data.Dk / data.cosAlpha1 + (dataIn.s - data.c));
                     }
                 }
                 else
                 {
-                    data.lE = (dataIn.D - dataIn.D1) / (2 * data.sinAlfa1);
-                    data.DE_1 = (dataIn.D + dataIn.D1) / (2 * data.cosAlfa1);
-                    data.DE_2 = dataIn.D / data.cosAlfa1 - 0.3 * (dataIn.D + dataIn.D1)
-                        * Math.Sqrt((dataIn.D + dataIn.D1) / ((dataIn.s - data.c) * 100)) * data.tgAlfa1;
+                    data.lE = (dataIn.D - dataIn.D1) / (2 * data.sinAlpha1);
+                    data.DE_1 = (dataIn.D + dataIn.D1) / (2 * data.cosAlpha1);
+                    data.DE_2 = dataIn.D / data.cosAlpha1 - 0.3 * (dataIn.D + dataIn.D1)
+                        * Math.Sqrt((dataIn.D + dataIn.D1) / ((dataIn.s - data.c) * 100)) * data.tgAlpha1;
                     data.DE = Math.Max(data.DE_1, data.DE_2);
                     data.B1_1 = 9.45 * data.DE / data.lE * Math.Sqrt(data.DE / (100 * (dataIn.s - data.c)));
                     data.B1 = Math.Min(1.0, data.B1_1);
@@ -134,7 +134,7 @@ namespace CalculateVessels.Core.Shells.Conical
                     data.s_p_1 = 1.06 * (0.01 * data.DE / data.B1)
                         * Math.Pow(dataIn.p / (0.00001 * data.E) * (data.lE / data.DE), 0.4);
                     data.s_p_2 = 1.2 * dataIn.p * data.Dk / (2 * dataIn.fi * data.SigmaAllow - dataIn.p)
-                        * (1 / data.cosAlfa1);
+                        * (1 / data.cosAlpha1);
                     data.s_p = Math.Max(data.s_p_1, data.s_p_2);
                     data.s = data.s_p + data.c;
 
@@ -144,7 +144,7 @@ namespace CalculateVessels.Core.Shells.Conical
                             throw new CalculateException("Принятая толщина меньше расчетной.");
 
                         data.p_dp = 2 * data.SigmaAllow * (dataIn.s - data.c)
-                            / (data.Dk / data.cosAlfa1 + dataIn.s - data.c);
+                            / (data.Dk / data.cosAlpha1 + dataIn.s - data.c);
                         data.p_de = 2.08 * 0.00001 * data.E / (dataIn.ny * data.B1) * (data.DE / data.lE)
                             * Math.Pow(100 * (dataIn.s - data.c) / data.DE, 2.5);
                         data.p_d = data.p_dp / Math.Sqrt(1 + Math.Pow(data.p_dp / data.p_de, 2));
@@ -172,10 +172,10 @@ namespace CalculateVessels.Core.Shells.Conical
                                 data.ErrorList.Add("Условие применения формул не выполняется");
                             }
                             data.chi_1 = data.SigmaAllow1 / data.SigmaAllow2;
-                            data.beta = 0.4 * Math.Sqrt(dataIn.D / (dataIn.s2 - data.c)) * data.tgAlfa1
+                            data.beta = 0.4 * Math.Sqrt(dataIn.D / (dataIn.s2 - data.c)) * data.tgAlpha1
                                 / (1 + Math.Sqrt((1 + data.chi_1
                                 * Math.Pow((dataIn.s1 - data.c) / (dataIn.s2 - data.c), 2))
-                                / (2 * data.cosAlfa1) * data.chi_1 * (dataIn.s1 - data.c) / (dataIn.s2 - data.c))) - 0.25;
+                                / (2 * data.cosAlpha1) * data.chi_1 * (dataIn.s1 - data.c) / (dataIn.s2 - data.c))) - 0.25;
                             data.beta_1 = Math.Max(0.5, data.beta);
                             data.s_2p = dataIn.p * dataIn.D * data.beta_1
                                 / (2 * data.SigmaAllow2 * dataIn.fi - dataIn.p);
@@ -197,27 +197,27 @@ namespace CalculateVessels.Core.Shells.Conical
                                 data.ErrorList.Add("Условие применения формул не выполняется");
                             }
                             data.chi_1 = data.SigmaAllow1 / data.SigmaAllow2;
-                            data.beta = 0.4 * Math.Sqrt(dataIn.D / (dataIn.s2 - data.c)) * data.tgAlfa1
+                            data.beta = 0.4 * Math.Sqrt(dataIn.D / (dataIn.s2 - data.c)) * data.tgAlpha1
                                 / (1 + Math.Sqrt((1 + data.chi_1
                                 * Math.Pow((dataIn.s1 - data.c) / (dataIn.s2 - data.c), 2))
-                                / (2 * data.cosAlfa1) * data.chi_1 * (dataIn.s1 - data.c) / (dataIn.s2 - data.c))) - 0.25;
+                                / (2 * data.cosAlpha1) * data.chi_1 * (dataIn.s1 - data.c) / (dataIn.s2 - data.c))) - 0.25;
                             data.beta_a = (2 * data.SigmaAllow2 * dataIn.fi / dataIn.p - 1) * (dataIn.s2 - data.c) / dataIn.D;
-                            data.Ak = dataIn.p * Math.Pow(dataIn.D, 2) * data.tgAlfa1 / (8 * data.SigmaAllowk * dataIn.fi_k)
+                            data.Ak = dataIn.p * Math.Pow(dataIn.D, 2) * data.tgAlpha1 / (8 * data.SigmaAllowC * dataIn.fi_k)
                                 * (1 - (data.beta_a + 0.25) / (data.beta + 0.25));
                             data.B2 = 1.6 * data.Ak / ((dataIn.s2 - data.c) * Math.Sqrt(dataIn.D * (dataIn.s2 - data.c)))
-                                * data.SigmaAllowk * dataIn.fi_k / (data.SigmaAllow2 * dataIn.fi_t);
+                                * data.SigmaAllowC * dataIn.fi_k / (data.SigmaAllow2 * dataIn.fi_t);
                             data.B3 = 0.25;
-                            data.beta_0 = 0.4 * Math.Sqrt(dataIn.D / (dataIn.s2 - data.c)) * data.tgAlfa1 - data.B3 *
+                            data.beta_0 = 0.4 * Math.Sqrt(dataIn.D / (dataIn.s2 - data.c)) * data.tgAlpha1 - data.B3 *
                                 (1 + Math.Sqrt((1 + data.chi_1 * Math.Pow((dataIn.s1 - data.c) / (dataIn.s2 - data.c), 2)) /
-                                (2 * data.cosAlfa1) * data.chi_1 * (dataIn.s1 - data.c) / (dataIn.s2 - data.c))) /
+                                (2 * data.cosAlpha1) * data.chi_1 * (dataIn.s1 - data.c) / (dataIn.s2 - data.c))) /
                                 (data.B2 + (1 + Math.Sqrt((1 + data.chi_1 * Math.Pow((dataIn.s1 - data.c) / (dataIn.s2 - data.c), 2)) /
-                                (2 * data.cosAlfa1) * data.chi_1 * (dataIn.s1 - data.c) / (dataIn.s2 - data.c))));
+                                (2 * data.cosAlpha1) * data.chi_1 * (dataIn.s1 - data.c) / (dataIn.s2 - data.c))));
                             data.beta_2 = Math.Max(0.5, data.beta_0);
                             data.p_dBig = 2 * data.SigmaAllow2 * dataIn.fi * (dataIn.s2 - data.c) / (dataIn.D * data.beta_2 + (dataIn.s2 - data.c));
                             break;
                         case ConicalConnectionType.WithRingPicture29:
-                            data.Ak = dataIn.p * Math.Pow(dataIn.D, 2) * data.tgAlfa1 / (8 * data.SigmaAllowk * dataIn.fi_k);
-                            data.p_dBig = data.Ak * 8 * data.SigmaAllowk * dataIn.fi_k / (Math.Pow(dataIn.D, 2) * data.tgAlfa1);
+                            data.Ak = dataIn.p * Math.Pow(dataIn.D, 2) * data.tgAlpha1 / (8 * data.SigmaAllowC * dataIn.fi_k);
+                            data.p_dBig = data.Ak * 8 * data.SigmaAllowC * dataIn.fi_k / (Math.Pow(dataIn.D, 2) * data.tgAlpha1);
                             //TODO: Check conical shell with ring picture 29
                             break;
                         case ConicalConnectionType.Toroidal:
@@ -228,13 +228,13 @@ namespace CalculateVessels.Core.Shells.Conical
                                 data.ErrorList.Add("Условие применения формул не выполняется");
                             }
                             data.chi_1 = data.SigmaAllow1 / data.SigmaAllow2;
-                            data.beta = 0.4 * Math.Sqrt(dataIn.D / (dataIn.s2 - data.c)) * data.tgAlfa1
+                            data.beta = 0.4 * Math.Sqrt(dataIn.D / (dataIn.s2 - data.c)) * data.tgAlpha1
                                 / (1 + Math.Sqrt((1 + data.chi_1
                                 * Math.Pow((dataIn.s1 - data.c) / (dataIn.s2 - data.c), 2))
-                                / (2 * data.cosAlfa1) * data.chi_1 * (dataIn.s1 - data.c) / (dataIn.s2 - data.c))) - 0.25;
+                                / (2 * data.cosAlpha1) * data.chi_1 * (dataIn.s1 - data.c) / (dataIn.s2 - data.c))) - 0.25;
                             data.beta_t = 1 / (1 + (0.028 * dataIn.alfa1 * dataIn.r / dataIn.D *
                                 Math.Sqrt(dataIn.D / (dataIn.sT - data.c))) /
-                                (1 / Math.Sqrt(data.cosAlfa1) + 1));
+                                (1 / Math.Sqrt(data.cosAlpha1) + 1));
                             //TODO: Check alfa1 in betadata.t in degree or in radians
                             data.beta_3 = Math.Max(0.5, Math.Max(data.beta, data.beta_t));
                             data.s_tp = dataIn.p * dataIn.D * data.beta_3 / (2 * dataIn.fi * data.SigmaAllow - dataIn.p);
@@ -252,22 +252,22 @@ namespace CalculateVessels.Core.Shells.Conical
                         data.ConditionForBetan = Math.Pow((dataIn.s1 - data.c) / (dataIn.s2 - data.c), 2);
                         if (data.ConditionForBetan >= 1)
                         {
-                            data.beta = 0.4 * Math.Sqrt(dataIn.D1 / (dataIn.s2 - data.c)) * data.tgAlfa1
+                            data.beta = 0.4 * Math.Sqrt(dataIn.D1 / (dataIn.s2 - data.c)) * data.tgAlpha1
                             / (1 + Math.Sqrt((1 + data.chi_1
                             * Math.Pow((dataIn.s1 - data.c) / (dataIn.s2 - data.c), 2))
-                            / (2 * data.cosAlfa1) * data.chi_1 * (dataIn.s1 - data.c) / (dataIn.s2 - data.c))) - 0.25;
+                            / (2 * data.cosAlpha1) * data.chi_1 * (dataIn.s1 - data.c) / (dataIn.s2 - data.c))) - 0.25;
                             data.beta_n = data.beta + 0.75;
                         }
                         else
                         {
-                            data.beta_n = 0.4 * Math.Sqrt(dataIn.D1 / (dataIn.s2 - data.c)) * data.tgAlfa1
+                            data.beta_n = 0.4 * Math.Sqrt(dataIn.D1 / (dataIn.s2 - data.c)) * data.tgAlpha1
                             / (data.chi_1 * (dataIn.s1 - data.c) / (dataIn.s2 - data.c) * Math.Sqrt((dataIn.s1 - data.c) /
-                            ((dataIn.s2 - data.c) * data.cosAlfa1)) + Math.Sqrt((1 + data.chi_1
+                            ((dataIn.s2 - data.c) * data.cosAlpha1)) + Math.Sqrt((1 + data.chi_1
                             * Math.Pow((dataIn.s1 - data.c) / (dataIn.s2 - data.c), 2))
                             / 2)) + 0.5;
                         }
                         data.beta_4 = Math.Max(1, data.beta_n);
-                        data.s_2plit = dataIn.p * dataIn.D1 * data.beta_4 / (2 * dataIn.fi * data.SigmaAllow2 - dataIn.p);
+                        data.s_2pLittle = dataIn.p * dataIn.D1 * data.beta_4 / (2 * dataIn.fi * data.SigmaAllow2 - dataIn.p);
                         data.p_dLittle = 2 * data.SigmaAllow2 * dataIn.fi * (dataIn.s2 - data.c) /
                             (dataIn.D1 * data.beta_4 + (dataIn.s2 - data.c));
 

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CalculateVessels.Core.Interfaces
 {
-    internal interface ICalculateProvider
+    public interface ICalculateProvider
     {
         ICalculatedData Calculate(IInputData inputData);
     }

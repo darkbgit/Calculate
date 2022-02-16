@@ -2,20 +2,20 @@
 
 namespace CalculateVessels.Core.Exceptions
 {
-    public class CalculateException : Exception
+    public class MakeWordException : Exception
     {
-        public CalculateException()
+        public MakeWordException()
         {
 
         }
 
-        public CalculateException(string massage)
+        public MakeWordException(string massage)
             : base(massage)
         {
 
         }
 
-        public CalculateException(string message, Exception innerException)
+        public MakeWordException(string message, Exception innerException)
             : base(message, innerException)
         {
 

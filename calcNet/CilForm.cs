@@ -1,6 +1,5 @@
 ﻿using CalculateVessels.Core.Exceptions;
 using CalculateVessels.Core.Interfaces;
-using CalculateVessels.Core.Shells.CylindricalShell;
 using CalculateVessels.Data.PhysicalData;
 using CalculateVessels.Data.Properties;
 using System;
@@ -9,6 +8,7 @@ using System.Drawing;
 using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
+using CalculateVessels.Core.Shells.Cylindrical;
 
 namespace CalculateVessels
 {

@@ -1,17 +1,13 @@
 ﻿using CalculateVessels.Core.Interfaces;
-using System.Collections.Generic;
 using CalculateVessels.Core.Shells.Base;
 
-namespace CalculateVessels.Core.Shells.CylindricalShell
+namespace CalculateVessels.Core.Shells.Cylindrical
 {
     public class CylindricalShellCalculatedData : ShellCalculatedData, ICalculatedData
     {
-
-
         public CylindricalShellCalculatedData(CylindricalShellInputData inputData)
         {
             InputData = inputData;
-            //ErrorList = new List<string>();
         }
 
         public IInputData InputData { get; }
@@ -38,19 +34,9 @@ namespace CalculateVessels.Core.Shells.CylindricalShell
         public double Q_dp { get; set; }
         public double s_f { get; set; }
         public double s_pf { get; set; }
-        //public double s_p { get; set; }
         public double s_p_1 { get; set; }
         public double s_p_2 { get; set; }
-        //public double s { get; set; }
-
-        //public double p_d { get; set; }
         public double p_dp { get; set; }
-        //public double p_de { get; set; }
         public double E { get; set; }
-        //public double SigmaAllow { get; set; }
-        //public double c { get; set; }
-        //public bool IsConditionUseFormulas { get; set; }
-
-        //public ICollection<string> ErrorList { get; }
     }
 }
