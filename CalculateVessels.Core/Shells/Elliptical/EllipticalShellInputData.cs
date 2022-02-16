@@ -4,7 +4,7 @@ using CalculateVessels.Core.Shells.Enums;
 
 namespace CalculateVessels.Core.Shells.Elliptical
 {
-    public class EllipticalShellInputData : ShellDataIn, IInputData
+    public class EllipticalShellInputData : ShellInputData, IInputData
     {
         public EllipticalShellInputData()
             : base(ShellType.Elliptical)

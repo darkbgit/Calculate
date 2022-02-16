@@ -231,9 +231,9 @@ namespace CalculateVessels
             this.predCalc_b.Name = "predCalc_b";
             this.predCalc_b.Size = new System.Drawing.Size(130, 42);
             this.predCalc_b.TabIndex = 105;
-            this.predCalc_b.Text = "Предварительный\r\nрасчет";
+            this.predCalc_b.Text = "Предварительный\r\nрасчет"; 
             this.predCalc_b.UseVisualStyleBackColor = true;
-            this.predCalc_b.Click += new System.EventHandler(this.PredCalc_b_Click);
+            this.predCalc_b.Click += new System.EventHandler(this.PreCalc_b_Click);
             // 
             // groupBox4
             // 

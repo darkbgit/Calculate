@@ -4,9 +4,9 @@ using CalculateVessels.Core.Shells.Enums;
 
 namespace CalculateVessels.Core.Shells.Base
 {
-    public abstract class ShellDataIn
+    public abstract class ShellInputData
     {
-        protected ShellDataIn(ShellType shellType)
+        protected ShellInputData(ShellType shellType)
         {
             this.ShellType = shellType;
         }
@@ -178,7 +178,7 @@ namespace CalculateVessels.Core.Shells.Base
 
         public void SetValue(string name, double value)
         {
-            var field = typeof(ShellDataIn).GetProperty(name);
+            var field = typeof(ShellInputData).GetProperty(name);
             try
             {
                 field.SetValue(this, value);
@@ -195,7 +195,7 @@ namespace CalculateVessels.Core.Shells.Base
 
         public void SetValue(string name, string value)
         {
-            var field = typeof(ShellDataIn).GetProperty(name);
+            var field = typeof(ShellInputData).GetProperty(name);
             field.SetValue(this, value);
         }
     }
