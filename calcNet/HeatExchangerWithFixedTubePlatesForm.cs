@@ -758,6 +758,7 @@ namespace CalculateVessels
             catch (CalculateException ex)
             {
                 MessageBox.Show(ex.Message);
+                return;
             }
 
             if (Owner is MainForm main)
