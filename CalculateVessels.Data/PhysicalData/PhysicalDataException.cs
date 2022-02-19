@@ -20,5 +20,14 @@ namespace CalculateVessels.Data.PhysicalData
         {
 
         }
+
+        public PhysicalDataException(double maxTemperature)
+        {
+            MaxTemperatureError = true;
+            MaxTemperature = maxTemperature;
+        }
+
+        public double MaxTemperature { get; }
+        public bool MaxTemperatureError { get; }
     }
 }

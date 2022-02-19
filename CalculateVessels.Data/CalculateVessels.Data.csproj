@@ -20,7 +20,22 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="PhysicalData\Gost34233_1\SteelsType.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="PhysicalData\Gost34233_1\SteelsAlpha_old.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="PhysicalData\Gost34233_1\SteelsE_old.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="PhysicalData\Gost34233_1\SteelsRm_old.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="PhysicalData\Gost34233_1\SteelsRm.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="PhysicalData\Gost34233_1\SteelsSigma_old.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="PhysicalData\Gost34233_1\SteelsSigma.json">
@@ -29,7 +44,7 @@
     <None Update="PhysicalData\Gost34233_1\SteelsE.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="PhysicalData\Gost34233_1\SteelsAlfa.json">
+    <None Update="PhysicalData\Gost34233_1\SteelsAlpha.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="PhysicalData\Gost34233_1\Steels.json">
@@ -38,7 +53,13 @@
     <None Update="PhysicalData\Gost34233_4\Gaskets.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="PhysicalData\Gost34233_4\SteelsAlfa.json">
+    <None Update="PhysicalData\Gost34233_4\SteelsAlpha_old.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="PhysicalData\Gost34233_4\SteelsAlpha.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="PhysicalData\Gost34233_4\SteelsE_old.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="PhysicalData\Gost34233_4\SteelsE.json">
@@ -66,6 +87,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="PhysicalData\Gost34233_7\TableG23.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="PhysicalData\Gost6533\EllipticalBottom_old.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="PhysicalData\Gost6533\EllipticalBottom.json">

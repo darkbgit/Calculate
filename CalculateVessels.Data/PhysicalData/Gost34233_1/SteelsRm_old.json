@@ -1,0 +1,291 @@
+﻿[
+	{
+		"Name": [ "Ст3" ],
+		"IsCouldBigThickness": true,
+		"BigThickness": 20,
+		"Values": [
+			{
+				"Temperature": 20,
+				"Value" : [ 460, 380 ]
+			},
+			{
+				"Temperature": 100,
+				"Value": [ 435, 360 ]
+			},
+			{
+				"Temperature": 150,
+				"Value": [ 460, 390 ]
+			},
+			{
+				"Temperature": 200,
+				"Value": [ 505, 420 ]
+			},
+			{
+				"Temperature": 250,
+				"Value": [ 510, 435 ]
+			},
+			{
+				"Temperature": 300,
+				"Value": [ 520, 440 ]
+			},
+			{
+				"Temperature": 350,
+				"Value": [ 480, 420 ]
+			},
+			{
+				"Temperature": 375,
+				"Value": [ 450, 402 ]
+			}
+		]
+	},
+	{
+		"Name": [ "09Г2С", "16ГС" ],
+		"IsCouldBigThickness": true,
+		"BigThickness": 32,
+		"Values": [
+			{
+				"Temperature": 20,
+				"Value": [ 470, 440 ]
+			},
+			{
+				"Temperature": 100,
+				"Value": [ 425, 385 ]
+			},
+			{
+				"Temperature": 150,
+				"Value": [ 430, 430 ]
+			},
+			{
+				"Temperature": 200,
+				"Value": [ 439, 439 ]
+			},
+			{
+				"Temperature": 250,
+				"Value": [ 444, 444 ]
+			},
+			{
+				"Temperature": 300,
+				"Value": [ 445, 445 ]
+			},
+			{
+				"Temperature": 350,
+				"Value": [ 441, 441 ]
+			},
+			{
+				"Temperature": 375,
+				"Value": [ 425, 425 ]
+			}
+		]
+	},
+	{
+		"Name": [ "20", "20К" ],
+		"IsCouldBigThickness": false,
+		"Values": [
+			{
+				"Temperature": 20,
+				"Value": [ 410 ]
+			},
+			{
+				"Temperature": 100,
+				"Value": [ 380 ]
+			},
+			{
+				"Temperature": 150,
+				"Value": [ 425 ]
+			},
+			{
+				"Temperature": 200,
+				"Value": [ 460 ]
+			},
+			{
+				"Temperature": 250,
+				"Value": [ 460 ]
+			},
+			{
+				"Temperature": 300,
+				"Value": [ 460 ]
+			},
+			{
+				"Temperature": 350,
+				"Value": [ 430 ]
+			},
+			{
+				"Temperature": 375,
+				"Value": [ 410 ]
+			}
+		]
+	},
+	{
+		"Name": [ "10" ],
+		"IsCouldBigThickness": false,
+		"Values": [
+			{
+				"Temperature": 20,
+				"Value": [ 340 ]
+			},
+			{
+				"Temperature": 100,
+				"Value": [ 310 ]
+			},
+			{
+				"Temperature": 150,
+				"Value": [ 340 ]
+			},
+			{
+				"Temperature": 200,
+				"Value": [ 382 ]
+			},
+			{
+				"Temperature": 250,
+				"Value": [ 400 ]
+			},
+			{
+				"Temperature": 300,
+				"Value": [ 374 ]
+			},
+			{
+				"Temperature": 350,
+				"Value": [ 360 ]
+			},
+			{
+				"Temperature": 375,
+				"Value": [ 330 ]
+			}
+		]
+	},
+	{
+		"Name": [ "10Г2", "09Г2", "17ГС", "17Г1С", "10Г2С1" ],
+		"IsCouldBigThickness": false,
+		"Values": [
+			{
+				"Temperature": 20,
+				"Value": [ 440 ]
+			},
+			{
+				"Temperature": 100,
+				"Value": [ 385 ]
+			},
+			{
+				"Temperature": 150,
+				"Value": [ 430 ]
+			},
+			{
+				"Temperature": 200,
+				"Value": [ 439 ]
+			},
+			{
+				"Temperature": 250,
+				"Value": [ 444 ]
+			},
+			{
+				"Temperature": 300,
+				"Value": [ 445 ]
+			},
+			{
+				"Temperature": 350,
+				"Value": [ 441 ]
+			},
+			{
+				"Temperature": 375,
+				"Value": [ 425 ]
+			}
+		]
+	},
+	{
+		"Name": [ "12Х18Н10Т", "12Х18Н12Т", "10Х17Н13М2Т", "10Х17Н13М3Т" ],
+		"IsCouldBigThickness": false,
+		"Values": [
+			{
+				"Temperature": 20,
+				"Value": [ 540 ]
+			},
+			{
+				"Temperature": 100,
+				"Value": [ 500 ]
+			},
+			{
+				"Temperature": 150,
+				"Value": [ 475 ]
+			},
+			{
+				"Temperature": 200,
+				"Value": [ 450 ]
+			},
+			{
+				"Temperature": 250,
+				"Value": [ 443 ]
+			},
+			{
+				"Temperature": 300,
+				"Value": [ 440 ]
+			},
+			{
+				"Temperature": 350,
+				"Value": [ 438 ]
+			},
+			{
+				"Temperature": 375,
+				"Value": [ 437 ]
+			},
+			{
+				"Temperature": 400,
+				"Value": [ 436 ]
+			},
+			{
+				"Temperature": 410,
+				"Value": [ 434 ]
+			},
+			{
+				"Temperature": 420,
+				"Value": [ 432 ]
+			},
+			{
+				"Temperature": 430,
+				"Value": [ 431 ]
+			},
+			{
+				"Temperature": 440,
+				"Value": [ 430 ]
+			},
+			{
+				"Temperature": 450,
+				"Value": [ 428 ]
+			},
+			{
+				"Temperature": 460,
+				"Value": [ 426 ]
+			},
+			{
+				"Temperature": 470,
+				"Value": [ 424 ]
+			},
+			{
+				"Temperature": 480,
+				"Value": [ 422 ]
+			},
+			{
+				"Temperature": 490,
+				"Value": [ 421 ]
+			},
+			{
+				"Temperature": 500,
+				"Value": [ 420 ]
+			},
+			{
+				"Temperature": 510,
+				"Value": [ 418 ]
+			},
+			{
+				"Temperature": 520,
+				"Value": [ 416 ]
+			},
+			{
+				"Temperature": 530,
+				"Value": [ 412 ]
+			}
+		]
+	}
+]
+
+	
+

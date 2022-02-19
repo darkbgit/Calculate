@@ -5,17 +5,17 @@
 			{
 				"Temperature": 20,
 				"EValue": 213000,
-				"AlfaValue": 0.0000111
+				"AlphaValue": 0.0000111
 			},
 			{
 				"Temperature": 100,
 				"EValue": 210000,
-				"AlfaValue": 0.0000111
+				"AlphaValue": 0.0000111
 			},
 			{
 				"Temperature": 200,
 				"EValue": 198000,
-				"AlfaValue": 0.0000119
+				"AlphaValue": 0.0000119
 			},
 			{
 				"Temperature": 300,
@@ -24,7 +24,7 @@
 			{
 				"Temperature": 400,
 				"EValue": 185000,
-				"AlfaValue": 0.0000134
+				"AlphaValue": 0.0000134
 			},
 			{
 				"Temperature": 450,
@@ -43,19 +43,19 @@
 				"Temperature": 20,
 				"SigmaValue": 130.0,
 				"EValue": 213000,
-				"AlfaValue": 0.0000111
+				"AlphaValue": 0.0000111
 			},
 			{
 				"Temperature": 100,
 				"SigmaValue": 126.0,
 				"EValue": 210000,
-				"AlfaValue": 0.0000111
+				"AlphaValue": 0.0000111
 			},
 			{
 				"Temperature": 200,
 				"SigmaValue": 120.0,
 				"EValue": 198000,
-				"AlfaValue": 0.0000119
+				"AlphaValue": 0.0000119
 			},
 			{
 				"Temperature": 250,
@@ -69,18 +69,18 @@
 			{
 				"Temperature": 350,
 				"SigmaValue": 86.0,
-				"AlfaValue": 0.0000134
+				"AlphaValue": 0.0000134
 			},
 			{
 				"Temperature": 375,
 				"SigmaValue": 80.0,
-				"AlfaValue": 0.0000134
+				"AlphaValue": 0.0000134
 			},
 			{
 				"Temperature": 400,
 				"SigmaValue": 75.0,
 				"EValue": 185000,
-				"AlfaValue": 0.0000134
+				"AlphaValue": 0.0000134
 			},
 			{
 				"Temperature": 425,
@@ -103,46 +103,46 @@
 				"Temperature": 20,
 				"SigmaValue": 130.0,
 				"EValue": 213000,
-				"AlfaValue": 0.0000113
+				"AlphaValue": 0.0000113
 			},
 			{
 				"Temperature": 100,
 				"SigmaValue": 126.0,
 				"EValue": 210000,
-				"AlfaValue": 0.0000113
+				"AlphaValue": 0.0000113
 			},
 			{
 				"Temperature": 200,
 				"SigmaValue": 120.0,
 				"EValue": 198000,
-				"AlfaValue": 0.000012
+				"AlphaValue": 0.000012
 			},
 			{
 				"Temperature": 250,
 				"SigmaValue": 107,
-				"AlfaValue": 0.0000133
+				"AlphaValue": 0.0000133
 			},
 			{
 				"Temperature": 300,
 				"SigmaValue": 97.0,
 				"EValue": 190000,
-				"AlfaValue": 0.0000133
+				"AlphaValue": 0.0000133
 			},
 			{
 				"Temperature": 350,
 				"SigmaValue": 86.0,
-				"AlfaValue": 0.0000133
+				"AlphaValue": 0.0000133
 			},
 			{
 				"Temperature": 375,
 				"SigmaValue": 80.0,
-				"AlfaValue": 0.0000133
+				"AlphaValue": 0.0000133
 			},
 			{
 				"Temperature": 400,
 				"SigmaValue": 75.0,
 				"EValue": 185000,
-				"AlfaValue": 0.0000133
+				"AlphaValue": 0.0000133
 			},
 			{
 				"Temperature": 425,

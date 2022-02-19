@@ -1,223 +1,73 @@
 ﻿[
 	{
 		"Name": [ "35", "40" ],
-		"Values": [
-			{
-				"Temperature": 20,
-				"SigmaValue": 130.0
-			},
-			{
-				"Temperature": 100,
-				"SigmaValue": 126.0
-			},
-			{
-				"Temperature": 200,
-				"SigmaValue": 120.0
-			},
-			{
-				"Temperature": 250,
-				"SigmaValue": 107
-			},
-			{
-				"Temperature": 300,
-				"SigmaValue": 97.0
-			},
-			{
-				"Temperature": 350,
-				"SigmaValue": 86.0
-			},
-			{
-				"Temperature": 375,
-				"SigmaValue": 80.0
-			},
-			{
-				"Temperature": 400,
-				"SigmaValue": 75.0
-			},
-			{
-				"Temperature": 425,
-				"SigmaValue": 68.0
-			}
-		]
+		"Values": {
+			"20": 130.0,
+			"100": 126.0,
+			"200": 120.0,
+			"250": 107,
+			"300": 97.0,
+			"350": 86.0,
+			"375": 80.0,
+			"400": 75.0,
+			"425": 68.0
+		}
 	},
 	{
 		"Name": [ "12Х18Н10Т", "10Х17Н13М2Т" ],
-		"Values": [
-			{
-				"Temperature": 20,
-				"SigmaValue": 110.0
-			},
-			{
-				"Temperature": 100,
-				"SigmaValue": 105.0
-			},
-			{
-				"Temperature": 200,
-				"SigmaValue": 98.0
-			},
-			{
-				"Temperature": 250,
-				"SigmaValue": 95.0
-			},
-			{
-				"Temperature": 300,
-				"SigmaValue": 90.0
-			},
-			{
-				"Temperature": 350,
-				"SigmaValue": 86.0
-			},
-			{
-				"Temperature": 375,
-				"SigmaValue": 85.0
-			},
-			{
-				"Temperature": 400,
-				"SigmaValue": 83.0
-			},
-			{
-				"Temperature": 425,
-				"SigmaValue": 82.0
-			},
-			{
-				"Temperature": 450,
-				"SigmaValue": 80.0
-			},
-			{
-				"Temperature": 475,
-				"SigmaValue": 79.0
-			},
-			{
-				"Temperature": 500,
-				"SigmaValue": 78.0
-			},
-			{
-				"Temperature": 510,
-				"SigmaValue": 75.0
-			},
-			{
-				"Temperature": 520,
-				"SigmaValue": 73.0
-			},
-			{
-				"Temperature": 530,
-				"SigmaValue": 70.0
-			},
-			{
-				"Temperature": 540,
-				"SigmaValue": 65.0
-			},
-			{
-				"Temperature": 550,
-				"SigmaValue": 63.0
-			},
-			{
-				"Temperature": 600,
-				"SigmaValue": 56.0
-			}
-		]
+		"Values": {
+			"20": 110.0,
+			"100": 105.0,
+			"200": 98.0,
+			"250": 95.0,
+			"300": 90.0,
+			"350": 86.0,
+			"375": 85.0,
+			"400": 83.0,
+			"425": 82.0,
+			"450": 80.0,
+			"475": 79.0,
+			"500": 78.0,
+			"510": 75.0,
+			"520": 73.0,
+			"530": 70.0,
+			"540": 65.0,
+			"550": 63.0,
+			"600": 56.0
+		}
 	},
 	{
 		"Name": [ "45Х14Н14В2М" ],
-		"Values": [
-			{
-				"Temperature": 20,
-				"SigmaValue": 160.0
-			},
-			{
-				"Temperature": 100,
-				"SigmaValue": 150.0
-			},
-			{
-				"Temperature": 200,
-				"SigmaValue": 150.0
-			},
-			{
-				"Temperature": 250,
-				"SigmaValue": 144.0
-			},
-			{
-				"Temperature": 300,
-				"SigmaValue": 139.0
-			},
-			{
-				"Temperature": 350,
-				"SigmaValue": 128.0
-			},
-			{
-				"Temperature": 375,
-				"SigmaValue": 128.0
-			},
-			{
-				"Temperature": 400,
-				"SigmaValue": 128.0
-			},
-			{
-				"Temperature": 425,
-				"SigmaValue": 125.0
-			},
-			{
-				"Temperature": 450,
-				"SigmaValue": 123.0
-			},
-			{
-				"Temperature": 475,
-				"SigmaValue": 120.0
-			},
-			{
-				"Temperature": 500,
-				"SigmaValue": 118.0
-			},
-			{
-				"Temperature": 510,
-				"SigmaValue": 117.0
-			},
-			{
-				"Temperature": 520,
-				"SigmaValue": 116.0
-			},
-			{
-				"Temperature": 530,
-				"SigmaValue": 115.0
-			},
-			{
-				"Temperature": 540,
-				"SigmaValue": 114.0
-			},
-			{
-				"Temperature": 550,
-				"SigmaValue": 113.0
-			}
-		]
+		"Values": {
+			"20": 160.0,
+			"100": 150.0,
+			"200": 150.0,
+			"250": 144.0,
+			"300": 139.0,
+			"350": 128.0,
+			"375": 128.0,
+			"400": 128.0,
+			"425": 125.0,
+			"450": 123.0,
+			"475": 120.0,
+			"500": 118.0,
+			"510": 117.0,
+			"520": 116.0,
+			"530": 115.0,
+			"540": 114.0,
+			"550": 113.0
+		}
 	},
   {
     "Name": [ "14Х17Н2" ],
-    "Values": [
-      {
-        "Temperature": 20,
-        "SigmaValue": 232.0
-      },
-      {
-        "Temperature": 100,
-        "SigmaValue": 230.0
-      },
-      {
-        "Temperature": 200,
-        "SigmaValue": 220.0
-      },
-      {
-        "Temperature": 250,
-        "SigmaValue": 218.0
-      },
-      {
-        "Temperature": 300,
-        "SigmaValue": 209.0
-      },
-      {
-        "Temperature": 350,
-        "SigmaValue": 207.0
-      }
-    ]
+		"Values": {
+			"20": 232.0,
+			"100": 230.0,
+			"200": 220.0,
+			"250": 218.0,
+			"300": 209.0,
+			"350": 207.0
+		}
   }
 ]
 

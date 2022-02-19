@@ -15,7 +15,8 @@ namespace CalculateVessels
         public GostEllForm()
         {
             InitializeComponent();
-            _elepses = Physical.Gost6533.GetEllipsesList();
+            _ellipses = Physical.Gost6533.GetEllipsesList()??
+                throw new ArgumentNullException();
         }
 
         private void Cancel_b_Click(object sender, EventArgs e)
@@ -23,7 +24,7 @@ namespace CalculateVessels
             this.Close();
         }
 
-        private readonly EllipsesList _elepses;
+        private readonly EllipsesList _ellipses;
 
         private void GostEllForm_Load(object sender, EventArgs e)
         {
@@ -34,11 +35,11 @@ namespace CalculateVessels
         {
             var diameters = type_cb.SelectedIndex switch
             {
-                0 => _elepses.Ell025In
-                    .Select(eb => eb.Diameter.ToString(CultureInfo.CurrentCulture))
+                0 => _ellipses.Ell025In.Keys
+                    .Select(eb => eb.ToString(CultureInfo.CurrentCulture))
                     .ToArray<object>(),
-                1 => _elepses.Ell025Out
-                    .Select(eb => eb.Diameter.ToString(CultureInfo.CurrentCulture))
+                1 => _ellipses.Ell025Out.Keys
+                    .Select(eb => eb.ToString(CultureInfo.CurrentCulture))
                     .ToArray<object>(),
                 _ => null
             };
@@ -60,16 +61,10 @@ namespace CalculateVessels
         {
             var sList = type_cb.SelectedIndex switch
             {
-                0 => _elepses.Ell025In
-                    .FirstOrDefault(eb=>
-                        eb.Diameter.Equals(Convert.ToDouble(D_cb.Text)))
-                    ?.SValue
+                0 => _ellipses.Ell025In[Convert.ToDouble(D_cb.Text)]
                     ?.Select(s => s.s.ToString(CultureInfo.CurrentCulture))
                     .ToArray<object>(),
-                1 => _elepses.Ell025Out
-                    .FirstOrDefault(eb =>
-                        eb.Diameter.Equals(Convert.ToDouble(D_cb.Text)))
-                    ?.SValue
+                1 => _ellipses.Ell025Out[Convert.ToDouble(D_cb.Text)]
                     ?.Select(s => s.s.ToString(CultureInfo.CurrentCulture))
                     .ToArray<object>(),
                 _ => null
@@ -91,16 +86,10 @@ namespace CalculateVessels
         {
             var ellipse = type_cb.SelectedIndex switch
             {
-                0 => _elepses.Ell025In
-                    .FirstOrDefault(eb =>
-                        eb.Diameter.Equals(Convert.ToDouble(D_cb.Text)))
-                    ?.SValue
+                0 => _ellipses.Ell025In[Convert.ToDouble(D_cb.Text)]
                     .FirstOrDefault(s => 
                         s.s.Equals(Convert.ToDouble(s_cb.Text))),
-                1 => _elepses.Ell025Out
-                    .FirstOrDefault(eb =>
-                        eb.Diameter.Equals(Convert.ToDouble(D_cb.Text)))
-                    ?.SValue
+                1 => _ellipses.Ell025Out[Convert.ToDouble(D_cb.Text)]
                     .FirstOrDefault(s =>
                         s.s.Equals(Convert.ToDouble(s_cb.Text))),
                 _ => null
@@ -126,7 +115,7 @@ namespace CalculateVessels
                 ef.H_tb.Text = H_tb.Text;
                 ef.h1_tb.Text = h1_tb.Text;
                 ef.s_tb.Text = s_cb.Text;
-                ef.c3_tb.Text = (Convert.ToInt32(s_cb.Text) * 0.15).ToString(System.Globalization.CultureInfo.InvariantCulture);
+                ef.c3_tb.Text = (Convert.ToInt32(s_cb.Text) * 0.15).ToString(CultureInfo.InvariantCulture);
             }
             this.Close();
         }
