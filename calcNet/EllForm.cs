@@ -262,8 +262,15 @@ namespace CalculateVessels
 
         private void GetGostDim_b_Click(object sender, EventArgs e)
         {
-            GostEllForm gef = new() { Owner = this };
-            gef.ShowDialog(); // показываем
+            try
+            {
+                GostEllForm gef = new() { Owner = this };
+                gef.ShowDialog(); // показываем
+            }
+            catch (ArgumentNullException )
+            {
+                MessageBox.Show("Couldn't get ellipse parameters");
+            }
         }
 
         private void GetFi_b_Click(object sender, EventArgs e)

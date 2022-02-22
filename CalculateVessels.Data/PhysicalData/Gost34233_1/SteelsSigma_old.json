@@ -1,0 +1,2916 @@
+﻿[
+  {
+    "Name": [
+      "Ст3"
+    ],
+    "IsCouldBigThickness": true,
+    "BigThickness": 20,
+    "SteelType": 0,
+    "Values": [
+      {
+        "Temperature": 20,
+        "Value": [
+          154.0,
+          154.0,
+          140.0,
+          140.0
+        ]
+      },
+      {
+        "Temperature": 100,
+        "Value": [
+          149.0,
+          149.0,
+          134.0,
+          134.0
+        ]
+      },
+      {
+        "Temperature": 150,
+        "Value": [
+          145.0,
+          145.0,
+          131.0,
+          131.0
+        ]
+      },
+      {
+        "Temperature": 200,
+        "Value": [
+          142.0,
+          142.0,
+          126.0,
+          126.0
+        ]
+      },
+      {
+        "Temperature": 250,
+        "Value": [
+          131.0,
+          131.0,
+          120.0,
+          120.0
+        ]
+      },
+      {
+        "Temperature": 300,
+        "Value": [
+          115.0,
+          115.0,
+          108.0,
+          108.0
+        ]
+      },
+      {
+        "Temperature": 350,
+        "Value": [
+          105.0,
+          105.0,
+          98.0,
+          98.0
+        ]
+      },
+      {
+        "Temperature": 375,
+        "Value": [
+          93.0,
+          93.0,
+          93.0,
+          93.0
+        ]
+      },
+      {
+        "Temperature": 400,
+        "Value": [
+          85.0,
+          68.0,
+          85.0,
+          68.0
+        ]
+      },
+      {
+        "Temperature": 410,
+        "Value": [
+          81.0,
+          65.0,
+          81.0,
+          65.0
+        ]
+      },
+      {
+        "Temperature": 420,
+        "Value": [
+          75.0,
+          60.0,
+          75.0,
+          60.0
+        ]
+      },
+      {
+        "Temperature": 430,
+        "Value": [
+          71.0,
+          57.0,
+          71.0,
+          57.0
+        ]
+      }
+    ]
+  },
+  {
+    "Name": [
+      "09Г2С",
+      "16ГС"
+    ],
+    "IsCouldBigThickness": true,
+    "BigThickness": 32,
+    "SteelType": 1,
+    "Values": [
+      {
+        "Temperature": 20,
+        "Value": [
+          196.0,
+          196.0,
+          183.0,
+          183.0
+        ]
+      },
+      {
+        "Temperature": 100,
+        "Value": [
+          177.0,
+          177.0,
+          160.0,
+          160.0
+        ]
+      },
+      {
+        "Temperature": 150,
+        "Value": [
+          171.0,
+          171.0,
+          154.0,
+          154.0
+        ]
+      },
+      {
+        "Temperature": 200,
+        "Value": [
+          165.0,
+          165.0,
+          148.0,
+          148.0
+        ]
+      },
+      {
+        "Temperature": 250,
+        "Value": [
+          162.0,
+          162.0,
+          145.0,
+          145.0
+        ]
+      },
+      {
+        "Temperature": 300,
+        "Value": [
+          151.0,
+          151.0,
+          134.0,
+          134.0
+        ]
+      },
+      {
+        "Temperature": 350,
+        "Value": [
+          140.0,
+          140.0,
+          123.0,
+          123.0
+        ]
+      },
+      {
+        "Temperature": 375,
+        "Value": [
+          133.0,
+          133.0,
+          116.0,
+          116.0
+        ]
+      },
+      {
+        "Temperature": 400,
+        "Value": [
+          122.0,
+          122.0,
+          105.0,
+          105.0
+        ]
+      },
+      {
+        "Temperature": 410,
+        "Value": [
+          104.0,
+          104.0,
+          104.0,
+          104.0
+        ]
+      },
+      {
+        "Temperature": 420,
+        "Value": [
+          92.0,
+          92.0,
+          92.0,
+          92.0
+        ]
+      },
+      {
+        "Temperature": 430,
+        "Value": [
+          86.0,
+          73.0,
+          86.0,
+          73.0
+        ]
+      },
+      {
+        "Temperature": 440,
+        "Value": [
+          78.0,
+          66.0,
+          78.0,
+          66.0
+        ]
+      },
+      {
+        "Temperature": 450,
+        "Value": [
+          71.0,
+          53.0,
+          71.0,
+          53.0
+        ]
+      },
+      {
+        "Temperature": 460,
+        "Value": [
+          64.0,
+          48.0,
+          64.0,
+          48.0
+        ]
+      },
+      {
+        "Temperature": 470,
+        "Value": [
+          56.0,
+          42.0,
+          56.0,
+          42.0
+        ]
+      },
+      {
+        "Temperature": 475,
+        "Value": [
+          53.0,
+          40.0,
+          53.0,
+          40.0
+        ]
+      }
+    ]
+  },
+  {
+    "Name": [
+      "20",
+      "20К"
+    ],
+    "IsCouldBigThickness": false,
+    "SteelType": 0,
+    "Values": [
+      {
+        "Temperature": 20,
+        "Value": [
+          147.0,
+          147.0
+        ]
+      },
+      {
+        "Temperature": 100,
+        "Value": [
+          142.0,
+          142.0
+        ]
+      },
+      {
+        "Temperature": 150,
+        "Value": [
+          139.0,
+          139.0
+        ]
+      },
+      {
+        "Temperature": 200,
+        "Value": [
+          136.0,
+          136.0
+        ]
+      },
+      {
+        "Temperature": 250,
+        "Value": [
+          132.0,
+          132.0
+        ]
+      },
+      {
+        "Temperature": 300,
+        "Value": [
+          119.0,
+          119.0
+        ]
+      },
+      {
+        "Temperature": 350,
+        "Value": [
+          106.0,
+          106.0
+        ]
+      },
+      {
+        "Temperature": 375,
+        "Value": [
+          98.0,
+          98.0
+        ]
+      },
+      {
+        "Temperature": 400,
+        "Value": [
+          92.0,
+          74.0
+        ]
+      },
+      {
+        "Temperature": 410,
+        "Value": [
+          86.0,
+          69.0
+        ]
+      },
+      {
+        "Temperature": 420,
+        "Value": [
+          80.0,
+          64.0
+        ]
+      },
+      {
+        "Temperature": 430,
+        "Value": [
+          75.0,
+          60.0
+        ]
+      },
+      {
+        "Temperature": 440,
+        "Value": [
+          67.0,
+          53.0
+        ]
+      },
+      {
+        "Temperature": 450,
+        "Value": [
+          61.0,
+          49.0
+        ]
+      },
+      {
+        "Temperature": 460,
+        "Value": [
+          55.0,
+          44.0
+        ]
+      },
+      {
+        "Temperature": 470,
+        "Value": [
+          49.0,
+          39.0
+        ]
+      },
+      {
+        "Temperature": 475,
+        "Value": [
+          46.0,
+          36.0
+        ]
+      }
+    ]
+  },
+  {
+    "Name": [
+      "10"
+    ],
+    "IsCouldBigThickness": false,
+    "SteelType": 0,
+    "Values": [
+      {
+        "Temperature": 20,
+        "Value": [
+          130.0,
+          130.0
+        ]
+      },
+      {
+        "Temperature": 100,
+        "Value": [
+          125.0,
+          125.0
+        ]
+      },
+      {
+        "Temperature": 150,
+        "Value": [
+          122.0,
+          122.0
+        ]
+      },
+      {
+        "Temperature": 200,
+        "Value": [
+          118.0,
+          118.0
+        ]
+      },
+      {
+        "Temperature": 250,
+        "Value": [
+          112.0,
+          112.0
+        ]
+      },
+      {
+        "Temperature": 300,
+        "Value": [
+          100.0,
+          100.0
+        ]
+      },
+      {
+        "Temperature": 350,
+        "Value": [
+          88.0,
+          88.0
+        ]
+      },
+      {
+        "Temperature": 375,
+        "Value": [
+          82.0,
+          82.0
+        ]
+      },
+      {
+        "Temperature": 400,
+        "Value": [
+          77.0,
+          61.0
+        ]
+      },
+      {
+        "Temperature": 410,
+        "Value": [
+          75.0,
+          60.0
+        ]
+      },
+      {
+        "Temperature": 420,
+        "Value": [
+          72.0,
+          57.0
+        ]
+      },
+      {
+        "Temperature": 430,
+        "Value": [
+          68.0,
+          54.0
+        ]
+      },
+      {
+        "Temperature": 440,
+        "Value": [
+          60.0,
+          48.0
+        ]
+      },
+      {
+        "Temperature": 450,
+        "Value": [
+          53.0,
+          42.0
+        ]
+      },
+      {
+        "Temperature": 460,
+        "Value": [
+          47.0,
+          37.0
+        ]
+      },
+      {
+        "Temperature": 470,
+        "Value": [
+          42.0,
+          33.0
+        ]
+      },
+      {
+        "Temperature": 475,
+        "Value": [
+          37.0,
+          29.0
+        ]
+      }
+    ]
+  },
+  {
+    "Name": [
+      "10Г2",
+      "09Г2"
+    ],
+    "IsCouldBigThickness": false,
+    "SteelType": 1,
+    "Values": [
+      {
+        "Temperature": 20,
+        "Value": [
+          180.0,
+          180.0
+        ]
+      },
+      {
+        "Temperature": 100,
+        "Value": [
+          160.0,
+          160.0
+        ]
+      },
+      {
+        "Temperature": 150,
+        "Value": [
+          154.0,
+          154.0
+        ]
+      },
+      {
+        "Temperature": 200,
+        "Value": [
+          148.0,
+          148.0
+        ]
+      },
+      {
+        "Temperature": 250,
+        "Value": [
+          145.0,
+          145.0
+        ]
+      },
+      {
+        "Temperature": 300,
+        "Value": [
+          134.0,
+          134.0
+        ]
+      },
+      {
+        "Temperature": 350,
+        "Value": [
+          123.0,
+          123.0
+        ]
+      },
+      {
+        "Temperature": 375,
+        "Value": [
+          108.0,
+          108.0
+        ]
+      },
+      {
+        "Temperature": 400,
+        "Value": [
+          92.0,
+          78.0
+        ]
+      },
+      {
+        "Temperature": 410,
+        "Value": [
+          86.0,
+          73.0
+        ]
+      },
+      {
+        "Temperature": 420,
+        "Value": [
+          80.0,
+          68.0
+        ]
+      },
+      {
+        "Temperature": 430,
+        "Value": [
+          75.0,
+          64.0
+        ]
+      },
+      {
+        "Temperature": 440,
+        "Value": [
+          67.0,
+          57.0
+        ]
+      },
+      {
+        "Temperature": 450,
+        "Value": [
+          61.0,
+          46.0
+        ]
+      },
+      {
+        "Temperature": 460,
+        "Value": [
+          55.0,
+          41.0
+        ]
+      },
+      {
+        "Temperature": 470,
+        "Value": [
+          49.0,
+          37.0
+        ]
+      },
+      {
+        "Temperature": 475,
+        "Value": [
+          46.0,
+          34.0
+        ]
+      }
+    ]
+  },
+  {
+    "Name": [
+      "17ГС",
+      "17Г1С",
+      "10Г2С1"
+    ],
+    "IsCouldBigThickness": false,
+    "SteelType": 1,
+    "Values": [
+      {
+        "Temperature": 20,
+        "Value": [
+          183.0,
+          183.0
+        ]
+      },
+      {
+        "Temperature": 100,
+        "Value": [
+          160.0,
+          160.0
+        ]
+      },
+      {
+        "Temperature": 150,
+        "Value": [
+          154.0,
+          154.0
+        ]
+      },
+      {
+        "Temperature": 200,
+        "Value": [
+          148.0,
+          148.0
+        ]
+      },
+      {
+        "Temperature": 250,
+        "Value": [
+          145.0,
+          145.0
+        ]
+      },
+      {
+        "Temperature": 300,
+        "Value": [
+          134.0,
+          134.0
+        ]
+      },
+      {
+        "Temperature": 350,
+        "Value": [
+          123.0,
+          123.0
+        ]
+      },
+      {
+        "Temperature": 375,
+        "Value": [
+          116.0,
+          116.0
+        ]
+      },
+      {
+        "Temperature": 400,
+        "Value": [
+          105.0,
+          105.0
+        ]
+      },
+      {
+        "Temperature": 410,
+        "Value": [
+          104.0,
+          104.0
+        ]
+      },
+      {
+        "Temperature": 420,
+        "Value": [
+          92.0,
+          92.0
+        ]
+      },
+      {
+        "Temperature": 430,
+        "Value": [
+          86.0,
+          73.0
+        ]
+      },
+      {
+        "Temperature": 440,
+        "Value": [
+          78.0,
+          66.0
+        ]
+      },
+      {
+        "Temperature": 450,
+        "Value": [
+          71.0,
+          53.0
+        ]
+      },
+      {
+        "Temperature": 460,
+        "Value": [
+          64.0,
+          48.0
+        ]
+      },
+      {
+        "Temperature": 470,
+        "Value": [
+          56.0,
+          42.0
+        ]
+      },
+      {
+        "Temperature": 475,
+        "Value": [
+          53.0,
+          40.0
+        ]
+      }
+    ]
+  },
+  {
+    "Name": [
+      "12Х18Н10Т",
+      "12Х18Н12Т",
+      "10Х17Н13М2Т",
+      "10Х17Н13М3Т"
+    ],
+    "IsCouldBigThickness": false,
+    "SteelType": 2,
+    "Values": [
+      {
+        "Temperature": 20,
+        "Value": [
+          184.0,
+          184.0
+        ]
+      },
+      {
+        "Temperature": 100,
+        "Value": [
+          174.0,
+          174.0
+        ]
+      },
+      {
+        "Temperature": 150,
+        "Value": [
+          168.0,
+          168.0
+        ]
+      },
+      {
+        "Temperature": 200,
+        "Value": [
+          160.0,
+          160.0
+        ]
+      },
+      {
+        "Temperature": 250,
+        "Value": [
+          154.0,
+          154.0
+        ]
+      },
+      {
+        "Temperature": 300,
+        "Value": [
+          148.0,
+          148.0
+        ]
+      },
+      {
+        "Temperature": 350,
+        "Value": [
+          144.0,
+          144.0
+        ]
+      },
+      {
+        "Temperature": 375,
+        "Value": [
+          140.0,
+          140.0
+        ]
+      },
+      {
+        "Temperature": 400,
+        "Value": [
+          137.0,
+          137.0
+        ]
+      },
+      {
+        "Temperature": 410,
+        "Value": [
+          136.0,
+          136.0
+        ]
+      },
+      {
+        "Temperature": 420,
+        "Value": [
+          135.0,
+          135.0
+        ]
+      },
+      {
+        "Temperature": 430,
+        "Value": [
+          134.0,
+          134.0
+        ]
+      },
+      {
+        "Temperature": 440,
+        "Value": [
+          133.0,
+          133.0
+        ]
+      },
+      {
+        "Temperature": 450,
+        "Value": [
+          132.0,
+          132.0
+        ]
+      },
+      {
+        "Temperature": 460,
+        "Value": [
+          131.0,
+          131.0
+        ]
+      },
+      {
+        "Temperature": 470,
+        "Value": [
+          130.0,
+          130.0
+        ]
+      },
+      {
+        "Temperature": 480,
+        "Value": [
+          129.0,
+          129.0
+        ]
+      },
+      {
+        "Temperature": 490,
+        "Value": [
+          128.0,
+          128.0
+        ]
+      },
+      {
+        "Temperature": 500,
+        "Value": [
+          127.0,
+          127.0
+        ]
+      },
+      {
+        "Temperature": 510,
+        "Value": [
+          126.0,
+          126.0
+        ]
+      },
+      {
+        "Temperature": 520,
+        "Value": [
+          125.0,
+          125.0
+        ]
+      },
+      {
+        "Temperature": 530,
+        "Value": [
+          124.0,
+          111.0
+        ]
+      },
+      {
+        "Temperature": 540,
+        "Value": [
+          111.0,
+          100.0
+        ]
+      },
+      {
+        "Temperature": 550,
+        "Value": [
+          111.0,
+          99.0
+        ]
+      },
+      {
+        "Temperature": 560,
+        "Value": [
+          101.0,
+          91.0
+        ]
+      },
+      {
+        "Temperature": 570,
+        "Value": [
+          97.0,
+          87.0
+        ]
+      },
+      {
+        "Temperature": 580,
+        "Value": [
+          90.0,
+          81.0
+        ]
+      },
+      {
+        "Temperature": 590,
+        "Value": [
+          81.0,
+          73.0
+        ]
+      },
+      {
+        "Temperature": 600,
+        "Value": [
+          74.0,
+          59.0
+        ]
+      },
+      {
+        "Temperature": 610,
+        "Value": [
+          68.0,
+          54.0
+        ]
+      },
+      {
+        "Temperature": 620,
+        "Value": [
+          62.0,
+          50.0
+        ]
+      },
+      {
+        "Temperature": 630,
+        "Value": [
+          57.0,
+          45.0
+        ]
+      },
+      {
+        "Temperature": 640,
+        "Value": [
+          52.0,
+          41.0
+        ]
+      },
+      {
+        "Temperature": 650,
+        "Value": [
+          48.0,
+          38.0
+        ]
+      },
+      {
+        "Temperature": 660,
+        "Value": [
+          45.0,
+          36.0
+        ]
+      },
+      {
+        "Temperature": 670,
+        "Value": [
+          42.0,
+          33.0
+        ]
+      },
+      {
+        "Temperature": 680,
+        "Value": [
+          38.0,
+          30.0
+        ]
+      },
+      {
+        "Temperature": 690,
+        "Value": [
+          34.0,
+          27.0
+        ]
+      },
+      {
+        "Temperature": 700,
+        "Value": [
+          30.0,
+          24.0
+        ]
+      }
+    ]
+  },
+  {
+    "Name": [
+      "12ХМ"
+    ],
+    "IsCouldBigThickness": false,
+    "SteelType": 1,
+    "Values": [
+      {
+        "Temperature": 20,
+        "Value": [
+          147.0,
+          147.0
+        ]
+      },
+      {
+        "Temperature": 100,
+        "Value": [
+          146.5,
+          146.5
+        ]
+      },
+      {
+        "Temperature": 150,
+        "Value": [
+          146.0,
+          146.0
+        ]
+      },
+      {
+        "Temperature": 200,
+        "Value": [
+          145.0,
+          145.0
+        ]
+      },
+      {
+        "Temperature": 250,
+        "Value": [
+          145.0,
+          145.0
+        ]
+      },
+      {
+        "Temperature": 300,
+        "Value": [
+          141.0,
+          141.0
+        ]
+      },
+      {
+        "Temperature": 350,
+        "Value": [
+          137.0,
+          137.0
+        ]
+      },
+      {
+        "Temperature": 375,
+        "Value": [
+          135.0,
+          135.0
+        ]
+      },
+      {
+        "Temperature": 400,
+        "Value": [
+          132.0,
+          132.0
+        ]
+      },
+      {
+        "Temperature": 410,
+        "Value": [
+          130.0,
+          130.0
+        ]
+      },
+      {
+        "Temperature": 420,
+        "Value": [
+          129.0,
+          129.0
+        ]
+      },
+      {
+        "Temperature": 430,
+        "Value": [
+          127.0,
+          127.0
+        ]
+      },
+      {
+        "Temperature": 440,
+        "Value": [
+          126.0,
+          126.0
+        ]
+      },
+      {
+        "Temperature": 450,
+        "Value": [
+          126.0,
+          126.0
+        ]
+      },
+      {
+        "Temperature": 460,
+        "Value": [
+          126.0,
+          126.0
+        ]
+      },
+      {
+        "Temperature": 470,
+        "Value": [
+          117.0,
+          117.0
+        ]
+      },
+      {
+        "Temperature": 480,
+        "Value": [
+          114.0,
+          114.0
+        ]
+      },
+      {
+        "Temperature": 490,
+        "Value": [
+          105.0,
+          89.0
+        ]
+      },
+      {
+        "Temperature": 500,
+        "Value": [
+          96.0,
+          72.0
+        ]
+      },
+      {
+        "Temperature": 510,
+        "Value": [
+          82.0,
+          61.0
+        ]
+      },
+      {
+        "Temperature": 520,
+        "Value": [
+          69.0,
+          52.0
+        ]
+      },
+      {
+        "Temperature": 530,
+        "Value": [
+          60.0,
+          45.0
+        ]
+      },
+      {
+        "Temperature": 540,
+        "Value": [
+          50.0,
+          37.0
+        ]
+      },
+      {
+        "Temperature": 550,
+        "Value": [
+          41.0,
+          31.0
+        ]
+      },
+      {
+        "Temperature": 560,
+        "Value": [
+          33.0,
+          25.0
+        ]
+      }
+    ]
+  },
+  {
+    "Name": [
+      "12МХ"
+    ],
+    "IsCouldBigThickness": false,
+    "SteelType": 1,
+    "Values": [
+      {
+        "Temperature": 20,
+        "Value": [
+          147.0,
+          147.0
+        ]
+      },
+      {
+        "Temperature": 100,
+        "Value": [
+          146.5,
+          146.5
+        ]
+      },
+      {
+        "Temperature": 150,
+        "Value": [
+          146.0,
+          146.0
+        ]
+      },
+      {
+        "Temperature": 200,
+        "Value": [
+          145.0,
+          145.0
+        ]
+      },
+      {
+        "Temperature": 250,
+        "Value": [
+          145.0,
+          145.0
+        ]
+      },
+      {
+        "Temperature": 300,
+        "Value": [
+          141.0,
+          141.0
+        ]
+      },
+      {
+        "Temperature": 350,
+        "Value": [
+          137.0,
+          137.0
+        ]
+      },
+      {
+        "Temperature": 375,
+        "Value": [
+          135.0,
+          135.0
+        ]
+      },
+      {
+        "Temperature": 400,
+        "Value": [
+          132.0,
+          132.0
+        ]
+      },
+      {
+        "Temperature": 410,
+        "Value": [
+          130.0,
+          130.0
+        ]
+      },
+      {
+        "Temperature": 420,
+        "Value": [
+          129.0,
+          129.0
+        ]
+      },
+      {
+        "Temperature": 430,
+        "Value": [
+          127.0,
+          127.0
+        ]
+      },
+      {
+        "Temperature": 440,
+        "Value": [
+          126.0,
+          126.0
+        ]
+      },
+      {
+        "Temperature": 450,
+        "Value": [
+          126.0,
+          126.0
+        ]
+      },
+      {
+        "Temperature": 460,
+        "Value": [
+          126.0,
+          126.0
+        ]
+      },
+      {
+        "Temperature": 470,
+        "Value": [
+          117.0,
+          117.0
+        ]
+      },
+      {
+        "Temperature": 480,
+        "Value": [
+          114.0,
+          114.0
+        ]
+      },
+      {
+        "Temperature": 490,
+        "Value": [
+          105.0,
+          89.0
+        ]
+      },
+      {
+        "Temperature": 500,
+        "Value": [
+          96.0,
+          72.0
+        ]
+      },
+      {
+        "Temperature": 510,
+        "Value": [
+          82.0,
+          61.0
+        ]
+      },
+      {
+        "Temperature": 520,
+        "Value": [
+          69.0,
+          52.0
+        ]
+      },
+      {
+        "Temperature": 530,
+        "Value": [
+          57.0,
+          43.0
+        ]
+      },
+      {
+        "Temperature": 540,
+        "Value": [
+          47.0,
+          35.0
+        ]
+      }
+    ]
+  },
+  {
+    "Name": [
+      "15ХМ"
+    ],
+    "IsCouldBigThickness": false,
+    "SteelType": 1,
+    "Values": [
+      {
+        "Temperature": 20,
+        "Value": [
+          155.0,
+          155.0
+        ]
+      },
+      {
+        "Temperature": 100,
+        "Value": [
+          153.0,
+          153.0
+        ]
+      },
+      {
+        "Temperature": 150,
+        "Value": [
+          152.5,
+          152.5
+        ]
+      },
+      {
+        "Temperature": 200,
+        "Value": [
+          152.0,
+          152.0
+        ]
+      },
+      {
+        "Temperature": 250,
+        "Value": [
+          152.0,
+          152.0
+        ]
+      },
+      {
+        "Temperature": 300,
+        "Value": [
+          147.0,
+          147.0
+        ]
+      },
+      {
+        "Temperature": 350,
+        "Value": [
+          142.0,
+          142.0
+        ]
+      },
+      {
+        "Temperature": 375,
+        "Value": [
+          140.0,
+          140.0
+        ]
+      },
+      {
+        "Temperature": 400,
+        "Value": [
+          137.0,
+          137.0
+        ]
+      },
+      {
+        "Temperature": 410,
+        "Value": [
+          136.0,
+          136.0
+        ]
+      },
+      {
+        "Temperature": 420,
+        "Value": [
+          135.0,
+          135.0
+        ]
+      },
+      {
+        "Temperature": 430,
+        "Value": [
+          134.0,
+          134.0
+        ]
+      },
+      {
+        "Temperature": 440,
+        "Value": [
+          132.0,
+          132.0
+        ]
+      },
+      {
+        "Temperature": 450,
+        "Value": [
+          132.0,
+          132.0
+        ]
+      },
+      {
+        "Temperature": 460,
+        "Value": [
+          132.0,
+          132.0
+        ]
+      },
+      {
+        "Temperature": 470,
+        "Value": [
+          122.0,
+          122.0
+        ]
+      },
+      {
+        "Temperature": 480,
+        "Value": [
+          117.0,
+          117.0
+        ]
+      },
+      {
+        "Temperature": 490,
+        "Value": [
+          107.0,
+          91.0
+        ]
+      },
+      {
+        "Temperature": 500,
+        "Value": [
+          99.0,
+          74.0
+        ]
+      },
+      {
+        "Temperature": 510,
+        "Value": [
+          84.0,
+          63.0
+        ]
+      },
+      {
+        "Temperature": 520,
+        "Value": [
+          74.0,
+          55.0
+        ]
+      },
+      {
+        "Temperature": 530,
+        "Value": [
+          67.0,
+          50.0
+        ]
+      },
+      {
+        "Temperature": 540,
+        "Value": [
+          57.0,
+          43.0
+        ]
+      },
+      {
+        "Temperature": 550,
+        "Value": [
+          49.0,
+          37.0
+        ]
+      },
+      {
+        "Temperature": 560,
+        "Value": [
+          41.0,
+          31.0
+        ]
+      }
+    ]
+  },
+  {
+    "Name": [
+      "12Х5М"
+    ],
+    "IsCouldBigThickness": false,
+    "SteelType": 1,
+    "Values": [
+      {
+        "Temperature": 20,
+        "Value": [
+          146.0,
+          146.0
+        ]
+      },
+      {
+        "Temperature": 100,
+        "Value": [
+          141.0,
+          141.0
+        ]
+      },
+      {
+        "Temperature": 150,
+        "Value": [
+          138.0,
+          138.0
+        ]
+      },
+      {
+        "Temperature": 200,
+        "Value": [
+          134.0,
+          134.0
+        ]
+      },
+      {
+        "Temperature": 250,
+        "Value": [
+          127.0,
+          127.0
+        ]
+      },
+      {
+        "Temperature": 300,
+        "Value": [
+          120.0,
+          120.0
+        ]
+      },
+      {
+        "Temperature": 350,
+        "Value": [
+          114.0,
+          114.0
+        ]
+      },
+      {
+        "Temperature": 375,
+        "Value": [
+          110.0,
+          110.0
+        ]
+      },
+      {
+        "Temperature": 400,
+        "Value": [
+          105.0,
+          105.0
+        ]
+      },
+      {
+        "Temperature": 410,
+        "Value": [
+          103.0,
+          103.0
+        ]
+      },
+      {
+        "Temperature": 420,
+        "Value": [
+          101.0,
+          101.0
+        ]
+      },
+      {
+        "Temperature": 430,
+        "Value": [
+          99.0,
+          99.0
+        ]
+      },
+      {
+        "Temperature": 440,
+        "Value": [
+          96.0,
+          96.0
+        ]
+      },
+      {
+        "Temperature": 450,
+        "Value": [
+          96.0,
+          96.0
+        ]
+      },
+      {
+        "Temperature": 460,
+        "Value": [
+          96.0,
+          96.0
+        ]
+      },
+      {
+        "Temperature": 470,
+        "Value": [
+          89.0,
+          75.0
+        ]
+      },
+      {
+        "Temperature": 480,
+        "Value": [
+          86.0,
+          73.0
+        ]
+      },
+      {
+        "Temperature": 490,
+        "Value": [
+          83.0,
+          70.0
+        ]
+      },
+      {
+        "Temperature": 500,
+        "Value": [
+          79.0,
+          59.0
+        ]
+      },
+      {
+        "Temperature": 510,
+        "Value": [
+          72.0,
+          54.0
+        ]
+      },
+      {
+        "Temperature": 520,
+        "Value": [
+          66.0,
+          50.0
+        ]
+      },
+      {
+        "Temperature": 530,
+        "Value": [
+          60.0,
+          45.0
+        ]
+      },
+      {
+        "Temperature": 540,
+        "Value": [
+          54.0,
+          40.0
+        ]
+      },
+      {
+        "Temperature": 550,
+        "Value": [
+          47.0,
+          35.0
+        ]
+      },
+      {
+        "Temperature": 560,
+        "Value": [
+          40.0,
+          30.0
+        ]
+      },
+      {
+        "Temperature": 570,
+        "Value": [
+          35.0,
+          29.0
+        ]
+      },
+      {
+        "Temperature": 580,
+        "Value": [
+          30.0,
+          22.0
+        ]
+      },
+      {
+        "Temperature": 590,
+        "Value": [
+          28.0,
+          21.0
+        ]
+      },
+      {
+        "Temperature": 600,
+        "Value": [
+          25.0,
+          19.0
+        ]
+      },
+      {
+        "Temperature": 610,
+        "Value": [
+          20.0,
+          15.0
+        ]
+      },
+      {
+        "Temperature": 620,
+        "Value": [
+          18.0,
+          13.0
+        ]
+      },
+      {
+        "Temperature": 630,
+        "Value": [
+          17.0,
+          12.0
+        ]
+      },
+      {
+        "Temperature": 640,
+        "Value": [
+          16.0,
+          11.0
+        ]
+      },
+      {
+        "Temperature": 650,
+        "Value": [
+          14.0,
+          10.0
+        ]
+      }
+    ]
+  },
+  {
+    "Name": [
+      "12Х5М-У"
+    ],
+    "IsCouldBigThickness": false,
+    "SteelType": 1,
+    "Values": [
+      {
+        "Temperature": 20,
+        "Value": [
+          240.0,
+          240.0
+        ]
+      },
+      {
+        "Temperature": 100,
+        "Value": [
+          235.0,
+          235.0
+        ]
+      },
+      {
+        "Temperature": 150,
+        "Value": [
+          230.0,
+          230.0
+        ]
+      },
+      {
+        "Temperature": 200,
+        "Value": [
+          225.0,
+          225.0
+        ]
+      },
+      {
+        "Temperature": 250,
+        "Value": [
+          220.0,
+          220.0
+        ]
+      },
+      {
+        "Temperature": 300,
+        "Value": [
+          210.0,
+          210.0
+        ]
+      },
+      {
+        "Temperature": 350,
+        "Value": [
+          200.0,
+          200.0
+        ]
+      },
+      {
+        "Temperature": 375,
+        "Value": [
+          180.0,
+          180.0
+        ]
+      },
+      {
+        "Temperature": 400,
+        "Value": [
+          170.0,
+          170.0
+        ]
+      },
+      {
+        "Temperature": 410,
+        "Value": [
+          160.0,
+          160.0
+        ]
+      },
+      {
+        "Temperature": 420,
+        "Value": [
+          150.0,
+          150.0
+        ]
+      },
+      {
+        "Temperature": 430,
+        "Value": [
+          140.0,
+          119.0
+        ]
+      },
+      {
+        "Temperature": 440,
+        "Value": [
+          135.0,
+          115.0
+        ]
+      },
+      {
+        "Temperature": 450,
+        "Value": [
+          130.0,
+          110.0
+        ]
+      },
+      {
+        "Temperature": 460,
+        "Value": [
+          126.0,
+          107.0
+        ]
+      },
+      {
+        "Temperature": 470,
+        "Value": [
+          122.0,
+          104.0
+        ]
+      },
+      {
+        "Temperature": 480,
+        "Value": [
+          118.0,
+          100.0
+        ]
+      },
+      {
+        "Temperature": 490,
+        "Value": [
+          114.0,
+          97.0
+        ]
+      },
+      {
+        "Temperature": 500,
+        "Value": [
+          108.0,
+          81.0
+        ]
+      },
+      {
+        "Temperature": 510,
+        "Value": [
+          97.0,
+          73.0
+        ]
+      },
+      {
+        "Temperature": 520,
+        "Value": [
+          85.0,
+          64.0
+        ]
+      },
+      {
+        "Temperature": 530,
+        "Value": [
+          72.0,
+          54.0
+        ]
+      },
+      {
+        "Temperature": 540,
+        "Value": [
+          58.0,
+          43.0
+        ]
+      },
+      {
+        "Temperature": 550,
+        "Value": [
+          52.0,
+          39.0
+        ]
+      },
+      {
+        "Temperature": 560,
+        "Value": [
+          45.0,
+          34.0
+        ]
+      },
+      {
+        "Temperature": 570,
+        "Value": [
+          40.0,
+          30.0
+        ]
+      },
+      {
+        "Temperature": 580,
+        "Value": [
+          34.0,
+          25.0
+        ]
+      },
+      {
+        "Temperature": 590,
+        "Value": [
+          30.0,
+          22.0
+        ]
+      },
+      {
+        "Temperature": 600,
+        "Value": [
+          25.0,
+          19.0
+        ]
+      },
+      {
+        "Temperature": 610,
+        "Value": [
+          20.0,
+          15.0
+        ]
+      },
+      {
+        "Temperature": 620,
+        "Value": [
+          18.0,
+          13.0
+        ]
+      },
+      {
+        "Temperature": 630,
+        "Value": [
+          17.0,
+          12.0
+        ]
+      },
+      {
+        "Temperature": 640,
+        "Value": [
+          16.0,
+          11.0
+        ]
+      },
+      {
+        "Temperature": 650,
+        "Value": [
+          14.0,
+          10.0
+        ]
+      }
+    ]
+  },
+  {
+    "Name": [
+      "10Х2М1А-А"
+    ],
+    "IsCouldBigThickness": false,
+    "SteelType": 1,
+    "Values": [
+      {
+        "Temperature": 20,
+        "Value": [
+          204.0,
+          204.0
+        ]
+      },
+      {
+        "Temperature": 100,
+        "Value": [
+          190.0,
+          190.0
+        ]
+      },
+      {
+        "Temperature": 150,
+        "Value": [
+          180.0,
+          180.0
+        ]
+      },
+      {
+        "Temperature": 200,
+        "Value": [
+          175.0,
+          175.0
+        ]
+      },
+      {
+        "Temperature": 250,
+        "Value": [
+          170.0,
+          170.0
+        ]
+      },
+      {
+        "Temperature": 300,
+        "Value": [
+          168.0,
+          168.0
+        ]
+      },
+      {
+        "Temperature": 350,
+        "Value": [
+          165.0,
+          165.0
+        ]
+      },
+      {
+        "Temperature": 375,
+        "Value": [
+          163.0,
+          163.0
+        ]
+      },
+      {
+        "Temperature": 400,
+        "Value": [
+          160.0,
+          160.0
+        ]
+      },
+      {
+        "Temperature": 410,
+        "Value": [
+          159.0,
+          159.0
+        ]
+      },
+      {
+        "Temperature": 420,
+        "Value": [
+          158.0,
+          158.0
+        ]
+      },
+      {
+        "Temperature": 430,
+        "Value": [
+          156.0,
+          156.0
+        ]
+      },
+      {
+        "Temperature": 440,
+        "Value": [
+          155.0,
+          155.0
+        ]
+      },
+      {
+        "Temperature": 450,
+        "Value": [
+          154.0,
+          154.0
+        ]
+      },
+      {
+        "Temperature": 460,
+        "Value": [
+          140.0,
+          140.0
+        ]
+      },
+      {
+        "Temperature": 470,
+        "Value": [
+          130.0,
+          130.0
+        ]
+      },
+      {
+        "Temperature": 480,
+        "Value": [
+          120.0,
+          107.0
+        ]
+      },
+      {
+        "Temperature": 490,
+        "Value": [
+          104.0,
+          93.0
+        ]
+      },
+      {
+        "Temperature": 500,
+        "Value": [
+          88.0,
+          78.0
+        ]
+      },
+      {
+        "Temperature": 510,
+        "Value": [
+          80.0,
+          71.0
+        ]
+      },
+      {
+        "Temperature": 520,
+        "Value": [
+          70.0,
+          62.0
+        ]
+      },
+      {
+        "Temperature": 530,
+        "Value": [
+          60.0,
+          53.0
+        ]
+      },
+      {
+        "Temperature": 540,
+        "Value": [
+          52.0,
+          45.0
+        ]
+      },
+      {
+        "Temperature": 550,
+        "Value": [
+          45.0,
+          38.0
+        ]
+      },
+      {
+        "Temperature": 560,
+        "Value": [
+          38.0,
+          33.0
+        ]
+      },
+      {
+        "Temperature": 570,
+        "Value": [
+          32.0,
+          27.0
+        ]
+      },
+      {
+        "Temperature": 580,
+        "Value": [
+          27.0,
+          23.0
+        ]
+      },
+      {
+        "Temperature": 590,
+        "Value": [
+          24.0,
+          20.0
+        ]
+      },
+      {
+        "Temperature": 600,
+        "Value": [
+          19.0,
+          16.0
+        ]
+      },
+      {
+        "Temperature": 610,
+        "Value": [
+          17.0
+        ]
+      },
+      {
+        "Temperature": 620,
+        "Value": [
+          14.0
+        ]
+      },
+      {
+        "Temperature": 630,
+        "Value": [
+          11.0
+        ]
+      },
+      {
+        "Temperature": 640,
+        "Value": [
+          10.0
+        ]
+      },
+      {
+        "Temperature": 650,
+        "Value": [
+          9.0
+        ]
+      }
+    ]
+  },
+  {
+    "Name": [
+      "03Х21Н21М4ГБ"
+    ],
+    "IsCouldBigThickness": false,
+    "SteelType": 2,
+    "Values": [
+      {
+        "Temperature": 20,
+        "Value": [
+          180.0
+        ]
+      },
+      {
+        "Temperature": 100,
+        "Value": [
+          173.0
+        ]
+      },
+      {
+        "Temperature": 150,
+        "Value": [
+          171.0
+        ]
+      },
+      {
+        "Temperature": 200,
+        "Value": [
+          171.0
+        ]
+      },
+      {
+        "Temperature": 250,
+        "Value": [
+          167.0
+        ]
+      },
+      {
+        "Temperature": 300,
+        "Value": [
+          149.0
+        ]
+      },
+      {
+        "Temperature": 350,
+        "Value": [
+          143.0
+        ]
+      },
+      {
+        "Temperature": 375,
+        "Value": [
+          141.0
+        ]
+      },
+      {
+        "Temperature": 400,
+        "Value": [
+          140.0
+        ]
+      }
+    ]
+  },
+  {
+    "Name": [
+      "03Х18Н11"
+    ],
+    "IsCouldBigThickness": false,
+    "SteelType": 2,
+    "Values": [
+      {
+        "Temperature": 20,
+        "Value": [
+          160.0
+        ]
+      },
+      {
+        "Temperature": 100,
+        "Value": [
+          133.0
+        ]
+      },
+      {
+        "Temperature": 150,
+        "Value": [
+          125.0
+        ]
+      },
+      {
+        "Temperature": 200,
+        "Value": [
+          120.0
+        ]
+      },
+      {
+        "Temperature": 250,
+        "Value": [
+          115.0
+        ]
+      },
+      {
+        "Temperature": 300,
+        "Value": [
+          112.0
+        ]
+      },
+      {
+        "Temperature": 350,
+        "Value": [
+          108.0
+        ]
+      },
+      {
+        "Temperature": 375,
+        "Value": [
+          107.0
+        ]
+      },
+      {
+        "Temperature": 400,
+        "Value": [
+          107.0
+        ]
+      },
+      {
+        "Temperature": 410,
+        "Value": [
+          107.0
+        ]
+      },
+      {
+        "Temperature": 420,
+        "Value": [
+          107.0
+        ]
+      },
+      {
+        "Temperature": 430,
+        "Value": [
+          107.0
+        ]
+      },
+      {
+        "Temperature": 440,
+        "Value": [
+          107.0
+        ]
+      },
+      {
+        "Temperature": 450,
+        "Value": [
+          107.0
+        ]
+      }
+    ]
+  },
+  {
+    "Name": [
+      "03Х17Н14М3"
+    ],
+    "IsCouldBigThickness": false,
+    "SteelType": 2,
+    "Values": [
+      {
+        "Temperature": 20,
+        "Value": [
+          153.0
+        ]
+      },
+      {
+        "Temperature": 100,
+        "Value": [
+          140.0
+        ]
+      },
+      {
+        "Temperature": 150,
+        "Value": [
+          130.0
+        ]
+      },
+      {
+        "Temperature": 200,
+        "Value": [
+          120.0
+        ]
+      },
+      {
+        "Temperature": 250,
+        "Value": [
+          113.0
+        ]
+      },
+      {
+        "Temperature": 300,
+        "Value": [
+          103.0
+        ]
+      },
+      {
+        "Temperature": 350,
+        "Value": [
+          101.0
+        ]
+      },
+      {
+        "Temperature": 375,
+        "Value": [
+          90.0
+        ]
+      },
+      {
+        "Temperature": 400,
+        "Value": [
+          87.0
+        ]
+      },
+      {
+        "Temperature": 410,
+        "Value": [
+          83.0
+        ]
+      },
+      {
+        "Temperature": 420,
+        "Value": [
+          82.0
+        ]
+      },
+      {
+        "Temperature": 430,
+        "Value": [
+          81.0
+        ]
+      },
+      {
+        "Temperature": 440,
+        "Value": [
+          81.0
+        ]
+      },
+      {
+        "Temperature": 450,
+        "Value": [
+          80.0
+        ]
+      }
+    ]
+  },
+  {
+    "Name": [
+      "08Х18Н10Т",
+      "08Х18Н12Т",
+      "08Х17Н13М2Т",
+      "08Х17Н15М3Т"
+    ],
+    "IsCouldBigThickness": false,
+    "SteelType": 2,
+    "Values": [
+      {
+        "Temperature": 20,
+        "Value": [
+          168.0,
+          168.0
+        ]
+      },
+      {
+        "Temperature": 100,
+        "Value": [
+          156.0,
+          156.0
+        ]
+      },
+      {
+        "Temperature": 150,
+        "Value": [
+          148.0,
+          148.0
+        ]
+      },
+      {
+        "Temperature": 200,
+        "Value": [
+          140.0,
+          140.0
+        ]
+      },
+      {
+        "Temperature": 250,
+        "Value": [
+          132.0,
+          132.0
+        ]
+      },
+      {
+        "Temperature": 300,
+        "Value": [
+          123.0,
+          123.0
+        ]
+      },
+      {
+        "Temperature": 350,
+        "Value": [
+          113.0,
+          113.0
+        ]
+      },
+      {
+        "Temperature": 375,
+        "Value": [
+          108.0,
+          108.0
+        ]
+      },
+      {
+        "Temperature": 400,
+        "Value": [
+          103.0,
+          103.0
+        ]
+      },
+      {
+        "Temperature": 410,
+        "Value": [
+          102.0,
+          102.0
+        ]
+      },
+      {
+        "Temperature": 420,
+        "Value": [
+          101.0,
+          101.0
+        ]
+      },
+      {
+        "Temperature": 430,
+        "Value": [
+          100.5,
+          100.5
+        ]
+      },
+      {
+        "Temperature": 440,
+        "Value": [
+          100.0,
+          100.0
+        ]
+      },
+      {
+        "Temperature": 450,
+        "Value": [
+          99.0,
+          99.0
+        ]
+      },
+      {
+        "Temperature": 460,
+        "Value": [
+          98.0,
+          98.0
+        ]
+      },
+      {
+        "Temperature": 470,
+        "Value": [
+          97.5,
+          97.5
+        ]
+      },
+      {
+        "Temperature": 480,
+        "Value": [
+          97.0,
+          97.0
+        ]
+      },
+      {
+        "Temperature": 490,
+        "Value": [
+          96.0,
+          96.0
+        ]
+      },
+      {
+        "Temperature": 500,
+        "Value": [
+          95.0,
+          95.0
+        ]
+      },
+      {
+        "Temperature": 510,
+        "Value": [
+          94.0,
+          94.0
+        ]
+      },
+      {
+        "Temperature": 520,
+        "Value": [
+          79.0,
+          79.0
+        ]
+      },
+      {
+        "Temperature": 530,
+        "Value": [
+          79.0,
+          71.0
+        ]
+      },
+      {
+        "Temperature": 540,
+        "Value": [
+          78.0,
+          70.0
+        ]
+      },
+      {
+        "Temperature": 550,
+        "Value": [
+          76.0,
+          68.0
+        ]
+      },
+      {
+        "Temperature": 560,
+        "Value": [
+          73.0,
+          66.0
+        ]
+      },
+      {
+        "Temperature": 570,
+        "Value": [
+          69.0,
+          62.0
+        ]
+      },
+      {
+        "Temperature": 580,
+        "Value": [
+          65.0,
+          58.0
+        ]
+      },
+      {
+        "Temperature": 590,
+        "Value": [
+          61.0,
+          55.0
+        ]
+      },
+      {
+        "Temperature": 600,
+        "Value": [
+          57.0,
+          46.0
+        ]
+      }
+    ]
+  },
+  {
+    "Name": [
+      "10Х14Г14Н4Т"
+    ],
+    "IsCouldBigThickness": false,
+    "SteelType": 2,
+    "Values": [
+      {
+        "Temperature": 20,
+        "Value": [
+          167.0
+        ]
+      },
+      {
+        "Temperature": 100,
+        "Value": [
+          153.0
+        ]
+      },
+      {
+        "Temperature": 150,
+        "Value": [
+          146.0
+        ]
+      },
+      {
+        "Temperature": 200,
+        "Value": [
+          137.0
+        ]
+      },
+      {
+        "Temperature": 250,
+        "Value": [
+          130.0
+        ]
+      },
+      {
+        "Temperature": 300,
+        "Value": [
+          123.0
+        ]
+      },
+      {
+        "Temperature": 350,
+        "Value": [
+          118.0
+        ]
+      },
+      {
+        "Temperature": 375,
+        "Value": [
+          115.0
+        ]
+      },
+      {
+        "Temperature": 400,
+        "Value": [
+          113.0
+        ]
+      },
+      {
+        "Temperature": 410,
+        "Value": [
+          112.0
+        ]
+      },
+      {
+        "Temperature": 420,
+        "Value": [
+          111.0
+        ]
+      },
+      {
+        "Temperature": 430,
+        "Value": [
+          110.0
+        ]
+      },
+      {
+        "Temperature": 440,
+        "Value": [
+          109.0
+        ]
+      },
+      {
+        "Temperature": 450,
+        "Value": [
+          108.0
+        ]
+      }
+    ]
+  }
+]

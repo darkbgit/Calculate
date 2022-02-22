@@ -4,15 +4,15 @@
 		"Values": [
 			{
 				"Temperature": 100,
-				"AlfaValue": 0.0000111
+				"AlphaValue": 0.0000111
 			},
 			{
 				"Temperature": 200,
-				"AlfaValue": 0.0000119
+				"AlphaValue": 0.0000119
 			},
 			{
 				"Temperature": 400,
-				"AlfaValue": 0.0000134
+				"AlphaValue": 0.0000134
 			}
 		]
 	},
@@ -21,19 +21,19 @@
 		"Values": [
 			{
 				"Temperature": 100,
-				"AlfaValue": 0.0000111
+				"AlphaValue": 0.0000111
 			},
 			{
 				"Temperature": 200,
-				"AlfaValue": 0.0000119
+				"AlphaValue": 0.0000119
 			},
 			{
 				"Temperature": 300,
-				"AlfaValue": 0.0000133
+				"AlphaValue": 0.0000133
 			},
 			{
 				"Temperature": 400,
-				"AlfaValue": 0.0000133
+				"AlphaValue": 0.0000133
 			}
 		]
 	},
@@ -42,19 +42,19 @@
 		"Values": [
 			{
 				"Temperature": 100,
-				"AlfaValue": 0.0000104
+				"AlphaValue": 0.0000104
 			},
 			{
 				"Temperature": 200,
-				"AlfaValue": 0.0000109
+				"AlphaValue": 0.0000109
 			},
 			{
 				"Temperature": 300,
-				"AlfaValue": 0.0000114
+				"AlphaValue": 0.0000114
 			},
 			{
 				"Temperature": 400,
-				"AlfaValue": 0.0000118
+				"AlphaValue": 0.0000118
 			}
 		]
 	},
@@ -63,23 +63,23 @@
 		"Values": [
 			{
 				"Temperature": 100,
-				"AlfaValue": 0.0000106
+				"AlphaValue": 0.0000106
 			},
 			{
 				"Temperature": 200,
-				"AlfaValue": 0.0000108
+				"AlphaValue": 0.0000108
 			},
 			{
 				"Temperature": 300,
-				"AlfaValue": 0.000011
+				"AlphaValue": 0.000011
 			},
 			{
 				"Temperature": 400,
-				"AlfaValue": 0.0000111
+				"AlphaValue": 0.0000111
 			},
 			{
 				"Temperature": 500,
-				"AlfaValue": 0.0000113
+				"AlphaValue": 0.0000113
       }
 		]
   }
