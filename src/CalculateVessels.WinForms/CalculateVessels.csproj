@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net5.0-windows</TargetFramework>
+    <TargetFramework>net6.0-windows</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms>
     <ApplicationIcon>pic\ico\calc.ico</ApplicationIcon>
     <AssemblyVersion>1.0.0.1</AssemblyVersion>
@@ -12,11 +12,13 @@
 	<Authors>Alex</Authors>
 	<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 	<IsPublishable>False</IsPublishable>
+	<StartupObject>CalculateVessels.Program</StartupObject>
+	<Nullable>enable</Nullable>
   </PropertyGroup>
-
+<!-- 
   <ItemGroup>
     <PackageReference Include="MSBuild.Version.Target" Version="3.0.60" />
-  </ItemGroup>
+  </ItemGroup> -->
 
   <ItemGroup>
     <ProjectReference Include="..\CalculateVessels.Core\CalculateVessels.Core.csproj" />
