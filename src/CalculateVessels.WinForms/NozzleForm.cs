@@ -12,6 +12,7 @@ using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
 using CalculateVessels.Core.Shells.Base;
+using CalculateVessels.Data.PhysicalData.Gost34233_1;
 
 namespace CalculateVessels
 {
@@ -40,7 +41,7 @@ namespace CalculateVessels
 
         private void Vid_rb_CheckedChanged(object sender, EventArgs e)
         {
-            if (sender is not RadioButton {Checked: true} rb) return;
+            if (sender is not RadioButton { Checked: true } rb) return;
 
             var i = Convert.ToInt32(rb.Text[0].ToString());
             vid_pictureBox.Image =
@@ -990,7 +991,7 @@ namespace CalculateVessels
 
         private void NozzleForm_Load(object sender, EventArgs e)
         {
-            var steels = Physical.Gost34233_1.GetSteelsList()?.ToArray();
+            var steels = Gost34233_1.GetSteelsList()?.ToArray();
             if (steels != null)
             {
                 steel1_cb.Items.AddRange(steels);

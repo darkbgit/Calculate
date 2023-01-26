@@ -4,6 +4,7 @@ using CalculateVessels.Core.HeatExchanger;
 using CalculateVessels.Core.HeatExchanger.Enums;
 using CalculateVessels.Core.Interfaces;
 using CalculateVessels.Data.PhysicalData;
+using CalculateVessels.Data.PhysicalData.Gost34233_1;
 using CalculateVessels.Data.Properties;
 using System;
 using System.Collections.Generic;
@@ -32,7 +33,7 @@ namespace CalculateVessels
             shell_pb.Image = (Bitmap)new ImageConverter().ConvertFrom(Data.Properties.Resources.Fixed_2_2);
             chamberFlange_pb.Image = (Bitmap)new ImageConverter().ConvertFrom(Data.Properties.Resources.ConnToFlange1_Flat1);
 
-            var steels = Physical.Gost34233_1.GetSteelsList()?.ToArray();
+            var steels = Gost34233_1.GetSteelsList()?.ToArray();
             if (steels != null)
             {
                 steel1_cb.Items.AddRange(steels);

@@ -1,7 +1,9 @@
 ﻿using CalculateVessels.Core.Exceptions;
 using CalculateVessels.Core.Interfaces;
 using CalculateVessels.Core.Shells.Enums;
+using CalculateVessels.Data.Exceptions;
 using CalculateVessels.Data.PhysicalData;
+using CalculateVessels.Data.PhysicalData.Gost34233_1;
 using System;
 
 namespace CalculateVessels.Core.Shells.Elliptical
@@ -19,7 +21,7 @@ namespace CalculateVessels.Core.Shells.Elliptical
             {
                 try
                 {
-                    data.SigmaAllow = Physical.Gost34233_1.GetSigma(dataIn.Steel, dataIn.t);
+                    data.SigmaAllow = Gost34233_1.GetSigma(dataIn.Steel, dataIn.t);
                 }
                 catch (PhysicalDataException e)
                 {

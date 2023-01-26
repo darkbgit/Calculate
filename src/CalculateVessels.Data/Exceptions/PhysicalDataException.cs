@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CalculateVessels.Data.PhysicalData
+namespace CalculateVessels.Data.Exceptions
 {
     public class PhysicalDataException : Exception
     {

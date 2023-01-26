@@ -3,6 +3,7 @@ using CalculateVessels.Core.Bottoms.FlatBottomWithAdditionalMoment;
 using CalculateVessels.Core.Exceptions;
 using CalculateVessels.Core.Interfaces;
 using CalculateVessels.Data.PhysicalData;
+using CalculateVessels.Data.PhysicalData.Gost34233_1;
 using CalculateVessels.Data.Properties;
 using System;
 using System.Collections.Generic;
@@ -44,7 +45,7 @@ namespace CalculateVessels
 
         private void FlatCover_rb_CheckedChanged(object sender, EventArgs e)
         {
-            if(sender is not RadioButton rb) return;
+            if (sender is not RadioButton rb) return;
 
             if (rb.Checked)
             {
@@ -62,7 +63,7 @@ namespace CalculateVessels
 
         private void FlatBottomWithAdditionalMomentForm_Load(object sender, EventArgs e)
         {
-            var steels = Physical.Gost34233_1.GetSteelsList()?.ToArray();
+            var steels = Gost34233_1.GetSteelsList()?.ToArray();
             if (steels != null)
             {
                 steel_cb.Items.AddRange(steels);
@@ -128,7 +129,7 @@ namespace CalculateVessels
 
         private void Flange_rb_CheckedChanged(object sender, EventArgs e)
         {
-            if (sender is not RadioButton {Checked: true} rb) return;
+            if (sender is not RadioButton { Checked: true } rb) return;
 
             var i = rb.Name[0].ToString();
             var type = scirtFlange_cb.Checked ? "fl1_" : "fl2_";

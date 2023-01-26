@@ -5,7 +5,9 @@ using CalculateVessels.Core.Shells.Conical;
 using CalculateVessels.Core.Shells.Elliptical;
 using CalculateVessels.Core.Shells.Enums;
 using CalculateVessels.Core.Shells.Nozzle.Enums;
+using CalculateVessels.Data.Exceptions;
 using CalculateVessels.Data.PhysicalData;
+using CalculateVessels.Data.PhysicalData.Gost34233_1;
 using System;
 
 namespace CalculateVessels.Core.Shells.Nozzle
@@ -24,7 +26,7 @@ namespace CalculateVessels.Core.Shells.Nozzle
             {
                 try
                 {
-                    data.SigmaAllow1 = Physical.Gost34233_1.GetSigma(dataIn.steel1, dataIn.t);
+                    data.SigmaAllow1 = Gost34233_1.GetSigma(dataIn.steel1, dataIn.t);
                 }
                 catch (PhysicalDataException e)
                 {
@@ -58,7 +60,7 @@ namespace CalculateVessels.Core.Shells.Nozzle
 
                 try
                 {
-                    data.SigmaAllow2 = Physical.Gost34233_1.GetSigma(dataIn.steel2, dataIn.t);
+                    data.SigmaAllow2 = Gost34233_1.GetSigma(dataIn.steel2, dataIn.t);
                 }
                 catch (PhysicalDataException e)
                 {
@@ -79,7 +81,7 @@ namespace CalculateVessels.Core.Shells.Nozzle
             {
                 try
                 {
-                    data.SigmaAllow3 = Physical.Gost34233_1.GetSigma(dataIn.steel3, dataIn.t);
+                    data.SigmaAllow3 = Gost34233_1.GetSigma(dataIn.steel3, dataIn.t);
                 }
                 catch (PhysicalDataException e)
                 {

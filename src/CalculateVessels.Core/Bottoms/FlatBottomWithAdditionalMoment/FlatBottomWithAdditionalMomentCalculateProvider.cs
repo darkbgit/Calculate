@@ -1,7 +1,9 @@
 ﻿using CalculateVessels.Core.Bottoms.Enums;
 using CalculateVessels.Core.Exceptions;
 using CalculateVessels.Core.Interfaces;
+using CalculateVessels.Data.Exceptions;
 using CalculateVessels.Data.PhysicalData;
+using CalculateVessels.Data.PhysicalData.Gost34233_1;
 using System;
 
 namespace CalculateVessels.Core.Bottoms.FlatBottomWithAdditionalMoment
@@ -32,7 +34,7 @@ namespace CalculateVessels.Core.Bottoms.FlatBottomWithAdditionalMoment
             {
                 try
                 {
-                    data.sigma_d = Physical.Gost34233_1.GetSigma(dataIn.CoverSteel, dataIn.t);
+                    data.sigma_d = Gost34233_1.GetSigma(dataIn.CoverSteel, dataIn.t);
                 }
                 catch (PhysicalDataException e)
                 {

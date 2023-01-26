@@ -9,6 +9,8 @@ using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
 using CalculateVessels.Core.Shells.Cylindrical;
+using CalculateVessels.Data.Exceptions;
+using CalculateVessels.Data.PhysicalData.Gost34233_1;
 
 namespace CalculateVessels
 {
@@ -423,7 +425,7 @@ namespace CalculateVessels
 
         private void CilForm_Load(object sender, EventArgs e)
         {
-            var steels = Physical.Gost34233_1.GetSteelsList()?.ToArray();
+            var steels = Gost34233_1.GetSteelsList()?.ToArray();
             if (steels != null)
             {
                 steel_cb.Items.AddRange(steels);

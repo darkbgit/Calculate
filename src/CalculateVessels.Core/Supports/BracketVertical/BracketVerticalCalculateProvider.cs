@@ -1,6 +1,8 @@
 ﻿using CalculateVessels.Core.Exceptions;
 using CalculateVessels.Core.Interfaces;
+using CalculateVessels.Data.Exceptions;
 using CalculateVessels.Data.PhysicalData;
+using CalculateVessels.Data.PhysicalData.Gost34233_1;
 using System;
 
 namespace CalculateVessels.Core.Supports.BracketVertical
@@ -25,7 +27,7 @@ namespace CalculateVessels.Core.Supports.BracketVertical
             {
                 try
                 {
-                    data.SigmaAlloy = Physical.Gost34233_1.GetSigma(dataIn.Steel, dataIn.t);
+                    data.SigmaAlloy = Gost34233_1.GetSigma(dataIn.Steel, dataIn.t);
                 }
                 catch (PhysicalDataException e)
                 {

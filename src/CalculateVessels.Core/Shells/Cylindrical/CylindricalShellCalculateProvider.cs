@@ -1,7 +1,9 @@
 ﻿using System;
 using CalculateVessels.Core.Exceptions;
 using CalculateVessels.Core.Interfaces;
+using CalculateVessels.Data.Exceptions;
 using CalculateVessels.Data.PhysicalData;
+using CalculateVessels.Data.PhysicalData.Gost34233_1;
 
 namespace CalculateVessels.Core.Shells.Cylindrical
 {
@@ -18,7 +20,7 @@ namespace CalculateVessels.Core.Shells.Cylindrical
             {
                 try
                 {
-                    data.SigmaAllow = Physical.Gost34233_1.GetSigma(dataIn.Steel, dataIn.t);
+                    data.SigmaAllow = Gost34233_1.GetSigma(dataIn.Steel, dataIn.t);
                 }
                 catch (PhysicalDataException e)
                 {

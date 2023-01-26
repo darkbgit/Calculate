@@ -3,6 +3,7 @@ using CalculateVessels.Core.Interfaces;
 using CalculateVessels.Core.Shells.Elliptical;
 using CalculateVessels.Core.Shells.Enums;
 using CalculateVessels.Data.PhysicalData;
+using CalculateVessels.Data.PhysicalData.Gost34233_1;
 using CalculateVessels.Data.Properties;
 using System;
 using System.Collections.Generic;
@@ -26,7 +27,7 @@ namespace CalculateVessels
 
         private void EllForm_Load(object sender, EventArgs e)
         {
-            var steels = Physical.Gost34233_1.GetSteelsList()?.ToArray();
+            var steels = Gost34233_1.GetSteelsList()?.ToArray();
             if (steels != null)
             {
                 steel_cb.Items.AddRange(steels);
@@ -267,7 +268,7 @@ namespace CalculateVessels
                 GostEllForm gef = new() { Owner = this };
                 gef.ShowDialog(); // показываем
             }
-            catch (ArgumentNullException )
+            catch (ArgumentNullException)
             {
                 MessageBox.Show("Couldn't get ellipse parameters");
             }

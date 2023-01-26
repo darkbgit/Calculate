@@ -1,8 +1,10 @@
 ﻿using CalculateVessels.Core.Exceptions;
 using CalculateVessels.Core.HeatExchanger.Enums;
 using CalculateVessels.Core.Interfaces;
+using CalculateVessels.Data.Enums;
+using CalculateVessels.Data.Exceptions;
 using CalculateVessels.Data.PhysicalData;
-using CalculateVessels.Data.PhysicalData.Enums;
+using CalculateVessels.Data.PhysicalData.Gost34233_1;
 using System;
 
 namespace CalculateVessels.Core.HeatExchanger
@@ -159,7 +161,7 @@ namespace CalculateVessels.Core.HeatExchanger
             //[]p
             try
             {
-                data.sigma_dp = Physical.Gost34233_1.GetSigma(dataIn.FirstTubePlate.Steelp, dataIn.TK);
+                data.sigma_dp = Gost34233_1.GetSigma(dataIn.FirstTubePlate.Steelp, dataIn.TK);
             }
             catch (PhysicalDataException e)
             {
@@ -169,7 +171,7 @@ namespace CalculateVessels.Core.HeatExchanger
             {
                 try
                 {
-                    data.sigma_dp2 = Physical.Gost34233_1.GetSigma(dataIn.SecondTubePlate.Steelp, dataIn.TK);
+                    data.sigma_dp2 = Gost34233_1.GetSigma(dataIn.SecondTubePlate.Steelp, dataIn.TK);
                 }
                 catch (PhysicalDataException e)
                 {
@@ -180,7 +182,7 @@ namespace CalculateVessels.Core.HeatExchanger
             //[]K
             try
             {
-                data.sigma_dK = Physical.Gost34233_1.GetSigma(dataIn.SteelK, dataIn.TK);
+                data.sigma_dK = Gost34233_1.GetSigma(dataIn.SteelK, dataIn.TK);
             }
             catch (PhysicalDataException e)
             {
@@ -190,7 +192,7 @@ namespace CalculateVessels.Core.HeatExchanger
             //[]T
             try
             {
-                data.sigma_dT = Physical.Gost34233_1.GetSigma(dataIn.SteelT, dataIn.TT);
+                data.sigma_dT = Gost34233_1.GetSigma(dataIn.SteelT, dataIn.TT);
             }
             catch (PhysicalDataException e)
             {
@@ -221,7 +223,7 @@ namespace CalculateVessels.Core.HeatExchanger
             //Rmp
             try
             {
-                data.Rmp = Physical.Gost34233_1.GetRm(dataIn.FirstTubePlate.Steelp, dataIn.TK);
+                data.Rmp = Gost34233_1.GetRm(dataIn.FirstTubePlate.Steelp, dataIn.TK);
             }
             catch (PhysicalDataException e)
             {
@@ -231,7 +233,7 @@ namespace CalculateVessels.Core.HeatExchanger
             {
                 try
                 {
-                    data.Rmp2 = Physical.Gost34233_1.GetRm(dataIn.SecondTubePlate.Steelp, dataIn.TK);
+                    data.Rmp2 = Gost34233_1.GetRm(dataIn.SecondTubePlate.Steelp, dataIn.TK);
                 }
                 catch (PhysicalDataException e)
                 {
@@ -248,7 +250,7 @@ namespace CalculateVessels.Core.HeatExchanger
 
             try
             {
-                data.AForSigmaap = Physical.Gost34233_1.GetSteelType(dataIn.FirstTubePlate.Steelp) is (SteelType.Carbon or SteelType.Austenitiс) and not SteelType.Undefined ? 60000.0 : 45000.0;
+                data.AForSigmaap = Gost34233_1.GetSteelType(dataIn.FirstTubePlate.Steelp) is (SteelType.Carbon or SteelType.Austenitic) and not SteelType.Undefined ? 60000.0 : 45000.0;
             }
             catch (PhysicalDataException e)
             {
@@ -264,7 +266,7 @@ namespace CalculateVessels.Core.HeatExchanger
             {
                 try
                 {
-                    data.AForSigmaap = Physical.Gost34233_1.GetSteelType(dataIn.SecondTubePlate.Steelp) is (SteelType.Carbon or SteelType.Austenitiс) and not SteelType.Undefined ? 60000.0 : 45000.0;
+                    data.AForSigmaap = Gost34233_1.GetSteelType(dataIn.SecondTubePlate.Steelp) is (SteelType.Carbon or SteelType.Austenitic) and not SteelType.Undefined ? 60000.0 : 45000.0;
                 }
                 catch (PhysicalDataException e)
                 {
@@ -277,7 +279,7 @@ namespace CalculateVessels.Core.HeatExchanger
 
             try
             {
-                data.AForSigmaaK = Physical.Gost34233_1.GetSteelType(dataIn.SteelK) is (SteelType.Carbon or SteelType.Austenitiс) and not SteelType.Undefined ? 60000.0 : 45000.0;
+                data.AForSigmaaK = Gost34233_1.GetSteelType(dataIn.SteelK) is (SteelType.Carbon or SteelType.Austenitic) and not SteelType.Undefined ? 60000.0 : 45000.0;
             }
             catch (PhysicalDataException e)
             {
@@ -288,14 +290,14 @@ namespace CalculateVessels.Core.HeatExchanger
 
             try
             {
-                data.AForSigmaaT = Physical.Gost34233_1.GetSteelType(dataIn.SteelT) is (SteelType.Carbon or SteelType.Austenitiс) and not SteelType.Undefined ? 60000.0 : 45000.0;
+                data.AForSigmaaT = Gost34233_1.GetSteelType(dataIn.SteelT) is (SteelType.Carbon or SteelType.Austenitic) and not SteelType.Undefined ? 60000.0 : 45000.0;
             }
             catch (PhysicalDataException e)
             {
                 throw new CalculateException("Couldn't identify steel type.", e);
             }
 
-            
+
             data.sigmaa_dT = data.CtForSigmaa * data.AForSigmaaT / Math.Sqrt(data.nNForSigmaa * dataIn.N) + data.BForSigmaa / data.nsigmaForSigmaa;
 
             data.Ksigma = dataIn.FirstTubePlate.TubePlateType switch

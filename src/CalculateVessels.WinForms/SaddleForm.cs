@@ -11,6 +11,7 @@ using CalculateVessels.Core.Shells;
 using CalculateVessels.Core.Supports.Enums;
 using CalculateVessels.Core.Supports.Saddle;
 using CalculateVessels.Data.PhysicalData;
+using CalculateVessels.Data.PhysicalData.Gost34233_1;
 using CalculateVessels.Data.Properties;
 
 namespace CalculateVessels
@@ -26,11 +27,11 @@ namespace CalculateVessels
 
         public IInputData DataIn => _saddleDataIn;
 
-        
+
 
         private void SaddleForm_Load(object sender, EventArgs e)
         {
-            var steels = Physical.Gost34233_1.GetSteelsList()?.ToArray<object>();
+            var steels = Gost34233_1.GetSteelsList()?.ToArray<object>();
             if (steels != null)
             {
                 steel_cb.Items.AddRange(steels);

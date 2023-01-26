@@ -3,6 +3,8 @@ using CalculateVessels.Core.Interfaces;
 using CalculateVessels.Data.PhysicalData;
 using System;
 using CalculateVessels.Core.Supports.Enums;
+using CalculateVessels.Data.PhysicalData.Gost34233_1;
+using CalculateVessels.Data.Exceptions;
 
 namespace CalculateVessels.Core.Supports.Saddle
 {
@@ -19,7 +21,7 @@ namespace CalculateVessels.Core.Supports.Saddle
             {
                 try
                 {
-                    data.SigmaAllow = Physical.Gost34233_1.GetSigma(dataIn.Steel, dataIn.t);
+                    data.SigmaAllow = Gost34233_1.GetSigma(dataIn.Steel, dataIn.t);
                 }
                 catch (PhysicalDataException e)
                 {
