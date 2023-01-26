@@ -107,7 +107,7 @@ namespace CalculateVessels.Core.Bottoms.FlatBottomWithAdditionalMoment
 
 
             // Gost 34233.4 add G
-            data.sigma_d_krm = dataIn.sigma_d * 1.5 / 1.1;
+            data.sigma_d_krm = data.sigma_d * 1.5 / 1.1;
 
             data.tkr = dataIn.t;
             data.hkr = dataIn.s2;
@@ -327,10 +327,10 @@ namespace CalculateVessels.Core.Bottoms.FlatBottomWithAdditionalMoment
                     throw new CalculateException("Ошибка определения количества отверстий.");
             }
 
-            data.s1p = data.K0 * data.K6 * data.Dp * Math.Sqrt(dataIn.p / (dataIn.fi * dataIn.sigma_d));
+            data.s1p = data.K0 * data.K6 * data.Dp * Math.Sqrt(dataIn.p / (dataIn.fi * data.sigma_d));
             data.s1 = data.s1p + data.c;
 
-            data.Phi_1 = data.Pbp / dataIn.sigma_d;
+            data.Phi_1 = data.Pbp / data.sigma_d;
             data.Phi_2 = data.Pbm / data.sigma_d_krm;
             data.Phi = Math.Max(data.Phi_1, data.Phi_2);
 
@@ -371,7 +371,7 @@ namespace CalculateVessels.Core.Bottoms.FlatBottomWithAdditionalMoment
                 ? 1
                 : 2.2 / (1 + Math.Sqrt(1 + Math.Pow(6 * (dataIn.s1 - data.c) / data.Dp, 2)));
 
-            data.p_d = Math.Pow((dataIn.s1 - data.c) / (data.K0 * data.K6 * data.Dp), 2) * dataIn.sigma_d * dataIn.fi;
+            data.p_d = Math.Pow((dataIn.s1 - data.c) / (data.K0 * data.K6 * data.Dp), 2) * data.sigma_d * dataIn.fi;
             if (data.Kp * data.p_d < dataIn.p)
             {
                 data.ErrorList.Add("Допускаемое давление меньше расчетного.");
