@@ -1,10 +1,9 @@
-﻿namespace CalculateVessels.Core.Shells.Enums
+﻿namespace CalculateVessels.Core.Shells.Enums;
+
+public enum EllipticalBottomType
 {
-    public enum EllipticalBottomType
-    {
-        Elliptical,
-        Hemispherical,
-        Torospherical,
-        SphericalUnflanged
-    }
+    Elliptical,
+    Hemispherical,
+    Torospherical,
+    SphericalUnflanged
 }

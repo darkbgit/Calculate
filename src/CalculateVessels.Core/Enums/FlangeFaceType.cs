@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace CalculateVessels.Core.Enums;
 
-namespace CalculateVessels.Core.Bottoms.Enums
+public enum FlangeFaceType
 {
-    public enum FlangeFaceType
-    {
-        Flat,
-        MaleFemale,
-        TongueGroove,
-        Ring
-    }
+    Flat,
+    MaleFemale,
+    TongueGroove,
+    Ring
 }

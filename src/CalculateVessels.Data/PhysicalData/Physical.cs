@@ -1,4 +1,6 @@
-﻿using CalculateVessels.Data.PhysicalData.Gost34233_1;
+﻿using CalculateVessels.Data.Enums;
+using CalculateVessels.Data.Exceptions;
+using CalculateVessels.Data.PhysicalData.Common;
 using CalculateVessels.Data.PhysicalData.Gost34233_4;
 using CalculateVessels.Data.PhysicalData.Gost34233_7;
 using CalculateVessels.Data.PhysicalData.Gost6533;
@@ -8,9 +10,6 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
-using CalculateVessels.Data.PhysicalData.Common;
-using CalculateVessels.Data.Exceptions;
-using CalculateVessels.Data.Enums;
 
 namespace CalculateVessels.Data.PhysicalData;
 
@@ -24,7 +23,14 @@ public static class Physical
     public static class Gost6533
     {
         private const string ELLIPTICAL_BOTTOM_TABLE = "PhysicalData/Gost6533/EllipticalBottom.json";
-        public static List<string> GetEllipseDiameters(EllipticalBottomGostType type)
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        /// <exception cref="PhysicalDataException"></exception>
+        public static IEnumerable<string> GetEllipseDiameters(EllipticalBottomGostType type)
         {
             EllipsesList ellipsesList;
 
@@ -33,21 +39,27 @@ public static class Physical
                 using StreamReader file = new(ELLIPTICAL_BOTTOM_TABLE);
                 var json = file.ReadToEnd();
                 file.Close();
-                ellipsesList = JsonSerializer.Deserialize<EllipsesList>(json);
+                ellipsesList = JsonSerializer.Deserialize<EllipsesList>(json) ?? throw new InvalidOperationException();
             }
             catch
             {
-                return null;
+                throw new PhysicalDataException($"Error open file {ELLIPTICAL_BOTTOM_TABLE} for ellipses diameters.");
             }
 
             var ellipses = type switch
             {
-                EllipticalBottomGostType.Ell025In => ellipsesList?.Ell025In.Keys,
-                EllipticalBottomGostType.Ell025Out => ellipsesList?.Ell025Out.Keys,
-                _ => null
+                EllipticalBottomGostType.Ell025In => ellipsesList.Ell025In.Keys,
+                EllipticalBottomGostType.Ell025Out => ellipsesList.Ell025Out.Keys,
+                EllipticalBottomGostType.Ell020In => throw new NotImplementedException(),
+                _ => throw new PhysicalDataException($"Error open file {ELLIPTICAL_BOTTOM_TABLE} for ellipses diameters.")
             };
 
-            return ellipses?.Select(i => i.ToString(CultureInfo.CurrentCulture)).ToList();
+            if (!ellipses.Any())
+            {
+                throw new PhysicalDataException($"Ellipses diameters weren't found in {ELLIPTICAL_BOTTOM_TABLE}.");
+            }
+
+            return ellipses.Select(i => i.ToString(CultureInfo.CurrentCulture)).ToList();
         }
 
         public static EllipsesList GetEllipsesList()
@@ -57,11 +69,11 @@ public static class Physical
                 using StreamReader file = new(ELLIPTICAL_BOTTOM_TABLE);
                 var json = file.ReadToEnd();
                 file.Close();
-                return JsonSerializer.Deserialize<EllipsesList>(json);
+                return JsonSerializer.Deserialize<EllipsesList>(json) ?? throw new InvalidOperationException();
             }
             catch
             {
-                return null;
+                throw new PhysicalDataException($"Error open file {ELLIPTICAL_BOTTOM_TABLE} for ellipses diameters.");
             }
         }
     }
@@ -92,7 +104,7 @@ public static class Physical
                 using StreamReader file = new(TABLE_D1_SCREW_M);
                 var json = file.ReadToEnd();
                 file.Close();
-                fbs = JsonSerializer.Deserialize<Dictionary<int, Fb>>(json);
+                fbs = JsonSerializer.Deserialize<Dictionary<int, Fb>>(json) ?? throw new InvalidOperationException();
             }
             catch
             {
@@ -116,14 +128,19 @@ public static class Physical
                 using StreamReader file = new(TABLE_D1_SCREW_M);
                 var json = file.ReadToEnd();
                 file.Close();
-                fbs = JsonSerializer.Deserialize<Dictionary<int, Fb>>(json);
+                fbs = JsonSerializer.Deserialize<Dictionary<int, Fb>>(json) ?? throw new InvalidOperationException();
             }
             catch
             {
-                return null;
+                throw new PhysicalDataException($"Error open file {TABLE_D1_SCREW_M} for screw ds.");
             }
 
-            return fbs?.Keys.Select(f => f.ToString()).AsEnumerable();
+            if (!fbs.Any())
+            {
+                throw new PhysicalDataException($"Screw ds weren't found in {TABLE_D1_SCREW_M}.");
+            }
+
+            return fbs.Keys.Select(f => f.ToString()).AsEnumerable();
         }
 
         /// <summary>
@@ -141,7 +158,7 @@ public static class Physical
                 using StreamReader file = new(TABLE_GASKET);
                 var json = file.ReadToEnd();
                 file.Close();
-                gaskets = JsonSerializer.Deserialize<List<PhysicalData.Gost34233_4.Gasket>>(json);
+                gaskets = JsonSerializer.Deserialize<List<PhysicalData.Gost34233_4.Gasket>>(json) ?? throw new InvalidOperationException();
             }
             catch
             {
@@ -170,14 +187,14 @@ public static class Physical
                 using StreamReader file = new(TABLE_SIGMA);
                 var json = file.ReadToEnd();
                 file.Close();
-                steels = JsonSerializer.Deserialize<List<SteelWithValues>>(json);
+                steels = JsonSerializer.Deserialize<List<SteelWithValues>>(json) ?? throw new InvalidOperationException();
             }
             catch
             {
                 throw new PhysicalDataException($"Error open file {TABLE_SIGMA} for sigma of steel {steelName}");
             }
 
-            var steel = steels?.FirstOrDefault(s => s.Name.Contains(steelName)) ??
+            var steel = steels.FirstOrDefault(s => s.Name.Contains(steelName)) ??
                         throw new PhysicalDataException($"Error find steel {steelName} in file {TABLE_SIGMA}");
 
             try
@@ -208,31 +225,29 @@ public static class Physical
                 using StreamReader file = new(TABLE_GASKET);
                 var json = file.ReadToEnd();
                 file.Close();
-                gaskets = JsonSerializer.Deserialize<List<Gasket>>(json);
+                gaskets = JsonSerializer.Deserialize<List<Gasket>>(json) ?? throw new InvalidOperationException();
             }
             catch
             {
-                return null;
+                throw new PhysicalDataException($"Error open file {TABLE_GASKET} for gaskets list.");
             }
 
-            return gaskets?.Select(g => g.Material);
+            if (!gaskets.Any())
+            {
+                throw new PhysicalDataException($"Gaskets weren't found in file {TABLE_GASKET}.");
+            }
+
+            return gaskets.Select(g => g.Material);
         }
 
         public static IEnumerable<string> GetSteelsList(string type)
         {
-            string table;
-
-            switch (type)
+            var table = type switch
             {
-                case "screw":
-                    table = TABLE_SIGMA;
-                    break;
-                case "washer":
-                    table = TABLE_E;
-                    break;
-                default:
-                    return null;
-            }
+                "screw" => TABLE_SIGMA,
+                "washer" => TABLE_E,
+                _ => throw new PhysicalDataException("Type for steels list is wrong.")
+            };
 
             List<PhysicalData.Gost34233_4.Steel> steels;
 
@@ -241,15 +256,15 @@ public static class Physical
                 using StreamReader file = new(table);
                 var json = file.ReadToEnd();
                 file.Close();
-                steels = JsonSerializer.Deserialize<List<PhysicalData.Gost34233_4.Steel>>(json);
+                steels = JsonSerializer.Deserialize<List<PhysicalData.Gost34233_4.Steel>>(json) ?? throw new InvalidOperationException();
             }
             catch
             {
-                return null;
+                throw new PhysicalDataException($"Error open file {table} for steels list.");
             }
 
             List<string> result = new();
-            steels?.ForEach(s => result = result.Union(s.Name).ToList());
+            steels.ForEach(s => result = result.Union(s.Name).ToList());
 
             return result;
         }
@@ -279,7 +294,7 @@ public static class Physical
                 using StreamReader file = new(TABLE_B1);
                 var json = file.ReadToEnd();
                 file.Close();
-                psiList = JsonSerializer.Deserialize<List<PhysicalData.Gost34233_7.Psi>>(json);
+                psiList = JsonSerializer.Deserialize<List<PhysicalData.Gost34233_7.Psi>>(json) ?? throw new InvalidOperationException();
             }
             catch
             {
@@ -309,7 +324,7 @@ public static class Physical
                 using StreamReader file = new(TABLE_2);
                 var json = file.ReadToEnd();
                 file.Close();
-                Ws = JsonSerializer.Deserialize<List<PhysicalData.Gost34233_7.W>>(json);
+                Ws = JsonSerializer.Deserialize<List<PhysicalData.Gost34233_7.W>>(json) ?? throw new InvalidOperationException();
             }
             catch
             {
@@ -353,7 +368,7 @@ public static class Physical
                 using StreamReader file = new(TABLE_G1);
                 var json = file.ReadToEnd();
                 file.Close();
-                omegaList = JsonSerializer.Deserialize<List<PhysicalData.Gost34233_7.OmegaForT1T2T3>>(json);
+                omegaList = JsonSerializer.Deserialize<List<PhysicalData.Gost34233_7.OmegaForT1T2T3>>(json) ?? throw new InvalidOperationException();
             }
             catch
             {
@@ -399,7 +414,7 @@ public static class Physical
                 using StreamReader file = new(TABLE_1);
                 var json = file.ReadToEnd();
                 file.Close();
-                omegaList = JsonSerializer.Deserialize<List<PhysicalData.Gost34233_7.OmegaForPhi1Phi2Phi3>>(json);
+                omegaList = JsonSerializer.Deserialize<List<PhysicalData.Gost34233_7.OmegaForPhi1Phi2Phi3>>(json) ?? throw new InvalidOperationException();
             }
             catch
             {
@@ -451,7 +466,7 @@ public static class Physical
                 using StreamReader file = new(TABLE_G23);
                 var json = file.ReadToEnd();
                 file.Close();
-                omegaList = JsonSerializer.Deserialize<List<PhysicalData.Gost34233_7.OmegaForAB>>(json);
+                omegaList = JsonSerializer.Deserialize<List<PhysicalData.Gost34233_7.OmegaForAB>>(json) ?? throw new InvalidOperationException();
             }
             catch
             {
@@ -505,7 +520,7 @@ public static class Physical
                 using StreamReader file = new(TABLE_G23);
                 var json = file.ReadToEnd();
                 file.Close();
-                omegaList = JsonSerializer.Deserialize<List<PhysicalData.Gost34233_7.OmegaForAB>>(json);
+                omegaList = JsonSerializer.Deserialize<List<PhysicalData.Gost34233_7.OmegaForAB>>(json) ?? throw new InvalidOperationException();
             }
             catch
             {
@@ -543,7 +558,7 @@ public static class Physical
             using StreamReader file = new($"PhysicalData/{gost}/{JSON_NAME}");
             var json = file.ReadToEnd();
             file.Close();
-            steels = JsonSerializer.Deserialize<List<SteelWithValues>>(json);
+            steels = JsonSerializer.Deserialize<List<SteelWithValues>>(json) ?? throw new InvalidOperationException();
         }
         catch
         {
@@ -581,7 +596,7 @@ public static class Physical
             using StreamReader file = new($"PhysicalData/{gost}/SteelsE.json");
             var json = file.ReadToEnd();
             file.Close();
-            steels = JsonSerializer.Deserialize<List<SteelWithValues>>(json);
+            steels = JsonSerializer.Deserialize<List<SteelWithValues>>(json) ?? throw new InvalidOperationException();
         }
         catch
         {
@@ -654,9 +669,9 @@ public static class Physical
             return values[minTemperature];
         }
 
-        if (values.ContainsKey(temperature))
+        if (values.TryGetValue(temperature, out var value))
         {
-            return values[temperature];
+            return value;
         }
 
         var temperatureBig = values.Keys.First(k => k > temperature);
@@ -664,9 +679,9 @@ public static class Physical
         var temperatureLittle = values.Keys.Last(k => k < temperature);
 
 
-        var value = Interpolation((temperatureBig, values[temperatureBig]), (temperatureLittle, values[temperatureLittle]), temperature, round);
+        var result = Interpolation((temperatureBig, values[temperatureBig]), (temperatureLittle, values[temperatureLittle]), temperature, round);
 
-        return value;
+        return result;
     }
 
     private static double Interpolation((double x, double y) first, (double x, double y) second, double interpolateFor, RoundType round)

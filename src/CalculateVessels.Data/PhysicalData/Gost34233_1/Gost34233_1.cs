@@ -49,9 +49,11 @@ public static class Gost34233_1
     {
         List<SteelForSteelType> steels;
 
+        var fileName = $"{Constants.DataFolder}/{GOST_FOLDER}/{TABLE_TYPE}";
+
         try
         {
-            using StreamReader file = new(TABLE_TYPE);
+            using StreamReader file = new(fileName);
             var json = file.ReadToEnd();
             file.Close();
             steels = JsonSerializer.Deserialize<List<SteelForSteelType>>(json);
@@ -87,9 +89,11 @@ public static class Gost34233_1
 
         List<SteelWithListValuesAndThickness> steels;
 
+        var fileName = $"{Constants.DataFolder}/{GOST_FOLDER}/{TABLE_SIGMA}";
+
         try
         {
-            using StreamReader file = new(TABLE_SIGMA);
+            using StreamReader file = new(fileName);
             var json = file.ReadToEnd();
             file.Close();
             steels = JsonSerializer.Deserialize<List<SteelWithListValuesAndThickness>>(json);

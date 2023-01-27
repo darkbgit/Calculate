@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
-namespace CalculateVessels.Data.PhysicalData.Gost34233_1
+namespace CalculateVessels.Data.PhysicalData.Gost34233_1;
+
+public class Steel
 {
-    public class Steel
-    {
-        public List<string> Name { get; set; }
-    }
+    public List<string> Name { get; set; }
 }

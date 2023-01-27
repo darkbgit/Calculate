@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace CalculateVessels.Data.PhysicalData.Gost34233_4
+namespace CalculateVessels.Data.PhysicalData.Gost34233_4;
+
+public class Steel
 {
-    public class Steel
-    {
-        public List<string> Name { get; set; }
-    }
+    public List<string> Name { get; set; }
 }

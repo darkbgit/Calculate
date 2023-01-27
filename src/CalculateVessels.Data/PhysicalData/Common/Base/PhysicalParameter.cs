@@ -1,8 +1,7 @@
-﻿namespace CalculateVessels.Data.PhysicalData.Common.Base
+﻿namespace CalculateVessels.Data.PhysicalData.Common.Base;
+
+internal class PhysicalParameter
 {
-    internal class PhysicalParameter
-    {
-        public double Temperature { get; set; }
-        public double Value { get; set; }
-    }
+    public double Temperature { get; set; }
+    public double Value { get; set; }
 }

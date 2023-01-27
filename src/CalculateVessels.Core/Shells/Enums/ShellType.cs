@@ -1,11 +1,10 @@
-﻿namespace CalculateVessels.Core.Shells.Enums
+﻿namespace CalculateVessels.Core.Shells.Enums;
+
+public enum ShellType
 {
-    public enum ShellType
-    {
-        Cylindrical,
-        Elliptical,
-        Conical,
-        Spherical,
-        Torospherical
-    }
+    Cylindrical,
+    Elliptical,
+    Conical,
+    Spherical,
+    Torospherical
 }

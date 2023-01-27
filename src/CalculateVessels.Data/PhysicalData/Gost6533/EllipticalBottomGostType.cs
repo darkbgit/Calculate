@@ -1,9 +1,8 @@
-﻿namespace CalculateVessels.Data.PhysicalData.Gost6533
+﻿namespace CalculateVessels.Data.PhysicalData.Gost6533;
+
+public enum EllipticalBottomGostType
 {
-    public enum EllipticalBottomGostType
-    {
-        Ell025In,
-        Ell025Out,
-        Ell020In
-    }
+    Ell025In,
+    Ell025Out,
+    Ell020In
 }
