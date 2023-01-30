@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace CalculateVessels.Core.Interfaces;
 
-public interface ICalculatedElement
+public interface ICalculatedElement<T>
+ where T : class, IInputData
 {
     ICollection<string> ErrorList { get; }
 
-    IInputData InputData { get; init; }
+    T InputData { get; init; }
     IEnumerable<string> Bibliography { get; }
 
-    Type GetElementType();
+    //Type GetElementType();
 }

@@ -1,15 +1,13 @@
-﻿using System;
-using System.Linq;
-using System.Threading;
-using System.Windows.Forms;
-using CalculateVessels.Core.Interfaces;
-using CalculateVessels.Core.Shells.Cylindrical;
+﻿using CalculateVessels.Core.DI;
 using CalculateVessels.Forms;
 using CalculateVessels.Helpers;
-using CalculateVessels.Output;
 using CalculateVessels.Output.DI;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System;
+using System.Linq;
+using System.Threading;
+using System.Windows.Forms;
 
 namespace CalculateVessels;
 
@@ -37,8 +35,6 @@ internal static class Program
             {
                 services.AddSingleton<IFormFactory, FormFactory>();
 
-                services.AddScoped<ICalculateService<CylindricalShellInput>, CylindricalShellCalculateService>();
-
                 var forms = typeof(Program).Assembly
                     .GetTypes()
                     .Where(t => t.BaseType == typeof(Form))
@@ -48,6 +44,9 @@ internal static class Program
                 {
                     services.AddTransient(form);
                 });
+
+                var serviceCollectionForCore = new ServiceCollectionForCore();
+                serviceCollectionForCore.RegisterDependencies(services);
 
                 var serviceCollectionForOutput = new ServiceCollectionForOutput();
                 serviceCollectionForOutput.RegisterDependencies(services);
