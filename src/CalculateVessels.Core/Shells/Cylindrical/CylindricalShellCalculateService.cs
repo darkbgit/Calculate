@@ -1,18 +1,17 @@
-﻿using System;
-using CalculateVessels.Core.Base;
-using CalculateVessels.Core.Exceptions;
+﻿using CalculateVessels.Core.Exceptions;
 using CalculateVessels.Core.Interfaces;
 using CalculateVessels.Data.Exceptions;
 using CalculateVessels.Data.PhysicalData;
 using CalculateVessels.Data.PhysicalData.Gost34233_1;
+using System;
 
 namespace CalculateVessels.Core.Shells.Cylindrical;
 
-public class CylindricalShellCalculateService : ICalculateService<CylindricalShellInput>
+internal class CylindricalShellCalculateService : ICalculateService<CylindricalShellInput>
 {
     public ICalculatedElement Calculate(CylindricalShellInput dataIn)
     {
-        var data = new CylindricalShellCalculated()
+        var data = new CylindricalShellCalculated
         {
             InputData = dataIn
         };

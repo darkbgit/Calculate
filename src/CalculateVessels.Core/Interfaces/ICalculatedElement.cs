@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace CalculateVessels.Core.Interfaces;
 
@@ -10,5 +9,5 @@ public interface ICalculatedElement
     IInputData InputData { get; init; }
     IEnumerable<string> Bibliography { get; }
 
-    Type GetElementType();
+    //Type GetElementType();
 }

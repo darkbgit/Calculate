@@ -24,7 +24,7 @@ public partial class MainForm : Form
 
 
     public CylindricalShellForm? CylindricalForm;
-    // public EllForm ef = null;
+    public EllipticalShellForm? EllipticalForm;
     // public FlatBottomWithAdditionalMomentForm flatBottomWithAdditionalMomentForm = null;
     // public NozzleForm nf = null;
     // public FlatBottomForm pdf = null;
@@ -222,7 +222,6 @@ public partial class MainForm : Form
 
     private void Cil_b_Click(object sender, EventArgs e)
     {
-        //CilForm cf = (CilForm) Application.OpenForms["CilForm"];
         if (CylindricalForm == null)
         {
             //cf.Dispose();
@@ -254,16 +253,18 @@ public partial class MainForm : Form
 
     private void Ell_b_Click(object sender, EventArgs e)
     {
-        // if (ef == null)
-        // {
-        //     ef = new EllForm { Owner = this };
-        //     ef.Show();
-        // }
-        // else
-        // {
-        //     ef.Owner = this;
-        //     ef.Show();
-        // }
+        if (EllipticalForm == null)
+        {
+            EllipticalForm = _formFactory.Create<EllipticalShellForm>();
+            if (EllipticalForm == null) return;
+            EllipticalForm.Owner = this;
+            EllipticalForm.Show();
+        }
+        else
+        {
+            EllipticalForm.Owner = this;
+            EllipticalForm.Show();
+        }
     }
 
     private void Saddle_b_Click(object sender, EventArgs e)

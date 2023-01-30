@@ -1,16 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Globalization;
-using System.Linq;
-using System.Windows.Forms;
-using CalculateVessels.Core.Exceptions;
+﻿using CalculateVessels.Core.Exceptions;
 using CalculateVessels.Core.Interfaces;
 using CalculateVessels.Core.Shells.Cylindrical;
 using CalculateVessels.Data.Exceptions;
 using CalculateVessels.Data.PhysicalData;
 using CalculateVessels.Data.PhysicalData.Gost34233_1;
 using CalculateVessels.Data.Properties;
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Globalization;
+using System.Linq;
+using System.Windows.Forms;
 
 namespace CalculateVessels.Forms;
 
@@ -234,7 +234,6 @@ public partial class CylindricalShellForm : Form
         }
 
         return isNoError;
-
     }
 
     private bool CollectDataForFinishCalculation()

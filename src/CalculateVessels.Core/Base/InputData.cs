@@ -10,5 +10,5 @@ public abstract class InputData
 
     public IEnumerable<string> ErrorList { get; } = new List<string>();
 
-    public string Name { get; } = string.Empty;
+    public string Name { get; set; } = string.Empty;
 }

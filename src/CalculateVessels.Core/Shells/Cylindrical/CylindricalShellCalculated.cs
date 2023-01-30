@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using CalculateVessels.Core.Base;
+﻿using CalculateVessels.Core.Base;
 using CalculateVessels.Core.Interfaces;
+using System;
+using System.Text;
 
 namespace CalculateVessels.Core.Shells.Cylindrical;
 
@@ -11,6 +10,15 @@ namespace CalculateVessels.Core.Shells.Cylindrical;
 
 public class CylindricalShellCalculated : CalculatedElement, ICalculatedElement
 {
+    public CylindricalShellCalculated()
+    {
+        Bibliography = new[]
+        {
+            Data.Properties.Resources.GOST_34233_1,
+            Data.Properties.Resources.GOST_34233_2
+        };
+    }
+
     public double B1 { get; set; }
     public double B1_2 { get; set; }
     public double b { get; set; }
