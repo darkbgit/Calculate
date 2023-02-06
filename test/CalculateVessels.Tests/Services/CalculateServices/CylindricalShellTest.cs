@@ -17,7 +17,7 @@ public class CylindricalShellTest
 
 
     [Theory]
-    [ClassData(typeof(CylindricalShellTestData))]
+    [MemberData(nameof(CylindricalShellTestData.GetData), MemberType = typeof(CylindricalShellTestData))]
     public void CylindricalShell(CylindricalShellInput inputData, CylindricalShellCalculated calculatedData)
     {
         //Act

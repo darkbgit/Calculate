@@ -24,7 +24,7 @@ public class CylindricalShellInput : ShellInputData, IInputData
     public double c3 { get; set; }
     //public double D { get; set; }
     public double E { get; set; }
-    public IEnumerable<string> ErrorList => _errorList;
+    //public IEnumerable<string> ErrorList => _errorList;
     public double F { get; set; }
     public int FCalcSchema { get; set; } //1-7
     public double f { get; set; }

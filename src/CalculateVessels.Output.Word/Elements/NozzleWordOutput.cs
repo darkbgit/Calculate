@@ -889,7 +889,7 @@ internal class NozzleWordOutput : IWordOutputElement<NozzleCalculated>
                     body.AddParagraph("")
                         .AppendEquation($"({shellDataIn.s}-{data.c:f2})/({data.Dk})={data.ConditionUseFormulas2:f2}");
                     body.AddParagraph("")
-                        .AppendEquation($"0.1/cos{data.alfa1}");
+                        .AppendEquation($"0.1/cos{data.alpha1}");
                     break;
                 }
             case ShellType.Elliptical:

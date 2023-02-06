@@ -4,9 +4,9 @@ using CalculateVessels.Core.Shells.Cylindrical;
 
 namespace CalculateVessels.UnitTests.Services.CalculateServices;
 
-public class CylindricalShellTestData : IEnumerable<object[]>
+public class CylindricalShellTestData
 {
-    public IEnumerator<object[]> GetEnumerator()
+    public static IEnumerable<object[]> GetData()
     {
         var inputData1 = new CylindricalShellInput
         {
@@ -23,6 +23,7 @@ public class CylindricalShellTestData : IEnumerable<object[]>
             ny = 2.4,
             IsPressureIn = true
         };
+
         var calculatedData1 = new CylindricalShellCalculated()
         {
             InputData = inputData1,
@@ -270,6 +271,4 @@ public class CylindricalShellTestData : IEnumerable<object[]>
         yield return new object[] { inputData3, calculatedData3 };
         yield return new object[] { inputData4, calculatedData4 };
     }
-
-    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 }

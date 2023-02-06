@@ -1,9 +1,7 @@
 ﻿using CalculateVessels.Core.Exceptions;
+using CalculateVessels.Core.Helpers;
 using CalculateVessels.Core.Interfaces;
 using CalculateVessels.Core.Shells.Enums;
-using CalculateVessels.Data.Exceptions;
-using CalculateVessels.Data.PhysicalData;
-using CalculateVessels.Data.PhysicalData.Gost34233_1;
 using System;
 
 namespace CalculateVessels.Core.Shells.Elliptical;
@@ -18,44 +16,13 @@ internal class EllipticalShellCalculateService : ICalculateService<EllipticalShe
 
     public ICalculatedElement Calculate(EllipticalShellInput dataIn)
     {
-        var data = new EllipticalShellCalculated()
+        var data = new EllipticalShellCalculated
         {
-            InputData = dataIn
+            InputData = dataIn,
+            SigmaAllow = PhysicalHelper.GetSigmaIfZero(dataIn.SigmaAllow, dataIn.Steel, dataIn.t),
+            E = PhysicalHelper.GetEIfZero(dataIn.E, dataIn.Steel, dataIn.t),
+            c = dataIn.c1 + dataIn.c2 + dataIn.c3
         };
-
-        if (dataIn.SigmaAllow == 0)
-        {
-            try
-            {
-                data.SigmaAllow = Gost34233_1.GetSigma(dataIn.Steel, dataIn.t);
-            }
-            catch (PhysicalDataException e)
-            {
-                throw new CalculateException("Error get sigma.", e);
-            }
-        }
-        else
-        {
-            data.SigmaAllow = dataIn.SigmaAllow;
-        }
-
-        if (dataIn.E == 0)
-        {
-            try
-            {
-                data.E = Physical.GetE(dataIn.Steel, dataIn.t);
-            }
-            catch (PhysicalDataException e)
-            {
-                throw new CalculateException("Error get sigma.", e);
-            }
-        }
-        else
-        {
-            data.E = dataIn.E;
-        }
-
-        data.c = dataIn.c1 + dataIn.c2 + dataIn.c3;
 
         switch (dataIn.EllipticalBottomType)
         {

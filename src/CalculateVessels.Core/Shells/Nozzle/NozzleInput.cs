@@ -1,5 +1,6 @@
 ﻿using CalculateVessels.Core.Base;
 using CalculateVessels.Core.Interfaces;
+using CalculateVessels.Core.Shells.Base;
 using CalculateVessels.Core.Shells.Nozzle.Enums;
 using System.Collections.Generic;
 
@@ -26,7 +27,7 @@ public class NozzleInput : InputData, IInputData
     public double delta { get; set; }
     public double delta1 { get; set; }
     public double delta2 { get; set; }
-    public IEnumerable<string> ErrorList => _errorList;
+    //public IEnumerable<string> ErrorList => _errorList;
     public double E1 { get; set; }
     public double E2 { get; set; }
     public double E3 { get; set; }

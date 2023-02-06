@@ -2,12 +2,10 @@
 
 namespace CalculateVessels.Core.Interfaces;
 
-public interface ICalculatedElement<T>
- where T : class, IInputData
+public interface ICalculatedElement
 {
     ICollection<string> ErrorList { get; }
-
-    T InputData { get; init; }
+    IInputData InputData { get; init; }
     IEnumerable<string> Bibliography { get; }
 
     //Type GetElementType();

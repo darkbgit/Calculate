@@ -1,12 +1,11 @@
 ﻿using CalculateVessels.Core.Exceptions;
+using CalculateVessels.Core.Helpers;
 using CalculateVessels.Core.Interfaces;
 using CalculateVessels.Core.Shells.Base;
+using CalculateVessels.Core.Shells.Conical;
 using CalculateVessels.Core.Shells.Elliptical;
 using CalculateVessels.Core.Shells.Enums;
 using CalculateVessels.Core.Shells.Nozzle.Enums;
-using CalculateVessels.Data.Exceptions;
-using CalculateVessels.Data.PhysicalData;
-using CalculateVessels.Data.PhysicalData.Gost34233_1;
 using System;
 
 namespace CalculateVessels.Core.Shells.Nozzle;
@@ -24,83 +23,22 @@ internal class NozzleCalculateService : ICalculateService<NozzleInput>
     {
         var data = new NozzleCalculated
         {
-            InputData = dataIn
+            InputData = dataIn,
+            SigmaAllow1 = PhysicalHelper.GetSigmaIfZero(dataIn.SigmaAllow1, dataIn.steel1, dataIn.t),
+            E1 = PhysicalHelper.GetEIfZero(dataIn.E1, dataIn.steel1, dataIn.t)
         };
-
-        if (dataIn.SigmaAllow1 == 0)
-        {
-            try
-            {
-                data.SigmaAllow1 = Gost34233_1.GetSigma(dataIn.steel1, dataIn.t);
-            }
-            catch (PhysicalDataException e)
-            {
-                throw new CalculateException("Error get sigma.", e);
-            }
-        }
-        else
-        {
-            data.SigmaAllow1 = dataIn.SigmaAllow1;
-        }
-
-        if (dataIn.E1 == 0)
-        {
-            try
-            {
-                data.E1 = Physical.GetE(dataIn.steel1, dataIn.t);
-            }
-            catch (PhysicalDataException e)
-            {
-                throw new CalculateException("Error get E.", e);
-            }
-        }
-        else
-        {
-            data.E1 = dataIn.E1;
-        }
 
         if (dataIn.NozzleKind is NozzleKind.ImpassWithRing or NozzleKind.PassWithRing
             or NozzleKind.WithRingAndInPart)
         {
-
-            try
-            {
-                data.SigmaAllow2 = Gost34233_1.GetSigma(dataIn.steel2, dataIn.t);
-            }
-            catch (PhysicalDataException e)
-            {
-                throw new CalculateException("Error get sigma.", e);
-            }
-
-            try
-            {
-                data.E2 = Physical.GetE(dataIn.steel2, dataIn.t);
-            }
-            catch (PhysicalDataException e)
-            {
-                throw new CalculateException("Error get E.", e);
-            }
+            data.SigmaAllow2 = PhysicalHelper.GetSigmaIfZero(dataIn.SigmaAllow2, dataIn.steel2, dataIn.t);
+            data.E2 = PhysicalHelper.GetEIfZero(dataIn.E2, dataIn.steel2, dataIn.t);
         }
 
         if (dataIn.NozzleKind is NozzleKind.PassWithoutRing or NozzleKind.PassWithRing or NozzleKind.WithRingAndInPart)
         {
-            try
-            {
-                data.SigmaAllow3 = Gost34233_1.GetSigma(dataIn.steel3, dataIn.t);
-            }
-            catch (PhysicalDataException e)
-            {
-                throw new CalculateException("Error get sigma.", e);
-            }
-
-            try
-            {
-                data.E3 = Physical.GetE(dataIn.steel3, dataIn.t);
-            }
-            catch (PhysicalDataException e)
-            {
-                throw new CalculateException("Error get E.", e);
-            }
+            data.SigmaAllow3 = PhysicalHelper.GetSigmaIfZero(dataIn.SigmaAllow3, dataIn.steel3, dataIn.t);
+            data.E3 = PhysicalHelper.GetEIfZero(dataIn.E3, dataIn.steel3, dataIn.t);
         }
 
         //TODO: steel4
@@ -116,9 +54,8 @@ internal class NozzleCalculateService : ICalculateService<NozzleInput>
         switch (shellDataIn.ShellType)
         {
             case ShellType.Conical:
-                //TODO
-                //data.Dk = ((ConicalShellCalculatedData)dataIn.ShellCalculatedData).Dk;
-                //data.alpha1 = ((ConicalShellInputData)shellDataIn).alpha1;
+                data.Dk = ((ConicalShellCalculated)dataIn.ShellCalculatedData).Dk;
+                data.alpha1 = ((ConicalShellInput)shellDataIn).alpha1;
                 break;
             case ShellType.Elliptical:
                 data.EllipseH = ((EllipticalShellInput)shellDataIn).EllipseH;
@@ -129,40 +66,30 @@ internal class NozzleCalculateService : ICalculateService<NozzleInput>
         switch (shellDataIn.ShellType)
         {
             case ShellType.Cylindrical:
-                {
-                    data.Dp = shellDataIn.D;
-                    break;
-                }
+                data.Dp = shellDataIn.D;
+                break;
             case ShellType.Conical:
-                {
-                    data.Dp = data.Dk / Math.Cos(Math.PI * 100 * data.alfa1);
-                    break;
-                }
+                data.Dp = data.Dk / Math.Cos(Math.PI * 100 * data.alpha1);
+                break;
             case ShellType.Elliptical:
+                if (Math.Abs(data.EllipseH * 100 - shellDataIn.D * 25) < 0.000001)
                 {
-                    if (Math.Abs(data.EllipseH * 100 - shellDataIn.D * 25) < 0.000001)
-                    {
-                        data.Dp = shellDataIn.D * 2 * Math.Sqrt(1.0 - 3.0 * Math.Pow(dataIn.ellx / shellDataIn.D, 2));
-                    }
-                    else
-                    {
-                        data.Dp = Math.Pow(shellDataIn.D, 2) / (data.EllipseH * 2) *
-                                  Math.Sqrt(1.0 - 4.0 * (Math.Pow(shellDataIn.D, 2) - 4 *
-                                          Math.Pow(data.EllipseH, 2)) * Math.Pow(dataIn.ellx, 2) /
-                                      Math.Pow(shellDataIn.D, 4));
-                    }
-                    break;
+                    data.Dp = shellDataIn.D * 2 * Math.Sqrt(1.0 - 3.0 * Math.Pow(dataIn.ellx / shellDataIn.D, 2));
                 }
+                else
+                {
+                    data.Dp = Math.Pow(shellDataIn.D, 2) / (data.EllipseH * 2) *
+                              Math.Sqrt(1.0 - 4.0 * (Math.Pow(shellDataIn.D, 2) - 4 *
+                                      Math.Pow(data.EllipseH, 2)) * Math.Pow(dataIn.ellx, 2) /
+                                  Math.Pow(shellDataIn.D, 4));
+                }
+                break;
             case ShellType.Spherical:
             case ShellType.Torospherical:
-                {
-                    //data.Dp = 2 * shellDataIn.R;
-                    break;
-                }
+                //data.Dp = 2 * shellDataIn.R;
+                break;
             default:
-                {
-                    throw new CalculateException("Ошибка вида укрепляемого элемента.");
-                }
+                throw new CalculateException("Ошибка вида укрепляемого элемента.");
         }
 
         if (shellDataIn is EllipticalShellInput { ShellType: ShellType.Elliptical, IsPressureIn: true } ellipticalDataIn)
@@ -187,50 +114,34 @@ internal class NozzleCalculateService : ICalculateService<NozzleInput>
         switch (dataIn.Location)
         {
             case NozzleLocation.LocationAccordingToParagraph_5_2_2_1:
-                {
-                    data.dp = dataIn.d + 2 * dataIn.cs; //dp = d + 2cs
-                    break;
-                }
+                data.dp = dataIn.d + 2 * dataIn.cs; //dp = d + 2cs
+                break;
             case NozzleLocation.LocationAccordingToParagraph_5_2_2_2:
-                {
-                    data.dp = Math.Max(dataIn.d, 0.5 * dataIn.tTransversely) + 2.0 * dataIn.cs; //dp =max{d; 0,5t} + 2cs
-                    break;
-                }
+                data.dp = Math.Max(dataIn.d, 0.5 * dataIn.tTransversely) + 2.0 * dataIn.cs; //dp =max{d; 0,5t} + 2cs
+                break;
             case NozzleLocation.LocationAccordingToParagraph_5_2_2_3:
-                {
-                    data.dp = (dataIn.d + 2.0 * dataIn.cs) / Math.Sqrt(1 + Math.Pow(2 * dataIn.ellx / data.Dp, 2));
-                    break;
-                }
+                data.dp = (dataIn.d + 2.0 * dataIn.cs) / Math.Sqrt(1 + Math.Pow(2 * dataIn.ellx / data.Dp, 2));
+                break;
             case NozzleLocation.LocationAccordingToParagraph_5_2_2_4:
-                {
-                    data.dp = (dataIn.d + 2.0 * dataIn.cs) * (1 + Math.Pow(Math.Tan(Math.PI * 180 * dataIn.gamma), 2) *
+                data.dp = (dataIn.d + 2.0 * dataIn.cs) * (1 + Math.Pow(Math.Tan(Math.PI * 180 * dataIn.gamma), 2) *
                         Math.Pow(Math.Cos(Math.PI * 180 * dataIn.omega), 2));
-                    break;
-                }
+                break;
             case NozzleLocation.LocationAccordingToParagraph_5_2_2_5:
-                {
-                    data.dp = (dataIn.d + 2.0 * dataIn.cs) / Math.Pow(Math.Cos(Math.PI * 180 * dataIn.gamma), 2);
-                    break;
-                }
+                data.dp = (dataIn.d + 2.0 * dataIn.cs) / Math.Pow(Math.Cos(Math.PI * 180 * dataIn.gamma), 2);
+                break;
             case NozzleLocation.LocationAccordingToParagraph_5_2_2_6:
-                {
-                    data.dp = (dataIn.d2 + 2.0 * dataIn.cs) *
-                              (Math.Pow(Math.Sin(Math.PI * 180 * dataIn.omega), 2) +
-                               (dataIn.d1 + 2 * dataIn.cs) *
-                               (dataIn.d1 + dataIn.d2 + 4 * dataIn.cs) /
-                               (2 * Math.Pow(dataIn.d2 + 2 * dataIn.cs, 2)) *
-                               Math.Pow(Math.Cos(Math.PI * 180 * dataIn.omega), 2));
-                    break;
-                }
+                data.dp = (dataIn.d2 + 2.0 * dataIn.cs) *
+                          (Math.Pow(Math.Sin(Math.PI * 180 * dataIn.omega), 2) +
+                           (dataIn.d1 + 2 * dataIn.cs) *
+                           (dataIn.d1 + dataIn.d2 + 4 * dataIn.cs) /
+                           (2 * Math.Pow(dataIn.d2 + 2 * dataIn.cs, 2)) *
+                           Math.Pow(Math.Cos(Math.PI * 180 * dataIn.omega), 2));
+                break;
             case NozzleLocation.LocationAccordingToParagraph_5_2_2_7:
-                {
-                    data.dp = dataIn.d + 1.5 * (dataIn.r - data.sp) + 2.0 * dataIn.cs;
-                    break;
-                }
+                data.dp = dataIn.d + 1.5 * (dataIn.r - data.sp) + 2.0 * dataIn.cs;
+                break;
             default:
-                {
-                    throw new CalculateException("Ошибка места расположения штуцера.");
-                }
+                throw new CalculateException("Ошибка места расположения штуцера.");
         }
 
         // l1p, l3p, l2p
@@ -326,17 +237,13 @@ internal class NozzleCalculateService : ICalculateService<NozzleInput>
         {
             case ShellType.Cylindrical:
             case ShellType.Conical:
-                {
-                    data.K1 = 1;
-                    break;
-                }
+                data.K1 = 1;
+                break;
             case ShellType.Elliptical:
             case ShellType.Spherical:
             case ShellType.Torospherical:
-                {
-                    data.K1 = 2;
-                    break;
-                }
+                data.K1 = 2;
+                break;
         }
 
         if (shellDataIn.IsPressureIn)
@@ -394,30 +301,24 @@ internal class NozzleCalculateService : ICalculateService<NozzleInput>
         switch (shellDataIn.ShellType)
         {
             case ShellType.Cylindrical:
-                {
-                    data.ConditionUseFormulas1 = (data.dp - 2 * dataIn.cs) / shellDataIn.D;
-                    data.ConditionUseFormulas2 = (shellDataIn.s - data.c) / shellDataIn.D;
-                    data.IsConditionUseFormulas = data.ConditionUseFormulas1 <= 1 & data.ConditionUseFormulas2 <= 0.1;
-                    break;
-                }
+                data.ConditionUseFormulas1 = (data.dp - 2 * dataIn.cs) / shellDataIn.D;
+                data.ConditionUseFormulas2 = (shellDataIn.s - data.c) / shellDataIn.D;
+                data.IsConditionUseFormulas = data.ConditionUseFormulas1 <= 1 & data.ConditionUseFormulas2 <= 0.1;
+                break;
             case ShellType.Conical:
-                {
-                    data.ConditionUseFormulas1 = (data.dp - 2 * dataIn.cs) / data.Dk;
-                    data.ConditionUseFormulas2 = (shellDataIn.s - data.c) / data.Dk;
-                    data.ConditionUseFormulas2_2 = 0.1 / Math.Cos(Math.PI * 180 * data.alfa1);
-                    data.IsConditionUseFormulas = data.ConditionUseFormulas1 <= 1 &
-                                                  data.ConditionUseFormulas2 <= data.ConditionUseFormulas2_2;
-                    break;
-                }
+                data.ConditionUseFormulas1 = (data.dp - 2 * dataIn.cs) / data.Dk;
+                data.ConditionUseFormulas2 = (shellDataIn.s - data.c) / data.Dk;
+                data.ConditionUseFormulas2_2 = 0.1 / Math.Cos(Math.PI * 180 * data.alpha1);
+                data.IsConditionUseFormulas = data.ConditionUseFormulas1 <= 1 &
+                                              data.ConditionUseFormulas2 <= data.ConditionUseFormulas2_2;
+                break;
             case ShellType.Elliptical:
             case ShellType.Spherical:
             case ShellType.Torospherical:
-                {
-                    data.ConditionUseFormulas1 = (data.dp - 2 * dataIn.cs) / shellDataIn.D;
-                    data.ConditionUseFormulas2 = (shellDataIn.s - data.c) / shellDataIn.D;
-                    data.IsConditionUseFormulas = data.ConditionUseFormulas1 <= 0.6 & data.ConditionUseFormulas2 <= 0.1;
-                    break;
-                }
+                data.ConditionUseFormulas1 = (data.dp - 2 * dataIn.cs) / shellDataIn.D;
+                data.ConditionUseFormulas2 = (shellDataIn.s - data.c) / shellDataIn.D;
+                data.IsConditionUseFormulas = data.ConditionUseFormulas1 <= 0.6 & data.ConditionUseFormulas2 <= 0.1;
+                break;
         }
         if (!data.IsConditionUseFormulas)
         {

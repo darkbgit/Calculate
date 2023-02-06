@@ -17,7 +17,7 @@ public class NozzleCalculated : CalculatedElement, ICalculatedElement
         };
     }
 
-    public double alfa1 { get; set; }
+    public double alpha1 { get; set; }
     public double b { get; set; }
     private double _B1n;
     public double c { get; set; }

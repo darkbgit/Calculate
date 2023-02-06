@@ -2,9 +2,6 @@
 using CalculateVessels.Core.Helpers;
 using CalculateVessels.Core.Interfaces;
 using CalculateVessels.Core.Shells.Enums;
-using CalculateVessels.Data.Exceptions;
-using CalculateVessels.Data.PhysicalData;
-using CalculateVessels.Data.PhysicalData.Gost34233_1;
 using System;
 
 namespace CalculateVessels.Core.Shells.Conical;
@@ -21,45 +18,37 @@ internal class ConicalShellCalculateService : ICalculateService<ConicalShellInpu
     {
         var data = new ConicalShellCalculated
         {
-            InputData = dataIn
+            InputData = dataIn,
+            SigmaAllow = PhysicalHelper.GetSigmaIfZero(dataIn.SigmaAllow, dataIn.Steel, dataIn.t),
+            E = PhysicalHelper.GetEIfZero(dataIn.E, dataIn.Steel, dataIn.t)
         };
 
-        if (dataIn.SigmaAllow == 0)
+        switch (dataIn.ConnectionType)
         {
-            try
-            {
-                data.SigmaAllow = Gost34233_1.GetSigma(dataIn.Steel, dataIn.t);
-            }
-            catch (PhysicalDataException e)
-            {
-                throw new CalculateException("Error get sigma.", e);
-            }
-        }
-        else
-        {
-            data.SigmaAllow = dataIn.SigmaAllow;
-        }
-
-        if (dataIn.E == 0)
-        {
-            try
-            {
-                data.E = Physical.GetE(dataIn.Steel, dataIn.t);
-            }
-            catch (PhysicalDataException e)
-            {
-                throw new CalculateException("Error get sigma.", e);
-            }
-        }
-        else
-        {
-            data.E = dataIn.E;
+            case ConicalConnectionType.WithoutConnection:
+                break;
+            case ConicalConnectionType.Simply:
+                data.SigmaAllow1Big = PhysicalHelper.GetSigmaIfZero(dataIn.SigmaAllow1Big, dataIn.Steel1Big, dataIn.t);
+                data.SigmaAllow2Big = PhysicalHelper.GetSigmaIfZero(dataIn.SigmaAllow2Big, dataIn.Steel2Big, dataIn.t);
+                break;
+            case ConicalConnectionType.WithRingPicture25b:
+            case ConicalConnectionType.WithRingPicture29:
+                data.SigmaAllow1Big = PhysicalHelper.GetSigmaIfZero(dataIn.SigmaAllow1Big, dataIn.Steel1Big, dataIn.t);
+                data.SigmaAllow2Big = PhysicalHelper.GetSigmaIfZero(dataIn.SigmaAllow2Big, dataIn.Steel2Big, dataIn.t);
+                data.SigmaAllowC = PhysicalHelper.GetSigmaIfZero(dataIn.SigmaAllowC, dataIn.SteelC, dataIn.t);
+                break;
+            case ConicalConnectionType.Toroidal:
+                data.SigmaAllowT = PhysicalHelper.GetSigmaIfZero(dataIn.SigmaAllowT, dataIn.SteelT, dataIn.t);
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
         }
 
-        //TODO: 
-        data.SigmaAllow1 = 0;
-        data.SigmaAllow2 = 0;
-        data.SigmaAllowC = 0;
+        if (dataIn.IsConnectionWithLittle)
+        {
+            data.SigmaAllow1Little = PhysicalHelper.GetSigmaIfZero(dataIn.SigmaAllow1Little, dataIn.Steel1Little, dataIn.t);
+            data.SigmaAllow2Little = PhysicalHelper.GetSigmaIfZero(dataIn.SigmaAllow2Little, dataIn.Steel2Little, dataIn.t);
+        }
 
         data.c = dataIn.c1 + dataIn.c2 + dataIn.c3;
 
@@ -74,8 +63,8 @@ internal class ConicalShellCalculateService : ICalculateService<ConicalShellInpu
             const double CONDITION_USE_FORMULAS_FROM = 0.001;
             const double CONDITION_USE_FORMULAS_TO = 0.05;
 
-            data.IsConditionUseFormulas = dataIn.s1 * data.cosAlpha1 / dataIn.D >= CONDITION_USE_FORMULAS_FROM
-                                          && dataIn.s1 * data.cosAlpha1 / dataIn.D <= CONDITION_USE_FORMULAS_TO;
+            data.IsConditionUseFormulas = dataIn.s * data.cosAlpha1 / dataIn.D >= CONDITION_USE_FORMULAS_FROM
+                                          && dataIn.s * data.cosAlpha1 / dataIn.D <= CONDITION_USE_FORMULAS_TO;
 
             if (!data.IsConditionUseFormulas)
             {
@@ -94,15 +83,15 @@ internal class ConicalShellCalculateService : ICalculateService<ConicalShellInpu
                 case ConicalConnectionType.Simply:
                 case ConicalConnectionType.WithRingPicture25b:
                 case ConicalConnectionType.WithRingPicture29:
-                    data.a1p = 0.7 * Math.Sqrt(dataIn.D * (dataIn.s1 - data.c) / data.cosAlpha1);
-                    data.a2p = 0.7 * Math.Sqrt(dataIn.D * (dataIn.s2 - data.c));
+                    data.a1p = 0.7 * Math.Sqrt(dataIn.D * (dataIn.s1Big - data.c) / data.cosAlpha1);
+                    data.a2p = 0.7 * Math.Sqrt(dataIn.D * (dataIn.s2Big - data.c));
                     break;
                 case ConicalConnectionType.Toroidal:
                     data.a1p = 0.7 * Math.Sqrt(dataIn.D * (dataIn.sT - data.c) / data.cosAlpha1);
                     data.a2p = 0.5 * Math.Sqrt(dataIn.D * (dataIn.sT - data.c));
                     break;
                 case ConicalConnectionType.WithoutConnection:
-                    data.a1p = 0.7 * Math.Sqrt(dataIn.D * (dataIn.s1 - data.c) / data.cosAlpha1);
+                    data.a1p = 0.7 * Math.Sqrt(dataIn.D * (dataIn.s - data.c) / data.cosAlpha1);
                     break;
                 default:
                     throw new CalculateException("Conical connection type error.");
@@ -176,62 +165,73 @@ internal class ConicalShellCalculateService : ICalculateService<ConicalShellInpu
                 case ConicalConnectionType.WithoutConnection:
                     break;
                 case ConicalConnectionType.Simply:
-                    if ((dataIn.s1 - data.c) < (dataIn.s2 - data.c))
+                    if ((dataIn.s1Big - data.c) < (dataIn.s2Big - data.c))
                     {
                         data.IsConditionUseFormulas = false;
                         data.ErrorList.Add("Условие применения формул не выполняется");
                     }
-                    data.chi_1 = data.SigmaAllow1 / data.SigmaAllow2;
-                    data.beta = 0.4 * Math.Sqrt(dataIn.D / (dataIn.s2 - data.c)) * data.tgAlpha1
-                        / (1 + Math.Sqrt((1 + data.chi_1
-                                * Math.Pow((dataIn.s1 - data.c) / (dataIn.s2 - data.c), 2))
-                            / (2 * data.cosAlpha1) * data.chi_1 * (dataIn.s1 - data.c) / (dataIn.s2 - data.c))) - 0.25;
+                    data.chi_1Big = data.SigmaAllow1Big / data.SigmaAllow2Big;
+                    data.beta = 0.4 * Math.Sqrt(dataIn.D / (dataIn.s2Big - data.c)) * data.tgAlpha1
+                        / (1 + Math.Sqrt((1 + data.chi_1Big
+                                * Math.Pow((dataIn.s1Big - data.c) / (dataIn.s2Big - data.c), 2))
+                            / (2 * data.cosAlpha1) * data.chi_1Big * (dataIn.s1Big - data.c) / (dataIn.s2Big - data.c))) - 0.25;
                     data.beta_1 = Math.Max(0.5, data.beta);
-                    data.s_2p = dataIn.p * dataIn.D * data.beta_1
-                                / (2 * data.SigmaAllow2 * dataIn.fi - dataIn.p);
+                    data.s_2pBig = dataIn.p * dataIn.D * data.beta_1
+                                / (2 * data.SigmaAllow2Big * dataIn.fi - dataIn.p);
 
-                    if (dataIn.s2 >= data.s_2p + data.c)
+                    data.s_2Big = data.s_2pBig + data.c;
+
+                    if (data.s_2Big > dataIn.s2Big)
                     {
-                        data.p_dBig = 2 * data.SigmaAllow2 * dataIn.fi * (dataIn.s2 - data.c)
-                                      / (dataIn.D * data.beta_1 + (dataIn.s2 - data.c));
+                        data.ErrorList.Add("Принятая толщина переходной зоны меньше расчетной.");
                     }
-                    else
-                    {
-                        throw new CalculateException("Принятая толщина переходной зоны меньше расчетной.");
-                    }
+
+                    data.p_dBig = 2 * data.SigmaAllow2Big * dataIn.fi * (dataIn.s2Big - data.c)
+                                  / (dataIn.D * data.beta_1 + (dataIn.s2Big - data.c));
+
                     break;
 
-
                 case ConicalConnectionType.WithRingPicture25b:
-                    if ((dataIn.s1 - data.c) < (dataIn.s2 - data.c))
+                    if ((dataIn.s1Big - data.c) < (dataIn.s2Big - data.c))
                     {
                         data.IsConditionUseFormulas = false;
                         data.ErrorList.Add("Условие применения формул не выполняется");
                     }
-                    data.chi_1 = data.SigmaAllow1 / data.SigmaAllow2;
-                    data.beta = 0.4 * Math.Sqrt(dataIn.D / (dataIn.s2 - data.c)) * data.tgAlpha1
-                        / (1 + Math.Sqrt((1 + data.chi_1
-                                * Math.Pow((dataIn.s1 - data.c) / (dataIn.s2 - data.c), 2))
-                            / (2 * data.cosAlpha1) * data.chi_1 * (dataIn.s1 - data.c) / (dataIn.s2 - data.c))) - 0.25;
-                    data.beta_a = (2 * data.SigmaAllow2 * dataIn.fi / dataIn.p - 1) * (dataIn.s2 - data.c) / dataIn.D;
+                    data.chi_1Big = data.SigmaAllow1Big / data.SigmaAllow2Big;
+                    data.beta = 0.4 * Math.Sqrt(dataIn.D / (dataIn.s2Big - data.c)) * data.tgAlpha1
+                        / (1 + Math.Sqrt((1 + data.chi_1Big
+                                * Math.Pow((dataIn.s1Big - data.c) / (dataIn.s2Big - data.c), 2))
+                            / (2 * data.cosAlpha1) * data.chi_1Big * (dataIn.s1Big - data.c) / (dataIn.s2Big - data.c))) - 0.25;
+                    data.beta_a = (2 * data.SigmaAllow2Big * dataIn.fi / dataIn.p - 1) * (dataIn.s2Big - data.c) / dataIn.D;
                     data.Ak = dataIn.p * Math.Pow(dataIn.D, 2) * data.tgAlpha1 / (8 * data.SigmaAllowC * dataIn.fi_k)
                               * (1 - (data.beta_a + 0.25) / (data.beta + 0.25));
-                    data.B2 = 1.6 * data.Ak / ((dataIn.s2 - data.c) * Math.Sqrt(dataIn.D * (dataIn.s2 - data.c)))
-                        * data.SigmaAllowC * dataIn.fi_k / (data.SigmaAllow2 * dataIn.fi_t);
+                    if (data.Ak > 0 && data.Ak < dataIn.Ak)
+                    {
+                        data.ErrorList.Add("Площадь укрепляющего кольца недостаточна.");
+                    }
+                    data.B2 = 1.6 * data.Ak / ((dataIn.s2Big - data.c) * Math.Sqrt(dataIn.D * (dataIn.s2Big - data.c)))
+                        * data.SigmaAllowC * dataIn.fi_k / (data.SigmaAllow2Big * dataIn.fi_t);
                     data.B3 = 0.25;
-                    data.beta_0 = 0.4 * Math.Sqrt(dataIn.D / (dataIn.s2 - data.c)) * data.tgAlpha1 - data.B3 *
-                        (1 + Math.Sqrt((1 + data.chi_1 * Math.Pow((dataIn.s1 - data.c) / (dataIn.s2 - data.c), 2)) /
-                            (2 * data.cosAlpha1) * data.chi_1 * (dataIn.s1 - data.c) / (dataIn.s2 - data.c))) /
-                        (data.B2 + (1 + Math.Sqrt((1 + data.chi_1 * Math.Pow((dataIn.s1 - data.c) / (dataIn.s2 - data.c), 2)) /
-                            (2 * data.cosAlpha1) * data.chi_1 * (dataIn.s1 - data.c) / (dataIn.s2 - data.c))));
+                    data.beta_0 = 0.4 * Math.Sqrt(dataIn.D / (dataIn.s2Big - data.c)) * data.tgAlpha1 - data.B3 *
+                        (1 + Math.Sqrt((1 + data.chi_1Big * Math.Pow((dataIn.s1Big - data.c) / (dataIn.s2Big - data.c), 2)) /
+                            (2 * data.cosAlpha1) * data.chi_1Big * (dataIn.s1Big - data.c) / (dataIn.s2Big - data.c))) /
+                        (data.B2 + (1 + Math.Sqrt((1 + data.chi_1Big * Math.Pow((dataIn.s1Big - data.c) / (dataIn.s2Big - data.c), 2)) /
+                            (2 * data.cosAlpha1) * data.chi_1Big * (dataIn.s1Big - data.c) / (dataIn.s2Big - data.c))));
                     data.beta_2 = Math.Max(0.5, data.beta_0);
-                    data.p_dBig = 2 * data.SigmaAllow2 * dataIn.fi * (dataIn.s2 - data.c) / (dataIn.D * data.beta_2 + (dataIn.s2 - data.c));
+                    data.p_dBig = 2 * data.SigmaAllow2Big * dataIn.fi * (dataIn.s2Big - data.c) / (dataIn.D * data.beta_2 + (dataIn.s2Big - data.c));
 
                     break;
                 case ConicalConnectionType.WithRingPicture29:
                     data.Ak = dataIn.p * Math.Pow(dataIn.D, 2) * data.tgAlpha1 / (8 * data.SigmaAllowC * dataIn.fi_k);
+
+
+                    if (data.Ak > 0 && data.Ak < dataIn.Ak)
+                    {
+                        data.ErrorList.Add("Площадь укрепляющего кольца недостаточна.");
+                    }
+
                     data.p_dBig = data.Ak * 8 * data.SigmaAllowC * dataIn.fi_k / (Math.Pow(dataIn.D, 2) * data.tgAlpha1);
-                    //TODO: Check conical shell with ring picture 29
+
                     break;
                 case ConicalConnectionType.Toroidal:
                     if (dataIn.r / dataIn.D >= 0.0
@@ -240,24 +240,31 @@ internal class ConicalShellCalculateService : ICalculateService<ConicalShellInpu
                         data.IsConditionUseFormulas = false;
                         data.ErrorList.Add("Условие применения формул не выполняется.");
                     }
-                    data.chi_1 = data.SigmaAllow1 / data.SigmaAllow2;
-                    data.beta = 0.4 * Math.Sqrt(dataIn.D / (dataIn.s2 - data.c)) * data.tgAlpha1
-                        / (1 + Math.Sqrt((1 + data.chi_1
-                                * Math.Pow((dataIn.s1 - data.c) / (dataIn.s2 - data.c), 2))
-                            / (2 * data.cosAlpha1) * data.chi_1 * (dataIn.s1 - data.c) / (dataIn.s2 - data.c))) - 0.25;
+
+                    data.beta = 0.4 * Math.Sqrt(dataIn.D / (dataIn.s2Big - data.c)) * data.tgAlpha1
+                        / (1 + Math.Sqrt(1 / data.cosAlpha1)) - 0.25;
                     data.beta_t = 1 / (1 + (0.028 * dataIn.alpha1 * dataIn.r / dataIn.D *
                                             Math.Sqrt(dataIn.D / (dataIn.sT - data.c))) /
                         (1 / Math.Sqrt(data.cosAlpha1) + 1));
-                    //TODO: Check alpha1 in betadata.t in degree or in radians
-                    data.beta_3 = Math.Max(0.5, Math.Max(data.beta, data.beta_t));
-                    data.s_tp = dataIn.p * dataIn.D * data.beta_3 / (2 * dataIn.fi * data.SigmaAllow - dataIn.p);
-                    data.p_dBig = 2 * data.SigmaAllow * dataIn.fi * (dataIn.sT - data.c) /
+                    //TODO: Check alpha1 in beta_t in degree or in radians
+                    data.beta_3_2 = data.beta * data.beta_t;
+                    data.beta_3 = Math.Max(0.5, data.beta_3_2);
+                    data.s_tp = dataIn.p * dataIn.D * data.beta_3 / (2 * dataIn.fi * data.SigmaAllowT - dataIn.p);
+                    data.s_t = data.s_tp + data.c;
+
+                    if (data.s_t > dataIn.sT)
+                    {
+                        data.ErrorList.Add("Принятая толщина переходной зоны меньше расчетной.");
+                    }
+
+                    data.p_dBig = 2 * data.SigmaAllowT * dataIn.fi * (dataIn.sT - data.c) /
                                   (dataIn.D * data.beta_3 + (dataIn.sT - data.c));
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-            if (data.p_dBig < dataIn.p && dataIn.s != 0)
+
+            if (dataIn.ConnectionType != ConicalConnectionType.WithoutConnection && data.p_dBig < dataIn.p && dataIn.s != 0)
             {
                 data.ErrorList.Add("[p] для переходной части меньше p");
             }
@@ -265,28 +272,40 @@ internal class ConicalShellCalculateService : ICalculateService<ConicalShellInpu
             //up connection
             if (dataIn.IsConnectionWithLittle)
             {
-                data.chi_1 = data.SigmaAllow1 / data.SigmaAllow2;
+                data.chi_1Little = data.SigmaAllow1Little / data.SigmaAllow2Little;
                 data.ConditionForBetan = Math.Pow((dataIn.s1Little - data.c) / (dataIn.s2Little - data.c), 2);
                 if (data.ConditionForBetan >= 1)
                 {
                     data.beta = 0.4 * Math.Sqrt(dataIn.D1 / (dataIn.s2Little - data.c)) * data.tgAlpha1
-                        / (1 + Math.Sqrt((1 + data.chi_1
+                        / (1 + Math.Sqrt((1 + data.chi_1Little
                                 * Math.Pow((dataIn.s1Little - data.c) / (dataIn.s2Little - data.c), 2))
-                            / (2 * data.cosAlpha1) * data.chi_1 * (dataIn.s1Little - data.c) / (dataIn.s2Little - data.c))) - 0.25;
+                            / (2 * data.cosAlpha1) * data.chi_1Little * (dataIn.s1Little - data.c) / (dataIn.s2Little - data.c))) - 0.25;
                     data.beta_n = data.beta + 0.75;
                 }
                 else
                 {
                     data.beta_n = 0.4 * Math.Sqrt(dataIn.D1 / (dataIn.s2Little - data.c)) * data.tgAlpha1
-                        / (data.chi_1 * (dataIn.s1Little - data.c) / (dataIn.s2Little - data.c) * Math.Sqrt((dataIn.s1Little - data.c) /
-                            ((dataIn.s2Little - data.c) * data.cosAlpha1)) + Math.Sqrt((1 + data.chi_1
+                        / (data.chi_1Little * (dataIn.s1Little - data.c) / (dataIn.s2Little - data.c) * Math.Sqrt((dataIn.s1Little - data.c) /
+                            ((dataIn.s2Little - data.c) * data.cosAlpha1)) + Math.Sqrt((1 + data.chi_1Little
                                 * Math.Pow((dataIn.s1Little - data.c) / (dataIn.s2Little - data.c), 2))
                             / 2)) + 0.5;
                 }
                 data.beta_4 = Math.Max(1, data.beta_n);
-                data.s_2pLittle = dataIn.p * dataIn.D1 * data.beta_4 / (2 * dataIn.fi * data.SigmaAllow2 - dataIn.p);
-                data.p_dLittle = 2 * data.SigmaAllow2 * dataIn.fi * (dataIn.s2Little - data.c) /
+                data.s_2pLittle = dataIn.p * dataIn.D1 * data.beta_4 / (2 * dataIn.fi * data.SigmaAllow2Little - dataIn.p);
+                data.s_2Little = data.s_2pLittle + data.c;
+
+                if (data.s_2Little > dataIn.s2Little)
+                {
+                    data.ErrorList.Add("Принятая толщина обечайки меньшего диаметра меньше расчетной.");
+                }
+
+                data.p_dLittle = 2 * data.SigmaAllow2Little * dataIn.fi * (dataIn.s2Little - data.c) /
                                  (dataIn.D1 * data.beta_4 + (dataIn.s2Little - data.c));
+
+                if (data.p_dLittle < dataIn.p && dataIn.s != 0)
+                {
+                    data.ErrorList.Add("[p] для переходной части меньше p");
+                }
             }
         }
 

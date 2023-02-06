@@ -15,6 +15,7 @@ public class ConicalShellInput : ShellInputData, IInputData
 
     }
 
+    public double Ak { get; set; }
     public double alpha1 { get; set; }
     public ConicalConnectionType ConnectionType { get; set; }
     public double c1 { get; set; }
@@ -28,12 +29,20 @@ public class ConicalShellInput : ShellInputData, IInputData
     public double ny { get; set; } = 2.4;
     public double r { get; set; }
     public double SigmaAllow { get; set; }
-    public string Steel1Up { get; set; } = string.Empty;
-    public string Steel1Down { get; set; } = string.Empty;
-    public string Steel2Up { get; set; } = string.Empty;
-    public string Steel2Down { get; set; } = string.Empty;
-    public double s1 { get; set; }
-    public double s2 { get; set; }
+    public double SigmaAllow1Little { get; set; }
+    public double SigmaAllow1Big { get; set; }
+    public double SigmaAllow2Little { get; set; }
+    public double SigmaAllow2Big { get; set; }
+    public double SigmaAllowC { get; set; }
+    public double SigmaAllowT { get; set; }
+    public string Steel1Little { get; set; } = string.Empty;
+    public string Steel1Big { get; set; } = string.Empty;
+    public string Steel2Little { get; set; } = string.Empty;
+    public string Steel2Big { get; set; } = string.Empty;
+    public string SteelC { get; set; } = string.Empty;
+    public string SteelT { get; set; } = string.Empty;
+    public double s1Big { get; set; }
+    public double s2Big { get; set; }
     public double s1Little { get; set; }
     public double s2Little { get; set; }
     public double sT { get; set; }

@@ -26,10 +26,10 @@ internal class ConicalShellWordOutput : IWordOutputElement<ConicalShellCalculate
 
         using var package = WordprocessingDocument.Open(filePath, true);
 
-        var mainPart = package.MainDocumentPart;
-        var body = mainPart?.Document.Body;
-
-        if (body == null) return;
+        var mainPart = package.MainDocumentPart
+            ?? throw new InvalidOperationException();
+        var body = mainPart.Document.Body
+            ?? throw new InvalidOperationException();
 
         body.AddParagraph($"Расчет на прочность конической обечайки {dataIn.Name}, нагруженной " +
                           (dataIn.IsPressureIn ? "внутренним избыточным давлением" : "наружным давлением")).Heading(HeadingType.Heading1);
@@ -60,13 +60,6 @@ internal class ConicalShellWordOutput : IWordOutputElement<ConicalShellCalculate
                 .AddCell("Внутренний диаметр обечайки, D:")
                 .AddCell($"{dataIn.D} мм");
 
-            //if (!dataIn.IsPressureIn)
-            //{
-            //    table.AddRow()
-            //        .AddCell("Длина обечайки, l:")
-            //        .AddCell($"{dataIn.l} мм");
-            //}
-
             table.AddRow()
                 .AddCell("Прибавка на коррозию, ")
                 .AppendEquation("c_1")
@@ -95,15 +88,7 @@ internal class ConicalShellWordOutput : IWordOutputElement<ConicalShellCalculate
                 .AppendText(":")
                 .AddCell($"{dataIn.fi}");
 
-            body.InsertTable(table);
-        }
-
-        body.AddParagraph("");
-        body.AddParagraph("Условия нагружения").Alignment(AlignmentType.Center);
-
-        //table
-        {
-            var table = body.AddTable();
+            table.AddRowWithOneCell("Условия нагружения");
 
             table.AddRow()
                 .AddCell("Расчетная температура, Т:")
@@ -124,6 +109,26 @@ internal class ConicalShellWordOutput : IWordOutputElement<ConicalShellCalculate
                     .AddCell("Модуль продольной упругости при расчетной температуре, E:")
                     .AddCell($"{dataIn.E} МПа");
             }
+
+            if (dataIn.ConnectionType != ConicalConnectionType.WithoutConnection)
+            {
+                table.AddRowWithOneCell("Нижнее соединение");
+
+                var connectionType = dataIn.ConnectionType switch
+                {
+                    ConicalConnectionType.Simply => "Без тороидального перехода",
+                    ConicalConnectionType.WithRingPicture25b => "С укрепляющим кольцом",
+                    ConicalConnectionType.WithRingPicture29 => "С укрепляющим кольцом",
+                    ConicalConnectionType.Toroidal => "С тороидальным переходом",
+                    _ => throw new ArgumentOutOfRangeException()
+                };
+
+                table.AddRow()
+                    .AddCell("Тип")
+                    .AddCell(connectionType);
+            }
+
+
             body.InsertTable(table);
         }
 
@@ -133,22 +138,22 @@ internal class ConicalShellWordOutput : IWordOutputElement<ConicalShellCalculate
         body.AddParagraph("Расчетные параметры").Alignment(AlignmentType.Center);
         body.AddParagraph("");
 
-        body.AddParagraph("Расчетные длины переходных частей. В пер вом приближении принимаем ")
-            .AppendEquation($"s_1={dataIn.s1} мм");
+        body.AddParagraph("Расчетные длины переходных частей. В первом приближении принимаем ")
+            .AppendEquation($"s_1={dataIn.s} мм");
 
         switch (dataIn.ConnectionType)
         {
             case ConicalConnectionType.Simply:
             case ConicalConnectionType.WithRingPicture25b:
                 body.Elements<Paragraph>().Last()
-                    .AppendEquation($"s_2={dataIn.s2} мм");
+                    .AppendEquation($"s_2={dataIn.s2Big} мм");
                 body.AddParagraph("- для конических и цилиндрических обечаек");
                 body.AddParagraph("")
                     .AppendEquation("a_1p=0.7√(D/cosα_1∙(s_1-c))" +
-                                    $"=0.7√({dataIn.D}/cos{dataIn.alpha1}({dataIn.s1}-{data.c:f2}))={data.a1p:f2}");
+                                    $"=0.7√({dataIn.D}/cos{dataIn.alpha1}({dataIn.s1Big}-{data.c:f2}))={data.a1p:f2}");
                 body.AddParagraph("")
                     .AppendEquation("a_2p=0.7√(D∙(s_2-c))" +
-                                    $"=0.7√({dataIn.D}∙({dataIn.s2}-{data.c:f2}))={data.a2p:f2}");
+                                    $"=0.7√({dataIn.D}∙({dataIn.s2Big}-{data.c:f2}))={data.a2p:f2}");
                 break;
             case ConicalConnectionType.Toroidal:
                 body.Elements<Paragraph>().Last()
@@ -167,10 +172,10 @@ internal class ConicalShellWordOutput : IWordOutputElement<ConicalShellCalculate
         {
             body.AddParagraph("- для конических и цилиндрических обечаек или штуцера")
                 .AppendEquation("a_1p=√(D_1/cosα_1∙(s_1-c))" +
-                                $"=√({dataIn.D1}/cos{dataIn.alpha1}({dataIn.s1}-{data.c:f2}))={data.a1p_l:f2}");
+                                $"=√({dataIn.D1}/cos{dataIn.alpha1}({dataIn.s1Little}-{data.c:f2}))={data.a1p_l:f2}");
             body.AddParagraph("")
                 .AppendEquation("a_2p=1.25√(D_1∙(s_2-c))" +
-                                $"=1.25√({dataIn.D1}∙({dataIn.s2}-{data.c:f2}))={data.a2p_l:f2}");
+                                $"=1.25√({dataIn.D1}∙({dataIn.s2Little}-{data.c:f2}))={data.a2p_l:f2}");
         }
 
         body.AddParagraph("Расчетный диаметр гладкой конической обечайки");
@@ -311,19 +316,19 @@ internal class ConicalShellWordOutput : IWordOutputElement<ConicalShellCalculate
                         .AppendEquation("β=0.4√(D/(s_2-c))∙tgα_1/(1+√((1+χ_1((s_1-c)/(s_2-c))^2)/(2∙cosα_1)χ_1(s_1-c)/(s_2-c)))-0.25");
                     body.AddParagraph("")
                         .AppendEquation("χ_1=[σ]_1/[σ]_2" +
-                                        $"={data.SigmaAllow1}/{data.SigmaAllow2}={data.chi_1:f2}");
+                                        $"={data.SigmaAllow1Big}/{data.SigmaAllow2Big}={data.chi_1Big:f2}");
                     body.AddParagraph("")
-                        .AppendEquation($"β=0.4√({dataIn.D}/({dataIn.s2}-{data.c:f2}))∙tg{dataIn.alpha1}/(1+√((1+{data.chi_1:f2} (({dataIn.s1}-{data.c:f2})/({dataIn.s2}-{data.c:f2}))^2)/(2∙cos{dataIn.alpha1}){data.chi_1:f2}({dataIn.s1}-{data.c:f2})/({dataIn.s2}-{data.c:f2})))-0.25={data.beta:f2}");
+                        .AppendEquation($"β=0.4√({dataIn.D}/({dataIn.s2Big}-{data.c:f2}))∙tg{dataIn.alpha1}/(1+√((1+{data.chi_1Big:f2} (({dataIn.s1Big}-{data.c:f2})/({dataIn.s2Big}-{data.c:f2}))^2)/(2∙cos{dataIn.alpha1}){data.chi_1Big:f2}({dataIn.s1Big}-{data.c:f2})/({dataIn.s2Big}-{data.c:f2})))-0.25={data.beta:f2}");
                     body.AddParagraph("")
                         .AppendEquation($"β_1=max{{0.5;{data.beta:f2}}}={data.beta_1:f2}");
                     body.AddParagraph("")
-                        .AppendEquation($"s_2p=({dataIn.p}∙{dataIn.D}∙{data.beta_1:f2})/(2∙{dataIn.SigmaAllow}∙{dataIn.fi}-{dataIn.p})={data.s_2p:f2} мм");
+                        .AppendEquation($"s_2p=({dataIn.p}∙{dataIn.D}∙{data.beta_1:f2})/(2∙{dataIn.SigmaAllow}∙{dataIn.fi}-{dataIn.p})={data.s_2pBig:f2} мм");
                     body.AddParagraph("Допускаемое " +
                                       (dataIn.IsPressureIn ? "внутреннее избыточное" : "наружное") +
                                       "давление из условия прочности переходной части вычисляют по формуле");
                     body.AddParagraph("")
                         .AppendEquation("[p]=(2∙[σ]_2∙φ_p∙(s_2-c))/(D∙β_1+(s_2-c))" +
-                                        $"=(2∙{data.SigmaAllow2}∙{dataIn.fi}∙({dataIn.s2}-{data.c:f2}))/({dataIn.D}∙{data.beta_1:f2}+({dataIn.s2}-{data.c:f2}))={data.p_dBig:f2} МПа");
+                                        $"=(2∙{data.SigmaAllow2Big}∙{dataIn.fi}∙({dataIn.s2Big}-{data.c:f2}))/({dataIn.D}∙{data.beta_1:f2}+({dataIn.s2Big}-{data.c:f2}))={data.p_dBig:f2} МПа");
                     break;
             }
 
