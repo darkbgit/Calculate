@@ -15,16 +15,29 @@ namespace CalculateVessels.Forms;
 
 public partial class EllipticalShellForm : Form
 {
-    private EllipticalShellInput _inputData;
-    private readonly ICalculateService<EllipticalShellInput> _calculateService;
+    private EllipticalShellInput? _inputData;
+    private readonly IEnumerable<ICalculateService<EllipticalShellInput>> _calculateServices;
 
-    public EllipticalShellForm(ICalculateService<EllipticalShellInput> calculateService)
+    public EllipticalShellForm(IEnumerable<ICalculateService<EllipticalShellInput>> calculateServices)
     {
         InitializeComponent();
-        _calculateService = calculateService;
+        _calculateServices = calculateServices;
+
+        var serviceNames = _calculateServices
+            .Select(s => s.Name as object)
+            .ToArray();
+
+        Gost_cb.Items.AddRange(serviceNames);
     }
 
     public IInputData InputData => _inputData;
+
+    private ICalculateService<EllipticalShellInput> GetCalculateService()
+    {
+        return _calculateServices
+                   .FirstOrDefault(s => s.Name == Gost_cb.Text)
+               ?? throw new InvalidOperationException("Service wasn't found.");
+    }
 
     private void EllForm_Load(object sender, EventArgs e)
     {
@@ -276,7 +289,7 @@ public partial class EllipticalShellForm : Form
 
         try
         {
-            ellipse = _calculateService.Calculate(_inputData);
+            ellipse = GetCalculateService().Calculate(_inputData ?? throw new InvalidOperationException());
         }
         catch (CalculateException ex)
         {
@@ -327,7 +340,8 @@ public partial class EllipticalShellForm : Form
 
         try
         {
-            ellipse = _calculateService.Calculate(_inputData);
+            ellipse = GetCalculateService().Calculate(_inputData
+                                                      ?? throw new InvalidOperationException());
         }
         catch (CalculateException ex)
         {
@@ -369,8 +383,10 @@ public partial class EllipticalShellForm : Form
         {
             pictureBox.Image = rb.Name switch
             {
-                "ell_rb" => (Bitmap)new ImageConverter().ConvertFrom(Resources.Ell),
-                "hemispherical_rb" => (Bitmap)new ImageConverter().ConvertFrom(Resources.Sfer),
+                "ell_rb" => (Bitmap)(new ImageConverter().ConvertFrom(Resources.Ell)
+                                     ?? throw new InvalidOperationException()),
+                "hemispherical_rb" => (Bitmap)(new ImageConverter().ConvertFrom(Resources.Sfer)
+                                               ?? throw new InvalidOperationException()),
                 _ => pictureBox.Image
             };
         }

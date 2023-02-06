@@ -1,5 +1,5 @@
-﻿using CalculateVessels.Core.Base;
-using CalculateVessels.Core.Interfaces;
+﻿using CalculateVessels.Core.Interfaces;
+using CalculateVessels.Core.Shells.Base;
 using System.Text;
 
 namespace CalculateVessels.Core.Shells.Elliptical;
@@ -7,7 +7,7 @@ namespace CalculateVessels.Core.Shells.Elliptical;
 #pragma warning disable IDE1006 // Naming Styles
 // ReSharper disable InconsistentNaming
 
-public class EllipticalShellCalculated : CalculatedElement, ICalculatedElement
+public class EllipticalShellCalculated : ShellCalculatedData, ICalculatedElement
 {
     public EllipticalShellCalculated()
     {
@@ -23,17 +23,17 @@ public class EllipticalShellCalculated : CalculatedElement, ICalculatedElement
     public double B1 { get; set; }
     public double B1_2 { get; set; }
     public double ConditionStability { get; set; }
-    public double c { get; set; }
-    public bool IsConditionUseFormulas { get; set; }
+    //public double c { get; set; }
+    //public bool IsConditionUseFormulas { get; set; }
     public double l { get; set; }
-    public double SigmaAllow { get; set; }
-    public double s { get; set; }
-    public double s_p { get; set; }
+    //public double SigmaAllow { get; set; }
+    //public double s { get; set; }
+    //public double s_p { get; set; }
     public double s_p_1 { get; set; }
     public double s_p_2 { get; set; }
-    public double p_d { get; set; }
+    //public double p_d { get; set; }
     public double p_dp { get; set; }
-    public double p_de { get; set; }
+    //public double p_de { get; set; }
     public double E { get; set; }
     public double EllipseR { get; set; }
     public double EllipseKePrev { get; set; }

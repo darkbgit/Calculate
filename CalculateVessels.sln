@@ -13,13 +13,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CalculateVessels.Data", "sr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CalculateVessels", "src\CalculateVessels.WinForms\CalculateVessels.csproj", "{7BECA9A8-89E5-4361-B09C-89DC6791CB20}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CalculateVessels.Tests", "test\CalculateVessels.Tests\CalculateVessels.Tests.csproj", "{167CB9CE-039A-4F9B-BD17-99BF1FF60984}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CalculateVessels.UnitTests", "test\CalculateVessels.Tests\CalculateVessels.UnitTests.csproj", "{167CB9CE-039A-4F9B-BD17-99BF1FF60984}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalculateVessels.Output.Word", "src\CalculateVessels.Output.Word\CalculateVessels.Output.Word.csproj", "{FBC1ED1B-6466-403F-A400-C4059777A605}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CalculateVessels.Output.Word", "src\CalculateVessels.Output.Word\CalculateVessels.Output.Word.csproj", "{FBC1ED1B-6466-403F-A400-C4059777A605}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalculateVessels.Output", "src\CalculateVessels.Output\CalculateVessels.Output.csproj", "{B15F3EDD-A2A8-4579-8A84-4AC175283601}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CalculateVessels.Output", "src\CalculateVessels.Output\CalculateVessels.Output.csproj", "{B15F3EDD-A2A8-4579-8A84-4AC175283601}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalculateVessels.Output.Interfaces", "src\CalculateVessels.Output.Interfaces\CalculateVessels.Output.Interfaces.csproj", "{20C3E64A-6DE4-4CBC-AF2C-5009FBF71945}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CalculateVessels.Output.Interfaces", "src\CalculateVessels.Output.Interfaces\CalculateVessels.Output.Interfaces.csproj", "{20C3E64A-6DE4-4CBC-AF2C-5009FBF71945}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

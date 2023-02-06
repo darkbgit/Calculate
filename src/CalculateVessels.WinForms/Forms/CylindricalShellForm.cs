@@ -5,6 +5,7 @@ using CalculateVessels.Data.Exceptions;
 using CalculateVessels.Data.PhysicalData;
 using CalculateVessels.Data.PhysicalData.Gost34233_1;
 using CalculateVessels.Data.Properties;
+using CalculateVessels.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -16,18 +17,33 @@ namespace CalculateVessels.Forms;
 
 public partial class CylindricalShellForm : Form
 {
-    private CylindricalShellInput _inputData;
+    private CylindricalShellInput? _inputData;
 
-    private readonly ICalculateService<CylindricalShellInput> _calculateService;
+    private readonly IEnumerable<ICalculateService<CylindricalShellInput>> _calculateServices;
+    private readonly IFormFactory _formFactory;
 
-    public CylindricalShellForm(ICalculateService<CylindricalShellInput> calculateService)
+    public CylindricalShellForm(IEnumerable<ICalculateService<CylindricalShellInput>> calculateServices,
+        IFormFactory formFactory)
     {
         InitializeComponent();
-        _calculateService = calculateService;
+        _calculateServices = calculateServices;
+        _formFactory = formFactory;
+
+        var serviceNames = _calculateServices
+            .Select(s => s.Name as object)
+            .ToArray();
+
+        Gost_cb.Items.AddRange(serviceNames);
     }
 
     public IInputData InputData => _inputData;
 
+    private ICalculateService<CylindricalShellInput> GetCalculateService()
+    {
+        return _calculateServices
+                       .FirstOrDefault(s => s.Name == Gost_cb.Text)
+                            ?? throw new InvalidOperationException("Service wasn't found.");
+    }
 
     private void Cancel_b_Click(object sender, EventArgs e)
     {
@@ -514,7 +530,8 @@ public partial class CylindricalShellForm : Form
 
         try
         {
-            cylinder = _calculateService.Calculate(_inputData);
+            cylinder = GetCalculateService().Calculate(_inputData
+                ?? throw new InvalidOperationException());
         }
         catch (CalculateException ex)
         {
@@ -545,40 +562,14 @@ public partial class CylindricalShellForm : Form
 
         try
         {
-            cylinder = _calculateService.Calculate(_inputData);
+            cylinder = GetCalculateService().Calculate(_inputData
+                ?? throw new InvalidOperationException());
         }
         catch (CalculateException ex)
         {
             MessageBox.Show(ex.Message);
             return;
         }
-
-
-        //IElement cylinder = new CylindricalShell(_inputData);
-
-        // try
-        // {
-        //     cylinder.Calculate();
-        // }
-        // catch (CalculateException ex)
-        // {
-        //     MessageBox.Show(ex.Message);
-        //     return;
-        // }
-
-        if (Owner is MainForm main)
-        {
-            main.Word_lv.Items.Add(cylinder.ToString());
-            main.ElementsCollection.Add(cylinder);
-
-            Hide();
-        }
-        else
-        {
-            MessageBox.Show("MainForm Error");
-            return;
-        }
-
 
         if (cylinder.ErrorList.Any())
         {
@@ -589,24 +580,46 @@ public partial class CylindricalShellForm : Form
         p_d_l.Text =
             $@"pd={((CylindricalShellCalculated)cylinder).p_d:f2} МПа";
 
+        if (isNozzleCalculateCheckBox.Checked)
+        {
+            if (Owner is not MainForm mainForm) return;
 
+            mainForm.NozzleForm = _formFactory.Create<NozzleForm>()
+                ?? throw new InvalidOperationException($"Couldn't create {nameof(NozzleForm)}.");
+            mainForm.NozzleForm.Owner = mainForm;
+            mainForm.NozzleForm.Show(cylinder);
+        }
         // MessageBoxCheckBox needNozzleCalculate = new(cylinder) { Owner = this };
         // needNozzleCalculate.ShowDialog();
 
+        if (Owner is MainForm main)
+        {
+            main.Word_lv.Items.Add(cylinder.ToString());
+            main.ElementsCollection.Add(cylinder);
+        }
+        else
+        {
+            MessageBox.Show("MainForm Error");
+            return;
+        }
+
         MessageBox.Show(Resources.CalcComplete);
+        Close();
     }
 
     private void CilForm_Load(object sender, EventArgs e)
     {
-        string[]? steels = Gost34233_1.GetSteelsList()?.ToArray();
+        var steels = Gost34233_1.GetSteelsList()?.ToArray();
         if (steels != null)
         {
             steel_cb.Items.AddRange(steels);
             steel_cb.SelectedIndex = 0;
         }
         Gost_cb.SelectedIndex = 0;
-        shell_pb.Image = (Bitmap)new ImageConverter().ConvertFrom(Resources.Cil);
-        f_pb.Image = (Bitmap)new ImageConverter().ConvertFrom(Resources.PC1);
+        shell_pb.Image = (Bitmap)(new ImageConverter().ConvertFrom(Resources.Cil)
+            ?? throw new InvalidOperationException());
+        f_pb.Image = (Bitmap)(new ImageConverter().ConvertFrom(Resources.PC1)
+            ?? throw new InvalidOperationException());
     }
 
     private void GetE_b_Click(object sender, EventArgs e)
@@ -640,13 +653,12 @@ public partial class CylindricalShellForm : Form
 
     private void Stress_rb_CheckedChanged(object sender, EventArgs e)
     {
-        if (sender is RadioButton { Checked: true })
-        {
-            var isForceHand = stressHand_rb.Checked;
-            force_gb.Enabled = isForceHand;
-            M_gb.Enabled = isForceHand;
-            Q_gb.Enabled = isForceHand;
-        }
+        if (sender is not RadioButton { Checked: true }) return;
+
+        var isForceHand = stressHand_rb.Checked;
+        force_gb.Enabled = isForceHand;
+        M_gb.Enabled = isForceHand;
+        Q_gb.Enabled = isForceHand;
     }
 
     private void Defect_chb_CheckedChanged(object sender, EventArgs e)

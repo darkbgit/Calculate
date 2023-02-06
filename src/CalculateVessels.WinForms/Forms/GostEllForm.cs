@@ -19,7 +19,7 @@ public partial class GostEllForm : Form
 
     private void Cancel_b_Click(object sender, EventArgs e)
     {
-        this.Close();
+        Close();
     }
 
 
@@ -41,17 +41,15 @@ public partial class GostEllForm : Form
             _ => null
         };
 
-        if (diameters != null)
-        {
-            D_cb.Items.Clear();
-            D_cb.Items.AddRange(diameters);
-            D_cb.SelectedIndex = 0;
-        }
-        else
+        if (diameters == null)
         {
             MessageBox.Show("Error");
-            this.Close();
+            return;
         }
+
+        D_cb.Items.Clear();
+        D_cb.Items.AddRange(diameters);
+        D_cb.SelectedIndex = 0;
     }
 
     private void D_cb_SelectedIndexChanged(object sender, EventArgs e)
@@ -66,17 +64,17 @@ public partial class GostEllForm : Form
                 .ToArray<object>(),
             _ => null
         };
-        if (sList != null)
-        {
-            s_cb.Items.Clear();
-            s_cb.Items.AddRange(sList);
-            s_cb.SelectedIndex = 0;
-        }
-        else
+
+        if (sList == null)
         {
             MessageBox.Show("Error");
-            this.Close();
+            return;
         }
+
+        s_cb.Items.Clear();
+        s_cb.Items.AddRange(sList);
+        s_cb.SelectedIndex = 0;
+
     }
 
     private void Scb_SelectedIndexChanged(object sender, EventArgs e)
@@ -92,21 +90,19 @@ public partial class GostEllForm : Form
             _ => null
         };
 
-        if (ellipse != null)
-        {
-            H_tb.Text = ellipse.H.ToString(CultureInfo.CurrentCulture);
-            h1_tb.Text = ellipse.h1.ToString(CultureInfo.CurrentCulture);
-        }
-        else
+        if (ellipse == null)
         {
             MessageBox.Show("Error");
-            this.Close();
+            return;
         }
+
+        H_tb.Text = ellipse.H.ToString(CultureInfo.CurrentCulture);
+        h1_tb.Text = ellipse.h1.ToString(CultureInfo.CurrentCulture);
     }
 
     private void OK_b_Click(object sender, EventArgs e)
     {
-        if (this.Owner is EllipticalShellForm ef)
+        if (Owner is EllipticalShellForm ef)
         {
             ef.D_tb.Text = D_cb.Text;
             ef.H_tb.Text = H_tb.Text;
@@ -114,6 +110,6 @@ public partial class GostEllForm : Form
             ef.s_tb.Text = s_cb.Text;
             ef.c3_tb.Text = (Convert.ToInt32(s_cb.Text) * 0.15).ToString(CultureInfo.InvariantCulture);
         }
-        this.Close();
+        Close();
     }
 }

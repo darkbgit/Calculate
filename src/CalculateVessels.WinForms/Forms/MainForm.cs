@@ -26,7 +26,7 @@ public partial class MainForm : Form
     public CylindricalShellForm? CylindricalForm;
     public EllipticalShellForm? EllipticalForm;
     // public FlatBottomWithAdditionalMomentForm flatBottomWithAdditionalMomentForm = null;
-    // public NozzleForm nf = null;
+    public NozzleForm? NozzleForm;
     // public FlatBottomForm pdf = null;
     // public SaddleForm saddleForm = null;
     // public HeatExchangerWithFixedTubePlatesForm heatExchangerWithFixedTubePlatesForm = null;
