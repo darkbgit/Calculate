@@ -231,7 +231,7 @@ namespace CalculateVessels.Forms
             this.predCalc_b.Name = "predCalc_b";
             this.predCalc_b.Size = new System.Drawing.Size(130, 42);
             this.predCalc_b.TabIndex = 105;
-            this.predCalc_b.Text = "Предварительный\r\nрасчет"; 
+            this.predCalc_b.Text = "Предварительный\r\nрасчет";
             this.predCalc_b.UseVisualStyleBackColor = true;
             this.predCalc_b.Click += new System.EventHandler(this.PreCalc_b_Click);
             // 
@@ -636,10 +636,7 @@ namespace CalculateVessels.Forms
             // 
             // Gost_cb
             // 
-            this.Gost_cb.Enabled = false;
             this.Gost_cb.FormattingEnabled = true;
-            this.Gost_cb.Items.AddRange(new object[] {
-            "ГОСТ 34233.3-2017"});
             this.Gost_cb.Location = new System.Drawing.Point(213, 46);
             this.Gost_cb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Gost_cb.Name = "Gost_cb";

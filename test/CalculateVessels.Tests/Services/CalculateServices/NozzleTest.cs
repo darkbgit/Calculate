@@ -1,5 +1,6 @@
 ﻿using CalculateVessels.Core.Interfaces;
 using CalculateVessels.Core.Shells.Nozzle;
+using CalculateVessels.Data.PhysicalData;
 using FluentAssertions;
 using Xunit;
 
@@ -11,7 +12,7 @@ public class NozzleTest
 
     public NozzleTest()
     {
-        _calculateService = new NozzleCalculateService();
+        _calculateService = new NozzleCalculateService(new PhysicalDataService());
     }
 
     [Theory]

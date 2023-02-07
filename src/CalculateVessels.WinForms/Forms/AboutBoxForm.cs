@@ -1,5 +1,4 @@
-﻿using System;
-using System.Reflection;
+﻿using System.Reflection;
 using System.Windows.Forms;
 
 namespace CalculateVessels.Forms;
@@ -9,9 +8,9 @@ partial class AboutBoxForm : Form
     public AboutBoxForm()
     {
         InitializeComponent();
-        this.Text = String.Format("About application {0}", AssemblyTitle);
+        this.Text = $"About application {AssemblyTitle}";
         this.labelProductName.Text = AssemblyProduct;
-        this.labelVersion.Text = String.Format("Version {0}", AssemblyVersion);
+        this.labelVersion.Text = $"Version {AssemblyVersion}";
         this.labelCopyright.Text = AssemblyCopyright;
         this.labelCompanyName.Text = AssemblyCompany;
         this.textBoxDescription.Text = AssemblyDescription;
@@ -36,13 +35,7 @@ partial class AboutBoxForm : Form
         }
     }
 
-    public string AssemblyVersion
-    {
-        get
-        {
-            return Assembly.GetExecutingAssembly().GetName().Version.ToString();
-        }
-    }
+    public string AssemblyVersion => Assembly.GetExecutingAssembly().GetName().Version.ToString();
 
     public string AssemblyDescription
     {

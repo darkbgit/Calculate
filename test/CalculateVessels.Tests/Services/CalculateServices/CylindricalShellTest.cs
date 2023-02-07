@@ -1,5 +1,6 @@
 using CalculateVessels.Core.Interfaces;
 using CalculateVessels.Core.Shells.Cylindrical;
+using CalculateVessels.Data.PhysicalData;
 using FluentAssertions;
 using Xunit;
 
@@ -11,7 +12,7 @@ public class CylindricalShellTest
 
     public CylindricalShellTest()
     {
-        _calculateService = new CylindricalShellCalculateService();
+        _calculateService = new CylindricalShellCalculateService(new PhysicalDataService());
     }
 
 

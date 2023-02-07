@@ -2,14 +2,18 @@
 using CalculateVessels.Core.Helpers;
 using CalculateVessels.Core.Interfaces;
 using CalculateVessels.Core.Shells.Enums;
+using CalculateVessels.Data.Interfaces;
 using System;
 
 namespace CalculateVessels.Core.Shells.Elliptical;
 
 internal class EllipticalShellCalculateService : ICalculateService<EllipticalShellInput>
 {
-    public EllipticalShellCalculateService()
+    private readonly IPhysicalDataService _physicalData;
+
+    public EllipticalShellCalculateService(IPhysicalDataService physicalData)
     {
+        _physicalData = physicalData;
         Name = "GOST 34233.2-2017";
     }
     public string Name { get; }
@@ -19,8 +23,8 @@ internal class EllipticalShellCalculateService : ICalculateService<EllipticalShe
         var data = new EllipticalShellCalculated
         {
             InputData = dataIn,
-            SigmaAllow = PhysicalHelper.GetSigmaIfZero(dataIn.SigmaAllow, dataIn.Steel, dataIn.t),
-            E = PhysicalHelper.GetEIfZero(dataIn.E, dataIn.Steel, dataIn.t),
+            SigmaAllow = PhysicalHelper.GetSigmaIfZero(dataIn.SigmaAllow, dataIn.Steel, dataIn.t, _physicalData),
+            E = PhysicalHelper.GetEIfZero(dataIn.E, dataIn.Steel, dataIn.t, _physicalData),
             c = dataIn.c1 + dataIn.c2 + dataIn.c3
         };
 

@@ -2,14 +2,18 @@
 using CalculateVessels.Core.Helpers;
 using CalculateVessels.Core.Interfaces;
 using CalculateVessels.Core.Shells.Enums;
+using CalculateVessels.Data.Interfaces;
 using System;
 
 namespace CalculateVessels.Core.Shells.Conical;
 
 internal class ConicalShellCalculateService : ICalculateService<ConicalShellInput>
 {
-    public ConicalShellCalculateService()
+    private readonly IPhysicalDataService _physicalData;
+
+    public ConicalShellCalculateService(IPhysicalDataService physicalData)
     {
+        _physicalData = physicalData;
         Name = "GOST 34233.2-2017";
     }
     public string Name { get; }
@@ -19,8 +23,8 @@ internal class ConicalShellCalculateService : ICalculateService<ConicalShellInpu
         var data = new ConicalShellCalculated
         {
             InputData = dataIn,
-            SigmaAllow = PhysicalHelper.GetSigmaIfZero(dataIn.SigmaAllow, dataIn.Steel, dataIn.t),
-            E = PhysicalHelper.GetEIfZero(dataIn.E, dataIn.Steel, dataIn.t)
+            SigmaAllow = PhysicalHelper.GetSigmaIfZero(dataIn.SigmaAllow, dataIn.Steel, dataIn.t, _physicalData),
+            E = PhysicalHelper.GetEIfZero(dataIn.E, dataIn.Steel, dataIn.t, _physicalData)
         };
 
         switch (dataIn.ConnectionType)
@@ -28,17 +32,17 @@ internal class ConicalShellCalculateService : ICalculateService<ConicalShellInpu
             case ConicalConnectionType.WithoutConnection:
                 break;
             case ConicalConnectionType.Simply:
-                data.SigmaAllow1Big = PhysicalHelper.GetSigmaIfZero(dataIn.SigmaAllow1Big, dataIn.Steel1Big, dataIn.t);
-                data.SigmaAllow2Big = PhysicalHelper.GetSigmaIfZero(dataIn.SigmaAllow2Big, dataIn.Steel2Big, dataIn.t);
+                data.SigmaAllow1Big = PhysicalHelper.GetSigmaIfZero(dataIn.SigmaAllow1Big, dataIn.Steel1Big, dataIn.t, _physicalData);
+                data.SigmaAllow2Big = PhysicalHelper.GetSigmaIfZero(dataIn.SigmaAllow2Big, dataIn.Steel2Big, dataIn.t, _physicalData);
                 break;
             case ConicalConnectionType.WithRingPicture25b:
             case ConicalConnectionType.WithRingPicture29:
-                data.SigmaAllow1Big = PhysicalHelper.GetSigmaIfZero(dataIn.SigmaAllow1Big, dataIn.Steel1Big, dataIn.t);
-                data.SigmaAllow2Big = PhysicalHelper.GetSigmaIfZero(dataIn.SigmaAllow2Big, dataIn.Steel2Big, dataIn.t);
-                data.SigmaAllowC = PhysicalHelper.GetSigmaIfZero(dataIn.SigmaAllowC, dataIn.SteelC, dataIn.t);
+                data.SigmaAllow1Big = PhysicalHelper.GetSigmaIfZero(dataIn.SigmaAllow1Big, dataIn.Steel1Big, dataIn.t, _physicalData);
+                data.SigmaAllow2Big = PhysicalHelper.GetSigmaIfZero(dataIn.SigmaAllow2Big, dataIn.Steel2Big, dataIn.t, _physicalData);
+                data.SigmaAllowC = PhysicalHelper.GetSigmaIfZero(dataIn.SigmaAllowC, dataIn.SteelC, dataIn.t, _physicalData);
                 break;
             case ConicalConnectionType.Toroidal:
-                data.SigmaAllowT = PhysicalHelper.GetSigmaIfZero(dataIn.SigmaAllowT, dataIn.SteelT, dataIn.t);
+                data.SigmaAllowT = PhysicalHelper.GetSigmaIfZero(dataIn.SigmaAllowT, dataIn.SteelT, dataIn.t, _physicalData);
                 break;
             default:
                 throw new ArgumentOutOfRangeException();
@@ -46,8 +50,8 @@ internal class ConicalShellCalculateService : ICalculateService<ConicalShellInpu
 
         if (dataIn.IsConnectionWithLittle)
         {
-            data.SigmaAllow1Little = PhysicalHelper.GetSigmaIfZero(dataIn.SigmaAllow1Little, dataIn.Steel1Little, dataIn.t);
-            data.SigmaAllow2Little = PhysicalHelper.GetSigmaIfZero(dataIn.SigmaAllow2Little, dataIn.Steel2Little, dataIn.t);
+            data.SigmaAllow1Little = PhysicalHelper.GetSigmaIfZero(dataIn.SigmaAllow1Little, dataIn.Steel1Little, dataIn.t, _physicalData);
+            data.SigmaAllow2Little = PhysicalHelper.GetSigmaIfZero(dataIn.SigmaAllow2Little, dataIn.Steel2Little, dataIn.t, _physicalData);
         }
 
         data.c = dataIn.c1 + dataIn.c2 + dataIn.c3;

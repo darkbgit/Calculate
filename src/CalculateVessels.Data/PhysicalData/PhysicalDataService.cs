@@ -1,81 +1,57 @@
 ﻿using CalculateVessels.Data.Enums;
 using CalculateVessels.Data.Exceptions;
+using CalculateVessels.Data.Interfaces;
 using CalculateVessels.Data.PhysicalData.Common;
+using CalculateVessels.Data.PhysicalData.Gost34233_1;
 using CalculateVessels.Data.PhysicalData.Gost34233_4;
 using CalculateVessels.Data.PhysicalData.Gost34233_7;
-using CalculateVessels.Data.PhysicalData.Gost6533;
+using CalculateVessels.Data.PhysicalData.Gost6533.Models;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
 
 namespace CalculateVessels.Data.PhysicalData;
 
-public static class Physical
+internal class PhysicalDataService : IPhysicalDataService
 {
-    static Physical()
+    public double GetSigma(string steelName, double temperature, SigmaSource source = SigmaSource.G34233D1)
     {
-
+        return source switch
+        {
+            SigmaSource.G34233D1 => Gost34233D1.GetSigma(steelName, temperature),
+            _ => throw new ArgumentOutOfRangeException(nameof(source), source, null)
+        };
     }
 
-    public static class Gost6533
+    public double GetSigma(string steelName, double temperature, double s = 0, int N = 1000)
     {
-        private const string ELLIPTICAL_BOTTOM_TABLE = "PhysicalData/Gost6533/EllipticalBottom.json";
+        return Gost34233D1.GetSigma(steelName, temperature, s, N);
+    }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="type"></param>
-        /// <returns></returns>
-        /// <exception cref="PhysicalDataException"></exception>
-        public static IEnumerable<string> GetEllipseDiameters(EllipticalBottomGostType type)
+    public double GetE(string steelName, double temperature, ESource source)
+    {
+        return source switch
         {
-            EllipsesList ellipsesList;
+            ESource.G34233D1 => Gost34233D1.GetE(steelName, temperature),
+            _ => throw new ArgumentOutOfRangeException(nameof(source), source, null)
+        };
+        ;
+    }
 
-            try
-            {
-                using StreamReader file = new(ELLIPTICAL_BOTTOM_TABLE);
-                var json = file.ReadToEnd();
-                file.Close();
-                ellipsesList = JsonSerializer.Deserialize<EllipsesList>(json) ?? throw new InvalidOperationException();
-            }
-            catch
-            {
-                throw new PhysicalDataException($"Error open file {ELLIPTICAL_BOTTOM_TABLE} for ellipses diameters.");
-            }
-
-            var ellipses = type switch
-            {
-                EllipticalBottomGostType.Ell025In => ellipsesList.Ell025In.Keys,
-                EllipticalBottomGostType.Ell025Out => ellipsesList.Ell025Out.Keys,
-                EllipticalBottomGostType.Ell020In => throw new NotImplementedException(),
-                _ => throw new PhysicalDataException($"Error open file {ELLIPTICAL_BOTTOM_TABLE} for ellipses diameters.")
-            };
-
-            if (!ellipses.Any())
-            {
-                throw new PhysicalDataException($"Ellipses diameters weren't found in {ELLIPTICAL_BOTTOM_TABLE}.");
-            }
-
-            return ellipses.Select(i => i.ToString(CultureInfo.CurrentCulture)).ToList();
-        }
-
-        public static EllipsesList GetEllipsesList()
+    public IEnumerable<string> GetSteels(SteelSource source)
+    {
+        return source switch
         {
-            try
-            {
-                using StreamReader file = new(ELLIPTICAL_BOTTOM_TABLE);
-                var json = file.ReadToEnd();
-                file.Close();
-                return JsonSerializer.Deserialize<EllipsesList>(json) ?? throw new InvalidOperationException();
-            }
-            catch
-            {
-                throw new PhysicalDataException($"Error open file {ELLIPTICAL_BOTTOM_TABLE} for ellipses diameters.");
-            }
-        }
+            SteelSource.G34233D1 => Gost34233D1.GetSteelsList(),
+            _ => throw new ArgumentOutOfRangeException(nameof(source), source, null)
+        };
+    }
+
+    public EllipsesParameters GetEllipsesParameters()
+    {
+        return Gost6533.Gost6533.GetEllipsesParameters();
     }
 
 

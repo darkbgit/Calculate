@@ -1,5 +1,6 @@
 ﻿using CalculateVessels.Core.Interfaces;
 using CalculateVessels.Core.Shells.Elliptical;
+using CalculateVessels.Data.PhysicalData;
 using FluentAssertions;
 using Xunit;
 
@@ -11,7 +12,7 @@ public class EllipticalShellTest
 
     public EllipticalShellTest()
     {
-        _calculateService = new EllipticalShellCalculateService();
+        _calculateService = new EllipticalShellCalculateService(new PhysicalDataService());
     }
 
     [Theory]
