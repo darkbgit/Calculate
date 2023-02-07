@@ -1,9 +1,9 @@
-﻿namespace CalculateVessels.Data.PhysicalData.Gost6533;
+﻿namespace CalculateVessels.Data.PhysicalData.Gost6533.Models;
 
 #pragma warning disable IDE1006
 // ReSharper disable InconsistentNaming
 
-public class SValue
+public class EllipseSValueParameters
 {
     public double s { get; set; }
     public double H { get; set; }

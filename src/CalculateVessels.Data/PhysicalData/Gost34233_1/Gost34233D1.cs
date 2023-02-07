@@ -1,45 +1,45 @@
+using CalculateVessels.Data.Enums;
+using CalculateVessels.Data.Exceptions;
+using CalculateVessels.Data.PhysicalData.Common;
+using CalculateVessels.Data.PhysicalData.Gost34233_1.Models;
+using CalculateVessels.Data.Utilities;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
-using CalculateVessels.Data.Enums;
-using CalculateVessels.Data.Exceptions;
-using CalculateVessels.Data.Intrpolations;
-using CalculateVessels.Data.PhysicalData.Common;
-using CalculateVessels.Data.PhysicalData.Gost34233_1;
-using CalculateVessels.Data.Utilities;
 
 namespace CalculateVessels.Data.PhysicalData.Gost34233_1;
 
-public static class Gost34233_1
+internal static class Gost34233D1
 {
-    private const string GOST_FOLDER = "Gost34233_1";
-    private const string TABLE_STEELS = "Steels.json";
-    private const string TABLE_SIGMA = "SteelsSigma.json";
+    private const string GostName = "ГОСТ 34233.1-2017";
+    private const string GostFolder = "Gost34233_1";
+    private const string TableSigma = "SteelsSigma.json";
+    private const string TableE = "SteelsE.json";
     private const string TABLE_TYPE = "PhysicalData/Gost34233_1/SteelsType.json";
     private const string TABLE_RM = "PhysicalData/Gost34233_1/SteelsRm.json";
-    //private const string TABLE_TYPE = "PhysicalData/Gost34233_1/SteelsType.json";
 
     public static IEnumerable<string> GetSteelsList()
     {
-        List<PhysicalData.Gost34233_1.Steel>? steels;
+        List<SteelWithName> steels;
 
-        var fileName = $"{Constants.DataFolder}/{GOST_FOLDER}/{TABLE_SIGMA}";
+        const string fileName = $"{Constants.DataFolder}/{GostFolder}/Data/{TableSigma}";
 
         using StreamReader file = new(fileName);
         try
         {
             var json = file.ReadToEnd();
-            steels = JsonSerializer.Deserialize<List<PhysicalData.Gost34233_1.Steel>>(json);
+            steels = JsonSerializer.Deserialize<List<SteelWithName>>(json)
+                ?? throw new InvalidOperationException();
         }
         catch (Exception ex)
         {
-            throw new PhysicalDataException($"Couldn't get steels from {fileName}.", ex);
+            throw new PhysicalDataException($"{GostName}. Couldn't get steels.", ex);
         }
 
         var result = Enumerable.Empty<string>();
-        steels?.ForEach(s => result = result.Union(s.Name));
+        steels.ForEach(s => result = result.Union<string>(s.Name));
         result = result.OrderByDescending(s => s);
 
         return result;
@@ -47,16 +47,16 @@ public static class Gost34233_1
 
     public static SteelType GetSteelType(string steelName)
     {
-        List<SteelForSteelType> steels;
+        List<SteelWithNameAndSteelType> steels;
 
-        var fileName = $"{Constants.DataFolder}/{GOST_FOLDER}/{TABLE_TYPE}";
+        const string fileName = $"{Constants.DataFolder}/{GostFolder}/{TABLE_TYPE}";
 
         try
         {
             using StreamReader file = new(fileName);
             var json = file.ReadToEnd();
             file.Close();
-            steels = JsonSerializer.Deserialize<List<SteelForSteelType>>(json);
+            steels = JsonSerializer.Deserialize<List<SteelWithNameAndSteelType>>(json);
         }
         catch
         {
@@ -80,16 +80,16 @@ public static class Gost34233_1
     /// <exception cref="PhysicalDataException"></exception>
     public static double GetSigma(string steelName, double temperature, double s = 0, int N = 1000)
     {
+        const string fileName = $"{Constants.DataFolder}/{GostFolder}/Data/{TableSigma}";
+
         var isBigResource = N switch
         {
-            1000 => false,
-            2000 => true,
+            <= 1000 => false,
+            >= 2000 => true,
             _ => true
         };
 
-        List<SteelWithListValuesAndThickness> steels;
-
-        var fileName = $"{Constants.DataFolder}/{GOST_FOLDER}/{TABLE_SIGMA}";
+        List<SteelWithListValuesAndThickness>? steels;
 
         try
         {
@@ -100,11 +100,11 @@ public static class Gost34233_1
         }
         catch
         {
-            throw new PhysicalDataException($"Error open file for sigma {steelName}");
+            throw new PhysicalDataException($"{GostName}. Couldn't open file {fileName} for sigma.");
         }
 
         var steel = steels?.FirstOrDefault(st => st.Name.Contains(steelName)) ??
-                    throw new PhysicalDataException($"Error find steel {steelName}");
+                    throw new PhysicalDataException($"{GostName}. Steel {steelName} wasn't found.");
 
         var isBigThickness = steel.IsCouldBigThickness && steel.BigThickness < s;
 
@@ -134,8 +134,47 @@ public static class Gost34233_1
             if (ex.MaxTemperatureError)
             {
                 throw new PhysicalDataException(
-                    $"Температура {temperature} °С, больше чем максимальная температура {ex.MaxTemperature} °С " +
-                    $"для стали {steelName} при которой определяется допускаемое напряжение по ГОСТ 34233.1-2017");
+                    $"{GostName}. Температура {temperature} °С, больше чем максимальная температура {ex.MaxTemperature} °С " +
+                    $"для стали {steelName} при которой определяется допускаемое напряжение.");
+            }
+
+            throw;
+        }
+    }
+
+    public static double GetE(string steelName, double temperature)
+    {
+        const string fileName = $"{Constants.DataFolder}/{GostFolder}/Data/{TableE}";
+
+        List<SteelWithValues>? steels;
+
+        try
+        {
+            using StreamReader file = new(fileName);
+            var json = file.ReadToEnd();
+            file.Close();
+            steels = JsonSerializer.Deserialize<List<SteelWithValues>>(json);
+        }
+        catch
+        {
+            throw new PhysicalDataException($"{GostName}. Couldn't open file {fileName} for E.");
+        }
+
+        var EList = steels?.FirstOrDefault(s => s.Name.Contains(steelName))
+                    ?? throw new PhysicalDataException($"{GostName}. Steel {steelName} wasn't found.");
+
+        try
+        {
+            var E = Interpolations.InterpolationForParameters(EList.Values, temperature, RoundType.Integer);
+            return E;
+        }
+        catch (PhysicalDataException ex)
+        {
+            if (ex.MaxTemperatureError)
+            {
+                throw new PhysicalDataException(
+                    $"{GostName}. Температура {temperature} °С, больше чем максимальная температура {ex.MaxTemperature} °С " +
+                    $"для стали {steelName} при которой определяется модуль продольной упругости.");
             }
 
             throw;

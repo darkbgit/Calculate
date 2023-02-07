@@ -2,8 +2,10 @@
 using CalculateVessels.Core.Interfaces;
 using CalculateVessels.Core.Shells.Elliptical;
 using CalculateVessels.Core.Shells.Enums;
-using CalculateVessels.Data.PhysicalData.Gost34233_1;
+using CalculateVessels.Data.Enums;
+using CalculateVessels.Data.Interfaces;
 using CalculateVessels.Data.Properties;
+using CalculateVessels.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -17,20 +19,18 @@ public partial class EllipticalShellForm : Form
 {
     private EllipticalShellInput? _inputData;
     private readonly IEnumerable<ICalculateService<EllipticalShellInput>> _calculateServices;
+    private readonly IPhysicalDataService _physicalDataService;
+    private readonly IFormFactory _formFactory;
 
-    public EllipticalShellForm(IEnumerable<ICalculateService<EllipticalShellInput>> calculateServices)
+    public EllipticalShellForm(IEnumerable<ICalculateService<EllipticalShellInput>> calculateServices,
+        IFormFactory formFactory,
+        IPhysicalDataService physicalDataService)
     {
         InitializeComponent();
         _calculateServices = calculateServices;
-
-        var serviceNames = _calculateServices
-            .Select(s => s.Name as object)
-            .ToArray();
-
-        Gost_cb.Items.AddRange(serviceNames);
+        _formFactory = formFactory;
+        _physicalDataService = physicalDataService;
     }
-
-    public IInputData InputData => _inputData;
 
     private ICalculateService<EllipticalShellInput> GetCalculateService()
     {
@@ -41,12 +41,17 @@ public partial class EllipticalShellForm : Form
 
     private void EllForm_Load(object sender, EventArgs e)
     {
-        var steels = Gost34233_1.GetSteelsList()?.ToArray();
-        if (steels != null)
-        {
-            steel_cb.Items.AddRange(steels);
-            steel_cb.SelectedIndex = 0;
-        }
+        var steels = _physicalDataService.GetSteels(SteelSource.G34233D1)
+            .Select(s => s as object)
+            .ToArray();
+
+        steel_cb.Items.AddRange(steels);
+        steel_cb.SelectedIndex = 0;
+
+        var serviceNames = _calculateServices
+            .Select(s => s.Name as object)
+            .ToArray();
+        Gost_cb.Items.AddRange(serviceNames);
         Gost_cb.SelectedIndex = 0;
     }
 
@@ -65,179 +70,37 @@ public partial class EllipticalShellForm : Form
 
     private bool CollectDataForPreliminarilyCalculation()
     {
-        const string WRONG_INPUT = " неверный ввод";
         List<string> dataInErr = new();
 
-        _inputData = new EllipticalShellInput();
-
-        //t
+        _inputData = new EllipticalShellInput()
         {
-            if (double.TryParse(t_tb.Text, NumberStyles.Integer,
-                    CultureInfo.InvariantCulture, out var t))
-            {
-                _inputData.t = t;
-            }
-            else
-            {
-                dataInErr.Add(nameof(t) + WRONG_INPUT);
-            }
-        }
-
-        //steel
-        _inputData.Steel = steel_cb.Text;
-
-        //pressure
-        _inputData.IsPressureIn = vn_rb.Checked;
-
-
-        //[σ]
-        if (sigmaHandle_cb.Checked)
-        {
-            if (double.TryParse(sigma_d_tb.Text, NumberStyles.AllowDecimalPoint,
-                    CultureInfo.InvariantCulture, out var sigmaAllow))
-            {
-                _inputData.SigmaAllow = sigmaAllow;
-            }
-            else
-            {
-                dataInErr.Add("[σ]" + WRONG_INPUT);
-            }
-        }
+            t = Parameters.GetParam<double>(t_tb.Text, "t", ref dataInErr, NumberStyles.Integer),
+            Steel = steel_cb.Text,
+            IsPressureIn = vn_rb.Checked,
+            p = Parameters.GetParam<double>(p_tb.Text, "p", ref dataInErr),
+            fi = Parameters.GetParam<double>(fi_tb.Text, "fi", ref dataInErr),
+            D = Parameters.GetParam<double>(D_tb.Text, "D", ref dataInErr),
+            EllipseH = Parameters.GetParam<double>(H_tb.Text, "H", ref dataInErr),
+            Ellipseh1 = Parameters.GetParam<double>(h1_tb.Text, "h1", ref dataInErr),
+            c1 = Parameters.GetParam<double>(c1_tb.Text, "c1", ref dataInErr),
+            c2 = Parameters.GetParam<double>(c2_tb.Text, "c2", ref dataInErr),
+            c3 = Parameters.GetParam<double>(c3_tb.Text, "c3", ref dataInErr),
+            EllipticalBottomType =
+                ell_rb.Checked ? EllipticalBottomType.Elliptical : EllipticalBottomType.Hemispherical,
+            SigmaAllow = sigmaHandle_cb.Checked
+                ? Parameters.GetParam<double>(sigma_d_tb.Text, "[σ]", ref dataInErr)
+                : default
+        };
 
         if (!_inputData.IsPressureIn)
         {
-            //E
             if (EHandle_cb.Checked)
             {
-                if (double.TryParse(sigma_d_tb.Text, NumberStyles.AllowDecimalPoint,
-                        CultureInfo.InvariantCulture, out var E))
-                {
-                    _inputData.E = E;
-                }
-                else
-                {
-                    dataInErr.Add(nameof(E) + WRONG_INPUT);
-                }
+                _inputData.E = Parameters.GetParam<double>(E_tb.Text, "E", ref dataInErr);
             }
         }
 
-        //p
-        {
-            if (double.TryParse(p_tb.Text, NumberStyles.AllowDecimalPoint,
-                    CultureInfo.InvariantCulture, out var p))
-            {
-                _inputData.p = p;
-            }
-            else
-            {
-                dataInErr.Add(nameof(p) + WRONG_INPUT);
-            }
-        }
-
-        //fi
-        {
-            if (double.TryParse(fi_tb.Text, NumberStyles.AllowDecimalPoint,
-                    CultureInfo.InvariantCulture, out var fi))
-            {
-                _inputData.fi = fi;
-            }
-            else
-            {
-                dataInErr.Add("φ" + WRONG_INPUT);
-            }
-        }
-
-        //D
-        {
-            if (double.TryParse(D_tb.Text, NumberStyles.AllowDecimalPoint,
-                    CultureInfo.InvariantCulture, out var D))
-            {
-                _inputData.D = D;
-            }
-            else
-            {
-                dataInErr.Add(nameof(D) + WRONG_INPUT);
-            }
-        }
-
-        //H
-        {
-            if (double.TryParse(H_tb.Text, NumberStyles.AllowDecimalPoint,
-                    CultureInfo.InvariantCulture, out var H))
-            {
-                _inputData.EllipseH = H;
-            }
-            else
-            {
-                dataInErr.Add(nameof(H) + WRONG_INPUT);
-            }
-        }
-
-        //h1
-        {
-            if (double.TryParse(h1_tb.Text, NumberStyles.AllowDecimalPoint,
-                    CultureInfo.InvariantCulture, out var h1))
-            {
-                _inputData.Ellipseh1 = h1;
-            }
-            else
-            {
-                dataInErr.Add(nameof(h1) + WRONG_INPUT);
-            }
-        }
-
-        //c1
-        {
-            if (double.TryParse(c1_tb.Text, NumberStyles.AllowDecimalPoint,
-                    CultureInfo.InvariantCulture, out var c1))
-            {
-                _inputData.c1 = c1;
-            }
-            else
-            {
-                dataInErr.Add(nameof(c1) + WRONG_INPUT);
-            }
-        }
-
-        //c2
-        {
-            if (string.IsNullOrWhiteSpace(c2_tb.Text))
-            {
-                _inputData.c2 = 0;
-            }
-            else if (double.TryParse(c2_tb.Text, NumberStyles.AllowDecimalPoint,
-                         CultureInfo.InvariantCulture, out var c2))
-            {
-                _inputData.c2 = c2;
-            }
-            else
-            {
-                dataInErr.Add(nameof(c2) + WRONG_INPUT);
-            }
-        }
-
-        //c3
-        {
-            if (string.IsNullOrWhiteSpace(c3_tb.Text))
-            {
-                _inputData.c3 = 0;
-            }
-            else if (double.TryParse(c3_tb.Text, NumberStyles.AllowDecimalPoint,
-                         CultureInfo.InvariantCulture, out var c3))
-            {
-                _inputData.c3 = c3;
-            }
-            else
-            {
-                dataInErr.Add(nameof(c3) + WRONG_INPUT);
-            }
-        }
-
-        _inputData.EllipticalBottomType =
-            ell_rb.Checked ? EllipticalBottomType.Elliptical : EllipticalBottomType.Hemispherical;
-
-
-        var isNoError = !dataInErr.Any() && InputData.IsDataGood;
+        var isNoError = !dataInErr.Any() && _inputData.IsDataGood;
 
         if (!isNoError)
         {
@@ -251,23 +114,38 @@ public partial class EllipticalShellForm : Form
     {
         List<string> dataInErr = new();
 
-        //name
-        _inputData.Name = name_tb.Text;
-
-        //s
+        _inputData = new EllipticalShellInput()
         {
-            if (double.TryParse(s_tb.Text, NumberStyles.AllowDecimalPoint,
-                    CultureInfo.InvariantCulture, out var s))
+            Name = name_tb.Text,
+            s = Parameters.GetParam<double>(s_tb.Text, "s", ref dataInErr),
+
+            t = Parameters.GetParam<double>(t_tb.Text, "t", ref dataInErr, NumberStyles.Integer),
+            Steel = steel_cb.Text,
+            IsPressureIn = vn_rb.Checked,
+            p = Parameters.GetParam<double>(p_tb.Text, "p", ref dataInErr),
+            fi = Parameters.GetParam<double>(fi_tb.Text, "fi", ref dataInErr),
+            D = Parameters.GetParam<double>(D_tb.Text, "D", ref dataInErr),
+            EllipseH = Parameters.GetParam<double>(H_tb.Text, "H", ref dataInErr),
+            Ellipseh1 = Parameters.GetParam<double>(h1_tb.Text, "h1", ref dataInErr),
+            c1 = Parameters.GetParam<double>(c1_tb.Text, "c1", ref dataInErr),
+            c2 = Parameters.GetParam<double>(c2_tb.Text, "c2", ref dataInErr),
+            c3 = Parameters.GetParam<double>(c3_tb.Text, "c3", ref dataInErr),
+            EllipticalBottomType =
+                ell_rb.Checked ? EllipticalBottomType.Elliptical : EllipticalBottomType.Hemispherical,
+            SigmaAllow = sigmaHandle_cb.Checked
+                ? Parameters.GetParam<double>(sigma_d_tb.Text, "[σ]", ref dataInErr)
+                : default
+        };
+
+        if (!_inputData.IsPressureIn)
+        {
+            if (EHandle_cb.Checked)
             {
-                _inputData.s = s;
-            }
-            else
-            {
-                dataInErr.Add(nameof(s) + " неверный ввод");
+                _inputData.E = Parameters.GetParam<double>(E_tb.Text, "E", ref dataInErr);
             }
         }
 
-        var isNoError = !dataInErr.Any() && InputData.IsDataGood;
+        var isNoError = !dataInErr.Any() && _inputData.IsDataGood;
 
         if (!isNoError)
         {
@@ -312,21 +190,18 @@ public partial class EllipticalShellForm : Form
 
     private void GetGostDim_b_Click(object sender, EventArgs e)
     {
-        try
-        {
-            GostEllForm gef = new() { Owner = this };
-            gef.ShowDialog(); // показываем
-        }
-        catch (ArgumentNullException)
-        {
-            MessageBox.Show("Couldn't get ellipse parameters");
-        }
+        var ellipticalParametersForm = _formFactory.Create<EllipticalParametersForm>()
+                                       ?? throw new InvalidOperationException($"Couldn't create {nameof(EllipticalParametersForm)}.");
+        ellipticalParametersForm.Owner = this;
+        ellipticalParametersForm.ShowDialog();
     }
 
     private void GetFi_b_Click(object sender, EventArgs e)
     {
-        FiForm ff = new() { Owner = this };
-        ff.ShowDialog(); // показываем
+        var fiForm = _formFactory.Create<FiForm>()
+                                       ?? throw new InvalidOperationException($"Couldn't create {nameof(FiForm)}.");
+        fiForm.Owner = this;
+        fiForm.ShowDialog();
     }
 
     private void Calc_b_Click(object sender, EventArgs e)
@@ -349,19 +224,6 @@ public partial class EllipticalShellForm : Form
             return;
         }
 
-        if (Owner is MainForm main)
-        {
-            main.Word_lv.Items.Add(ellipse.ToString());
-            main.ElementsCollection.Add(ellipse);
-
-            //_form.Hide();
-        }
-        else
-        {
-            MessageBox.Show("MainForm Error");
-            return;
-        }
-
         if (ellipse.ErrorList.Any())
         {
             MessageBox.Show(string.Join<string>(Environment.NewLine, ellipse.ErrorList));
@@ -371,10 +233,29 @@ public partial class EllipticalShellForm : Form
         p_d_l.Text =
             $@"pd={((EllipticalShellCalculated)ellipse).p_d:f2} МПа";
 
-        //MessageBoxCheckBox needNozzleCalculate = new(ellipse) { Owner = this };
-        //needNozzleCalculate.ShowDialog();
+
+        if (isNozzleCalculateCheckBox.Checked)
+        {
+            if (Owner is not MainForm mainForm) return;
+
+            mainForm.NozzleForm = _formFactory.Create<NozzleForm>()
+                                  ?? throw new InvalidOperationException($"Couldn't create {nameof(NozzleForm)}.");
+            mainForm.NozzleForm.Owner = mainForm;
+            mainForm.NozzleForm.Show(ellipse);
+        }
+
+        if (Owner is not MainForm main)
+        {
+            MessageBox.Show($"{nameof(MainForm)} Error");
+            return;
+
+        }
+
+        main.Word_lv.Items.Add(ellipse.ToString());
+        main.ElementsCollection.Add(ellipse);
 
         MessageBox.Show(Resources.CalcComplete);
+        Close();
     }
 
     private void Ell_Hemispherical_rb_CheckedChanged(object sender, EventArgs e)

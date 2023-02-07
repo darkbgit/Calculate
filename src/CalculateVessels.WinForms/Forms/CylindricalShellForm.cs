@@ -1,9 +1,9 @@
 ﻿using CalculateVessels.Core.Exceptions;
 using CalculateVessels.Core.Interfaces;
 using CalculateVessels.Core.Shells.Cylindrical;
+using CalculateVessels.Data.Enums;
 using CalculateVessels.Data.Exceptions;
-using CalculateVessels.Data.PhysicalData;
-using CalculateVessels.Data.PhysicalData.Gost34233_1;
+using CalculateVessels.Data.Interfaces;
 using CalculateVessels.Data.Properties;
 using CalculateVessels.Helpers;
 using System;
@@ -17,26 +17,20 @@ namespace CalculateVessels.Forms;
 
 public partial class CylindricalShellForm : Form
 {
-    private CylindricalShellInput? _inputData;
-
     private readonly IEnumerable<ICalculateService<CylindricalShellInput>> _calculateServices;
+    private readonly IPhysicalDataService _physicalDataService;
     private readonly IFormFactory _formFactory;
 
+    private CylindricalShellInput? _inputData;
+
     public CylindricalShellForm(IEnumerable<ICalculateService<CylindricalShellInput>> calculateServices,
-        IFormFactory formFactory)
+        IFormFactory formFactory, IPhysicalDataService physicalDataService)
     {
         InitializeComponent();
         _calculateServices = calculateServices;
         _formFactory = formFactory;
-
-        var serviceNames = _calculateServices
-            .Select(s => s.Name as object)
-            .ToArray();
-
-        Gost_cb.Items.AddRange(serviceNames);
+        _physicalDataService = physicalDataService;
     }
-
-    public IInputData InputData => _inputData;
 
     private ICalculateService<CylindricalShellInput> GetCalculateService()
     {
@@ -90,159 +84,33 @@ public partial class CylindricalShellForm : Form
     {
         var dataInErr = new List<string>();
 
-        _inputData = new CylindricalShellInput();
-
-        //t
+        _inputData = new CylindricalShellInput
         {
-            if (double.TryParse((string?)t_tb.Text, NumberStyles.Integer,
-                CultureInfo.InvariantCulture, out var t))
-            {
-                _inputData.t = t;
-            }
-            else
-            {
-                dataInErr.Add("t неверный ввод");
-            }
-        }
-
-        //steel
-        _inputData.Steel = steel_cb.Text;
-
-        //
-        _inputData.IsPressureIn = vn_rb.Checked;
-
-        //[σ]
-        if (sigmaHandle_cb.Checked)
-        {
-            if (double.TryParse((string?)sigma_d_tb.Text, NumberStyles.AllowDecimalPoint,
-                CultureInfo.InvariantCulture, out var sigmaAllow))
-            {
-                _inputData.SigmaAllow = sigmaAllow;
-            }
-            else
-            {
-                dataInErr.Add("[σ] неверный ввод");
-            }
-        }
+            t = Parameters.GetParam<double>(t_tb.Text, "t", ref dataInErr, NumberStyles.Integer),
+            Steel = steel_cb.Text,
+            IsPressureIn = vn_rb.Checked,
+            p = Parameters.GetParam<double>(p_tb.Text, "p", ref dataInErr),
+            fi = Parameters.GetParam<double>(fi_tb.Text, "fi", ref dataInErr),
+            D = Parameters.GetParam<double>(D_tb.Text, "D", ref dataInErr),
+            c1 = Parameters.GetParam<double>(c1_tb.Text, "c1", ref dataInErr),
+            c2 = Parameters.GetParam<double>(c2_tb.Text, "c2", ref dataInErr),
+            c3 = Parameters.GetParam<double>(c3_tb.Text, "c3", ref dataInErr),
+            SigmaAllow = sigmaHandle_cb.Checked
+                ? Parameters.GetParam<double>(sigma_d_tb.Text, "[σ]", ref dataInErr)
+                : default
+        };
 
         if (!_inputData.IsPressureIn)
         {
-            //E
             if (EHandle_cb.Checked)
             {
-                if (double.TryParse((string?)sigma_d_tb.Text, NumberStyles.AllowDecimalPoint,
-                    CultureInfo.InvariantCulture, out var E))
-                {
-                    _inputData.E = E;
-                }
-                else
-                {
-                    dataInErr.Add("E неверный ввод");
-                }
+                _inputData.E = Parameters.GetParam<double>(E_tb.Text, "E", ref dataInErr);
             }
 
-
-            //l
-            {
-                if (double.TryParse((string?)l_tb.Text, NumberStyles.AllowDecimalPoint,
-                CultureInfo.InvariantCulture, out var l))
-                {
-                    _inputData.l = l;
-                }
-                else
-                {
-                    dataInErr.Add("l неверный ввод");
-                }
-            }
+            _inputData.l = Parameters.GetParam<double>(l_tb.Text, "l", ref dataInErr, NumberStyles.Integer);
         }
 
-        //p
-        {
-            if (double.TryParse((string?)p_tb.Text, NumberStyles.AllowDecimalPoint,
-            CultureInfo.InvariantCulture, out var p))
-            {
-                _inputData.p = p;
-            }
-            else
-            {
-                dataInErr.Add("p неверный ввод");
-            }
-        }
-
-        //fi
-        {
-            if (double.TryParse((string?)fi_tb.Text, NumberStyles.AllowDecimalPoint,
-            CultureInfo.InvariantCulture, out var fi))
-            {
-                _inputData.fi = fi;
-            }
-            else
-            {
-                dataInErr.Add("φ неверный ввод");
-            }
-        }
-
-        //D
-        {
-            if (double.TryParse((string?)D_tb.Text, NumberStyles.AllowDecimalPoint,
-            CultureInfo.InvariantCulture, out var D))
-            {
-                _inputData.D = D;
-            }
-            else
-            {
-                dataInErr.Add("D неверный ввод");
-            }
-        }
-
-        //c1
-        {
-            if (double.TryParse((string?)c1_tb.Text, NumberStyles.AllowDecimalPoint,
-            CultureInfo.InvariantCulture, out var c1))
-            {
-                _inputData.c1 = c1;
-            }
-            else
-            {
-                dataInErr.Add("c1 неверный ввод");
-            }
-        }
-
-        //c2
-        {
-            if (c2_tb.Text == "")
-            {
-                _inputData.c2 = 0;
-            }
-            else if (double.TryParse((string?)c2_tb.Text, NumberStyles.AllowDecimalPoint,
-            CultureInfo.InvariantCulture, out var c2))
-            {
-                _inputData.c2 = c2;
-            }
-            else
-            {
-                dataInErr.Add("c2 неверный ввод");
-            }
-        }
-
-        //c3
-        {
-            if (c3_tb.Text == "")
-            {
-                _inputData.c3 = 0;
-            }
-            else if (double.TryParse((string?)c3_tb.Text, NumberStyles.AllowDecimalPoint,
-            CultureInfo.InvariantCulture, out var c3))
-            {
-                _inputData.c3 = c3;
-            }
-            else
-            {
-                dataInErr.Add("c3 неверный ввод");
-            }
-        }
-
-        var isNoError = !dataInErr.Any() && InputData.IsDataGood;
+        var isNoError = !dataInErr.Any() && _inputData.IsDataGood;
 
         if (!isNoError)
         {
@@ -256,259 +124,62 @@ public partial class CylindricalShellForm : Form
     {
         var dataInErr = new List<string>();
 
-        _inputData = new CylindricalShellInput();
-
-        //t
+        _inputData = new CylindricalShellInput()
         {
-            if (double.TryParse((string?)t_tb.Text, NumberStyles.Integer,
-                CultureInfo.InvariantCulture, out var t))
-            {
-                _inputData.t = t;
-            }
-            else
-            {
-                dataInErr.Add("t неверный ввод");
-            }
-        }
+            Name = Name_tb.Text,
+            s = Parameters.GetParam<double>(s_tb.Text, "s", ref dataInErr),
 
-        //steel
-        _inputData.Steel = steel_cb.Text;
-
-        //
-        _inputData.IsPressureIn = vn_rb.Checked;
-
-        //[σ]
-        if (sigmaHandle_cb.Checked)
-        {
-            if (double.TryParse((string?)sigma_d_tb.Text, NumberStyles.AllowDecimalPoint,
-                CultureInfo.InvariantCulture, out var sigmaAllow))
-            {
-                _inputData.SigmaAllow = sigmaAllow;
-            }
-            else
-            {
-                dataInErr.Add("[σ] неверный ввод");
-            }
-        }
+            t = Parameters.GetParam<double>(t_tb.Text, "t", ref dataInErr, NumberStyles.Integer),
+            Steel = steel_cb.Text,
+            IsPressureIn = vn_rb.Checked,
+            p = Parameters.GetParam<double>(p_tb.Text, "p", ref dataInErr),
+            fi = Parameters.GetParam<double>(fi_tb.Text, "φ", ref dataInErr),
+            D = Parameters.GetParam<double>(D_tb.Text, "D", ref dataInErr),
+            c1 = Parameters.GetParam<double>(c1_tb.Text, "c1", ref dataInErr),
+            c2 = Parameters.GetParam<double>(c2_tb.Text, "c2", ref dataInErr),
+            c3 = Parameters.GetParam<double>(c3_tb.Text, "c3", ref dataInErr),
+            SigmaAllow = sigmaHandle_cb.Checked
+                ? Parameters.GetParam<double>(sigma_d_tb.Text, "[σ]", ref dataInErr)
+                : default
+        };
 
         if (!_inputData.IsPressureIn)
         {
-            //E
             if (EHandle_cb.Checked)
             {
-                if (double.TryParse((string?)sigma_d_tb.Text, NumberStyles.AllowDecimalPoint,
-                    CultureInfo.InvariantCulture, out var E))
-                {
-                    _inputData.E = E;
-                }
-                else
-                {
-                    dataInErr.Add("E неверный ввод");
-                }
+                _inputData.E = Parameters.GetParam<double>(E_tb.Text, "E", ref dataInErr);
             }
 
-
-            //l
-            {
-                if (double.TryParse((string?)l_tb.Text, NumberStyles.AllowDecimalPoint,
-                CultureInfo.InvariantCulture, out var l))
-                {
-                    _inputData.l = l;
-                }
-                else
-                {
-                    dataInErr.Add("l неверный ввод");
-                }
-            }
-        }
-
-        //p
-        {
-            if (double.TryParse((string?)p_tb.Text, NumberStyles.AllowDecimalPoint,
-            CultureInfo.InvariantCulture, out var p))
-            {
-                _inputData.p = p;
-            }
-            else
-            {
-                dataInErr.Add("p неверный ввод");
-            }
-        }
-
-        //fi
-        {
-            if (double.TryParse((string?)fi_tb.Text, NumberStyles.AllowDecimalPoint,
-            CultureInfo.InvariantCulture, out var fi))
-            {
-                _inputData.fi = fi;
-            }
-            else
-            {
-                dataInErr.Add("φ неверный ввод");
-            }
-        }
-
-        //D
-        {
-            if (double.TryParse((string?)D_tb.Text, NumberStyles.AllowDecimalPoint,
-            CultureInfo.InvariantCulture, out var D))
-            {
-                _inputData.D = D;
-            }
-            else
-            {
-                dataInErr.Add("D неверный ввод");
-            }
-        }
-
-        //c1
-        {
-            if (double.TryParse((string?)c1_tb.Text, NumberStyles.AllowDecimalPoint,
-            CultureInfo.InvariantCulture, out var c1))
-            {
-                _inputData.c1 = c1;
-            }
-            else
-            {
-                dataInErr.Add("c1 неверный ввод");
-            }
-        }
-
-        //c2
-        {
-            if (c2_tb.Text == "")
-            {
-                _inputData.c2 = 0;
-            }
-            else if (double.TryParse((string?)c2_tb.Text, NumberStyles.AllowDecimalPoint,
-            CultureInfo.InvariantCulture, out var c2))
-            {
-                _inputData.c2 = c2;
-            }
-            else
-            {
-                dataInErr.Add("c2 неверный ввод");
-            }
-        }
-
-        //c3
-        {
-            if (c3_tb.Text == "")
-            {
-                _inputData.c3 = 0;
-            }
-            else if (double.TryParse((string?)c3_tb.Text, NumberStyles.AllowDecimalPoint,
-            CultureInfo.InvariantCulture, out var c3))
-            {
-                _inputData.c3 = c3;
-            }
-            else
-            {
-                dataInErr.Add("c3 неверный ввод");
-            }
-        }
-
-        //name
-        _inputData.Name = Name_tb.Text;
-
-        //s
-        {
-            if (double.TryParse((string?)s_tb.Text, NumberStyles.AllowDecimalPoint,
-            CultureInfo.InvariantCulture, out var s))
-            {
-                _inputData.s = s;
-            }
-            else
-            {
-                dataInErr.Add("s неверный ввод.");
-            }
+            _inputData.l = Parameters.GetParam<double>(l_tb.Text, "l", ref dataInErr, NumberStyles.Integer);
         }
 
         if (stressHand_rb.Checked)
         {
-            //Q
-            {
-                if (double.TryParse((string?)Q_tb.Text, NumberStyles.AllowDecimalPoint,
-            CultureInfo.InvariantCulture, out var Q))
-                {
-                    _inputData.Q = Q;
-                }
-                else
-                {
-                    dataInErr.Add("Q неверный ввод.");
-                }
-            }
-
-            //M
-            {
-                if (double.TryParse((string?)M_tb.Text, NumberStyles.AllowDecimalPoint,
-            CultureInfo.InvariantCulture, out var M))
-                {
-                    _inputData.M = M;
-                }
-                else
-                {
-                    dataInErr.Add("M неверный ввод.");
-                }
-            }
-
+            _inputData.Q = Parameters.GetParam<double>(Q_tb.Text, "Q", ref dataInErr);
+            _inputData.M = Parameters.GetParam<double>(M_tb.Text, "M", ref dataInErr);
             _inputData.IsFTensile = forceStretch_rb.Checked;
-
-            //F
-            {
-                if (double.TryParse((string?)F_tb.Text, NumberStyles.AllowDecimalPoint,
-                    CultureInfo.InvariantCulture, out var F))
-                {
-                    _inputData.F = F;
-                }
-                else
-                {
-                    dataInErr.Add("F неверный ввод.");
-                }
-            }
+            _inputData.F = Parameters.GetParam<double>(F_tb.Text, "[σ]", ref dataInErr);
 
             if (!_inputData.IsFTensile)
             {
                 var idx = force_gb.Controls.OfType<RadioButton>().FirstOrDefault(rb => rb.Checked)?.Text;
-                if (int.TryParse(idx, NumberStyles.Integer, CultureInfo.InvariantCulture, out var i))
-                {
-                    _inputData.FCalcSchema = i;
 
-                    switch (i)
-                    {
-                        case 5:
-                            if (double.TryParse((string?)F_tb.Text, NumberStyles.AllowDecimalPoint,
-                                CultureInfo.InvariantCulture, out var q))
-                            {
-                                _inputData.q = q;
-                            }
-                            else
-                            {
-                                dataInErr.Add("q неверный ввод.");
-                            }
-                            break;
-                        case 6:
-                        case 7:
-                            if (double.TryParse((string?)F_tb.Text, NumberStyles.AllowDecimalPoint,
-                                CultureInfo.InvariantCulture, out var f))
-                            {
-                                _inputData.f = f;
-                            }
-                            else
-                            {
-                                dataInErr.Add("f неверный ввод.");
-                            }
-                            break;
-                    }
-                }
-                else
+                _inputData.FCalcSchema = Parameters.GetParam<int>(idx, "Тип сжимающего усилия", ref dataInErr, NumberStyles.Integer);
+
+                switch (_inputData.FCalcSchema)
                 {
-                    dataInErr.Add("Не возможно определить тип сжимающего усилия");
+                    case 5:
+                        _inputData.q = Parameters.GetParam<double>(fq_tb.Text, "q", ref dataInErr);
+                        break;
+                    case 6:
+                    case 7:
+                        _inputData.f = Parameters.GetParam<double>(fq_tb.Text, "f", ref dataInErr);
+                        break;
                 }
             }
         }
 
-        var isNoError = !dataInErr.Any() && InputData.IsDataGood;
+        var isNoError = !dataInErr.Any() && _inputData.IsDataGood;
 
         if (!isNoError)
         {
@@ -589,19 +260,15 @@ public partial class CylindricalShellForm : Form
             mainForm.NozzleForm.Owner = mainForm;
             mainForm.NozzleForm.Show(cylinder);
         }
-        // MessageBoxCheckBox needNozzleCalculate = new(cylinder) { Owner = this };
-        // needNozzleCalculate.ShowDialog();
 
-        if (Owner is MainForm main)
+        if (Owner is not MainForm main)
         {
-            main.Word_lv.Items.Add(cylinder.ToString());
-            main.ElementsCollection.Add(cylinder);
-        }
-        else
-        {
-            MessageBox.Show("MainForm Error");
+            MessageBox.Show($"{nameof(MainForm)} error");
             return;
         }
+
+        main.Word_lv.Items.Add(cylinder.ToString());
+        main.ElementsCollection.Add(cylinder);
 
         MessageBox.Show(Resources.CalcComplete);
         Close();
@@ -609,13 +276,19 @@ public partial class CylindricalShellForm : Form
 
     private void CilForm_Load(object sender, EventArgs e)
     {
-        var steels = Gost34233_1.GetSteelsList()?.ToArray();
-        if (steels != null)
-        {
-            steel_cb.Items.AddRange(steels);
-            steel_cb.SelectedIndex = 0;
-        }
+        var steels = _physicalDataService.GetSteels(SteelSource.G34233D1)
+            .Select(s => s as object)
+            .ToArray();
+
+        steel_cb.Items.AddRange(steels);
+        steel_cb.SelectedIndex = 0;
+
+        var serviceNames = _calculateServices
+            .Select(s => s.Name as object)
+            .ToArray();
+        Gost_cb.Items.AddRange(serviceNames);
         Gost_cb.SelectedIndex = 0;
+
         shell_pb.Image = (Bitmap)(new ImageConverter().ConvertFrom(Resources.Cil)
             ?? throw new InvalidOperationException());
         f_pb.Image = (Bitmap)(new ImageConverter().ConvertFrom(Resources.PC1)
@@ -626,7 +299,7 @@ public partial class CylindricalShellForm : Form
     {
         try
         {
-            var E = Physical.GetE(steel_cb.Text, Convert.ToInt32((string?)t_tb.Text));
+            var E = _physicalDataService.GetE(steel_cb.Text, Convert.ToInt32((string?)t_tb.Text), ESource.G34233D1);
             E_tb.Text = E.ToString("N");
         }
         catch (PhysicalDataException ex)

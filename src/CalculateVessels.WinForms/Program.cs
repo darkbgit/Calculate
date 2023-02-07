@@ -1,4 +1,5 @@
 ﻿using CalculateVessels.Core.DI;
+using CalculateVessels.Data.DI;
 using CalculateVessels.Forms;
 using CalculateVessels.Helpers;
 using CalculateVessels.Output.DI;
@@ -44,6 +45,9 @@ internal static class Program
                 {
                     services.AddTransient(form);
                 });
+
+                var serviceCollectionForData = new ServiceCollectionForData();
+                serviceCollectionForData.RegisterDependencies(services);
 
                 var serviceCollectionForCore = new ServiceCollectionForCore();
                 serviceCollectionForCore.RegisterDependencies(services);

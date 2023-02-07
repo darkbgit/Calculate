@@ -1,13 +1,13 @@
 ﻿using CalculateVessels.Core.Exceptions;
+using CalculateVessels.Data.Enums;
 using CalculateVessels.Data.Exceptions;
-using CalculateVessels.Data.PhysicalData;
-using CalculateVessels.Data.PhysicalData.Gost34233_1;
+using CalculateVessels.Data.Interfaces;
 
 namespace CalculateVessels.Core.Helpers;
 
-internal static class PhysicalHelper
+internal class PhysicalHelper
 {
-    public static double GetSigmaIfZero(double sigmaAllow, string steel, double temperature)
+    public static double GetSigmaIfZero(double sigmaAllow, string steel, double temperature, IPhysicalDataService service, SigmaSource source = SigmaSource.G34233D1)
     {
         if (sigmaAllow != 0) return sigmaAllow;
 
@@ -15,7 +15,7 @@ internal static class PhysicalHelper
 
         try
         {
-            result = Gost34233_1.GetSigma(steel, temperature);
+            result = service.GetSigma(steel, temperature, source);
         }
         catch (PhysicalDataException e)
         {
@@ -25,7 +25,7 @@ internal static class PhysicalHelper
         return result;
     }
 
-    public static double GetEIfZero(double E, string steel, double temperature)
+    public static double GetEIfZero(double E, string steel, double temperature, IPhysicalDataService service, ESource source = ESource.G34233D1)
     {
         if (E != 0) return E;
 
@@ -33,7 +33,7 @@ internal static class PhysicalHelper
 
         try
         {
-            result = Physical.GetE(steel, temperature);
+            result = service.GetE(steel, temperature, source);
         }
         catch (PhysicalDataException e)
         {

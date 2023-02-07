@@ -1,7 +1,7 @@
 ﻿
 namespace CalculateVessels.Forms
 {
-    partial class GostEllForm
+    partial class EllipticalParametersForm
     {
         /// <summary>
         /// Required designer variable.

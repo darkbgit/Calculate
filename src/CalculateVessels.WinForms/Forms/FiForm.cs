@@ -4,8 +4,6 @@ namespace CalculateVessels.Forms;
 
 public partial class FiForm : Form
 {
-
-
     public FiForm()
     {
         InitializeComponent();
@@ -13,13 +11,13 @@ public partial class FiForm : Form
 
     private void LinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
     {
-        // приводим отправителя к элементу типа LinkLabel
-        LinkLabel ll = sender as LinkLabel;
-        //MessageBox.Show(ll.Text);
-        if (this.Owner != null)
+        const string FI_TEXT_BOX_NAME = "fi_tb";
+
+        if (sender is LinkLabel linkLabel && Owner?.Controls[FI_TEXT_BOX_NAME] is TextBox fiTextBox)
         {
-            (Owner.Controls["fi_tb"] as TextBox).Text = ll.Text;
+            fiTextBox.Text = linkLabel.Text;
         }
-        this.Close();
+
+        Close();
     }
 }

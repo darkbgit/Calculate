@@ -6,6 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Update="Properties\Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -21,34 +25,34 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="PhysicalData\Gost34233_1\SteelsType.json">
+    <None Update="PhysicalData\Gost34233_1\Data\SteelsType.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="PhysicalData\Gost34233_1\SteelsAlpha_old.json">
+    <None Update="PhysicalData\Gost34233_1\Data\SteelsAlpha_old.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="PhysicalData\Gost34233_1\SteelsE_old.json">
+    <None Update="PhysicalData\Gost34233_1\Data\SteelsE_old.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="PhysicalData\Gost34233_1\SteelsRm_old.json">
+    <None Update="PhysicalData\Gost34233_1\Data\SteelsRm_old.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="PhysicalData\Gost34233_1\SteelsRm.json">
+    <None Update="PhysicalData\Gost34233_1\Data\SteelsRm.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="PhysicalData\Gost34233_1\SteelsSigma_old.json">
+    <None Update="PhysicalData\Gost34233_1\Data\SteelsSigma_old.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="PhysicalData\Gost34233_1\SteelsSigma.json">
+    <None Update="PhysicalData\Gost34233_1\Data\SteelsSigma.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="PhysicalData\Gost34233_1\SteelsE.json">
+    <None Update="PhysicalData\Gost34233_1\Data\SteelsE.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="PhysicalData\Gost34233_1\SteelsAlpha.json">
+    <None Update="PhysicalData\Gost34233_1\Data\SteelsAlpha.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="PhysicalData\Gost34233_1\Steels.json">
+    <None Update="PhysicalData\Gost34233_1\Data\Steels.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="PhysicalData\Gost34233_4\Gaskets.json">
@@ -90,12 +94,18 @@
     <None Update="PhysicalData\Gost34233_7\TableG23.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="PhysicalData\Gost6533\EllipticalBottom_old.json">
+    <None Update="PhysicalData\Gost6533\Data\EllipticalBottom_old.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="PhysicalData\Gost6533\EllipticalBottom.json">
+    <None Update="PhysicalData\Gost6533\Data\EllipticalBottom.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+
+	<ItemGroup>
+		<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+			<_Parameter1>CalculateVessels.UnitTests</_Parameter1>
+		</AssemblyAttribute>
+	</ItemGroup>
 
 </Project>

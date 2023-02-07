@@ -1,5 +1,6 @@
 ﻿using CalculateVessels.Core.Interfaces;
 using CalculateVessels.Core.Shells.Conical;
+using CalculateVessels.Data.PhysicalData;
 using FluentAssertions;
 using Xunit;
 
@@ -11,7 +12,7 @@ namespace CalculateVessels.UnitTests.Services.CalculateServices
 
         public ConicalShellTest()
         {
-            _calculateService = new ConicalShellCalculateService();
+            _calculateService = new ConicalShellCalculateService(new PhysicalDataService());
         }
 
         [Theory]

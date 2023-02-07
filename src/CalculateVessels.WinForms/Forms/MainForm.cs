@@ -190,35 +190,6 @@ public partial class MainForm : Form
         return OutputType.Word;
     }
 
-    private void Output(string filePath)
-    {
-        if (!ElementsCollection.Any()) return;
-
-        //List<string> bibliography = new();
-
-        //foreach (var element in ElementsCollection)
-        //{
-        //    try
-        //    {
-        //        _outputService.Output(filePath, OutputType.Word, element);
-        //        bibliography = bibliography.Union(element.Bibliography).ToList();
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        MessageBox.Show($"Couldn't create word file for element {element}" + e.ToString());
-        //    }
-        //}
-
-        //try
-        //{
-        //    Bibliography.AddBibliography(bibliography, filePath);
-        //    MessageBox.Show("OK");
-        //}
-        //catch (Exception e)
-        //{
-        //    MessageBox.Show("Couldn't create word file for bibliography" + e.ToString());
-        //}
-    }
 
     private void Cil_b_Click(object sender, EventArgs e)
     {
@@ -348,32 +319,31 @@ public partial class MainForm : Form
 
     private static void MoveSelectedItemListView(ListView lv, int idx, bool moveUp)
     {
-        if (lv.Items.Count > 1)
+        if (lv.Items.Count <= 1) return;
+
+        int offset = 0;
+        //int idx = lv.SelectedItems[0].Index;
+        if (idx >= 0)
         {
-            int offset = 0;
-            //int idx = lv.SelectedItems[0].Index;
-            if (idx >= 0)
+            offset = moveUp ? -1 : 1;
+        }
+
+        if (offset != 0)
+        {
+            lv.BeginUpdate();
+
+            int selectItem = idx + offset;
+            for (int i = 0; i < lv.Items[idx].SubItems.Count; i++)
             {
-                offset = moveUp ? -1 : 1;
+                (lv.Items[selectItem].SubItems[i].Text, lv.Items[idx].SubItems[i].Text) =
+                    (lv.Items[idx].SubItems[i].Text, lv.Items[selectItem].SubItems[i].Text);
             }
 
-            if (offset != 0)
-            {
-                lv.BeginUpdate();
+            lv.Focus();
+            lv.Items[selectItem].Selected = true;
+            lv.EnsureVisible(selectItem);
 
-                int selectItem = idx + offset;
-                for (int i = 0; i < lv.Items[idx].SubItems.Count; i++)
-                {
-                    (lv.Items[selectItem].SubItems[i].Text, lv.Items[idx].SubItems[i].Text) =
-                        (lv.Items[idx].SubItems[i].Text, lv.Items[selectItem].SubItems[i].Text);
-                }
-
-                lv.Focus();
-                lv.Items[selectItem].Selected = true;
-                lv.EnsureVisible(selectItem);
-
-                lv.EndUpdate();
-            }
+            lv.EndUpdate();
         }
     }
 
@@ -433,10 +403,9 @@ public partial class MainForm : Form
 
     private void AboutToolStripMenuItem_Click(object sender, EventArgs e)
     {
-        if (sender is ToolStripItem { Name: "AboutToolStripMenuItem" })
-        {
-            var abf = _formFactory.Create<AboutBoxForm>();
-            abf?.ShowDialog();
-        }
+        if (sender is not ToolStripItem { Name: "AboutToolStripMenuItem" }) return;
+
+        var aboutBoxForm = _formFactory.Create<AboutBoxForm>();
+        aboutBoxForm?.ShowDialog();
     }
 }

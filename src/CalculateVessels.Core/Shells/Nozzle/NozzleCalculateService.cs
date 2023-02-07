@@ -6,14 +6,18 @@ using CalculateVessels.Core.Shells.Conical;
 using CalculateVessels.Core.Shells.Elliptical;
 using CalculateVessels.Core.Shells.Enums;
 using CalculateVessels.Core.Shells.Nozzle.Enums;
+using CalculateVessels.Data.Interfaces;
 using System;
 
 namespace CalculateVessels.Core.Shells.Nozzle;
 
 internal class NozzleCalculateService : ICalculateService<NozzleInput>
 {
-    public NozzleCalculateService()
+    private readonly IPhysicalDataService _physicalData;
+
+    public NozzleCalculateService(IPhysicalDataService physicalData)
     {
+        _physicalData = physicalData;
         Name = "GOST 34233.2-2017";
     }
 
@@ -24,21 +28,21 @@ internal class NozzleCalculateService : ICalculateService<NozzleInput>
         var data = new NozzleCalculated
         {
             InputData = dataIn,
-            SigmaAllow1 = PhysicalHelper.GetSigmaIfZero(dataIn.SigmaAllow1, dataIn.steel1, dataIn.t),
-            E1 = PhysicalHelper.GetEIfZero(dataIn.E1, dataIn.steel1, dataIn.t)
+            SigmaAllow1 = PhysicalHelper.GetSigmaIfZero(dataIn.SigmaAllow1, dataIn.steel1, dataIn.t, _physicalData),
+            E1 = PhysicalHelper.GetEIfZero(dataIn.E1, dataIn.steel1, dataIn.t, _physicalData)
         };
 
         if (dataIn.NozzleKind is NozzleKind.ImpassWithRing or NozzleKind.PassWithRing
             or NozzleKind.WithRingAndInPart)
         {
-            data.SigmaAllow2 = PhysicalHelper.GetSigmaIfZero(dataIn.SigmaAllow2, dataIn.steel2, dataIn.t);
-            data.E2 = PhysicalHelper.GetEIfZero(dataIn.E2, dataIn.steel2, dataIn.t);
+            data.SigmaAllow2 = PhysicalHelper.GetSigmaIfZero(dataIn.SigmaAllow2, dataIn.steel2, dataIn.t, _physicalData);
+            data.E2 = PhysicalHelper.GetEIfZero(dataIn.E2, dataIn.steel2, dataIn.t, _physicalData);
         }
 
         if (dataIn.NozzleKind is NozzleKind.PassWithoutRing or NozzleKind.PassWithRing or NozzleKind.WithRingAndInPart)
         {
-            data.SigmaAllow3 = PhysicalHelper.GetSigmaIfZero(dataIn.SigmaAllow3, dataIn.steel3, dataIn.t);
-            data.E3 = PhysicalHelper.GetEIfZero(dataIn.E3, dataIn.steel3, dataIn.t);
+            data.SigmaAllow3 = PhysicalHelper.GetSigmaIfZero(dataIn.SigmaAllow3, dataIn.steel3, dataIn.t, _physicalData);
+            data.E3 = PhysicalHelper.GetEIfZero(dataIn.E3, dataIn.steel3, dataIn.t, _physicalData);
         }
 
         //TODO: steel4

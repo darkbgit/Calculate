@@ -1,10 +1,10 @@
+using CalculateVessels.Data.Enums;
+using CalculateVessels.Data.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using CalculateVessels.Data.Enums;
-using CalculateVessels.Data.Exceptions;
 
-namespace CalculateVessels.Data.Intrpolations;
+namespace CalculateVessels.Data.Utilities;
 
 internal static class Interpolations
 {
@@ -22,9 +22,9 @@ internal static class Interpolations
             return values[minTemperature][accessIndex];
         }
 
-        if (values.ContainsKey(temperature))
+        if (values.TryGetValue(temperature, out List<double> valuesList))
         {
-            return values[temperature][accessIndex];
+            return valuesList[accessIndex];
         }
 
         var temperatureBig = values.Keys.First(k => k > temperature);
@@ -51,9 +51,9 @@ internal static class Interpolations
             return values[minTemperature];
         }
 
-        if (values.ContainsKey(temperature))
+        if (values.TryGetValue(temperature, out double value))
         {
-            return values[temperature];
+            return value;
         }
 
         var temperatureBig = values.Keys.First(k => k > temperature);
@@ -61,15 +61,15 @@ internal static class Interpolations
         var temperatureLittle = values.Keys.Last(k => k < temperature);
 
 
-        var value = Interpolation((temperatureBig, values[temperatureBig]), (temperatureLittle, values[temperatureLittle]), temperature, round);
+        var result = Interpolation((temperatureBig, values[temperatureBig]), (temperatureLittle, values[temperatureLittle]), temperature, round);
 
-        return value;
+        return result;
     }
 
     private static double Interpolation((double x, double y) first, (double x, double y) second, double interpolateFor, RoundType round)
     {
         if (Math.Abs(first.x - second.x) < 0.000001 || Math.Abs(first.y - second.y) < 0.000001)
-            throw new PhysicalDataException($"Couldn't interpolate values {first} - {second}");
+            throw new PhysicalDataException($"Couldn't interpolate values {first} - {second}.");
 
         if (first.y < second.y)
         {

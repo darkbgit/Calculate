@@ -1,5 +1,5 @@
 ﻿{
-  "Ell025In": {
+  "EllipticalBottomInsideDiameter025": {
     "250": [
       {
         "s": 4,
@@ -1669,7 +1669,7 @@
     "4000": null,
     "4500": null
   },
-  "Ell025Out": {
+  "EllipticalBottomOutsideDiameter025": {
     "800": [
       {
         "s": 6,
