@@ -19,7 +19,7 @@ internal class PhysicalHelper
         }
         catch (PhysicalDataException e)
         {
-            throw new CalculateException("Error get sigma.", e);
+            throw new CalculateException($"Error get sigma. {e.Message}", e);
         }
 
         return result;
@@ -37,7 +37,7 @@ internal class PhysicalHelper
         }
         catch (PhysicalDataException e)
         {
-            throw new CalculateException("Error get sigma.", e);
+            throw new CalculateException($"Error get E. {e.Message}", e);
         }
 
         return result;

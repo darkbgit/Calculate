@@ -1045,7 +1045,7 @@ public partial class NozzleForm : Form
 
                 place_gb.Controls.AddRange(new Control[]
                 {
-                        placeRadioButton1, placeRadioButton2, placeRadioButton3, mainPanel
+                    placeRadioButton1, placeRadioButton2, placeRadioButton3, mainPanel
                 });
 
                 place_pb.Image = (Bitmap)(new ImageConverter().ConvertFrom(Resources.CylRadial)
@@ -1063,7 +1063,7 @@ public partial class NozzleForm : Form
                     Text = Perpendicular,
                     Checked = true,
                     AutoSize = true,
-                    Location = new Point(8, 30),
+                    Location = new Point(8, 40),
                     Margin = new Padding(4, 3, 4, 3),
                     Name = nameof(placeRadioButton1),
                     UseVisualStyleBackColor = true,
@@ -1075,7 +1075,7 @@ public partial class NozzleForm : Form
                 {
                     Text = Offset,
                     AutoSize = true,
-                    Location = new Point(8, 70),
+                    Location = new Point(8, 80),
                     Margin = new Padding(4, 3, 4, 3),
                     Name = nameof(placeRadioButton2),
                     UseVisualStyleBackColor = true

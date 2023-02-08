@@ -1,4 +1,6 @@
-﻿using CalculateVessels.Core.Shells.Cylindrical;
+﻿using CalculateVessels.Core.Bottoms.FlatBottom;
+using CalculateVessels.Core.Shells.Conical;
+using CalculateVessels.Core.Shells.Cylindrical;
 using CalculateVessels.Core.Shells.Elliptical;
 using CalculateVessels.Core.Shells.Nozzle;
 using CalculateVessels.Output.Interfaces;
@@ -20,7 +22,9 @@ public class ServiceCollectionForWordOutput : IServiceCollectionForWordOutput
 
         services.AddScoped<IWordOutputElement<CylindricalShellCalculated>, CylindricalShellWordOutput>();
         services.AddScoped<IWordOutputElement<EllipticalShellCalculated>, EllipticalShellWordOutput>();
-
+        services.AddScoped<IWordOutputElement<ConicalShellCalculated>, ConicalShellWordOutput>();
         services.AddScoped<IWordOutputElement<NozzleCalculated>, NozzleWordOutput>();
+
+        services.AddScoped<IWordOutputElement<FlatBottomCalculated>, FlatBottomWordOutput>();
     }
 }

@@ -219,13 +219,14 @@ public partial class CylindricalShellForm : Form
         scalc_l.Text = $@"sp={((CylindricalShellCalculated)cylinder).s:f3} мм";
         p_d_l.Text =
             $@"pd={((CylindricalShellCalculated)cylinder).p_d:f2} МПа";
+
         MessageBox.Show(Resources.CalcComplete);
     }
 
     private void Calc_b_Click(object sender, EventArgs e)
     {
-        c_tb.Text = "";
-        scalc_l.Text = "";
+        c_tb.Clear();
+        scalc_l.Text = string.Empty;
 
         if (!CollectDataForFinishCalculation()) return;
 

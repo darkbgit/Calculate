@@ -13,6 +13,7 @@ public class NozzleCalculated : CalculatedElement, ICalculatedElement
     {
         Bibliography = new[]
         {
+            Data.Properties.Resources.GOST_34233_1,
             Data.Properties.Resources.GOST_34233_3
         };
     }

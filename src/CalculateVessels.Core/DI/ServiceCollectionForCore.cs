@@ -1,4 +1,6 @@
-﻿using CalculateVessels.Core.Interfaces;
+﻿using CalculateVessels.Core.Bottoms.FlatBottom;
+using CalculateVessels.Core.Interfaces;
+using CalculateVessels.Core.Shells.Conical;
 using CalculateVessels.Core.Shells.Cylindrical;
 using CalculateVessels.Core.Shells.Elliptical;
 using CalculateVessels.Core.Shells.Nozzle;
@@ -12,8 +14,9 @@ public class ServiceCollectionForCore : IServiceCollectionForCore
     {
         services.AddScoped<ICalculateService<CylindricalShellInput>, CylindricalShellCalculateService>();
         services.AddScoped<ICalculateService<EllipticalShellInput>, EllipticalShellCalculateService>();
-
+        services.AddScoped<ICalculateService<ConicalShellInput>, ConicalShellCalculateService>();
         services.AddScoped<ICalculateService<NozzleInput>, NozzleCalculateService>();
 
+        services.AddScoped<ICalculateService<FlatBottomInput>, FlatBottomCalculateService>();
     }
 }

@@ -27,7 +27,7 @@ public partial class MainForm : Form
     public EllipticalShellForm? EllipticalForm;
     // public FlatBottomWithAdditionalMomentForm flatBottomWithAdditionalMomentForm = null;
     public NozzleForm? NozzleForm;
-    // public FlatBottomForm pdf = null;
+    public FlatBottomForm? FlatBottomForm;
     // public SaddleForm saddleForm = null;
     // public HeatExchangerWithFixedTubePlatesForm heatExchangerWithFixedTubePlatesForm = null;
 
@@ -172,7 +172,7 @@ public partial class MainForm : Form
         {
             try
             {
-                File.Copy("temp.docx", filePathWithFileExtension);
+                File.Copy("Templates/temp.docx", filePathWithFileExtension);
             }
             catch (Exception ex)
             {
@@ -254,16 +254,18 @@ public partial class MainForm : Form
 
     private void FlatBottom_b_Click(object sender, EventArgs e)
     {
-        //     if (pdf == null)
-        //     {
-        //         pdf = new FlatBottomForm { Owner = this };
-        //         pdf.Show();
-        //     }
-        //     else
-        //     {
-        //         pdf.Owner = this;
-        //         pdf.Show();
-        //     }
+        if (FlatBottomForm == null)
+        {
+            FlatBottomForm = _formFactory.Create<FlatBottomForm>();
+            if (FlatBottomForm == null) return;
+            FlatBottomForm.Owner = this;
+            FlatBottomForm.Show();
+        }
+        else
+        {
+            FlatBottomForm.Owner = this;
+            FlatBottomForm.Show();
+        }
     }
 
     private void FlatBottomWithAdditionalMoment_b_Click(object sender, EventArgs e)

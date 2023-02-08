@@ -39,7 +39,7 @@ internal static class Gost34233D1
         }
 
         var result = Enumerable.Empty<string>();
-        steels.ForEach(s => result = result.Union<string>(s.Name));
+        steels.ForEach(s => result = result.Union(s.Name));
         result = result.OrderByDescending(s => s);
 
         return result;
