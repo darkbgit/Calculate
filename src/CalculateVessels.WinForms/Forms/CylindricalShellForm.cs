@@ -191,8 +191,7 @@ public partial class CylindricalShellForm : Form
 
     private void PreCalc_b_Click(object sender, EventArgs e)
     {
-        c_tb.Text = "";
-        scalc_l.Text = "";
+        scalc_l.Text = string.Empty;
         calc_b.Enabled = false;
 
         if (!CollectDataForPreliminarilyCalculation()) return;
@@ -225,7 +224,6 @@ public partial class CylindricalShellForm : Form
 
     private void Calc_b_Click(object sender, EventArgs e)
     {
-        c_tb.Clear();
         scalc_l.Text = string.Empty;
 
         if (!CollectDataForFinishCalculation()) return;

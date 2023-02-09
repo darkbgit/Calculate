@@ -36,7 +36,6 @@ partial class EllipticalShellForm
             this.label25 = new System.Windows.Forms.Label();
             this.label24 = new System.Windows.Forms.Label();
             this.label23 = new System.Windows.Forms.Label();
-            this.label22 = new System.Windows.Forms.Label();
             this.label21 = new System.Windows.Forms.Label();
             this.cancel_b = new System.Windows.Forms.Button();
             this.calc_b = new System.Windows.Forms.Button();
@@ -56,14 +55,12 @@ partial class EllipticalShellForm
             this.label18 = new System.Windows.Forms.Label();
             this.s_tb = new System.Windows.Forms.TextBox();
             this.label17 = new System.Windows.Forms.Label();
-            this.label16 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
-            this.c_tb = new System.Windows.Forms.TextBox();
             this.c3_tb = new System.Windows.Forms.TextBox();
             this.c2_tb = new System.Windows.Forms.TextBox();
             this.c1_tb = new System.Windows.Forms.TextBox();
@@ -110,7 +107,7 @@ partial class EllipticalShellForm
             // 
             this.label28.AutoSize = true;
             this.label28.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.label28.Location = new System.Drawing.Point(0, 549);
+            this.label28.Location = new System.Drawing.Point(0, 513);
             this.label28.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label28.MaximumSize = new System.Drawing.Size(0, 1);
             this.label28.MinimumSize = new System.Drawing.Size(350, 0);
@@ -122,7 +119,7 @@ partial class EllipticalShellForm
             // label27
             // 
             this.label27.AutoSize = true;
-            this.label27.Location = new System.Drawing.Point(268, 557);
+            this.label27.Location = new System.Drawing.Point(268, 521);
             this.label27.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label27.Name = "label27";
             this.label27.Size = new System.Drawing.Size(25, 15);
@@ -169,16 +166,6 @@ partial class EllipticalShellForm
             this.label23.TabIndex = 110;
             this.label23.Text = "мм";
             // 
-            // label22
-            // 
-            this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(268, 523);
-            this.label22.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(25, 15);
-            this.label22.TabIndex = 109;
-            this.label22.Text = "мм";
-            // 
             // label21
             // 
             this.label21.AutoSize = true;
@@ -191,7 +178,7 @@ partial class EllipticalShellForm
             // 
             // cancel_b
             // 
-            this.cancel_b.Location = new System.Drawing.Point(246, 601);
+            this.cancel_b.Location = new System.Drawing.Point(246, 622);
             this.cancel_b.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cancel_b.Name = "cancel_b";
             this.cancel_b.Size = new System.Drawing.Size(88, 27);
@@ -202,7 +189,8 @@ partial class EllipticalShellForm
             // 
             // calc_b
             // 
-            this.calc_b.Location = new System.Drawing.Point(151, 601);
+            this.calc_b.Enabled = false;
+            this.calc_b.Location = new System.Drawing.Point(151, 622);
             this.calc_b.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.calc_b.Name = "calc_b";
             this.calc_b.Size = new System.Drawing.Size(88, 27);
@@ -213,7 +201,7 @@ partial class EllipticalShellForm
             // 
             // predCalc_b
             // 
-            this.predCalc_b.Location = new System.Drawing.Point(13, 593);
+            this.predCalc_b.Location = new System.Drawing.Point(13, 607);
             this.predCalc_b.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.predCalc_b.Name = "predCalc_b";
             this.predCalc_b.Size = new System.Drawing.Size(130, 42);
@@ -226,7 +214,7 @@ partial class EllipticalShellForm
             // 
             this.groupBox4.Controls.Add(this.p_d_l);
             this.groupBox4.Controls.Add(this.scalc_l);
-            this.groupBox4.Location = new System.Drawing.Point(381, 565);
+            this.groupBox4.Location = new System.Drawing.Point(381, 591);
             this.groupBox4.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -298,7 +286,7 @@ partial class EllipticalShellForm
             // 
             // getGostDim_b
             // 
-            this.getGostDim_b.Location = new System.Drawing.Point(311, 330);
+            this.getGostDim_b.Location = new System.Drawing.Point(307, 330);
             this.getGostDim_b.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.getGostDim_b.Name = "getGostDim_b";
             this.getGostDim_b.Size = new System.Drawing.Size(43, 93);
@@ -309,7 +297,7 @@ partial class EllipticalShellForm
             // 
             // getFi_b
             // 
-            this.getFi_b.Location = new System.Drawing.Point(311, 297);
+            this.getFi_b.Location = new System.Drawing.Point(307, 293);
             this.getFi_b.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.getFi_b.Name = "getFi_b";
             this.getFi_b.Size = new System.Drawing.Size(43, 23);
@@ -321,7 +309,7 @@ partial class EllipticalShellForm
             // getE_b
             // 
             this.getE_b.Enabled = false;
-            this.getE_b.Location = new System.Drawing.Point(311, 255);
+            this.getE_b.Location = new System.Drawing.Point(307, 257);
             this.getE_b.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.getE_b.Name = "getE_b";
             this.getE_b.Size = new System.Drawing.Size(43, 23);
@@ -341,7 +329,7 @@ partial class EllipticalShellForm
             // 
             // grtSigma_b
             // 
-            this.grtSigma_b.Location = new System.Drawing.Point(311, 224);
+            this.grtSigma_b.Location = new System.Drawing.Point(307, 221);
             this.grtSigma_b.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.grtSigma_b.Name = "grtSigma_b";
             this.grtSigma_b.Size = new System.Drawing.Size(43, 23);
@@ -361,7 +349,7 @@ partial class EllipticalShellForm
             // 
             // s_tb
             // 
-            this.s_tb.Location = new System.Drawing.Point(214, 554);
+            this.s_tb.Location = new System.Drawing.Point(214, 518);
             this.s_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.s_tb.Name = "s_tb";
             this.s_tb.Size = new System.Drawing.Size(46, 23);
@@ -372,22 +360,12 @@ partial class EllipticalShellForm
             // 
             this.label17.AutoSize = true;
             this.label17.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.label17.Location = new System.Drawing.Point(77, 557);
+            this.label17.Location = new System.Drawing.Point(77, 521);
             this.label17.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(131, 15);
             this.label17.TabIndex = 90;
             this.label17.Text = "Принятая толщина, s:";
-            // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(92, 523);
-            this.label16.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(116, 15);
-            this.label16.TabIndex = 89;
-            this.label16.Text = "Общая прибавка, с:";
             // 
             // label15
             // 
@@ -430,6 +408,7 @@ partial class EllipticalShellForm
             this.label12.TabIndex = 85;
             this.label12.Text = "Высота выпуклой части днища\r\nпо внутренней поверхности без\r\nучета цилиндрической " +
     "части, Н:";
+            this.label12.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // label11
             // 
@@ -451,14 +430,6 @@ partial class EllipticalShellForm
             this.label10.Size = new System.Drawing.Size(192, 15);
             this.label10.TabIndex = 83;
             this.label10.Text = "К-т прочности сварного шва, φp:";
-            // 
-            // c_tb
-            // 
-            this.c_tb.Location = new System.Drawing.Point(214, 519);
-            this.c_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.c_tb.Name = "c_tb";
-            this.c_tb.Size = new System.Drawing.Size(46, 23);
-            this.c_tb.TabIndex = 81;
             // 
             // c3_tb
             // 
@@ -518,7 +489,6 @@ partial class EllipticalShellForm
             this.E_tb.Location = new System.Drawing.Point(136, 257);
             this.E_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.E_tb.Name = "E_tb";
-            this.E_tb.ReadOnly = true;
             this.E_tb.Size = new System.Drawing.Size(46, 23);
             this.E_tb.TabIndex = 74;
             // 
@@ -528,12 +498,12 @@ partial class EllipticalShellForm
             this.sigma_d_tb.Location = new System.Drawing.Point(136, 222);
             this.sigma_d_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.sigma_d_tb.Name = "sigma_d_tb";
-            this.sigma_d_tb.ReadOnly = true;
             this.sigma_d_tb.Size = new System.Drawing.Size(46, 23);
             this.sigma_d_tb.TabIndex = 73;
             // 
             // steel_cb
             // 
+            this.steel_cb.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.steel_cb.FormattingEnabled = true;
             this.steel_cb.Location = new System.Drawing.Point(214, 190);
             this.steel_cb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -652,6 +622,7 @@ partial class EllipticalShellForm
             // 
             // Gost_cb
             // 
+            this.Gost_cb.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.Gost_cb.FormattingEnabled = true;
             this.Gost_cb.Location = new System.Drawing.Point(214, 44);
             this.Gost_cb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -777,6 +748,7 @@ partial class EllipticalShellForm
             this.label9.Size = new System.Drawing.Size(121, 30);
             this.label9.TabIndex = 121;
             this.label9.Text = "Модуль продольной\r\n упругости, E:";
+            this.label9.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // label8
             // 
@@ -787,11 +759,12 @@ partial class EllipticalShellForm
             this.label8.Size = new System.Drawing.Size(102, 30);
             this.label8.TabIndex = 120;
             this.label8.Text = "Допускаемое\r\n напряжение, [σ]:";
+            this.label8.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // EHandle_cb
             // 
             this.EHandle_cb.AutoSize = true;
-            this.EHandle_cb.Location = new System.Drawing.Point(229, 257);
+            this.EHandle_cb.Location = new System.Drawing.Point(229, 251);
             this.EHandle_cb.Name = "EHandle_cb";
             this.EHandle_cb.Size = new System.Drawing.Size(75, 34);
             this.EHandle_cb.TabIndex = 123;
@@ -802,7 +775,7 @@ partial class EllipticalShellForm
             // sigmaHandle_cb
             // 
             this.sigmaHandle_cb.AutoSize = true;
-            this.sigmaHandle_cb.Location = new System.Drawing.Point(229, 219);
+            this.sigmaHandle_cb.Location = new System.Drawing.Point(229, 216);
             this.sigmaHandle_cb.Name = "sigmaHandle_cb";
             this.sigmaHandle_cb.Size = new System.Drawing.Size(75, 34);
             this.sigmaHandle_cb.TabIndex = 122;
@@ -813,7 +786,7 @@ partial class EllipticalShellForm
             // isNozzleCalculateCheckBox
             // 
             this.isNozzleCalculateCheckBox.AutoSize = true;
-            this.isNozzleCalculateCheckBox.Location = new System.Drawing.Point(381, 531);
+            this.isNozzleCalculateCheckBox.Location = new System.Drawing.Point(163, 591);
             this.isNozzleCalculateCheckBox.Name = "isNozzleCalculateCheckBox";
             this.isNozzleCalculateCheckBox.Size = new System.Drawing.Size(190, 19);
             this.isNozzleCalculateCheckBox.TabIndex = 124;
@@ -824,7 +797,7 @@ partial class EllipticalShellForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(664, 648);
+            this.ClientSize = new System.Drawing.Size(664, 661);
             this.Controls.Add(this.isNozzleCalculateCheckBox);
             this.Controls.Add(this.EHandle_cb);
             this.Controls.Add(this.sigmaHandle_cb);
@@ -840,7 +813,6 @@ partial class EllipticalShellForm
             this.Controls.Add(this.label25);
             this.Controls.Add(this.label24);
             this.Controls.Add(this.label23);
-            this.Controls.Add(this.label22);
             this.Controls.Add(this.label21);
             this.Controls.Add(this.cancel_b);
             this.Controls.Add(this.calc_b);
@@ -858,14 +830,12 @@ partial class EllipticalShellForm
             this.Controls.Add(this.label18);
             this.Controls.Add(this.s_tb);
             this.Controls.Add(this.label17);
-            this.Controls.Add(this.label16);
             this.Controls.Add(this.label15);
             this.Controls.Add(this.label14);
             this.Controls.Add(this.label13);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.label11);
             this.Controls.Add(this.label10);
-            this.Controls.Add(this.c_tb);
             this.Controls.Add(this.c3_tb);
             this.Controls.Add(this.c2_tb);
             this.Controls.Add(this.c1_tb);
@@ -886,6 +856,8 @@ partial class EllipticalShellForm
             this.Controls.Add(this.button1);
             this.Controls.Add(this.name_tb);
             this.Controls.Add(this.label1);
+            this.MaximumSize = new System.Drawing.Size(680, 700);
+            this.MinimumSize = new System.Drawing.Size(680, 700);
             this.Name = "EllipticalShellForm";
             this.Text = "EllForm";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.EllForm_FormClosing);
@@ -910,7 +882,6 @@ partial class EllipticalShellForm
     private System.Windows.Forms.Label label25;
     private System.Windows.Forms.Label label24;
     private System.Windows.Forms.Label label23;
-    private System.Windows.Forms.Label label22;
     private System.Windows.Forms.Label label21;
     private System.Windows.Forms.Button cancel_b;
     private System.Windows.Forms.Button calc_b;
@@ -929,14 +900,12 @@ partial class EllipticalShellForm
     private System.Windows.Forms.Button grtSigma_b;
     private System.Windows.Forms.Label label18;
     private System.Windows.Forms.Label label17;
-    private System.Windows.Forms.Label label16;
     private System.Windows.Forms.Label label15;
     private System.Windows.Forms.Label label14;
     private System.Windows.Forms.Label label13;
     private System.Windows.Forms.Label label12;
     private System.Windows.Forms.Label label11;
     private System.Windows.Forms.Label label10;
-    private System.Windows.Forms.TextBox c_tb;
     private System.Windows.Forms.TextBox c2_tb;
     private System.Windows.Forms.TextBox c1_tb;
     internal System.Windows.Forms.TextBox fi_tb;

@@ -157,7 +157,6 @@ public partial class EllipticalShellForm : Form
 
     private void PreCalc_b_Click(object sender, EventArgs e)
     {
-        c_tb.Text = string.Empty;
         scalc_l.Text = string.Empty;
         calc_b.Enabled = false;
 
@@ -206,8 +205,7 @@ public partial class EllipticalShellForm : Form
 
     private void Calc_b_Click(object sender, EventArgs e)
     {
-        c_tb.Text = "";
-        scalc_l.Text = "";
+        scalc_l.Text = string.Empty;
 
         if (!CollectDataForFinishCalculation()) return;
 

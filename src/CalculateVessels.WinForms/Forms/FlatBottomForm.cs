@@ -87,7 +87,6 @@ public partial class FlatBottomForm : Form
     private void Cancel_b_Click(object sender, EventArgs e)
     {
         Hide();
-
     }
 
     private void Otv_cb_CheckedChanged(object sender, EventArgs e)
@@ -805,9 +804,8 @@ public partial class FlatBottomForm : Form
 
     private void PreCalc_btn_Click(object sender, EventArgs e)
     {
-        c_tb.Text = "";
-        scalc_l.Text = "";
-        p_d_l.Text = "";
+        scalc_l.Text = string.Empty;
+        p_d_l.Text = string.Empty;
         calc_btn.Enabled = false;
 
         if (!CollectDataForPreliminarilyCalculation()) return;
@@ -888,10 +886,11 @@ public partial class FlatBottomForm : Form
             t = Parameters.GetParam<double>(t_tb.Text, "t", ref dataInErr, NumberStyles.Integer),
             Steel = steel_cb.Text,
             p = Parameters.GetParam<double>(p_tb.Text, "p", ref dataInErr),
-            fi = Parameters.GetParam<double>(fi_tb.Text, "fi", ref dataInErr),
+            fi = Parameters.GetParam<double>(fi_tb.Text, "φ", ref dataInErr),
             c1 = Parameters.GetParam<double>(c1_tb.Text, "c1", ref dataInErr),
             c2 = Parameters.GetParam<double>(c2_tb.Text, "c2", ref dataInErr),
             c3 = Parameters.GetParam<double>(c3_tb.Text, "c3", ref dataInErr),
+            s1 = Parameters.GetParam<double>(s1_tb.Text, "s1", ref dataInErr),
             Type = Parameters.GetParam<int>(type_gb.Controls.OfType<RadioButton>().FirstOrDefault(rb => rb.Checked)?.Text,
                 "Type", ref dataInErr),
             SigmaAllow = sigmaHandle_cb.Checked
@@ -957,7 +956,7 @@ public partial class FlatBottomForm : Form
         }
         else
         {
-            var d = Parameters.GetParam<double>(holed_tb?.Text, "d", ref dataInErr);
+            var d = Parameters.GetParam<double>(holed_tb.Text, "d", ref dataInErr);
             if (oneHole_rb.Checked)
             {
                 _inputData.Hole = HoleInFlatBottom.OneHole;
@@ -969,8 +968,6 @@ public partial class FlatBottomForm : Form
                 _inputData.di = d;
             }
         }
-
-        _inputData.s1 = Parameters.GetParam<double>(s1_tb?.Text, "s1", ref dataInErr);
 
         var isNoError = !dataInErr.Any() && _inputData.IsDataGood;
 

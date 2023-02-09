@@ -25,7 +25,7 @@ public partial class MainForm : Form
 
     public CylindricalShellForm? CylindricalForm;
     public EllipticalShellForm? EllipticalForm;
-    // public FlatBottomWithAdditionalMomentForm flatBottomWithAdditionalMomentForm = null;
+    public FlatBottomWithAdditionalMomentForm? FlatBottomWithAdditionalMomentForm;
     public NozzleForm? NozzleForm;
     public FlatBottomForm? FlatBottomForm;
     // public SaddleForm saddleForm = null;
@@ -195,7 +195,6 @@ public partial class MainForm : Form
     {
         if (CylindricalForm == null)
         {
-            //cf.Dispose();
             CylindricalForm = _formFactory.Create<CylindricalShellForm>();
             if (CylindricalForm == null) return;
             CylindricalForm.Owner = this;
@@ -270,16 +269,18 @@ public partial class MainForm : Form
 
     private void FlatBottomWithAdditionalMoment_b_Click(object sender, EventArgs e)
     {
-        //     if (flatBottomWithAdditionalMomentForm == null)
-        //     {
-        //         flatBottomWithAdditionalMomentForm = new FlatBottomWithAdditionalMomentForm { Owner = this };
-        //         flatBottomWithAdditionalMomentForm.Show();
-        //     }
-        //     else
-        //     {
-        //         flatBottomWithAdditionalMomentForm.Owner = this;
-        //         flatBottomWithAdditionalMomentForm.Show();
-        //     }
+        if (FlatBottomWithAdditionalMomentForm == null)
+        {
+            FlatBottomWithAdditionalMomentForm = _formFactory.Create<FlatBottomWithAdditionalMomentForm>();
+            if (FlatBottomWithAdditionalMomentForm == null) return;
+            FlatBottomWithAdditionalMomentForm.Owner = this;
+            FlatBottomWithAdditionalMomentForm.Show();
+        }
+        else
+        {
+            FlatBottomWithAdditionalMomentForm.Owner = this;
+            FlatBottomWithAdditionalMomentForm.Show();
+        }
     }
 
     private void HeatExchangerWithFixedTubePlate_b_Click(object sender, EventArgs e)

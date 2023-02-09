@@ -1,4 +1,5 @@
 ﻿using CalculateVessels.Core.Bottoms.FlatBottom;
+using CalculateVessels.Core.Bottoms.FlatBottomWithAdditionalMoment;
 using CalculateVessels.Core.Interfaces;
 using CalculateVessels.Core.Shells.Conical;
 using CalculateVessels.Core.Shells.Cylindrical;
@@ -18,5 +19,8 @@ public class ServiceCollectionForCore : IServiceCollectionForCore
         services.AddScoped<ICalculateService<NozzleInput>, NozzleCalculateService>();
 
         services.AddScoped<ICalculateService<FlatBottomInput>, FlatBottomCalculateService>();
+        services
+            .AddScoped<ICalculateService<FlatBottomWithAdditionalMomentInput>,
+                FlatBottomWithAdditionalMomentCalculateService>();
     }
 }

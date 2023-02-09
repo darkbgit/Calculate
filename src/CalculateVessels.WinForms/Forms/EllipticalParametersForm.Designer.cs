@@ -90,6 +90,7 @@ namespace CalculateVessels.Forms
             // 
             // type_cb
             // 
+            this.type_cb.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.type_cb.FormattingEnabled = true;
             this.type_cb.Items.AddRange(new object[] {
             "hн = 0,25 Dвн ГОСТ 6533-78",
@@ -103,6 +104,7 @@ namespace CalculateVessels.Forms
             // 
             // D_cb
             // 
+            this.D_cb.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.D_cb.FormattingEnabled = true;
             this.D_cb.Location = new System.Drawing.Point(100, 41);
             this.D_cb.Name = "D_cb";
@@ -112,6 +114,7 @@ namespace CalculateVessels.Forms
             // 
             // s_cb
             // 
+            this.s_cb.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.s_cb.FormattingEnabled = true;
             this.s_cb.Location = new System.Drawing.Point(100, 70);
             this.s_cb.Name = "s_cb";
@@ -153,7 +156,7 @@ namespace CalculateVessels.Forms
             this.Cancel_b.UseVisualStyleBackColor = true;
             this.Cancel_b.Click += new System.EventHandler(this.Cancel_b_Click);
             // 
-            // GostEllForm
+            // EllipticalParametersForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -171,7 +174,7 @@ namespace CalculateVessels.Forms
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Name = "GostEllForm";
+            this.Name = "EllipticalParametersForm";
             this.Text = "GostEllForm";
             this.Load += new System.EventHandler(this.GostEllForm_Load);
             this.ResumeLayout(false);

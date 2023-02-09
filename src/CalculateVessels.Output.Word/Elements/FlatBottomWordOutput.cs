@@ -19,8 +19,8 @@ public class FlatBottomWordOutput : IWordOutputElement<FlatBottomCalculated>
 
         if (string.IsNullOrWhiteSpace(filePath))
         {
-            const string DEFAULT_FILE_NAME = "temp.docx";
-            filePath = DEFAULT_FILE_NAME;
+            const string defaultFileName = "temp.docx";
+            filePath = defaultFileName;
         }
 
         using var package = WordprocessingDocument.Open(filePath, true);

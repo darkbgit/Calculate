@@ -7,39 +7,49 @@ namespace CalculateVessels.Core.Helpers;
 
 internal class PhysicalHelper
 {
-    public static double GetSigmaIfZero(double sigmaAllow, string steel, double temperature, IPhysicalDataService service, SigmaSource source = SigmaSource.G34233D1)
+    public static double GetSigma(string steel, double temperature, IPhysicalDataService service, SigmaSource source = SigmaSource.G34233D1)
     {
-        if (sigmaAllow != 0) return sigmaAllow;
-
-        double result;
-
         try
         {
-            result = service.GetSigma(steel, temperature, source);
+            return service.GetSigma(steel, temperature, source);
         }
         catch (PhysicalDataException e)
         {
-            throw new CalculateException($"Error get sigma. {e.Message}", e);
+            throw new CalculateException($"Couldn't get sigma. {e.Message}", e);
         }
+    }
 
-        return result;
+    public static double GetSigmaIfZero(double sigmaAllow, string steel, double temperature, IPhysicalDataService service, SigmaSource source = SigmaSource.G34233D1)
+    {
+        return sigmaAllow != 0 ? sigmaAllow : GetSigma(steel, temperature, service, source);
+    }
+
+    public static double GetE(string steel, double temperature, IPhysicalDataService service, ESource source = ESource.G34233D1)
+    {
+        try
+        {
+            return service.GetE(steel, temperature, source);
+        }
+        catch (PhysicalDataException e)
+        {
+            throw new CalculateException($"Couldn't get E. {e.Message}", e);
+        }
     }
 
     public static double GetEIfZero(double E, string steel, double temperature, IPhysicalDataService service, ESource source = ESource.G34233D1)
     {
-        if (E != 0) return E;
+        return E != 0 ? E : GetE(steel, temperature, service, source);
+    }
 
-        double result;
-
+    public static double GetAlpha(string steel, double temperature, IPhysicalDataService service, AlphaSource source = AlphaSource.G34233D1)
+    {
         try
         {
-            result = service.GetE(steel, temperature, source);
+            return service.GetAlpha(steel, temperature, source);
         }
         catch (PhysicalDataException e)
         {
-            throw new CalculateException($"Error get E. {e.Message}", e);
+            throw new CalculateException($"Couldn't get alpha. {e.Message}", e);
         }
-
-        return result;
     }
 }
