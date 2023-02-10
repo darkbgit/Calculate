@@ -874,7 +874,6 @@ public partial class FlatBottomForm : Form
 
         MessageBox.Show(Resources.CalcComplete);
         Close();
-
     }
 
     private bool CollectDataForPreliminarilyCalculation()

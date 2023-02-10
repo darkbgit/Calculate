@@ -48,6 +48,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Forms\Base\" />
     <Folder Include="Helpers\" />
   </ItemGroup>
 

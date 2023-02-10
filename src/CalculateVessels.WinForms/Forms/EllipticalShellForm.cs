@@ -78,7 +78,7 @@ public partial class EllipticalShellForm : Form
             Steel = steel_cb.Text,
             IsPressureIn = vn_rb.Checked,
             p = Parameters.GetParam<double>(p_tb.Text, "p", ref dataInErr),
-            fi = Parameters.GetParam<double>(fi_tb.Text, "fi", ref dataInErr),
+            fi = Parameters.GetParam<double>(fi_tb.Text, "φ", ref dataInErr),
             D = Parameters.GetParam<double>(D_tb.Text, "D", ref dataInErr),
             EllipseH = Parameters.GetParam<double>(H_tb.Text, "H", ref dataInErr),
             Ellipseh1 = Parameters.GetParam<double>(h1_tb.Text, "h1", ref dataInErr),

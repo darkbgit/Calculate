@@ -22,13 +22,12 @@ public partial class MainForm : Form
         ElementsCollection = new ElementsCollection<ICalculatedElement>();
     }
 
-
     public CylindricalShellForm? CylindricalForm;
     public EllipticalShellForm? EllipticalForm;
     public FlatBottomWithAdditionalMomentForm? FlatBottomWithAdditionalMomentForm;
     public NozzleForm? NozzleForm;
     public FlatBottomForm? FlatBottomForm;
-    // public SaddleForm saddleForm = null;
+    public SaddleForm? SaddleForm;
     // public HeatExchangerWithFixedTubePlatesForm heatExchangerWithFixedTubePlatesForm = null;
 
     internal ElementsCollection<ICalculatedElement> ElementsCollection { get; set; }
@@ -239,16 +238,18 @@ public partial class MainForm : Form
 
     private void Saddle_b_Click(object sender, EventArgs e)
     {
-        //     if (saddleForm == null)
-        //     {
-        //         saddleForm = new SaddleForm { Owner = this };
-        //         saddleForm.Show();
-        //     }
-        //     else
-        //     {
-        //         saddleForm.Owner = this;
-        //         saddleForm.Show();
-        //     }
+        if (SaddleForm == null)
+        {
+            SaddleForm = _formFactory.Create<SaddleForm>();
+            if (SaddleForm == null) return;
+            SaddleForm.Owner = this;
+            SaddleForm.Show();
+        }
+        else
+        {
+            SaddleForm.Owner = this;
+            SaddleForm.Show();
+        }
     }
 
     private void FlatBottom_b_Click(object sender, EventArgs e)
