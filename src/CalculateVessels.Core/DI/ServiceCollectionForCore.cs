@@ -5,6 +5,7 @@ using CalculateVessels.Core.Shells.Conical;
 using CalculateVessels.Core.Shells.Cylindrical;
 using CalculateVessels.Core.Shells.Elliptical;
 using CalculateVessels.Core.Shells.Nozzle;
+using CalculateVessels.Core.Supports.BracketVertical;
 using CalculateVessels.Core.Supports.Saddle;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -24,5 +25,6 @@ public class ServiceCollectionForCore : IServiceCollectionForCore
             .AddScoped<ICalculateService<FlatBottomWithAdditionalMomentInput>,
                 FlatBottomWithAdditionalMomentCalculateService>();
         services.AddScoped<ICalculateService<SaddleInput>, SaddleCalculateService>();
+        services.AddScoped<ICalculateService<BracketVerticalInput>, BracketVerticalCalculateService>();
     }
 }

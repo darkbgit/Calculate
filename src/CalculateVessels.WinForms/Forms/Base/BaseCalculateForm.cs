@@ -9,13 +9,14 @@ using System.Windows.Forms;
 
 namespace CalculateVessels.Forms.Base;
 
+//[TypeDescriptionProvider(typeof(AbstractControlDescriptionProvider<BaseCalculateForm<T>, Form>))]
 public abstract class BaseCalculateForm<T> : Form
     where T : class, IInputData
 {
     private readonly IEnumerable<ICalculateService<T>> _calculateServices;
     private readonly IPhysicalDataService _physicalDataService;
 
-    protected T? InputData;
+    protected T? InputData { get; set; }
 
     protected BaseCalculateForm(IEnumerable<ICalculateService<T>> calculateServices,
         IPhysicalDataService physicalDataService)

@@ -9,21 +9,20 @@ using System.Drawing;
 using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
-using CalculateVessels.Forms.Base;
 using CalculateVessels.Core.Enums;
 using CalculateVessels.Helpers;
 
 namespace CalculateVessels.Forms;
 
-public sealed partial class SaddleForm : BaseCalculateForm<SaddleInput>
+public sealed partial class SaddleForm : SaddleFormMiddle
 {
-
     public SaddleForm(IEnumerable<ICalculateService<SaddleInput>> calculateServices,
         IPhysicalDataService physicalDataService)
         : base(calculateServices, physicalDataService)
     {
         InitializeComponent();
     }
+
 
     protected override string GetServiceName()
     {
@@ -104,7 +103,7 @@ public sealed partial class SaddleForm : BaseCalculateForm<SaddleInput>
         return isNoError;
     }
 
-    protected override bool CollectDataForFinishCalculation()
+    private bool CollectDataForFinishCalculation()
     {
         if (InputData == null) throw new InvalidOperationException();
 

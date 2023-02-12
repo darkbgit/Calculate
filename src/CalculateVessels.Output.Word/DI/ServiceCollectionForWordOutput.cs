@@ -4,6 +4,7 @@ using CalculateVessels.Core.Shells.Conical;
 using CalculateVessels.Core.Shells.Cylindrical;
 using CalculateVessels.Core.Shells.Elliptical;
 using CalculateVessels.Core.Shells.Nozzle;
+using CalculateVessels.Core.Supports.BracketVertical;
 using CalculateVessels.Core.Supports.Saddle;
 using CalculateVessels.Output.Interfaces;
 using CalculateVessels.Output.Word.Core;
@@ -32,5 +33,6 @@ public class ServiceCollectionForWordOutput : IServiceCollectionForWordOutput
             .AddScoped<IWordOutputElement<FlatBottomWithAdditionalMomentCalculated>,
                 FlatBottomWithAdditionalMomentWordOutput>();
         services.AddScoped<IWordOutputElement<SaddleCalculated>, SaddleWordOutput>();
+        services.AddScoped<IWordOutputElement<BracketVerticalCalculated>, BracketVerticalWordOutput>();
     }
 }

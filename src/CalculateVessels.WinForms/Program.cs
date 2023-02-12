@@ -38,7 +38,7 @@ internal static class Program
 
                 var forms = typeof(Program).Assembly
                     .GetTypes()
-                    .Where(t => (t.BaseType == typeof(Form) && !t.IsAbstract) || t.BaseType?.BaseType == typeof(Form))
+                    .Where(t => (t.BaseType == typeof(Form) && !t.IsAbstract) || t.BaseType?.BaseType?.BaseType == typeof(Form))
                     .ToList();
 
                 forms.ForEach(form =>

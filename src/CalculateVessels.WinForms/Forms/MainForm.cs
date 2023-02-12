@@ -28,6 +28,8 @@ public partial class MainForm : Form
     public NozzleForm? NozzleForm;
     public FlatBottomForm? FlatBottomForm;
     public SaddleForm? SaddleForm;
+
+    public BracketVerticalForm? BracketVerticalForm;
     // public HeatExchangerWithFixedTubePlatesForm heatExchangerWithFixedTubePlatesForm = null;
 
     internal ElementsCollection<ICalculatedElement> ElementsCollection { get; set; }
@@ -189,6 +191,22 @@ public partial class MainForm : Form
         return OutputType.Word;
     }
 
+    private void OpenForm<T>(T? form)
+     where T : Form
+    {
+        if (form == null)
+        {
+            form = _formFactory.Create<T>();
+            if (form == null) return;
+            form.Owner = this;
+            form.Show();
+        }
+        else
+        {
+            form.Owner = this;
+            form.Show();
+        }
+    }
 
     private void Cil_b_Click(object sender, EventArgs e)
     {
@@ -238,18 +256,19 @@ public partial class MainForm : Form
 
     private void Saddle_b_Click(object sender, EventArgs e)
     {
-        if (SaddleForm == null)
-        {
-            SaddleForm = _formFactory.Create<SaddleForm>();
-            if (SaddleForm == null) return;
-            SaddleForm.Owner = this;
-            SaddleForm.Show();
-        }
-        else
-        {
-            SaddleForm.Owner = this;
-            SaddleForm.Show();
-        }
+        OpenForm(SaddleForm);
+        //if (SaddleForm == null)
+        //{
+        //    SaddleForm = _formFactory.Create<SaddleForm>();
+        //    if (SaddleForm == null) return;
+        //    SaddleForm.Owner = this;
+        //    SaddleForm.Show();
+        //}
+        //else
+        //{
+        //    SaddleForm.Owner = this;
+        //    SaddleForm.Show();
+        //}
     }
 
     private void FlatBottom_b_Click(object sender, EventArgs e)
@@ -296,6 +315,11 @@ public partial class MainForm : Form
         //         heatExchangerWithFixedTubePlatesForm.Owner = this;
         //         heatExchangerWithFixedTubePlatesForm.Show();
         //     }
+    }
+
+    private void BracketVertical_b_Click(object sender, EventArgs e)
+    {
+        OpenForm(BracketVerticalForm);
     }
 
     private void Word_lv_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)

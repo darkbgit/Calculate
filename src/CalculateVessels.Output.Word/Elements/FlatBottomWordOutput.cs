@@ -8,7 +8,7 @@ using DocumentFormat.OpenXml.Packaging;
 
 namespace CalculateVessels.Output.Word.Elements;
 
-public class FlatBottomWordOutput : IWordOutputElement<FlatBottomCalculated>
+internal class FlatBottomWordOutput : IWordOutputElement<FlatBottomCalculated>
 {
     public void MakeWord(string filePath, ICalculatedElement calculatedData)
     {
