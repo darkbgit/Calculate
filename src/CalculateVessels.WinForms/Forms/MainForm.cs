@@ -135,6 +135,10 @@ public partial class MainForm : Form
 
     private static bool TryGetFilePath(string filePath, out string filePathWithFileExtension)
     {
+        const string templatesFolder = "Templates";
+        const string templateFile = "temp.docx";
+        const string fileExtension = ".docx";
+
         filePathWithFileExtension = string.Empty;
 
         if (string.IsNullOrWhiteSpace(filePath))
@@ -149,8 +153,8 @@ public partial class MainForm : Form
             return false;
         }
 
-        filePathWithFileExtension = filePath + ".docx";
-        if (File.Exists(filePath))
+        filePathWithFileExtension = filePath + fileExtension;
+        if (File.Exists(filePathWithFileExtension))
         {
             var bad = true;
             while (bad)
@@ -172,7 +176,8 @@ public partial class MainForm : Form
         {
             try
             {
-                File.Copy("temp.docx", filePathWithFileExtension);
+                var templateFilePath = Path.Combine(templatesFolder, templateFile);
+                File.Copy(templateFilePath, filePathWithFileExtension);
             }
             catch (Exception ex)
             {

@@ -120,7 +120,7 @@ internal class EllipticalShellWordOutput : IWordOutputElement<EllipticalShellCal
 
             table.AddRow()
                 .AddCell("Допускаемое напряжение при расчетной температуре, [σ]:")
-                .AddCell($"{dataIn.SigmaAllow} МПа");
+                .AddCell($"{data.SigmaAllow} МПа");
 
             if (!dataIn.IsPressureIn)
             {
@@ -168,7 +168,7 @@ internal class EllipticalShellWordOutput : IWordOutputElement<EllipticalShellCal
         if (dataIn.IsPressureIn)
         {
             body.AddParagraph("")
-                .AppendEquation($"s_p=({dataIn.p}∙{data.EllipseR:f2})/(2∙{dataIn.SigmaAllow}∙{dataIn.fi}-0.5{dataIn.p})={data.s_p:f2} мм");
+                .AppendEquation($"s_p=({dataIn.p}∙{data.EllipseR:f2})/(2∙{data.SigmaAllow}∙{dataIn.fi}-0.5{dataIn.p})={data.s_p:f2} мм");
         }
         else
         {
@@ -204,7 +204,7 @@ internal class EllipticalShellWordOutput : IWordOutputElement<EllipticalShellCal
             body.AddParagraph("Допускаемое внутреннее избыточное давление вычисляют по формуле:");
             body.AddParagraph("")
                 .AppendEquation("[p]=(2∙[σ]∙φ∙(s_1-c))/(R+0.5∙(s-c))" +
-                                $"=(2∙{dataIn.SigmaAllow}∙{dataIn.fi}∙({dataIn.s}-{data.c:f2}))/" +
+                                $"=(2∙{data.SigmaAllow}∙{dataIn.fi}∙({dataIn.s}-{data.c:f2}))/" +
                                 $"({data.EllipseR:f2}+0.5∙({dataIn.s}-{data.c:f2}))={data.p_d:f2} МПа");
         }
         else
@@ -215,7 +215,7 @@ internal class EllipticalShellWordOutput : IWordOutputElement<EllipticalShellCal
             body.AddParagraph("допускаемое давление из условия прочности вычисляют по формуле:");
             body.AddParagraph("")
                 .AppendEquation("[p]_П=(2∙[σ]∙(s_1-c))/(R+0.5(s_1-c))" +
-                                $"=(2∙{dataIn.SigmaAllow}∙({dataIn.s}-{data.c:f2}))/({data.EllipseR}+0.5({dataIn.s}-{data.c:f2}))={data.p_dp:f2} МПа");
+                                $"=(2∙{data.SigmaAllow}∙({dataIn.s}-{data.c:f2}))/({data.EllipseR}+0.5({dataIn.s}-{data.c:f2}))={data.p_dp:f2} МПа");
             body.AddParagraph("допускаемое давление из условия устойчивости в пределах упругости вычисляют по формуле:");
             body.AddParagraph("")
                 .AppendEquation("[p]_E=(2.6∙10^-5∙E)/n_y∙[(100∙(s_1-c))/(К_Э∙R)]^2");
@@ -227,7 +227,7 @@ internal class EllipticalShellWordOutput : IWordOutputElement<EllipticalShellCal
             body.AddParagraph("")
                 .AppendEquation($"x=10∙(s_1-c)/D∙(D/(2∙H)-(2∙H)/D)=10∙({dataIn.s - data.c:f2})/{dataIn.D}∙({dataIn.D}/(2∙{dataIn.EllipseH})-(2∙{dataIn.EllipseH})/{dataIn.D})={data.Ellipsex:f2}");
             body.AddParagraph("")
-                .AppendEquation($"К_Э=(1+(2.4+8∙{data.Ellipsex})∙{data.Ellipsex})/(1+(3+10∙{data.Ellipsex})∙{data.Ellipsex}={data.EllipseKe:f2}");
+                .AppendEquation($"К_Э=(1+(2.4+8∙{data.Ellipsex:f2})∙{data.Ellipsex:f2})/(1+(3+10∙{data.Ellipsex:f2})∙{data.Ellipsex:f2})={data.EllipseKe:f2}");
             body.AddParagraph("")
                 .AppendEquation($"[p]_E=(2.6∙10^-5∙{data.E})/{dataIn.ny}∙" +
                                 $"[(100∙({dataIn.s}-{data.c:f2}))/({data.EllipseKe:f2}∙{data.EllipseR:f2})]^2={data.p_de:f2} МПа");

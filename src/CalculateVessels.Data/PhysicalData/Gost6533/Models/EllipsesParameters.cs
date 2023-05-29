@@ -6,6 +6,6 @@ public class EllipsesParameters
 {
     public Dictionary<double, List<EllipseSValueParameters>> EllipticalBottomInsideDiameter025 { get; set; } = new Dictionary<double, List<EllipseSValueParameters>>();
 
-    public Dictionary<double, List<EllipseSValueParameters>> EllipticalBottomOutsideDiameter025 { get; set; } =
+    public Dictionary<double, List<EllipseSValueParameters>> EllipticalBottomInsideDiameter02 { get; set; } =
         new Dictionary<double, List<EllipseSValueParameters>>();
 }

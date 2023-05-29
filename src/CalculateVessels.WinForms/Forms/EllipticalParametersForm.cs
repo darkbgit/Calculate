@@ -42,7 +42,7 @@ public partial class EllipticalParametersForm : Form
             0 => _ellipses.EllipticalBottomInsideDiameter025.Keys
                 .Select(eb => eb.ToString(CultureInfo.CurrentCulture))
                 .ToArray<object>(),
-            1 => _ellipses.EllipticalBottomOutsideDiameter025.Keys
+            1 => _ellipses.EllipticalBottomInsideDiameter02.Keys
                 .Select(eb => eb.ToString(CultureInfo.CurrentCulture))
                 .ToArray<object>(),
             _ => null
@@ -136,7 +136,7 @@ public partial class EllipticalParametersForm : Form
         {
             0 => _ellipses.EllipticalBottomInsideDiameter025
                 .TryGetValue(diameter, out result),
-            1 => _ellipses.EllipticalBottomOutsideDiameter025
+            1 => _ellipses.EllipticalBottomInsideDiameter02
                 .TryGetValue(diameter, out result),
             _ => false
         };

@@ -232,7 +232,7 @@ internal class NozzleCalculateService : ICalculateService<NozzleInput>
             case ShellType.Torospherical:
                 {
                     // TODO: 
-                    //data.dmax = 0.6 * shellDataIn.D;
+                    data.dmax = 0.6 * shellDataIn.D;
                     break;
                 }
         }
