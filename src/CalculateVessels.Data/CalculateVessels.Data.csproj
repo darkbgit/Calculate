@@ -55,28 +55,28 @@
     <None Update="PhysicalData\Gost34233_1\Data\Steels.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="PhysicalData\Gost34233_4\Gaskets.json">
+    <None Update="PhysicalData\Gost34233_4\Data\Gaskets.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="PhysicalData\Gost34233_4\SteelsAlpha_old.json">
+    <None Update="PhysicalData\Gost34233_4\Data\SteelsAlpha_old.json">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="PhysicalData\Gost34233_4\Data\SteelsAlpha.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="PhysicalData\Gost34233_4\SteelsAlpha.json">
+    <None Update="PhysicalData\Gost34233_4\Data\SteelsE_old.json">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="PhysicalData\Gost34233_4\Data\SteelsE.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="PhysicalData\Gost34233_4\SteelsE_old.json">
+    <None Update="PhysicalData\Gost34233_4\Data\SteelsSigma.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="PhysicalData\Gost34233_4\SteelsE.json">
+    <None Update="PhysicalData\Gost34233_4\Data\TableD1.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="PhysicalData\Gost34233_4\SteelsSigma.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="PhysicalData\Gost34233_4\TableD1.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="PhysicalData\Gost34233_4\Steels.json">
+    <None Update="PhysicalData\Gost34233_4\Data\Steels.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="PhysicalData\Gost34233_7\Table1.json">

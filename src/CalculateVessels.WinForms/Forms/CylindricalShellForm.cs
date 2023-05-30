@@ -191,8 +191,7 @@ public partial class CylindricalShellForm : Form
 
     private void PreCalc_b_Click(object sender, EventArgs e)
     {
-        c_tb.Text = "";
-        scalc_l.Text = "";
+        scalc_l.Text = string.Empty;
         calc_b.Enabled = false;
 
         if (!CollectDataForPreliminarilyCalculation()) return;
@@ -219,13 +218,13 @@ public partial class CylindricalShellForm : Form
         scalc_l.Text = $@"sp={((CylindricalShellCalculated)cylinder).s:f3} мм";
         p_d_l.Text =
             $@"pd={((CylindricalShellCalculated)cylinder).p_d:f2} МПа";
+
         MessageBox.Show(Resources.CalcComplete);
     }
 
     private void Calc_b_Click(object sender, EventArgs e)
     {
-        c_tb.Text = "";
-        scalc_l.Text = "";
+        scalc_l.Text = string.Empty;
 
         if (!CollectDataForFinishCalculation()) return;
 

@@ -25,10 +25,8 @@ internal class EllipticalShellWordOutput : IWordOutputElement<EllipticalShellCal
 
         using var package = WordprocessingDocument.Open(filePath, true);
 
-        var mainPart = package.MainDocumentPart;
-        var body = mainPart?.Document.Body;
-
-        if (body == null) return;
+        var mainPart = package.MainDocumentPart ?? throw new InvalidOperationException();
+        var body = mainPart.Document.Body ?? throw new InvalidOperationException();
 
         // TODO: добавить полусферическое
 

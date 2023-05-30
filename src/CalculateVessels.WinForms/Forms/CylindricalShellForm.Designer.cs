@@ -53,7 +53,6 @@ partial class CylindricalShellForm
             this.c1_tb = new System.Windows.Forms.TextBox();
             this.c2_tb = new System.Windows.Forms.TextBox();
             this.c3_tb = new System.Windows.Forms.TextBox();
-            this.c_tb = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
@@ -61,7 +60,6 @@ partial class CylindricalShellForm
             this.label13 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
-            this.label16 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
             this.s_tb = new System.Windows.Forms.TextBox();
             this.label18 = new System.Windows.Forms.Label();
@@ -103,7 +101,6 @@ partial class CylindricalShellForm
             this.cancel_b = new System.Windows.Forms.Button();
             this.shell_pb = new System.Windows.Forms.PictureBox();
             this.label21 = new System.Windows.Forms.Label();
-            this.label22 = new System.Windows.Forms.Label();
             this.label23 = new System.Windows.Forms.Label();
             this.label24 = new System.Windows.Forms.Label();
             this.label25 = new System.Windows.Forms.Label();
@@ -182,6 +179,7 @@ partial class CylindricalShellForm
             // 
             // Gost_cb
             // 
+            this.Gost_cb.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.Gost_cb.FormattingEnabled = true;
             this.Gost_cb.Location = new System.Drawing.Point(224, 41);
             this.Gost_cb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -294,6 +292,7 @@ partial class CylindricalShellForm
             // 
             // steel_cb
             // 
+            this.steel_cb.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.steel_cb.FormattingEnabled = true;
             this.steel_cb.Location = new System.Drawing.Point(224, 182);
             this.steel_cb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -311,6 +310,7 @@ partial class CylindricalShellForm
             this.label8.Size = new System.Drawing.Size(102, 30);
             this.label8.TabIndex = 16;
             this.label8.Text = "Допускаемое\r\n напряжение, [σ]:";
+            this.label8.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // sigma_d_tb
             // 
@@ -391,15 +391,6 @@ partial class CylindricalShellForm
             this.c3_tb.TabIndex = 13;
             this.c3_tb.TextChanged += new System.EventHandler(this.DisabledCalculateBtn);
             // 
-            // c_tb
-            // 
-            this.c_tb.Location = new System.Drawing.Point(224, 466);
-            this.c_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.c_tb.Name = "c_tb";
-            this.c_tb.Size = new System.Drawing.Size(46, 23);
-            this.c_tb.TabIndex = 14;
-            this.c_tb.TextChanged += new System.EventHandler(this.DisabledCalculateBtn);
-            // 
             // label9
             // 
             this.label9.AutoSize = true;
@@ -409,6 +400,7 @@ partial class CylindricalShellForm
             this.label9.Size = new System.Drawing.Size(121, 30);
             this.label9.TabIndex = 26;
             this.label9.Text = "Модуль продольной\r\n упругости, E:";
+            this.label9.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // label10
             // 
@@ -472,21 +464,11 @@ partial class CylindricalShellForm
             this.label15.TabIndex = 32;
             this.label15.Text = "Технологическая прибавка, c3:";
             // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(102, 470);
-            this.label16.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(116, 15);
-            this.label16.TabIndex = 33;
-            this.label16.Text = "Общая прибавка, с:";
-            // 
             // label17
             // 
             this.label17.AutoSize = true;
             this.label17.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.label17.Location = new System.Drawing.Point(87, 506);
+            this.label17.Location = new System.Drawing.Point(87, 469);
             this.label17.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(131, 15);
@@ -495,7 +477,7 @@ partial class CylindricalShellForm
             // 
             // s_tb
             // 
-            this.s_tb.Location = new System.Drawing.Point(224, 503);
+            this.s_tb.Location = new System.Drawing.Point(224, 466);
             this.s_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.s_tb.Name = "s_tb";
             this.s_tb.Size = new System.Drawing.Size(46, 23);
@@ -546,7 +528,7 @@ partial class CylindricalShellForm
             // 
             // getFi_b
             // 
-            this.getFi_b.Location = new System.Drawing.Point(321, 292);
+            this.getFi_b.Location = new System.Drawing.Point(316, 292);
             this.getFi_b.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.getFi_b.Name = "getFi_b";
             this.getFi_b.Size = new System.Drawing.Size(43, 23);
@@ -558,7 +540,7 @@ partial class CylindricalShellForm
             // getL_b
             // 
             this.getL_b.Enabled = false;
-            this.getL_b.Location = new System.Drawing.Point(320, 359);
+            this.getL_b.Location = new System.Drawing.Point(316, 350);
             this.getL_b.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.getL_b.Name = "getL_b";
             this.getL_b.Size = new System.Drawing.Size(43, 23);
@@ -953,16 +935,6 @@ partial class CylindricalShellForm
             this.label21.TabIndex = 52;
             this.label21.Text = "мм";
             // 
-            // label22
-            // 
-            this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(278, 470);
-            this.label22.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(25, 15);
-            this.label22.TabIndex = 53;
-            this.label22.Text = "мм";
-            // 
             // label23
             // 
             this.label23.AutoSize = true;
@@ -1006,7 +978,7 @@ partial class CylindricalShellForm
             // label27
             // 
             this.label27.AutoSize = true;
-            this.label27.Location = new System.Drawing.Point(278, 506);
+            this.label27.Location = new System.Drawing.Point(278, 469);
             this.label27.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label27.Name = "label27";
             this.label27.Size = new System.Drawing.Size(25, 15);
@@ -1017,7 +989,7 @@ partial class CylindricalShellForm
             // 
             this.label28.AutoSize = true;
             this.label28.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.label28.Location = new System.Drawing.Point(-1, 499);
+            this.label28.Location = new System.Drawing.Point(-1, 462);
             this.label28.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label28.MaximumSize = new System.Drawing.Size(0, 1);
             this.label28.MinimumSize = new System.Drawing.Size(350, 0);
@@ -1134,7 +1106,6 @@ partial class CylindricalShellForm
             this.Controls.Add(this.label25);
             this.Controls.Add(this.label24);
             this.Controls.Add(this.label23);
-            this.Controls.Add(this.label22);
             this.Controls.Add(this.label21);
             this.Controls.Add(this.cancel_b);
             this.Controls.Add(this.calc_b);
@@ -1154,7 +1125,6 @@ partial class CylindricalShellForm
             this.Controls.Add(this.label18);
             this.Controls.Add(this.s_tb);
             this.Controls.Add(this.label17);
-            this.Controls.Add(this.label16);
             this.Controls.Add(this.label15);
             this.Controls.Add(this.label14);
             this.Controls.Add(this.label13);
@@ -1162,7 +1132,6 @@ partial class CylindricalShellForm
             this.Controls.Add(this.label11);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.label9);
-            this.Controls.Add(this.c_tb);
             this.Controls.Add(this.c3_tb);
             this.Controls.Add(this.c2_tb);
             this.Controls.Add(this.c1_tb);
@@ -1243,7 +1212,6 @@ partial class CylindricalShellForm
     private System.Windows.Forms.TextBox c1_tb;
     private System.Windows.Forms.TextBox c2_tb;
     private System.Windows.Forms.TextBox c3_tb;
-    private System.Windows.Forms.TextBox c_tb;
     private System.Windows.Forms.Label label9;
     private System.Windows.Forms.Label label10;
     private System.Windows.Forms.Label label11;
@@ -1251,7 +1219,6 @@ partial class CylindricalShellForm
     private System.Windows.Forms.Label label13;
     private System.Windows.Forms.Label label14;
     private System.Windows.Forms.Label label15;
-    private System.Windows.Forms.Label label16;
     private System.Windows.Forms.Label label17;
     private System.Windows.Forms.TextBox s_tb;
     private System.Windows.Forms.Label label18;
@@ -1284,7 +1251,6 @@ partial class CylindricalShellForm
     private System.Windows.Forms.Button calc_b;
     private System.Windows.Forms.Button cancel_b;
     private System.Windows.Forms.Label label21;
-    private System.Windows.Forms.Label label22;
     private System.Windows.Forms.Label label23;
     private System.Windows.Forms.Label label24;
     private System.Windows.Forms.Label label25;

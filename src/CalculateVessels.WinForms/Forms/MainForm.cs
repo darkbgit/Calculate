@@ -1,11 +1,11 @@
-﻿using CalculateVessels.Core.Interfaces;
-using CalculateVessels.Helpers;
-using CalculateVessels.Models;
-using CalculateVessels.Output;
-using System;
+﻿using System;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using CalculateVessels.Core.Interfaces;
+using CalculateVessels.Helpers;
+using CalculateVessels.Models;
+using CalculateVessels.Output;
 
 namespace CalculateVessels.Forms;
 
@@ -22,13 +22,14 @@ public partial class MainForm : Form
         ElementsCollection = new ElementsCollection<ICalculatedElement>();
     }
 
-
     public CylindricalShellForm? CylindricalForm;
     public EllipticalShellForm? EllipticalForm;
-    // public FlatBottomWithAdditionalMomentForm flatBottomWithAdditionalMomentForm = null;
+    public FlatBottomWithAdditionalMomentForm? FlatBottomWithAdditionalMomentForm;
     public NozzleForm? NozzleForm;
-    // public FlatBottomForm pdf = null;
-    // public SaddleForm saddleForm = null;
+    public FlatBottomForm? FlatBottomForm;
+    public SaddleForm? SaddleForm;
+
+    public BracketVerticalForm? BracketVerticalForm;
     // public HeatExchangerWithFixedTubePlatesForm heatExchangerWithFixedTubePlatesForm = null;
 
     internal ElementsCollection<ICalculatedElement> ElementsCollection { get; set; }
@@ -195,12 +196,27 @@ public partial class MainForm : Form
         return OutputType.Word;
     }
 
+    private void OpenForm<T>(T? form)
+     where T : Form
+    {
+        if (form == null)
+        {
+            form = _formFactory.Create<T>();
+            if (form == null) return;
+            form.Owner = this;
+            form.Show();
+        }
+        else
+        {
+            form.Owner = this;
+            form.Show();
+        }
+    }
 
     private void Cil_b_Click(object sender, EventArgs e)
     {
         if (CylindricalForm == null)
         {
-            //cf.Dispose();
             CylindricalForm = _formFactory.Create<CylindricalShellForm>();
             if (CylindricalForm == null) return;
             CylindricalForm.Owner = this;
@@ -245,44 +261,51 @@ public partial class MainForm : Form
 
     private void Saddle_b_Click(object sender, EventArgs e)
     {
-        //     if (saddleForm == null)
-        //     {
-        //         saddleForm = new SaddleForm { Owner = this };
-        //         saddleForm.Show();
-        //     }
-        //     else
-        //     {
-        //         saddleForm.Owner = this;
-        //         saddleForm.Show();
-        //     }
+        OpenForm(SaddleForm);
+        //if (SaddleForm == null)
+        //{
+        //    SaddleForm = _formFactory.Create<SaddleForm>();
+        //    if (SaddleForm == null) return;
+        //    SaddleForm.Owner = this;
+        //    SaddleForm.Show();
+        //}
+        //else
+        //{
+        //    SaddleForm.Owner = this;
+        //    SaddleForm.Show();
+        //}
     }
 
     private void FlatBottom_b_Click(object sender, EventArgs e)
     {
-        //     if (pdf == null)
-        //     {
-        //         pdf = new FlatBottomForm { Owner = this };
-        //         pdf.Show();
-        //     }
-        //     else
-        //     {
-        //         pdf.Owner = this;
-        //         pdf.Show();
-        //     }
+        if (FlatBottomForm == null)
+        {
+            FlatBottomForm = _formFactory.Create<FlatBottomForm>();
+            if (FlatBottomForm == null) return;
+            FlatBottomForm.Owner = this;
+            FlatBottomForm.Show();
+        }
+        else
+        {
+            FlatBottomForm.Owner = this;
+            FlatBottomForm.Show();
+        }
     }
 
     private void FlatBottomWithAdditionalMoment_b_Click(object sender, EventArgs e)
     {
-        //     if (flatBottomWithAdditionalMomentForm == null)
-        //     {
-        //         flatBottomWithAdditionalMomentForm = new FlatBottomWithAdditionalMomentForm { Owner = this };
-        //         flatBottomWithAdditionalMomentForm.Show();
-        //     }
-        //     else
-        //     {
-        //         flatBottomWithAdditionalMomentForm.Owner = this;
-        //         flatBottomWithAdditionalMomentForm.Show();
-        //     }
+        if (FlatBottomWithAdditionalMomentForm == null)
+        {
+            FlatBottomWithAdditionalMomentForm = _formFactory.Create<FlatBottomWithAdditionalMomentForm>();
+            if (FlatBottomWithAdditionalMomentForm == null) return;
+            FlatBottomWithAdditionalMomentForm.Owner = this;
+            FlatBottomWithAdditionalMomentForm.Show();
+        }
+        else
+        {
+            FlatBottomWithAdditionalMomentForm.Owner = this;
+            FlatBottomWithAdditionalMomentForm.Show();
+        }
     }
 
     private void HeatExchangerWithFixedTubePlate_b_Click(object sender, EventArgs e)
@@ -297,6 +320,11 @@ public partial class MainForm : Form
         //         heatExchangerWithFixedTubePlatesForm.Owner = this;
         //         heatExchangerWithFixedTubePlatesForm.Show();
         //     }
+    }
+
+    private void BracketVertical_b_Click(object sender, EventArgs e)
+    {
+        OpenForm(BracketVerticalForm);
     }
 
     private void Word_lv_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)

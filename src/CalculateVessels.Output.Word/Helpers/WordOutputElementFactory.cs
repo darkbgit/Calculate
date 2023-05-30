@@ -13,7 +13,7 @@ public class WordOutputElementFactory : IWordOutputElementFactory
         _scope = scopeFactory.CreateScope();
     }
 
-    public IWordOutputElement<T>? Create<T>() 
+    public IWordOutputElement<T>? Create<T>()
         where T : class, ICalculatedElement
     {
         return _scope.ServiceProvider.GetService<IWordOutputElement<T>>();

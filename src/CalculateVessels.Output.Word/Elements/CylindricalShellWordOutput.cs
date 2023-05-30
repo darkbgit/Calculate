@@ -1,6 +1,4 @@
-﻿using System;
-using System.IO;
-using CalculateVessels.Core.Interfaces;
+﻿using CalculateVessels.Core.Interfaces;
 using CalculateVessels.Core.Shells.Cylindrical;
 using CalculateVessels.Output.Word.Core;
 using CalculateVessels.Output.Word.Enums;
@@ -26,10 +24,8 @@ internal class CylindricalShellWordOutput : IWordOutputElement<CylindricalShellC
 
         using var package = WordprocessingDocument.Open(filePath, true);
 
-        var mainPart = package.MainDocumentPart;
-        var body = mainPart?.Document.Body;
-
-        if (body == null) return;
+        var mainPart = package.MainDocumentPart ?? throw new InvalidOperationException(); ;
+        var body = mainPart.Document.Body ?? throw new InvalidOperationException(); ;
 
         body.AddParagraph($"Расчет на прочность обечайки {dataIn.Name}, нагруженной " +
                           (dataIn.IsPressureIn ? "внутренним избыточным давлением" : "наружным давлением")).Heading(HeadingType.Heading1);

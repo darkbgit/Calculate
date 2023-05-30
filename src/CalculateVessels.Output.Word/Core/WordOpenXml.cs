@@ -1,13 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using CalculateVessels.Output.Word.Enums;
+﻿using CalculateVessels.Output.Word.Enums;
 using DocumentFormat.OpenXml;
-using DocumentFormat.OpenXml.ExtendedProperties;
-using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
 using ImageMagick;
 using A = DocumentFormat.OpenXml.Drawing;
@@ -18,7 +10,7 @@ namespace CalculateVessels.Output.Word.Core;
 
 internal static class WordOpenXml
 {
-    public static Paragraph AddParagraph(this Body body, string text)
+    public static Paragraph AddParagraph(this Body body, string text = "")
     {
         var p = body.AppendChild(new Paragraph());
         var r = p.AppendChild(new Run());
@@ -29,7 +21,7 @@ internal static class WordOpenXml
         return p;
     }
 
-    public static Run AddRun(this Paragraph p, string runText)
+    public static Run AddRun(this Paragraph p, string runText = "")
     {
         var r = p.AppendChild(new Run());
         r.AppendChild(new Text(runText)
@@ -39,9 +31,10 @@ internal static class WordOpenXml
         return r;
     }
 
-    public static Run AddRun(this Run r, string runText)
+    public static Run AddRun(this Run r, string runText = "")
     {
-        var p = r.Parent as Paragraph;
+        if (r.Parent is not Paragraph p) throw new InvalidOperationException();
+
         var newRun = p.AppendChild(new Run());
         r.AppendChild(new Text(runText)
         {
@@ -60,7 +53,8 @@ internal static class WordOpenXml
 
     public static Paragraph AppendEquation(this Run r, string text)
     {
-        var p = r.Parent as Paragraph;
+        if (r.Parent is not Paragraph p) throw new InvalidOperationException();
+
         var pM = p.AppendChild(new DocumentFormat.OpenXml.Math.Paragraph());
         var m = new DocumentFormat.OpenXml.Math.OfficeMath(new Run(new Text(text)));
         pM.AppendChild(m);
@@ -71,29 +65,18 @@ internal static class WordOpenXml
     {
         if (!p.Elements<ParagraphProperties>().Any())
         {
-            p.PrependChild<ParagraphProperties>(new ParagraphProperties());
+            p.PrependChild(new ParagraphProperties());
         }
 
         var pPr = p.Elements<ParagraphProperties>().First();
 
-        switch (alignmentType)
+        pPr.Justification = alignmentType switch
         {
-            case AlignmentType.Center:
-                {
-                    pPr.Justification = new Justification() { Val = JustificationValues.Center };
-                    break;
-                }
-            case AlignmentType.Right:
-                {
-                    pPr.Justification = new Justification() { Val = JustificationValues.Right };
-                    break;
-                }
-            case AlignmentType.Left:
-                {
-                    pPr.Justification = new Justification() { Val = JustificationValues.Left };
-                    break;
-                }
-        }
+            AlignmentType.Center => new Justification { Val = JustificationValues.Center },
+            AlignmentType.Right => new Justification { Val = JustificationValues.Right },
+            AlignmentType.Left => new Justification { Val = JustificationValues.Left },
+            _ => pPr.Justification
+        };
 
         return p;
     }
@@ -102,33 +85,30 @@ internal static class WordOpenXml
     {
         if (!p.Elements<ParagraphProperties>().Any())
         {
-            p.PrependChild<ParagraphProperties>(new ParagraphProperties());
+            p.PrependChild(new ParagraphProperties());
         }
 
         var pPr = p.Elements<ParagraphProperties>().First();
 
-        switch (headingType)
+        pPr.ParagraphStyleId = headingType switch
         {
-            case HeadingType.Heading1:
-                {
-                    pPr.ParagraphStyleId = new ParagraphStyleId { Val = "1" };
-                    break;
-                }
-        }
-
-
+            HeadingType.Heading1 => new ParagraphStyleId { Val = "1" },
+            _ => pPr.ParagraphStyleId
+        };
 
         return p;
     }
 
     public static Paragraph Bold(this Paragraph p)
     {
-        if (!p.GetFirstChild<Run>().Elements<RunProperties>().Any())
+        var r = p.GetFirstChild<Run>() ?? throw new InvalidOperationException();
+
+        if (!r.Elements<RunProperties>().Any())
         {
-            p.GetFirstChild<Run>().PrependChild<RunProperties>(new RunProperties());
+            r.PrependChild(new RunProperties());
         }
 
-        var rPr = p.GetFirstChild<Run>().Elements<RunProperties>().First();
+        var rPr = r.Elements<RunProperties>().First();
 
         rPr.Bold = new Bold();
 
@@ -139,10 +119,10 @@ internal static class WordOpenXml
     {
         if (!r.Elements<RunProperties>().Any())
         {
-            r.PrependChild<RunProperties>(new RunProperties());
+            r.PrependChild(new RunProperties());
         }
 
-        var rPr = r.RunProperties;
+        var rPr = r.Elements<RunProperties>().First();
 
         rPr.Bold = new Bold();
 
@@ -151,12 +131,14 @@ internal static class WordOpenXml
 
     public static Paragraph Italic(this Paragraph p)
     {
-        if (!p.GetFirstChild<Run>().Elements<RunProperties>().Any())
+        var r = p.GetFirstChild<Run>() ?? throw new InvalidOperationException();
+
+        if (!r.Elements<RunProperties>().Any())
         {
-            p.GetFirstChild<Run>().PrependChild<RunProperties>(new RunProperties());
+            r.PrependChild(new RunProperties());
         }
 
-        var rPr = p.GetFirstChild<Run>().Elements<RunProperties>().First();
+        var rPr = r.Elements<RunProperties>().First();
 
         rPr.Italic = new Italic();
 
@@ -167,10 +149,10 @@ internal static class WordOpenXml
     {
         if (!r.Elements<RunProperties>().Any())
         {
-            r.PrependChild<RunProperties>(new RunProperties());
+            r.PrependChild(new RunProperties());
         }
 
-        var rPr = r.RunProperties;
+        var rPr = r.Elements<RunProperties>().First();
 
         rPr.Italic = new Italic();
 
@@ -179,14 +161,16 @@ internal static class WordOpenXml
 
     public static Paragraph Underline(this Paragraph p)
     {
-        if (!p.GetFirstChild<Run>().Elements<RunProperties>().Any())
+        var r = p.GetFirstChild<Run>() ?? throw new InvalidOperationException();
+
+        if (!r.Elements<RunProperties>().Any())
         {
-            p.GetFirstChild<Run>().PrependChild<RunProperties>(new RunProperties());
+            r.PrependChild(new RunProperties());
         }
 
-        var rPr = p.GetFirstChild<Run>().Elements<RunProperties>().First();
+        var rPr = r.Elements<RunProperties>().First();
 
-        rPr.Underline = new Underline()
+        rPr.Underline = new Underline
         {
             Val = new EnumValue<UnderlineValues>(UnderlineValues.Single)
         };
@@ -198,10 +182,10 @@ internal static class WordOpenXml
     {
         if (!r.Elements<RunProperties>().Any())
         {
-            r.PrependChild<RunProperties>(new RunProperties());
+            r.PrependChild(new RunProperties());
         }
 
-        var rPr = r.RunProperties;
+        var rPr = r.Elements<RunProperties>().First();
 
         rPr.Underline = new Underline();
 
@@ -210,14 +194,16 @@ internal static class WordOpenXml
 
     public static Paragraph Color(this Paragraph p, System.Drawing.Color color)
     {
-        if (!p.GetFirstChild<Run>().Elements<RunProperties>().Any())
+        var r = p.GetFirstChild<Run>() ?? throw new InvalidOperationException();
+
+        if (!r.Elements<RunProperties>().Any())
         {
-            p.GetFirstChild<Run>().PrependChild<RunProperties>(new RunProperties());
+            r.PrependChild(new RunProperties());
         }
 
-        var rPr = p.GetFirstChild<Run>().Elements<RunProperties>().First();
+        var rPr = r.Elements<RunProperties>().First();
 
-        rPr.Color = new Color()
+        rPr.Color = new Color
         {
             Val = color.ToString()
         };
@@ -229,14 +215,14 @@ internal static class WordOpenXml
     {
         if (!r.Elements<RunProperties>().Any())
         {
-            r.PrependChild<RunProperties>(new RunProperties());
+            r.PrependChild(new RunProperties());
         }
 
-        var rPr = r.RunProperties;
+        var rPr = r.Elements<RunProperties>().First();
 
-        rPr.Color = new Color()
+        rPr.Color = new Color
         {
-            Val = color.ToString() //Val = "FF0000"
+            Val = color.ToString()
         };
 
         return r;
@@ -244,37 +230,34 @@ internal static class WordOpenXml
 
     public static void AddImage(this Paragraph p, string relationshipId, byte[] image)
     {
-        long width;
-        long height;
-
-        (width, height) = GetImageSize(image);
+        var (width, height) = GetImageSize(image);
 
         // Define the reference of the image.
         var element =
              new Drawing(
                  new DW.Inline(
-                     new DW.Extent() { Cx = width, Cy = height },
-                     new DW.EffectExtent()
+                     new DW.Extent { Cx = width, Cy = height },
+                     new DW.EffectExtent
                      {
                          LeftEdge = 0L,
                          TopEdge = 0L,
                          RightEdge = 0L,
                          BottomEdge = 0L
                      },
-                     new DW.DocProperties()
+                     new DW.DocProperties
                      {
-                         Id = (UInt32Value)1U,
+                         Id = (UInt32Value)(uint)image.GetHashCode(),
                          Name = "Picture 1"
                      },
                      new DW.NonVisualGraphicFrameDrawingProperties(
-                         new A.GraphicFrameLocks() { NoChangeAspect = true }),
+                         new A.GraphicFrameLocks { NoChangeAspect = true }),
                      new A.Graphic(
                          new A.GraphicData(
                              new PIC.Picture(
                                  new PIC.NonVisualPictureProperties(
                                      new PIC.NonVisualDrawingProperties()
                                      {
-                                         Id = (UInt32Value)0U,
+                                         Id = (UInt32Value)(uint)image.GetHashCode(),
                                          Name = "New Bitmap Image.jpg"
                                      },
                                      new PIC.NonVisualPictureDrawingProperties()),
@@ -297,7 +280,7 @@ internal static class WordOpenXml
                                  new PIC.ShapeProperties(
                                      new A.Transform2D(
                                          new A.Offset() { X = 0L, Y = 0L },
-                                         new A.Extents() { Cx = width, Cy = height }),
+                                         new A.Extents { Cx = width, Cy = height }),
                                      new A.PresetGeometry(
                                          new A.AdjustValueList()
                                      )
@@ -313,10 +296,7 @@ internal static class WordOpenXml
                      EditId = "50D07946"
                  });
 
-        // Append the reference to body, the element should be in a Run.
-        //wordDoc.MainDocumentPart.Document.Body.AppendChild(new Paragraph(new Run(element)));
-
-        p.GetFirstChild<Run>().PrependChild(element);
+        p.AppendChild(new Run(element));
     }
 
     public static Table AddTable(this Body body)
@@ -326,34 +306,33 @@ internal static class WordOpenXml
         // Create a TableProperties object and specify its border information.
         TableProperties tblProp = new(
             new TableBorders(
-                new TopBorder()
+                new TopBorder
                 {
                     Val = new EnumValue<BorderValues>(BorderValues.Single)
                 },
-                new BottomBorder()
+                new BottomBorder
                 {
                     Val = new EnumValue<BorderValues>(BorderValues.Single)
                 },
-                new LeftBorder()
+                new LeftBorder
                 {
                     Val = new EnumValue<BorderValues>(BorderValues.Single)
                 },
-                new RightBorder()
+                new RightBorder
                 {
                     Val = new EnumValue<BorderValues>(BorderValues.Single)
                 },
-                new InsideHorizontalBorder()
+                new InsideHorizontalBorder
                 {
                     Val = new EnumValue<BorderValues>(BorderValues.Single)
                 },
-                new InsideVerticalBorder()
+                new InsideVerticalBorder
                 {
                     Val = new EnumValue<BorderValues>(BorderValues.Single)
                 }
             )
         );
-        // Append the TableProperties object to the empty table.
-        table.AppendChild<TableProperties>(tblProp);
+        table.AppendChild(tblProp);
 
         return table;
     }
@@ -367,15 +346,26 @@ internal static class WordOpenXml
 
     public static TableRow AddRowWithOneCell(this Table table, string text, JustificationValues justification = JustificationValues.Center, int gridSpanCount = 0)
     {
+        if (table.GetFirstChild<TableRow>() == null)
+        {
+            throw new InvalidOperationException();
+        }
+
         TableRow tr = new();
 
         TableCell tc = new();
 
         tc.Append(new TableCellProperties(
-            new GridSpan { Val = gridSpanCount == 0 ? table.LastChild.ChildElements.Count : gridSpanCount }),
+            new GridSpan
+            {
+                Val = gridSpanCount == 0 ? table.ChildElements.OfType<TableRow>().Last().ChildElements.Count : gridSpanCount
+            }),
             //new Justification { Val = justification }),
             new Paragraph(
-                new ParagraphProperties(new Justification() { Val = justification }),
+                new ParagraphProperties(new Justification
+                {
+                    Val = justification
+                }),
                 new Run(new Text(text)
                 {
                     Space = SpaceProcessingModeValues.Preserve
@@ -385,22 +375,18 @@ internal static class WordOpenXml
 
         table.Append(tr);
         return tr;
-
     }
 
-    public static TableRow AddCell(this TableRow tr, string text)
+    public static TableRow AddCell(this TableRow tr, string text = "")
     {
-        // Create a cell.
-        TableCell tc1 = new();
+        TableCell tc = new();
 
-        // Specify the table cell content.
-        tc1.AppendChild(new Paragraph(new Run(new Text(text)
+        tc.AppendChild(new Paragraph(new Run(new Text(text)
         {
             Space = SpaceProcessingModeValues.Preserve
         })));
 
-        // Append the table cell to the table row.
-        tr.AppendChild(tc1);
+        tr.AppendChild(tc);
 
         return tr;
     }
@@ -408,9 +394,17 @@ internal static class WordOpenXml
 
     public static TableRow AppendText(this TableRow tr, string text)
     {
-        var tc = tr.Elements<TableCell>().Last();
+        if (tr.Elements<TableCell>().Last() is not { } tc)
+            throw new InvalidOperationException();
+
         var p = tc.GetFirstChild<Paragraph>();
-        p.AppendChild(new Run(new Text(text)
+
+        if (p == null)
+        {
+            tc.AppendChild(new Paragraph());
+        }
+
+        tc.GetFirstChild<Paragraph>()!.AppendChild(new Run(new Text(text)
         {
             Space = SpaceProcessingModeValues.Preserve
         }));
@@ -422,7 +416,11 @@ internal static class WordOpenXml
     {
         var tc = tr.Elements<TableCell>().Last();
         var p = tc.GetFirstChild<Paragraph>();
-        var pM = p.AppendChild(new DocumentFormat.OpenXml.Math.Paragraph());
+        if (p == null)
+        {
+            tc.AppendChild(new Paragraph());
+        }
+        var pM = p!.AppendChild(new DocumentFormat.OpenXml.Math.Paragraph());
         var m = new DocumentFormat.OpenXml.Math.OfficeMath(new Run(new Text(text)));
         pM.AppendChild(m);
         return tr;
@@ -435,20 +433,16 @@ internal static class WordOpenXml
 
     private static (long width, long height) GetImageSize(byte[] image)
     {
-        if (image == null)
-        {
-            return default;
-        }
+        const int emusPerPixel = 9525;
 
         using var img = new MagickImage(image);
 
-        long iWidth = img.Width;
-        long iHeight = img.Height;
+        long iWidth = img.Page.Width;
+        long iHeight = img.Page.Height;
 
-        iWidth = (long)Math.Round((decimal)iWidth * 9525);
-        iHeight = (long)Math.Round((decimal)iHeight * 9525);
+        iWidth = (long)Math.Round((decimal)iWidth * emusPerPixel);
+        iHeight = (long)Math.Round((decimal)iHeight * emusPerPixel);
 
         return (iWidth, iHeight);
-
     }
 }

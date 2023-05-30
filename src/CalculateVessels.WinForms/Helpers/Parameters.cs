@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
+using CalculateVessels.Core.Enums;
 
 namespace CalculateVessels.Helpers;
 
@@ -26,6 +28,12 @@ internal static class Parameters
                 if (int.TryParse(paramValue, numberStyles, CultureInfo.InvariantCulture, out var paramIntValue))
                 {
                     return (T)(object)paramIntValue;
+                }
+                break;
+            case var value when value == typeof(BracketVerticalType):
+                if (Enum.TryParse(paramValue, out BracketVerticalType paramBracketVerticalType))
+                {
+                    return (T)(object)paramBracketVerticalType;
                 }
                 break;
 

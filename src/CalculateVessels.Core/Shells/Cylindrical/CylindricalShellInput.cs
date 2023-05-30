@@ -1,7 +1,6 @@
 ﻿using CalculateVessels.Core.Interfaces;
 using CalculateVessels.Core.Shells.Base;
 using CalculateVessels.Core.Shells.Enums;
-using System.Collections.Generic;
 
 namespace CalculateVessels.Core.Shells.Cylindrical;
 
@@ -10,8 +9,6 @@ namespace CalculateVessels.Core.Shells.Cylindrical;
 
 public class CylindricalShellInput : ShellInputData, IInputData
 {
-    private List<string> _errorList = new();
-
     public CylindricalShellInput()
         : base(ShellType.Cylindrical)
     {

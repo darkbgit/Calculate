@@ -4,6 +4,7 @@ using CalculateVessels.Data.Interfaces;
 using CalculateVessels.Data.PhysicalData.Common;
 using CalculateVessels.Data.PhysicalData.Gost34233_1;
 using CalculateVessels.Data.PhysicalData.Gost34233_4;
+using CalculateVessels.Data.PhysicalData.Gost34233_4.Models;
 using CalculateVessels.Data.PhysicalData.Gost34233_7;
 using CalculateVessels.Data.PhysicalData.Gost6533.Models;
 using System;
@@ -21,7 +22,8 @@ internal class PhysicalDataService : IPhysicalDataService
         return source switch
         {
             SigmaSource.G34233D1 => Gost34233D1.GetSigma(steelName, temperature),
-            _ => throw new ArgumentOutOfRangeException(nameof(source), source, null)
+            SigmaSource.G34233D4 => Gost34233D4.GetSigma(steelName, temperature),
+            _ => throw new PhysicalDataException($"{source} isn't supported.")
         };
     }
 
@@ -35,9 +37,19 @@ internal class PhysicalDataService : IPhysicalDataService
         return source switch
         {
             ESource.G34233D1 => Gost34233D1.GetE(steelName, temperature),
-            _ => throw new ArgumentOutOfRangeException(nameof(source), source, null)
+            ESource.G34233D4 => Gost34233D4.GetE(steelName, temperature),
+            _ => throw new PhysicalDataException($"{source} isn't supported.")
         };
-        ;
+    }
+
+    public double GetAlpha(string steelName, double temperature, AlphaSource source)
+    {
+        return source switch
+        {
+            AlphaSource.G34233D1 => Gost34233D1.GetAlpha(steelName, temperature),
+            AlphaSource.G34233D4 => Gost34233D4.GetAlpha(steelName, temperature),
+            _ => throw new PhysicalDataException($"{source} isn't supported.")
+        };
     }
 
     public IEnumerable<string> GetSteels(SteelSource source)
@@ -45,7 +57,9 @@ internal class PhysicalDataService : IPhysicalDataService
         return source switch
         {
             SteelSource.G34233D1 => Gost34233D1.GetSteelsList(),
-            _ => throw new ArgumentOutOfRangeException(nameof(source), source, null)
+            SteelSource.G34233D4Washer => Gost34233D4.GetSteelsList(source),
+            SteelSource.G34233D4Screw => Gost34233D4.GetSteelsList(source),
+            _ => throw new PhysicalDataException($"{source} isn't supported.")
         };
     }
 
@@ -54,196 +68,24 @@ internal class PhysicalDataService : IPhysicalDataService
         return Gost6533.Gost6533.GetEllipsesParameters();
     }
 
-
-    public static class Gost34233_4
+    public double Gost34233D4Get_fb(int screwD, bool isScrewWithGroove)
     {
-        private const string TABLE_D1_SCREW_M = "PhysicalData/Gost34233_4/TableD1.json";
-        private const string TABLE_E = "PhysicalData/Gost34233_4/SteelsE.json";
-        private const string TABLE_SIGMA = "PhysicalData/Gost34233_4/SteelsSigma.json";
-        private const string TABLE_GASKET = "PhysicalData/Gost34233_4/Gaskets.json";
-        private const string TABLE_ALPHA = "PhysicalData/Gost34233_4/SteelsAlfa.json";
+        return Gost34233D4.Getfb(screwD, isScrewWithGroove);
+    }
 
+    public Gasket Gost34233D4GetGasketParameters(string materialName)
+    {
+        return Gost34233D4.GetGasketParameters(materialName);
+    }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="M"></param>
-        /// <param name="isGroove"></param>
-        /// <returns></returns>
-        /// <exception cref="PhysicalDataException"></exception>
-        public static double Getfb(int M, bool isGroove)
-        {
-            Dictionary<int, Fb> fbs;
+    public IEnumerable<string> Gost34233D4GetGasketsList()
+    {
+        return Gost34233D4.GetGasketsList();
+    }
 
-            try
-            {
-                using StreamReader file = new(TABLE_D1_SCREW_M);
-                var json = file.ReadToEnd();
-                file.Close();
-                fbs = JsonSerializer.Deserialize<Dictionary<int, Fb>>(json) ?? throw new InvalidOperationException();
-            }
-            catch
-            {
-                throw new PhysicalDataException($"Error open file {TABLE_D1_SCREW_M} for fb");
-            }
-
-            if (fbs == null || !fbs.ContainsKey(M))
-            {
-                throw new PhysicalDataException($"Error find value for fb for M {M} in file {TABLE_D1_SCREW_M}");
-            }
-
-            return isGroove ? fbs[M].fbGroove : fbs[M].fb;
-        }
-
-        public static IEnumerable<string> GetScrewDs()
-        {
-            Dictionary<int, Fb> fbs;
-
-            try
-            {
-                using StreamReader file = new(TABLE_D1_SCREW_M);
-                var json = file.ReadToEnd();
-                file.Close();
-                fbs = JsonSerializer.Deserialize<Dictionary<int, Fb>>(json) ?? throw new InvalidOperationException();
-            }
-            catch
-            {
-                throw new PhysicalDataException($"Error open file {TABLE_D1_SCREW_M} for screw ds.");
-            }
-
-            if (!fbs.Any())
-            {
-                throw new PhysicalDataException($"Screw ds weren't found in {TABLE_D1_SCREW_M}.");
-            }
-
-            return fbs.Keys.Select(f => f.ToString()).AsEnumerable();
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="name"></param>
-        /// <returns></returns>
-        /// <exception cref="PhysicalDataException"></exception>
-        public static (double m, double qobj, double q_d, double Kobj, double Ep, bool isFlat, bool isMetall) GetGasketParameters(string name)
-        {
-            List<Gasket> gaskets;
-
-            try
-            {
-                using StreamReader file = new(TABLE_GASKET);
-                var json = file.ReadToEnd();
-                file.Close();
-                gaskets = JsonSerializer.Deserialize<List<PhysicalData.Gost34233_4.Gasket>>(json) ?? throw new InvalidOperationException();
-            }
-            catch
-            {
-                throw new PhysicalDataException($"Error open file {TABLE_GASKET} for gasket parameters");
-            }
-
-            var gasket = gaskets?.FirstOrDefault(g => g.Material == name) ??
-                         throw new PhysicalDataException($"Couldn't find gasket parameters for material {name}");
-
-            return (gasket.m, gasket.qobj, gasket.q_d, gasket.Kobj, gasket.Ep, gasket.IsFlat, gasket.IsMetal);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="steelName"></param>
-        /// <param name="temperature"></param>
-        /// <returns></returns>
-        /// <exception cref="PhysicalDataException"></exception>
-        public static double GetSigma(string steelName, double temperature)
-        {
-            List<SteelWithValues> steels;
-
-            try
-            {
-                using StreamReader file = new(TABLE_SIGMA);
-                var json = file.ReadToEnd();
-                file.Close();
-                steels = JsonSerializer.Deserialize<List<SteelWithValues>>(json) ?? throw new InvalidOperationException();
-            }
-            catch
-            {
-                throw new PhysicalDataException($"Error open file {TABLE_SIGMA} for sigma of steel {steelName}");
-            }
-
-            var steel = steels.FirstOrDefault(s => s.Name.Contains(steelName)) ??
-                        throw new PhysicalDataException($"Error find steel {steelName} in file {TABLE_SIGMA}");
-
-            try
-            {
-                var sigmaAllow = InterpolationForParameters(steel.Values, temperature, RoundType.WithAccuracy05);
-                return sigmaAllow;
-            }
-            catch (PhysicalDataException ex)
-            {
-                if (ex.MaxTemperatureError)
-                {
-                    throw new PhysicalDataException(
-                        $"Температура {temperature} °С, больше чем максимальная температура {ex.MaxTemperature} °С " +
-                        $"для стали {steelName} при которой определяется допускаемое напряжение по ГОСТ 34233.4-2017");
-                }
-
-                throw;
-            }
-        }
-
-
-        public static IEnumerable<string> GetGasketsList()
-        {
-            List<Gasket> gaskets;
-
-            try
-            {
-                using StreamReader file = new(TABLE_GASKET);
-                var json = file.ReadToEnd();
-                file.Close();
-                gaskets = JsonSerializer.Deserialize<List<Gasket>>(json) ?? throw new InvalidOperationException();
-            }
-            catch
-            {
-                throw new PhysicalDataException($"Error open file {TABLE_GASKET} for gaskets list.");
-            }
-
-            if (!gaskets.Any())
-            {
-                throw new PhysicalDataException($"Gaskets weren't found in file {TABLE_GASKET}.");
-            }
-
-            return gaskets.Select(g => g.Material);
-        }
-
-        public static IEnumerable<string> GetSteelsList(string type)
-        {
-            var table = type switch
-            {
-                "screw" => TABLE_SIGMA,
-                "washer" => TABLE_E,
-                _ => throw new PhysicalDataException("Type for steels list is wrong.")
-            };
-
-            List<PhysicalData.Gost34233_4.Steel> steels;
-
-            try
-            {
-                using StreamReader file = new(table);
-                var json = file.ReadToEnd();
-                file.Close();
-                steels = JsonSerializer.Deserialize<List<PhysicalData.Gost34233_4.Steel>>(json) ?? throw new InvalidOperationException();
-            }
-            catch
-            {
-                throw new PhysicalDataException($"Error open file {table} for steels list.");
-            }
-
-            List<string> result = new();
-            steels.ForEach(s => result = result.Union(s.Name).ToList());
-
-            return result;
-        }
+    public IEnumerable<string> Gost34233D4GetScrewDs()
+    {
+        return Gost34233D4.GetScrewDs();
     }
 
 

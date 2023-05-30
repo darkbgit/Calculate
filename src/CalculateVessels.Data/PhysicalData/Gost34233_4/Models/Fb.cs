@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace CalculateVessels.Data.PhysicalData.Gost34233_4;
+﻿namespace CalculateVessels.Data.PhysicalData.Gost34233_4.Models;
 
 public class Fb
 {

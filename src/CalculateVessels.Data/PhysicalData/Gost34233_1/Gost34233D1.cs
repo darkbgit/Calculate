@@ -14,17 +14,22 @@ namespace CalculateVessels.Data.PhysicalData.Gost34233_1;
 internal static class Gost34233D1
 {
     private const string GostName = "ГОСТ 34233.1-2017";
-    private const string GostFolder = "Gost34233_1";
+    private const string GostFolder = "Gost34233_1/Data";
     private const string TableSigma = "SteelsSigma.json";
     private const string TableE = "SteelsE.json";
+    private const string TableAlpha = "SteelsAlpha.json";
     private const string TABLE_TYPE = "PhysicalData/Gost34233_1/SteelsType.json";
     private const string TABLE_RM = "PhysicalData/Gost34233_1/SteelsRm.json";
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <exception cref="PhysicalDataException"></exception>
     public static IEnumerable<string> GetSteelsList()
     {
         List<SteelWithName> steels;
 
-        const string fileName = $"{Constants.DataFolder}/{GostFolder}/Data/{TableSigma}";
+        var fileName = Path.Combine(Constants.DataFolder, GostFolder, TableSigma);
 
         using StreamReader file = new(fileName);
         try
@@ -39,7 +44,7 @@ internal static class Gost34233D1
         }
 
         var result = Enumerable.Empty<string>();
-        steels.ForEach(s => result = result.Union<string>(s.Name));
+        steels.ForEach(s => result = result.Union(s.Name));
         result = result.OrderByDescending(s => s);
 
         return result;
@@ -69,18 +74,9 @@ internal static class Gost34233D1
         return (SteelType)steel.SteelType;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="steelName"></param>
-    /// <param name="temperature"></param>
-    /// <param name="s"></param>
-    /// <param name="N"></param>
-    /// <returns></returns>
-    /// <exception cref="PhysicalDataException"></exception>
     public static double GetSigma(string steelName, double temperature, double s = 0, int N = 1000)
     {
-        const string fileName = $"{Constants.DataFolder}/{GostFolder}/Data/{TableSigma}";
+        var fileName = Path.Combine(Constants.DataFolder, GostFolder, TableSigma);
 
         var isBigResource = N switch
         {
@@ -144,7 +140,7 @@ internal static class Gost34233D1
 
     public static double GetE(string steelName, double temperature)
     {
-        const string fileName = $"{Constants.DataFolder}/{GostFolder}/Data/{TableE}";
+        var fileName = Path.Combine(Constants.DataFolder, GostFolder, TableE);
 
         List<SteelWithValues>? steels;
 
@@ -161,12 +157,11 @@ internal static class Gost34233D1
         }
 
         var EList = steels?.FirstOrDefault(s => s.Name.Contains(steelName))
-                    ?? throw new PhysicalDataException($"{GostName}. Steel {steelName} wasn't found.");
+                    ?? throw new PhysicalDataException($"{GostName}. Steel \"{steelName}\" wasn't found.");
 
         try
         {
-            var E = Interpolations.InterpolationForParameters(EList.Values, temperature, RoundType.Integer);
-            return E;
+            return Interpolations.InterpolationForParameters(EList.Values, temperature, RoundType.Integer);
         }
         catch (PhysicalDataException ex)
         {
@@ -181,14 +176,36 @@ internal static class Gost34233D1
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="steelName"></param>
-    /// <param name="temperature"></param>
-    /// <param name="s"></param>
-    /// <returns></returns>
-    /// <exception cref="PhysicalDataException"></exception>
+    public static double GetAlpha(string steelName, double temperature)
+    {
+        var fileName = Path.Combine(Constants.DataFolder, GostFolder, TableAlpha);
+
+        List<SteelWithValues>? steels;
+
+        try
+        {
+            using StreamReader file = new(fileName);
+            var json = file.ReadToEnd();
+            file.Close();
+            steels = JsonSerializer.Deserialize<List<SteelWithValues>>(json);
+        }
+        catch
+        {
+            throw new PhysicalDataException($"{GostName}. Couldn't open file {fileName} for alpha.");
+        }
+
+        var alphaList = steels
+                            ?.FirstOrDefault(s => s.Name.Contains(steelName))
+                        ?? throw new PhysicalDataException($"{GostName}. Couldn't find alpha values for steel \"{steelName}\".");
+
+        if (!alphaList.Values.Keys.Any(k => k >= temperature))
+            throw new PhysicalDataException(
+                $"{GostName}. Couldn't find alpha value for steel \"{steelName}\" temperature \"{temperature}\".");
+
+        var key = alphaList.Values.Keys.First(k => k >= temperature);
+        return alphaList.Values[key];
+    }
+
     public static double GetRm(string steelName, double temperature, double s = 0)
     {
         List<SteelWithListValuesAndThickness> steels;

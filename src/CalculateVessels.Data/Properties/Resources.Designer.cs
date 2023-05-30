@@ -83,6 +83,116 @@ namespace CalculateVessels.Data.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        public static byte[] BracketVertical_2Lugs {
+            get {
+                object obj = ResourceManager.GetObject("BracketVertical_2Lugs", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] BracketVertical_3Lugs {
+            get {
+                object obj = ResourceManager.GetObject("BracketVertical_3Lugs", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] BracketVertical_4Lugs {
+            get {
+                object obj = ResourceManager.GetObject("BracketVertical_4Lugs", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] BracketVertical_A {
+            get {
+                object obj = ResourceManager.GetObject("BracketVertical_A", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] BracketVertical_A_1 {
+            get {
+                object obj = ResourceManager.GetObject("BracketVertical_A_1", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] BracketVertical_B {
+            get {
+                object obj = ResourceManager.GetObject("BracketVertical_B", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] BracketVertical_B_1 {
+            get {
+                object obj = ResourceManager.GetObject("BracketVertical_B_1", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] BracketVertical_C {
+            get {
+                object obj = ResourceManager.GetObject("BracketVertical_C", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] BracketVertical_C_1 {
+            get {
+                object obj = ResourceManager.GetObject("BracketVertical_C_1", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] BracketVertical_D {
+            get {
+                object obj = ResourceManager.GetObject("BracketVertical_D", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] BracketVertical_D_1 {
+            get {
+                object obj = ResourceManager.GetObject("BracketVertical_D_1", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         public static byte[] BSphRadial {
             get {
                 object obj = ResourceManager.GetObject("BSphRadial", resourceCulture);

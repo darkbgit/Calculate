@@ -26,10 +26,8 @@ internal class ConicalShellWordOutput : IWordOutputElement<ConicalShellCalculate
 
         using var package = WordprocessingDocument.Open(filePath, true);
 
-        var mainPart = package.MainDocumentPart
-            ?? throw new InvalidOperationException();
-        var body = mainPart.Document.Body
-            ?? throw new InvalidOperationException();
+        var mainPart = package.MainDocumentPart ?? throw new InvalidOperationException();
+        var body = mainPart.Document.Body ?? throw new InvalidOperationException();
 
         body.AddParagraph($"Расчет на прочность конической обечайки {dataIn.Name}, нагруженной " +
                           (dataIn.IsPressureIn ? "внутренним избыточным давлением" : "наружным давлением")).Heading(HeadingType.Heading1);

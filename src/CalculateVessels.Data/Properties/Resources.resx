@@ -1114,4 +1114,37 @@
   <data name="pldn13" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\pic\pldn\pldn13.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="BracketVertical_2Lugs" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\pic\BracketVertical\2Lugs.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="BracketVertical_3Lugs" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\pic\BracketVertical\3Lugs.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="BracketVertical_4Lugs" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\pic\BracketVertical\4Lugs.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="BracketVertical_A" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\pic\BracketVertical\A.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="BracketVertical_A_1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\pic\BracketVertical\A-1.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="BracketVertical_B" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\pic\BracketVertical\B.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="BracketVertical_B_1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\pic\BracketVertical\B-1.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="BracketVertical_C" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\pic\BracketVertical\C.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="BracketVertical_C_1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\pic\BracketVertical\C-1.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="BracketVertical_D" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\pic\BracketVertical\D.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="BracketVertical_D_1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\pic\BracketVertical\D-1.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
 </root>

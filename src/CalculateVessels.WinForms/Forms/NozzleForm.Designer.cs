@@ -521,6 +521,7 @@ namespace CalculateVessels.Forms
             // 
             // steel1_cb
             // 
+            this.steel1_cb.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.steel1_cb.FormattingEnabled = true;
             this.steel1_cb.Location = new System.Drawing.Point(213, 182);
             this.steel1_cb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -636,6 +637,7 @@ namespace CalculateVessels.Forms
             // 
             // Gost_cb
             // 
+            this.Gost_cb.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.Gost_cb.FormattingEnabled = true;
             this.Gost_cb.Location = new System.Drawing.Point(213, 46);
             this.Gost_cb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -863,6 +865,7 @@ namespace CalculateVessels.Forms
             // 
             // steel2_cb
             // 
+            this.steel2_cb.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.steel2_cb.FormattingEnabled = true;
             this.steel2_cb.Location = new System.Drawing.Point(200, 22);
             this.steel2_cb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -900,6 +903,7 @@ namespace CalculateVessels.Forms
             // 
             // steel3_cb
             // 
+            this.steel3_cb.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.steel3_cb.FormattingEnabled = true;
             this.steel3_cb.Location = new System.Drawing.Point(200, 22);
             this.steel3_cb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);

@@ -1,7 +1,6 @@
 ﻿using CalculateVessels.Core.DI;
 using CalculateVessels.Data.DI;
 using CalculateVessels.Forms;
-using CalculateVessels.Helpers;
 using CalculateVessels.Output.DI;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -9,6 +8,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
+using CalculateVessels.Helpers;
 
 namespace CalculateVessels;
 
@@ -38,7 +38,7 @@ internal static class Program
 
                 var forms = typeof(Program).Assembly
                     .GetTypes()
-                    .Where(t => t.BaseType == typeof(Form))
+                    .Where(t => (t.BaseType == typeof(Form) && !t.IsAbstract) || t.BaseType?.BaseType?.BaseType == typeof(Form))
                     .ToList();
 
                 forms.ForEach(form =>
