@@ -101,7 +101,7 @@ internal class EllipticalShellWordOutput : IWordOutputElement<EllipticalShellCal
                 .AddCell("Коэффициент прочности сварного шва, ")
                 .AppendEquation("φ_p")
                 .AppendText(":")
-                .AddCell($"{dataIn.fi}");
+                .AddCell($"{dataIn.phi}");
 
             table.AddRowWithOneCell("Условия нагружения");
 
@@ -166,7 +166,7 @@ internal class EllipticalShellWordOutput : IWordOutputElement<EllipticalShellCal
         if (dataIn.IsPressureIn)
         {
             body.AddParagraph("")
-                .AppendEquation($"s_p=({dataIn.p}∙{data.EllipseR:f2})/(2∙{data.SigmaAllow}∙{dataIn.fi}-0.5{dataIn.p})={data.s_p:f2} мм");
+                .AppendEquation($"s_p=({dataIn.p}∙{data.EllipseR:f2})/(2∙{data.SigmaAllow}∙{dataIn.phi}-0.5{dataIn.p})={data.s_p:f2} мм");
         }
         else
         {
@@ -202,7 +202,7 @@ internal class EllipticalShellWordOutput : IWordOutputElement<EllipticalShellCal
             body.AddParagraph("Допускаемое внутреннее избыточное давление вычисляют по формуле:");
             body.AddParagraph("")
                 .AppendEquation("[p]=(2∙[σ]∙φ∙(s_1-c))/(R+0.5∙(s-c))" +
-                                $"=(2∙{data.SigmaAllow}∙{dataIn.fi}∙({dataIn.s}-{data.c:f2}))/" +
+                                $"=(2∙{data.SigmaAllow}∙{dataIn.phi}∙({dataIn.s}-{data.c:f2}))/" +
                                 $"({data.EllipseR:f2}+0.5∙({dataIn.s}-{data.c:f2}))={data.p_d:f2} МПа");
         }
         else

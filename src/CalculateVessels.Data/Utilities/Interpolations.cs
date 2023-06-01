@@ -60,6 +60,10 @@ internal static class Interpolations
 
         var temperatureLittle = values.Keys.Last(k => k < temperature);
 
+        if (Math.Abs(values[temperatureBig] - values[temperatureLittle]) < 0.000001)
+        {
+            return values[temperatureBig];
+        }
 
         var result = Interpolation((temperatureBig, values[temperatureBig]), (temperatureLittle, values[temperatureLittle]), temperature, round);
 

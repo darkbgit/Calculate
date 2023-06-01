@@ -59,7 +59,7 @@ internal class NozzleCalculateService : ICalculateService<NozzleInput>
         {
             case ShellType.Conical:
                 data.Dk = ((ConicalShellCalculated)dataIn.ShellCalculatedData).Dk;
-                data.alpha1 = ((ConicalShellInput)shellDataIn).alpha1;
+                data.alpha1 = MathHelper.RadianToDegree(((ConicalShellCalculated)dataIn.ShellCalculatedData).alpha1);
                 break;
             case ShellType.Elliptical:
                 data.EllipseH = ((EllipticalShellInput)shellDataIn).EllipseH;
@@ -99,7 +99,7 @@ internal class NozzleCalculateService : ICalculateService<NozzleInput>
         if (shellDataIn is EllipticalShellInput { ShellType: ShellType.Elliptical, IsPressureIn: true } ellipticalDataIn)
         {
             data.sp = shellDataIn.p * data.Dp /
-                      (4.0 * ellipticalDataIn.fi * data.SigmaAllowShell - shellDataIn.p);
+                      (4.0 * ellipticalDataIn.phi * data.SigmaAllowShell - shellDataIn.p);
         }
         else
         {

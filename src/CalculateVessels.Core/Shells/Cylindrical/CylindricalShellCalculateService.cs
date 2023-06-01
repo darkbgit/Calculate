@@ -31,7 +31,7 @@ internal class CylindricalShellCalculateService : ICalculateService<CylindricalS
         {
             if (dataIn.IsPressureIn)
             {
-                data.s_p = dataIn.p * dataIn.D / (2 * data.SigmaAllow * dataIn.fi - dataIn.p);
+                data.s_p = dataIn.p * dataIn.D / (2 * data.SigmaAllow * dataIn.phi - dataIn.p);
                 data.s = data.s_p + data.c;
 
                 if (dataIn.s != 0.0)
@@ -39,7 +39,7 @@ internal class CylindricalShellCalculateService : ICalculateService<CylindricalS
                     if (data.s > dataIn.s)
                         throw new CalculateException("Принятая толщина меньше расчетной.");
 
-                    data.p_d = 2 * data.SigmaAllow * dataIn.fi * (dataIn.s - data.c) /
+                    data.p_d = 2 * data.SigmaAllow * dataIn.phi * (dataIn.s - data.c) /
                                (dataIn.D + dataIn.s - data.c);
                 }
             }

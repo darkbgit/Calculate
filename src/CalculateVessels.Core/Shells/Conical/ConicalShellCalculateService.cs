@@ -56,46 +56,39 @@ internal class ConicalShellCalculateService : ICalculateService<ConicalShellInpu
 
         data.c = dataIn.c1 + dataIn.c2 + dataIn.c3;
 
-        data.cosAlpha1 = Math.Cos(MathHelper.DegreeToRadian(dataIn.alpha1));
-        data.tgAlpha1 = Math.Tan(MathHelper.DegreeToRadian(dataIn.alpha1));
-        data.sinAlpha1 = Math.Sin(MathHelper.DegreeToRadian(dataIn.alpha1));
+        data.alpha1 = Math.Atan((dataIn.D / 2 - dataIn.D1 / 2) / dataIn.L);
 
         if (dataIn.p > 0)
         {
             // Condition use formals
+            const double conditionUseFormulasFrom = 0.001;
+            const double conditionUseFormulasTo = 0.05;
+            const int angleCondition = 70;
 
-            const double CONDITION_USE_FORMULAS_FROM = 0.001;
-            const double CONDITION_USE_FORMULAS_TO = 0.05;
+            data.ConditionUseFormulas = dataIn.s * Math.Cos(data.alpha1) / dataIn.D;
 
-            data.IsConditionUseFormulas = dataIn.s * data.cosAlpha1 / dataIn.D >= CONDITION_USE_FORMULAS_FROM
-                                          && dataIn.s * data.cosAlpha1 / dataIn.D <= CONDITION_USE_FORMULAS_TO;
+            data.IsConditionUseFormulas = data.ConditionUseFormulas is >= conditionUseFormulasFrom and <= conditionUseFormulasTo &&
+                                          MathHelper.RadianToDegree(data.alpha1) <= angleCondition;
 
             if (!data.IsConditionUseFormulas)
             {
                 data.ErrorList.Add("Условие применения формул не выполняется.");
             }
 
-            if (dataIn.alpha1 > 70)
-            {
-                data.IsConditionUseFormulas = false;
-                data.ErrorList.Add("Угол должен быть меньше либо равен 70 градусам.");
-            }
-
-
             switch (dataIn.ConnectionType)
             {
                 case ConicalConnectionType.Simply:
                 case ConicalConnectionType.WithRingPicture25b:
                 case ConicalConnectionType.WithRingPicture29:
-                    data.a1p = 0.7 * Math.Sqrt(dataIn.D * (dataIn.s1Big - data.c) / data.cosAlpha1);
+                    data.a1p = 0.7 * Math.Sqrt(dataIn.D * (dataIn.s1Big - data.c) / Math.Cos(data.alpha1));
                     data.a2p = 0.7 * Math.Sqrt(dataIn.D * (dataIn.s2Big - data.c));
                     break;
                 case ConicalConnectionType.Toroidal:
-                    data.a1p = 0.7 * Math.Sqrt(dataIn.D * (dataIn.sT - data.c) / data.cosAlpha1);
+                    data.a1p = 0.7 * Math.Sqrt(dataIn.D * (dataIn.sT - data.c) / Math.Cos(data.alpha1));
                     data.a2p = 0.5 * Math.Sqrt(dataIn.D * (dataIn.sT - data.c));
                     break;
                 case ConicalConnectionType.WithoutConnection:
-                    data.a1p = 0.7 * Math.Sqrt(dataIn.D * (dataIn.s - data.c) / data.cosAlpha1);
+                    data.a1p = 0.7 * Math.Sqrt(dataIn.D * (dataIn.s - data.c) / Math.Cos(data.alpha1));
                     break;
                 default:
                     throw new CalculateException("Conical connection type error.");
@@ -103,20 +96,20 @@ internal class ConicalShellCalculateService : ICalculateService<ConicalShellInpu
 
             if (dataIn.IsConnectionWithLittle)
             {
-                data.a1p_l = Math.Sqrt(dataIn.D1 * (dataIn.s1Little - data.c) / data.cosAlpha1);
+                data.a1p_l = Math.Sqrt(dataIn.D1 * (dataIn.s1Little - data.c) / Math.Cos(data.alpha1));
                 data.a2p_l = 1.25 * Math.Sqrt(dataIn.D1 * (dataIn.s2Little - data.c));
             }
 
             data.Dk = dataIn.ConnectionType == ConicalConnectionType.Toroidal
-                ? dataIn.D - 2 * (dataIn.r * (1 - data.cosAlpha1) + 0.7 * data.a1p * data.sinAlpha1)
-                : dataIn.D - 1.4 * data.a1p * data.sinAlpha1;
+                ? dataIn.D - 2 * (dataIn.r * (1 - Math.Cos(data.alpha1)) + 0.7 * data.a1p * Math.Sin(data.alpha1))
+                : dataIn.D - 1.4 * data.a1p * Math.Sin(data.alpha1);
 
 
 
             if (dataIn.IsPressureIn)
             {
-                data.s_p = dataIn.p * data.Dk / (2 * data.SigmaAllow * dataIn.fi - dataIn.p)
-                           * (1 / data.cosAlpha1);
+                data.s_p = dataIn.p * data.Dk / (2 * data.SigmaAllow * dataIn.phi - dataIn.p)
+                           * (1 / Math.Cos(data.alpha1));
                 data.s = data.s_p + data.c;
 
                 if (dataIn.s != 0)
@@ -124,24 +117,24 @@ internal class ConicalShellCalculateService : ICalculateService<ConicalShellInpu
                     if (data.s > dataIn.s)
                         throw new CalculateException("Принятая толщина меньше расчетной.");
 
-                    data.p_d = 2 * data.SigmaAllow * dataIn.fi * (dataIn.s - data.c)
-                               / (data.Dk / data.cosAlpha1 + (dataIn.s - data.c));
+                    data.p_d = 2 * data.SigmaAllow * dataIn.phi * (dataIn.s - data.c)
+                               / (data.Dk / Math.Cos(data.alpha1) + (dataIn.s - data.c));
                 }
             }
             else
             {
-                data.lE = (dataIn.D - dataIn.D1) / (2 * data.sinAlpha1);
-                data.DE_1 = (dataIn.D + dataIn.D1) / (2 * data.cosAlpha1);
-                data.DE_2 = dataIn.D / data.cosAlpha1 - 0.3 * (dataIn.D + dataIn.D1)
-                                                            * Math.Sqrt((dataIn.D + dataIn.D1) * data.tgAlpha1 / ((dataIn.s - data.c) * 100));
+                data.lE = (dataIn.D - dataIn.D1) / (2 * Math.Sin(data.alpha1));
+                data.DE_1 = (dataIn.D + dataIn.D1) / (2 * Math.Cos(data.alpha1));
+                data.DE_2 = dataIn.D / Math.Cos(data.alpha1) - 0.3 * (dataIn.D + dataIn.D1)
+                                                                   * Math.Sqrt((dataIn.D + dataIn.D1) * Math.Tan(data.alpha1) / ((dataIn.s - data.c) * 100));
                 data.DE = Math.Max(data.DE_1, data.DE_2);
                 data.B1_1 = 9.45 * data.DE / data.lE * Math.Sqrt(data.DE / (100 * (dataIn.s - data.c)));
                 data.B1 = Math.Min(1.0, data.B1_1);
 
                 data.s_p_1 = 1.06 * (0.01 * data.DE / data.B1)
                                   * Math.Pow(dataIn.p / (0.00001 * data.E) * (data.lE / data.DE), 0.4);
-                data.s_p_2 = 1.2 * dataIn.p * data.Dk / (2 * dataIn.fi * data.SigmaAllow - dataIn.p)
-                             * (1 / data.cosAlpha1);
+                data.s_p_2 = 1.2 * dataIn.p * data.Dk / (2 * dataIn.phi * data.SigmaAllow - dataIn.p)
+                             * (1 / Math.Cos(data.alpha1));
                 data.s_p = Math.Max(data.s_p_1, data.s_p_2);
                 data.s = data.s_p + data.c;
 
@@ -151,7 +144,7 @@ internal class ConicalShellCalculateService : ICalculateService<ConicalShellInpu
                         throw new CalculateException("Принятая толщина меньше расчетной.");
 
                     data.p_dp = 2 * data.SigmaAllow * (dataIn.s - data.c)
-                                / (data.Dk / data.cosAlpha1 + dataIn.s - data.c);
+                                / (data.Dk / Math.Cos(data.alpha1) + dataIn.s - data.c);
                     data.p_de = 2.08 * 0.00001 * data.E / (dataIn.ny * data.B1) * (data.DE / data.lE)
                         * Math.Pow(100 * (dataIn.s - data.c) / data.DE, 2.5);
                     data.p_d = data.p_dp / Math.Sqrt(1 + Math.Pow(data.p_dp / data.p_de, 2));
@@ -163,105 +156,121 @@ internal class ConicalShellCalculateService : ICalculateService<ConicalShellInpu
                 data.ErrorList.Add("[p] меньше p");
             }
 
-            //down connection
+            //big connection
             switch (dataIn.ConnectionType)
             {
                 case ConicalConnectionType.WithoutConnection:
                     break;
                 case ConicalConnectionType.Simply:
-                    if ((dataIn.s1Big - data.c) < (dataIn.s2Big - data.c))
+                    data.IsConditionUseFormulasBigConnection = dataIn.s1Big - data.c >= dataIn.s2Big - data.c &&
+                                                               MathHelper.RadianToDegree(data.alpha1) <= 70;
+                    if (!data.IsConditionUseFormulasBigConnection)
                     {
-                        data.IsConditionUseFormulas = false;
-                        data.ErrorList.Add("Условие применения формул не выполняется");
+                        data.ErrorList.Add("Узел соединения с обечайкой большего диаметра. Условие применения формул не выполняется");
                     }
                     data.chi_1Big = data.SigmaAllow1Big / data.SigmaAllow2Big;
-                    data.beta = 0.4 * Math.Sqrt(dataIn.D / (dataIn.s2Big - data.c)) * data.tgAlpha1
+                    data.beta = 0.4 * Math.Sqrt(dataIn.D / (dataIn.s2Big - data.c)) * Math.Tan(data.alpha1)
                         / (1 + Math.Sqrt((1 + data.chi_1Big
                                 * Math.Pow((dataIn.s1Big - data.c) / (dataIn.s2Big - data.c), 2))
-                            / (2 * data.cosAlpha1) * data.chi_1Big * (dataIn.s1Big - data.c) / (dataIn.s2Big - data.c))) - 0.25;
+                            / (2 * Math.Cos(data.alpha1)) * data.chi_1Big * (dataIn.s1Big - data.c) / (dataIn.s2Big - data.c))) - 0.25;
                     data.beta_1 = Math.Max(0.5, data.beta);
                     data.s_2pBig = dataIn.p * dataIn.D * data.beta_1
-                                / (2 * data.SigmaAllow2Big * dataIn.fi - dataIn.p);
+                                / (2 * data.SigmaAllow2Big * dataIn.phi - dataIn.p);
 
                     data.s_2Big = data.s_2pBig + data.c;
 
                     if (data.s_2Big > dataIn.s2Big)
                     {
-                        data.ErrorList.Add("Принятая толщина переходной зоны меньше расчетной.");
+                        data.ErrorList.Add("Узел соединения с обечайкой большего диаметра. Принятая толщина стенки обечайки меньше расчетной.");
                     }
 
-                    data.p_dBig = 2 * data.SigmaAllow2Big * dataIn.fi * (dataIn.s2Big - data.c)
+                    data.s_1Big = (dataIn.s1Big - data.c) / (dataIn.s2Big - data.c) * data.s_2pBig + data.c;
+
+                    if (data.s_1Big > dataIn.s1Big)
+                    {
+                        data.ErrorList.Add("Узел соединения с обечайкой большего диаметра. Принятая толщина стенки конуса меньше расчетной.");
+                    }
+
+                    data.p_dBig = 2 * data.SigmaAllow2Big * dataIn.phi * (dataIn.s2Big - data.c)
                                   / (dataIn.D * data.beta_1 + (dataIn.s2Big - data.c));
 
                     break;
 
                 case ConicalConnectionType.WithRingPicture25b:
-                    if ((dataIn.s1Big - data.c) < (dataIn.s2Big - data.c))
+                    data.IsConditionUseFormulasBigConnection = dataIn.s1Big - data.c >= dataIn.s2Big - data.c &&
+                                                               MathHelper.RadianToDegree(data.alpha1) <= 70;
+                    if (!data.IsConditionUseFormulasBigConnection)
                     {
-                        data.IsConditionUseFormulas = false;
-                        data.ErrorList.Add("Условие применения формул не выполняется");
+                        data.ErrorList.Add("Узел соединения с обечайкой большего диаметра. Условие применения формул не выполняется");
                     }
+
                     data.chi_1Big = data.SigmaAllow1Big / data.SigmaAllow2Big;
-                    data.beta = 0.4 * Math.Sqrt(dataIn.D / (dataIn.s2Big - data.c)) * data.tgAlpha1
+                    data.beta = 0.4 * Math.Sqrt(dataIn.D / (dataIn.s2Big - data.c)) * Math.Tan(data.alpha1)
                         / (1 + Math.Sqrt((1 + data.chi_1Big
                                 * Math.Pow((dataIn.s1Big - data.c) / (dataIn.s2Big - data.c), 2))
-                            / (2 * data.cosAlpha1) * data.chi_1Big * (dataIn.s1Big - data.c) / (dataIn.s2Big - data.c))) - 0.25;
-                    data.beta_a = (2 * data.SigmaAllow2Big * dataIn.fi / dataIn.p - 1) * (dataIn.s2Big - data.c) / dataIn.D;
-                    data.Ak = dataIn.p * Math.Pow(dataIn.D, 2) * data.tgAlpha1 / (8 * data.SigmaAllowC * dataIn.fi_k)
+                            / (2 * Math.Cos(data.alpha1)) * data.chi_1Big * (dataIn.s1Big - data.c) / (dataIn.s2Big - data.c))) - 0.25;
+                    data.beta_a = (2 * data.SigmaAllow2Big * dataIn.phi / dataIn.p - 1) * (dataIn.s2Big - data.c) / dataIn.D;
+                    data.Ak = dataIn.p * Math.Pow(dataIn.D, 2) * Math.Tan(data.alpha1) / (8 * data.SigmaAllowC * dataIn.phi_k)
                               * (1 - (data.beta_a + 0.25) / (data.beta + 0.25));
                     if (data.Ak > 0 && data.Ak < dataIn.Ak)
                     {
-                        data.ErrorList.Add("Площадь укрепляющего кольца недостаточна.");
+                        data.ErrorList.Add("Узел соединения с обечайкой большего диаметра. Площадь укрепляющего кольца недостаточна.");
                     }
                     data.B2 = 1.6 * data.Ak / ((dataIn.s2Big - data.c) * Math.Sqrt(dataIn.D * (dataIn.s2Big - data.c)))
-                        * data.SigmaAllowC * dataIn.fi_k / (data.SigmaAllow2Big * dataIn.fi_t);
+                        * data.SigmaAllowC * dataIn.phi_k / (data.SigmaAllow2Big * dataIn.phi_t);
                     data.B3 = 0.25;
-                    data.beta_0 = 0.4 * Math.Sqrt(dataIn.D / (dataIn.s2Big - data.c)) * data.tgAlpha1 - data.B3 *
+                    data.beta_0 = 0.4 * Math.Sqrt(dataIn.D / (dataIn.s2Big - data.c)) * Math.Tan(data.alpha1) - data.B3 *
                         (1 + Math.Sqrt((1 + data.chi_1Big * Math.Pow((dataIn.s1Big - data.c) / (dataIn.s2Big - data.c), 2)) /
-                            (2 * data.cosAlpha1) * data.chi_1Big * (dataIn.s1Big - data.c) / (dataIn.s2Big - data.c))) /
+                            (2 * Math.Cos(data.alpha1)) * data.chi_1Big * (dataIn.s1Big - data.c) / (dataIn.s2Big - data.c))) /
                         (data.B2 + (1 + Math.Sqrt((1 + data.chi_1Big * Math.Pow((dataIn.s1Big - data.c) / (dataIn.s2Big - data.c), 2)) /
-                            (2 * data.cosAlpha1) * data.chi_1Big * (dataIn.s1Big - data.c) / (dataIn.s2Big - data.c))));
+                            (2 * Math.Cos(data.alpha1)) * data.chi_1Big * (dataIn.s1Big - data.c) / (dataIn.s2Big - data.c))));
                     data.beta_2 = Math.Max(0.5, data.beta_0);
-                    data.p_dBig = 2 * data.SigmaAllow2Big * dataIn.fi * (dataIn.s2Big - data.c) / (dataIn.D * data.beta_2 + (dataIn.s2Big - data.c));
+                    data.p_dBig = 2 * data.SigmaAllow2Big * dataIn.phi * (dataIn.s2Big - data.c) / (dataIn.D * data.beta_2 + (dataIn.s2Big - data.c));
 
                     break;
                 case ConicalConnectionType.WithRingPicture29:
-                    data.Ak = dataIn.p * Math.Pow(dataIn.D, 2) * data.tgAlpha1 / (8 * data.SigmaAllowC * dataIn.fi_k);
+                    data.IsConditionUseFormulasBigConnection = MathHelper.RadianToDegree(data.alpha1) <= 70;
+                    if (!data.IsConditionUseFormulasBigConnection)
+                    {
+                        data.ErrorList.Add("Узел соединения с обечайкой большего диаметра. Условие применения формул не выполняется");
+                    }
+                    data.Ak = dataIn.p * Math.Pow(dataIn.D, 2) * Math.Tan(data.alpha1) / (8 * data.SigmaAllowC * dataIn.phi_k);
 
 
                     if (data.Ak > 0 && data.Ak < dataIn.Ak)
                     {
-                        data.ErrorList.Add("Площадь укрепляющего кольца недостаточна.");
+                        data.ErrorList.Add("Узел соединения с обечайкой большего диаметра. Площадь укрепляющего кольца недостаточна.");
                     }
 
-                    data.p_dBig = data.Ak * 8 * data.SigmaAllowC * dataIn.fi_k / (Math.Pow(dataIn.D, 2) * data.tgAlpha1);
+                    data.p_dBig = data.Ak * 8 * data.SigmaAllowC * dataIn.phi_k / (Math.Pow(dataIn.D, 2) * Math.Tan(data.alpha1));
 
                     break;
                 case ConicalConnectionType.Toroidal:
-                    if (dataIn.r / dataIn.D >= 0.0
-                        && dataIn.r / dataIn.D < 0.3)
+                    data.ConditionUseFormulasToroidal = dataIn.r / dataIn.D;
+                    data.IsConditionUseFormulasBigConnection = data.ConditionUseFormulasToroidal is >= 0.0 and < 0.3 &&
+                                                               MathHelper.RadianToDegree(data.alpha1) <= 70;
+                    if (!data.IsConditionUseFormulasBigConnection)
                     {
-                        data.IsConditionUseFormulas = false;
-                        data.ErrorList.Add("Условие применения формул не выполняется.");
+                        data.ErrorList.Add("Узел соединения с обечайкой большего диаметра. Условие применения формул не выполняется.");
                     }
 
-                    data.beta = 0.4 * Math.Sqrt(dataIn.D / (dataIn.s2Big - data.c)) * data.tgAlpha1
-                        / (1 + Math.Sqrt(1 / data.cosAlpha1)) - 0.25;
-                    data.beta_t = 1 / (1 + (0.028 * dataIn.alpha1 * dataIn.r / dataIn.D *
+                    data.beta = 0.4 * Math.Sqrt(dataIn.D / (dataIn.s2Big - data.c)) * Math.Tan(data.alpha1)
+                        / (1 + Math.Sqrt(1 / Math.Cos(data.alpha1))) - 0.25;
+                    data.beta_t = 1 / (1 + (0.028 * MathHelper.RadianToDegree(data.alpha1) * dataIn.r / dataIn.D *
                                             Math.Sqrt(dataIn.D / (dataIn.sT - data.c))) /
-                        (1 / Math.Sqrt(data.cosAlpha1) + 1));
+                        (1 / Math.Sqrt(Math.Cos(data.alpha1)) + 1));
                     //TODO: Check alpha1 in beta_t in degree or in radians
                     data.beta_3_2 = data.beta * data.beta_t;
                     data.beta_3 = Math.Max(0.5, data.beta_3_2);
-                    data.s_tp = dataIn.p * dataIn.D * data.beta_3 / (2 * dataIn.fi * data.SigmaAllowT - dataIn.p);
+                    data.s_tp = dataIn.p * dataIn.D * data.beta_3 / (2 * dataIn.phi * data.SigmaAllowT - dataIn.p);
                     data.s_t = data.s_tp + data.c;
 
                     if (data.s_t > dataIn.sT)
                     {
-                        data.ErrorList.Add("Принятая толщина переходной зоны меньше расчетной.");
+                        data.ErrorList.Add("Узел соединения с обечайкой большего диаметра. Принятая толщина перехода меньше расчетной.");
                     }
 
-                    data.p_dBig = 2 * data.SigmaAllowT * dataIn.fi * (dataIn.sT - data.c) /
+                    data.p_dBig = 2 * data.SigmaAllowT * dataIn.phi * (dataIn.sT - data.c) /
                                   (dataIn.D * data.beta_3 + (dataIn.sT - data.c));
                     break;
                 default:
@@ -270,45 +279,57 @@ internal class ConicalShellCalculateService : ICalculateService<ConicalShellInpu
 
             if (dataIn.ConnectionType != ConicalConnectionType.WithoutConnection && data.p_dBig < dataIn.p && dataIn.s != 0)
             {
-                data.ErrorList.Add("[p] для переходной части меньше p");
+                data.ErrorList.Add("Узел соединения с обечайкой большего диаметра. [p] для переходной части меньше p.");
             }
 
-            //up connection
+            //little connection
             if (dataIn.IsConnectionWithLittle)
             {
-                data.chi_1Little = data.SigmaAllow1Little / data.SigmaAllow2Little;
-                data.ConditionForBetan = Math.Pow((dataIn.s1Little - data.c) / (dataIn.s2Little - data.c), 2);
-                if (data.ConditionForBetan >= 1)
+                data.IsConditionUseFormulasLittleConnection = MathHelper.RadianToDegree(data.alpha1) <= 70;
+                if (!data.IsConditionUseFormulasLittleConnection)
                 {
-                    data.beta = 0.4 * Math.Sqrt(dataIn.D1 / (dataIn.s2Little - data.c)) * data.tgAlpha1
+                    data.ErrorList.Add("Узел соединения с обечайкой меньшего диаметра. Условие применения формул не выполняется.");
+                }
+                data.chi_1Little = data.SigmaAllow1Little / data.SigmaAllow2Little;
+                data.ConditionForBetaH = Math.Pow((dataIn.s1Little - data.c) / (dataIn.s2Little - data.c), 2);
+                if (data.ConditionForBetaH >= 1)
+                {
+                    data.betaLittle = 0.4 * Math.Sqrt(dataIn.D1 / (dataIn.s2Little - data.c)) * Math.Tan(data.alpha1)
                         / (1 + Math.Sqrt((1 + data.chi_1Little
                                 * Math.Pow((dataIn.s1Little - data.c) / (dataIn.s2Little - data.c), 2))
-                            / (2 * data.cosAlpha1) * data.chi_1Little * (dataIn.s1Little - data.c) / (dataIn.s2Little - data.c))) - 0.25;
-                    data.beta_n = data.beta + 0.75;
+                            / (2 * Math.Cos(data.alpha1)) * data.chi_1Little * (dataIn.s1Little - data.c) / (dataIn.s2Little - data.c))) - 0.25;
+                    data.beta_H = data.betaLittle + 0.75;
                 }
                 else
                 {
-                    data.beta_n = 0.4 * Math.Sqrt(dataIn.D1 / (dataIn.s2Little - data.c)) * data.tgAlpha1
+                    data.beta_H = 0.4 * Math.Sqrt(dataIn.D1 / (dataIn.s2Little - data.c)) * Math.Tan(data.alpha1)
                         / (data.chi_1Little * (dataIn.s1Little - data.c) / (dataIn.s2Little - data.c) * Math.Sqrt((dataIn.s1Little - data.c) /
-                            ((dataIn.s2Little - data.c) * data.cosAlpha1)) + Math.Sqrt((1 + data.chi_1Little
+                            ((dataIn.s2Little - data.c) * Math.Cos(data.alpha1))) + Math.Sqrt((1 + data.chi_1Little
                                 * Math.Pow((dataIn.s1Little - data.c) / (dataIn.s2Little - data.c), 2))
                             / 2)) + 0.5;
                 }
-                data.beta_4 = Math.Max(1, data.beta_n);
-                data.s_2pLittle = dataIn.p * dataIn.D1 * data.beta_4 / (2 * dataIn.fi * data.SigmaAllow2Little - dataIn.p);
+                data.beta_4 = Math.Max(1, data.beta_H);
+                data.s_2pLittle = dataIn.p * dataIn.D1 * data.beta_4 / (2 * dataIn.phi * data.SigmaAllow2Little - dataIn.p);
                 data.s_2Little = data.s_2pLittle + data.c;
 
                 if (data.s_2Little > dataIn.s2Little)
                 {
-                    data.ErrorList.Add("Принятая толщина обечайки меньшего диаметра меньше расчетной.");
+                    data.ErrorList.Add("Узел соединения с обечайкой меньшего диаметра. Принятая толщина обечайки меньше расчетной.");
                 }
 
-                data.p_dLittle = 2 * data.SigmaAllow2Little * dataIn.fi * (dataIn.s2Little - data.c) /
+                data.s_1Little = (dataIn.s1Little - data.c) / (dataIn.s2Little - data.c) * data.s_2pLittle + data.c;
+
+                if (data.s_1Little > dataIn.s1Little)
+                {
+                    data.ErrorList.Add("Узел соединения с обечайкой меньшего диаметра. Принятая толщина стенки конуса меньше расчетной.");
+                }
+
+                data.p_dLittle = 2 * data.SigmaAllow2Little * dataIn.phi * (dataIn.s2Little - data.c) /
                                  (dataIn.D1 * data.beta_4 + (dataIn.s2Little - data.c));
 
                 if (data.p_dLittle < dataIn.p && dataIn.s != 0)
                 {
-                    data.ErrorList.Add("[p] для переходной части меньше p");
+                    data.ErrorList.Add("Узел соединения с обечайкой меньшего диаметра. [p] для переходной части меньше p.");
                 }
             }
         }

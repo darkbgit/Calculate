@@ -51,7 +51,7 @@ public class NozzleTestData
             p = 0.6,
             t = 150,
             s = 8,
-            fi = 1,
+            phi = 1,
             ny = 2.4,
             IsPressureIn = true
         };

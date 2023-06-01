@@ -56,7 +56,7 @@ internal class EllipticalShellCalculateService : ICalculateService<EllipticalShe
                 if (dataIn.IsPressureIn)
                 {
                     data.s_p = dataIn.p * data.EllipseR /
-                               (2.0 * data.SigmaAllow * dataIn.fi - 0.5 * dataIn.p);
+                               (2.0 * data.SigmaAllow * dataIn.phi - 0.5 * dataIn.p);
                     data.s = data.s_p + data.c;
 
                     if (dataIn.s != 0.0)
@@ -64,7 +64,7 @@ internal class EllipticalShellCalculateService : ICalculateService<EllipticalShe
                         if (data.s > dataIn.s)
                             throw new CalculateException("Принятая толщина меньше расчетной.");
 
-                        data.p_d = 2.0 * data.SigmaAllow * dataIn.fi *
+                        data.p_d = 2.0 * data.SigmaAllow * dataIn.phi *
                                    (dataIn.s - data.c) /
                                    (data.EllipseR + 0.5 * (dataIn.s - data.c));
                     }

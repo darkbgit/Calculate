@@ -104,7 +104,7 @@ internal class SaddleCalculateService : ICalculateService<SaddleInput>
             data.ConditionStrength1_1 = dataIn.p * dataIn.D /
                                         (4 * (dataIn.s - dataIn.c)) +
                                         4 * data.M12 * data.K9 / (Math.PI * Math.Pow(dataIn.D, 2) * (dataIn.s - dataIn.c));
-            // UNDONE: if fi<1 check condition
+            // UNDONE: if phi<1 check condition
             data.ConditionStrength1_2 = data.SigmaAllow * dataIn.fi;
             if (data.ConditionStrength1_1 > data.ConditionStrength1_2)
             {

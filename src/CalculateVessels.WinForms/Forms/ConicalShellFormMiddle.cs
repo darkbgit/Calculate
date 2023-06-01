@@ -1,20 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using CalculateVessels.Core.Interfaces;
-using CalculateVessels.Core.Supports.BracketVertical;
+using CalculateVessels.Core.Shells.Conical;
 using CalculateVessels.Data.Interfaces;
 using CalculateVessels.Forms.Base;
 
 namespace CalculateVessels.Forms;
 
-public class BracketVerticalFormMiddle : BaseCalculateForm<BracketVerticalInput>
+public class ConicalShellFormMiddle : BaseCalculateForm<ConicalShellInput>
 {
-    protected BracketVerticalFormMiddle(IEnumerable<ICalculateService<BracketVerticalInput>> calculateServices, IPhysicalDataService physicalDataService)
+    protected ConicalShellFormMiddle(IEnumerable<ICalculateService<ConicalShellInput>> calculateServices, IPhysicalDataService physicalDataService)
         : base(calculateServices, physicalDataService)
     {
+
     }
 
-    public BracketVerticalFormMiddle()
+    public ConicalShellFormMiddle()
         : this(null, null)
     {
 

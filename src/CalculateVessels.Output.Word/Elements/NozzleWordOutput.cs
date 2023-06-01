@@ -513,7 +513,7 @@ internal class NozzleWordOutput : IWordOutputElement<NozzleCalculated>
         {
             body.AddParagraph()
                 .AppendEquation("s_p=(p∙D_p)/(4∙φ∙[σ]-p)" +
-                                $"=({shellDataIn.p}∙{data.Dp:f2})/(4∙{shellDataIn.fi}∙{data.SigmaAllowShell}-{shellDataIn.p})={data.sp:f2} мм");
+                                $"=({shellDataIn.p}∙{data.Dp:f2})/(4∙{shellDataIn.phi}∙{data.SigmaAllowShell}-{shellDataIn.p})={data.sp:f2} мм");
         }
         else
         {

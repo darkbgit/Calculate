@@ -24,11 +24,11 @@ public partial class MainForm : Form
 
     public CylindricalShellForm? CylindricalForm;
     public EllipticalShellForm? EllipticalForm;
+    public ConicalShellForm? ConicalForm;
     public FlatBottomWithAdditionalMomentForm? FlatBottomWithAdditionalMomentForm;
     public NozzleForm? NozzleForm;
     public FlatBottomForm? FlatBottomForm;
     public SaddleForm? SaddleForm;
-
     public BracketVerticalForm? BracketVerticalForm;
     // public HeatExchangerWithFixedTubePlatesForm heatExchangerWithFixedTubePlatesForm = null;
 
@@ -215,97 +215,32 @@ public partial class MainForm : Form
 
     private void Cil_b_Click(object sender, EventArgs e)
     {
-        if (CylindricalForm == null)
-        {
-            CylindricalForm = _formFactory.Create<CylindricalShellForm>();
-            if (CylindricalForm == null) return;
-            CylindricalForm.Owner = this;
-            CylindricalForm.Show();
-        }
-        else
-        {
-            CylindricalForm.Owner = this;
-            CylindricalForm.Show();
-        }
+        OpenForm(CylindricalForm);
     }
 
     private void Kon_b_Click(object sender, EventArgs e)
     {
-        //if (nf == null)
-        //{
-        //    nf = new NozzleForm { Owner = this };
-        //    nf.Show();
-        //}
-        //else
-        //{
-        //    nf.Owner = this;
-        //    nf.Show();
-        //}
+        OpenForm(ConicalForm);
     }
 
     private void Ell_b_Click(object sender, EventArgs e)
     {
-        if (EllipticalForm == null)
-        {
-            EllipticalForm = _formFactory.Create<EllipticalShellForm>();
-            if (EllipticalForm == null) return;
-            EllipticalForm.Owner = this;
-            EllipticalForm.Show();
-        }
-        else
-        {
-            EllipticalForm.Owner = this;
-            EllipticalForm.Show();
-        }
+        OpenForm(EllipticalForm);
     }
 
     private void Saddle_b_Click(object sender, EventArgs e)
     {
         OpenForm(SaddleForm);
-        //if (SaddleForm == null)
-        //{
-        //    SaddleForm = _formFactory.Create<SaddleForm>();
-        //    if (SaddleForm == null) return;
-        //    SaddleForm.Owner = this;
-        //    SaddleForm.Show();
-        //}
-        //else
-        //{
-        //    SaddleForm.Owner = this;
-        //    SaddleForm.Show();
-        //}
     }
 
     private void FlatBottom_b_Click(object sender, EventArgs e)
     {
-        if (FlatBottomForm == null)
-        {
-            FlatBottomForm = _formFactory.Create<FlatBottomForm>();
-            if (FlatBottomForm == null) return;
-            FlatBottomForm.Owner = this;
-            FlatBottomForm.Show();
-        }
-        else
-        {
-            FlatBottomForm.Owner = this;
-            FlatBottomForm.Show();
-        }
+        OpenForm(FlatBottomForm);
     }
 
     private void FlatBottomWithAdditionalMoment_b_Click(object sender, EventArgs e)
     {
-        if (FlatBottomWithAdditionalMomentForm == null)
-        {
-            FlatBottomWithAdditionalMomentForm = _formFactory.Create<FlatBottomWithAdditionalMomentForm>();
-            if (FlatBottomWithAdditionalMomentForm == null) return;
-            FlatBottomWithAdditionalMomentForm.Owner = this;
-            FlatBottomWithAdditionalMomentForm.Show();
-        }
-        else
-        {
-            FlatBottomWithAdditionalMomentForm.Owner = this;
-            FlatBottomWithAdditionalMomentForm.Show();
-        }
+        OpenForm(FlatBottomWithAdditionalMomentForm);
     }
 
     private void HeatExchangerWithFixedTubePlate_b_Click(object sender, EventArgs e)

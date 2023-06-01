@@ -148,9 +148,6 @@
   <data name="ConeAxial" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\pic\Nozzle\ConeAxial.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="ConeElemBottom" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\pic\Cone\ConeElemBottom.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="ConeElemLeft" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\pic\Cone\ConeElemLeft.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
@@ -1146,5 +1143,32 @@
   </data>
   <data name="BracketVertical_D_1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\pic\BracketVertical\D-1.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConeElem" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\pic\Cone\ConeElem.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConeBigConnectionSimple" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\pic\Cone\ConeBigSimple.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConeBigConnectionSimple_1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\pic\Cone\ConeBigSimple-1.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConeBigConnectionToroidal" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\pic\Cone\ConeBigToroidal.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConeBigConnectionWithRing" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\pic\Cone\ConeBigWithRing.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConeBigConnectionWithRingPicture29" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\pic\Cone\ConeBigWithRingPicture29.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConeLittleConnectionSimple" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\pic\Cone\ConeLittleSimple.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConeLittleConnectionSimple_1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\pic\Cone\ConeLittleSimple-1.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ConeLittleConnectionWithRingPicture29" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\pic\Cone\ConeLittleWithRingPicture29.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>

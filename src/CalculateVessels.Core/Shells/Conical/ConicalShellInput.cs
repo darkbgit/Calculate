@@ -16,16 +16,12 @@ public class ConicalShellInput : ShellInputData, IInputData
     }
 
     public double Ak { get; set; }
-    public double alpha1 { get; set; }
     public ConicalConnectionType ConnectionType { get; set; }
-    public double c1 { get; set; }
-    public double c2 { get; set; }
-    public double c3 { get; set; }
     public double D1 { get; set; }
-    public double E { get; set; }
-    public double fi_k { get; set; }
-    public double fi_t { get; set; }
+    public double phi_k { get; set; }
+    public double phi_t { get; set; }
     public bool IsConnectionWithLittle { get; set; }
+    public double L { get; set; }
     public double ny { get; set; } = 2.4;
     public double r { get; set; }
     public double SigmaAllow { get; set; }
@@ -46,5 +42,4 @@ public class ConicalShellInput : ShellInputData, IInputData
     public double s1Little { get; set; }
     public double s2Little { get; set; }
     public double sT { get; set; }
-    public double sr { get; set; }
 }

@@ -88,7 +88,7 @@ internal class CylindricalShellWordOutput : IWordOutputElement<CylindricalShellC
                 .AddCell("Коэффициент прочности сварного шва, ")
                 .AppendEquation("φ_p")
                 .AppendText(":")
-                .AddCell($"{dataIn.fi}");
+                .AddCell($"{dataIn.phi}");
 
             table.AddRowWithOneCell("Условия нагружения");
 
@@ -128,7 +128,7 @@ internal class CylindricalShellWordOutput : IWordOutputElement<CylindricalShellC
         {
             body.AddParagraph("")
                 .AppendEquation("s_p=(p∙D)/(2∙[σ]∙φ_p-p)" +
-                                $"=({dataIn.p}∙{dataIn.D})/(2∙{data.SigmaAllow}∙{dataIn.fi}-{dataIn.p})=" +
+                                $"=({dataIn.p}∙{dataIn.D})/(2∙{data.SigmaAllow}∙{dataIn.phi}-{dataIn.p})=" +
                                 $"{data.s_p:f2} мм");
         }
         else
@@ -171,7 +171,7 @@ internal class CylindricalShellWordOutput : IWordOutputElement<CylindricalShellC
             body.AddParagraph("Допускаемое внутреннее избыточное давление вычисляют по формуле:");
             body.AddParagraph("")
                 .AppendEquation("[p]=(2∙[σ]∙φ_p∙(s-c))/(D+s-c)"
-                                + $"=(2∙{data.SigmaAllow}∙{dataIn.fi}∙({dataIn.s}-{data.c:f2}))/"
+                                + $"=(2∙{data.SigmaAllow}∙{dataIn.phi}∙({dataIn.s}-{data.c:f2}))/"
                                 + $"({dataIn.D}+{dataIn.s}-{data.c:f2})={data.p_d:f2} МПа");
         }
         else

@@ -282,9 +282,59 @@ namespace CalculateVessels.Data.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        public static byte[] ConeElemBottom {
+        public static byte[] ConeBigConnectionSimple {
             get {
-                object obj = ResourceManager.GetObject("ConeElemBottom", resourceCulture);
+                object obj = ResourceManager.GetObject("ConeBigConnectionSimple", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConeBigConnectionSimple_1 {
+            get {
+                object obj = ResourceManager.GetObject("ConeBigConnectionSimple_1", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConeBigConnectionToroidal {
+            get {
+                object obj = ResourceManager.GetObject("ConeBigConnectionToroidal", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConeBigConnectionWithRing {
+            get {
+                object obj = ResourceManager.GetObject("ConeBigConnectionWithRing", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConeBigConnectionWithRingPicture29 {
+            get {
+                object obj = ResourceManager.GetObject("ConeBigConnectionWithRingPicture29", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConeElem {
+            get {
+                object obj = ResourceManager.GetObject("ConeElem", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -315,6 +365,36 @@ namespace CalculateVessels.Data.Properties {
         public static byte[] ConeElemTop {
             get {
                 object obj = ResourceManager.GetObject("ConeElemTop", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConeLittleConnectionSimple {
+            get {
+                object obj = ResourceManager.GetObject("ConeLittleConnectionSimple", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConeLittleConnectionSimple_1 {
+            get {
+                object obj = ResourceManager.GetObject("ConeLittleConnectionSimple_1", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ConeLittleConnectionWithRingPicture29 {
+            get {
+                object obj = ResourceManager.GetObject("ConeLittleConnectionWithRingPicture29", resourceCulture);
                 return ((byte[])(obj));
             }
         }

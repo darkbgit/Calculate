@@ -1,5 +1,6 @@
 ﻿using CalculateVessels.Output.Word.Enums;
 using DocumentFormat.OpenXml;
+using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
 using ImageMagick;
 using A = DocumentFormat.OpenXml.Drawing;
@@ -430,6 +431,17 @@ internal static class WordOpenXml
     {
         body.AppendChild(table);
     }
+
+    public static void InsertImage(this MainDocumentPart mainPart, byte[] image, ImagePartType imagePartType)
+    {
+        var imagePart = mainPart.AddImagePart(imagePartType);
+
+        imagePart.FeedData(new MemoryStream(image));
+        mainPart.Document.Body
+            ?.AddParagraph()
+            .AddImage(mainPart.GetIdOfPart(imagePart), image);
+    }
+
 
     private static (long width, long height) GetImageSize(byte[] image)
     {
