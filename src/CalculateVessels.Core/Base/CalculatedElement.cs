@@ -6,7 +6,17 @@ namespace CalculateVessels.Core.Base;
 
 public abstract class CalculatedElement
 {
-    public IEnumerable<string> Bibliography { get; set; } = Enumerable.Empty<string>();
-    public ICollection<string> ErrorList { get; set; } = new List<string>();
+    private readonly List<string> _errorList = new();
+
+    public IEnumerable<string> Bibliography { get; protected init; } = Enumerable.Empty<string>();
+
+    public ICollection<string> ErrorList => _errorList;
+
     public required IInputData InputData { get; init; }
+
+    internal void AddErrors(IEnumerable<string> errors)
+    {
+        _errorList.AddRange(errors);
+    }
+
 }

@@ -3,8 +3,10 @@ using CalculateVessels.Core.Shells.Elliptical;
 using CalculateVessels.Core.Shells.Enums;
 using CalculateVessels.Output.Word.Core;
 using CalculateVessels.Output.Word.Enums;
+using CalculateVessels.Output.Word.Helpers;
 using CalculateVessels.Output.Word.Interfaces;
 using DocumentFormat.OpenXml.Packaging;
+using DocumentFormat.OpenXml.Wordprocessing;
 
 namespace CalculateVessels.Output.Word.Elements;
 
@@ -17,11 +19,7 @@ internal class EllipticalShellWordOutput : IWordOutputElement<EllipticalShellCal
 
         var dataIn = (EllipticalShellInput)data.InputData;
 
-        if (string.IsNullOrWhiteSpace(filePath))
-        {
-            const string DEFAULT_FILE_NAME = "temp.docx";
-            filePath = DEFAULT_FILE_NAME;
-        }
+        filePath = WordHelpers.CheckFilePath(filePath);
 
         using var package = WordprocessingDocument.Open(filePath, true);
 
@@ -32,115 +30,65 @@ internal class EllipticalShellWordOutput : IWordOutputElement<EllipticalShellCal
 
         //body.AddParagraph("").InsertPageBreakAfterSelf();
 
-        body.AddParagraph($"Расчет на прочность эллиптического днища {dataIn.Name}, нагруженного " +
-                          (dataIn.IsPressureIn ? "внутренним избыточным давлением" : "наружным давлением"))
+        body.AddParagraph($"Расчет на прочность эллиптического днища {dataIn.Name}") //, нагруженного (dataIn.IsPressureIn ? "внутренним избыточным давлением" : "наружным давлением"))
             .Heading(HeadingType.Heading1)
             .Alignment(AlignmentType.Center);
 
-        body.AddParagraph("");
+        body.AddParagraph();
 
+        MakeImage(mainPart);
 
-        var imagePart = mainPart.AddImagePart(ImagePartType.Gif);
+        MakeInputDataTable(body, dataIn, data);
 
-        byte[] bytes = Data.Properties.Resources.Ell;
+        dataIn.LoadingConditions
+            .ToList()
+            .ForEach(lc => MakeCalculateResult(body,
+                data.Results
+                    .First(r => r.LoadingCondition.OrdinalNumber == lc.OrdinalNumber),
+                data.CommonData,
+                dataIn));
 
-        if (bytes != null)
+        MakeCheckConditionsUseFormulas(body, dataIn.D, dataIn.s, dataIn.EllipseH, data.CommonData.c, data.CommonData.IsConditionUseFormulas);
+
+        package.Close();
+    }
+
+    private static void MakeCheckConditionsUseFormulas(Body body, double D, double s, double ellipseH, double c, bool isConditionUseFormulas)
+    {
+        body.AddParagraph("Условия применения расчетных формул");
+
+        // elliptical bottom
+        body.AddParagraph()
+            .AppendEquation("0.002≤(s_1-c)/(D)" +
+                            $"=({s}-{c:f2})/({D})={(s - c) / D:f3}≤0.1");
+        body.AddParagraph()
+            .AppendEquation($"0.2≤H/D={ellipseH}/{D}={ellipseH / D:f3}<0.5");
+
+        if (!isConditionUseFormulas)
         {
-            imagePart.FeedData(new MemoryStream(bytes));
-
-            body.AddParagraph("").AddImage(mainPart.GetIdOfPart(imagePart), bytes);
+            body.AddParagraph("Условия применения расчетных формул не выполняется ")
+                .Bold()
+                .Color(System.Drawing.Color.Red);
         }
+    }
 
-        body.AddParagraph("Исходные данные")
+    private static void MakeCalculateResult(Body body, EllipticalShellCalculatedOneLoading data, EllipticalShellCalculatedCommon cdc, EllipticalShellInput dataIn)
+    {
+        var loadingCondition = data.LoadingCondition;
+
+        body.AddParagraph();
+        body.AddParagraph($"Результаты расчета #{loadingCondition.OrdinalNumber}")
             .Alignment(AlignmentType.Center);
-
-        //table
-        {
-            var table = body.AddTable();
-
-            table.AddRow()
-                .AddCell("Материал днища")
-                .AddCell($"{dataIn.Steel}");
-
-            table.AddRow()
-                .AddCell("Внутренний диаметр днища, D:")
-                .AddCell($"{dataIn.D} мм");
-
-            table.AddRow()
-                .AddCell("Высота выпуклой части, H:")
-                .AddCell($"{dataIn.EllipseH} мм");
-
-            table.AddRow()
-                .AddCell("Длина отбортовки ")
-                .AppendEquation("h_1")
-                .AppendText(":")
-                .AddCell($"{dataIn.Ellipseh1}");
-
-            table.AddRow()
-                .AddCell("Прибавка на коррозию, ")
-                .AppendEquation("c_1")
-                .AppendText(":")
-                .AddCell($"{dataIn.c1} мм");
-
-            table.AddRow()
-                .AddCell("Прибавка для компенсации минусового допуска, ")
-                .AppendEquation("c_2")
-                .AppendText(":")
-                .AddCell($"{dataIn.c2} мм");
-
-            if (dataIn.c3 > 0)
-            {
-                table.AddRow()
-                    .AddCell("Технологическая прибавка, ")
-                    .AppendEquation("c_3")
-                    .AppendText(":")
-                    .AddCell($"{dataIn.c3}");
-            }
-
-            table.AddRow()
-                .AddCell("Коэффициент прочности сварного шва, ")
-                .AppendEquation("φ_p")
-                .AppendText(":")
-                .AddCell($"{dataIn.phi}");
-
-            table.AddRowWithOneCell("Условия нагружения");
-
-            table.AddRow()
-                .AddCell("Расчетная температура, Т:")
-                .AddCell($"{dataIn.t} °С");
-
-            table.AddRow()
-                .AddCell(dataIn.IsPressureIn ? "Расчетное внутреннее избыточное давление, p:"
-                    : "Расчетное наружное давление, p:")
-                .AddCell($"{dataIn.p} МПа");
-
-            table.AddRowWithOneCell($"Характеристики материала сталь {dataIn.Steel}");
-
-            table.AddRow()
-                .AddCell("Допускаемое напряжение при расчетной температуре, [σ]:")
-                .AddCell($"{data.SigmaAllow} МПа");
-
-            if (!dataIn.IsPressureIn)
-            {
-                table.AddRow()
-                    .AddCell("Модуль продольной упругости при расчетной температуре, E:")
-                    .AddCell($"{data.E} МПа");
-            }
-
-            body.InsertTable(table);
-        }
-
-        body.AddParagraph("");
-        body.AddParagraph("Результаты расчета").Alignment(AlignmentType.Center);
-        body.AddParagraph("");
+        body.AddParagraph();
         body.AddParagraph("Толщину стенки вычисляют по формуле:");
-        body.AddParagraph("").AppendEquation("s_1≥s_1p+c");
+        body.AddParagraph()
+            .AppendEquation("s_1≥s_1p+c");
         body.AddParagraph("где ")
             .AppendEquation("s_1p")
             .AddRun(" - расчетная толщина стенки днища");
 
-        body.AddParagraph("")
-            .AppendEquation(dataIn.IsPressureIn
+        body.AddParagraph()
+            .AppendEquation(loadingCondition.IsPressureIn
                 ? "s_1p=(p∙R)/(2∙[σ]∙φ-0.5∙p)"
                 : "s_1p=max{(K_Э∙R)/(161)∙√((n_y∙p)/(10^-5∙E));(1.2∙p∙R)/(2∙[σ])}");
         body.AddParagraph("где R - радиус кривизны в вершине днища");
@@ -149,24 +97,24 @@ internal class EllipticalShellWordOutput : IWordOutputElement<EllipticalShellCal
 
         switch (dataIn.EllipticalBottomType)
         {
-            case EllipticalBottomType.Elliptical when Math.Abs(dataIn.D - data.EllipseR) < 0.00001:
+            case EllipticalBottomType.Elliptical when Math.Abs(dataIn.D - cdc.EllipseR) < 0.00001:
                 body.AddParagraph($"R=D={dataIn.D} мм - для эллиптических днищ с H=0.25D");
                 break;
-            case EllipticalBottomType.Hemispherical when Math.Abs(0.5 * dataIn.D - data.EllipseR) < 0.00001:
-                body.AddParagraph("")
+            case EllipticalBottomType.Hemispherical when Math.Abs(0.5 * dataIn.D - cdc.EllipseR) < 0.00001:
+                body.AddParagraph()
                     .AppendEquation($"R=0.5∙D={dataIn.D} мм")
                     .AddRun(" - для полусферических днищ с H=0.5D");
                 break;
             default:
-                body.AddParagraph("")
-                    .AppendEquation($"R=D^2/(4∙H)={dataIn.D}^2/(4∙{dataIn.EllipseH})={data.EllipseR:f2} мм");
+                body.AddParagraph()
+                    .AppendEquation($"R=D^2/(4∙H)={dataIn.D}^2/(4∙{dataIn.EllipseH})={cdc.EllipseR:f2} мм");
                 break;
         }
 
-        if (dataIn.IsPressureIn)
+        if (loadingCondition.IsPressureIn)
         {
-            body.AddParagraph("")
-                .AppendEquation($"s_p=({dataIn.p}∙{data.EllipseR:f2})/(2∙{data.SigmaAllow}∙{dataIn.phi}-0.5{dataIn.p})={data.s_p:f2} мм");
+            body.AddParagraph()
+                .AppendEquation($"s_p=({loadingCondition.p}∙{cdc.EllipseR:f2})/(2∙{data.SigmaAllow}∙{dataIn.phi}-0.5{loadingCondition.p})={data.s_p:f2} мм");
         }
         else
         {
@@ -175,93 +123,130 @@ internal class EllipticalShellWordOutput : IWordOutputElement<EllipticalShellCal
                 .AddRun(dataIn.EllipticalBottomType == EllipticalBottomType.Elliptical
                     ? " для эллиптических днищ"
                     : " для полусферических днищ");
-            body.AddParagraph("")
-                .AppendEquation($"({data.EllipseKePrev}∙{data.EllipseR:f2})/(161)∙√(({dataIn.ny}∙{dataIn.p})/(10^-5∙{data.E}))=" +
+            body.AddParagraph()
+                .AppendEquation($"({data.EllipseKePrev}∙{cdc.EllipseR:f2})/(161)∙√(({dataIn.ny}∙{loadingCondition.p})/(10^-5∙{data.E}))=" +
                                 $"{data.s_p_1:f2}");
-            body.AddParagraph("").AppendEquation($"(1.2∙{dataIn.p}∙{data.EllipseR:f2})/(2∙{dataIn.SigmaAllow})={data.s_p_2:f2}");
-            body.AddParagraph("").AppendEquation($"s_1p=max({data.s_p_1:f2};{data.s_p_2:f2})={data.s_p:f2} мм");
+            body.AddParagraph()
+                .AppendEquation($"(1.2∙{loadingCondition.p}∙{cdc.EllipseR:f2})/(2∙{data.SigmaAllow})={data.s_p_2:f2}");
+            body.AddParagraph()
+                .AppendEquation($"s_1p=max({data.s_p_1:f2};{data.s_p_2:f2})={data.s_p:f2} мм");
         }
         body.AddParagraph("c - сумма прибавок к расчетной толщине");
-        body.AddParagraph("")
-            .AppendEquation($"c=c_1+c_2+c_3={dataIn.c1}+{dataIn.c2}+{dataIn.c3}={data.c:f2} мм");
+        body.AddParagraph()
+            .AppendEquation($"c=c_1+c_2+c_3={dataIn.c1}+{dataIn.c2}+{dataIn.c3}={cdc.c:f2} мм");
 
-        body.AddParagraph("").AppendEquation($"s={data.s_p:f2}+{data.c:f2}={data.s:f2} мм");
+        body.AddParagraph()
+            .AppendEquation($"s={data.s_p:f2}+{cdc.c:f2}={data.s:f2} мм");
 
-        if (dataIn.s >= data.s)
-        {
-            body.AddParagraph("Принятая толщина ").Bold().AppendEquation($"s_1={dataIn.s} мм");
-        }
-        else
-        {
-            body.AddParagraph("Принятая толщина ").Bold().Color(System.Drawing.Color.Red)
-                .AppendEquation($"s_1={dataIn.s} мм");
-        }
+        WordHelpers.CheckCalculatedThickness("s_1", dataIn.s, data.s, body);
 
-        if (dataIn.IsPressureIn)
+        if (loadingCondition.IsPressureIn)
         {
             body.AddParagraph("Допускаемое внутреннее избыточное давление вычисляют по формуле:");
-            body.AddParagraph("")
+            body.AddParagraph()
                 .AppendEquation("[p]=(2∙[σ]∙φ∙(s_1-c))/(R+0.5∙(s-c))" +
-                                $"=(2∙{data.SigmaAllow}∙{dataIn.phi}∙({dataIn.s}-{data.c:f2}))/" +
-                                $"({data.EllipseR:f2}+0.5∙({dataIn.s}-{data.c:f2}))={data.p_d:f2} МПа");
+                                $"=(2∙{data.SigmaAllow}∙{dataIn.phi}∙({dataIn.s}-{cdc.c:f2}))/" +
+                                $"({cdc.EllipseR:f2}+0.5∙({dataIn.s}-{cdc.c:f2}))={data.p_d:f2} МПа");
         }
         else
         {
             body.AddParagraph("Допускаемое наружное давление вычисляют по формуле:");
-            body.AddParagraph("")
+            body.AddParagraph()
                 .AppendEquation("[p]=[p]_П/√(1+([p]_П/[p]_E)^2)");
             body.AddParagraph("допускаемое давление из условия прочности вычисляют по формуле:");
-            body.AddParagraph("")
+            body.AddParagraph()
                 .AppendEquation("[p]_П=(2∙[σ]∙(s_1-c))/(R+0.5(s_1-c))" +
-                                $"=(2∙{data.SigmaAllow}∙({dataIn.s}-{data.c:f2}))/({data.EllipseR}+0.5({dataIn.s}-{data.c:f2}))={data.p_dp:f2} МПа");
+                                $"=(2∙{data.SigmaAllow}∙({dataIn.s}-{cdc.c:f2}))/({cdc.EllipseR}+0.5({dataIn.s}-{cdc.c:f2}))={data.p_dp:f2} МПа");
             body.AddParagraph("допускаемое давление из условия устойчивости в пределах упругости вычисляют по формуле:");
-            body.AddParagraph("")
+            body.AddParagraph()
                 .AppendEquation("[p]_E=(2.6∙10^-5∙E)/n_y∙[(100∙(s_1-c))/(К_Э∙R)]^2");
             body.AddParagraph("коэффициент ")
                 .AppendEquation("К_Э")
                 .AddRun(" вычисляют по формуле");
-            body.AddParagraph("")
+            body.AddParagraph()
                 .AppendEquation("К_Э=(1+(2.4+8∙x)∙x)/(1+(3+10∙x)∙x)");
-            body.AddParagraph("")
-                .AppendEquation($"x=10∙(s_1-c)/D∙(D/(2∙H)-(2∙H)/D)=10∙({dataIn.s - data.c:f2})/{dataIn.D}∙({dataIn.D}/(2∙{dataIn.EllipseH})-(2∙{dataIn.EllipseH})/{dataIn.D})={data.Ellipsex:f2}");
-            body.AddParagraph("")
+            body.AddParagraph()
+                .AppendEquation($"x=10∙(s_1-c)/D∙(D/(2∙H)-(2∙H)/D)=10∙({dataIn.s - cdc.c:f2})/{dataIn.D}∙({dataIn.D}/(2∙{dataIn.EllipseH})-(2∙{dataIn.EllipseH})/{dataIn.D})={data.Ellipsex:f2}");
+            body.AddParagraph()
                 .AppendEquation($"К_Э=(1+(2.4+8∙{data.Ellipsex:f2})∙{data.Ellipsex:f2})/(1+(3+10∙{data.Ellipsex:f2})∙{data.Ellipsex:f2})={data.EllipseKe:f2}");
-            body.AddParagraph("")
+            body.AddParagraph()
                 .AppendEquation($"[p]_E=(2.6∙10^-5∙{data.E})/{dataIn.ny}∙" +
-                                $"[(100∙({dataIn.s}-{data.c:f2}))/({data.EllipseKe:f2}∙{data.EllipseR:f2})]^2={data.p_de:f2} МПа");
-            body.AddParagraph("")
+                                $"[(100∙({dataIn.s}-{cdc.c:f2}))/({data.EllipseKe:f2}∙{cdc.EllipseR:f2})]^2={data.p_de:f2} МПа");
+            body.AddParagraph()
                 .AppendEquation($"[p]={data.p_dp:f2}/√(1+({data.p_dp:f2}/{data.p_de:f2})^2)={data.p_d:f2} МПа");
         }
-        body.AddParagraph("").AppendEquation("[p]≥p");
-        body.AddParagraph("").AppendEquation($"{data.p_d:f2}≥{dataIn.p}");
 
-        if (data.p_d > dataIn.p)
+        WordHelpers.CheckCalculatedPressure(loadingCondition.p, data.p_d, body);
+    }
+
+    private static void MakeInputDataTable(Body body, EllipticalShellInput dataIn, EllipticalShellCalculated data)
+    {
+        body.AddParagraph("Исходные данные")
+            .Alignment(AlignmentType.Center);
+
+        var table = body.AddTable();
+
+        table.AddRow()
+            .AddCell("Материал днища")
+            .AddCell($"{dataIn.Steel}");
+
+        table.AddRow()
+            .AddCell("Внутренний диаметр днища, D:")
+            .AddCell($"{dataIn.D} мм");
+
+        table.AddRow()
+            .AddCell("Высота выпуклой части, H:")
+            .AddCell($"{dataIn.EllipseH} мм");
+
+        table.AddRow()
+            .AddCell("Длина отбортовки ")
+            .AppendEquation("h_1")
+            .AppendText(":")
+            .AddCell($"{dataIn.Ellipseh1}");
+
+        table.AddRow()
+            .AddCell("Прибавка на коррозию, ")
+            .AppendEquation("c_1")
+            .AppendText(":")
+            .AddCell($"{dataIn.c1} мм");
+
+        table.AddRow()
+            .AddCell("Прибавка для компенсации минусового допуска, ")
+            .AppendEquation("c_2")
+            .AppendText(":")
+            .AddCell($"{dataIn.c2} мм");
+
+        if (dataIn.c3 > 0)
         {
-            body.AddParagraph("Условие прочности выполняется")
-                .Bold();
-        }
-        else
-        {
-            body.AddParagraph("Условие прочности не выполняется")
-                .Bold()
-                .Color(System.Drawing.Color.Red);
+            table.AddRow()
+                .AddCell("Технологическая прибавка, ")
+                .AppendEquation("c_3")
+                .AppendText(":")
+                .AddCell($"{dataIn.c3}");
         }
 
-        body.AddParagraph("Условия применения расчетных формул");
+        table.AddRow()
+            .AddCell("Коэффициент прочности сварного шва, ")
+            .AppendEquation("φ_p")
+            .AppendText(":")
+            .AddCell($"{dataIn.phi}");
 
-        // elliptical bottom
-        body.AddParagraph("")
-            .AppendEquation("0.002≤(s_1-c)/(D)" +
-                            $"=({dataIn.s}-{data.c:f2})/({dataIn.D})={(dataIn.s - data.c) / dataIn.D:f3}≤0.1");
-        body.AddParagraph("")
-            .AppendEquation($"0.2≤H/D={dataIn.EllipseH}/{dataIn.D}={dataIn.EllipseH / dataIn.D:f3}<0.5");
+        WordHelpers.AddLoadingConditionsInTableForShells(dataIn.LoadingConditions, table);
 
-        if (!data.IsConditionUseFormulas)
-        {
-            body.AddParagraph("Условия применения расчетных формул не выполняется ")
-                .Bold()
-                .Color(System.Drawing.Color.Red);
-        }
-        package.Close();
+        WordHelpers.AddMaterialCharacteristicsInTableForShell(dataIn.Steel,
+            data.Results.Select(r => new
+            {
+                r.LoadingCondition.OrdinalNumber,
+                r.SigmaAllow,
+                r.E
+            }).ToList(),
+            dataIn.LoadingConditions, table);
+
+        body.InsertTable(table);
+    }
+
+    private static void MakeImage(MainDocumentPart mainPart)
+    {
+        mainPart.InsertImage(Data.Properties.Resources.Ell, ImagePartType.Gif);
     }
 }

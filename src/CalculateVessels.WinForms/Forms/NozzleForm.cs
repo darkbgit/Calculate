@@ -1,5 +1,4 @@
-﻿using CalculateVessels.Core.Exceptions;
-using CalculateVessels.Core.Interfaces;
+﻿using CalculateVessels.Core.Interfaces;
 using CalculateVessels.Core.Shells.Base;
 using CalculateVessels.Core.Shells.Enums;
 using CalculateVessels.Core.Shells.Nozzle;
@@ -7,21 +6,18 @@ using CalculateVessels.Core.Shells.Nozzle.Enums;
 using CalculateVessels.Data.Enums;
 using CalculateVessels.Data.Interfaces;
 using CalculateVessels.Data.Properties;
+using CalculateVessels.Forms.MiddleForms;
 using CalculateVessels.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
 
 namespace CalculateVessels.Forms;
 
-public partial class NozzleForm : Form
+public partial class NozzleForm : NozzleFormMiddle
 {
-    private readonly IEnumerable<ICalculateService<NozzleInput>> _calculateServices;
-    private readonly IPhysicalDataService _physicalDataService;
-
     private const string Perpendicular = "Перпендикулярно\n поверхности";
     private const string Transversely = "В плоскости\nпопер. сечения";
     private const string Offset = "Смещенный";
@@ -34,8 +30,6 @@ public partial class NozzleForm : Form
 
     private const string OmegaTextBoxName = "omega_tb";
     private const string GammaTextBoxName = "gamma_tb";
-
-    private NozzleInput? _nozzleData;
 
     private RadioButton? placeRadioButton1;
     private RadioButton? placeRadioButton2;
@@ -55,10 +49,9 @@ public partial class NozzleForm : Form
 
     public NozzleForm(IPhysicalDataService physicalDataService,
         IEnumerable<ICalculateService<NozzleInput>> calculateServices)
+    : base(calculateServices, physicalDataService)
     {
         InitializeComponent();
-        _physicalDataService = physicalDataService;
-        _calculateServices = calculateServices;
     }
 
     public void Show(ICalculatedElement shellElement)
@@ -67,6 +60,455 @@ public partial class NozzleForm : Form
         _shellInputData = (ShellInputData)shellElement.InputData;
 
         ShowDialog();
+    }
+
+    protected override string GetServiceName()
+    {
+        return Gost_cb.Text;
+    }
+
+    private void NozzleForm_Load(object sender, EventArgs e)
+    {
+        LoadSteelsToComboBox(steel1_cb, SteelSource.G34233D1);
+        LoadSteelsToComboBox(steel2_cb, SteelSource.G34233D1);
+        LoadSteelsToComboBox(steel3_cb, SteelSource.G34233D1);
+
+        LoadCalculateServicesNamesToComboBox(Gost_cb);
+
+        MessageBox.Show(((ShellInputData)_shellElement.InputData).ShellType.ToString());
+
+        switch (((ShellInputData)_shellElement.InputData).ShellType)
+        {
+            case ShellType.Cylindrical:
+                placeRadioButton1 = new RadioButton
+                {
+                    Text = Perpendicular,
+                    Checked = true,
+                    AutoSize = true,
+                    Location = new Point(8, 22),
+                    Margin = new Padding(4, 3, 4, 3),
+                    Name = nameof(placeRadioButton1),
+                    UseVisualStyleBackColor = true,
+                };
+
+                placeRadioButton1.CheckedChanged += Place_rb_CheckedChanged;
+                //Size = new System.Drawing.Size(31, 19),
+
+                //placerb_1.toggled[bool].emit(False)
+
+                placeRadioButton2 = new RadioButton
+                {
+                    Text = Transversely,
+                    AutoSize = true,
+                    Location = new Point(8, 62),
+                    Margin = new Padding(4, 3, 4, 3),
+                    Name = nameof(placeRadioButton2),
+                    UseVisualStyleBackColor = true
+                };
+                placeRadioButton2.CheckedChanged += Place_rb_CheckedChanged;
+
+                //RadioButton placerb_3 = new RadioButton
+                //{
+                //    Text = "Смещенный",
+                //    AutoSize = true,
+                //    Location = new System.Drawing.Point(8, 76),
+                //    Margin = new System.Windows.Forms.Padding(4, 3, 4, 3),
+                //    Name = "placerb_3",
+                //    UseVisualStyleBackColor = true
+                //};
+                //placerb_3.CheckedChanged += new EventHandler(Place_rb_CheckedChanged);
+
+                placeRadioButton3 = new RadioButton
+                {
+                    Text = Slanted,
+                    AutoSize = true,
+                    Location = new Point(8, 102),
+                    Margin = new Padding(4, 3, 4, 3),
+                    Name = nameof(placeRadioButton3),
+                    UseVisualStyleBackColor = true
+                };
+                placeRadioButton3.CheckedChanged += Place_rb_CheckedChanged;
+
+                mainPanel = new Panel
+                {
+                    Name = nameof(mainPanel),
+                    Location = new Point(2, 15),
+                    Size = new Size(300, 310)
+                };
+
+                place_gb.Controls.AddRange(new Control[]
+                {
+                    placeRadioButton1, placeRadioButton2, placeRadioButton3, mainPanel
+                });
+
+                place_pb.Image = (Bitmap)(new ImageConverter().ConvertFrom(Resources.CylRadial)
+                                          ?? throw new InvalidOperationException());
+                break;
+            // TODO: Добавить расчет конуса
+            //else if (this.Owner is KonForm)
+            //{
+            //    TypeElement = "Kon";
+            //}
+
+            case ShellType.Elliptical:
+                placeRadioButton1 = new RadioButton
+                {
+                    Text = Perpendicular,
+                    Checked = true,
+                    AutoSize = true,
+                    Location = new Point(8, 40),
+                    Margin = new Padding(4, 3, 4, 3),
+                    Name = nameof(placeRadioButton1),
+                    UseVisualStyleBackColor = true,
+                };
+                placeRadioButton1.CheckedChanged += Place_rb_CheckedChanged;
+                //Size = new System.Drawing.Size(31, 19),
+
+                placeRadioButton2 = new RadioButton
+                {
+                    Text = Offset,
+                    AutoSize = true,
+                    Location = new Point(8, 80),
+                    Margin = new Padding(4, 3, 4, 3),
+                    Name = nameof(placeRadioButton2),
+                    UseVisualStyleBackColor = true
+                };
+                placeRadioButton2.CheckedChanged += Place_rb_CheckedChanged;
+                //RadioButton placerb_4 = new RadioButton
+                //{
+                //    Text = "Наклонный",
+                //    AutoSize = true,
+                //    Location = new System.Drawing.Point(8, 70),
+                //    Margin = new System.Windows.Forms.Padding(4, 3, 4, 3),
+                //    Name = "placerb_4",
+                //    UseVisualStyleBackColor = true
+                //};
+                //placerb_4.CheckedChanged += new EventHandler(Place_rb_CheckedChanged);
+
+                mainPanel = new Panel
+                {
+                    Name = nameof(mainPanel),
+                    Location = new Point(2, 15),
+                    Size = new Size(400, 310)
+                };
+
+                placeCartesianRadioButton = new RadioButton
+                {
+                    Text = Cartesian,
+                    AutoSize = true,
+                    Location = new Point(210, 15),
+                    Margin = new Padding(4, 3, 4, 3),
+                    Name = nameof(placeCartesianRadioButton),
+                    UseVisualStyleBackColor = true
+                };
+                placeCartesianRadioButton.CheckedChanged += PlaceCoordinate_rb_CheckedChanged;
+                //Size = new System.Drawing.Size(31, 19),
+
+                placePolarRadioButton = new RadioButton
+                {
+                    Text = Polar,
+                    Checked = true,
+                    AutoSize = true,
+                    Location = new Point(125, 15),
+                    Margin = new Padding(4, 3, 4, 3),
+                    Name = nameof(placePolarRadioButton),
+                    UseVisualStyleBackColor = true
+                };
+                placePolarRadioButton.CheckedChanged += PlaceCoordinate_rb_CheckedChanged;
+
+                coordinateLabel = new Label
+                {
+                    Text = "Система координат:",
+                    AutoSize = true,
+                    Location = new Point(0, 15)
+                };
+
+                coordinatePanel = new Panel
+                {
+                    Name = nameof(coordinatePanel),
+                    Location = new Point(110, 10),
+                    Size = new Size(300, 35)
+                };
+
+                coordinatePanel.Controls.AddRange(new Control[]
+                {
+                        coordinateLabel, placeCartesianRadioButton, placePolarRadioButton
+                });
+
+                place_gb.Controls.AddRange(new Control[]
+                {
+                        placeRadioButton1, placeRadioButton2, mainPanel, coordinatePanel
+                });
+
+                place_pb.Location = new Point(place_pb.Location.X, place_pb.Location.Y + 35);
+                place_pb.Image = (Bitmap)(new ImageConverter().ConvertFrom(Resources.EllRadial)
+                    ?? throw new InvalidOperationException());
+                break;
+        }
+
+        if (Owner is MainForm)
+        {
+            steel1_cb.SelectedItem = _shellInputData.Steel;
+            steel2_cb.Text = _shellInputData.Steel;
+            steel3_cb.Text = _shellInputData.Steel;
+
+
+            nameEl_tb.Text = _shellInputData.Name;
+
+            _shellInputData.LoadingConditions
+                .ToList()
+                .ForEach(lc =>
+                {
+                    FormHelpers.AddLoadingCondition(loadingConditionsListView,
+                        lc.IsPressureIn ? Properties.Resources.InsidePressure : Properties.Resources.OutsidePressure,
+                        lc.p.ToString(),
+                        lc.t.ToString(),
+                        lc.SigmaAllow != 0 ? lc.SigmaAllow.ToString() : string.Empty,
+                        lc.EAllow != 0 ? lc.EAllow.ToString() : string.Empty);
+                });
+        }
+
+        Place_Draw(place_gb.Controls
+            .OfType<RadioButton>()
+            .FirstOrDefault(rb => rb.Checked)
+        ?? throw new InvalidOperationException());
+    }
+
+    private void NozzleForm_FormClosing(object sender, FormClosingEventArgs e)
+    {
+        if (sender is not NozzleForm) return;
+
+        if (Owner is not MainForm { NozzleForm: not null } main) return;
+
+        main.NozzleForm = null;
+    }
+
+    private void Cancel_btn_Click(object sender, EventArgs e)
+    {
+        Hide();
+    }
+
+    protected override bool CollectDataForPreliminarilyCalculation()
+    {
+        List<string> dataInErr = new();
+
+        InputData = new NozzleInput(_shellElement)
+        {
+            steel1 = steel1_cb.Text,
+
+            d = Parameters.GetParam<double>(d_tb.Text, "d", ref dataInErr),
+            s1 = Parameters.GetParam<double>(s1_tb.Text, "s1", ref dataInErr),
+            cs = Parameters.GetParam<double>(cs_tb.Text, "cs", ref dataInErr),
+            cs1 = Parameters.GetParam<double>(cs1_tb.Text, "cs1", ref dataInErr),
+            l1 = Parameters.GetParam<double>(l1_tb.Text, "l1", ref dataInErr),
+            phi = Parameters.GetParam<double>(fi_tb.Text, "φ", ref dataInErr),
+            phi1 = Parameters.GetParam<double>(fi1_tb.Text, "φ1", ref dataInErr),
+            delta = Parameters.GetParam<double>(delta_tb.Text, "delta", ref dataInErr),
+            delta1 = Parameters.GetParam<double>(delta1_tb.Text, "delta1", ref dataInErr),
+            delta2 = Parameters.GetParam<double>(delta2_tb.Text, "delta2", ref dataInErr),
+
+            SigmaAllow1 = sigmaHandle_cb.Checked
+                ? Parameters.GetParam<double>(sigma_d1_tb.Text, "[σ1]", ref dataInErr)
+                : default,
+            E1 = EHandle_cb.Checked
+                ? Parameters.GetParam<double>(E1_tb.Text, "E1", ref dataInErr)
+                : default
+        };
+
+
+        //NozzleKind
+        var checkedButton = vid_gb.Controls
+                .OfType<RadioButton>()
+                .FirstOrDefault(rb => rb.Checked);
+        if (checkedButton != null)
+        {
+            InputData.NozzleKind = (NozzleKind)Convert.ToInt32(checkedButton.Text.First().ToString());
+        }
+        else
+        {
+            dataInErr.Add("Невозможно определить тип штуцера");
+        }
+
+        if (InputData.NozzleKind is NozzleKind.ImpassWithRing or NozzleKind.PassWithRing or NozzleKind.WithRingAndInPart)
+        {
+            InputData.steel2 = steel2_cb.Text;
+            InputData.l2 = Parameters.GetParam<double>(l2_tb.Text, "l2", ref dataInErr);
+            InputData.s2 = Parameters.GetParam<double>(s2_tb.Text, "s2", ref dataInErr);
+        }
+
+        if (InputData.NozzleKind is NozzleKind.PassWithoutRing or NozzleKind.PassWithRing or NozzleKind.WithRingAndInPart)
+        {
+            InputData.steel3 = steel3_cb.Text;
+            InputData.l3 = Parameters.GetParam<double>(l3_tb.Text, "l3", ref dataInErr);
+            InputData.s3 = Parameters.GetParam<double>(s3_tb.Text, "s3", ref dataInErr);
+        }
+
+        var checkedPlaceButton = place_gb.Controls
+            .OfType<RadioButton>()
+            .FirstOrDefault(rb => rb.Checked)
+            ?? throw new InvalidOperationException();
+
+        var checkedRadioButtonText = checkedPlaceButton.Text;
+
+        switch (checkedRadioButtonText)
+        {
+            case Perpendicular:
+                if (!InputData.IsOval)
+                {
+                    if (InputData.NozzleKind is NozzleKind.ImpassWithoutRing or
+                        NozzleKind.ImpassWithRing or
+                        NozzleKind.PassWithoutRing or
+                        NozzleKind.PassWithRing or
+                        NozzleKind.WithRingAndInPart or
+                        NozzleKind.WithWealdedRing)
+                    {
+                        InputData.Location = NozzleLocation.LocationAccordingToParagraph_5_2_2_1;
+                    }
+                    else if (InputData.NozzleKind is NozzleKind.WithFlanging or NozzleKind.WithTorusshapedInsert)
+                    {
+                        InputData.Location = NozzleLocation.LocationAccordingToParagraph_5_2_2_7;
+                    }
+                }
+                else
+                {
+                    InputData.Location = NozzleLocation.LocationAccordingToParagraph_5_2_2_6;
+                    if (_shellInputData.ShellType is ShellType.Elliptical or
+                        ShellType.Spherical or ShellType.Torospherical)
+                    {
+                        InputData.omega = 0;
+                    }
+                }
+                break;
+            case Transversely:
+                InputData.Location = NozzleLocation.LocationAccordingToParagraph_5_2_2_2;
+
+                if (mainPanel?.Controls[TransverselyTextBoxName] is TextBox transverselyTextBox)
+                {
+                    InputData.tTransversely = Parameters.GetParam<double>(transverselyTextBox.Text, "tTransversely", ref dataInErr);
+                }
+                break;
+            case Offset:
+                switch (_shellInputData.ShellType)
+                {
+                    case ShellType.Elliptical:
+                        InputData.Location = NozzleLocation.LocationAccordingToParagraph_5_2_2_3;
+
+                        if (mainPanel?.Controls[RNozzleTextBoxName] is TextBox rNozzleTextBox)
+                        {
+                            InputData.ellx = Parameters.GetParam<double>(rNozzleTextBox.Text, "ellx", ref dataInErr);
+                        }
+                        break;
+                    case ShellType.Cylindrical:
+                        break;
+                }
+                break;
+            case Slanted:
+                switch (_shellInputData.ShellType)
+                {
+                    case ShellType.Elliptical:
+                    case ShellType.Conical:
+                        var omegaText = (mainPanel?.Controls[OmegaTextBoxName] as TextBox)?.Text;
+
+                        InputData.omega = Parameters.GetParam<double>(omegaText, "omega", ref dataInErr);
+
+                        var gammaTextElliptical = (mainPanel?.Controls[GammaTextBoxName] as TextBox)?.Text;
+
+                        InputData.gamma = Parameters.GetParam<double>(gammaTextElliptical, "gamma", ref dataInErr);
+                        InputData.Location = InputData.omega == 0
+                            ? NozzleLocation.LocationAccordingToParagraph_5_2_2_5
+                            : NozzleLocation.LocationAccordingToParagraph_5_2_2_4;
+
+                        break;
+
+                    case ShellType.Spherical:
+                    case ShellType.Torospherical:
+
+                        InputData.omega = 0;
+                        var gammaTextSpherical = (mainPanel?.Controls[GammaTextBoxName] as TextBox)?.Text;
+
+                        InputData.gamma = Parameters.GetParam<double>(gammaTextSpherical, "gamma", ref dataInErr);
+
+                        InputData.Location = NozzleLocation.LocationAccordingToParagraph_5_2_2_5;
+                        break;
+                }
+                break;
+        }
+
+        var isNoError = !dataInErr.Any() && InputData.IsDataGood;
+
+        if (!isNoError)
+        {
+            MessageBox.Show(string.Join<string>(Environment.NewLine, dataInErr.Union(InputData.ErrorList)));
+        }
+
+        return isNoError;
+    }
+
+    protected override bool CollectDataForFinishCalculation()
+    {
+        var dataInErr = new List<string>();
+
+        if (InputData == null)
+            throw new InvalidOperationException();
+
+        InputData.Name = name_tb.Text;
+
+        var isNoError = !dataInErr.Any() && InputData.IsDataGood;
+
+        if (!isNoError)
+        {
+            MessageBox.Show(string.Join<string>(Environment.NewLine, dataInErr.Union(InputData.ErrorList)));
+        }
+
+        return isNoError;
+    }
+
+    private void PreCalculate_btn_Click(object sender, EventArgs e)
+    {
+        d0_l.Text = string.Empty;
+        p_d_l.Text = string.Empty;
+        b_l.Text = string.Empty;
+
+        if (!CollectDataForPreliminarilyCalculation()) return;
+
+        var nozzle = Calculate();
+
+        if (nozzle == null) return;
+
+        d0_l.Text = Get_d0(nozzle);
+        p_d_l.Text = Get_p(nozzle);
+        b_l.Text = Get_b(nozzle);
+
+        calculate_btn.Enabled = true;
+        MessageBox.Show(Resources.CalcComplete);
+    }
+
+    private void Calculate_btn_Click(object sender, EventArgs e)
+    {
+        d0_l.Text = string.Empty;
+        p_d_l.Text = string.Empty;
+        b_l.Text = string.Empty;
+
+        if (!CollectDataForFinishCalculation()) return;
+
+        var nozzle = Calculate();
+
+        if (nozzle == null) return;
+
+        d0_l.Text = Get_d0(nozzle);
+        p_d_l.Text = Get_p(nozzle);
+        b_l.Text = Get_b(nozzle);
+
+        if (Owner is not MainForm main)
+        {
+            MessageBox.Show($"{nameof(MainForm)} error");
+            return;
+        }
+
+        SetCalculatedElementToStorage(Owner, nozzle);
+
+        MessageBox.Show(Resources.CalcComplete);
+        Close();
     }
 
     private void Vid_rb_CheckedChanged(object sender, EventArgs e)
@@ -963,502 +1405,30 @@ public partial class NozzleForm : Form
         }
     }
 
-    private void NozzleForm_Load(object sender, EventArgs e)
+
+    private void Sigma1Handle_cb_CheckedChanged(object sender, EventArgs e)
     {
-        var steels = _physicalDataService.GetSteels(SteelSource.G34233D1)
-            .Select(s => s as object)
-            .ToArray();
+        if (sender is not CheckBox cb) return;
 
-        steel1_cb.Items.AddRange(steels);
-        steel1_cb.SelectedIndex = 0;
-        steel2_cb.Items.AddRange(steels);
-        steel2_cb.SelectedIndex = 0;
-        steel3_cb.Items.AddRange(steels);
-        steel3_cb.SelectedIndex = 0;
-
-        var serviceNames = _calculateServices
-            .Select(s => s.Name as object)
-            .ToArray();
-        Gost_cb.Items.AddRange(serviceNames);
-        Gost_cb.SelectedIndex = 0;
-
-        MessageBox.Show(((ShellInputData)_shellElement.InputData).ShellType.ToString());
-
-        switch (((ShellInputData)_shellElement.InputData).ShellType)
-        {
-            case ShellType.Cylindrical:
-                placeRadioButton1 = new RadioButton
-                {
-                    Text = Perpendicular,
-                    Checked = true,
-                    AutoSize = true,
-                    Location = new Point(8, 22),
-                    Margin = new Padding(4, 3, 4, 3),
-                    Name = nameof(placeRadioButton1),
-                    UseVisualStyleBackColor = true,
-                };
-
-                placeRadioButton1.CheckedChanged += Place_rb_CheckedChanged;
-                //Size = new System.Drawing.Size(31, 19),
-
-                //placerb_1.toggled[bool].emit(False)
-
-                placeRadioButton2 = new RadioButton
-                {
-                    Text = Transversely,
-                    AutoSize = true,
-                    Location = new Point(8, 62),
-                    Margin = new Padding(4, 3, 4, 3),
-                    Name = nameof(placeRadioButton2),
-                    UseVisualStyleBackColor = true
-                };
-                placeRadioButton2.CheckedChanged += Place_rb_CheckedChanged;
-
-                //RadioButton placerb_3 = new RadioButton
-                //{
-                //    Text = "Смещенный",
-                //    AutoSize = true,
-                //    Location = new System.Drawing.Point(8, 76),
-                //    Margin = new System.Windows.Forms.Padding(4, 3, 4, 3),
-                //    Name = "placerb_3",
-                //    UseVisualStyleBackColor = true
-                //};
-                //placerb_3.CheckedChanged += new EventHandler(Place_rb_CheckedChanged);
-
-                placeRadioButton3 = new RadioButton
-                {
-                    Text = Slanted,
-                    AutoSize = true,
-                    Location = new Point(8, 102),
-                    Margin = new Padding(4, 3, 4, 3),
-                    Name = nameof(placeRadioButton3),
-                    UseVisualStyleBackColor = true
-                };
-                placeRadioButton3.CheckedChanged += Place_rb_CheckedChanged;
-
-                mainPanel = new Panel
-                {
-                    Name = nameof(mainPanel),
-                    Location = new Point(2, 15),
-                    Size = new Size(300, 310)
-                };
-
-                place_gb.Controls.AddRange(new Control[]
-                {
-                    placeRadioButton1, placeRadioButton2, placeRadioButton3, mainPanel
-                });
-
-                place_pb.Image = (Bitmap)(new ImageConverter().ConvertFrom(Resources.CylRadial)
-                                          ?? throw new InvalidOperationException());
-                break;
-            // TODO: Добавить расчет конуса
-            //else if (this.Owner is KonForm)
-            //{
-            //    TypeElement = "Kon";
-            //}
-
-            case ShellType.Elliptical:
-                placeRadioButton1 = new RadioButton
-                {
-                    Text = Perpendicular,
-                    Checked = true,
-                    AutoSize = true,
-                    Location = new Point(8, 40),
-                    Margin = new Padding(4, 3, 4, 3),
-                    Name = nameof(placeRadioButton1),
-                    UseVisualStyleBackColor = true,
-                };
-                placeRadioButton1.CheckedChanged += Place_rb_CheckedChanged;
-                //Size = new System.Drawing.Size(31, 19),
-
-                placeRadioButton2 = new RadioButton
-                {
-                    Text = Offset,
-                    AutoSize = true,
-                    Location = new Point(8, 80),
-                    Margin = new Padding(4, 3, 4, 3),
-                    Name = nameof(placeRadioButton2),
-                    UseVisualStyleBackColor = true
-                };
-                placeRadioButton2.CheckedChanged += Place_rb_CheckedChanged;
-                //RadioButton placerb_4 = new RadioButton
-                //{
-                //    Text = "Наклонный",
-                //    AutoSize = true,
-                //    Location = new System.Drawing.Point(8, 70),
-                //    Margin = new System.Windows.Forms.Padding(4, 3, 4, 3),
-                //    Name = "placerb_4",
-                //    UseVisualStyleBackColor = true
-                //};
-                //placerb_4.CheckedChanged += new EventHandler(Place_rb_CheckedChanged);
-
-                mainPanel = new Panel
-                {
-                    Name = nameof(mainPanel),
-                    Location = new Point(2, 15),
-                    Size = new Size(400, 310)
-                };
-
-                placeCartesianRadioButton = new RadioButton
-                {
-                    Text = Cartesian,
-                    AutoSize = true,
-                    Location = new Point(210, 15),
-                    Margin = new Padding(4, 3, 4, 3),
-                    Name = nameof(placeCartesianRadioButton),
-                    UseVisualStyleBackColor = true
-                };
-                placeCartesianRadioButton.CheckedChanged += PlaceCoordinate_rb_CheckedChanged;
-                //Size = new System.Drawing.Size(31, 19),
-
-                placePolarRadioButton = new RadioButton
-                {
-                    Text = Polar,
-                    Checked = true,
-                    AutoSize = true,
-                    Location = new Point(125, 15),
-                    Margin = new Padding(4, 3, 4, 3),
-                    Name = nameof(placePolarRadioButton),
-                    UseVisualStyleBackColor = true
-                };
-                placePolarRadioButton.CheckedChanged += PlaceCoordinate_rb_CheckedChanged;
-
-                coordinateLabel = new Label
-                {
-                    Text = "Система координат:",
-                    AutoSize = true,
-                    Location = new Point(0, 15)
-                };
-
-                coordinatePanel = new Panel
-                {
-                    Name = nameof(coordinatePanel),
-                    Location = new Point(110, 10),
-                    Size = new Size(300, 35)
-                };
-
-                coordinatePanel.Controls.AddRange(new Control[]
-                {
-                        coordinateLabel, placeCartesianRadioButton, placePolarRadioButton
-                });
-
-                place_gb.Controls.AddRange(new Control[]
-                {
-                        placeRadioButton1, placeRadioButton2, mainPanel, coordinatePanel
-                });
-
-                place_pb.Location = new Point(place_pb.Location.X, place_pb.Location.Y + 35);
-                place_pb.Image = (Bitmap)(new ImageConverter().ConvertFrom(Resources.EllRadial)
-                    ?? throw new InvalidOperationException());
-                break;
-        }
-
-        if (Owner is MainForm)
-        {
-            steel1_cb.SelectedItem = _shellInputData.Steel;
-            steel2_cb.Text = _shellInputData.Steel;
-            steel3_cb.Text = _shellInputData.Steel;
-            p_tb.Text = _shellInputData.p.ToString();
-            t_tb.Text = _shellInputData.t.ToString();
-
-            nameEl_tb.Text = _shellInputData.Name;
-
-            vn_rb.Checked = _shellInputData.IsPressureIn;
-            nar_rb.Checked = !_shellInputData.IsPressureIn;
-
-            pressure_gb.Enabled = false;
-        }
-
-        Place_Draw(place_gb.Controls
-            .OfType<RadioButton>()
-            .FirstOrDefault(rb => rb.Checked)
-        ?? throw new InvalidOperationException());
-    }
-
-    private void Cancel_b_Click(object sender, EventArgs e)
-    {
-        Hide();
-    }
-
-    private bool CollectDataForPreliminarilyCalculation()
-    {
-        List<string> dataInErr = new();
-
-        _nozzleData = new NozzleInput(_shellElement)
-        {
-            t = Parameters.GetParam<double>(t_tb.Text, "t", ref dataInErr, NumberStyles.Integer),
-            steel1 = steel1_cb.Text,
-
-            d = Parameters.GetParam<double>(d_tb.Text, "d", ref dataInErr),
-            s1 = Parameters.GetParam<double>(s1_tb.Text, "s1", ref dataInErr),
-            cs = Parameters.GetParam<double>(cs_tb.Text, "cs", ref dataInErr),
-            cs1 = Parameters.GetParam<double>(cs1_tb.Text, "cs1", ref dataInErr),
-            l1 = Parameters.GetParam<double>(l1_tb.Text, "l1", ref dataInErr),
-            fi = Parameters.GetParam<double>(fi_tb.Text, "φ", ref dataInErr),
-            fi1 = Parameters.GetParam<double>(fi1_tb.Text, "φ1", ref dataInErr),
-            delta = Parameters.GetParam<double>(delta_tb.Text, "delta", ref dataInErr),
-            delta1 = Parameters.GetParam<double>(delta1_tb.Text, "delta1", ref dataInErr),
-            delta2 = Parameters.GetParam<double>(delta2_tb.Text, "delta2", ref dataInErr),
-
-            SigmaAllow1 = sigmaHandle_cb.Checked
-                ? Parameters.GetParam<double>(sigma_d1_tb.Text, "[σ1]", ref dataInErr)
-                : default
-        };
-
-
-        //NozzleKind
-        var checkedButton = vid_gb.Controls
-                .OfType<RadioButton>()
-                .FirstOrDefault(rb => rb.Checked);
-        if (checkedButton != null)
-        {
-            _nozzleData.NozzleKind = (NozzleKind)Convert.ToInt32(checkedButton.Text.First().ToString());
-        }
-        else
-        {
-            dataInErr.Add("Невозможно определить тип штуцера");
-        }
-
-
-        if (!((ShellInputData)_shellElement.InputData).IsPressureIn)
-        {
-            if (EHandle_cb.Checked)
-            {
-                _nozzleData.E1 = Parameters.GetParam<double>(E1_tb.Text, "E1", ref dataInErr);
-            }
-        }
-
-        if (_nozzleData.NozzleKind is NozzleKind.ImpassWithRing or NozzleKind.PassWithRing or NozzleKind.WithRingAndInPart)
-        {
-            _nozzleData.steel2 = steel2_cb.Text;
-            _nozzleData.l2 = Parameters.GetParam<double>(l2_tb.Text, "l2", ref dataInErr);
-            _nozzleData.s2 = Parameters.GetParam<double>(s2_tb.Text, "s2", ref dataInErr);
-        }
-
-        if (_nozzleData.NozzleKind is NozzleKind.PassWithoutRing or NozzleKind.PassWithRing or NozzleKind.WithRingAndInPart)
-        {
-            _nozzleData.steel3 = steel3_cb.Text;
-            _nozzleData.l3 = Parameters.GetParam<double>(l3_tb.Text, "l3", ref dataInErr);
-            _nozzleData.s3 = Parameters.GetParam<double>(s3_tb.Text, "s3", ref dataInErr);
-        }
-
-        var checkedPlaceButton = place_gb.Controls
-            .OfType<RadioButton>()
-            .FirstOrDefault(rb => rb.Checked)
-            ?? throw new InvalidOperationException();
-
-        var checkedRadioButtonText = checkedPlaceButton.Text;
-
-        switch (checkedRadioButtonText)
-        {
-            case Perpendicular:
-                if (!_nozzleData.IsOval)
-                {
-                    if (_nozzleData.NozzleKind is NozzleKind.ImpassWithoutRing or
-                        NozzleKind.ImpassWithRing or
-                        NozzleKind.PassWithoutRing or
-                        NozzleKind.PassWithRing or
-                        NozzleKind.WithRingAndInPart or
-                        NozzleKind.WithWealdedRing)
-                    {
-                        _nozzleData.Location = NozzleLocation.LocationAccordingToParagraph_5_2_2_1;
-                    }
-                    else if (_nozzleData.NozzleKind is NozzleKind.WithFlanging or NozzleKind.WithTorusshapedInsert)
-                    {
-                        _nozzleData.Location = NozzleLocation.LocationAccordingToParagraph_5_2_2_7;
-                    }
-                }
-                else
-                {
-                    _nozzleData.Location = NozzleLocation.LocationAccordingToParagraph_5_2_2_6;
-                    if (_shellInputData.ShellType is ShellType.Elliptical or
-                        ShellType.Spherical or ShellType.Torospherical)
-                    {
-                        _nozzleData.omega = 0;
-                    }
-                }
-                break;
-            case Transversely:
-                _nozzleData.Location = NozzleLocation.LocationAccordingToParagraph_5_2_2_2;
-
-                if (mainPanel?.Controls[TransverselyTextBoxName] is TextBox transverselyTextBox)
-                {
-                    _nozzleData.tTransversely = Parameters.GetParam<double>(transverselyTextBox.Text, "tTransversely", ref dataInErr);
-                }
-                break;
-            case Offset:
-                switch (_shellInputData.ShellType)
-                {
-                    case ShellType.Elliptical:
-                        _nozzleData.Location = NozzleLocation.LocationAccordingToParagraph_5_2_2_3;
-
-                        if (mainPanel?.Controls[RNozzleTextBoxName] is TextBox rNozzleTextBox)
-                        {
-                            _nozzleData.ellx = Parameters.GetParam<double>(rNozzleTextBox.Text, "ellx", ref dataInErr);
-                        }
-                        break;
-                    case ShellType.Cylindrical:
-                        break;
-                }
-                break;
-            case Slanted:
-                switch (_shellInputData.ShellType)
-                {
-                    case ShellType.Elliptical:
-                    case ShellType.Conical:
-                        var omegaText = (mainPanel?.Controls[OmegaTextBoxName] as TextBox)?.Text;
-
-                        _nozzleData.omega = Parameters.GetParam<double>(omegaText, "omeg", ref dataInErr);
-
-                        var gammaTextElliptical = (mainPanel?.Controls[GammaTextBoxName] as TextBox)?.Text;
-
-                        _nozzleData.gamma = Parameters.GetParam<double>(gammaTextElliptical, "gamma", ref dataInErr);
-                        _nozzleData.Location = _nozzleData.omega == 0
-                            ? NozzleLocation.LocationAccordingToParagraph_5_2_2_5
-                            : NozzleLocation.LocationAccordingToParagraph_5_2_2_4;
-
-                        break;
-
-                    case ShellType.Spherical:
-                    case ShellType.Torospherical:
-
-                        _nozzleData.omega = 0;
-                        var gammaTextSpherical = (mainPanel?.Controls[GammaTextBoxName] as TextBox)?.Text;
-
-                        _nozzleData.gamma = Parameters.GetParam<double>(gammaTextSpherical, "gamma", ref dataInErr);
-
-                        _nozzleData.Location = NozzleLocation.LocationAccordingToParagraph_5_2_2_5;
-                        break;
-
-                }
-
-                break;
-        }
-
-        if ((_nozzleData.cs + _nozzleData.cs1 > _nozzleData.s3) & _nozzleData.s3 > 0)
-        {
-            dataInErr.Add("cs+cs1 должно быть меньше s3");
-        }
-
-
-        var isNoError = !dataInErr.Any() && _nozzleData.IsDataGood;
-
-        if (!isNoError)
-        {
-            MessageBox.Show(string.Join<string>(Environment.NewLine, dataInErr.Union(_nozzleData.ErrorList)));
-        }
-
-        return isNoError;
-    }
-
-    private bool CollectDataForFinishCalculation()
-    {
-        var dataInErr = new List<string>();
-
-        if (_nozzleData == null)
-            throw new InvalidOperationException();
-
-        _nozzleData.Name = name_tb.Text;
-
-        var isNoError = !dataInErr.Any() && _nozzleData.IsDataGood;
-
-        if (!isNoError)
-        {
-            MessageBox.Show(string.Join<string>(Environment.NewLine, dataInErr.Union(_nozzleData.ErrorList)));
-        }
-
-        return isNoError;
-    }
-
-    private void PreCalc_b_Click(object sender, EventArgs e)
-    {
-        if (!CollectDataForPreliminarilyCalculation()) return;
-
-        ICalculatedElement nozzle;
-
-        try
-        {
-            nozzle = GetCalculateService().Calculate(_nozzleData
-                ?? throw new InvalidOperationException());
-        }
-        catch (CalculateException ex)
-        {
-            MessageBox.Show(ex.Message);
-            return;
-        }
-
-        if (nozzle.ErrorList.Any())
-        {
-            MessageBox.Show(string.Join<string>(Environment.NewLine, nozzle.ErrorList));
-        }
-
-        calc_b.Enabled = true;
-        d0_l.Text = $@"d0={((NozzleCalculated)nozzle).d0:f2} мм";
-        p_d_l.Text = $@"[p]={((NozzleCalculated)nozzle).p_d:f2} МПа";
-        b_l.Text = $@"b={((NozzleCalculated)nozzle).b:f2} мм";
-
-        MessageBox.Show(Resources.CalcComplete);
-    }
-
-    private void Calc_b_Click(object sender, EventArgs e)
-    {
-        if (!CollectDataForFinishCalculation()) return;
-
-        ICalculatedElement nozzle;
-
-        try
-        {
-            nozzle = GetCalculateService().Calculate(_nozzleData
-             ?? throw new InvalidOperationException());
-        }
-        catch (CalculateException ex)
-        {
-            MessageBox.Show(ex.Message);
-            return;
-        }
-
-        if (nozzle.ErrorList.Any())
-        {
-            MessageBox.Show(string.Join<string>(Environment.NewLine, nozzle.ErrorList));
-        }
-
-        d0_l.Text = $@"d0={((NozzleCalculated)nozzle).d0:f2} мм";
-        p_d_l.Text = $@"[p]={((NozzleCalculated)nozzle).p_d:f2} МПа";
-        b_l.Text = $@"b={((NozzleCalculated)nozzle).b:f2} мм";
-
-        if (Owner is not MainForm main)
-        {
-            MessageBox.Show($"{nameof(MainForm)} error");
-            return;
-        }
-
-        main.Word_lv.Items.Add(nozzle.ToString());
-        main.ElementsCollection.Add(nozzle);
-
-        MessageBox.Show(Resources.CalcComplete);
-        Close();
-    }
-
-    private void SigmaHandle_cb_CheckedChanged(object sender, EventArgs e)
-    {
-        if (sender is CheckBox cb)
-        {
-            sigma_d1_tb.Enabled = cb.Checked;
-        }
+        FormHelpers.EnabledIfCheck(sigma_d1_tb, cb.Checked);
     }
 
     private void EHandle_cb_CheckedChanged(object sender, EventArgs e)
     {
-        if (sender is CheckBox cb)
-        {
-            E1_tb.Enabled = cb.Checked;
-        }
+        if (sender is not CheckBox cb) return;
+
+        FormHelpers.EnabledIfCheck(E1_tb, cb.Checked);
     }
 
-    private ICalculateService<NozzleInput> GetCalculateService()
-    {
-        return _calculateServices
-                   .FirstOrDefault(s => s.Name == Gost_cb.Text)
-               ?? throw new InvalidOperationException("Service wasn't found.");
-    }
+    private static string Get_d0(ICalculatedElement element) => string
+        .Join(", ", ((NozzleCalculated)element).Results
+            .Select((r, j) => $"d0{j + 1}={r.d0:f3} мм")
+            .ToList());
+
+    private static string Get_p(ICalculatedElement element) => string
+        .Join(", ", ((NozzleCalculated)element).Results
+            .Select((r, j) => $"p{j + 1}={r.p_d:f3} МПа")
+            .ToList());
+
+    private static string Get_b(ICalculatedElement element) => $"b={((NozzleCalculated)element).CommonData.b:f3} мм";
 }

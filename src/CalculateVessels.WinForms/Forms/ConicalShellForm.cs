@@ -1,24 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Globalization;
-using System.Linq;
-using System.Windows.Forms;
-using CalculateVessels.Core.Interfaces;
+﻿using CalculateVessels.Core.Interfaces;
 using CalculateVessels.Core.Shells.Conical;
 using CalculateVessels.Core.Shells.Enums;
 using CalculateVessels.Data.Enums;
 using CalculateVessels.Data.Interfaces;
 using CalculateVessels.Data.Properties;
+using CalculateVessels.Forms.MiddleForms;
 using CalculateVessels.Helpers;
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
+using System.Windows.Forms;
 
 namespace CalculateVessels.Forms;
 
 public sealed partial class ConicalShellForm : ConicalShellFormMiddle
 {
     public ConicalShellForm(IEnumerable<ICalculateService<ConicalShellInput>> calculateServices,
-        IPhysicalDataService physicalDataService)
-        : base(calculateServices, physicalDataService)
+        IPhysicalDataService physicalDataService,
+        IFormFactory formFactory)
+        : base(calculateServices, physicalDataService, formFactory)
     {
         InitializeComponent();
     }
@@ -71,7 +72,6 @@ public sealed partial class ConicalShellForm : ConicalShellFormMiddle
         InputData = new ConicalShellInput
         {
             Steel = steel_cb.Text,
-            IsPressureIn = !isNotPressureIn_cb.Checked,
             IsConnectionWithLittle = littleConnection_cb.Checked,
 
             //public double ny { get; set; } = 2.4;
@@ -90,18 +90,19 @@ public sealed partial class ConicalShellForm : ConicalShellFormMiddle
             D1 = Parameters.GetParam<double>(D1_tb.Text, "D1", ref dataInErr),
             L = Parameters.GetParam<double>(L_tb.Text, "L", ref dataInErr),
             //M = Parameters.GetParam<double>(M_tb.Text, "M", ref dataInErr),
-            p = Parameters.GetParam<double>(p_tb.Text, "p", ref dataInErr),
             phi = Parameters.GetParam<double>(phip_tb.Text, "φp", ref dataInErr),
             phi_t = Parameters.GetParam<double>(phit_tb.Text, "φt", ref dataInErr),
-            s = Parameters.GetParam<double>(s_tb.Text, "s", ref dataInErr),
-            SigmaAllow = sigmaHandle_cb.Checked
-                ? Parameters.GetParam<double>(sigma_d_tb.Text, "[σ]", ref dataInErr)
-                : default,
-            E = EHandle_cb.Checked
-                ? Parameters.GetParam<double>(E_tb.Text, "E", ref dataInErr)
-                : default,
-            t = Parameters.GetParam<double>(t_tb.Text, "t", ref dataInErr, NumberStyles.Integer)
+            s = Parameters.GetParam<double>(s_tb.Text, "s", ref dataInErr)
         };
+
+        var loadingConditions = FormHelpers.ParseLoadingConditions(loadingConditionsControl, loadingConditionGroupBox).ToList();
+
+        if (!loadingConditions.Any())
+        {
+            return false;
+        }
+
+        InputData.LoadingConditions = loadingConditions;
 
         if (bigConnection_cb.Checked)
         {
@@ -326,7 +327,9 @@ public sealed partial class ConicalShellForm : ConicalShellFormMiddle
 
     private void PreCalculate_btn_Click(object sender, EventArgs e)
     {
+        sk_l.Text = string.Empty;
         p_d_l.Text = "[p]";
+        calculate_btn.Enabled = false;
 
         if (!CollectDataForPreliminarilyCalculation()) return;
 
@@ -334,7 +337,7 @@ public sealed partial class ConicalShellForm : ConicalShellFormMiddle
 
         if (conical == null) return;
 
-        sk_l.Text = $"sk={((ConicalShellCalculated)conical).s:f3} мм";
+        sk_l.Text = Gets(conical);
 
         calculate_btn.Enabled = true;
         MessageBox.Show(Resources.CalcComplete);
@@ -348,10 +351,26 @@ public sealed partial class ConicalShellForm : ConicalShellFormMiddle
 
         if (conical == null) return;
 
+        if (isNozzleCalculateCheckBox.Checked)
+        {
+            if (Owner is not MainForm mainForm) return;
+
+            mainForm.NozzleForm = FormFactory.Create<NozzleForm>()
+                                  ?? throw new InvalidOperationException($"Couldn't create {nameof(NozzleForm)}.");
+            mainForm.NozzleForm.Owner = mainForm;
+            mainForm.NozzleForm.Show(conical);
+        }
+
+        if (Owner is not MainForm main)
+        {
+            MessageBox.Show($"{nameof(MainForm)} error");
+            return;
+        }
+
         SetCalculatedElementToStorage(Owner, conical);
 
-        sk_l.Text = $"sk={((ConicalShellCalculated)conical).s:f3} мм";
-        p_d_l.Text = $"[p]={((ConicalShellCalculated)conical).p_d:f3} МПа";
+        sk_l.Text = Gets(conical);
+        p_d_l.Text = Getp(conical);
 
         MessageBox.Show(Resources.CalcComplete);
         Close();
@@ -375,4 +394,24 @@ public sealed partial class ConicalShellForm : ConicalShellFormMiddle
                                                  ?? throw new InvalidOperationException())
                                              ?? throw new InvalidOperationException());
     }
+
+    private void DisabledCalculateBtn(object sender, EventArgs e)
+    {
+        DisableCalculateButton();
+    }
+
+    private void DisableCalculateButton()
+    {
+        calculate_btn.Enabled = false;
+    }
+
+    private static string Gets(ICalculatedElement element) => string
+        .Join(", ", ((ConicalShellCalculated)element).Results
+            .Select((r, j) => $"s{j + 1}={r.s:f3} мм")
+            .ToList());
+
+    private static string Getp(ICalculatedElement element) => string
+        .Join(", ", ((ConicalShellCalculated)element).Results
+            .Select((r, j) => $"p{j + 1}={r.p_d:f3} МПа")
+            .ToList());
 }

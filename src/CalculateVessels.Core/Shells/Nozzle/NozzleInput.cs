@@ -1,8 +1,8 @@
 ﻿using CalculateVessels.Core.Base;
 using CalculateVessels.Core.Interfaces;
-using CalculateVessels.Core.Shells.Base;
 using CalculateVessels.Core.Shells.Nozzle.Enums;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace CalculateVessels.Core.Shells.Nozzle;
 
@@ -33,12 +33,12 @@ public class NozzleInput : InputData, IInputData
     public double E3 { get; set; }
     public double E4 { get; set; }
     public double ellx { get; set; }
-    public double fi { get; set; }
-    public double fi1 { get; set; }
+    public double phi { get; set; }
+    public double phi1 { get; set; }
     public double gamma { get; set; }
     public bool IsOval { get; set; }
     public NozzleLocation Location { get; set; }
-    public byte l { get; set; }
+    public double l { get; set; }
     public double l1 { get; set; }
     public double l2 { get; set; }
     public double l3 { get; set; }
@@ -58,10 +58,22 @@ public class NozzleInput : InputData, IInputData
     public string steel2 { get; set; } = string.Empty;
     public string steel3 { get; set; } = string.Empty;
     public string steel4 { get; set; } = string.Empty;
-    public double t { get; set; }
+    //public double t { get; set; }
     public double tTransversely { get; set; }
 
     //public IElement Element { get; set; }
     //public ShellDataIn ShellDataIn => (ShellDataIn) _shellCalculatedData.InputData;
 
+    public override bool IsDataGood
+    {
+        get
+        {
+            if (s3 > 0 && cs + cs1 > s3)
+            {
+                ErrorList.Add("cs+cs1 должно быть меньше s3.");
+            }
+
+            return !ErrorList.Any();
+        }
+    }
 }

@@ -4,19 +4,22 @@ using CalculateVessels.Core.Interfaces;
 using CalculateVessels.Core.Shells.Conical;
 using CalculateVessels.Data.Interfaces;
 using CalculateVessels.Forms.Base;
+using CalculateVessels.Helpers;
 
-namespace CalculateVessels.Forms;
+namespace CalculateVessels.Forms.MiddleForms;
 
-public class ConicalShellFormMiddle : BaseCalculateForm<ConicalShellInput>
+public class ConicalShellFormMiddle : CalculateFormWithFormFactory<ConicalShellInput>
 {
-    protected ConicalShellFormMiddle(IEnumerable<ICalculateService<ConicalShellInput>> calculateServices, IPhysicalDataService physicalDataService)
-        : base(calculateServices, physicalDataService)
+    protected ConicalShellFormMiddle(IEnumerable<ICalculateService<ConicalShellInput>> calculateServices,
+        IPhysicalDataService physicalDataService,
+        IFormFactory formFactory)
+        : base(calculateServices, physicalDataService, formFactory)
     {
 
     }
 
     public ConicalShellFormMiddle()
-        : this(null, null)
+        : this(null, null, null)
     {
 
     }

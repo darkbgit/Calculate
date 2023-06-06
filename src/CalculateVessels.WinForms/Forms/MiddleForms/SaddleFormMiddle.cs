@@ -1,20 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using CalculateVessels.Core.Interfaces;
-using CalculateVessels.Core.Supports.BracketVertical;
+using CalculateVessels.Core.Supports.Saddle;
 using CalculateVessels.Data.Interfaces;
 using CalculateVessels.Forms.Base;
 
-namespace CalculateVessels.Forms;
+namespace CalculateVessels.Forms.MiddleForms;
 
-public class BracketVerticalFormMiddle : BaseCalculateForm<BracketVerticalInput>
+public class SaddleFormMiddle : BaseCalculateForm<SaddleInput>
 {
-    protected BracketVerticalFormMiddle(IEnumerable<ICalculateService<BracketVerticalInput>> calculateServices, IPhysicalDataService physicalDataService)
+    protected SaddleFormMiddle(IEnumerable<ICalculateService<SaddleInput>> calculateServices,
+        IPhysicalDataService physicalDataService)
         : base(calculateServices, physicalDataService)
     {
     }
 
-    public BracketVerticalFormMiddle()
+    public SaddleFormMiddle()
         : this(null, null)
     {
 

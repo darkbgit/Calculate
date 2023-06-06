@@ -3,7 +3,7 @@ using System.Windows.Forms;
 
 namespace CalculateVessels.Forms;
 
-partial class AboutBoxForm : Form
+internal partial class AboutBoxForm : Form
 {
     public AboutBoxForm()
     {

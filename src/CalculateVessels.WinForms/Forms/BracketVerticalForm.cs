@@ -11,6 +11,7 @@ using CalculateVessels.Data.Properties;
 using System.Globalization;
 using CalculateVessels.Core.Enums;
 using CalculateVessels.Helpers;
+using CalculateVessels.Forms.MiddleForms;
 
 namespace CalculateVessels.Forms;
 

@@ -1,0 +1,22 @@
+﻿using CalculateVessels.Core.Shells.Base;
+
+namespace CalculateVessels.Core.Shells.Conical;
+
+
+#pragma warning disable IDE1006
+// ReSharper disable InconsistentNaming
+
+public class ConicalShellCalculatedCommon : ShellCalculatedCommonData
+{
+    /// <summary>
+    /// in radians
+    /// </summary>
+    public double alpha1 { get; set; }
+
+    public double a1p { get; set; }
+    public double a2p { get; set; }
+    public double a1p_l { get; set; }
+    public double a2p_l { get; set; }
+    //public double c { get; set; }
+    public double Dk { get; set; }
+}

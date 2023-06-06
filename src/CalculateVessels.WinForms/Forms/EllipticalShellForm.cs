@@ -1,83 +1,62 @@
-﻿using CalculateVessels.Core.Exceptions;
-using CalculateVessels.Core.Interfaces;
+﻿using CalculateVessels.Core.Interfaces;
 using CalculateVessels.Core.Shells.Elliptical;
 using CalculateVessels.Core.Shells.Enums;
 using CalculateVessels.Data.Enums;
 using CalculateVessels.Data.Interfaces;
 using CalculateVessels.Data.Properties;
+using CalculateVessels.Forms.MiddleForms;
 using CalculateVessels.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
 
 namespace CalculateVessels.Forms;
 
-public partial class EllipticalShellForm : Form
+public sealed partial class EllipticalShellForm : EllipticalShellFormMiddle
 {
-    private EllipticalShellInput? _inputData;
-    private readonly IEnumerable<ICalculateService<EllipticalShellInput>> _calculateServices;
-    private readonly IPhysicalDataService _physicalDataService;
-    private readonly IFormFactory _formFactory;
-
     public EllipticalShellForm(IEnumerable<ICalculateService<EllipticalShellInput>> calculateServices,
-        IFormFactory formFactory,
-        IPhysicalDataService physicalDataService)
+        IPhysicalDataService physicalDataService,
+        IFormFactory formFactory)
+        : base(calculateServices, physicalDataService, formFactory)
     {
         InitializeComponent();
-        _calculateServices = calculateServices;
-        _formFactory = formFactory;
-        _physicalDataService = physicalDataService;
     }
 
-    private ICalculateService<EllipticalShellInput> GetCalculateService()
+    protected override string GetServiceName()
     {
-        return _calculateServices
-                   .FirstOrDefault(s => s.Name == Gost_cb.Text)
-               ?? throw new InvalidOperationException("Service wasn't found.");
+        return Gost_cb.Text;
     }
 
-    private void EllForm_Load(object sender, EventArgs e)
+    private void EllipticalShellForm_Load(object sender, EventArgs e)
     {
-        var steels = _physicalDataService.GetSteels(SteelSource.G34233D1)
-            .Select(s => s as object)
-            .ToArray();
+        LoadSteelsToComboBox(steel_cb, SteelSource.G34233D1);
 
-        steel_cb.Items.AddRange(steels);
-        steel_cb.SelectedIndex = 0;
-
-        var serviceNames = _calculateServices
-            .Select(s => s.Name as object)
-            .ToArray();
-        Gost_cb.Items.AddRange(serviceNames);
-        Gost_cb.SelectedIndex = 0;
+        LoadCalculateServicesNamesToComboBox(Gost_cb);
     }
 
-    private void Cancel_b_Click(object sender, EventArgs e)
+    private void EllipticalShellForm_FormClosing(object sender, FormClosingEventArgs e)
+    {
+        if (sender is not EllipticalShellForm) return;
+
+        if (Owner is not MainForm { EllipticalForm: not null } main) return;
+
+        main.EllipticalForm = null;
+    }
+
+    private void Cancel_btn_Click(object sender, EventArgs e)
     {
         this.Hide();
     }
 
-    private void EllForm_FormClosing(object sender, FormClosingEventArgs e)
-    {
-        if (sender is EllipticalShellForm && Owner is MainForm { EllipticalForm: { } } main)
-        {
-            main.EllipticalForm = null;
-        }
-    }
-
-    private bool CollectDataForPreliminarilyCalculation()
+    protected override bool CollectDataForPreliminarilyCalculation()
     {
         List<string> dataInErr = new();
 
-        _inputData = new EllipticalShellInput()
+        InputData = new EllipticalShellInput
         {
-            t = Parameters.GetParam<double>(t_tb.Text, "t", ref dataInErr, NumberStyles.Integer),
             Steel = steel_cb.Text,
-            IsPressureIn = vn_rb.Checked,
-            p = Parameters.GetParam<double>(p_tb.Text, "p", ref dataInErr),
             phi = Parameters.GetParam<double>(fi_tb.Text, "φ", ref dataInErr),
             D = Parameters.GetParam<double>(D_tb.Text, "D", ref dataInErr),
             EllipseH = Parameters.GetParam<double>(H_tb.Text, "H", ref dataInErr),
@@ -86,43 +65,37 @@ public partial class EllipticalShellForm : Form
             c2 = Parameters.GetParam<double>(c2_tb.Text, "c2", ref dataInErr),
             c3 = Parameters.GetParam<double>(c3_tb.Text, "c3", ref dataInErr),
             EllipticalBottomType =
-                ell_rb.Checked ? EllipticalBottomType.Elliptical : EllipticalBottomType.Hemispherical,
-            SigmaAllow = sigmaHandle_cb.Checked
-                ? Parameters.GetParam<double>(sigma_d_tb.Text, "[σ]", ref dataInErr)
-                : default
+                ell_rb.Checked ? EllipticalBottomType.Elliptical : EllipticalBottomType.Hemispherical
         };
 
-        if (!_inputData.IsPressureIn)
+        var loadingConditions = FormHelpers.ParseLoadingConditions(loadingConditionsControl, loadingConditionGroupBox).ToList();
+
+        if (!loadingConditions.Any())
         {
-            if (EHandle_cb.Checked)
-            {
-                _inputData.E = Parameters.GetParam<double>(E_tb.Text, "E", ref dataInErr);
-            }
+            return false;
         }
 
-        var isNoError = !dataInErr.Any() && _inputData.IsDataGood;
+        InputData.LoadingConditions = loadingConditions;
+
+        var isNoError = !dataInErr.Any() && InputData.IsDataGood;
 
         if (!isNoError)
         {
-            MessageBox.Show(string.Join<string>(Environment.NewLine, dataInErr.Union(_inputData.ErrorList)));
+            MessageBox.Show(string.Join<string>(Environment.NewLine, dataInErr.Union(InputData.ErrorList)));
         }
 
         return isNoError;
     }
 
-    private bool CollectDataForFinishCalculation()
+    protected override bool CollectDataForFinishCalculation()
     {
         List<string> dataInErr = new();
 
-        _inputData = new EllipticalShellInput()
+        InputData = new EllipticalShellInput
         {
             Name = name_tb.Text,
             s = Parameters.GetParam<double>(s_tb.Text, "s", ref dataInErr),
-
-            t = Parameters.GetParam<double>(t_tb.Text, "t", ref dataInErr, NumberStyles.Integer),
             Steel = steel_cb.Text,
-            IsPressureIn = vn_rb.Checked,
-            p = Parameters.GetParam<double>(p_tb.Text, "p", ref dataInErr),
             phi = Parameters.GetParam<double>(fi_tb.Text, "phi", ref dataInErr),
             D = Parameters.GetParam<double>(D_tb.Text, "D", ref dataInErr),
             EllipseH = Parameters.GetParam<double>(H_tb.Text, "H", ref dataInErr),
@@ -131,112 +104,64 @@ public partial class EllipticalShellForm : Form
             c2 = Parameters.GetParam<double>(c2_tb.Text, "c2", ref dataInErr),
             c3 = Parameters.GetParam<double>(c3_tb.Text, "c3", ref dataInErr),
             EllipticalBottomType =
-                ell_rb.Checked ? EllipticalBottomType.Elliptical : EllipticalBottomType.Hemispherical,
-            SigmaAllow = sigmaHandle_cb.Checked
-                ? Parameters.GetParam<double>(sigma_d_tb.Text, "[σ]", ref dataInErr)
-                : default
+                ell_rb.Checked ? EllipticalBottomType.Elliptical : EllipticalBottomType.Hemispherical
         };
 
-        if (!_inputData.IsPressureIn)
+        var loadingConditions = FormHelpers.ParseLoadingConditions(loadingConditionsControl, loadingConditionGroupBox).ToList();
+
+        if (!loadingConditions.Any())
         {
-            if (EHandle_cb.Checked)
-            {
-                _inputData.E = Parameters.GetParam<double>(E_tb.Text, "E", ref dataInErr);
-            }
+            return false;
         }
 
-        var isNoError = !dataInErr.Any() && _inputData.IsDataGood;
+        InputData.LoadingConditions = loadingConditions;
+
+        var isNoError = !dataInErr.Any() && InputData.IsDataGood;
 
         if (!isNoError)
         {
-            MessageBox.Show(string.Join<string>(Environment.NewLine, dataInErr.Union(_inputData.ErrorList)));
+            MessageBox.Show(string.Join<string>(Environment.NewLine, dataInErr.Union(InputData.ErrorList)));
         }
 
         return isNoError;
     }
 
-    private void PreCalc_b_Click(object sender, EventArgs e)
+    private void PreCalculate_btn_Click(object sender, EventArgs e)
     {
         scalc_l.Text = string.Empty;
-        calc_b.Enabled = false;
+        calculate_btn.Enabled = false;
 
         if (!CollectDataForPreliminarilyCalculation()) return;
 
-        ICalculatedElement ellipse;
+        var ellipse = Calculate();
 
-        try
-        {
-            ellipse = GetCalculateService().Calculate(_inputData ?? throw new InvalidOperationException());
-        }
-        catch (CalculateException ex)
-        {
-            MessageBox.Show(ex.Message);
-            return;
-        }
+        if (ellipse == null) return;
 
+        scalc_l.Text = Gets(ellipse);
+        p_d_l.Text = Getp(ellipse);
 
-        if (ellipse.ErrorList.Any())
-        {
-            MessageBox.Show(string.Join<string>(Environment.NewLine, ellipse.ErrorList));
-        }
-
-        calc_b.Enabled = true;
-        scalc_l.Text = $@"sp={((EllipticalShellCalculated)ellipse).s:f3} мм";
-        p_d_l.Text =
-            $@"pd={((EllipticalShellCalculated)ellipse).p_d:f2} МПа";
+        calculate_btn.Enabled = true;
         MessageBox.Show(Resources.CalcComplete);
     }
 
-    private void GetGostDim_b_Click(object sender, EventArgs e)
-    {
-        var ellipticalParametersForm = _formFactory.Create<EllipticalParametersForm>()
-                                       ?? throw new InvalidOperationException($"Couldn't create {nameof(EllipticalParametersForm)}.");
-        ellipticalParametersForm.Owner = this;
-        ellipticalParametersForm.ShowDialog();
-    }
-
-    private void GetFi_b_Click(object sender, EventArgs e)
-    {
-        var fiForm = _formFactory.Create<FiForm>()
-                                       ?? throw new InvalidOperationException($"Couldn't create {nameof(FiForm)}.");
-        fiForm.Owner = this;
-        fiForm.ShowDialog();
-    }
-
-    private void Calc_b_Click(object sender, EventArgs e)
+    private void Calculate_btn_Click(object sender, EventArgs e)
     {
         scalc_l.Text = string.Empty;
 
         if (!CollectDataForFinishCalculation()) return;
 
-        ICalculatedElement ellipse;
+        var ellipse = Calculate();
 
-        try
-        {
-            ellipse = GetCalculateService().Calculate(_inputData
-                                                      ?? throw new InvalidOperationException());
-        }
-        catch (CalculateException ex)
-        {
-            MessageBox.Show(ex.Message);
-            return;
-        }
+        if (ellipse == null) return;
 
-        if (ellipse.ErrorList.Any())
-        {
-            MessageBox.Show(string.Join<string>(Environment.NewLine, ellipse.ErrorList));
-        }
-
-        scalc_l.Text = $@"sp={((EllipticalShellCalculated)ellipse).s:f3} мм";
-        p_d_l.Text =
-            $@"pd={((EllipticalShellCalculated)ellipse).p_d:f2} МПа";
-
+        scalc_l.Text = Gets(ellipse);
+        p_d_l.Text = Getp(ellipse);
 
         if (isNozzleCalculateCheckBox.Checked)
         {
             if (Owner is not MainForm mainForm) return;
 
-            mainForm.NozzleForm = _formFactory.Create<NozzleForm>()
+            mainForm.NozzleForm = FormFactory.Create<NozzleForm>()
                                   ?? throw new InvalidOperationException($"Couldn't create {nameof(NozzleForm)}.");
             mainForm.NozzleForm.Owner = mainForm;
             mainForm.NozzleForm.Show(ellipse);
@@ -246,14 +171,28 @@ public partial class EllipticalShellForm : Form
         {
             MessageBox.Show($"{nameof(MainForm)} Error");
             return;
-
         }
 
-        main.Word_lv.Items.Add(ellipse.ToString());
-        main.ElementsCollection.Add(ellipse);
+        SetCalculatedElementToStorage(Owner, ellipse);
 
         MessageBox.Show(Resources.CalcComplete);
         Close();
+    }
+
+    private void GetGostDim_btn_Click(object sender, EventArgs e)
+    {
+        var ellipticalParametersForm = FormFactory.Create<EllipticalParametersForm>()
+                                       ?? throw new InvalidOperationException($"Couldn't create {nameof(EllipticalParametersForm)}.");
+        ellipticalParametersForm.Owner = this;
+        ellipticalParametersForm.ShowDialog();
+    }
+
+    private void GetPhi_btn_Click(object sender, EventArgs e)
+    {
+        var phiForm = FormFactory.Create<FiForm>()
+                                       ?? throw new InvalidOperationException($"Couldn't create {nameof(FiForm)}.");
+        phiForm.Owner = this;
+        phiForm.ShowDialog();
     }
 
     private void Ell_Hemispherical_rb_CheckedChanged(object sender, EventArgs e)
@@ -271,19 +210,31 @@ public partial class EllipticalShellForm : Form
         }
     }
 
-    private void SigmaHandle_cb_CheckedChanged(object sender, EventArgs e)
+    private void Defect_chb_CheckedChanged(object sender, EventArgs e)
     {
         if (sender is CheckBox cb)
         {
-            sigma_d_tb.Enabled = cb.Checked;
+            FormHelpers.EnabledIfCheck(defect_btn, cb.Checked);
         }
     }
 
-    private void EHandle_cb_CheckedChanged(object sender, EventArgs e)
+    private void DisabledCalculateBtn(object sender, EventArgs e)
     {
-        if (sender is CheckBox cb)
-        {
-            E_tb.Enabled = cb.Checked;
-        }
+        DisableCalculateButton();
     }
+
+    private void DisableCalculateButton()
+    {
+        calculate_btn.Enabled = false;
+    }
+
+    private static string Gets(ICalculatedElement element) => string
+        .Join(", ", ((EllipticalShellCalculated)element).Results
+            .Select((r, j) => $"s{j + 1}={r.s:f3} мм")
+            .ToList());
+
+    private static string Getp(ICalculatedElement element) => string
+        .Join(", ", ((EllipticalShellCalculated)element).Results
+            .Select((r, j) => $"p{j + 1}={r.p_d:f3} МПа")
+            .ToList());
 }

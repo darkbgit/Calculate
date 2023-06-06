@@ -1,4 +1,5 @@
 ﻿using CalculateVessels.Core.Interfaces;
+using CalculateVessels.Core.Shells.Base;
 using CalculateVessels.Core.Shells.Conical;
 using CalculateVessels.Core.Shells.Enums;
 using CalculateVessels.Data.PhysicalData;
@@ -38,8 +39,23 @@ public class ConicalShellTestData
 {
     public static IEnumerable<object[]> GetData()
     {
-        var inputData1 = new ConicalShellInput
+        var (inputData1, calculatedData1) = GetData1();
+        yield return new object[] { inputData1, calculatedData1 };
+    }
+
+    private static (ConicalShellInput, ConicalShellCalculated) GetData1()
+    {
+        var loadingCondition1 = new LoadingCondition
         {
+            OrdinalNumber = 1,
+            p = 0.6,
+            t = 120,
+            IsPressureIn = true
+        };
+
+        var inputData = new ConicalShellInput
+        {
+            LoadingConditions = new List<LoadingCondition> { loadingCondition1 },
             Name = "Тестовая коническая обечайка",
             Steel = "20",
             c1 = 2.0,
@@ -48,72 +64,44 @@ public class ConicalShellTestData
             D = 1200,
             D1 = 738,
             L = 400,
-            p = 0.6,
-            t = 120,
             s = 8,
             phi = 0.9,
             phi_t = 1,
             phi_k = 0,
             ny = 2.4,
-            IsPressureIn = true,
             ConnectionType = ConicalConnectionType.WithoutConnection,
             sT = 0,
             IsConnectionWithLittle = false,
             r = 0,
         };
 
-        var calculatedData1 = new ConicalShellCalculated
+        var commonData = new ConicalShellCalculatedCommon
         {
-            InputData = inputData1,
-            Ak = 0,
             alpha1 = 0.523,
             a1p = 59.42,
-            a2p = 0,
-            a1p_l = 0,
-            a2p_l = 0,
-            B1 = 0,
-            B1_1 = 0,
-            B2 = 0,
-            B3 = 0,
-            beta = 0,
-            beta_0 = 0,
-            beta_1 = 0,
-            beta_2 = 0,
-            beta_3 = 0,
-            beta_4 = 0,
-            beta_a = 0,
-            beta_H = 0,
-            beta_t = 0,
-            ConditionForBetaH = 0,
-            ConditionUseFormulas = 0.005,
             c = 2.8,
-            chi_1Little = 0,
-            DE = 0,
-            DE_1 = 0,
-            DE_2 = 0,
             Dk = 1158.397,
-            E = 189000,
-            IsConditionUseFormulas = true,
-            lE = 0,
-            SigmaAllow = 140.5,
-            SigmaAllowC = 0,
-            s = 5.981,
-            s_tp = 0,
-            s_p = 3.181,
-            s_p_1 = 0,
-            s_p_2 = 0,
-            s_2pLittle = 0,
-            p_d = 0.979,
-            p_dp = 0,
-            p_dBig = 0,
-            p_dLittle = 0,
         };
 
-        yield return new object[] { inputData1, calculatedData1 };
-        // Assert.Equal(3.18, result.s_p, 2);
-        // Assert.Equal(0.98, result.p_d, 2);
-        // Assert.Equal(189000, result.E, 0);
-        // Assert.Equal(140.5, result.SigmaAllow, 1);
+        var result1 = new ConicalShellCalculatedOneLoading
+        {
+            LoadingCondition = loadingCondition1,
+            ConditionUseFormulas = 0.005,
+            E = 189000,
+            IsConditionUseFormulas = true,
+            SigmaAllow = 140.5,
+            s = 5.981,
+            s_p = 3.181,
+            p_d = 0.979
+        };
+
+        var calculatedData = new ConicalShellCalculated(commonData,
+            new List<ConicalShellCalculatedOneLoading> { result1 })
+        {
+            InputData = inputData
+        };
+
+        return (inputData, calculatedData);
     }
 }
 

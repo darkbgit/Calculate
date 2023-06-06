@@ -1,9 +1,11 @@
 ﻿using CalculateVessels.Core.Exceptions;
 using CalculateVessels.Core.Helpers;
 using CalculateVessels.Core.Interfaces;
+using CalculateVessels.Core.Shells.Base;
 using CalculateVessels.Core.Shells.Enums;
 using CalculateVessels.Data.Interfaces;
 using System;
+using System.Linq;
 
 namespace CalculateVessels.Core.Shells.Elliptical;
 
@@ -20,53 +22,93 @@ internal class EllipticalShellCalculateService : ICalculateService<EllipticalShe
 
     public ICalculatedElement Calculate(EllipticalShellInput dataIn)
     {
-        var data = new EllipticalShellCalculated
+        var commonData = CalculateCommonData(dataIn);
+        var results = dataIn.LoadingConditions
+            .Select(lc => CalculateOneLoadingCondition(dataIn, commonData, lc))
+            .ToList();
+
+        var data = new EllipticalShellCalculated(commonData, results)
         {
             InputData = dataIn,
-            SigmaAllow = PhysicalHelper.GetSigmaIfZero(dataIn.SigmaAllow, dataIn.Steel, dataIn.t, _physicalData),
-            E = PhysicalHelper.GetEIfZero(dataIn.E, dataIn.Steel, dataIn.t, _physicalData),
-            c = dataIn.c1 + dataIn.c2 + dataIn.c3
+            //CommonData = commonData,
+            //Results = dataIn.LoadingConditions
+            //    .Select(lc => CalculateOneLoadingCondition(dataIn, commonData, lc))
+            //    .ToList()
+        };
+
+        if (data.CommonData.ErrorList.Any())
+        {
+            data.AddErrors(data.CommonData.ErrorList);
+        }
+
+        if (data.Results.Any(r => r.ErrorList.Any()))
+        {
+            data.AddErrors(data.Results.SelectMany(r => r.ErrorList));
+        }
+
+        return data;
+    }
+
+    private static EllipticalShellCalculatedCommon CalculateCommonData(EllipticalShellInput dataIn)
+    {
+        var data = new EllipticalShellCalculatedCommon
+        {
+            c = dataIn.c1 + dataIn.c2 + dataIn.c3,
+            EllipseR = Math.Pow(dataIn.D, 2) / (4.0 * dataIn.EllipseH)
+        };
+
+        if (dataIn.s != 0)
+        {
+            const double conditionUseFormulas1Min = 0.002,
+                conditionUseFormulas1Max = 0.1,
+                conditionUseFormulas2Min = 0.2,
+                conditionUseFormulas2Max = 0.5;
+
+            data.IsConditionUseFormulas =
+                (dataIn.s - data.c) / dataIn.D <= conditionUseFormulas1Max &
+                (dataIn.s - data.c) / dataIn.D >= conditionUseFormulas1Min &
+                dataIn.EllipseH / dataIn.D < conditionUseFormulas2Max &
+                dataIn.EllipseH / dataIn.D >= conditionUseFormulas2Min;
+
+            if (!data.IsConditionUseFormulas)
+            {
+                data.ErrorList.Add("Условие применения формул не выполняется");
+            }
+        }
+
+        return data;
+    }
+
+    private EllipticalShellCalculatedOneLoading CalculateOneLoadingCondition(EllipticalShellInput dataIn,
+        EllipticalShellCalculatedCommon cdc,
+        LoadingCondition loadingCondition)
+    {
+        var data = new EllipticalShellCalculatedOneLoading
+        {
+            LoadingCondition = loadingCondition,
+            SigmaAllow = PhysicalHelper.GetSigmaIfZero(loadingCondition.SigmaAllow, dataIn.Steel, loadingCondition.t, _physicalData),
+            E = PhysicalHelper.GetEIfZero(loadingCondition.EAllow, dataIn.Steel, loadingCondition.t, _physicalData),
         };
 
         switch (dataIn.EllipticalBottomType)
         {
             case EllipticalBottomType.Elliptical:
             case EllipticalBottomType.Hemispherical:
-                if (dataIn.s != 0)
+
+                if (loadingCondition.IsPressureIn)
                 {
-                    const double CONDITION_USE_FORMULAS_1_MIN = 0.002,
-                        CONDITION_USE_FORMULAS_1_MAX = 0.1,
-                        CONDITION_USE_FORMULAS_2_MIN = 0.2,
-                        CONDITION_USE_FORMULAS_2_MAX = 0.5;
-
-                    data.IsConditionUseFormulas =
-                        (dataIn.s - data.c) / dataIn.D <= CONDITION_USE_FORMULAS_1_MAX &
-                        (dataIn.s - data.c) / dataIn.D >= CONDITION_USE_FORMULAS_1_MIN &
-                        dataIn.EllipseH / dataIn.D < CONDITION_USE_FORMULAS_2_MAX &
-                        dataIn.EllipseH / dataIn.D >= CONDITION_USE_FORMULAS_2_MIN;
-
-                    if (!data.IsConditionUseFormulas)
-                    {
-                        data.ErrorList.Add("Условие применения формул не выполняется");
-                    }
-                }
-
-                data.EllipseR = Math.Pow(dataIn.D, 2) / (4.0 * dataIn.EllipseH);
-
-                if (dataIn.IsPressureIn)
-                {
-                    data.s_p = dataIn.p * data.EllipseR /
-                               (2.0 * data.SigmaAllow * dataIn.phi - 0.5 * dataIn.p);
-                    data.s = data.s_p + data.c;
+                    data.s_p = loadingCondition.p * cdc.EllipseR /
+                               (2.0 * data.SigmaAllow * dataIn.phi - 0.5 * loadingCondition.p);
+                    data.s = data.s_p + cdc.c;
 
                     if (dataIn.s != 0.0)
                     {
                         if (data.s > dataIn.s)
-                            throw new CalculateException("Принятая толщина меньше расчетной.");
+                            throw new CalculateException("Принятая толщина меньше расчетной.", loadingCondition);
 
                         data.p_d = 2.0 * data.SigmaAllow * dataIn.phi *
-                                   (dataIn.s - data.c) /
-                                   (data.EllipseR + 0.5 * (dataIn.s - data.c));
+                                   (dataIn.s - cdc.c) /
+                                   (cdc.EllipseR + 0.5 * (dataIn.s - cdc.c));
                     }
                 }
                 else
@@ -75,30 +117,30 @@ internal class EllipticalShellCalculateService : ICalculateService<EllipticalShe
                     {
                         EllipticalBottomType.Elliptical => 0.9,
                         EllipticalBottomType.Hemispherical => 1.0,
-                        _ => throw new CalculateException("Неверный тип днища.")
+                        _ => throw new CalculateException("Неверный тип днища.", loadingCondition)
                     };
 
-                    data.s_p_1 = data.EllipseKePrev * data.EllipseR / 161 *
-                                 Math.Sqrt(dataIn.ny * dataIn.p / (0.00001 * data.E));
-                    data.s_p_2 = 1.2 * dataIn.p * data.EllipseR / (2.0 * data.SigmaAllow);
+                    data.s_p_1 = data.EllipseKePrev * cdc.EllipseR / 161 *
+                                 Math.Sqrt(dataIn.ny * loadingCondition.p / (0.00001 * data.E));
+                    data.s_p_2 = 1.2 * loadingCondition.p * cdc.EllipseR / (2.0 * data.SigmaAllow);
 
                     data.s_p = Math.Max(data.s_p_1, data.s_p_2);
-                    data.s = data.s_p + data.c;
+                    data.s = data.s_p + cdc.c;
 
                     if (dataIn.s != 0.0)
                     {
                         if (data.s > dataIn.s)
-                            throw new CalculateException("Принятая толщина меньше расчетной.");
+                            throw new CalculateException("Принятая толщина меньше расчетной.", loadingCondition);
 
-                        data.p_dp = 2.0 * data.SigmaAllow * (dataIn.s - data.c) /
-                                    (data.EllipseR + 0.5 * (dataIn.s - data.c));
-                        data.Ellipsex = 10.0 * ((dataIn.s - data.c) / dataIn.D) *
+                        data.p_dp = 2.0 * data.SigmaAllow * (dataIn.s - cdc.c) /
+                                    (cdc.EllipseR + 0.5 * (dataIn.s - cdc.c));
+                        data.Ellipsex = 10.0 * ((dataIn.s - cdc.c) / dataIn.D) *
                                         (dataIn.D / (2.0 * dataIn.EllipseH) -
                                          2.0 * dataIn.EllipseH / dataIn.D);
                         data.EllipseKe = (1.0 + (2.4 + 8.0 * data.Ellipsex) * data.Ellipsex) /
                                          (1.0 + (3.0 + 10.0 * data.Ellipsex) * data.Ellipsex);
                         data.p_de = 2.6 * 0.00001 * data.E / dataIn.ny *
-                                    Math.Pow(100 * (dataIn.s - data.c) / (data.EllipseKe * data.EllipseR),
+                                    Math.Pow(100 * (dataIn.s - cdc.c) / (data.EllipseKe * cdc.EllipseR),
                                         2);
                         data.p_d = data.p_dp / Math.Sqrt(1.0 + Math.Pow(data.p_dp / data.p_de, 2));
                     }

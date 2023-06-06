@@ -29,849 +29,640 @@ partial class EllipticalShellForm
     /// </summary>
     private void InitializeComponent()
     {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EllipticalShellForm));
-            this.label28 = new System.Windows.Forms.Label();
-            this.label27 = new System.Windows.Forms.Label();
-            this.label26 = new System.Windows.Forms.Label();
-            this.label25 = new System.Windows.Forms.Label();
-            this.label24 = new System.Windows.Forms.Label();
-            this.label23 = new System.Windows.Forms.Label();
-            this.label21 = new System.Windows.Forms.Label();
-            this.cancel_b = new System.Windows.Forms.Button();
-            this.calc_b = new System.Windows.Forms.Button();
-            this.predCalc_b = new System.Windows.Forms.Button();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.p_d_l = new System.Windows.Forms.Label();
-            this.scalc_l = new System.Windows.Forms.Label();
-            this.button4 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.getGostDim_b = new System.Windows.Forms.Button();
-            this.getFi_b = new System.Windows.Forms.Button();
-            this.getE_b = new System.Windows.Forms.Button();
-            this.label19 = new System.Windows.Forms.Label();
-            this.grtSigma_b = new System.Windows.Forms.Button();
-            this.label18 = new System.Windows.Forms.Label();
-            this.s_tb = new System.Windows.Forms.TextBox();
-            this.label17 = new System.Windows.Forms.Label();
-            this.label15 = new System.Windows.Forms.Label();
-            this.label14 = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.c3_tb = new System.Windows.Forms.TextBox();
-            this.c2_tb = new System.Windows.Forms.TextBox();
-            this.c1_tb = new System.Windows.Forms.TextBox();
-            this.H_tb = new System.Windows.Forms.TextBox();
-            this.D_tb = new System.Windows.Forms.TextBox();
-            this.fi_tb = new System.Windows.Forms.TextBox();
-            this.E_tb = new System.Windows.Forms.TextBox();
-            this.sigma_d_tb = new System.Windows.Forms.TextBox();
-            this.steel_cb = new System.Windows.Forms.ComboBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.dav_gb = new System.Windows.Forms.GroupBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.nar_rb = new System.Windows.Forms.RadioButton();
-            this.p_tb = new System.Windows.Forms.TextBox();
-            this.vn_rb = new System.Windows.Forms.RadioButton();
-            this.label4 = new System.Windows.Forms.Label();
-            this.pictureBox = new System.Windows.Forms.PictureBox();
-            this.t_tb = new System.Windows.Forms.TextBox();
-            this.Gost_cb = new System.Windows.Forms.ComboBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
-            this.name_tb = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label20 = new System.Windows.Forms.Label();
-            this.h1_tb = new System.Windows.Forms.TextBox();
-            this.label29 = new System.Windows.Forms.Label();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.hemispherical_rb = new System.Windows.Forms.RadioButton();
-            this.ell_rb = new System.Windows.Forms.RadioButton();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.EHandle_cb = new System.Windows.Forms.CheckBox();
-            this.sigmaHandle_cb = new System.Windows.Forms.CheckBox();
-            this.isNozzleCalculateCheckBox = new System.Windows.Forms.CheckBox();
-            this.groupBox4.SuspendLayout();
-            this.dav_gb.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
-            this.groupBox1.SuspendLayout();
-            this.SuspendLayout();
-            // 
-            // label28
-            // 
-            this.label28.AutoSize = true;
-            this.label28.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.label28.Location = new System.Drawing.Point(0, 513);
-            this.label28.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label28.MaximumSize = new System.Drawing.Size(0, 1);
-            this.label28.MinimumSize = new System.Drawing.Size(350, 0);
-            this.label28.Name = "label28";
-            this.label28.Size = new System.Drawing.Size(350, 1);
-            this.label28.TabIndex = 115;
-            this.label28.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label27
-            // 
-            this.label27.AutoSize = true;
-            this.label27.Location = new System.Drawing.Point(268, 521);
-            this.label27.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(25, 15);
-            this.label27.TabIndex = 114;
-            this.label27.Text = "мм";
-            // 
-            // label26
-            // 
-            this.label26.AutoSize = true;
-            this.label26.Location = new System.Drawing.Point(268, 365);
-            this.label26.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label26.Name = "label26";
-            this.label26.Size = new System.Drawing.Size(25, 15);
-            this.label26.TabIndex = 113;
-            this.label26.Text = "мм";
-            // 
-            // label25
-            // 
-            this.label25.AutoSize = true;
-            this.label25.Location = new System.Drawing.Point(268, 433);
-            this.label25.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(25, 15);
-            this.label25.TabIndex = 112;
-            this.label25.Text = "мм";
-            // 
-            // label24
-            // 
-            this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(268, 463);
-            this.label24.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(25, 15);
-            this.label24.TabIndex = 111;
-            this.label24.Text = "мм";
-            // 
-            // label23
-            // 
-            this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(268, 493);
-            this.label23.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(25, 15);
-            this.label23.TabIndex = 110;
-            this.label23.Text = "мм";
-            // 
-            // label21
-            // 
-            this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(269, 334);
-            this.label21.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(25, 15);
-            this.label21.TabIndex = 108;
-            this.label21.Text = "мм";
-            // 
-            // cancel_b
-            // 
-            this.cancel_b.Location = new System.Drawing.Point(246, 622);
-            this.cancel_b.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cancel_b.Name = "cancel_b";
-            this.cancel_b.Size = new System.Drawing.Size(88, 27);
-            this.cancel_b.TabIndex = 107;
-            this.cancel_b.Text = "Cancel";
-            this.cancel_b.UseVisualStyleBackColor = true;
-            this.cancel_b.Click += new System.EventHandler(this.Cancel_b_Click);
-            // 
-            // calc_b
-            // 
-            this.calc_b.Enabled = false;
-            this.calc_b.Location = new System.Drawing.Point(151, 622);
-            this.calc_b.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.calc_b.Name = "calc_b";
-            this.calc_b.Size = new System.Drawing.Size(88, 27);
-            this.calc_b.TabIndex = 106;
-            this.calc_b.Text = "Расчет";
-            this.calc_b.UseVisualStyleBackColor = true;
-            this.calc_b.Click += new System.EventHandler(this.Calc_b_Click);
-            // 
-            // predCalc_b
-            // 
-            this.predCalc_b.Location = new System.Drawing.Point(13, 607);
-            this.predCalc_b.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.predCalc_b.Name = "predCalc_b";
-            this.predCalc_b.Size = new System.Drawing.Size(130, 42);
-            this.predCalc_b.TabIndex = 105;
-            this.predCalc_b.Text = "Предварительный\r\nрасчет";
-            this.predCalc_b.UseVisualStyleBackColor = true;
-            this.predCalc_b.Click += new System.EventHandler(this.PreCalc_b_Click);
-            // 
-            // groupBox4
-            // 
-            this.groupBox4.Controls.Add(this.p_d_l);
-            this.groupBox4.Controls.Add(this.scalc_l);
-            this.groupBox4.Location = new System.Drawing.Point(381, 591);
-            this.groupBox4.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.groupBox4.Size = new System.Drawing.Size(270, 58);
-            this.groupBox4.TabIndex = 104;
-            this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "Результаты расчета";
-            // 
-            // p_d_l
-            // 
-            this.p_d_l.AutoSize = true;
-            this.p_d_l.Location = new System.Drawing.Point(126, 18);
-            this.p_d_l.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.p_d_l.Name = "p_d_l";
-            this.p_d_l.Size = new System.Drawing.Size(22, 15);
-            this.p_d_l.TabIndex = 1;
-            this.p_d_l.Text = "[p]";
-            // 
-            // scalc_l
-            // 
-            this.scalc_l.AutoSize = true;
-            this.scalc_l.Location = new System.Drawing.Point(8, 18);
-            this.scalc_l.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.scalc_l.Name = "scalc_l";
-            this.scalc_l.Size = new System.Drawing.Size(12, 15);
-            this.scalc_l.TabIndex = 0;
-            this.scalc_l.Text = "s";
-            // 
-            // button4
-            // 
-            this.button4.Location = new System.Drawing.Point(407, 498);
-            this.button4.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(187, 27);
-            this.button4.TabIndex = 101;
-            this.button4.Text = "Малоцикловая прочность >>";
-            this.button4.UseVisualStyleBackColor = true;
-            // 
-            // button3
-            // 
-            this.button3.Location = new System.Drawing.Point(407, 465);
-            this.button3.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(176, 27);
-            this.button3.TabIndex = 100;
-            this.button3.Text = "Изоляция и футеровка >>";
-            this.button3.UseVisualStyleBackColor = true;
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(616, 417);
-            this.button2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(35, 27);
-            this.button2.TabIndex = 99;
-            this.button2.Text = ">>";
-            this.button2.UseVisualStyleBackColor = true;
-            // 
-            // checkBox1
-            // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(407, 423);
-            this.checkBox1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(201, 19);
-            this.checkBox1.TabIndex = 98;
-            this.checkBox1.Text = "Дефекты по ГОСТ 34233.11-2017";
-            this.checkBox1.UseVisualStyleBackColor = true;
-            // 
-            // getGostDim_b
-            // 
-            this.getGostDim_b.Location = new System.Drawing.Point(307, 330);
-            this.getGostDim_b.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.getGostDim_b.Name = "getGostDim_b";
-            this.getGostDim_b.Size = new System.Drawing.Size(43, 93);
-            this.getGostDim_b.TabIndex = 97;
-            this.getGostDim_b.Text = ">>";
-            this.getGostDim_b.UseVisualStyleBackColor = true;
-            this.getGostDim_b.Click += new System.EventHandler(this.GetGostDim_b_Click);
-            // 
-            // getFi_b
-            // 
-            this.getFi_b.Location = new System.Drawing.Point(307, 293);
-            this.getFi_b.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.getFi_b.Name = "getFi_b";
-            this.getFi_b.Size = new System.Drawing.Size(43, 23);
-            this.getFi_b.TabIndex = 96;
-            this.getFi_b.Text = ">>";
-            this.getFi_b.UseVisualStyleBackColor = true;
-            this.getFi_b.Click += new System.EventHandler(this.GetFi_b_Click);
-            // 
-            // getE_b
-            // 
-            this.getE_b.Enabled = false;
-            this.getE_b.Location = new System.Drawing.Point(307, 257);
-            this.getE_b.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.getE_b.Name = "getE_b";
-            this.getE_b.Size = new System.Drawing.Size(43, 23);
-            this.getE_b.TabIndex = 95;
-            this.getE_b.Text = ">>";
-            this.getE_b.UseVisualStyleBackColor = true;
-            // 
-            // label19
-            // 
-            this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(190, 260);
-            this.label19.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(33, 15);
-            this.label19.TabIndex = 94;
-            this.label19.Text = "МПа";
-            // 
-            // grtSigma_b
-            // 
-            this.grtSigma_b.Location = new System.Drawing.Point(307, 221);
-            this.grtSigma_b.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.grtSigma_b.Name = "grtSigma_b";
-            this.grtSigma_b.Size = new System.Drawing.Size(43, 23);
-            this.grtSigma_b.TabIndex = 93;
-            this.grtSigma_b.Text = ">>";
-            this.grtSigma_b.UseVisualStyleBackColor = true;
-            // 
-            // label18
-            // 
-            this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(190, 225);
-            this.label18.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(33, 15);
-            this.label18.TabIndex = 92;
-            this.label18.Text = "МПа";
-            // 
-            // s_tb
-            // 
-            this.s_tb.Location = new System.Drawing.Point(214, 518);
-            this.s_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.s_tb.Name = "s_tb";
-            this.s_tb.Size = new System.Drawing.Size(46, 23);
-            this.s_tb.TabIndex = 91;
-            this.s_tb.Text = "6";
-            // 
-            // label17
-            // 
-            this.label17.AutoSize = true;
-            this.label17.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.label17.Location = new System.Drawing.Point(77, 521);
-            this.label17.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(131, 15);
-            this.label17.TabIndex = 90;
-            this.label17.Text = "Принятая толщина, s:";
-            // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(30, 493);
-            this.label15.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(178, 15);
-            this.label15.TabIndex = 88;
-            this.label15.Text = "Технологическая прибавка, c3:";
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(75, 463);
-            this.label14.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(133, 15);
-            this.label14.TabIndex = 87;
-            this.label14.Text = "Минусовой допуск, c2:";
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label13.Location = new System.Drawing.Point(62, 433);
-            this.label13.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(146, 13);
-            this.label13.TabIndex = 86;
-            this.label13.Text = "Прибавка на коррозию, c1:";
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(22, 351);
-            this.label12.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(186, 45);
-            this.label12.TabIndex = 85;
-            this.label12.Text = "Высота выпуклой части днища\r\nпо внутренней поверхности без\r\nучета цилиндрической " +
-    "части, Н:";
-            this.label12.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(29, 330);
-            this.label11.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(179, 15);
-            this.label11.TabIndex = 84;
-            this.label11.Text = "Внутренний диаметр днища, D:";
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.label10.Location = new System.Drawing.Point(16, 301);
-            this.label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(192, 15);
-            this.label10.TabIndex = 83;
-            this.label10.Text = "К-т прочности сварного шва, φp:";
-            // 
-            // c3_tb
-            // 
-            this.c3_tb.Location = new System.Drawing.Point(214, 489);
-            this.c3_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.c3_tb.Name = "c3_tb";
-            this.c3_tb.Size = new System.Drawing.Size(46, 23);
-            this.c3_tb.TabIndex = 80;
-            // 
-            // c2_tb
-            // 
-            this.c2_tb.Location = new System.Drawing.Point(214, 459);
-            this.c2_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.c2_tb.Name = "c2_tb";
-            this.c2_tb.Size = new System.Drawing.Size(46, 23);
-            this.c2_tb.TabIndex = 79;
-            this.c2_tb.Text = "1";
-            // 
-            // c1_tb
-            // 
-            this.c1_tb.Location = new System.Drawing.Point(214, 429);
-            this.c1_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.c1_tb.Name = "c1_tb";
-            this.c1_tb.Size = new System.Drawing.Size(46, 23);
-            this.c1_tb.TabIndex = 78;
-            this.c1_tb.Text = "1";
-            // 
-            // H_tb
-            // 
-            this.H_tb.Location = new System.Drawing.Point(214, 362);
-            this.H_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.H_tb.Name = "H_tb";
-            this.H_tb.Size = new System.Drawing.Size(46, 23);
-            this.H_tb.TabIndex = 77;
-            // 
-            // D_tb
-            // 
-            this.D_tb.Location = new System.Drawing.Point(214, 327);
-            this.D_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.D_tb.Name = "D_tb";
-            this.D_tb.Size = new System.Drawing.Size(46, 23);
-            this.D_tb.TabIndex = 76;
-            this.D_tb.Text = "1000";
-            // 
-            // fi_tb
-            // 
-            this.fi_tb.Location = new System.Drawing.Point(214, 297);
-            this.fi_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.fi_tb.Name = "fi_tb";
-            this.fi_tb.Size = new System.Drawing.Size(46, 23);
-            this.fi_tb.TabIndex = 75;
-            this.fi_tb.Text = "1";
-            // 
-            // E_tb
-            // 
-            this.E_tb.Enabled = false;
-            this.E_tb.Location = new System.Drawing.Point(136, 257);
-            this.E_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.E_tb.Name = "E_tb";
-            this.E_tb.Size = new System.Drawing.Size(46, 23);
-            this.E_tb.TabIndex = 74;
-            // 
-            // sigma_d_tb
-            // 
-            this.sigma_d_tb.Enabled = false;
-            this.sigma_d_tb.Location = new System.Drawing.Point(136, 222);
-            this.sigma_d_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.sigma_d_tb.Name = "sigma_d_tb";
-            this.sigma_d_tb.Size = new System.Drawing.Size(46, 23);
-            this.sigma_d_tb.TabIndex = 73;
-            // 
-            // steel_cb
-            // 
-            this.steel_cb.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.steel_cb.FormattingEnabled = true;
-            this.steel_cb.Location = new System.Drawing.Point(214, 190);
-            this.steel_cb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.steel_cb.Name = "steel_cb";
-            this.steel_cb.Size = new System.Drawing.Size(139, 23);
-            this.steel_cb.TabIndex = 71;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(100, 193);
-            this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(108, 15);
-            this.label7.TabIndex = 70;
-            this.label7.Text = "Марка материала:";
-            // 
-            // dav_gb
-            // 
-            this.dav_gb.Controls.Add(this.label6);
-            this.dav_gb.Controls.Add(this.label5);
-            this.dav_gb.Controls.Add(this.nar_rb);
-            this.dav_gb.Controls.Add(this.p_tb);
-            this.dav_gb.Controls.Add(this.vn_rb);
-            this.dav_gb.Location = new System.Drawing.Point(4, 105);
-            this.dav_gb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.dav_gb.Name = "dav_gb";
-            this.dav_gb.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.dav_gb.Size = new System.Drawing.Size(350, 77);
-            this.dav_gb.TabIndex = 69;
-            this.dav_gb.TabStop = false;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(267, 18);
-            this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(33, 15);
-            this.label6.TabIndex = 13;
-            this.label6.Text = "МПа";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(73, 19);
-            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(134, 15);
-            this.label5.TabIndex = 9;
-            this.label5.Text = "Расчетное давление, p:";
-            // 
-            // nar_rb
-            // 
-            this.nar_rb.AutoSize = true;
-            this.nar_rb.Location = new System.Drawing.Point(186, 45);
-            this.nar_rb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.nar_rb.Name = "nar_rb";
-            this.nar_rb.Size = new System.Drawing.Size(80, 19);
-            this.nar_rb.TabIndex = 11;
-            this.nar_rb.Text = "наружное";
-            this.nar_rb.UseVisualStyleBackColor = true;
-            // 
-            // p_tb
-            // 
-            this.p_tb.Location = new System.Drawing.Point(210, 16);
-            this.p_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.p_tb.Name = "p_tb";
-            this.p_tb.Size = new System.Drawing.Size(46, 23);
-            this.p_tb.TabIndex = 12;
-            this.p_tb.Text = "1";
-            // 
-            // vn_rb
-            // 
-            this.vn_rb.AutoSize = true;
-            this.vn_rb.Checked = true;
-            this.vn_rb.Location = new System.Drawing.Point(82, 45);
-            this.vn_rb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.vn_rb.Name = "vn_rb";
-            this.vn_rb.Size = new System.Drawing.Size(88, 19);
-            this.vn_rb.TabIndex = 10;
-            this.vn_rb.TabStop = true;
-            this.vn_rb.Text = "внутреннее";
-            this.vn_rb.UseVisualStyleBackColor = true;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(264, 79);
-            this.label4.Margin = new System.Windows.Forms.Padding(0, 0, 4, 0);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(20, 15);
-            this.label4.TabIndex = 68;
-            this.label4.Text = "°C";
-            // 
-            // pictureBox
-            // 
-            this.pictureBox.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox.Image")));
-            this.pictureBox.InitialImage = ((System.Drawing.Image)(resources.GetObject("pictureBox.InitialImage")));
-            this.pictureBox.Location = new System.Drawing.Point(361, 44);
-            this.pictureBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.pictureBox.Name = "pictureBox";
-            this.pictureBox.Size = new System.Drawing.Size(300, 200);
-            this.pictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.pictureBox.TabIndex = 67;
-            this.pictureBox.TabStop = false;
-            // 
-            // t_tb
-            // 
-            this.t_tb.Location = new System.Drawing.Point(214, 76);
-            this.t_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.t_tb.Name = "t_tb";
-            this.t_tb.Size = new System.Drawing.Size(46, 23);
-            this.t_tb.TabIndex = 66;
-            this.t_tb.Text = "50";
-            // 
-            // Gost_cb
-            // 
-            this.Gost_cb.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.Gost_cb.FormattingEnabled = true;
-            this.Gost_cb.Location = new System.Drawing.Point(214, 44);
-            this.Gost_cb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.Gost_cb.Name = "Gost_cb";
-            this.Gost_cb.Size = new System.Drawing.Size(139, 23);
-            this.Gost_cb.TabIndex = 65;
-            this.Gost_cb.Tag = "";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(59, 79);
-            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(149, 15);
-            this.label3.TabIndex = 64;
-            this.label3.Text = "Расчетная температура, t:";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(64, 47);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(144, 15);
-            this.label2.TabIndex = 63;
-            this.label2.Text = "Нормативный документ:";
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(361, 13);
-            this.button1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(284, 25);
-            this.button1.TabIndex = 62;
-            this.button1.Text = "Расчетная схема эллиптического днища";
-            this.button1.UseVisualStyleBackColor = true;
-            // 
-            // name_tb
-            // 
-            this.name_tb.Location = new System.Drawing.Point(214, 13);
-            this.name_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.name_tb.Name = "name_tb";
-            this.name_tb.Size = new System.Drawing.Size(139, 23);
-            this.name_tb.TabIndex = 61;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(91, 16);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(117, 15);
-            this.label1.TabIndex = 60;
-            this.label1.Text = "Название элемента:";
-            // 
-            // label20
-            // 
-            this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(60, 396);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(147, 30);
-            this.label20.TabIndex = 116;
-            this.label20.Text = "Длина цилиндрической\r\nотбартованной части, h1:";
-            // 
-            // h1_tb
-            // 
-            this.h1_tb.Location = new System.Drawing.Point(214, 400);
-            this.h1_tb.Name = "h1_tb";
-            this.h1_tb.Size = new System.Drawing.Size(46, 23);
-            this.h1_tb.TabIndex = 117;
-            // 
-            // label29
-            // 
-            this.label29.AutoSize = true;
-            this.label29.Location = new System.Drawing.Point(271, 403);
-            this.label29.Name = "label29";
-            this.label29.Size = new System.Drawing.Size(25, 15);
-            this.label29.TabIndex = 118;
-            this.label29.Text = "мм";
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.hemispherical_rb);
-            this.groupBox1.Controls.Add(this.ell_rb);
-            this.groupBox1.Location = new System.Drawing.Point(361, 255);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(300, 49);
-            this.groupBox1.TabIndex = 119;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Вид днища";
-            // 
-            // hemispherical_rb
-            // 
-            this.hemispherical_rb.AutoSize = true;
-            this.hemispherical_rb.Location = new System.Drawing.Point(146, 22);
-            this.hemispherical_rb.Name = "hemispherical_rb";
-            this.hemispherical_rb.Size = new System.Drawing.Size(127, 19);
-            this.hemispherical_rb.TabIndex = 1;
-            this.hemispherical_rb.Text = "Полусферическое";
-            this.hemispherical_rb.UseVisualStyleBackColor = true;
-            this.hemispherical_rb.CheckedChanged += new System.EventHandler(this.Ell_Hemispherical_rb_CheckedChanged);
-            // 
-            // ell_rb
-            // 
-            this.ell_rb.AutoSize = true;
-            this.ell_rb.Checked = true;
-            this.ell_rb.Location = new System.Drawing.Point(6, 22);
-            this.ell_rb.Name = "ell_rb";
-            this.ell_rb.Size = new System.Drawing.Size(110, 19);
-            this.ell_rb.TabIndex = 0;
-            this.ell_rb.TabStop = true;
-            this.ell_rb.Text = "Эллиптическое";
-            this.ell_rb.UseVisualStyleBackColor = true;
-            this.ell_rb.CheckedChanged += new System.EventHandler(this.Ell_Hemispherical_rb_CheckedChanged);
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(7, 256);
-            this.label9.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(121, 30);
-            this.label9.TabIndex = 121;
-            this.label9.Text = "Модуль продольной\r\n упругости, E:";
-            this.label9.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(26, 218);
-            this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(102, 30);
-            this.label8.TabIndex = 120;
-            this.label8.Text = "Допускаемое\r\n напряжение, [σ]:";
-            this.label8.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            // 
-            // EHandle_cb
-            // 
-            this.EHandle_cb.AutoSize = true;
-            this.EHandle_cb.Location = new System.Drawing.Point(229, 251);
-            this.EHandle_cb.Name = "EHandle_cb";
-            this.EHandle_cb.Size = new System.Drawing.Size(75, 34);
-            this.EHandle_cb.TabIndex = 123;
-            this.EHandle_cb.Text = "Задать\r\nвручную";
-            this.EHandle_cb.UseVisualStyleBackColor = true;
-            this.EHandle_cb.CheckedChanged += new System.EventHandler(this.EHandle_cb_CheckedChanged);
-            // 
-            // sigmaHandle_cb
-            // 
-            this.sigmaHandle_cb.AutoSize = true;
-            this.sigmaHandle_cb.Location = new System.Drawing.Point(229, 216);
-            this.sigmaHandle_cb.Name = "sigmaHandle_cb";
-            this.sigmaHandle_cb.Size = new System.Drawing.Size(75, 34);
-            this.sigmaHandle_cb.TabIndex = 122;
-            this.sigmaHandle_cb.Text = "Задать\r\nвручную";
-            this.sigmaHandle_cb.UseVisualStyleBackColor = true;
-            this.sigmaHandle_cb.CheckedChanged += new System.EventHandler(this.SigmaHandle_cb_CheckedChanged);
-            // 
-            // isNozzleCalculateCheckBox
-            // 
-            this.isNozzleCalculateCheckBox.AutoSize = true;
-            this.isNozzleCalculateCheckBox.Location = new System.Drawing.Point(163, 591);
-            this.isNozzleCalculateCheckBox.Name = "isNozzleCalculateCheckBox";
-            this.isNozzleCalculateCheckBox.Size = new System.Drawing.Size(190, 19);
-            this.isNozzleCalculateCheckBox.TabIndex = 124;
-            this.isNozzleCalculateCheckBox.Text = "Расчитать штуцер в обечайке";
-            this.isNozzleCalculateCheckBox.UseVisualStyleBackColor = true;
-            // 
-            // EllipticalShellForm
-            // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(664, 661);
-            this.Controls.Add(this.isNozzleCalculateCheckBox);
-            this.Controls.Add(this.EHandle_cb);
-            this.Controls.Add(this.sigmaHandle_cb);
-            this.Controls.Add(this.label9);
-            this.Controls.Add(this.label8);
-            this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.label29);
-            this.Controls.Add(this.h1_tb);
-            this.Controls.Add(this.label20);
-            this.Controls.Add(this.label28);
-            this.Controls.Add(this.label27);
-            this.Controls.Add(this.label26);
-            this.Controls.Add(this.label25);
-            this.Controls.Add(this.label24);
-            this.Controls.Add(this.label23);
-            this.Controls.Add(this.label21);
-            this.Controls.Add(this.cancel_b);
-            this.Controls.Add(this.calc_b);
-            this.Controls.Add(this.predCalc_b);
-            this.Controls.Add(this.groupBox4);
-            this.Controls.Add(this.button4);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.checkBox1);
-            this.Controls.Add(this.getGostDim_b);
-            this.Controls.Add(this.getFi_b);
-            this.Controls.Add(this.getE_b);
-            this.Controls.Add(this.label19);
-            this.Controls.Add(this.grtSigma_b);
-            this.Controls.Add(this.label18);
-            this.Controls.Add(this.s_tb);
-            this.Controls.Add(this.label17);
-            this.Controls.Add(this.label15);
-            this.Controls.Add(this.label14);
-            this.Controls.Add(this.label13);
-            this.Controls.Add(this.label12);
-            this.Controls.Add(this.label11);
-            this.Controls.Add(this.label10);
-            this.Controls.Add(this.c3_tb);
-            this.Controls.Add(this.c2_tb);
-            this.Controls.Add(this.c1_tb);
-            this.Controls.Add(this.H_tb);
-            this.Controls.Add(this.D_tb);
-            this.Controls.Add(this.fi_tb);
-            this.Controls.Add(this.E_tb);
-            this.Controls.Add(this.sigma_d_tb);
-            this.Controls.Add(this.steel_cb);
-            this.Controls.Add(this.label7);
-            this.Controls.Add(this.dav_gb);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.pictureBox);
-            this.Controls.Add(this.t_tb);
-            this.Controls.Add(this.Gost_cb);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.name_tb);
-            this.Controls.Add(this.label1);
-            this.MaximumSize = new System.Drawing.Size(680, 700);
-            this.MinimumSize = new System.Drawing.Size(680, 700);
-            this.Name = "EllipticalShellForm";
-            this.Text = "EllForm";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.EllForm_FormClosing);
-            this.Load += new System.EventHandler(this.EllForm_Load);
-            this.groupBox4.ResumeLayout(false);
-            this.groupBox4.PerformLayout();
-            this.dav_gb.ResumeLayout(false);
-            this.dav_gb.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+        System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EllipticalShellForm));
+        label28 = new System.Windows.Forms.Label();
+        label27 = new System.Windows.Forms.Label();
+        label26 = new System.Windows.Forms.Label();
+        label25 = new System.Windows.Forms.Label();
+        label24 = new System.Windows.Forms.Label();
+        label23 = new System.Windows.Forms.Label();
+        label21 = new System.Windows.Forms.Label();
+        cancel_b = new System.Windows.Forms.Button();
+        calculate_btn = new System.Windows.Forms.Button();
+        preCalculate_btn = new System.Windows.Forms.Button();
+        groupBox4 = new System.Windows.Forms.GroupBox();
+        p_d_l = new System.Windows.Forms.Label();
+        scalc_l = new System.Windows.Forms.Label();
+        button4 = new System.Windows.Forms.Button();
+        button3 = new System.Windows.Forms.Button();
+        defect_btn = new System.Windows.Forms.Button();
+        checkBox1 = new System.Windows.Forms.CheckBox();
+        getGostDim_b = new System.Windows.Forms.Button();
+        getFi_b = new System.Windows.Forms.Button();
+        s_tb = new System.Windows.Forms.TextBox();
+        label17 = new System.Windows.Forms.Label();
+        label15 = new System.Windows.Forms.Label();
+        label14 = new System.Windows.Forms.Label();
+        label13 = new System.Windows.Forms.Label();
+        label12 = new System.Windows.Forms.Label();
+        label11 = new System.Windows.Forms.Label();
+        label10 = new System.Windows.Forms.Label();
+        c3_tb = new System.Windows.Forms.TextBox();
+        c2_tb = new System.Windows.Forms.TextBox();
+        c1_tb = new System.Windows.Forms.TextBox();
+        H_tb = new System.Windows.Forms.TextBox();
+        D_tb = new System.Windows.Forms.TextBox();
+        fi_tb = new System.Windows.Forms.TextBox();
+        steel_cb = new System.Windows.Forms.ComboBox();
+        label7 = new System.Windows.Forms.Label();
+        pictureBox = new System.Windows.Forms.PictureBox();
+        Gost_cb = new System.Windows.Forms.ComboBox();
+        label2 = new System.Windows.Forms.Label();
+        button1 = new System.Windows.Forms.Button();
+        name_tb = new System.Windows.Forms.TextBox();
+        label1 = new System.Windows.Forms.Label();
+        label20 = new System.Windows.Forms.Label();
+        h1_tb = new System.Windows.Forms.TextBox();
+        label29 = new System.Windows.Forms.Label();
+        groupBox1 = new System.Windows.Forms.GroupBox();
+        hemispherical_rb = new System.Windows.Forms.RadioButton();
+        ell_rb = new System.Windows.Forms.RadioButton();
+        isNozzleCalculateCheckBox = new System.Windows.Forms.CheckBox();
+        loadingConditionGroupBox = new Elements.LoadingConditionGroupBox();
+        loadingConditionsControl = new Elements.LoadingConditionsControl();
+        groupBox4.SuspendLayout();
+        ((System.ComponentModel.ISupportInitialize)pictureBox).BeginInit();
+        groupBox1.SuspendLayout();
+        SuspendLayout();
+        // 
+        // label28
+        // 
+        label28.AutoSize = true;
+        label28.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+        label28.Location = new System.Drawing.Point(0, 468);
+        label28.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+        label28.MaximumSize = new System.Drawing.Size(0, 1);
+        label28.MinimumSize = new System.Drawing.Size(350, 0);
+        label28.Name = "label28";
+        label28.Size = new System.Drawing.Size(350, 1);
+        label28.TabIndex = 115;
+        label28.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+        // 
+        // label27
+        // 
+        label27.AutoSize = true;
+        label27.Location = new System.Drawing.Point(268, 476);
+        label27.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+        label27.Name = "label27";
+        label27.Size = new System.Drawing.Size(25, 15);
+        label27.TabIndex = 114;
+        label27.Text = "мм";
+        // 
+        // label26
+        // 
+        label26.AutoSize = true;
+        label26.Location = new System.Drawing.Point(268, 320);
+        label26.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+        label26.Name = "label26";
+        label26.Size = new System.Drawing.Size(25, 15);
+        label26.TabIndex = 113;
+        label26.Text = "мм";
+        // 
+        // label25
+        // 
+        label25.AutoSize = true;
+        label25.Location = new System.Drawing.Point(268, 388);
+        label25.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+        label25.Name = "label25";
+        label25.Size = new System.Drawing.Size(25, 15);
+        label25.TabIndex = 112;
+        label25.Text = "мм";
+        // 
+        // label24
+        // 
+        label24.AutoSize = true;
+        label24.Location = new System.Drawing.Point(268, 418);
+        label24.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+        label24.Name = "label24";
+        label24.Size = new System.Drawing.Size(25, 15);
+        label24.TabIndex = 111;
+        label24.Text = "мм";
+        // 
+        // label23
+        // 
+        label23.AutoSize = true;
+        label23.Location = new System.Drawing.Point(268, 448);
+        label23.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+        label23.Name = "label23";
+        label23.Size = new System.Drawing.Size(25, 15);
+        label23.TabIndex = 110;
+        label23.Text = "мм";
+        // 
+        // label21
+        // 
+        label21.AutoSize = true;
+        label21.Location = new System.Drawing.Point(269, 289);
+        label21.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+        label21.Name = "label21";
+        label21.Size = new System.Drawing.Size(25, 15);
+        label21.TabIndex = 108;
+        label21.Text = "мм";
+        // 
+        // cancel_b
+        // 
+        cancel_b.Location = new System.Drawing.Point(246, 663);
+        cancel_b.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+        cancel_b.Name = "cancel_b";
+        cancel_b.Size = new System.Drawing.Size(88, 27);
+        cancel_b.TabIndex = 107;
+        cancel_b.Text = "Cancel";
+        cancel_b.UseVisualStyleBackColor = true;
+        cancel_b.Click += Cancel_btn_Click;
+        // 
+        // calculate_btn
+        // 
+        calculate_btn.Enabled = false;
+        calculate_btn.Location = new System.Drawing.Point(151, 663);
+        calculate_btn.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+        calculate_btn.Name = "calculate_btn";
+        calculate_btn.Size = new System.Drawing.Size(88, 27);
+        calculate_btn.TabIndex = 106;
+        calculate_btn.Text = "Расчет";
+        calculate_btn.UseVisualStyleBackColor = true;
+        calculate_btn.Click += Calculate_btn_Click;
+        // 
+        // preCalculate_btn
+        // 
+        preCalculate_btn.Location = new System.Drawing.Point(13, 648);
+        preCalculate_btn.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+        preCalculate_btn.Name = "preCalculate_btn";
+        preCalculate_btn.Size = new System.Drawing.Size(130, 42);
+        preCalculate_btn.TabIndex = 105;
+        preCalculate_btn.Text = "Предварительный\r\nрасчет";
+        preCalculate_btn.UseVisualStyleBackColor = true;
+        preCalculate_btn.Click += PreCalculate_btn_Click;
+        // 
+        // groupBox4
+        // 
+        groupBox4.Controls.Add(p_d_l);
+        groupBox4.Controls.Add(scalc_l);
+        groupBox4.Location = new System.Drawing.Point(381, 626);
+        groupBox4.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+        groupBox4.Name = "groupBox4";
+        groupBox4.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+        groupBox4.Size = new System.Drawing.Size(270, 66);
+        groupBox4.TabIndex = 104;
+        groupBox4.TabStop = false;
+        groupBox4.Text = "Результаты расчета";
+        // 
+        // p_d_l
+        // 
+        p_d_l.AutoSize = true;
+        p_d_l.Location = new System.Drawing.Point(8, 39);
+        p_d_l.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+        p_d_l.Name = "p_d_l";
+        p_d_l.Size = new System.Drawing.Size(22, 15);
+        p_d_l.TabIndex = 1;
+        p_d_l.Text = "[p]";
+        // 
+        // scalc_l
+        // 
+        scalc_l.AutoSize = true;
+        scalc_l.Location = new System.Drawing.Point(8, 18);
+        scalc_l.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+        scalc_l.Name = "scalc_l";
+        scalc_l.Size = new System.Drawing.Size(12, 15);
+        scalc_l.TabIndex = 0;
+        scalc_l.Text = "s";
+        // 
+        // button4
+        // 
+        button4.Location = new System.Drawing.Point(361, 385);
+        button4.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+        button4.Name = "button4";
+        button4.Size = new System.Drawing.Size(187, 27);
+        button4.TabIndex = 101;
+        button4.Text = "Малоцикловая прочность >>";
+        button4.UseVisualStyleBackColor = true;
+        // 
+        // button3
+        // 
+        button3.Location = new System.Drawing.Point(361, 352);
+        button3.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+        button3.Name = "button3";
+        button3.Size = new System.Drawing.Size(176, 27);
+        button3.TabIndex = 100;
+        button3.Text = "Изоляция и футеровка >>";
+        button3.UseVisualStyleBackColor = true;
+        // 
+        // defect_btn
+        // 
+        defect_btn.Enabled = false;
+        defect_btn.Location = new System.Drawing.Point(616, 310);
+        defect_btn.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+        defect_btn.Name = "defect_btn";
+        defect_btn.Size = new System.Drawing.Size(35, 27);
+        defect_btn.TabIndex = 99;
+        defect_btn.Text = ">>";
+        defect_btn.UseVisualStyleBackColor = true;
+        // 
+        // checkBox1
+        // 
+        checkBox1.AutoSize = true;
+        checkBox1.Location = new System.Drawing.Point(407, 316);
+        checkBox1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+        checkBox1.Name = "checkBox1";
+        checkBox1.Size = new System.Drawing.Size(201, 19);
+        checkBox1.TabIndex = 98;
+        checkBox1.Text = "Дефекты по ГОСТ 34233.11-2017";
+        checkBox1.UseVisualStyleBackColor = true;
+        checkBox1.CheckedChanged += Defect_chb_CheckedChanged;
+        // 
+        // getGostDim_b
+        // 
+        getGostDim_b.Location = new System.Drawing.Point(307, 282);
+        getGostDim_b.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+        getGostDim_b.Name = "getGostDim_b";
+        getGostDim_b.Size = new System.Drawing.Size(43, 93);
+        getGostDim_b.TabIndex = 97;
+        getGostDim_b.Text = ">>";
+        getGostDim_b.UseVisualStyleBackColor = true;
+        getGostDim_b.Click += GetGostDim_btn_Click;
+        // 
+        // getFi_b
+        // 
+        getFi_b.Location = new System.Drawing.Point(307, 252);
+        getFi_b.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+        getFi_b.Name = "getFi_b";
+        getFi_b.Size = new System.Drawing.Size(43, 23);
+        getFi_b.TabIndex = 96;
+        getFi_b.Text = ">>";
+        getFi_b.UseVisualStyleBackColor = true;
+        getFi_b.Click += GetPhi_btn_Click;
+        // 
+        // s_tb
+        // 
+        s_tb.Location = new System.Drawing.Point(214, 473);
+        s_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+        s_tb.Name = "s_tb";
+        s_tb.Size = new System.Drawing.Size(46, 23);
+        s_tb.TabIndex = 91;
+        s_tb.Text = "8";
+        s_tb.TextChanged += DisabledCalculateBtn;
+        // 
+        // label17
+        // 
+        label17.AutoSize = true;
+        label17.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+        label17.Location = new System.Drawing.Point(77, 476);
+        label17.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+        label17.Name = "label17";
+        label17.Size = new System.Drawing.Size(131, 15);
+        label17.TabIndex = 90;
+        label17.Text = "Принятая толщина, s:";
+        // 
+        // label15
+        // 
+        label15.AutoSize = true;
+        label15.Location = new System.Drawing.Point(30, 448);
+        label15.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+        label15.Name = "label15";
+        label15.Size = new System.Drawing.Size(178, 15);
+        label15.TabIndex = 88;
+        label15.Text = "Технологическая прибавка, c3:";
+        // 
+        // label14
+        // 
+        label14.AutoSize = true;
+        label14.Location = new System.Drawing.Point(75, 418);
+        label14.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+        label14.Name = "label14";
+        label14.Size = new System.Drawing.Size(133, 15);
+        label14.TabIndex = 87;
+        label14.Text = "Минусовой допуск, c2:";
+        // 
+        // label13
+        // 
+        label13.AutoSize = true;
+        label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+        label13.Location = new System.Drawing.Point(62, 388);
+        label13.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+        label13.Name = "label13";
+        label13.Size = new System.Drawing.Size(146, 13);
+        label13.TabIndex = 86;
+        label13.Text = "Прибавка на коррозию, c1:";
+        // 
+        // label12
+        // 
+        label12.AutoSize = true;
+        label12.Location = new System.Drawing.Point(22, 306);
+        label12.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+        label12.Name = "label12";
+        label12.Size = new System.Drawing.Size(186, 45);
+        label12.TabIndex = 85;
+        label12.Text = "Высота выпуклой части днища\r\nпо внутренней поверхности без\r\nучета цилиндрической части, Н:";
+        label12.TextAlign = System.Drawing.ContentAlignment.TopRight;
+        // 
+        // label11
+        // 
+        label11.AutoSize = true;
+        label11.Location = new System.Drawing.Point(29, 285);
+        label11.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+        label11.Name = "label11";
+        label11.Size = new System.Drawing.Size(179, 15);
+        label11.TabIndex = 84;
+        label11.Text = "Внутренний диаметр днища, D:";
+        // 
+        // label10
+        // 
+        label10.AutoSize = true;
+        label10.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+        label10.Location = new System.Drawing.Point(16, 256);
+        label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+        label10.Name = "label10";
+        label10.Size = new System.Drawing.Size(192, 15);
+        label10.TabIndex = 83;
+        label10.Text = "К-т прочности сварного шва, φp:";
+        // 
+        // c3_tb
+        // 
+        c3_tb.Location = new System.Drawing.Point(214, 444);
+        c3_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+        c3_tb.Name = "c3_tb";
+        c3_tb.Size = new System.Drawing.Size(46, 23);
+        c3_tb.TabIndex = 80;
+        c3_tb.TextChanged += DisabledCalculateBtn;
+        // 
+        // c2_tb
+        // 
+        c2_tb.Location = new System.Drawing.Point(214, 414);
+        c2_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+        c2_tb.Name = "c2_tb";
+        c2_tb.Size = new System.Drawing.Size(46, 23);
+        c2_tb.TabIndex = 79;
+        c2_tb.Text = "0.8";
+        c2_tb.TextChanged += DisabledCalculateBtn;
+        // 
+        // c1_tb
+        // 
+        c1_tb.Location = new System.Drawing.Point(214, 384);
+        c1_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+        c1_tb.Name = "c1_tb";
+        c1_tb.Size = new System.Drawing.Size(46, 23);
+        c1_tb.TabIndex = 78;
+        c1_tb.Text = "1";
+        c1_tb.TextChanged += DisabledCalculateBtn;
+        // 
+        // H_tb
+        // 
+        H_tb.Location = new System.Drawing.Point(214, 317);
+        H_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+        H_tb.Name = "H_tb";
+        H_tb.Size = new System.Drawing.Size(46, 23);
+        H_tb.TabIndex = 77;
+        H_tb.TextChanged += DisabledCalculateBtn;
+        // 
+        // D_tb
+        // 
+        D_tb.Location = new System.Drawing.Point(214, 282);
+        D_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+        D_tb.Name = "D_tb";
+        D_tb.Size = new System.Drawing.Size(46, 23);
+        D_tb.TabIndex = 76;
+        D_tb.Text = "1000";
+        D_tb.TextChanged += DisabledCalculateBtn;
+        // 
+        // fi_tb
+        // 
+        fi_tb.Location = new System.Drawing.Point(214, 252);
+        fi_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+        fi_tb.Name = "fi_tb";
+        fi_tb.Size = new System.Drawing.Size(46, 23);
+        fi_tb.TabIndex = 75;
+        fi_tb.Text = "1";
+        fi_tb.TextChanged += DisabledCalculateBtn;
+        // 
+        // steel_cb
+        // 
+        steel_cb.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+        steel_cb.FormattingEnabled = true;
+        steel_cb.Location = new System.Drawing.Point(214, 73);
+        steel_cb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+        steel_cb.Name = "steel_cb";
+        steel_cb.Size = new System.Drawing.Size(139, 23);
+        steel_cb.TabIndex = 71;
+        // 
+        // label7
+        // 
+        label7.AutoSize = true;
+        label7.Location = new System.Drawing.Point(100, 76);
+        label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+        label7.Name = "label7";
+        label7.Size = new System.Drawing.Size(108, 15);
+        label7.TabIndex = 70;
+        label7.Text = "Марка материала:";
+        // 
+        // pictureBox
+        // 
+        pictureBox.Image = (System.Drawing.Image)resources.GetObject("pictureBox.Image");
+        pictureBox.InitialImage = (System.Drawing.Image)resources.GetObject("pictureBox.InitialImage");
+        pictureBox.Location = new System.Drawing.Point(361, 44);
+        pictureBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+        pictureBox.Name = "pictureBox";
+        pictureBox.Size = new System.Drawing.Size(300, 200);
+        pictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+        pictureBox.TabIndex = 67;
+        pictureBox.TabStop = false;
+        // 
+        // Gost_cb
+        // 
+        Gost_cb.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+        Gost_cb.FormattingEnabled = true;
+        Gost_cb.Location = new System.Drawing.Point(214, 44);
+        Gost_cb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+        Gost_cb.Name = "Gost_cb";
+        Gost_cb.Size = new System.Drawing.Size(139, 23);
+        Gost_cb.TabIndex = 65;
+        Gost_cb.Tag = "";
+        // 
+        // label2
+        // 
+        label2.AutoSize = true;
+        label2.Location = new System.Drawing.Point(64, 47);
+        label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+        label2.Name = "label2";
+        label2.Size = new System.Drawing.Size(144, 15);
+        label2.TabIndex = 63;
+        label2.Text = "Нормативный документ:";
+        // 
+        // button1
+        // 
+        button1.Location = new System.Drawing.Point(361, 13);
+        button1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+        button1.Name = "button1";
+        button1.Size = new System.Drawing.Size(284, 25);
+        button1.TabIndex = 62;
+        button1.Text = "Расчетная схема эллиптического днища";
+        button1.UseVisualStyleBackColor = true;
+        // 
+        // name_tb
+        // 
+        name_tb.Location = new System.Drawing.Point(214, 13);
+        name_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+        name_tb.Name = "name_tb";
+        name_tb.Size = new System.Drawing.Size(139, 23);
+        name_tb.TabIndex = 61;
+        name_tb.TextChanged += DisabledCalculateBtn;
+        // 
+        // label1
+        // 
+        label1.AutoSize = true;
+        label1.Location = new System.Drawing.Point(91, 16);
+        label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+        label1.Name = "label1";
+        label1.Size = new System.Drawing.Size(117, 15);
+        label1.TabIndex = 60;
+        label1.Text = "Название элемента:";
+        // 
+        // label20
+        // 
+        label20.AutoSize = true;
+        label20.Location = new System.Drawing.Point(60, 351);
+        label20.Name = "label20";
+        label20.Size = new System.Drawing.Size(147, 30);
+        label20.TabIndex = 116;
+        label20.Text = "Длина цилиндрической\r\nотбартованной части, h1:";
+        // 
+        // h1_tb
+        // 
+        h1_tb.Location = new System.Drawing.Point(214, 355);
+        h1_tb.Name = "h1_tb";
+        h1_tb.Size = new System.Drawing.Size(46, 23);
+        h1_tb.TabIndex = 117;
+        h1_tb.TextChanged += DisabledCalculateBtn;
+        // 
+        // label29
+        // 
+        label29.AutoSize = true;
+        label29.Location = new System.Drawing.Point(271, 358);
+        label29.Name = "label29";
+        label29.Size = new System.Drawing.Size(25, 15);
+        label29.TabIndex = 118;
+        label29.Text = "мм";
+        // 
+        // groupBox1
+        // 
+        groupBox1.Controls.Add(hemispherical_rb);
+        groupBox1.Controls.Add(ell_rb);
+        groupBox1.Location = new System.Drawing.Point(361, 255);
+        groupBox1.Name = "groupBox1";
+        groupBox1.Size = new System.Drawing.Size(300, 49);
+        groupBox1.TabIndex = 119;
+        groupBox1.TabStop = false;
+        groupBox1.Text = "Вид днища";
+        // 
+        // hemispherical_rb
+        // 
+        hemispherical_rb.AutoSize = true;
+        hemispherical_rb.Location = new System.Drawing.Point(146, 22);
+        hemispherical_rb.Name = "hemispherical_rb";
+        hemispherical_rb.Size = new System.Drawing.Size(127, 19);
+        hemispherical_rb.TabIndex = 1;
+        hemispherical_rb.Text = "Полусферическое";
+        hemispherical_rb.UseVisualStyleBackColor = true;
+        hemispherical_rb.CheckedChanged += Ell_Hemispherical_rb_CheckedChanged;
+        // 
+        // ell_rb
+        // 
+        ell_rb.AutoSize = true;
+        ell_rb.Checked = true;
+        ell_rb.Location = new System.Drawing.Point(6, 22);
+        ell_rb.Name = "ell_rb";
+        ell_rb.Size = new System.Drawing.Size(110, 19);
+        ell_rb.TabIndex = 0;
+        ell_rb.TabStop = true;
+        ell_rb.Text = "Эллиптическое";
+        ell_rb.UseVisualStyleBackColor = true;
+        ell_rb.CheckedChanged += Ell_Hemispherical_rb_CheckedChanged;
+        // 
+        // isNozzleCalculateCheckBox
+        // 
+        isNozzleCalculateCheckBox.AutoSize = true;
+        isNozzleCalculateCheckBox.Location = new System.Drawing.Point(16, 623);
+        isNozzleCalculateCheckBox.Name = "isNozzleCalculateCheckBox";
+        isNozzleCalculateCheckBox.Size = new System.Drawing.Size(190, 19);
+        isNozzleCalculateCheckBox.TabIndex = 124;
+        isNozzleCalculateCheckBox.Text = "Расчитать штуцер в обечайке";
+        isNozzleCalculateCheckBox.UseVisualStyleBackColor = true;
+        // 
+        // loadingConditionGroupBox
+        // 
+        loadingConditionGroupBox.Location = new System.Drawing.Point(3, 102);
+        loadingConditionGroupBox.Name = "loadingConditionGroupBox";
+        loadingConditionGroupBox.Size = new System.Drawing.Size(351, 144);
+        loadingConditionGroupBox.TabIndex = 125;
+        loadingConditionGroupBox.TabStop = false;
+        loadingConditionGroupBox.Text = "Условия нагружения";
+        // 
+        // loadingConditionsControl
+        // 
+        loadingConditionsControl.Location = new System.Drawing.Point(12, 502);
+        loadingConditionsControl.Name = "loadingConditionsControl";
+        loadingConditionsControl.Size = new System.Drawing.Size(380, 115);
+        loadingConditionsControl.TabIndex = 126;
+        // 
+        // EllipticalShellForm
+        // 
+        AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+        AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+        ClientSize = new System.Drawing.Size(664, 704);
+        Controls.Add(loadingConditionsControl);
+        Controls.Add(loadingConditionGroupBox);
+        Controls.Add(isNozzleCalculateCheckBox);
+        Controls.Add(groupBox1);
+        Controls.Add(label29);
+        Controls.Add(h1_tb);
+        Controls.Add(label20);
+        Controls.Add(label28);
+        Controls.Add(label27);
+        Controls.Add(label26);
+        Controls.Add(label25);
+        Controls.Add(label24);
+        Controls.Add(label23);
+        Controls.Add(label21);
+        Controls.Add(cancel_b);
+        Controls.Add(calculate_btn);
+        Controls.Add(preCalculate_btn);
+        Controls.Add(groupBox4);
+        Controls.Add(button4);
+        Controls.Add(button3);
+        Controls.Add(defect_btn);
+        Controls.Add(checkBox1);
+        Controls.Add(getGostDim_b);
+        Controls.Add(getFi_b);
+        Controls.Add(s_tb);
+        Controls.Add(label17);
+        Controls.Add(label15);
+        Controls.Add(label14);
+        Controls.Add(label13);
+        Controls.Add(label12);
+        Controls.Add(label11);
+        Controls.Add(label10);
+        Controls.Add(c3_tb);
+        Controls.Add(c2_tb);
+        Controls.Add(c1_tb);
+        Controls.Add(H_tb);
+        Controls.Add(D_tb);
+        Controls.Add(fi_tb);
+        Controls.Add(steel_cb);
+        Controls.Add(label7);
+        Controls.Add(pictureBox);
+        Controls.Add(Gost_cb);
+        Controls.Add(label2);
+        Controls.Add(button1);
+        Controls.Add(name_tb);
+        Controls.Add(label1);
+        Name = "EllipticalShellForm";
+        Text = "EllipticalShellForm";
+        FormClosing += EllipticalShellForm_FormClosing;
+        Load += EllipticalShellForm_Load;
+        groupBox4.ResumeLayout(false);
+        groupBox4.PerformLayout();
+        ((System.ComponentModel.ISupportInitialize)pictureBox).EndInit();
+        groupBox1.ResumeLayout(false);
+        groupBox1.PerformLayout();
+        ResumeLayout(false);
+        PerformLayout();
     }
 
     #endregion
@@ -884,21 +675,17 @@ partial class EllipticalShellForm
     private System.Windows.Forms.Label label23;
     private System.Windows.Forms.Label label21;
     private System.Windows.Forms.Button cancel_b;
-    private System.Windows.Forms.Button calc_b;
-    private System.Windows.Forms.Button predCalc_b;
+    private System.Windows.Forms.Button calculate_btn;
+    private System.Windows.Forms.Button preCalculate_btn;
     private System.Windows.Forms.GroupBox groupBox4;
     private System.Windows.Forms.Label p_d_l;
     private System.Windows.Forms.Label scalc_l;
     private System.Windows.Forms.Button button4;
     private System.Windows.Forms.Button button3;
-    private System.Windows.Forms.Button button2;
+    private System.Windows.Forms.Button defect_btn;
     private System.Windows.Forms.CheckBox checkBox1;
     private System.Windows.Forms.Button getGostDim_b;
     private System.Windows.Forms.Button getFi_b;
-    private System.Windows.Forms.Button getE_b;
-    private System.Windows.Forms.Label label19;
-    private System.Windows.Forms.Button grtSigma_b;
-    private System.Windows.Forms.Label label18;
     private System.Windows.Forms.Label label17;
     private System.Windows.Forms.Label label15;
     private System.Windows.Forms.Label label14;
@@ -909,21 +696,10 @@ partial class EllipticalShellForm
     private System.Windows.Forms.TextBox c2_tb;
     private System.Windows.Forms.TextBox c1_tb;
     internal System.Windows.Forms.TextBox fi_tb;
-    private System.Windows.Forms.TextBox E_tb;
-    private System.Windows.Forms.TextBox sigma_d_tb;
     private System.Windows.Forms.ComboBox steel_cb;
     private System.Windows.Forms.Label label7;
-    private System.Windows.Forms.GroupBox dav_gb;
-    private System.Windows.Forms.Label label6;
-    private System.Windows.Forms.Label label5;
-    private System.Windows.Forms.RadioButton nar_rb;
-    private System.Windows.Forms.TextBox p_tb;
-    private System.Windows.Forms.RadioButton vn_rb;
-    private System.Windows.Forms.Label label4;
     private System.Windows.Forms.PictureBox pictureBox;
-    private System.Windows.Forms.TextBox t_tb;
     private System.Windows.Forms.ComboBox Gost_cb;
-    private System.Windows.Forms.Label label3;
     private System.Windows.Forms.Label label2;
     private System.Windows.Forms.Button button1;
     private System.Windows.Forms.TextBox name_tb;
@@ -938,9 +714,7 @@ partial class EllipticalShellForm
     private System.Windows.Forms.GroupBox groupBox1;
     private System.Windows.Forms.RadioButton hemispherical_rb;
     private System.Windows.Forms.RadioButton ell_rb;
-    private System.Windows.Forms.Label label9;
-    private System.Windows.Forms.Label label8;
-    private System.Windows.Forms.CheckBox EHandle_cb;
-    private System.Windows.Forms.CheckBox sigmaHandle_cb;
     private System.Windows.Forms.CheckBox isNozzleCalculateCheckBox;
+    private Elements.LoadingConditionGroupBox loadingConditionGroupBox;
+    private Elements.LoadingConditionsControl loadingConditionsControl;
 }

@@ -1,5 +1,7 @@
 ﻿using CalculateVessels.Core.Base;
 using CalculateVessels.Core.Shells.Enums;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace CalculateVessels.Core.Shells.Base;
 
@@ -13,16 +15,14 @@ public abstract class ShellInputData : InputData
         ShellType = shellType;
     }
 
-    public bool IsPressureIn { get; set; }
+    public IEnumerable<LoadingCondition> LoadingConditions { get; set; } = Enumerable.Empty<LoadingCondition>();
+
     public double c1 { get; set; }
     public double c2 { get; set; }
     public double c3 { get; set; }
-    public double D { get; set; }
-    public double E { get; set; }
-    public double p { get; set; }
+    public double D { get; init; }
     public double phi { get; set; }
     public double s { get; set; }
-    public double t { get; set; }
     public ShellType ShellType { get; }
     public string Steel { get; set; } = string.Empty;
 
@@ -32,4 +32,5 @@ public abstract class ShellInputData : InputData
     //public double q { get; set; }
     //public double M { get; set; }
     //public double Q { get; set; }
+    //public abstract override bool IsDataGood { get; }
 }

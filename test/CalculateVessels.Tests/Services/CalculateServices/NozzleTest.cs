@@ -1,4 +1,5 @@
 ﻿using CalculateVessels.Core.Interfaces;
+using CalculateVessels.Core.Shells.Base;
 using CalculateVessels.Core.Shells.Cylindrical;
 using CalculateVessels.Core.Shells.Nozzle;
 using CalculateVessels.Core.Shells.Nozzle.Enums;
@@ -26,7 +27,7 @@ public class NozzleTest
         var result = _calculateService.Calculate(nozzleInput) as NozzleCalculated;
 
         //Assert
-        var precision = 0.001;
+        const double precision = 0.001;
         result.Should().BeEquivalentTo(nozzleCalculated, options => options
             .Using<double>(ctx => ctx.Subject.Should().BeApproximately(ctx.Expectation, precision))
             .WhenTypeIs<double>());
@@ -39,64 +40,59 @@ public class NozzleTestData
 {
     public static IEnumerable<object[]> GetData()
     {
+        var (inputData1, calculatedData1) = GetData1();
+        yield return new object[] { inputData1, calculatedData1 };
+    }
 
-        var shellInput1 = new CylindricalShellInput
+    private static (NozzleInput, NozzleCalculated) GetData1()
+    {
+        var loadingCondition1 = new LoadingCondition
         {
+            OrdinalNumber = 1,
+            p = 0.6,
+            t = 150,
+            IsPressureIn = true
+        };
+
+        var shellInput = new CylindricalShellInput
+        {
+            LoadingConditions = new List<LoadingCondition> { loadingCondition1 },
             Name = "Тестовая цилиндрическая обечайка",
             Steel = "12Х18Н10Т",
             c1 = 2.0,
             D = 600,
             c2 = 0.8,
             c3 = 0,
-            p = 0.6,
-            t = 150,
             s = 8,
             phi = 1,
             ny = 2.4,
-            IsPressureIn = true
         };
 
-        var shellCalculated1 = new CylindricalShellCalculated()
+        var shellCommon = new CylindricalShellCalculatedCommon
         {
-            InputData = shellInput1,
             c = 2.8,
+            IsConditionUseFormulas = true
+        };
+
+        var shellResult1 = new CylindricalShellCalculatedOneLoading
+        {
+            LoadingCondition = loadingCondition1,
             s_p = 1.073,
             s = 3.873,
-            p_de = 0,
             p_d = 2.887,
             SigmaAllow = 168,
-            IsConditionUseFormulas = true,
-            b = 0,
-            b_2 = 0,
-            B1 = 0,
-            B1_2 = 0,
             ConditionStability = 0.208,
-            F = 0,
-            FAllow = 0,
-            F_de = 0,
-            F_de1 = 0,
-            F_de2 = 0,
-            F_dp = 0,
-            l = 0,
-            lambda = 0,
-            lpr = 0,
-            M_d = 0,
-            M_de = 0,
-            M_dp = 0,
-            Q_d = 0,
-            Q_de = 0,
-            Q_dp = 0,
-            s_f = 0,
-            s_pf = 0,
-            s_p_1 = 0,
-            s_p_2 = 0,
-            p_dp = 0,
             E = 199000
         };
 
-        var nozzleInput1 = new NozzleInput(shellCalculated1)
+        var shellCalculated = new CylindricalShellCalculated(shellCommon,
+            new List<CylindricalShellCalculatedOneLoading> { shellResult1 })
         {
-            t = 150,
+            InputData = shellInput
+        };
+
+        var nozzleInput = new NozzleInput(shellCalculated)
+        {
             steel1 = "12Х18Н10Т",
             SigmaAllow1 = 0,
             E1 = 0,
@@ -114,8 +110,8 @@ public class NozzleTestData
             l2 = 0,
             l3 = 5,
             NozzleKind = NozzleKind.PassWithoutRing,
-            fi = 1,
-            fi1 = 1,
+            phi = 1,
+            phi1 = 1,
             delta = 6,
             delta1 = 6,
             delta2 = 6,
@@ -138,29 +134,19 @@ public class NozzleTestData
             SigmaAllow4 = 0
         };
 
-        var nozzleCalculated1 = new NozzleCalculated
+        var nozzleCommon = new NozzleCalculatedCommon
         {
-            InputData = nozzleInput1,
             alpha1 = 0,
             b = 111.714,
             c = 2.8,
-            ConditionStrengthening1 = 0,
-            ConditionStrengthening2 = 0,
             ConditionUseFormulas1 = 0.128,
             ConditionUseFormulas2 = 0.009,
             ConditionUseFormulas2_2 = 0,
-            d0 = 452.02,// 451.85,
-            d01 = 452.02,
-            d02 = 605.8,
             d0p = 22.343,
             Dk = 0,
             dmax = 600,
             dp = 82.8,
             Dp = 600,
-            E1 = 199000,
-            E2 = 0,
-            E3 = 199000,
-            E4 = 0,
             EllipseH = 0,
             IsConditionUseFormulas = true,
             K1 = 1,
@@ -172,6 +158,22 @@ public class NozzleTestData
             l3p = 4.772,
             l3p2 = 4.772,
             lp = 55.857,
+        };
+
+        var nozzleResult1 = new NozzleCalculatedOneLoading
+        {
+            LoadingCondition = loadingCondition1,
+
+            ConditionStrengthening1 = 0,
+            ConditionStrengthening2 = 0,
+
+            d0 = 452.02,// 451.85,
+            d01 = 452.02,
+            d02 = 605.8,
+            E1 = 199000,
+            E2 = 0,
+            E3 = 199000,
+            E4 = 0,
             p_d = 2.887,
             p_de = 0,
             p_deShell = 0,
@@ -195,7 +197,14 @@ public class NozzleTestData
             V2 = 4.569,
         };
 
-        yield return new object[] { nozzleInput1, nozzleCalculated1 };
+        var nozzleCalculated = new NozzleCalculated
+        {
+            InputData = nozzleInput,
+            CommonData = nozzleCommon,
+            Results = new List<NozzleCalculatedOneLoading> { nozzleResult1 }
+        };
+
+        return (nozzleInput, nozzleCalculated);
     }
 }
 

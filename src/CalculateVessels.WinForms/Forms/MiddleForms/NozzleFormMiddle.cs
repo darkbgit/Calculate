@@ -1,21 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using CalculateVessels.Core.Interfaces;
-using CalculateVessels.Core.Supports.Saddle;
+﻿using CalculateVessels.Core.Interfaces;
+using CalculateVessels.Core.Shells.Nozzle;
 using CalculateVessels.Data.Interfaces;
 using CalculateVessels.Forms.Base;
+using System;
+using System.Collections.Generic;
 
-namespace CalculateVessels.Forms;
+namespace CalculateVessels.Forms.MiddleForms;
 
-public class SaddleFormMiddle : BaseCalculateForm<SaddleInput>
+public class NozzleFormMiddle : BaseCalculateForm<NozzleInput>
 {
-    protected SaddleFormMiddle(IEnumerable<ICalculateService<SaddleInput>> calculateServices,
+    protected NozzleFormMiddle(IEnumerable<ICalculateService<NozzleInput>> calculateServices,
         IPhysicalDataService physicalDataService)
         : base(calculateServices, physicalDataService)
     {
+
     }
 
-    public SaddleFormMiddle()
+    public NozzleFormMiddle()
         : this(null, null)
     {
 

@@ -5,7 +5,7 @@ using CalculateVessels.Data.Interfaces;
 
 namespace CalculateVessels.Core.Helpers;
 
-internal class PhysicalHelper
+internal static class PhysicalHelper
 {
     public static double GetSigma(string steel, double temperature, IPhysicalDataService service, SigmaSource source = SigmaSource.G34233D1)
     {

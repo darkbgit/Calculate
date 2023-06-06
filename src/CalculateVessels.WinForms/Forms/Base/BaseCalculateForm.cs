@@ -13,17 +13,18 @@ namespace CalculateVessels.Forms.Base;
 public abstract class BaseCalculateForm<T> : Form
     where T : class, IInputData
 {
-    private readonly IEnumerable<ICalculateService<T>> _calculateServices;
-    private readonly IPhysicalDataService _physicalDataService;
-
     protected T? InputData { get; set; }
 
     protected BaseCalculateForm(IEnumerable<ICalculateService<T>> calculateServices,
         IPhysicalDataService physicalDataService)
     {
-        _calculateServices = calculateServices;
-        _physicalDataService = physicalDataService;
+        CalculateServices = calculateServices;
+        PhysicalDataService = physicalDataService;
     }
+
+    protected IEnumerable<ICalculateService<T>> CalculateServices { get; }
+
+    protected IPhysicalDataService PhysicalDataService { get; }
 
     protected abstract bool CollectDataForPreliminarilyCalculation();
 
@@ -33,7 +34,7 @@ public abstract class BaseCalculateForm<T> : Form
 
     private ICalculateService<T> GetCalculateService(string serviceName)
     {
-        return _calculateServices
+        return CalculateServices
                        .FirstOrDefault(s => s.Name == serviceName)
                             ?? throw new InvalidOperationException("Service wasn't found.");
     }
@@ -78,7 +79,7 @@ public abstract class BaseCalculateForm<T> : Form
     {
         comboBox.Items.Clear();
 
-        var steels = _physicalDataService.GetSteels(source)
+        var steels = PhysicalDataService.GetSteels(source)
             .Select(s => s as object)
             .ToArray();
 
@@ -89,7 +90,7 @@ public abstract class BaseCalculateForm<T> : Form
     protected void LoadCalculateServicesNamesToComboBox(ComboBox comboBox)
     {
         comboBox.Items.Clear();
-        var serviceNames = _calculateServices
+        var serviceNames = CalculateServices
                     .Select(s => s.Name as object)
                     .ToArray();
         comboBox.Items.AddRange(serviceNames);

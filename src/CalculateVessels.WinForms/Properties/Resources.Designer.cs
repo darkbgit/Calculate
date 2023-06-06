@@ -79,5 +79,32 @@ namespace CalculateVessels.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to внутреннее.
+        /// </summary>
+        internal static string InsidePressure {
+            get {
+                return ResourceManager.GetString("InsidePressure", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Условия нагружения.
+        /// </summary>
+        internal static string LoadingConditionGroupBoxName {
+            get {
+                return ResourceManager.GetString("LoadingConditionGroupBoxName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to наружное.
+        /// </summary>
+        internal static string OutsidePressure {
+            get {
+                return ResourceManager.GetString("OutsidePressure", resourceCulture);
+            }
+        }
     }
 }

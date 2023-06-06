@@ -14,9 +14,35 @@ public class EllipticalShellInput : ShellInputData, IInputData
     {
     }
 
-    public double EllipseH { get; set; }
-    public double Ellipseh1 { get; set; }
+    private readonly double _ellipseH;
+    private readonly double _h1;
+
+    public double EllipseH
+    {
+        get => _ellipseH;
+        init
+        {
+            _ellipseH = value;
+            if (_ellipseH <= 0)
+            {
+                ErrorList.Add("H не задано.");
+            }
+        }
+    }
+
+    public double Ellipseh1
+    {
+        get => _h1;
+        init
+        {
+            _h1 = value;
+            if (_h1 <= 0)
+            {
+                ErrorList.Add("h1 не задано.");
+            }
+        }
+    }
+
     public double ny { get; set; } = 2.4;
-    public double SigmaAllow { get; set; }
-    public EllipticalBottomType EllipticalBottomType { get; set; }
+    public EllipticalBottomType EllipticalBottomType { get; init; }
 }

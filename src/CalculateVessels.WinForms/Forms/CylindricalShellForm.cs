@@ -1,10 +1,10 @@
-﻿using CalculateVessels.Core.Exceptions;
-using CalculateVessels.Core.Interfaces;
+﻿using CalculateVessels.Core.Interfaces;
+using CalculateVessels.Core.Shells.Base;
 using CalculateVessels.Core.Shells.Cylindrical;
 using CalculateVessels.Data.Enums;
-using CalculateVessels.Data.Exceptions;
 using CalculateVessels.Data.Interfaces;
 using CalculateVessels.Data.Properties;
+using CalculateVessels.Forms.MiddleForms;
 using CalculateVessels.Helpers;
 using System;
 using System.Collections.Generic;
@@ -15,33 +15,170 @@ using System.Windows.Forms;
 
 namespace CalculateVessels.Forms;
 
-public partial class CylindricalShellForm : Form
+public partial class CylindricalShellForm : CylindricalShellFormMiddle
 {
-    private readonly IEnumerable<ICalculateService<CylindricalShellInput>> _calculateServices;
-    private readonly IPhysicalDataService _physicalDataService;
-    private readonly IFormFactory _formFactory;
-
-    private CylindricalShellInput? _inputData;
-
     public CylindricalShellForm(IEnumerable<ICalculateService<CylindricalShellInput>> calculateServices,
-        IFormFactory formFactory, IPhysicalDataService physicalDataService)
+        IPhysicalDataService physicalDataService,
+        IFormFactory formFactory)
+        : base(calculateServices, physicalDataService, formFactory)
     {
         InitializeComponent();
-        _calculateServices = calculateServices;
-        _formFactory = formFactory;
-        _physicalDataService = physicalDataService;
     }
 
-    private ICalculateService<CylindricalShellInput> GetCalculateService()
+    protected override string GetServiceName()
     {
-        return _calculateServices
-                       .FirstOrDefault(s => s.Name == Gost_cb.Text)
-                            ?? throw new InvalidOperationException("Service wasn't found.");
+        return Gost_cb.Text;
     }
 
-    private void Cancel_b_Click(object sender, EventArgs e)
+    private void CylindricalShellForm_Load(object sender, EventArgs e)
+    {
+        LoadSteelsToComboBox(steel_cb, SteelSource.G34233D1);
+
+        LoadCalculateServicesNamesToComboBox(Gost_cb);
+
+        shell_pb.Image = (Bitmap)(new ImageConverter().ConvertFrom(Resources.Cil)
+                                  ?? throw new InvalidOperationException());
+        f_pb.Image = (Bitmap)(new ImageConverter().ConvertFrom(Resources.PC1)
+                              ?? throw new InvalidOperationException());
+    }
+
+    private void CylindricalShellForm_FormClosing(object sender, FormClosingEventArgs e)
+    {
+        if (sender is not CylindricalShellForm) return;
+
+        if (Owner is not MainForm { CylindricalForm: not null } main) return;
+
+        main.CylindricalForm = null;
+    }
+
+    private void Cancel_btn_Click(object sender, EventArgs e)
     {
         Hide();
+    }
+
+    protected override bool CollectDataForPreliminarilyCalculation()
+    {
+
+        var dataInErr = new List<string>();
+
+        InputData = new CylindricalShellInput
+        {
+            Steel = steel_cb.Text,
+            phi = Parameters.GetParam<double>(fi_tb.Text, "phi", ref dataInErr),
+            D = Parameters.GetParam<double>(D_tb.Text, "D", ref dataInErr),
+            c1 = Parameters.GetParam<double>(c1_tb.Text, "c1", ref dataInErr),
+            c2 = Parameters.GetParam<double>(c2_tb.Text, "c2", ref dataInErr),
+            c3 = Parameters.GetParam<double>(c3_tb.Text, "c3", ref dataInErr),
+        };
+
+        var loadingConditions = FormHelpers.ParseLoadingConditions(loadingConditionsControl, loadingConditionGroupBox).ToList();
+
+        if (!loadingConditions.Any())
+        {
+            return false;
+        }
+
+        InputData.LoadingConditions = loadingConditions;
+
+        if (InputData.LoadingConditions.Any(lc => !lc.IsPressureIn))
+        {
+            InputData.l = Parameters.GetParam<double>(l_tb.Text, "l", ref dataInErr, NumberStyles.Integer);
+        }
+
+        var isNoError = !dataInErr.Any() && InputData.IsDataGood;
+
+        if (!isNoError)
+        {
+            MessageBox.Show(string.Join<string>(Environment.NewLine, dataInErr.Union(InputData.ErrorList)));
+        }
+
+        return isNoError;
+    }
+
+    protected override bool CollectDataForFinishCalculation()
+    {
+        var dataInErr = new List<string>();
+
+        InputData = new CylindricalShellInput
+        {
+            Name = Name_tb.Text,
+            s = Parameters.GetParam<double>(s_tb.Text, "s", ref dataInErr),
+            Steel = steel_cb.Text,
+            phi = Parameters.GetParam<double>(fi_tb.Text, "φ", ref dataInErr),
+            D = Parameters.GetParam<double>(D_tb.Text, "D", ref dataInErr),
+            c1 = Parameters.GetParam<double>(c1_tb.Text, "c1", ref dataInErr),
+            c2 = Parameters.GetParam<double>(c2_tb.Text, "c2", ref dataInErr),
+            c3 = Parameters.GetParam<double>(c3_tb.Text, "c3", ref dataInErr),
+
+        };
+
+        if (!loadingConditionsControl.Any())
+        {
+            var loadingCondition = loadingConditionGroupBox.GetLoadingCondition();
+
+            if (loadingCondition == null)
+            {
+                return false;
+            }
+
+            InputData.LoadingConditions = new List<LoadingCondition>
+            {
+                loadingCondition
+            };
+        }
+        else
+        {
+            var loadingConditions = loadingConditionsControl
+                .GetLoadingConditions()
+                .ToList();
+
+            if (!loadingConditions.Any())
+            {
+                return false;
+            }
+
+            InputData.LoadingConditions = loadingConditions;
+        }
+
+        if (InputData.LoadingConditions.Any(lc => !lc.IsPressureIn))
+        {
+            InputData.l = Parameters.GetParam<double>(l_tb.Text, "l", ref dataInErr, NumberStyles.Integer);
+        }
+
+        if (stressHand_rb.Checked)
+        {
+            InputData.Q = Parameters.GetParam<double>(Q_tb.Text, "Q", ref dataInErr);
+            InputData.M = Parameters.GetParam<double>(M_tb.Text, "M", ref dataInErr);
+            InputData.IsFTensile = forceStretch_rb.Checked;
+            InputData.F = Parameters.GetParam<double>(F_tb.Text, "[σ]", ref dataInErr);
+
+            if (!InputData.IsFTensile)
+            {
+                var idx = force_gb.Controls.OfType<RadioButton>().FirstOrDefault(rb => rb.Checked)?.Text;
+
+                InputData.FCalcSchema = Parameters.GetParam<int>(idx, "Тип сжимающего усилия", ref dataInErr, NumberStyles.Integer);
+
+                switch (InputData.FCalcSchema)
+                {
+                    case 5:
+                        InputData.q = Parameters.GetParam<double>(fq_tb.Text, "q", ref dataInErr);
+                        break;
+                    case 6:
+                    case 7:
+                        InputData.f = Parameters.GetParam<double>(fq_tb.Text, "f", ref dataInErr);
+                        break;
+                }
+            }
+        }
+
+        var isNoError = !dataInErr.Any() && InputData.IsDataGood;
+
+        if (!isNoError)
+        {
+            MessageBox.Show(string.Join<string>(Environment.NewLine, dataInErr.Union(InputData.ErrorList)));
+        }
+
+        return isNoError;
     }
 
     private void Force_rb_CheckedChanged(object sender, EventArgs e)
@@ -69,192 +206,50 @@ public partial class CylindricalShellForm : Form
         }
     }
 
-    private void Pressure_rb(object sender, EventArgs e)
+    private void OutsidePressureChecked_cb(object sender, EventArgs e)
     {
-        if (sender is not RadioButton { Checked: true }) return;
-
-        var isPressureOut = nar_rb.Checked;
-        l_tb.Enabled = isPressureOut;
-        //l_tb.ReadOnly = isPressureIn;
-        getE_b.Enabled = isPressureOut;
-        getL_b.Enabled = isPressureOut;
+        if (sender is CheckBox cb)
+        {
+            FormHelpers.EnabledIfCheck(l_tb, cb.Checked);
+        }
     }
 
-    private bool CollectDataForPreliminarilyCalculation()
-    {
-        var dataInErr = new List<string>();
-
-        _inputData = new CylindricalShellInput
-        {
-            t = Parameters.GetParam<double>(t_tb.Text, "t", ref dataInErr, NumberStyles.Integer),
-            Steel = steel_cb.Text,
-            IsPressureIn = vn_rb.Checked,
-            p = Parameters.GetParam<double>(p_tb.Text, "p", ref dataInErr),
-            phi = Parameters.GetParam<double>(fi_tb.Text, "phi", ref dataInErr),
-            D = Parameters.GetParam<double>(D_tb.Text, "D", ref dataInErr),
-            c1 = Parameters.GetParam<double>(c1_tb.Text, "c1", ref dataInErr),
-            c2 = Parameters.GetParam<double>(c2_tb.Text, "c2", ref dataInErr),
-            c3 = Parameters.GetParam<double>(c3_tb.Text, "c3", ref dataInErr),
-            SigmaAllow = sigmaHandle_cb.Checked
-                ? Parameters.GetParam<double>(sigma_d_tb.Text, "[σ]", ref dataInErr)
-                : default
-        };
-
-        if (!_inputData.IsPressureIn)
-        {
-            if (EHandle_cb.Checked)
-            {
-                _inputData.E = Parameters.GetParam<double>(E_tb.Text, "E", ref dataInErr);
-            }
-
-            _inputData.l = Parameters.GetParam<double>(l_tb.Text, "l", ref dataInErr, NumberStyles.Integer);
-        }
-
-        var isNoError = !dataInErr.Any() && _inputData.IsDataGood;
-
-        if (!isNoError)
-        {
-            MessageBox.Show(string.Join<string>(Environment.NewLine, dataInErr.Union(_inputData.ErrorList)));
-        }
-
-        return isNoError;
-    }
-
-    private bool CollectDataForFinishCalculation()
-    {
-        var dataInErr = new List<string>();
-
-        _inputData = new CylindricalShellInput()
-        {
-            Name = Name_tb.Text,
-            s = Parameters.GetParam<double>(s_tb.Text, "s", ref dataInErr),
-
-            t = Parameters.GetParam<double>(t_tb.Text, "t", ref dataInErr, NumberStyles.Integer),
-            Steel = steel_cb.Text,
-            IsPressureIn = vn_rb.Checked,
-            p = Parameters.GetParam<double>(p_tb.Text, "p", ref dataInErr),
-            phi = Parameters.GetParam<double>(fi_tb.Text, "φ", ref dataInErr),
-            D = Parameters.GetParam<double>(D_tb.Text, "D", ref dataInErr),
-            c1 = Parameters.GetParam<double>(c1_tb.Text, "c1", ref dataInErr),
-            c2 = Parameters.GetParam<double>(c2_tb.Text, "c2", ref dataInErr),
-            c3 = Parameters.GetParam<double>(c3_tb.Text, "c3", ref dataInErr),
-            SigmaAllow = sigmaHandle_cb.Checked
-                ? Parameters.GetParam<double>(sigma_d_tb.Text, "[σ]", ref dataInErr)
-                : default
-        };
-
-        if (!_inputData.IsPressureIn)
-        {
-            if (EHandle_cb.Checked)
-            {
-                _inputData.E = Parameters.GetParam<double>(E_tb.Text, "E", ref dataInErr);
-            }
-
-            _inputData.l = Parameters.GetParam<double>(l_tb.Text, "l", ref dataInErr, NumberStyles.Integer);
-        }
-
-        if (stressHand_rb.Checked)
-        {
-            _inputData.Q = Parameters.GetParam<double>(Q_tb.Text, "Q", ref dataInErr);
-            _inputData.M = Parameters.GetParam<double>(M_tb.Text, "M", ref dataInErr);
-            _inputData.IsFTensile = forceStretch_rb.Checked;
-            _inputData.F = Parameters.GetParam<double>(F_tb.Text, "[σ]", ref dataInErr);
-
-            if (!_inputData.IsFTensile)
-            {
-                var idx = force_gb.Controls.OfType<RadioButton>().FirstOrDefault(rb => rb.Checked)?.Text;
-
-                _inputData.FCalcSchema = Parameters.GetParam<int>(idx, "Тип сжимающего усилия", ref dataInErr, NumberStyles.Integer);
-
-                switch (_inputData.FCalcSchema)
-                {
-                    case 5:
-                        _inputData.q = Parameters.GetParam<double>(fq_tb.Text, "q", ref dataInErr);
-                        break;
-                    case 6:
-                    case 7:
-                        _inputData.f = Parameters.GetParam<double>(fq_tb.Text, "f", ref dataInErr);
-                        break;
-                }
-            }
-        }
-
-        var isNoError = !dataInErr.Any() && _inputData.IsDataGood;
-
-        if (!isNoError)
-        {
-            MessageBox.Show(string.Join<string>(Environment.NewLine, dataInErr.Union(_inputData.ErrorList)));
-        }
-
-        return isNoError;
-    }
-
-    private void PreCalc_b_Click(object sender, EventArgs e)
+    private void PreCalculate_btn_Click(object sender, EventArgs e)
     {
         scalc_l.Text = string.Empty;
-        calc_b.Enabled = false;
+        calculate_btn.Enabled = false;
 
         if (!CollectDataForPreliminarilyCalculation()) return;
 
-        ICalculatedElement cylinder;
+        var cylinder = Calculate();
 
-        try
-        {
-            cylinder = GetCalculateService().Calculate(_inputData
-                ?? throw new InvalidOperationException());
-        }
-        catch (CalculateException ex)
-        {
-            MessageBox.Show(ex.Message);
-            return;
-        }
+        if (cylinder == null) return;
 
-        if (cylinder.ErrorList.Any())
-        {
-            MessageBox.Show(string.Join<string>(Environment.NewLine, cylinder.ErrorList));
-        }
+        scalc_l.Text = Gets(cylinder);
+        p_d_l.Text = Getp(cylinder);
 
-        calc_b.Enabled = true;
-        scalc_l.Text = $@"sp={((CylindricalShellCalculated)cylinder).s:f3} мм";
-        p_d_l.Text =
-            $@"pd={((CylindricalShellCalculated)cylinder).p_d:f2} МПа";
-
+        calculate_btn.Enabled = true;
         MessageBox.Show(Resources.CalcComplete);
     }
 
-    private void Calc_b_Click(object sender, EventArgs e)
+    private void Calculate_btn_Click(object sender, EventArgs e)
     {
         scalc_l.Text = string.Empty;
 
         if (!CollectDataForFinishCalculation()) return;
 
-        ICalculatedElement cylinder;
+        var cylinder = Calculate();
 
-        try
-        {
-            cylinder = GetCalculateService().Calculate(_inputData
-                ?? throw new InvalidOperationException());
-        }
-        catch (CalculateException ex)
-        {
-            MessageBox.Show(ex.Message);
-            return;
-        }
+        if (cylinder == null) return;
 
-        if (cylinder.ErrorList.Any())
-        {
-            MessageBox.Show(string.Join<string>(Environment.NewLine, cylinder.ErrorList));
-        }
-
-        scalc_l.Text = $@"sp={((CylindricalShellCalculated)cylinder).s:f3} мм";
-        p_d_l.Text =
-            $@"pd={((CylindricalShellCalculated)cylinder).p_d:f2} МПа";
+        scalc_l.Text = Gets(cylinder);
+        p_d_l.Text = Getp(cylinder);
 
         if (isNozzleCalculateCheckBox.Checked)
         {
             if (Owner is not MainForm mainForm) return;
 
-            mainForm.NozzleForm = _formFactory.Create<NozzleForm>()
+            mainForm.NozzleForm = FormFactory.Create<NozzleForm>()
                 ?? throw new InvalidOperationException($"Couldn't create {nameof(NozzleForm)}.");
             mainForm.NozzleForm.Owner = mainForm;
             mainForm.NozzleForm.Show(cylinder);
@@ -266,110 +261,71 @@ public partial class CylindricalShellForm : Form
             return;
         }
 
-        main.Word_lv.Items.Add(cylinder.ToString());
-        main.ElementsCollection.Add(cylinder);
+        SetCalculatedElementToStorage(Owner, cylinder);
 
         MessageBox.Show(Resources.CalcComplete);
         Close();
     }
 
-    private void CilForm_Load(object sender, EventArgs e)
+    private void GetPhi_btn_Click(object sender, EventArgs e)
     {
-        var steels = _physicalDataService.GetSteels(SteelSource.G34233D1)
-            .Select(s => s as object)
-            .ToArray();
-
-        steel_cb.Items.AddRange(steels);
-        steel_cb.SelectedIndex = 0;
-
-        var serviceNames = _calculateServices
-            .Select(s => s.Name as object)
-            .ToArray();
-        Gost_cb.Items.AddRange(serviceNames);
-        Gost_cb.SelectedIndex = 0;
-
-        shell_pb.Image = (Bitmap)(new ImageConverter().ConvertFrom(Resources.Cil)
-            ?? throw new InvalidOperationException());
-        f_pb.Image = (Bitmap)(new ImageConverter().ConvertFrom(Resources.PC1)
-            ?? throw new InvalidOperationException());
-    }
-
-    private void GetE_b_Click(object sender, EventArgs e)
-    {
-        try
-        {
-            var E = _physicalDataService.GetE(steel_cb.Text, Convert.ToInt32((string?)t_tb.Text), ESource.G34233D1);
-            E_tb.Text = E.ToString("N");
-        }
-        catch (PhysicalDataException ex)
-        {
-            MessageBox.Show(ex.Message);
-        }
-    }
-
-    private void GetFi_b_Click(object sender, EventArgs e)
-    {
-        var ff = new FiForm { Owner = this };
-        ff.ShowDialog();
-    }
-
-    private void CilForm_FormClosing(object sender, FormClosingEventArgs e)
-    {
-        if (sender is not CylindricalShellForm) return;
-
-        if (Owner is MainForm { CylindricalForm: { } } main)
-        {
-            main.CylindricalForm = null;
-        }
+        var phiForm = FormFactory.Create<FiForm>()
+                      ?? throw new InvalidOperationException($"Couldn't create {nameof(FiForm)}.");
+        phiForm.Owner = this;
+        phiForm.ShowDialog();
     }
 
     private void Stress_rb_CheckedChanged(object sender, EventArgs e)
     {
         if (sender is not RadioButton { Checked: true }) return;
 
-        var isForceHand = stressHand_rb.Checked;
-        force_gb.Enabled = isForceHand;
-        M_gb.Enabled = isForceHand;
-        Q_gb.Enabled = isForceHand;
+        var controls = new List<Control>
+        {
+            force_gb, M_gb, Q_gb
+        };
+
+        FormHelpers.EnabledIfCheck(controls, stressHand_rb.Checked);
     }
 
     private void Defect_chb_CheckedChanged(object sender, EventArgs e)
     {
-        defect_b.Enabled = defect_chb.Checked;
+        if (sender is CheckBox cb)
+        {
+            FormHelpers.EnabledIfCheck(defect_btn, cb.Checked);
+        }
     }
 
     private void ForceStretchCompress_rb_CheckedChanged(object sender, EventArgs e)
     {
         if (sender is not RadioButton { Checked: true }) return;
 
-        var isCompress = forceCompress_rb.Checked;
-        rb1.Enabled = isCompress;
-        rb2.Enabled = isCompress;
-        rb3.Enabled = isCompress;
-        rb4.Enabled = isCompress;
-        rb5.Enabled = isCompress;
-        rb6.Enabled = isCompress;
-        rb7.Enabled = isCompress;
+        var rbs = force_gb.Controls
+            .OfType<RadioButton>()
+            .ToList();
+
+        if (!rbs.Any()) return;
+
+        FormHelpers.EnabledIfCheck(rbs, forceCompress_rb.Checked);
     }
 
-    private void SigmaHandle_cb_CheckedChanged(object sender, EventArgs e)
-    {
-        if (sender is CheckBox cb)
-        {
-            sigma_d_tb.Enabled = cb.Checked;
-        }
-    }
-
-    private void EHandle_cb_CheckedChanged(object sender, EventArgs e)
-    {
-        if (sender is CheckBox cb)
-        {
-            E_tb.Enabled = cb.Checked;
-        }
-    }
 
     private void DisabledCalculateBtn(object sender, EventArgs e)
     {
-        calc_b.Enabled = false;
+        DisableCalculateButton();
     }
+
+    private void DisableCalculateButton()
+    {
+        calculate_btn.Enabled = false;
+    }
+
+    private static string Gets(ICalculatedElement element) => string
+    .Join(", ", ((CylindricalShellCalculated)element).Results
+        .Select((r, j) => $"s{j + 1}={r.s:f3} мм")
+    .ToList());
+
+    private static string Getp(ICalculatedElement element) => string
+        .Join(", ", ((CylindricalShellCalculated)element).Results
+            .Select((r, j) => $"p{j + 1}={r.p_d:f3} МПа")
+            .ToList());
 }

@@ -124,4 +124,13 @@
   <data name="Icon41000" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Icon41000.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="InsidePressure" xml:space="preserve">
+    <value>внутреннее</value>
+  </data>
+  <data name="LoadingConditionGroupBoxName" xml:space="preserve">
+    <value>Условия нагружения</value>
+  </data>
+  <data name="OutsidePressure" xml:space="preserve">
+    <value>наружное</value>
+  </data>
 </root>
