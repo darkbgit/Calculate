@@ -10,10 +10,12 @@ using System.Windows.Forms;
 namespace CalculateVessels.Forms.Base;
 
 //[TypeDescriptionProvider(typeof(AbstractControlDescriptionProvider<BaseCalculateForm<T>, Form>))]
+//[TypeDescriptionProvider(typeof(AbstractGenericFormDescriptionProvider))]
 public abstract class BaseCalculateForm<T> : Form
     where T : class, IInputData
 {
-    protected T? InputData { get; set; }
+    private const int newCalculatedElementIndex = -1;
+    private int _calculatedElementIndex = newCalculatedElementIndex;
 
     protected BaseCalculateForm(IEnumerable<ICalculateService<T>> calculateServices,
         IPhysicalDataService physicalDataService)
@@ -22,15 +24,33 @@ public abstract class BaseCalculateForm<T> : Form
         PhysicalDataService = physicalDataService;
     }
 
+    protected T? InputData { get; set; }
+
     protected IEnumerable<ICalculateService<T>> CalculateServices { get; }
 
     protected IPhysicalDataService PhysicalDataService { get; }
+
+    public void Show(T inputData, int calculatedElementIndex)
+    {
+        if (!inputData.IsDataGood)
+        {
+            MessageBox.Show("Couldn't load initialize data.");
+            return;
+        }
+
+        InputData = inputData;
+        _calculatedElementIndex = calculatedElementIndex;
+        Show();
+        LoadInputData();
+    }
 
     protected abstract bool CollectDataForPreliminarilyCalculation();
 
     protected abstract bool CollectDataForFinishCalculation();
 
     protected abstract string GetServiceName();
+
+    protected abstract void LoadInputData();
 
     private ICalculateService<T> GetCalculateService(string serviceName)
     {
@@ -66,12 +86,18 @@ public abstract class BaseCalculateForm<T> : Form
     {
         if (form is MainForm main)
         {
-            main.Word_lv.Items.Add(element.ToString());
-            main.ElementsCollection.Add(element);
+            if (_calculatedElementIndex == newCalculatedElementIndex)
+            {
+                main.calculatedElementsControl.AddElement(element);
+            }
+            else
+            {
+                main.calculatedElementsControl.UpdateElement(element, _calculatedElementIndex);
+            }
         }
         else
         {
-            MessageBox.Show($"{nameof(MainForm)} error");
+            MessageBox.Show($"{nameof(MainForm)} error.");
         }
     }
 

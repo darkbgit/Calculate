@@ -16,6 +16,8 @@ public class CylindricalShellInput : ShellInputData, IInputData
 
     }
 
+    public override string Type => nameof(CylindricalShellInput);
+
     public bool ConditionForCalcF5341 { get; set; }
 
     //public IEnumerable<string> ErrorList => _errorList;

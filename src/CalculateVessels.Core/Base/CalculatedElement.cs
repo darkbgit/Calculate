@@ -8,11 +8,15 @@ public abstract class CalculatedElement
 {
     private readonly List<string> _errorList = new();
 
-    public IEnumerable<string> Bibliography { get; protected init; } = Enumerable.Empty<string>();
+    public virtual string Type { get; } = string.Empty;
+
+    public IEnumerable<string> Bibliography { get; init; } = Enumerable.Empty<string>();
 
     public ICollection<string> ErrorList => _errorList;
 
-    public required IInputData InputData { get; init; }
+    //public required IInputData InputData { get;  init; }
+
+    public IInputData InputData { get; init; }
 
     internal void AddErrors(IEnumerable<string> errors)
     {

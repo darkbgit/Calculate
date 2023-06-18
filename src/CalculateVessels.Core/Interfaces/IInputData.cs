@@ -1,7 +1,10 @@
 ﻿using System.Collections.Generic;
+using System.Text.Json.Serialization;
+using CalculateVessels.Core.Helpers.Json;
 
 namespace CalculateVessels.Core.Interfaces;
 
+[JsonConverter(typeof(CustomJsonConverter<IInputData>))]
 public interface IInputData
 {
     bool IsDataGood { get; }

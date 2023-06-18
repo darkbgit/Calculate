@@ -38,4 +38,9 @@ public class EllipticalShellFormMiddle : CalculateFormWithFormFactory<Elliptical
     {
         throw new NotImplementedException();
     }
+
+    protected override void LoadInputData()
+    {
+        throw new NotImplementedException();
+    }
 }

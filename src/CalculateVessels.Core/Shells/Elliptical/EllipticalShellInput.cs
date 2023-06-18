@@ -9,13 +9,15 @@ namespace CalculateVessels.Core.Shells.Elliptical;
 
 public class EllipticalShellInput : ShellInputData, IInputData
 {
+    private readonly double _ellipseH;
+    private readonly double _h1;
+
     public EllipticalShellInput()
         : base(ShellType.Elliptical)
     {
     }
 
-    private readonly double _ellipseH;
-    private readonly double _h1;
+    public override string Type => nameof(EllipticalShellInput);
 
     public double EllipseH
     {

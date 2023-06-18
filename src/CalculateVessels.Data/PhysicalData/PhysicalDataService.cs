@@ -112,7 +112,8 @@ internal class PhysicalDataService : IPhysicalDataService
                 using StreamReader file = new(TABLE_B1);
                 var json = file.ReadToEnd();
                 file.Close();
-                psiList = JsonSerializer.Deserialize<List<PhysicalData.Gost34233_7.Psi>>(json) ?? throw new InvalidOperationException();
+                psiList = JsonSerializer.Deserialize<List<PhysicalData.Gost34233_7.Psi>>(json)
+                          ?? throw new InvalidOperationException();
             }
             catch
             {

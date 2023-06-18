@@ -204,7 +204,7 @@ public partial class FlatBottomWithAdditionalMomentForm : Form
 
         _inputData = new FlatBottomWithAdditionalMomentInput
         {
-            t = Parameters.GetParam<double>(t_tb.Text, "t", ref dataInErr, NumberStyles.Integer),
+            t = Parameters.GetParam<double>(t_tb.Text, "t", dataInErr, NumberStyles.Integer),
             CoverSteel = steel_cb.Text,
             FlangeSteel = flangeSteel_cb.Text,
             ScrewSteel = screwSteel_cb.Text,
@@ -218,46 +218,46 @@ public partial class FlatBottomWithAdditionalMomentForm : Form
             IsWasher = isWasher_cb.Checked,
             GasketType = gasketType_cb.Text,
 
-            p = Parameters.GetParam<double>(p_tb.Text, "p", ref dataInErr),
-            F = Parameters.GetParam<double>(F_tb.Text, "F", ref dataInErr),
-            fi = Parameters.GetParam<double>(fi_tb.Text, "φ", ref dataInErr),
-            c1 = Parameters.GetParam<double>(c1_tb.Text, "c1", ref dataInErr),
-            c2 = Parameters.GetParam<double>(c2_tb.Text, "c2", ref dataInErr),
-            c3 = Parameters.GetParam<double>(c3_tb.Text, "c3", ref dataInErr),
-            Screwd = Parameters.GetParam<int>(screwd_cb.Text, "dscrew", ref dataInErr, NumberStyles.Integer),
-            s1 = Parameters.GetParam<double>(s1_tb.Text, "s1", ref dataInErr),
-            s2 = Parameters.GetParam<double>(s2_tb.Text, "s2", ref dataInErr),
-            s3 = Parameters.GetParam<double>(s3_tb.Text, "s3", ref dataInErr),
-            D = Parameters.GetParam<double>(D_tb.Text, "D", ref dataInErr),
-            D2 = Parameters.GetParam<double>(D2_tb.Text, "D2", ref dataInErr),
-            D3 = Parameters.GetParam<double>(D3_tb.Text, "D3", ref dataInErr),
-            Dn = Parameters.GetParam<double>(Dn_tb.Text, "Dn", ref dataInErr),
-            Db = Parameters.GetParam<double>(Db_tb.Text, "Db", ref dataInErr),
-            Dcp = Parameters.GetParam<double>(Dcp_tb.Text, "Dcp", ref dataInErr),
-            d = Parameters.GetParam<double>(screwd_cb.Text, "d", ref dataInErr),
-            M = Parameters.GetParam<double>(M_tb.Text, "M", ref dataInErr),
-            h = Parameters.GetParam<double>(h_tb.Text, "h", ref dataInErr),
-            hp = Parameters.GetParam<double>(hp_tb.Text, "hp", ref dataInErr),
-            bp = Parameters.GetParam<double>(bp_tb.Text, "bp", ref dataInErr),
-            Lb0 = Parameters.GetParam<double>(Lb0_tb.Text, "Lb0", ref dataInErr),
-            n = Parameters.GetParam<int>(n_tb.Text, "n", ref dataInErr, NumberStyles.Integer),
+            p = Parameters.GetParam<double>(p_tb.Text, "p", dataInErr),
+            F = Parameters.GetParam<double>(F_tb.Text, "F", dataInErr),
+            fi = Parameters.GetParam<double>(fi_tb.Text, "φ", dataInErr),
+            c1 = Parameters.GetParam<double>(c1_tb.Text, "c1", dataInErr),
+            c2 = Parameters.GetParam<double>(c2_tb.Text, "c2", dataInErr),
+            c3 = Parameters.GetParam<double>(c3_tb.Text, "c3", dataInErr),
+            Screwd = Parameters.GetParam<int>(screwd_cb.Text, "dscrew", dataInErr, NumberStyles.Integer),
+            s1 = Parameters.GetParam<double>(s1_tb.Text, "s1", dataInErr),
+            s2 = Parameters.GetParam<double>(s2_tb.Text, "s2", dataInErr),
+            s3 = Parameters.GetParam<double>(s3_tb.Text, "s3", dataInErr),
+            D = Parameters.GetParam<double>(D_tb.Text, "D", dataInErr),
+            D2 = Parameters.GetParam<double>(D2_tb.Text, "D2", dataInErr),
+            D3 = Parameters.GetParam<double>(D3_tb.Text, "D3", dataInErr),
+            Dn = Parameters.GetParam<double>(Dn_tb.Text, "Dn", dataInErr),
+            Db = Parameters.GetParam<double>(Db_tb.Text, "Db", dataInErr),
+            Dcp = Parameters.GetParam<double>(Dcp_tb.Text, "Dcp", dataInErr),
+            d = Parameters.GetParam<double>(screwd_cb.Text, "d", dataInErr),
+            M = Parameters.GetParam<double>(M_tb.Text, "M", dataInErr),
+            h = Parameters.GetParam<double>(h_tb.Text, "h", dataInErr),
+            hp = Parameters.GetParam<double>(hp_tb.Text, "hp", dataInErr),
+            bp = Parameters.GetParam<double>(bp_tb.Text, "bp", dataInErr),
+            Lb0 = Parameters.GetParam<double>(Lb0_tb.Text, "Lb0", dataInErr),
+            n = Parameters.GetParam<int>(n_tb.Text, "n", dataInErr, NumberStyles.Integer),
 
             FlangeFace = (FlangeFaceType)
                 (Parameters.GetParam<int>(flange_gb.Controls.OfType<RadioButton>().FirstOrDefault(r => r.Checked)?.Name[1].ToString(),
-                    "Уплотнительная поверхность фланца", ref dataInErr, NumberStyles.Integer)
+                    "Уплотнительная поверхность фланца", dataInErr, NumberStyles.Integer)
                     - 1),
 
             SigmaAllow = sigmaHandle_cb.Checked
-                ? Parameters.GetParam<double>(sigma_d_tb.Text, "[σ]", ref dataInErr)
+                ? Parameters.GetParam<double>(sigma_d_tb.Text, "[σ]", dataInErr)
                 : default,
             E = EHandle_cb.Checked
-                ? Parameters.GetParam<double>(E_tb.Text, "E", ref dataInErr)
+                ? Parameters.GetParam<double>(E_tb.Text, "E", dataInErr)
                 : default
         };
 
         if (_inputData.IsCoverWithGroove)
         {
-            _inputData.s4 = Parameters.GetParam<double>(s4_tb.Text, "s4", ref dataInErr);
+            _inputData.s4 = Parameters.GetParam<double>(s4_tb.Text, "s4", dataInErr);
         }
 
         if (!hole_cb.Checked)
@@ -266,7 +266,7 @@ public partial class FlatBottomWithAdditionalMomentForm : Form
         }
         else
         {
-            var d = Parameters.GetParam<double>(holed_tb.Text, "d", ref dataInErr);
+            var d = Parameters.GetParam<double>(holed_tb.Text, "d", dataInErr);
             if (oneHole_rb.Checked)
             {
                 _inputData.Hole = HoleInFlatBottom.OneHole;
@@ -281,19 +281,19 @@ public partial class FlatBottomWithAdditionalMomentForm : Form
 
         if (_inputData.IsFlangeFlat)
         {
-            _inputData.s = Parameters.GetParam<double>(s_tb.Text, "s", ref dataInErr);
+            _inputData.s = Parameters.GetParam<double>(s_tb.Text, "s", dataInErr);
         }
         else
         {
-            _inputData.S0 = Parameters.GetParam<double>(S0_tb.Text, "S0", ref dataInErr);
-            _inputData.S1 = Parameters.GetParam<double>(s1scirt_tb.Text, "S1", ref dataInErr);
-            _inputData.l = Parameters.GetParam<double>(l_tb.Text, "l", ref dataInErr);
+            _inputData.S0 = Parameters.GetParam<double>(S0_tb.Text, "S0", dataInErr);
+            _inputData.S1 = Parameters.GetParam<double>(s1scirt_tb.Text, "S1", dataInErr);
+            _inputData.l = Parameters.GetParam<double>(l_tb.Text, "l", dataInErr);
         }
 
         if (isWasher_cb.Checked)
         {
             _inputData.WasherSteel = washerSteel_cb.Text;
-            _inputData.hsh = Parameters.GetParam<double>(hsh_tb.Text, "hsh", ref dataInErr);
+            _inputData.hsh = Parameters.GetParam<double>(hsh_tb.Text, "hsh", dataInErr);
         }
 
         var isNoError = !dataInErr.Any() && _inputData.IsDataGood;
@@ -391,8 +391,7 @@ public partial class FlatBottomWithAdditionalMomentForm : Form
             return;
         }
 
-        main.Word_lv.Items.Add(bottom.ToString());
-        main.ElementsCollection.Add(bottom);
+        main.calculatedElementsControl.AddElement(bottom);
 
         MessageBox.Show(Resources.CalcComplete);
         Close();

@@ -16,6 +16,8 @@ public class NozzleCalculated : CalculatedElement, ICalculatedElement
         };
     }
 
+    public override string Type => nameof(NozzleCalculated);
+
     public required NozzleCalculatedCommon CommonData { get; init; }
 
     public required IEnumerable<NozzleCalculatedOneLoading> Results { get; init; } =

@@ -8,6 +8,7 @@ namespace CalculateVessels.Core.Shells.Elliptical;
 
 public class EllipticalShellCalculatedCommon : ShellCalculatedCommonData
 {
+    //public override string Type => nameof(EllipticalShellCalculatedCommon);
     //public double c { get; set; }
     public double EllipseR { get; set; }
     public bool IsConditionUseFormulas { get; set; }

@@ -7,7 +7,7 @@ namespace CalculateVessels.Helpers;
 
 internal static class Parameters
 {
-    public static T GetParam<T>(string? paramValue, string paramName, ref List<string> errorList, NumberStyles numberStyles = NumberStyles.AllowDecimalPoint)
+    public static T GetParam<T>(string? paramValue, string paramName, List<string> errorList, NumberStyles numberStyles = NumberStyles.AllowDecimalPoint)
         where T : struct
     {
         if (string.IsNullOrEmpty(paramValue))

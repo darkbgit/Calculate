@@ -8,6 +8,8 @@ namespace CalculateVessels.Core.Shells.Conical;
 
 public class ConicalShellCalculatedCommon : ShellCalculatedCommonData
 {
+    //public override string Type => nameof(ConicalShellCalculatedCommon);
+
     /// <summary>
     /// in radians
     /// </summary>

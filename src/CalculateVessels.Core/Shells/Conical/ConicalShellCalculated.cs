@@ -21,6 +21,8 @@ public class ConicalShellCalculated : ShellCalculated, ICalculatedElement
         Results = results;
     }
 
+    public override string Type => nameof(ConicalShellCalculated);
+
     public override ConicalShellCalculatedCommon CommonData { get; }
 
     public override IEnumerable<ConicalShellCalculatedOneLoading> Results { get; } =
@@ -32,13 +34,14 @@ public class ConicalShellCalculated : ShellCalculated, ICalculatedElement
 
         var builder = new StringBuilder();
         builder.Append("Conical shell - ");
-        builder.Append($" D - {dataIn.D} mm");
-        builder.Append($" D1 - {dataIn.D1} mm");
+        builder.Append($" D={dataIn.D} mm");
+        builder.Append($" D1={dataIn.D1} mm");
         dataIn.LoadingConditions.ToList()
-            .ForEach(x =>
+            .ForEach(lc =>
             {
-                builder.Append(x.IsPressureIn ? "inside" : "outside");
-                builder.Append($" pressure {x.p} MPa");
+                builder.Append($" p={lc.p} MPa");
+                builder.Append(lc.IsPressureIn ? "(inside)" : "(outside)");
+                builder.Append($" t={lc.t} C");
             });
 
         return builder.ToString();

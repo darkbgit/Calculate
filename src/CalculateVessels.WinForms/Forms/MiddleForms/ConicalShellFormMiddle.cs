@@ -38,4 +38,9 @@ public class ConicalShellFormMiddle : CalculateFormWithFormFactory<ConicalShellI
     {
         throw new NotImplementedException();
     }
+
+    protected override void LoadInputData()
+    {
+        throw new NotImplementedException();
+    }
 }

@@ -1,20 +1,21 @@
-﻿using CalculateVessels.Core.Interfaces;
+﻿using CalculateVessels.Core.Enums;
+using CalculateVessels.Core.Interfaces;
 using CalculateVessels.Core.Supports.Saddle;
 using CalculateVessels.Data.Enums;
 using CalculateVessels.Data.Interfaces;
 using CalculateVessels.Data.Properties;
+using CalculateVessels.Forms.MiddleForms;
+using CalculateVessels.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
-using CalculateVessels.Core.Enums;
-using CalculateVessels.Helpers;
-using CalculateVessels.Forms.MiddleForms;
 
 namespace CalculateVessels.Forms;
 
+//[TypeDescriptionProvider(typeof(AbstractControlDescriptionProvider<BaseCalculateForm<SaddleInput>, Form, SaddleInput>))]
 public sealed partial class SaddleForm : SaddleFormMiddle
 {
     public SaddleForm(IEnumerable<ICalculateService<SaddleInput>> calculateServices,
@@ -30,6 +31,11 @@ public sealed partial class SaddleForm : SaddleFormMiddle
         return Gost_cb.Text;
     }
 
+    protected override void LoadInputData()
+    {
+        throw new NotImplementedException();
+    }
+
     protected override bool CollectDataForPreliminarilyCalculation()
     {
         var dataInErr = new List<string>();
@@ -39,20 +45,20 @@ public sealed partial class SaddleForm : SaddleFormMiddle
             Steel = steel_cb.Text,
             IsPressureIn = !isNotPressureIn_cb.Checked,
             IsAssembly = isAssembly_cb.Checked,
-            D = Parameters.GetParam<double>(D_tb.Text, "D", ref dataInErr),
-            s = Parameters.GetParam<double>(s_tb.Text, "s", ref dataInErr),
-            c = Parameters.GetParam<double>(c_tb.Text, "c", ref dataInErr),
-            p = Parameters.GetParam<double>(p_tb.Text, "p", ref dataInErr),
-            fi = Parameters.GetParam<double>(fi_tb.Text, "φ", ref dataInErr),
-            t = Parameters.GetParam<double>(t_tb.Text, "t", ref dataInErr, NumberStyles.Integer),
-            N = Parameters.GetParam<int>(N_cb.Text, "N", ref dataInErr, NumberStyles.Integer),
-            G = Parameters.GetParam<double>(G_tb.Text, "G", ref dataInErr),
-            b = Parameters.GetParam<double>(b_tb.Text, "b", ref dataInErr),
-            delta1 = Parameters.GetParam<double>(delta1_tb.Text, "delta1", ref dataInErr),
-            a = Parameters.GetParam<double>(a_tb.Text, "a", ref dataInErr),
-            H = Parameters.GetParam<double>(H_tb.Text, "H", ref dataInErr),
-            L = Parameters.GetParam<double>(L_tb.Text, "L", ref dataInErr),
-            e = Parameters.GetParam<double>(e_tb.Text, "e", ref dataInErr),
+            D = Parameters.GetParam<double>(D_tb.Text, "D", dataInErr),
+            s = Parameters.GetParam<double>(s_tb.Text, "s", dataInErr),
+            c = Parameters.GetParam<double>(c_tb.Text, "c", dataInErr),
+            p = Parameters.GetParam<double>(p_tb.Text, "p", dataInErr),
+            fi = Parameters.GetParam<double>(fi_tb.Text, "φ", dataInErr),
+            t = Parameters.GetParam<double>(t_tb.Text, "t", dataInErr, NumberStyles.Integer),
+            N = Parameters.GetParam<int>(N_cb.Text, "N", dataInErr, NumberStyles.Integer),
+            G = Parameters.GetParam<double>(G_tb.Text, "G", dataInErr),
+            b = Parameters.GetParam<double>(b_tb.Text, "b", dataInErr),
+            delta1 = Parameters.GetParam<double>(delta1_tb.Text, "delta1", dataInErr),
+            a = Parameters.GetParam<double>(a_tb.Text, "a", dataInErr),
+            H = Parameters.GetParam<double>(H_tb.Text, "H", dataInErr),
+            L = Parameters.GetParam<double>(L_tb.Text, "L", dataInErr),
+            e = Parameters.GetParam<double>(e_tb.Text, "e", dataInErr),
         };
 
 
@@ -69,9 +75,9 @@ public sealed partial class SaddleForm : SaddleFormMiddle
             case nameof(sheet_rb):
                 InputData.Type = SaddleType.SaddleWithoutRingWithSheet;
 
-                InputData.s2 = Parameters.GetParam<double>(s2_tb.Text, "s2", ref dataInErr);
-                InputData.b2 = Parameters.GetParam<double>(b2_tb.Text, "b2", ref dataInErr);
-                InputData.delta2 = Parameters.GetParam<double>(delta2_tb.Text, "delta2", ref dataInErr);
+                InputData.s2 = Parameters.GetParam<double>(s2_tb.Text, "s2", dataInErr);
+                InputData.b2 = Parameters.GetParam<double>(b2_tb.Text, "b2", dataInErr);
+                InputData.delta2 = Parameters.GetParam<double>(delta2_tb.Text, "delta2", dataInErr);
 
                 ////f
                 //{
@@ -104,7 +110,7 @@ public sealed partial class SaddleForm : SaddleFormMiddle
         return isNoError;
     }
 
-    private bool CollectDataForFinishCalculation()
+    protected override bool CollectDataForFinishCalculation()
     {
         if (InputData == null) throw new InvalidOperationException();
 

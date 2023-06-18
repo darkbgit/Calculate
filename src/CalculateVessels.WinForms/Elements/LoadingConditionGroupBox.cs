@@ -26,13 +26,13 @@ public sealed partial class LoadingConditionGroupBox : GroupBox
         {
             OrdinalNumber = 1,
             IsPressureIn = !isPressureOutsideCheckBox.Checked,
-            t = Parameters.GetParam<double>(temperatureTextBox.Text, "t", ref dataInErr, NumberStyles.Integer),
-            p = Parameters.GetParam<double>(pressureTextBox.Text, "p", ref dataInErr),
+            t = Parameters.GetParam<double>(temperatureTextBox.Text, "t", dataInErr, NumberStyles.Integer),
+            p = Parameters.GetParam<double>(pressureTextBox.Text, "p", dataInErr),
             SigmaAllow = isSigmaAllowHandleCheckBox.Checked
-                ? Parameters.GetParam<double>(sigmaAllowTextBox.Text, "[σ]", ref dataInErr)
+                ? Parameters.GetParam<double>(sigmaAllowTextBox.Text, "[σ]", dataInErr)
                 : default,
             EAllow = isEAllowHandleCheckBox.Checked
-                ? Parameters.GetParam<double>(EAllowTextBox.Text, "E", ref dataInErr)
+                ? Parameters.GetParam<double>(EAllowTextBox.Text, "E", dataInErr)
                 : default
         };
 
@@ -43,6 +43,24 @@ public sealed partial class LoadingConditionGroupBox : GroupBox
 
         MessageBox.Show(string.Join(Environment.NewLine, dataInErr));
         return null;
+    }
+
+    public void SetLoadingCondition(LoadingCondition loadingCondition)
+    {
+
+        isPressureOutsideCheckBox.Checked = !loadingCondition.IsPressureIn;
+        temperatureTextBox.Text = loadingCondition.t.ToString(CultureInfo.CurrentCulture);
+        pressureTextBox.Text = loadingCondition.p.ToString(CultureInfo.CurrentCulture);
+        if (loadingCondition.SigmaAllow > 0)
+        {
+            isSigmaAllowHandleCheckBox.Checked = true;
+            sigmaAllowTextBox.Text = loadingCondition.SigmaAllow.ToString(CultureInfo.CurrentCulture);
+        }
+        if (loadingCondition.EAllow > 0)
+        {
+            isEAllowHandleCheckBox.Checked = true;
+            EAllowTextBox.Text = loadingCondition.EAllow.ToString(CultureInfo.CurrentCulture);
+        }
     }
 
     private void SigmaAllowHandleCheckBox_CheckedChanged(object? sender, EventArgs e)

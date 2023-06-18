@@ -15,7 +15,7 @@ public class ConicalShellInput : ShellInputData, IInputData
     {
 
     }
-
+    public override string Type => nameof(ConicalShellInput);
     public double Ak { get; set; }
     public ConicalConnectionType ConnectionType { get; set; }
     public double D1 { get; set; }

@@ -1292,7 +1292,7 @@
             littleConnection_gb.Size = new System.Drawing.Size(428, 303);
             littleConnection_gb.TabIndex = 131;
             littleConnection_gb.TabStop = false;
-            littleConnection_gb.Text = "         Узел соединения (больший диаметр)";
+            littleConnection_gb.Text = "         Узел соединения (меньший диаметр)";
             // 
             // AkLittlePanel
             // 
@@ -1704,8 +1704,6 @@
         internal System.Windows.Forms.TextBox phip_tb;
         private System.Windows.Forms.ComboBox steel_cb;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.RadioButton nar_rb;
-        private System.Windows.Forms.RadioButton vn_rb;
         private System.Windows.Forms.PictureBox shell_pb;
         private System.Windows.Forms.ComboBox Gost_cb;
         private System.Windows.Forms.Label label2;

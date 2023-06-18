@@ -9,6 +9,7 @@ using CalculateVessels.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -22,6 +23,40 @@ public sealed partial class EllipticalShellForm : EllipticalShellFormMiddle
         : base(calculateServices, physicalDataService, formFactory)
     {
         InitializeComponent();
+    }
+
+    protected override void LoadInputData()
+    {
+        if (InputData == null) return;
+
+        name_tb.Text = InputData.Name;
+        steel_cb.Text = InputData.Steel;
+        fi_tb.Text = InputData.phi.ToString(CultureInfo.CurrentCulture);
+        D_tb.Text = InputData.D.ToString(CultureInfo.CurrentCulture);
+        c1_tb.Text = InputData.c1.ToString(CultureInfo.CurrentCulture);
+        c2_tb.Text = InputData.c2.ToString(CultureInfo.CurrentCulture);
+        c3_tb.Text = InputData.c3.ToString(CultureInfo.CurrentCulture);
+        s_tb.Text = InputData.s.ToString(CultureInfo.CurrentCulture);
+        H_tb.Text = InputData.EllipseH.ToString(CultureInfo.CurrentCulture);
+        h1_tb.Text = InputData.Ellipseh1.ToString(CultureInfo.CurrentCulture);
+
+        if (InputData.EllipticalBottomType == EllipticalBottomType.Elliptical)
+        {
+            ell_rb.Checked = true;
+        }
+        else
+        {
+            hemispherical_rb.Checked = true;
+        }
+
+        if (InputData.LoadingConditions.Count() == 1)
+        {
+            loadingConditionGroupBox.SetLoadingCondition(InputData.LoadingConditions.First());
+        }
+        else
+        {
+            loadingConditionsControl.SetLoadingConditions(InputData.LoadingConditions);
+        }
     }
 
     protected override string GetServiceName()
@@ -47,7 +82,7 @@ public sealed partial class EllipticalShellForm : EllipticalShellFormMiddle
 
     private void Cancel_btn_Click(object sender, EventArgs e)
     {
-        this.Hide();
+        Hide();
     }
 
     protected override bool CollectDataForPreliminarilyCalculation()
@@ -57,13 +92,13 @@ public sealed partial class EllipticalShellForm : EllipticalShellFormMiddle
         InputData = new EllipticalShellInput
         {
             Steel = steel_cb.Text,
-            phi = Parameters.GetParam<double>(fi_tb.Text, "φ", ref dataInErr),
-            D = Parameters.GetParam<double>(D_tb.Text, "D", ref dataInErr),
-            EllipseH = Parameters.GetParam<double>(H_tb.Text, "H", ref dataInErr),
-            Ellipseh1 = Parameters.GetParam<double>(h1_tb.Text, "h1", ref dataInErr),
-            c1 = Parameters.GetParam<double>(c1_tb.Text, "c1", ref dataInErr),
-            c2 = Parameters.GetParam<double>(c2_tb.Text, "c2", ref dataInErr),
-            c3 = Parameters.GetParam<double>(c3_tb.Text, "c3", ref dataInErr),
+            phi = Parameters.GetParam<double>(fi_tb.Text, "φ", dataInErr),
+            D = Parameters.GetParam<double>(D_tb.Text, "D", dataInErr),
+            EllipseH = Parameters.GetParam<double>(H_tb.Text, "H", dataInErr),
+            Ellipseh1 = Parameters.GetParam<double>(h1_tb.Text, "h1", dataInErr),
+            c1 = Parameters.GetParam<double>(c1_tb.Text, "c1", dataInErr),
+            c2 = Parameters.GetParam<double>(c2_tb.Text, "c2", dataInErr),
+            c3 = Parameters.GetParam<double>(c3_tb.Text, "c3", dataInErr),
             EllipticalBottomType =
                 ell_rb.Checked ? EllipticalBottomType.Elliptical : EllipticalBottomType.Hemispherical
         };
@@ -94,15 +129,15 @@ public sealed partial class EllipticalShellForm : EllipticalShellFormMiddle
         InputData = new EllipticalShellInput
         {
             Name = name_tb.Text,
-            s = Parameters.GetParam<double>(s_tb.Text, "s", ref dataInErr),
+            s = Parameters.GetParam<double>(s_tb.Text, "s", dataInErr),
             Steel = steel_cb.Text,
-            phi = Parameters.GetParam<double>(fi_tb.Text, "phi", ref dataInErr),
-            D = Parameters.GetParam<double>(D_tb.Text, "D", ref dataInErr),
-            EllipseH = Parameters.GetParam<double>(H_tb.Text, "H", ref dataInErr),
-            Ellipseh1 = Parameters.GetParam<double>(h1_tb.Text, "h1", ref dataInErr),
-            c1 = Parameters.GetParam<double>(c1_tb.Text, "c1", ref dataInErr),
-            c2 = Parameters.GetParam<double>(c2_tb.Text, "c2", ref dataInErr),
-            c3 = Parameters.GetParam<double>(c3_tb.Text, "c3", ref dataInErr),
+            phi = Parameters.GetParam<double>(fi_tb.Text, "phi", dataInErr),
+            D = Parameters.GetParam<double>(D_tb.Text, "D", dataInErr),
+            EllipseH = Parameters.GetParam<double>(H_tb.Text, "H", dataInErr),
+            Ellipseh1 = Parameters.GetParam<double>(h1_tb.Text, "h1", dataInErr),
+            c1 = Parameters.GetParam<double>(c1_tb.Text, "c1", dataInErr),
+            c2 = Parameters.GetParam<double>(c2_tb.Text, "c2", dataInErr),
+            c3 = Parameters.GetParam<double>(c3_tb.Text, "c3", dataInErr),
             EllipticalBottomType =
                 ell_rb.Checked ? EllipticalBottomType.Elliptical : EllipticalBottomType.Hemispherical
         };

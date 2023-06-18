@@ -869,8 +869,7 @@ public partial class FlatBottomForm : Form
             return;
         }
 
-        main.Word_lv.Items.Add(bottom.ToString());
-        main.ElementsCollection.Add(bottom);
+        main.calculatedElementsControl.AddElement(bottom);
 
         MessageBox.Show(Resources.CalcComplete);
         Close();
@@ -882,18 +881,18 @@ public partial class FlatBottomForm : Form
 
         _inputData = new FlatBottomInput
         {
-            t = Parameters.GetParam<double>(t_tb.Text, "t", ref dataInErr, NumberStyles.Integer),
+            t = Parameters.GetParam<double>(t_tb.Text, "t", dataInErr, NumberStyles.Integer),
             Steel = steel_cb.Text,
-            p = Parameters.GetParam<double>(p_tb.Text, "p", ref dataInErr),
-            fi = Parameters.GetParam<double>(fi_tb.Text, "φ", ref dataInErr),
-            c1 = Parameters.GetParam<double>(c1_tb.Text, "c1", ref dataInErr),
-            c2 = Parameters.GetParam<double>(c2_tb.Text, "c2", ref dataInErr),
-            c3 = Parameters.GetParam<double>(c3_tb.Text, "c3", ref dataInErr),
-            s1 = Parameters.GetParam<double>(s1_tb.Text, "s1", ref dataInErr),
+            p = Parameters.GetParam<double>(p_tb.Text, "p", dataInErr),
+            fi = Parameters.GetParam<double>(fi_tb.Text, "φ", dataInErr),
+            c1 = Parameters.GetParam<double>(c1_tb.Text, "c1", dataInErr),
+            c2 = Parameters.GetParam<double>(c2_tb.Text, "c2", dataInErr),
+            c3 = Parameters.GetParam<double>(c3_tb.Text, "c3", dataInErr),
+            s1 = Parameters.GetParam<double>(s1_tb.Text, "s1", dataInErr),
             Type = Parameters.GetParam<int>(type_gb.Controls.OfType<RadioButton>().FirstOrDefault(rb => rb.Checked)?.Text,
-                "Type", ref dataInErr),
+                "Type", dataInErr),
             SigmaAllow = sigmaHandle_cb.Checked
-                ? Parameters.GetParam<double>(sigma_d_tb.Text, "[σ]", ref dataInErr)
+                ? Parameters.GetParam<double>(sigma_d_tb.Text, "[σ]", dataInErr)
                 : default
         };
 
@@ -901,15 +900,15 @@ public partial class FlatBottomForm : Form
         {
             case 1:
             case 2:
-                _inputData.D = Parameters.GetParam<double>(_DTextBox?.Text, "D", ref dataInErr);
-                _inputData.s = Parameters.GetParam<double>(_sTextBox?.Text, "s", ref dataInErr);
-                _inputData.a = Parameters.GetParam<double>(_aTextBox?.Text, "a", ref dataInErr);
+                _inputData.D = Parameters.GetParam<double>(_DTextBox?.Text, "D", dataInErr);
+                _inputData.s = Parameters.GetParam<double>(_sTextBox?.Text, "s", dataInErr);
+                _inputData.a = Parameters.GetParam<double>(_aTextBox?.Text, "a", dataInErr);
                 break;
             case 3:
             case 4:
             case 5:
-                _inputData.D = Parameters.GetParam<double>(_DTextBox?.Text, "D", ref dataInErr);
-                _inputData.s = Parameters.GetParam<double>(_sTextBox?.Text, "s", ref dataInErr);
+                _inputData.D = Parameters.GetParam<double>(_DTextBox?.Text, "D", dataInErr);
+                _inputData.s = Parameters.GetParam<double>(_sTextBox?.Text, "s", dataInErr);
                 break;
             case 6:
                 goto case 2;
@@ -917,27 +916,27 @@ public partial class FlatBottomForm : Form
             case 8:
                 goto case 5;
             case 9:
-                _inputData.D = Parameters.GetParam<double>(_DTextBox?.Text, "D", ref dataInErr);
-                _inputData.s = Parameters.GetParam<double>(_sTextBox?.Text, "s", ref dataInErr);
-                _inputData.r = Parameters.GetParam<double>(_rTextBox?.Text, "r", ref dataInErr);
-                _inputData.h1 = Parameters.GetParam<double>(_h1TextBox?.Text, "h1", ref dataInErr);
+                _inputData.D = Parameters.GetParam<double>(_DTextBox?.Text, "D", dataInErr);
+                _inputData.s = Parameters.GetParam<double>(_sTextBox?.Text, "s", dataInErr);
+                _inputData.r = Parameters.GetParam<double>(_rTextBox?.Text, "r", dataInErr);
+                _inputData.h1 = Parameters.GetParam<double>(_h1TextBox?.Text, "h1", dataInErr);
                 break;
             case 10:
-                _inputData.D = Parameters.GetParam<double>(_DTextBox?.Text, "D", ref dataInErr);
-                _inputData.s = Parameters.GetParam<double>(_sTextBox?.Text, "s", ref dataInErr);
-                _inputData.r = Parameters.GetParam<double>(_rTextBox?.Text, "r", ref dataInErr);
-                _inputData.gamma = Parameters.GetParam<double>(_gammaTextBox?.Text, "gamma", ref dataInErr);
-                _inputData.s2 = Parameters.GetParam<double>(_s2TextBox?.Text, "s2", ref dataInErr);
+                _inputData.D = Parameters.GetParam<double>(_DTextBox?.Text, "D", dataInErr);
+                _inputData.s = Parameters.GetParam<double>(_sTextBox?.Text, "s", dataInErr);
+                _inputData.r = Parameters.GetParam<double>(_rTextBox?.Text, "r", dataInErr);
+                _inputData.gamma = Parameters.GetParam<double>(_gammaTextBox?.Text, "gamma", dataInErr);
+                _inputData.s2 = Parameters.GetParam<double>(_s2TextBox?.Text, "s2", dataInErr);
                 break;
             case 11:
-                _inputData.D2 = Parameters.GetParam<double>(_D2TextBox?.Text, "D2", ref dataInErr);
-                _inputData.D3 = Parameters.GetParam<double>(_D3TextBox?.Text, "D3", ref dataInErr);
-                _inputData.s2 = Parameters.GetParam<double>(_s2TextBox?.Text, "s2", ref dataInErr);
+                _inputData.D2 = Parameters.GetParam<double>(_D2TextBox?.Text, "D2", dataInErr);
+                _inputData.D3 = Parameters.GetParam<double>(_D3TextBox?.Text, "D3", dataInErr);
+                _inputData.s2 = Parameters.GetParam<double>(_s2TextBox?.Text, "s2", dataInErr);
                 break;
             case 12:
-                _inputData.D2 = Parameters.GetParam<double>(_D2TextBox?.Text, "D2", ref dataInErr);
-                _inputData.Dcp = Parameters.GetParam<double>(_DcpTextBox?.Text, "Dcp", ref dataInErr);
-                _inputData.s2 = Parameters.GetParam<double>(_s2TextBox?.Text, "s2", ref dataInErr);
+                _inputData.D2 = Parameters.GetParam<double>(_D2TextBox?.Text, "D2", dataInErr);
+                _inputData.Dcp = Parameters.GetParam<double>(_DcpTextBox?.Text, "Dcp", dataInErr);
+                _inputData.s2 = Parameters.GetParam<double>(_s2TextBox?.Text, "s2", dataInErr);
                 break;
             case 13:
             case 14:
@@ -955,7 +954,7 @@ public partial class FlatBottomForm : Form
         }
         else
         {
-            var d = Parameters.GetParam<double>(holed_tb.Text, "d", ref dataInErr);
+            var d = Parameters.GetParam<double>(holed_tb.Text, "d", dataInErr);
             if (oneHole_rb.Checked)
             {
                 _inputData.Hole = HoleInFlatBottom.OneHole;
@@ -985,7 +984,7 @@ public partial class FlatBottomForm : Form
         var dataInErr = new List<string>();
 
         _inputData.Name = name_tb.Text;
-        _inputData.s1 = Parameters.GetParam<double>(s1_tb.Text, "s1", ref dataInErr);
+        _inputData.s1 = Parameters.GetParam<double>(s1_tb.Text, "s1", dataInErr);
 
         var isNoError = !dataInErr.Any() && _inputData.IsDataGood;
 

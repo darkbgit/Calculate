@@ -38,4 +38,9 @@ public class CylindricalShellFormMiddle : CalculateFormWithFormFactory<Cylindric
     {
         throw new NotImplementedException();
     }
+
+    protected override void LoadInputData()
+    {
+        throw new NotImplementedException();
+    }
 }

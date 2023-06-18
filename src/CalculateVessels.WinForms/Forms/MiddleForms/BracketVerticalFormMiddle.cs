@@ -34,4 +34,9 @@ public class BracketVerticalFormMiddle : BaseCalculateForm<BracketVerticalInput>
     {
         throw new NotImplementedException();
     }
+
+    protected override void LoadInputData()
+    {
+        throw new NotImplementedException();
+    }
 }

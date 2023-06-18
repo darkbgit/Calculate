@@ -25,6 +25,66 @@ public partial class CylindricalShellForm : CylindricalShellFormMiddle
         InitializeComponent();
     }
 
+
+    protected override void LoadInputData()
+    {
+        if (InputData == null) return;
+
+        Name_tb.Text = InputData.Name;
+        steel_cb.Text = InputData.Steel;
+        fi_tb.Text = InputData.phi.ToString(CultureInfo.CurrentCulture);
+        D_tb.Text = InputData.D.ToString(CultureInfo.CurrentCulture);
+        c1_tb.Text = InputData.c1.ToString(CultureInfo.CurrentCulture);
+        c2_tb.Text = InputData.c2.ToString(CultureInfo.CurrentCulture);
+        c3_tb.Text = InputData.c3.ToString(CultureInfo.CurrentCulture);
+        s_tb.Text = InputData.s.ToString(CultureInfo.CurrentCulture);
+
+        if (InputData.LoadingConditions.Count() == 1)
+        {
+            loadingConditionGroupBox.SetLoadingCondition(InputData.LoadingConditions.First());
+        }
+        else
+        {
+            loadingConditionsControl.SetLoadingConditions(InputData.LoadingConditions);
+        }
+
+        if (InputData.LoadingConditions.Any(lc => !lc.IsPressureIn))
+        {
+            l_tb.Text = InputData.l.ToString(CultureInfo.CurrentCulture);
+        }
+
+        if (InputData.F > 0 || InputData.Q > 0 || InputData.M > 0)
+        {
+            stressHand_rb.Checked = true;
+
+            Q_tb.Text = InputData.Q.ToString(CultureInfo.CurrentCulture);
+            M_tb.Text = InputData.M.ToString(CultureInfo.CurrentCulture);
+            F_tb.Text = InputData.F.ToString(CultureInfo.CurrentCulture);
+
+            forceStretch_rb.Checked = InputData.IsFTensile;
+
+            if (!InputData.IsFTensile)
+            {
+                var radioButton = force_gb.Controls
+                   .OfType<RadioButton>()
+                   .FirstOrDefault(rb => rb.Text == InputData.FCalcSchema.ToString());
+
+                if (radioButton != null) radioButton.Checked = true;
+
+                switch (InputData.FCalcSchema)
+                {
+                    case 5:
+                        fq_tb.Text = InputData.q.ToString(CultureInfo.CurrentCulture);
+                        break;
+                    case 6:
+                    case 7:
+                        fq_tb.Text = InputData.f.ToString(CultureInfo.CurrentCulture);
+                        break;
+                }
+            }
+        }
+    }
+
     protected override string GetServiceName()
     {
         return Gost_cb.Text;
@@ -64,11 +124,11 @@ public partial class CylindricalShellForm : CylindricalShellFormMiddle
         InputData = new CylindricalShellInput
         {
             Steel = steel_cb.Text,
-            phi = Parameters.GetParam<double>(fi_tb.Text, "phi", ref dataInErr),
-            D = Parameters.GetParam<double>(D_tb.Text, "D", ref dataInErr),
-            c1 = Parameters.GetParam<double>(c1_tb.Text, "c1", ref dataInErr),
-            c2 = Parameters.GetParam<double>(c2_tb.Text, "c2", ref dataInErr),
-            c3 = Parameters.GetParam<double>(c3_tb.Text, "c3", ref dataInErr),
+            phi = Parameters.GetParam<double>(fi_tb.Text, "phi", dataInErr),
+            D = Parameters.GetParam<double>(D_tb.Text, "D", dataInErr),
+            c1 = Parameters.GetParam<double>(c1_tb.Text, "c1", dataInErr),
+            c2 = Parameters.GetParam<double>(c2_tb.Text, "c2", dataInErr),
+            c3 = Parameters.GetParam<double>(c3_tb.Text, "c3", dataInErr),
         };
 
         var loadingConditions = FormHelpers.ParseLoadingConditions(loadingConditionsControl, loadingConditionGroupBox).ToList();
@@ -82,7 +142,7 @@ public partial class CylindricalShellForm : CylindricalShellFormMiddle
 
         if (InputData.LoadingConditions.Any(lc => !lc.IsPressureIn))
         {
-            InputData.l = Parameters.GetParam<double>(l_tb.Text, "l", ref dataInErr, NumberStyles.Integer);
+            InputData.l = Parameters.GetParam<double>(l_tb.Text, "l", dataInErr, NumberStyles.Integer);
         }
 
         var isNoError = !dataInErr.Any() && InputData.IsDataGood;
@@ -102,13 +162,13 @@ public partial class CylindricalShellForm : CylindricalShellFormMiddle
         InputData = new CylindricalShellInput
         {
             Name = Name_tb.Text,
-            s = Parameters.GetParam<double>(s_tb.Text, "s", ref dataInErr),
+            s = Parameters.GetParam<double>(s_tb.Text, "s", dataInErr),
             Steel = steel_cb.Text,
-            phi = Parameters.GetParam<double>(fi_tb.Text, "φ", ref dataInErr),
-            D = Parameters.GetParam<double>(D_tb.Text, "D", ref dataInErr),
-            c1 = Parameters.GetParam<double>(c1_tb.Text, "c1", ref dataInErr),
-            c2 = Parameters.GetParam<double>(c2_tb.Text, "c2", ref dataInErr),
-            c3 = Parameters.GetParam<double>(c3_tb.Text, "c3", ref dataInErr),
+            phi = Parameters.GetParam<double>(fi_tb.Text, "φ", dataInErr),
+            D = Parameters.GetParam<double>(D_tb.Text, "D", dataInErr),
+            c1 = Parameters.GetParam<double>(c1_tb.Text, "c1", dataInErr),
+            c2 = Parameters.GetParam<double>(c2_tb.Text, "c2", dataInErr),
+            c3 = Parameters.GetParam<double>(c3_tb.Text, "c3", dataInErr),
 
         };
 
@@ -142,30 +202,30 @@ public partial class CylindricalShellForm : CylindricalShellFormMiddle
 
         if (InputData.LoadingConditions.Any(lc => !lc.IsPressureIn))
         {
-            InputData.l = Parameters.GetParam<double>(l_tb.Text, "l", ref dataInErr, NumberStyles.Integer);
+            InputData.l = Parameters.GetParam<double>(l_tb.Text, "l", dataInErr, NumberStyles.Integer);
         }
 
         if (stressHand_rb.Checked)
         {
-            InputData.Q = Parameters.GetParam<double>(Q_tb.Text, "Q", ref dataInErr);
-            InputData.M = Parameters.GetParam<double>(M_tb.Text, "M", ref dataInErr);
+            InputData.Q = Parameters.GetParam<double>(Q_tb.Text, "Q", dataInErr);
+            InputData.M = Parameters.GetParam<double>(M_tb.Text, "M", dataInErr);
             InputData.IsFTensile = forceStretch_rb.Checked;
-            InputData.F = Parameters.GetParam<double>(F_tb.Text, "[σ]", ref dataInErr);
+            InputData.F = Parameters.GetParam<double>(F_tb.Text, "[σ]", dataInErr);
 
             if (!InputData.IsFTensile)
             {
                 var idx = force_gb.Controls.OfType<RadioButton>().FirstOrDefault(rb => rb.Checked)?.Text;
 
-                InputData.FCalcSchema = Parameters.GetParam<int>(idx, "Тип сжимающего усилия", ref dataInErr, NumberStyles.Integer);
+                InputData.FCalcSchema = Parameters.GetParam<int>(idx, "Тип сжимающего усилия", dataInErr, NumberStyles.Integer);
 
                 switch (InputData.FCalcSchema)
                 {
                     case 5:
-                        InputData.q = Parameters.GetParam<double>(fq_tb.Text, "q", ref dataInErr);
+                        InputData.q = Parameters.GetParam<double>(fq_tb.Text, "q", dataInErr);
                         break;
                     case 6:
                     case 7:
-                        InputData.f = Parameters.GetParam<double>(fq_tb.Text, "f", ref dataInErr);
+                        InputData.f = Parameters.GetParam<double>(fq_tb.Text, "f", dataInErr);
                         break;
                 }
             }
@@ -203,14 +263,6 @@ public partial class CylindricalShellForm : CylindricalShellFormMiddle
             default:
                 fq_panel.Visible = false;
                 break;
-        }
-    }
-
-    private void OutsidePressureChecked_cb(object sender, EventArgs e)
-    {
-        if (sender is CheckBox cb)
-        {
-            FormHelpers.EnabledIfCheck(l_tb, cb.Checked);
         }
     }
 

@@ -26,5 +26,7 @@ public class ServiceCollectionForCore : IServiceCollectionForCore
                 FlatBottomWithAdditionalMomentCalculateService>();
         services.AddScoped<ICalculateService<SaddleInput>, SaddleCalculateService>();
         services.AddScoped<ICalculateService<BracketVerticalInput>, BracketVerticalCalculateService>();
+
+        services.AddSingleton<IPersistanceService, PersistanceServer>();
     }
 }

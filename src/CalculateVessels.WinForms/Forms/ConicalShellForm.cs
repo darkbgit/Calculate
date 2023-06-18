@@ -9,6 +9,7 @@ using CalculateVessels.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -22,6 +23,94 @@ public sealed partial class ConicalShellForm : ConicalShellFormMiddle
         : base(calculateServices, physicalDataService, formFactory)
     {
         InitializeComponent();
+    }
+
+    protected override void LoadInputData()
+    {
+        if (InputData == null) return;
+
+        steel_cb.Text = InputData.Steel;
+        phip_tb.Text = InputData.phi.ToString(CultureInfo.CurrentCulture);
+        phit_tb.Text = InputData.phi_t.ToString(CultureInfo.CurrentCulture);
+        D_tb.Text = InputData.D.ToString(CultureInfo.CurrentCulture);
+        D1_tb.Text = InputData.D1.ToString(CultureInfo.CurrentCulture);
+        c1_tb.Text = InputData.c1.ToString(CultureInfo.CurrentCulture);
+        c2_tb.Text = InputData.c2.ToString(CultureInfo.CurrentCulture);
+        c3_tb.Text = InputData.c3.ToString(CultureInfo.CurrentCulture);
+        s_tb.Text = InputData.s.ToString(CultureInfo.CurrentCulture);
+        L_tb.Text = InputData.L.ToString(CultureInfo.CurrentCulture);
+
+        if (InputData.LoadingConditions.Count() == 1)
+        {
+            loadingConditionGroupBox.SetLoadingCondition(InputData.LoadingConditions.First());
+        }
+        else
+        {
+            loadingConditionsControl.SetLoadingConditions(InputData.LoadingConditions);
+        }
+
+        if (InputData.IsConnectionWithLittle)
+        {
+            littleConnection_cb.Checked = true;
+            littleConnectionSimple_1_rb.Checked = true;
+
+            s1Little_tb.Text = InputData.s1Little.ToString(CultureInfo.CurrentCulture);
+            steel1Little_cb.Text = InputData.Steel1Little;
+
+            s2Little_tb.Text = InputData.s2Little.ToString(CultureInfo.CurrentCulture);
+            steel2Little_cb.Text = InputData.Steel2Little;
+        }
+
+        if (InputData.ConnectionType != ConicalConnectionType.WithoutConnection)
+        {
+            bigConnection_cb.Checked = true;
+            switch (InputData.ConnectionType)
+            {
+                case ConicalConnectionType.Simply:
+                    bigConnectionSimple_1_rb.Checked = true;
+
+                    s1Big_tb.Text = InputData.s1Big.ToString(CultureInfo.CurrentCulture);
+                    steel1Big_cb.Text = InputData.Steel1Big;
+
+                    s2Big_tb.Text = InputData.s2Big.ToString(CultureInfo.CurrentCulture);
+                    steel2Big_cb.Text = InputData.Steel2Big;
+                    break;
+                case ConicalConnectionType.WithRingPicture25b:
+                    bigConnectionWithRing_rb.Checked = true;
+
+                    s1Big_tb.Text = InputData.s1Big.ToString(CultureInfo.CurrentCulture);
+                    steel1Big_cb.Text = InputData.Steel1Big;
+
+                    s2Big_tb.Text = InputData.s2Big.ToString(CultureInfo.CurrentCulture);
+                    steel2Big_cb.Text = InputData.Steel2Big;
+
+                    AkBig_tb.Text = InputData.Ak.ToString(CultureInfo.CurrentCulture);
+                    steelC_cb.Text = InputData.SteelC;
+                    phi_k_tb.Text = InputData.phi_k.ToString(CultureInfo.CurrentCulture);
+                    break;
+                case ConicalConnectionType.WithRingPicture29:
+                    bigConnectionWithRingPicture29_rb.Checked = true;
+
+                    s1Big_tb.Text = InputData.s1Big.ToString(CultureInfo.CurrentCulture);
+                    steel1Big_cb.Text = InputData.Steel1Big;
+
+                    s2Big_tb.Text = InputData.s2Big.ToString(CultureInfo.CurrentCulture);
+                    steel2Big_cb.Text = InputData.Steel2Big;
+
+                    AkBig_tb.Text = InputData.Ak.ToString(CultureInfo.CurrentCulture);
+                    steelC_cb.Text = InputData.SteelC;
+                    phi_k_tb.Text = InputData.phi_k.ToString(CultureInfo.CurrentCulture);
+                    break;
+                case ConicalConnectionType.Toroidal:
+                    bigConnectionToroidal_rb.Checked = true;
+
+                    sT_tb.Text = InputData.sT.ToString(CultureInfo.CurrentCulture);
+                    steelT_cb.Text = InputData.SteelT;
+
+                    r_tb.Text = InputData.r.ToString(CultureInfo.CurrentCulture);
+                    break;
+            }
+        }
     }
 
     protected override string GetServiceName()
@@ -83,16 +172,16 @@ public sealed partial class ConicalShellForm : ConicalShellFormMiddle
             //public double SigmaAllowC { get; set; }
             //public double SigmaAllowT { get; set; }
 
-            c1 = Parameters.GetParam<double>(c1_tb.Text, "c1", ref dataInErr),
-            c2 = Parameters.GetParam<double>(c2_tb.Text, "c2", ref dataInErr),
-            c3 = Parameters.GetParam<double>(c3_tb.Text, "c3", ref dataInErr),
-            D = Parameters.GetParam<double>(D_tb.Text, "D", ref dataInErr),
-            D1 = Parameters.GetParam<double>(D1_tb.Text, "D1", ref dataInErr),
-            L = Parameters.GetParam<double>(L_tb.Text, "L", ref dataInErr),
+            c1 = Parameters.GetParam<double>(c1_tb.Text, "c1", dataInErr),
+            c2 = Parameters.GetParam<double>(c2_tb.Text, "c2", dataInErr),
+            c3 = Parameters.GetParam<double>(c3_tb.Text, "c3", dataInErr),
+            D = Parameters.GetParam<double>(D_tb.Text, "D", dataInErr),
+            D1 = Parameters.GetParam<double>(D1_tb.Text, "D1", dataInErr),
+            L = Parameters.GetParam<double>(L_tb.Text, "L", dataInErr),
             //M = Parameters.GetParam<double>(M_tb.Text, "M", ref dataInErr),
-            phi = Parameters.GetParam<double>(phip_tb.Text, "φp", ref dataInErr),
-            phi_t = Parameters.GetParam<double>(phit_tb.Text, "φt", ref dataInErr),
-            s = Parameters.GetParam<double>(s_tb.Text, "s", ref dataInErr)
+            phi = Parameters.GetParam<double>(phip_tb.Text, "φp", dataInErr),
+            phi_t = Parameters.GetParam<double>(phit_tb.Text, "φt", dataInErr),
+            s = Parameters.GetParam<double>(s_tb.Text, "s", dataInErr)
         };
 
         var loadingConditions = FormHelpers.ParseLoadingConditions(loadingConditionsControl, loadingConditionGroupBox).ToList();
@@ -115,43 +204,43 @@ public sealed partial class ConicalShellForm : ConicalShellFormMiddle
             {
                 case nameof(bigConnectionSimple_rb):
                     InputData.ConnectionType = ConicalConnectionType.Simply;
-                    InputData.s1Big = Parameters.GetParam<double>(s_tb.Text, "s1Big", ref dataInErr);
+                    InputData.s1Big = Parameters.GetParam<double>(s_tb.Text, "s1Big", dataInErr);
                     InputData.Steel1Big = steel_cb.Text;
-                    InputData.s2Big = Parameters.GetParam<double>(s2Big_tb.Text, "s2Big", ref dataInErr);
+                    InputData.s2Big = Parameters.GetParam<double>(s2Big_tb.Text, "s2Big", dataInErr);
                     InputData.Steel2Big = steel2Big_cb.Text;
                     break;
                 case nameof(bigConnectionSimple_1_rb):
                     InputData.ConnectionType = ConicalConnectionType.Simply;
-                    InputData.s1Big = Parameters.GetParam<double>(s1Big_tb.Text, "s1Big", ref dataInErr);
+                    InputData.s1Big = Parameters.GetParam<double>(s1Big_tb.Text, "s1Big", dataInErr);
                     InputData.Steel1Big = steel1Big_cb.Text;
-                    InputData.s2Big = Parameters.GetParam<double>(s2Big_tb.Text, "s2Big", ref dataInErr);
+                    InputData.s2Big = Parameters.GetParam<double>(s2Big_tb.Text, "s2Big", dataInErr);
                     InputData.Steel2Big = steel2Big_cb.Text;
                     break;
                 case nameof(bigConnectionWithRing_rb):
                     InputData.ConnectionType = ConicalConnectionType.WithRingPicture25b;
-                    InputData.s1Big = Parameters.GetParam<double>(s1Big_tb.Text, "s1Big", ref dataInErr);
+                    InputData.s1Big = Parameters.GetParam<double>(s1Big_tb.Text, "s1Big", dataInErr);
                     InputData.Steel1Big = steel1Big_cb.Text;
-                    InputData.s2Big = Parameters.GetParam<double>(s2Big_tb.Text, "s2Big", ref dataInErr);
+                    InputData.s2Big = Parameters.GetParam<double>(s2Big_tb.Text, "s2Big", dataInErr);
                     InputData.Steel2Big = steel2Big_cb.Text;
-                    InputData.Ak = Parameters.GetParam<double>(AkBig_tb.Text, "Ak", ref dataInErr);
+                    InputData.Ak = Parameters.GetParam<double>(AkBig_tb.Text, "Ak", dataInErr);
                     InputData.SteelC = steelC_cb.Text;
-                    InputData.phi_k = Parameters.GetParam<double>(phi_k_tb.Text, "φk", ref dataInErr);
+                    InputData.phi_k = Parameters.GetParam<double>(phi_k_tb.Text, "φk", dataInErr);
                     break;
                 case nameof(bigConnectionWithRingPicture29_rb):
                     InputData.ConnectionType = ConicalConnectionType.WithRingPicture29;
-                    InputData.s1Big = Parameters.GetParam<double>(s1Big_tb.Text, "s1Big", ref dataInErr);
+                    InputData.s1Big = Parameters.GetParam<double>(s1Big_tb.Text, "s1Big", dataInErr);
                     InputData.Steel1Big = steel1Big_cb.Text;
-                    InputData.s2Big = Parameters.GetParam<double>(s2Big_tb.Text, "s2Big", ref dataInErr);
+                    InputData.s2Big = Parameters.GetParam<double>(s2Big_tb.Text, "s2Big", dataInErr);
                     InputData.Steel2Big = steel2Big_cb.Text;
-                    InputData.Ak = Parameters.GetParam<double>(AkBig_tb.Text, "Ak", ref dataInErr);
+                    InputData.Ak = Parameters.GetParam<double>(AkBig_tb.Text, "Ak", dataInErr);
                     InputData.SteelC = steelC_cb.Text;
-                    InputData.phi_k = Parameters.GetParam<double>(phi_k_tb.Text, "φk", ref dataInErr);
+                    InputData.phi_k = Parameters.GetParam<double>(phi_k_tb.Text, "φk", dataInErr);
                     break;
                 case nameof(bigConnectionToroidal_rb):
                     InputData.ConnectionType = ConicalConnectionType.Toroidal;
-                    InputData.sT = Parameters.GetParam<double>(sT_tb.Text, "sT", ref dataInErr);
+                    InputData.sT = Parameters.GetParam<double>(sT_tb.Text, "sT", dataInErr);
                     InputData.SteelT = steelT_cb.Text;
-                    InputData.r = Parameters.GetParam<double>(r_tb.Text, "r", ref dataInErr);
+                    InputData.r = Parameters.GetParam<double>(r_tb.Text, "r", dataInErr);
                     break;
                 default:
                     dataInErr.Add("Invalid big connection type.");
@@ -173,27 +262,27 @@ public sealed partial class ConicalShellForm : ConicalShellFormMiddle
             switch (littleConnectionType)
             {
                 case nameof(littleConnectionSimple_rb):
-                    InputData.s1Little = Parameters.GetParam<double>(s_tb.Text, "s1Little", ref dataInErr);
+                    InputData.s1Little = Parameters.GetParam<double>(s_tb.Text, "s1Little", dataInErr);
                     InputData.Steel1Little = steel_cb.Text;
-                    InputData.s2Little = Parameters.GetParam<double>(s2Little_tb.Text, "s2Little", ref dataInErr);
+                    InputData.s2Little = Parameters.GetParam<double>(s2Little_tb.Text, "s2Little", dataInErr);
                     InputData.Steel2Little = steel2Little_cb.Text;
                     break;
                 case nameof(littleConnectionSimple_1_rb):
-                    InputData.s1Little = Parameters.GetParam<double>(s1Little_tb.Text, "s1Little", ref dataInErr);
+                    InputData.s1Little = Parameters.GetParam<double>(s1Little_tb.Text, "s1Little", dataInErr);
                     InputData.Steel1Little = steel1Little_cb.Text;
-                    InputData.s2Little = Parameters.GetParam<double>(s2Little_tb.Text, "s2Little", ref dataInErr);
+                    InputData.s2Little = Parameters.GetParam<double>(s2Little_tb.Text, "s2Little", dataInErr);
                     InputData.Steel2Little = steel2Little_cb.Text;
                     break;
                 case nameof(littleConnectionWithRingPicture29_rb):
-                    InputData.s1Little = Parameters.GetParam<double>(s1Little_tb.Text, "s1Little", ref dataInErr);
+                    InputData.s1Little = Parameters.GetParam<double>(s1Little_tb.Text, "s1Little", dataInErr);
                     InputData.Steel1Little = steel1Little_cb.Text;
-                    InputData.s2Little = Parameters.GetParam<double>(s2Little_tb.Text, "s2Little", ref dataInErr);
+                    InputData.s2Little = Parameters.GetParam<double>(s2Little_tb.Text, "s2Little", dataInErr);
                     InputData.Steel2Little = steel2Little_cb.Text;
                     //InputData.AkLittle = Parameters.GetParam<double>(AkLittle_tb.Text, "AkLittle", ref dataInErr);
                     //InputData.SteelCLittle = steelCLittle_cb.Text;
                     break;
                 default:
-                    dataInErr.Add("Invalid big connection type.");
+                    dataInErr.Add("Invalid little connection type.");
                     break;
             }
         }

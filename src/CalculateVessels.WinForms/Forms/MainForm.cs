@@ -1,11 +1,17 @@
-﻿using System;
+﻿using CalculateVessels.Core;
+using CalculateVessels.Core.Base;
+using CalculateVessels.Core.Interfaces;
+using CalculateVessels.Core.Shells.Conical;
+using CalculateVessels.Core.Shells.Cylindrical;
+using CalculateVessels.Core.Shells.Elliptical;
+using CalculateVessels.Core.Shells.Nozzle;
+using CalculateVessels.Helpers;
+using CalculateVessels.Output;
+using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-using CalculateVessels.Core.Interfaces;
-using CalculateVessels.Helpers;
-using CalculateVessels.Models;
-using CalculateVessels.Output;
 
 namespace CalculateVessels.Forms;
 
@@ -13,13 +19,16 @@ public partial class MainForm : Form
 {
     private readonly IFormFactory _formFactory;
     private readonly IOutputService _outputService;
+    private readonly IPersistanceService _persistanceService;
 
-    public MainForm(IFormFactory formFactory, IOutputService outputService)
+    public MainForm(IFormFactory formFactory,
+     IOutputService outputService,
+     IPersistanceService persistanceService)
     {
         InitializeComponent();
         _outputService = outputService;
         _formFactory = formFactory;
-        ElementsCollection = new ElementsCollection<ICalculatedElement>();
+        _persistanceService = persistanceService;
     }
 
     public CylindricalShellForm? CylindricalForm;
@@ -32,7 +41,6 @@ public partial class MainForm : Form
     public BracketVerticalForm? BracketVerticalForm;
     // public HeatExchangerWithFixedTubePlatesForm heatExchangerWithFixedTubePlatesForm = null;
 
-    internal ElementsCollection<ICalculatedElement> ElementsCollection { get; set; }
 
     // TODO: KonForm 
 
@@ -112,20 +120,23 @@ public partial class MainForm : Form
 
     private void MakeWord_b_Click(object sender, EventArgs e)
     {
-        if (!ElementsCollection.Any())
+        var elements = calculatedElementsControl.GetElements()
+            .ToList();
+
+        if (!elements.Any())
         {
             MessageBox.Show("Данных для вывода нет.");
             return;
         }
 
-        if (!TryGetFilePath(file_tb.Text, out var path))
+        if (!TryGetFilePath(filePathTextBox.Text, out var path))
         {
             return;
         }
 
         try
         {
-            _outputService.Output(path, GetOutputType(), ElementsCollection);
+            _outputService.Output(path, GetOutputType(), elements);
             MessageBox.Show("OK");
         }
         catch (Exception ex)
@@ -196,51 +207,47 @@ public partial class MainForm : Form
         return OutputType.Word;
     }
 
-    private void OpenForm<T>(T? form)
+    private void OpenForm<T>(ref T? form)
      where T : Form
     {
         if (form == null)
         {
             form = _formFactory.Create<T>();
             if (form == null) return;
-            form.Owner = this;
-            form.Show();
         }
-        else
-        {
-            form.Owner = this;
-            form.Show();
-        }
+
+        form.Owner = this;
+        form.Show();
     }
 
     private void Cil_b_Click(object sender, EventArgs e)
     {
-        OpenForm(CylindricalForm);
+        OpenForm(ref CylindricalForm);
     }
 
     private void Kon_b_Click(object sender, EventArgs e)
     {
-        OpenForm(ConicalForm);
+        OpenForm(ref ConicalForm);
     }
 
     private void Ell_b_Click(object sender, EventArgs e)
     {
-        OpenForm(EllipticalForm);
+        OpenForm(ref EllipticalForm);
     }
 
     private void Saddle_b_Click(object sender, EventArgs e)
     {
-        OpenForm(SaddleForm);
+        OpenForm(ref SaddleForm);
     }
 
     private void FlatBottom_b_Click(object sender, EventArgs e)
     {
-        OpenForm(FlatBottomForm);
+        OpenForm(ref FlatBottomForm);
     }
 
     private void FlatBottomWithAdditionalMoment_b_Click(object sender, EventArgs e)
     {
-        OpenForm(FlatBottomWithAdditionalMomentForm);
+        OpenForm(ref FlatBottomWithAdditionalMomentForm);
     }
 
     private void HeatExchangerWithFixedTubePlate_b_Click(object sender, EventArgs e)
@@ -259,114 +266,15 @@ public partial class MainForm : Form
 
     private void BracketVertical_b_Click(object sender, EventArgs e)
     {
-        OpenForm(BracketVerticalForm);
+        OpenForm(ref BracketVerticalForm);
     }
 
-    private void Word_lv_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
+    internal bool IsAnyWindowOpen()
     {
-        if (e.IsSelected)
-        {
-            del_b.Enabled = true;
-            if (e.ItemIndex < Word_lv.Items.Count - 1)
-            {
-                down_b.Enabled = true;
-            }
-            if (e.ItemIndex > 0)
-            {
-                up_b.Enabled = true;
-            }
-
-        }
-        else
-        {
-            del_b.Enabled = false;
-            up_b.Enabled = false;
-            down_b.Enabled = false;
-        }
-    }
-
-    private static void MoveSelectedItemListView(ListView lv, int idx, bool moveUp)
-    {
-        if (lv.Items.Count <= 1) return;
-
-        int offset = 0;
-        //int idx = lv.SelectedItems[0].Index;
-        if (idx >= 0)
-        {
-            offset = moveUp ? -1 : 1;
-        }
-
-        if (offset != 0)
-        {
-            lv.BeginUpdate();
-
-            int selectItem = idx + offset;
-            for (int i = 0; i < lv.Items[idx].SubItems.Count; i++)
-            {
-                (lv.Items[selectItem].SubItems[i].Text, lv.Items[idx].SubItems[i].Text) =
-                    (lv.Items[idx].SubItems[i].Text, lv.Items[selectItem].SubItems[i].Text);
-            }
-
-            lv.Focus();
-            lv.Items[selectItem].Selected = true;
-            lv.EnsureVisible(selectItem);
-
-            lv.EndUpdate();
-        }
-    }
-
-    private void Up_b_Click(object sender, EventArgs e)
-    {
-        var idx = Word_lv.SelectedItems[0].Index;
-
-        MoveSelectedItemListView(Word_lv, idx, true);
-
-        (ElementsCollection[idx], ElementsCollection[idx - 1]) =
-            (ElementsCollection[idx - 1], ElementsCollection[idx]);
-    }
-
-    private void Down_b_Click(object sender, EventArgs e)
-    {
-        var idx = Word_lv.SelectedItems[0].Index;
-
-        MoveSelectedItemListView(Word_lv, idx, false);
-
-        (ElementsCollection[idx], ElementsCollection[idx + 1]) =
-            (ElementsCollection[idx + 1], ElementsCollection[idx]);
-
-    }
-
-    private void Del_b_Click(object sender, EventArgs e)
-    {
-        var idx = Word_lv.SelectedItems[0].Index;
-
-        Word_lv.Items.RemoveAt(idx);
-        ElementsCollection.RemoveAt(idx);
-        //Word_lv.SelectedItems.Clear();
-    }
-
-    private void Word_lv_Leave(object sender, EventArgs e)
-    {
-        //up_b.Enabled = false;
-        //down_b.Enabled = false;
-        //del_b.Enabled = false;
-        //if (sender is System.Windows.Forms.ListView lv)
-        //{
-        //    if (lv.Items.Count > 1)
-        //    {
-        //        Word_lv.SelectedItems[0].Selected = false;
-        //    }
-        //}
-
-    }
-
-    private void MenuUp_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
-    {
-        //if (e.ClickedItem.Name == "AboutToolStripMenuItem")
-        //{
-        //    AboutBox abf = new AboutBox();
-        //    abf.ShowDialog();
-        //}
+        return CylindricalForm != null ||
+               ConicalForm != null ||
+               EllipticalForm != null ||
+               NozzleForm != null;
     }
 
     private void AboutToolStripMenuItem_Click(object sender, EventArgs e)
@@ -375,5 +283,107 @@ public partial class MainForm : Form
 
         var aboutBoxForm = _formFactory.Create<AboutBoxForm>();
         aboutBoxForm?.ShowDialog();
+    }
+
+    private void SaveToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        saveFileDialogRst.ShowDialog();
+
+        if (string.IsNullOrWhiteSpace(saveFileDialogRst.FileName))
+            return;
+
+        var elements = calculatedElementsControl.GetElements()
+            .ToList();
+
+        if (!elements.Any())
+        {
+            MessageBox.Show("Нет данных для сохранения.");
+            return;
+        }
+
+        try
+        {
+            _persistanceService.Save(elements, saveFileDialogRst.FileName, SaveType.Json);
+        }
+        catch (PersistanceException ex)
+        {
+            MessageBox.Show(ex.Message);
+        }
+    }
+
+    private void OpenToolStripMenuItem1_Click(object sender, EventArgs e)
+    {
+        openFileDialog.ShowDialog();
+
+        if (string.IsNullOrWhiteSpace(openFileDialog.FileName))
+        {
+            return;
+        }
+
+        IEnumerable<ICalculatedElement> calculatedElements;
+
+        try
+        {
+            calculatedElements = _persistanceService.Open(openFileDialog.FileName, SaveType.Json);
+        }
+        catch (PersistanceException ex)
+        {
+            MessageBox.Show(ex.Message);
+            return;
+        }
+
+        calculatedElementsControl.LoadElements(calculatedElements);
+    }
+
+    public void CheckAndCreateFormForEditElement(ICalculatedElement calculatedElement, int elementIndex)
+    {
+        if (calculatedElement is not CalculatedElement element) return;
+
+        var type = element.Type;
+
+        switch (type)
+        {
+            case nameof(CylindricalShellCalculated):
+                CheckAndCreateForm(ref CylindricalForm);
+                CylindricalForm?.Show((CylindricalShellInput)((CylindricalShellCalculated)element).InputData, elementIndex);
+                break;
+            case nameof(ConicalShellCalculated):
+                CheckAndCreateForm(ref ConicalForm);
+                ConicalForm?.Show((ConicalShellInput)((ConicalShellCalculated)element).InputData, elementIndex);
+                break;
+            case nameof(EllipticalShellCalculated):
+                CheckAndCreateForm(ref EllipticalForm);
+                EllipticalForm?.Show((EllipticalShellInput)((EllipticalShellCalculated)element).InputData, elementIndex);
+                break;
+            case nameof(NozzleCalculated):
+                CheckAndCreateForm(ref NozzleForm);
+                NozzleForm?.Show((NozzleInput)((NozzleCalculated)element).InputData, elementIndex);
+                break;
+            default:
+                throw new InvalidOperationException($"Couldn't create form for type {type}.");
+        }
+    }
+
+    private void ChooseFileNameButton_Click(object sender, EventArgs e)
+    {
+        saveFileDialogDocx.ShowDialog();
+
+        if (string.IsNullOrWhiteSpace(saveFileDialogDocx.FileName))
+            return;
+
+        filePathTextBox.Text = saveFileDialogDocx.FileName;
+    }
+
+    private void CheckAndCreateForm<T>(ref T? form)
+        where T : Form
+    {
+        if (form != null)
+        {
+            MessageBox.Show($"Other {form.Text} is opened.");
+        }
+
+        form = _formFactory.Create<T>()
+            ?? throw new NullReferenceException("Unable to create form.");
+        form.Owner = this;
     }
 }

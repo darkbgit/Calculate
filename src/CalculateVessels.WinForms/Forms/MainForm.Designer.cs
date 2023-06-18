@@ -30,7 +30,6 @@ partial class MainForm
     private void InitializeComponent()
     {
         components = new System.ComponentModel.Container();
-        System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
         menuUp = new System.Windows.Forms.MenuStrip();
         FileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
         OpenToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -40,7 +39,6 @@ partial class MainForm
         AboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
         ExitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
         Cil_b = new System.Windows.Forms.Button();
-        Word_lv = new System.Windows.Forms.ListView();
         data_contextMenu = new System.Windows.Forms.ContextMenuStrip(components);
         up_MenuItem = new System.Windows.Forms.ToolStripMenuItem();
         down_MenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -50,7 +48,7 @@ partial class MainForm
         Kon_b = new System.Windows.Forms.Button();
         Ell_b = new System.Windows.Forms.Button();
         MakeWord_b = new System.Windows.Forms.Button();
-        file_tb = new System.Windows.Forms.TextBox();
+        filePathTextBox = new System.Windows.Forms.TextBox();
         proekt_tb = new System.Windows.Forms.TextBox();
         polysfer_b = new System.Windows.Forms.Button();
         torosfer_b = new System.Windows.Forms.Button();
@@ -85,9 +83,13 @@ partial class MainForm
         button30 = new System.Windows.Forms.Button();
         button31 = new System.Windows.Forms.Button();
         button32 = new System.Windows.Forms.Button();
-        up_b = new System.Windows.Forms.Button();
-        down_b = new System.Windows.Forms.Button();
-        del_b = new System.Windows.Forms.Button();
+        openFileDialog = new System.Windows.Forms.OpenFileDialog();
+        saveFileDialogRst = new System.Windows.Forms.SaveFileDialog();
+        calculatedElementsControl = new Elements.CalculatedElementsControl();
+        label1 = new System.Windows.Forms.Label();
+        label2 = new System.Windows.Forms.Label();
+        chooseFileNimeButton = new System.Windows.Forms.Button();
+        saveFileDialogDocx = new System.Windows.Forms.SaveFileDialog();
         menuUp.SuspendLayout();
         data_contextMenu.SuspendLayout();
         SuspendLayout();
@@ -98,10 +100,9 @@ partial class MainForm
         menuUp.Location = new System.Drawing.Point(0, 0);
         menuUp.Name = "menuUp";
         menuUp.Padding = new System.Windows.Forms.Padding(7, 2, 0, 2);
-        menuUp.Size = new System.Drawing.Size(922, 24);
+        menuUp.Size = new System.Drawing.Size(984, 24);
         menuUp.TabIndex = 1;
         menuUp.Text = "menuUp";
-        menuUp.ItemClicked += MenuUp_ItemClicked;
         // 
         // FileToolStripMenuItem
         // 
@@ -115,12 +116,14 @@ partial class MainForm
         OpenToolStripMenuItem1.Name = "OpenToolStripMenuItem1";
         OpenToolStripMenuItem1.Size = new System.Drawing.Size(173, 22);
         OpenToolStripMenuItem1.Text = "Открыть расчет";
+        OpenToolStripMenuItem1.Click += OpenToolStripMenuItem1_Click;
         // 
         // SaveToolStripMenuItem
         // 
         SaveToolStripMenuItem.Name = "SaveToolStripMenuItem";
         SaveToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
         SaveToolStripMenuItem.Text = "Сохранить расчет";
+        SaveToolStripMenuItem.Click += SaveToolStripMenuItem_Click;
         // 
         // ToolsStripMenuItem
         // 
@@ -161,21 +164,6 @@ partial class MainForm
         Cil_b.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
         Cil_b.UseVisualStyleBackColor = true;
         Cil_b.Click += Cil_b_Click;
-        // 
-        // Word_lv
-        // 
-        Word_lv.ContextMenuStrip = data_contextMenu;
-        Word_lv.GridLines = true;
-        Word_lv.Location = new System.Drawing.Point(604, 27);
-        Word_lv.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-        Word_lv.MultiSelect = false;
-        Word_lv.Name = "Word_lv";
-        Word_lv.Size = new System.Drawing.Size(259, 381);
-        Word_lv.TabIndex = 3;
-        Word_lv.UseCompatibleStateImageBehavior = false;
-        Word_lv.View = System.Windows.Forms.View.List;
-        Word_lv.ItemSelectionChanged += Word_lv_ItemSelectionChanged;
-        Word_lv.Leave += Word_lv_Leave;
         // 
         // data_contextMenu
         // 
@@ -245,19 +233,19 @@ partial class MainForm
         MakeWord_b.UseVisualStyleBackColor = true;
         MakeWord_b.Click += MakeWord_b_Click;
         // 
-        // file_tb
+        // filePathTextBox
         // 
-        file_tb.Location = new System.Drawing.Point(604, 443);
-        file_tb.Name = "file_tb";
-        file_tb.Size = new System.Drawing.Size(100, 23);
-        file_tb.TabIndex = 7;
-        file_tb.Text = "C:\\Calculate\\";
+        filePathTextBox.Location = new System.Drawing.Point(702, 443);
+        filePathTextBox.Name = "filePathTextBox";
+        filePathTextBox.Size = new System.Drawing.Size(158, 23);
+        filePathTextBox.TabIndex = 7;
+        filePathTextBox.Text = "C:\\Calculate\\";
         // 
         // proekt_tb
         // 
-        proekt_tb.Location = new System.Drawing.Point(604, 414);
+        proekt_tb.Location = new System.Drawing.Point(702, 414);
         proekt_tb.Name = "proekt_tb";
-        proekt_tb.Size = new System.Drawing.Size(189, 23);
+        proekt_tb.Size = new System.Drawing.Size(209, 23);
         proekt_tb.TabIndex = 8;
         // 
         // polysfer_b
@@ -412,6 +400,7 @@ partial class MainForm
         // 
         // heatExchengerWithFixedTubePlate_b
         // 
+        heatExchengerWithFixedTubePlate_b.Enabled = false;
         heatExchengerWithFixedTubePlate_b.Image = Properties.Resources.Icon41000;
         heatExchengerWithFixedTubePlate_b.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
         heatExchengerWithFixedTubePlate_b.Location = new System.Drawing.Point(207, 196);
@@ -593,47 +582,64 @@ partial class MainForm
         button32.Text = "button32";
         button32.UseVisualStyleBackColor = true;
         // 
-        // up_b
+        // openFileDialog
         // 
-        up_b.Enabled = false;
-        up_b.Image = (System.Drawing.Image)resources.GetObject("up_b.Image");
-        up_b.Location = new System.Drawing.Point(870, 43);
-        up_b.Name = "up_b";
-        up_b.Size = new System.Drawing.Size(40, 25);
-        up_b.TabIndex = 43;
-        up_b.UseVisualStyleBackColor = true;
-        up_b.Click += Up_b_Click;
+        openFileDialog.FileName = "openFileDialog1";
         // 
-        // down_b
+        // saveFileDialogRst
         // 
-        down_b.Enabled = false;
-        down_b.Image = (System.Drawing.Image)resources.GetObject("down_b.Image");
-        down_b.Location = new System.Drawing.Point(870, 75);
-        down_b.Name = "down_b";
-        down_b.Size = new System.Drawing.Size(40, 25);
-        down_b.TabIndex = 44;
-        down_b.UseVisualStyleBackColor = true;
-        down_b.Click += Down_b_Click;
+        saveFileDialogRst.DefaultExt = "rst";
+        saveFileDialogRst.Filter = "|*.rst";
         // 
-        // del_b
+        // calculatedElementsControl
         // 
-        del_b.Enabled = false;
-        del_b.Image = (System.Drawing.Image)resources.GetObject("del_b.Image");
-        del_b.Location = new System.Drawing.Point(870, 126);
-        del_b.Name = "del_b";
-        del_b.Size = new System.Drawing.Size(40, 25);
-        del_b.TabIndex = 45;
-        del_b.UseVisualStyleBackColor = true;
-        del_b.Click += Del_b_Click;
+        calculatedElementsControl.Location = new System.Drawing.Point(591, 31);
+        calculatedElementsControl.Name = "calculatedElementsControl";
+        calculatedElementsControl.Size = new System.Drawing.Size(380, 380);
+        calculatedElementsControl.TabIndex = 47;
+        // 
+        // label1
+        // 
+        label1.AutoSize = true;
+        label1.Location = new System.Drawing.Point(604, 417);
+        label1.Name = "label1";
+        label1.Size = new System.Drawing.Size(92, 15);
+        label1.TabIndex = 48;
+        label1.Text = "Номер проекта";
+        // 
+        // label2
+        // 
+        label2.AutoSize = true;
+        label2.Location = new System.Drawing.Point(627, 446);
+        label2.Name = "label2";
+        label2.Size = new System.Drawing.Size(69, 15);
+        label2.TabIndex = 49;
+        label2.Text = "Имя файла";
+        // 
+        // chooseFileNimeButton
+        // 
+        chooseFileNimeButton.Location = new System.Drawing.Point(866, 442);
+        chooseFileNimeButton.Name = "chooseFileNimeButton";
+        chooseFileNimeButton.Size = new System.Drawing.Size(45, 23);
+        chooseFileNimeButton.TabIndex = 50;
+        chooseFileNimeButton.Text = "...";
+        chooseFileNimeButton.UseVisualStyleBackColor = true;
+        chooseFileNimeButton.Click += ChooseFileNameButton_Click;
+        // 
+        // saveFileDialogDocx
+        // 
+        saveFileDialogDocx.DefaultExt = "rst";
+        saveFileDialogDocx.Filter = "|*.docx";
         // 
         // MainForm
         // 
         AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
         AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-        ClientSize = new System.Drawing.Size(922, 532);
-        Controls.Add(del_b);
-        Controls.Add(down_b);
-        Controls.Add(up_b);
+        ClientSize = new System.Drawing.Size(984, 511);
+        Controls.Add(chooseFileNimeButton);
+        Controls.Add(label2);
+        Controls.Add(label1);
+        Controls.Add(calculatedElementsControl);
         Controls.Add(button22);
         Controls.Add(button23);
         Controls.Add(button24);
@@ -668,11 +674,10 @@ partial class MainForm
         Controls.Add(torosfer_b);
         Controls.Add(polysfer_b);
         Controls.Add(proekt_tb);
-        Controls.Add(file_tb);
+        Controls.Add(filePathTextBox);
         Controls.Add(MakeWord_b);
         Controls.Add(Ell_b);
         Controls.Add(Kon_b);
-        Controls.Add(Word_lv);
         Controls.Add(Cil_b);
         Controls.Add(menuUp);
         FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -700,8 +705,7 @@ partial class MainForm
     private System.Windows.Forms.Button Kon_b;
     private System.Windows.Forms.Button Ell_b;
     private System.Windows.Forms.Button MakeWord_b;
-    internal System.Windows.Forms.ListView Word_lv;
-    private System.Windows.Forms.TextBox file_tb;
+    private System.Windows.Forms.TextBox filePathTextBox;
     private System.Windows.Forms.TextBox proekt_tb;
     private System.Windows.Forms.ContextMenuStrip data_contextMenu;
     private System.Windows.Forms.ToolStripMenuItem up_MenuItem;
@@ -743,8 +747,12 @@ partial class MainForm
     private System.Windows.Forms.Button button31;
     private System.Windows.Forms.Button button32;
     private System.Windows.Forms.ToolStripMenuItem ToolsStripMenuItem;
-    private System.Windows.Forms.Button up_b;
-    private System.Windows.Forms.Button down_b;
-    private System.Windows.Forms.Button del_b;
+    private System.Windows.Forms.OpenFileDialog openFileDialog;
+    private System.Windows.Forms.SaveFileDialog saveFileDialogRst;
+    internal Elements.CalculatedElementsControl calculatedElementsControl;
+    private System.Windows.Forms.Label label1;
+    private System.Windows.Forms.Label label2;
+    private System.Windows.Forms.Button chooseFileNimeButton;
+    private System.Windows.Forms.SaveFileDialog saveFileDialogDocx;
 }
 

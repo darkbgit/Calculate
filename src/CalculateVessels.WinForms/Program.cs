@@ -38,7 +38,9 @@ internal static class Program
 
                 var forms = typeof(Program).Assembly
                     .GetTypes()
-                    .Where(t => (t.BaseType == typeof(Form) && !t.IsAbstract) || t.BaseType?.BaseType?.BaseType == typeof(Form)
+                    .Where(t => (t.BaseType == typeof(Form) && !t.IsAbstract)
+                                || (t.BaseType?.BaseType == typeof(Form) && !t.IsAbstract && t.Name[^6..] != "Middle")
+                                || t.BaseType?.BaseType?.BaseType == typeof(Form)
                         || t.BaseType?.BaseType?.BaseType?.BaseType == typeof(Form))
                     .ToList();
 
@@ -55,7 +57,6 @@ internal static class Program
 
                 var serviceCollectionForOutput = new ServiceCollectionForOutput();
                 serviceCollectionForOutput.RegisterDependencies(services);
-
             });
     }
 }

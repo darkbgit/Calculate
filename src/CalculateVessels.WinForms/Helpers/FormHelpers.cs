@@ -118,13 +118,13 @@ internal static class FormHelpers
             .Select((i, j) => new LoadingCondition
             {
                 IsPressureIn = i.SubItems[pressureTypeIndex].Text == Properties.Resources.InsidePressure,
-                p = Parameters.GetParam<double>(i.SubItems[pressureIndex].Text, "p", ref dataInErr),
-                t = Parameters.GetParam<double>(i.SubItems[tIndex].Text, "t", ref dataInErr),
+                p = Parameters.GetParam<double>(i.SubItems[pressureIndex].Text, "p", dataInErr),
+                t = Parameters.GetParam<double>(i.SubItems[tIndex].Text, "t", dataInErr),
                 OrdinalNumber = j + 1,
                 SigmaAllow = i.SubItems[sigmaAllowIndex].Text == AutoStrengthParameters ? default :
-                    Parameters.GetParam<double>(i.SubItems[sigmaAllowIndex].Text, "[σ]", ref dataInErr),
+                    Parameters.GetParam<double>(i.SubItems[sigmaAllowIndex].Text, "[σ]", dataInErr),
                 EAllow = i.SubItems[EAllowIndex].Text == AutoStrengthParameters ? default :
-                    Parameters.GetParam<double>(i.SubItems[EAllowIndex].Text, "E", ref dataInErr),
+                    Parameters.GetParam<double>(i.SubItems[EAllowIndex].Text, "E", dataInErr),
             })
             .ToList();
 
@@ -137,11 +137,11 @@ internal static class FormHelpers
         var loadingCondition = new LoadingCondition
         {
             IsPressureIn = !isPressureOutside.Checked,
-            t = Parameters.GetParam<double>(t.Text, "t", ref dataInErr, NumberStyles.Integer),
-            p = Parameters.GetParam<double>(p.Text, "p", ref dataInErr),
+            t = Parameters.GetParam<double>(t.Text, "t", dataInErr, NumberStyles.Integer),
+            p = Parameters.GetParam<double>(p.Text, "p", dataInErr),
             OrdinalNumber = 1,
             SigmaAllow = sigmaHandle.Checked
-                ? Parameters.GetParam<double>(sigmaAllow.Text, "[σ]", ref dataInErr)
+                ? Parameters.GetParam<double>(sigmaAllow.Text, "[σ]", dataInErr)
                 : default
         };
 
@@ -150,7 +150,7 @@ internal static class FormHelpers
 
         if (EHandle.Checked)
         {
-            loadingCondition.EAllow = Parameters.GetParam<double>(EAllow.Text, "E", ref dataInErr);
+            loadingCondition.EAllow = Parameters.GetParam<double>(EAllow.Text, "E", dataInErr);
         }
 
         return loadingCondition;

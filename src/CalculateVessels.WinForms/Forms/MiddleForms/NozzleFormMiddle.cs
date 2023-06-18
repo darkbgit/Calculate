@@ -36,4 +36,9 @@ public class NozzleFormMiddle : BaseCalculateForm<NozzleInput>
     {
         throw new NotImplementedException();
     }
+
+    protected override void LoadInputData()
+    {
+        throw new NotImplementedException();
+    }
 }

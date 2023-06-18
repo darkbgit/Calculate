@@ -20,6 +20,8 @@ public class EllipticalShellCalculated : ShellCalculated, ICalculatedElement
         Results = results;
     }
 
+    public override string Type => nameof(EllipticalShellCalculated);
+
     public override EllipticalShellCalculatedCommon CommonData { get; }
 
     public override IEnumerable<EllipticalShellCalculatedOneLoading> Results { get; } =
@@ -31,12 +33,13 @@ public class EllipticalShellCalculated : ShellCalculated, ICalculatedElement
 
         var builder = new StringBuilder();
         builder.Append("Elliptical shell - ");
-        builder.Append($" D - {dataIn.D} mm");
+        builder.Append($" D={dataIn.D} mm");
         dataIn.LoadingConditions.ToList()
-            .ForEach(x =>
+            .ForEach(lc =>
             {
-                builder.Append(x.IsPressureIn ? "inside" : "outside");
-                builder.Append($" pressure {x.p} MPa");
+                builder.Append($" p={lc.p} MPa");
+                builder.Append(lc.IsPressureIn ? "(inside)" : "(outside)");
+                builder.Append($" t={lc.t} C");
             });
 
         return builder.ToString();

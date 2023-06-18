@@ -65,25 +65,25 @@ public sealed partial class BracketVerticalForm : BracketVerticalFormMiddle
             IsAssembly = isAssembly_cb.Checked,
             PreciseMontage = preciseMontage_cb.Checked,
             ReinforcingPad = reinforcementPad_cb.Checked,
-            b4 = Parameters.GetParam<double>(b4_tb.Text, "b4", ref dataInErr),
-            c = Parameters.GetParam<double>(c_tb.Text, "c", ref dataInErr),
-            D = Parameters.GetParam<double>(D_tb.Text, "D", ref dataInErr),
-            e1 = Parameters.GetParam<double>(e1_tb.Text, "e1", ref dataInErr),
-            g = Parameters.GetParam<double>(g_tb.Text, "g", ref dataInErr),
-            G = Parameters.GetParam<double>(GCapital_tb.Text, "G", ref dataInErr),
-            h = Parameters.GetParam<double>(h_tb.Text, "h", ref dataInErr),
-            h1 = Parameters.GetParam<double>(h1_tb.Text, "h1", ref dataInErr),
-            l1 = Parameters.GetParam<double>(l1_tb.Text, "l1", ref dataInErr),
-            M = Parameters.GetParam<double>(M_tb.Text, "M", ref dataInErr),
-            p = Parameters.GetParam<double>(p_tb.Text, "p", ref dataInErr),
-            phi = Parameters.GetParam<double>(fi_tb.Text, "φ", ref dataInErr),
-            Q = Parameters.GetParam<double>(Q_tb.Text, "Q", ref dataInErr),
-            s = Parameters.GetParam<double>(s_tb.Text, "s", ref dataInErr),
+            b4 = Parameters.GetParam<double>(b4_tb.Text, "b4", dataInErr),
+            c = Parameters.GetParam<double>(c_tb.Text, "c", dataInErr),
+            D = Parameters.GetParam<double>(D_tb.Text, "D", dataInErr),
+            e1 = Parameters.GetParam<double>(e1_tb.Text, "e1", dataInErr),
+            g = Parameters.GetParam<double>(g_tb.Text, "g", dataInErr),
+            G = Parameters.GetParam<double>(GCapital_tb.Text, "G", dataInErr),
+            h = Parameters.GetParam<double>(h_tb.Text, "h", dataInErr),
+            h1 = Parameters.GetParam<double>(h1_tb.Text, "h1", dataInErr),
+            l1 = Parameters.GetParam<double>(l1_tb.Text, "l1", dataInErr),
+            M = Parameters.GetParam<double>(M_tb.Text, "M", dataInErr),
+            p = Parameters.GetParam<double>(p_tb.Text, "p", dataInErr),
+            phi = Parameters.GetParam<double>(fi_tb.Text, "φ", dataInErr),
+            Q = Parameters.GetParam<double>(Q_tb.Text, "Q", dataInErr),
+            s = Parameters.GetParam<double>(s_tb.Text, "s", dataInErr),
             SigmaAllow = sigmaHandle_cb.Checked
-                ? Parameters.GetParam<double>(sigma_d_tb.Text, "[σ]", ref dataInErr)
+                ? Parameters.GetParam<double>(sigma_d_tb.Text, "[σ]", dataInErr)
                 : default,
-            t = Parameters.GetParam<double>(t_tb.Text, "t", ref dataInErr, NumberStyles.Integer),
-            N = Parameters.GetParam<int>(N_cb.Text, "N", ref dataInErr, NumberStyles.Integer),
+            t = Parameters.GetParam<double>(t_tb.Text, "t", dataInErr, NumberStyles.Integer),
+            N = Parameters.GetParam<int>(N_cb.Text, "N", dataInErr, NumberStyles.Integer),
         };
 
         var number = numberOfBracket_gb.Controls
@@ -91,14 +91,14 @@ public sealed partial class BracketVerticalForm : BracketVerticalFormMiddle
             .First(rb => rb.Checked)
             .Text;
 
-        InputData.n = Parameters.GetParam<int>(number, "n", ref dataInErr);
+        InputData.n = Parameters.GetParam<int>(number, "n", dataInErr);
 
         var type = bracketType_gb.Controls
             .OfType<RadioButton>()
             .First(rb => rb.Checked)
             .Text;
 
-        InputData.Type = Parameters.GetParam<BracketVerticalType>(type, "Bracket type", ref dataInErr);
+        InputData.Type = Parameters.GetParam<BracketVerticalType>(type, "Bracket type", dataInErr);
 
         var isNoError = !dataInErr.Any() && InputData.IsDataGood;
 

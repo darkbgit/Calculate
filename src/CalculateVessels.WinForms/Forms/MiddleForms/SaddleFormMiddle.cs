@@ -35,4 +35,9 @@ public class SaddleFormMiddle : BaseCalculateForm<SaddleInput>
     {
         throw new NotImplementedException();
     }
+
+    protected override void LoadInputData()
+    {
+        throw new NotImplementedException();
+    }
 }

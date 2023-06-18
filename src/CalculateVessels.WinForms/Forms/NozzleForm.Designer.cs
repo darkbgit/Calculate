@@ -207,6 +207,7 @@ namespace CalculateVessels.Forms
             cancel_btn.TabIndex = 107;
             cancel_btn.Text = "Cancel";
             cancel_btn.UseVisualStyleBackColor = true;
+            cancel_btn.Click += Cancel_btn_Click;
             // 
             // calculate_btn
             // 
@@ -1138,6 +1139,7 @@ namespace CalculateVessels.Forms
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            CancelButton = cancel_btn;
             ClientSize = new System.Drawing.Size(804, 884);
             Controls.Add(loadingConditionsListView);
             Controls.Add(EHandle_cb);

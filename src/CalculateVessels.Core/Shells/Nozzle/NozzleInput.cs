@@ -19,6 +19,7 @@ public class NozzleInput : InputData, IInputData
         _shellCalculatedData = shellCalculatedData;
     }
 
+    public override string Type => nameof(NozzleInput);
     public double cs { get; set; }
     public double cs1 { get; set; }
     public double d { get; set; }

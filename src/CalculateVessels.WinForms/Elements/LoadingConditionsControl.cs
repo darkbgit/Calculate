@@ -2,6 +2,7 @@
 using CalculateVessels.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -29,14 +30,14 @@ public partial class LoadingConditionsControl : UserControl
             {
                 OrdinalNumber = Convert.ToInt32(i.SubItems[ordinalNumber_ch.Index].Text),
                 IsPressureIn = i.SubItems[pressureType_ch.Index].Text == Properties.Resources.InsidePressure,
-                p = Parameters.GetParam<double>(i.SubItems[p_ch.Index].Text, "p", ref dataInErr),
-                t = Parameters.GetParam<double>(i.SubItems[t_ch.Index].Text, "t", ref dataInErr),
+                p = Parameters.GetParam<double>(i.SubItems[p_ch.Index].Text, "p", dataInErr),
+                t = Parameters.GetParam<double>(i.SubItems[t_ch.Index].Text, "t", dataInErr),
                 SigmaAllow = i.SubItems[sigmaAllow_ch.Index].Text == AutoStrengthParameters
                     ? default
-                    : Parameters.GetParam<double>(i.SubItems[sigmaAllow_ch.Index].Text, "[σ]", ref dataInErr),
+                    : Parameters.GetParam<double>(i.SubItems[sigmaAllow_ch.Index].Text, "[σ]", dataInErr),
                 EAllow = i.SubItems[EAllow_ch.Index].Text == AutoStrengthParameters
                     ? default
-                    : Parameters.GetParam<double>(i.SubItems[EAllow_ch.Index].Text, "E", ref dataInErr),
+                    : Parameters.GetParam<double>(i.SubItems[EAllow_ch.Index].Text, "E", dataInErr),
             })
             .ToList();
 
@@ -44,6 +45,13 @@ public partial class LoadingConditionsControl : UserControl
 
         MessageBox.Show(string.Join(Environment.NewLine, dataInErr));
         return Enumerable.Empty<LoadingCondition>();
+    }
+
+    public void SetLoadingConditions(IEnumerable<LoadingCondition> loadingConditions)
+    {
+        loadingConditions
+            .ToList()
+            .ForEach(lc => AddLoadingCondition(lc));
     }
 
     private void AddLoadingCondition_btn_Click(object sender, EventArgs e)
@@ -70,10 +78,10 @@ public partial class LoadingConditionsControl : UserControl
         var loadingConditions = new string[]
         {
             loadingCondition.IsPressureIn ? Properties.Resources.InsidePressure : Properties.Resources.OutsidePressure,
-            loadingCondition.p.ToString(),
-            loadingCondition.t.ToString(),
-            loadingCondition.SigmaAllow == 0 ? AutoStrengthParameters : loadingCondition.SigmaAllow.ToString(),
-            loadingCondition.EAllow == 0 ? AutoStrengthParameters : loadingCondition.EAllow.ToString()
+            loadingCondition.p.ToString(CultureInfo.CurrentCulture),
+            loadingCondition.t.ToString(CultureInfo.CurrentCulture),
+            loadingCondition.SigmaAllow == 0 ? AutoStrengthParameters : loadingCondition.SigmaAllow.ToString(CultureInfo.CurrentCulture),
+            loadingCondition.EAllow == 0 ? AutoStrengthParameters : loadingCondition.EAllow.ToString(CultureInfo.CurrentCulture)
         };
 
         if (loadingConditionsListView.Items.Cast<ListViewItem>()
