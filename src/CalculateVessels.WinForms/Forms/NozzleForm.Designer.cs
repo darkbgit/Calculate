@@ -49,9 +49,7 @@ namespace CalculateVessels.Forms
             button3 = new System.Windows.Forms.Button();
             button2 = new System.Windows.Forms.Button();
             checkBox1 = new System.Windows.Forms.CheckBox();
-            getE_b = new System.Windows.Forms.Button();
             label19 = new System.Windows.Forms.Label();
-            grtSigma_b = new System.Windows.Forms.Button();
             label18 = new System.Windows.Forms.Label();
             label16 = new System.Windows.Forms.Label();
             label15 = new System.Windows.Forms.Label();
@@ -86,8 +84,8 @@ namespace CalculateVessels.Forms
             vid_rb3 = new System.Windows.Forms.RadioButton();
             vid_rb2 = new System.Windows.Forms.RadioButton();
             vid_rb1 = new System.Windows.Forms.RadioButton();
-            E1_tb = new System.Windows.Forms.TextBox();
-            sigma_d1_tb = new System.Windows.Forms.TextBox();
+            Ellow1TextBox = new System.Windows.Forms.TextBox();
+            sigmaAllow1TextBox = new System.Windows.Forms.TextBox();
             ring_gb = new System.Windows.Forms.GroupBox();
             steel2_cb = new System.Windows.Forms.ComboBox();
             label31 = new System.Windows.Forms.Label();
@@ -119,8 +117,8 @@ namespace CalculateVessels.Forms
             label37 = new System.Windows.Forms.Label();
             label9 = new System.Windows.Forms.Label();
             label8 = new System.Windows.Forms.Label();
-            EHandle_cb = new System.Windows.Forms.CheckBox();
-            sigmaHandle_cb = new System.Windows.Forms.CheckBox();
+            E1HandleCheckBox = new System.Windows.Forms.CheckBox();
+            sigma1HandleCheckBox = new System.Windows.Forms.CheckBox();
             label2 = new System.Windows.Forms.Label();
             loadingConditionsListView = new System.Windows.Forms.ListView();
             pressureType_ch = new System.Windows.Forms.ColumnHeader();
@@ -128,6 +126,23 @@ namespace CalculateVessels.Forms
             t_ch = new System.Windows.Forms.ColumnHeader();
             sigmaAllow_ch = new System.Windows.Forms.ColumnHeader();
             EAllow_ch = new System.Windows.Forms.ColumnHeader();
+            nozzleGgroupBox = new System.Windows.Forms.GroupBox();
+            E2HandleCheckBox = new System.Windows.Forms.CheckBox();
+            sigmaAllow2TextBox = new System.Windows.Forms.TextBox();
+            sigma2HandleCheckBox = new System.Windows.Forms.CheckBox();
+            Ellow2TextBox = new System.Windows.Forms.TextBox();
+            label3 = new System.Windows.Forms.Label();
+            label4 = new System.Windows.Forms.Label();
+            label5 = new System.Windows.Forms.Label();
+            label6 = new System.Windows.Forms.Label();
+            E3HandleCheckBox = new System.Windows.Forms.CheckBox();
+            sigmaAllow3TextBox = new System.Windows.Forms.TextBox();
+            sigma3HandleCheckBox = new System.Windows.Forms.CheckBox();
+            Ellow3TextBox = new System.Windows.Forms.TextBox();
+            label20 = new System.Windows.Forms.Label();
+            label38 = new System.Windows.Forms.Label();
+            label44 = new System.Windows.Forms.Label();
+            label45 = new System.Windows.Forms.Label();
             groupBox4.SuspendLayout();
             place_gb.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)place_pb).BeginInit();
@@ -136,12 +151,13 @@ namespace CalculateVessels.Forms
             ring_gb.SuspendLayout();
             in_gb.SuspendLayout();
             groupBox8.SuspendLayout();
+            nozzleGgroupBox.SuspendLayout();
             SuspendLayout();
             // 
             // label26
             // 
             label26.AutoSize = true;
-            label26.Location = new System.Drawing.Point(267, 357);
+            label26.Location = new System.Drawing.Point(254, 170);
             label26.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label26.Name = "label26";
             label26.Size = new System.Drawing.Size(25, 15);
@@ -151,7 +167,7 @@ namespace CalculateVessels.Forms
             // label25
             // 
             label25.AutoSize = true;
-            label25.Location = new System.Drawing.Point(267, 386);
+            label25.Location = new System.Drawing.Point(254, 199);
             label25.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label25.Name = "label25";
             label25.Size = new System.Drawing.Size(25, 15);
@@ -161,7 +177,7 @@ namespace CalculateVessels.Forms
             // label24
             // 
             label24.AutoSize = true;
-            label24.Location = new System.Drawing.Point(267, 415);
+            label24.Location = new System.Drawing.Point(254, 228);
             label24.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label24.Name = "label24";
             label24.Size = new System.Drawing.Size(25, 15);
@@ -171,7 +187,7 @@ namespace CalculateVessels.Forms
             // label23
             // 
             label23.AutoSize = true;
-            label23.Location = new System.Drawing.Point(254, 55);
+            label23.Location = new System.Drawing.Point(254, 113);
             label23.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label23.Name = "label23";
             label23.Size = new System.Drawing.Size(25, 15);
@@ -181,7 +197,7 @@ namespace CalculateVessels.Forms
             // label22
             // 
             label22.AutoSize = true;
-            label22.Location = new System.Drawing.Point(254, 85);
+            label22.Location = new System.Drawing.Point(254, 143);
             label22.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label22.Name = "label22";
             label22.Size = new System.Drawing.Size(25, 15);
@@ -191,7 +207,7 @@ namespace CalculateVessels.Forms
             // label21
             // 
             label21.AutoSize = true;
-            label21.Location = new System.Drawing.Point(267, 328);
+            label21.Location = new System.Drawing.Point(254, 141);
             label21.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label21.Name = "label21";
             label21.Size = new System.Drawing.Size(25, 15);
@@ -200,7 +216,7 @@ namespace CalculateVessels.Forms
             // 
             // cancel_btn
             // 
-            cancel_btn.Location = new System.Drawing.Point(246, 845);
+            cancel_btn.Location = new System.Drawing.Point(246, 954);
             cancel_btn.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             cancel_btn.Name = "cancel_btn";
             cancel_btn.Size = new System.Drawing.Size(88, 27);
@@ -211,7 +227,7 @@ namespace CalculateVessels.Forms
             // 
             // calculate_btn
             // 
-            calculate_btn.Location = new System.Drawing.Point(151, 846);
+            calculate_btn.Location = new System.Drawing.Point(151, 955);
             calculate_btn.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             calculate_btn.Name = "calculate_btn";
             calculate_btn.Size = new System.Drawing.Size(88, 27);
@@ -222,7 +238,7 @@ namespace CalculateVessels.Forms
             // 
             // preCalculate_btn
             // 
-            preCalculate_btn.Location = new System.Drawing.Point(13, 833);
+            preCalculate_btn.Location = new System.Drawing.Point(13, 942);
             preCalculate_btn.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             preCalculate_btn.Name = "preCalculate_btn";
             preCalculate_btn.Size = new System.Drawing.Size(130, 42);
@@ -236,7 +252,7 @@ namespace CalculateVessels.Forms
             groupBox4.Controls.Add(b_l);
             groupBox4.Controls.Add(p_d_l);
             groupBox4.Controls.Add(d0_l);
-            groupBox4.Location = new System.Drawing.Point(365, 737);
+            groupBox4.Location = new System.Drawing.Point(402, 905);
             groupBox4.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             groupBox4.Name = "groupBox4";
             groupBox4.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -277,11 +293,11 @@ namespace CalculateVessels.Forms
             // place_gb
             // 
             place_gb.Controls.Add(place_pb);
-            place_gb.Location = new System.Drawing.Point(365, 308);
+            place_gb.Location = new System.Drawing.Point(403, 308);
             place_gb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             place_gb.Name = "place_gb";
             place_gb.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            place_gb.Size = new System.Drawing.Size(427, 335);
+            place_gb.Size = new System.Drawing.Size(433, 335);
             place_gb.TabIndex = 103;
             place_gb.TabStop = false;
             place_gb.Text = "Расположение";
@@ -300,7 +316,7 @@ namespace CalculateVessels.Forms
             // 
             // button4
             // 
-            button4.Location = new System.Drawing.Point(589, 682);
+            button4.Location = new System.Drawing.Point(627, 682);
             button4.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             button4.Name = "button4";
             button4.Size = new System.Drawing.Size(187, 27);
@@ -310,7 +326,7 @@ namespace CalculateVessels.Forms
             // 
             // button3
             // 
-            button3.Location = new System.Drawing.Point(382, 682);
+            button3.Location = new System.Drawing.Point(420, 682);
             button3.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             button3.Name = "button3";
             button3.Size = new System.Drawing.Size(176, 27);
@@ -320,7 +336,7 @@ namespace CalculateVessels.Forms
             // 
             // button2
             // 
-            button2.Location = new System.Drawing.Point(599, 649);
+            button2.Location = new System.Drawing.Point(637, 649);
             button2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             button2.Name = "button2";
             button2.Size = new System.Drawing.Size(35, 27);
@@ -331,7 +347,7 @@ namespace CalculateVessels.Forms
             // checkBox1
             // 
             checkBox1.AutoSize = true;
-            checkBox1.Location = new System.Drawing.Point(365, 654);
+            checkBox1.Location = new System.Drawing.Point(403, 654);
             checkBox1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             checkBox1.Name = "checkBox1";
             checkBox1.Size = new System.Drawing.Size(201, 19);
@@ -339,41 +355,20 @@ namespace CalculateVessels.Forms
             checkBox1.Text = "Дефекты по ГОСТ 34233.11-2017";
             checkBox1.UseVisualStyleBackColor = true;
             // 
-            // getE_b
-            // 
-            getE_b.Enabled = false;
-            getE_b.Location = new System.Drawing.Point(308, 260);
-            getE_b.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            getE_b.Name = "getE_b";
-            getE_b.Size = new System.Drawing.Size(43, 23);
-            getE_b.TabIndex = 95;
-            getE_b.Text = ">>";
-            getE_b.UseVisualStyleBackColor = true;
-            // 
             // label19
             // 
             label19.AutoSize = true;
-            label19.Location = new System.Drawing.Point(186, 258);
+            label19.Location = new System.Drawing.Point(254, 84);
             label19.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label19.Name = "label19";
             label19.Size = new System.Drawing.Size(33, 15);
             label19.TabIndex = 94;
             label19.Text = "МПа";
             // 
-            // grtSigma_b
-            // 
-            grtSigma_b.Location = new System.Drawing.Point(308, 227);
-            grtSigma_b.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            grtSigma_b.Name = "grtSigma_b";
-            grtSigma_b.Size = new System.Drawing.Size(43, 23);
-            grtSigma_b.TabIndex = 93;
-            grtSigma_b.Text = ">>";
-            grtSigma_b.UseVisualStyleBackColor = true;
-            // 
             // label18
             // 
             label18.AutoSize = true;
-            label18.Location = new System.Drawing.Point(186, 220);
+            label18.Location = new System.Drawing.Point(254, 55);
             label18.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label18.Name = "label18";
             label18.Size = new System.Drawing.Size(33, 15);
@@ -383,7 +378,7 @@ namespace CalculateVessels.Forms
             // label16
             // 
             label16.AutoSize = true;
-            label16.Location = new System.Drawing.Point(75, 85);
+            label16.Location = new System.Drawing.Point(75, 143);
             label16.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label16.Name = "label16";
             label16.Size = new System.Drawing.Size(120, 15);
@@ -393,7 +388,7 @@ namespace CalculateVessels.Forms
             // label15
             // 
             label15.AutoSize = true;
-            label15.Location = new System.Drawing.Point(83, 55);
+            label15.Location = new System.Drawing.Point(83, 113);
             label15.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label15.Name = "label15";
             label15.Size = new System.Drawing.Size(112, 15);
@@ -403,18 +398,18 @@ namespace CalculateVessels.Forms
             // label14
             // 
             label14.AutoSize = true;
-            label14.Location = new System.Drawing.Point(4, 414);
+            label14.Location = new System.Drawing.Point(54, 221);
             label14.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label14.Name = "label14";
-            label14.Size = new System.Drawing.Size(204, 15);
+            label14.Size = new System.Drawing.Size(138, 30);
             label14.TabIndex = 87;
-            label14.Text = "Длина наружной части штуцера, l1:";
+            label14.Text = "Длина наружной части \r\nштуцера, l1:";
             // 
             // label13
             // 
             label13.AutoSize = true;
             label13.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            label13.Location = new System.Drawing.Point(46, 386);
+            label13.Location = new System.Drawing.Point(33, 199);
             label13.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label13.Name = "label13";
             label13.Size = new System.Drawing.Size(162, 15);
@@ -424,7 +419,7 @@ namespace CalculateVessels.Forms
             // label12
             // 
             label12.AutoSize = true;
-            label12.Location = new System.Drawing.Point(29, 350);
+            label12.Location = new System.Drawing.Point(16, 163);
             label12.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label12.Name = "label12";
             label12.Size = new System.Drawing.Size(179, 30);
@@ -434,7 +429,7 @@ namespace CalculateVessels.Forms
             // label11
             // 
             label11.AutoSize = true;
-            label11.Location = new System.Drawing.Point(39, 328);
+            label11.Location = new System.Drawing.Point(26, 141);
             label11.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label11.Name = "label11";
             label11.Size = new System.Drawing.Size(169, 15);
@@ -445,7 +440,7 @@ namespace CalculateVessels.Forms
             // 
             label10.AutoSize = true;
             label10.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            label10.Location = new System.Drawing.Point(19, 299);
+            label10.Location = new System.Drawing.Point(6, 112);
             label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label10.Name = "label10";
             label10.Size = new System.Drawing.Size(189, 15);
@@ -454,7 +449,7 @@ namespace CalculateVessels.Forms
             // 
             // s2_tb
             // 
-            s2_tb.Location = new System.Drawing.Point(200, 80);
+            s2_tb.Location = new System.Drawing.Point(200, 138);
             s2_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             s2_tb.Name = "s2_tb";
             s2_tb.Size = new System.Drawing.Size(46, 23);
@@ -463,7 +458,7 @@ namespace CalculateVessels.Forms
             // 
             // l2_tb
             // 
-            l2_tb.Location = new System.Drawing.Point(200, 51);
+            l2_tb.Location = new System.Drawing.Point(200, 109);
             l2_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             l2_tb.Name = "l2_tb";
             l2_tb.Size = new System.Drawing.Size(46, 23);
@@ -472,7 +467,7 @@ namespace CalculateVessels.Forms
             // 
             // l1_tb
             // 
-            l1_tb.Location = new System.Drawing.Point(213, 412);
+            l1_tb.Location = new System.Drawing.Point(200, 225);
             l1_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             l1_tb.Name = "l1_tb";
             l1_tb.Size = new System.Drawing.Size(46, 23);
@@ -481,7 +476,7 @@ namespace CalculateVessels.Forms
             // 
             // cs1_tb
             // 
-            cs1_tb.Location = new System.Drawing.Point(213, 383);
+            cs1_tb.Location = new System.Drawing.Point(200, 196);
             cs1_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             cs1_tb.Name = "cs1_tb";
             cs1_tb.Size = new System.Drawing.Size(46, 23);
@@ -490,7 +485,7 @@ namespace CalculateVessels.Forms
             // 
             // cs_tb
             // 
-            cs_tb.Location = new System.Drawing.Point(213, 354);
+            cs_tb.Location = new System.Drawing.Point(200, 167);
             cs_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             cs_tb.Name = "cs_tb";
             cs_tb.Size = new System.Drawing.Size(46, 23);
@@ -499,7 +494,7 @@ namespace CalculateVessels.Forms
             // 
             // s1_tb
             // 
-            s1_tb.Location = new System.Drawing.Point(213, 325);
+            s1_tb.Location = new System.Drawing.Point(200, 138);
             s1_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             s1_tb.Name = "s1_tb";
             s1_tb.Size = new System.Drawing.Size(46, 23);
@@ -508,7 +503,7 @@ namespace CalculateVessels.Forms
             // 
             // d_tb
             // 
-            d_tb.Location = new System.Drawing.Point(213, 296);
+            d_tb.Location = new System.Drawing.Point(200, 109);
             d_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             d_tb.Name = "d_tb";
             d_tb.Size = new System.Drawing.Size(46, 23);
@@ -519,16 +514,16 @@ namespace CalculateVessels.Forms
             // 
             steel1_cb.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             steel1_cb.FormattingEnabled = true;
-            steel1_cb.Location = new System.Drawing.Point(213, 189);
+            steel1_cb.Location = new System.Drawing.Point(200, 22);
             steel1_cb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             steel1_cb.Name = "steel1_cb";
-            steel1_cb.Size = new System.Drawing.Size(139, 23);
+            steel1_cb.Size = new System.Drawing.Size(168, 23);
             steel1_cb.TabIndex = 71;
             // 
             // label7
             // 
             label7.AutoSize = true;
-            label7.Location = new System.Drawing.Point(92, 192);
+            label7.Location = new System.Drawing.Point(79, 25);
             label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label7.Name = "label7";
             label7.Size = new System.Drawing.Size(116, 15);
@@ -568,7 +563,7 @@ namespace CalculateVessels.Forms
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new System.Drawing.Point(13, 20);
+            label1.Location = new System.Drawing.Point(13, 21);
             label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label1.Name = "label1";
             label1.Size = new System.Drawing.Size(117, 15);
@@ -578,7 +573,7 @@ namespace CalculateVessels.Forms
             // label29
             // 
             label29.AutoSize = true;
-            label29.Location = new System.Drawing.Point(255, 20);
+            label29.Location = new System.Drawing.Point(255, 21);
             label29.Name = "label29";
             label29.Size = new System.Drawing.Size(135, 15);
             label29.TabIndex = 116;
@@ -595,7 +590,7 @@ namespace CalculateVessels.Forms
             // label30
             // 
             label30.AutoSize = true;
-            label30.Location = new System.Drawing.Point(512, 19);
+            label30.Location = new System.Drawing.Point(512, 21);
             label30.Name = "label30";
             label30.Size = new System.Drawing.Size(94, 15);
             label30.TabIndex = 118;
@@ -603,7 +598,7 @@ namespace CalculateVessels.Forms
             // 
             // nameEl_tb
             // 
-            nameEl_tb.Location = new System.Drawing.Point(612, 16);
+            nameEl_tb.Location = new System.Drawing.Point(612, 17);
             nameEl_tb.Name = "nameEl_tb";
             nameEl_tb.Size = new System.Drawing.Size(110, 23);
             nameEl_tb.TabIndex = 119;
@@ -619,7 +614,7 @@ namespace CalculateVessels.Forms
             vid_gb.Controls.Add(vid_rb2);
             vid_gb.Controls.Add(vid_rb1);
             vid_gb.Controls.Add(vid_pictureBox);
-            vid_gb.Location = new System.Drawing.Point(359, 46);
+            vid_gb.Location = new System.Drawing.Point(403, 46);
             vid_gb.Name = "vid_gb";
             vid_gb.Size = new System.Drawing.Size(433, 256);
             vid_gb.TabIndex = 120;
@@ -716,28 +711,36 @@ namespace CalculateVessels.Forms
             vid_rb1.UseVisualStyleBackColor = true;
             vid_rb1.CheckedChanged += Vid_rb_CheckedChanged;
             // 
-            // E1_tb
+            // Ellow1TextBox
             // 
-            E1_tb.Enabled = false;
-            E1_tb.Location = new System.Drawing.Point(132, 262);
-            E1_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            E1_tb.Name = "E1_tb";
-            E1_tb.ReadOnly = true;
-            E1_tb.Size = new System.Drawing.Size(46, 23);
-            E1_tb.TabIndex = 74;
+            Ellow1TextBox.Enabled = false;
+            Ellow1TextBox.Location = new System.Drawing.Point(200, 80);
+            Ellow1TextBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            Ellow1TextBox.Name = "Ellow1TextBox";
+            Ellow1TextBox.ReadOnly = true;
+            Ellow1TextBox.Size = new System.Drawing.Size(46, 23);
+            Ellow1TextBox.TabIndex = 74;
             // 
-            // sigma_d1_tb
+            // sigmaAllow1TextBox
             // 
-            sigma_d1_tb.Enabled = false;
-            sigma_d1_tb.Location = new System.Drawing.Point(132, 223);
-            sigma_d1_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            sigma_d1_tb.Name = "sigma_d1_tb";
-            sigma_d1_tb.ReadOnly = true;
-            sigma_d1_tb.Size = new System.Drawing.Size(46, 23);
-            sigma_d1_tb.TabIndex = 73;
+            sigmaAllow1TextBox.Enabled = false;
+            sigmaAllow1TextBox.Location = new System.Drawing.Point(200, 51);
+            sigmaAllow1TextBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            sigmaAllow1TextBox.Name = "sigmaAllow1TextBox";
+            sigmaAllow1TextBox.ReadOnly = true;
+            sigmaAllow1TextBox.Size = new System.Drawing.Size(46, 23);
+            sigmaAllow1TextBox.TabIndex = 73;
             // 
             // ring_gb
             // 
+            ring_gb.Controls.Add(E2HandleCheckBox);
+            ring_gb.Controls.Add(sigmaAllow2TextBox);
+            ring_gb.Controls.Add(sigma2HandleCheckBox);
+            ring_gb.Controls.Add(Ellow2TextBox);
+            ring_gb.Controls.Add(label3);
+            ring_gb.Controls.Add(label4);
+            ring_gb.Controls.Add(label5);
+            ring_gb.Controls.Add(label6);
             ring_gb.Controls.Add(steel2_cb);
             ring_gb.Controls.Add(label31);
             ring_gb.Controls.Add(label15);
@@ -747,9 +750,9 @@ namespace CalculateVessels.Forms
             ring_gb.Controls.Add(label22);
             ring_gb.Controls.Add(label23);
             ring_gb.Enabled = false;
-            ring_gb.Location = new System.Drawing.Point(13, 441);
+            ring_gb.Location = new System.Drawing.Point(13, 456);
             ring_gb.Name = "ring_gb";
-            ring_gb.Size = new System.Drawing.Size(339, 120);
+            ring_gb.Size = new System.Drawing.Size(375, 170);
             ring_gb.TabIndex = 121;
             ring_gb.TabStop = false;
             ring_gb.Text = "Накладное кольцо";
@@ -761,7 +764,7 @@ namespace CalculateVessels.Forms
             steel2_cb.Location = new System.Drawing.Point(200, 22);
             steel2_cb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             steel2_cb.Name = "steel2_cb";
-            steel2_cb.Size = new System.Drawing.Size(138, 23);
+            steel2_cb.Size = new System.Drawing.Size(168, 23);
             steel2_cb.TabIndex = 73;
             // 
             // label31
@@ -776,6 +779,14 @@ namespace CalculateVessels.Forms
             // 
             // in_gb
             // 
+            in_gb.Controls.Add(E3HandleCheckBox);
+            in_gb.Controls.Add(sigmaAllow3TextBox);
+            in_gb.Controls.Add(sigma3HandleCheckBox);
+            in_gb.Controls.Add(Ellow3TextBox);
+            in_gb.Controls.Add(label20);
+            in_gb.Controls.Add(label38);
+            in_gb.Controls.Add(label44);
+            in_gb.Controls.Add(label45);
             in_gb.Controls.Add(steel3_cb);
             in_gb.Controls.Add(label17);
             in_gb.Controls.Add(label27);
@@ -785,9 +796,9 @@ namespace CalculateVessels.Forms
             in_gb.Controls.Add(label32);
             in_gb.Controls.Add(label33);
             in_gb.Enabled = false;
-            in_gb.Location = new System.Drawing.Point(13, 567);
+            in_gb.Location = new System.Drawing.Point(12, 632);
             in_gb.Name = "in_gb";
-            in_gb.Size = new System.Drawing.Size(339, 120);
+            in_gb.Size = new System.Drawing.Size(376, 167);
             in_gb.TabIndex = 122;
             in_gb.TabStop = false;
             in_gb.Text = "Внутренняя часть";
@@ -799,7 +810,7 @@ namespace CalculateVessels.Forms
             steel3_cb.Location = new System.Drawing.Point(200, 22);
             steel3_cb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             steel3_cb.Name = "steel3_cb";
-            steel3_cb.Size = new System.Drawing.Size(138, 23);
+            steel3_cb.Size = new System.Drawing.Size(169, 23);
             steel3_cb.TabIndex = 73;
             // 
             // label17
@@ -815,7 +826,7 @@ namespace CalculateVessels.Forms
             // label27
             // 
             label27.AutoSize = true;
-            label27.Location = new System.Drawing.Point(13, 55);
+            label27.Location = new System.Drawing.Point(13, 113);
             label27.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label27.Name = "label27";
             label27.Size = new System.Drawing.Size(182, 15);
@@ -824,7 +835,7 @@ namespace CalculateVessels.Forms
             // 
             // l3_tb
             // 
-            l3_tb.Location = new System.Drawing.Point(200, 51);
+            l3_tb.Location = new System.Drawing.Point(200, 109);
             l3_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             l3_tb.Name = "l3_tb";
             l3_tb.Size = new System.Drawing.Size(46, 23);
@@ -833,7 +844,7 @@ namespace CalculateVessels.Forms
             // 
             // s3_tb
             // 
-            s3_tb.Location = new System.Drawing.Point(200, 80);
+            s3_tb.Location = new System.Drawing.Point(200, 138);
             s3_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             s3_tb.Name = "s3_tb";
             s3_tb.Size = new System.Drawing.Size(46, 23);
@@ -843,7 +854,7 @@ namespace CalculateVessels.Forms
             // label28
             // 
             label28.AutoSize = true;
-            label28.Location = new System.Drawing.Point(-5, 83);
+            label28.Location = new System.Drawing.Point(-5, 141);
             label28.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label28.Name = "label28";
             label28.Size = new System.Drawing.Size(200, 15);
@@ -853,7 +864,7 @@ namespace CalculateVessels.Forms
             // label32
             // 
             label32.AutoSize = true;
-            label32.Location = new System.Drawing.Point(254, 85);
+            label32.Location = new System.Drawing.Point(254, 143);
             label32.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label32.Name = "label32";
             label32.Size = new System.Drawing.Size(25, 15);
@@ -863,7 +874,7 @@ namespace CalculateVessels.Forms
             // label33
             // 
             label33.AutoSize = true;
-            label33.Location = new System.Drawing.Point(254, 55);
+            label33.Location = new System.Drawing.Point(254, 113);
             label33.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label33.Name = "label33";
             label33.Size = new System.Drawing.Size(25, 15);
@@ -888,9 +899,9 @@ namespace CalculateVessels.Forms
             groupBox8.Controls.Add(fi_tb);
             groupBox8.Controls.Add(label36);
             groupBox8.Controls.Add(label37);
-            groupBox8.Location = new System.Drawing.Point(13, 693);
+            groupBox8.Location = new System.Drawing.Point(11, 806);
             groupBox8.Name = "groupBox8";
-            groupBox8.Size = new System.Drawing.Size(339, 130);
+            groupBox8.Size = new System.Drawing.Size(377, 130);
             groupBox8.TabIndex = 123;
             groupBox8.TabStop = false;
             groupBox8.Text = "Сварные швы";
@@ -1047,44 +1058,44 @@ namespace CalculateVessels.Forms
             // label9
             // 
             label9.AutoSize = true;
-            label9.Location = new System.Drawing.Point(3, 260);
+            label9.Location = new System.Drawing.Point(-1, 84);
             label9.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label9.Name = "label9";
-            label9.Size = new System.Drawing.Size(121, 30);
+            label9.Size = new System.Drawing.Size(195, 15);
             label9.TabIndex = 125;
-            label9.Text = "Модуль продольной\r\n упругости, E:";
+            label9.Text = "Модуль продольной упругости, E:";
             // 
             // label8
             // 
             label8.AutoSize = true;
-            label8.Location = new System.Drawing.Point(22, 212);
+            label8.Location = new System.Drawing.Point(16, 55);
             label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label8.Name = "label8";
-            label8.Size = new System.Drawing.Size(102, 30);
+            label8.Size = new System.Drawing.Size(176, 15);
             label8.TabIndex = 124;
-            label8.Text = "Допускаемое\r\n напряжение, [σ]:";
+            label8.Text = "Допускаемое напряжение, [σ]:";
             // 
-            // EHandle_cb
+            // E1HandleCheckBox
             // 
-            EHandle_cb.AutoSize = true;
-            EHandle_cb.Location = new System.Drawing.Point(226, 256);
-            EHandle_cb.Name = "EHandle_cb";
-            EHandle_cb.Size = new System.Drawing.Size(75, 34);
-            EHandle_cb.TabIndex = 127;
-            EHandle_cb.Text = "Задать\r\nвручную";
-            EHandle_cb.UseVisualStyleBackColor = true;
+            E1HandleCheckBox.AutoSize = true;
+            E1HandleCheckBox.Location = new System.Drawing.Point(294, 74);
+            E1HandleCheckBox.Name = "E1HandleCheckBox";
+            E1HandleCheckBox.Size = new System.Drawing.Size(75, 34);
+            E1HandleCheckBox.TabIndex = 127;
+            E1HandleCheckBox.Text = "Задать\r\nвручную";
+            E1HandleCheckBox.UseVisualStyleBackColor = true;
             // 
-            // sigmaHandle_cb
+            // sigma1HandleCheckBox
             // 
-            sigmaHandle_cb.AutoSize = true;
-            sigmaHandle_cb.Location = new System.Drawing.Point(226, 218);
-            sigmaHandle_cb.Name = "sigmaHandle_cb";
-            sigmaHandle_cb.Size = new System.Drawing.Size(75, 34);
-            sigmaHandle_cb.TabIndex = 126;
-            sigmaHandle_cb.Text = "Задать\r\nвручную";
-            sigmaHandle_cb.UseVisualStyleBackColor = true;
-            sigmaHandle_cb.CheckedChanged += Sigma1Handle_cb_CheckedChanged;
-            sigmaHandle_cb.CheckStateChanged += EHandle_cb_CheckedChanged;
+            sigma1HandleCheckBox.AutoSize = true;
+            sigma1HandleCheckBox.Location = new System.Drawing.Point(294, 45);
+            sigma1HandleCheckBox.Name = "sigma1HandleCheckBox";
+            sigma1HandleCheckBox.Size = new System.Drawing.Size(75, 34);
+            sigma1HandleCheckBox.TabIndex = 126;
+            sigma1HandleCheckBox.Text = "Задать\r\nвручную";
+            sigma1HandleCheckBox.UseVisualStyleBackColor = true;
+            sigma1HandleCheckBox.CheckedChanged += Sigma1Handle_cb_CheckedChanged;
+            sigma1HandleCheckBox.CheckStateChanged += EHandle_cb_CheckedChanged;
             // 
             // label2
             // 
@@ -1135,17 +1146,207 @@ namespace CalculateVessels.Forms
             EAllow_ch.Text = "E, МПа";
             EAllow_ch.Width = 55;
             // 
+            // nozzleGgroupBox
+            // 
+            nozzleGgroupBox.Controls.Add(steel1_cb);
+            nozzleGgroupBox.Controls.Add(label7);
+            nozzleGgroupBox.Controls.Add(E1HandleCheckBox);
+            nozzleGgroupBox.Controls.Add(sigmaAllow1TextBox);
+            nozzleGgroupBox.Controls.Add(sigma1HandleCheckBox);
+            nozzleGgroupBox.Controls.Add(Ellow1TextBox);
+            nozzleGgroupBox.Controls.Add(label9);
+            nozzleGgroupBox.Controls.Add(d_tb);
+            nozzleGgroupBox.Controls.Add(label8);
+            nozzleGgroupBox.Controls.Add(s1_tb);
+            nozzleGgroupBox.Controls.Add(cs_tb);
+            nozzleGgroupBox.Controls.Add(cs1_tb);
+            nozzleGgroupBox.Controls.Add(l1_tb);
+            nozzleGgroupBox.Controls.Add(label10);
+            nozzleGgroupBox.Controls.Add(label11);
+            nozzleGgroupBox.Controls.Add(label12);
+            nozzleGgroupBox.Controls.Add(label13);
+            nozzleGgroupBox.Controls.Add(label14);
+            nozzleGgroupBox.Controls.Add(label26);
+            nozzleGgroupBox.Controls.Add(label18);
+            nozzleGgroupBox.Controls.Add(label19);
+            nozzleGgroupBox.Controls.Add(label25);
+            nozzleGgroupBox.Controls.Add(label21);
+            nozzleGgroupBox.Controls.Add(label24);
+            nozzleGgroupBox.Location = new System.Drawing.Point(13, 192);
+            nozzleGgroupBox.Name = "nozzleGgroupBox";
+            nozzleGgroupBox.Size = new System.Drawing.Size(375, 258);
+            nozzleGgroupBox.TabIndex = 129;
+            nozzleGgroupBox.TabStop = false;
+            nozzleGgroupBox.Text = "Штуцер";
+            // 
+            // E2HandleCheckBox
+            // 
+            E2HandleCheckBox.AutoSize = true;
+            E2HandleCheckBox.Location = new System.Drawing.Point(294, 74);
+            E2HandleCheckBox.Name = "E2HandleCheckBox";
+            E2HandleCheckBox.Size = new System.Drawing.Size(75, 34);
+            E2HandleCheckBox.TabIndex = 135;
+            E2HandleCheckBox.Text = "Задать\r\nвручную";
+            E2HandleCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // sigmaAllow2TextBox
+            // 
+            sigmaAllow2TextBox.Enabled = false;
+            sigmaAllow2TextBox.Location = new System.Drawing.Point(200, 51);
+            sigmaAllow2TextBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            sigmaAllow2TextBox.Name = "sigmaAllow2TextBox";
+            sigmaAllow2TextBox.ReadOnly = true;
+            sigmaAllow2TextBox.Size = new System.Drawing.Size(46, 23);
+            sigmaAllow2TextBox.TabIndex = 128;
+            // 
+            // sigma2HandleCheckBox
+            // 
+            sigma2HandleCheckBox.AutoSize = true;
+            sigma2HandleCheckBox.Location = new System.Drawing.Point(294, 45);
+            sigma2HandleCheckBox.Name = "sigma2HandleCheckBox";
+            sigma2HandleCheckBox.Size = new System.Drawing.Size(75, 34);
+            sigma2HandleCheckBox.TabIndex = 134;
+            sigma2HandleCheckBox.Text = "Задать\r\nвручную";
+            sigma2HandleCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // Ellow2TextBox
+            // 
+            Ellow2TextBox.Enabled = false;
+            Ellow2TextBox.Location = new System.Drawing.Point(200, 80);
+            Ellow2TextBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            Ellow2TextBox.Name = "Ellow2TextBox";
+            Ellow2TextBox.ReadOnly = true;
+            Ellow2TextBox.Size = new System.Drawing.Size(46, 23);
+            Ellow2TextBox.TabIndex = 129;
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Location = new System.Drawing.Point(-1, 84);
+            label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label3.Name = "label3";
+            label3.Size = new System.Drawing.Size(195, 15);
+            label3.TabIndex = 133;
+            label3.Text = "Модуль продольной упругости, E:";
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Location = new System.Drawing.Point(16, 55);
+            label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label4.Name = "label4";
+            label4.Size = new System.Drawing.Size(176, 15);
+            label4.TabIndex = 132;
+            label4.Text = "Допускаемое напряжение, [σ]:";
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Location = new System.Drawing.Point(254, 55);
+            label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label5.Name = "label5";
+            label5.Size = new System.Drawing.Size(33, 15);
+            label5.TabIndex = 130;
+            label5.Text = "МПа";
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Location = new System.Drawing.Point(254, 84);
+            label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label6.Name = "label6";
+            label6.Size = new System.Drawing.Size(33, 15);
+            label6.TabIndex = 131;
+            label6.Text = "МПа";
+            // 
+            // E3HandleCheckBox
+            // 
+            E3HandleCheckBox.AutoSize = true;
+            E3HandleCheckBox.Location = new System.Drawing.Point(294, 74);
+            E3HandleCheckBox.Name = "E3HandleCheckBox";
+            E3HandleCheckBox.Size = new System.Drawing.Size(75, 34);
+            E3HandleCheckBox.TabIndex = 135;
+            E3HandleCheckBox.Text = "Задать\r\nвручную";
+            E3HandleCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // sigmaAllow3TextBox
+            // 
+            sigmaAllow3TextBox.Enabled = false;
+            sigmaAllow3TextBox.Location = new System.Drawing.Point(200, 51);
+            sigmaAllow3TextBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            sigmaAllow3TextBox.Name = "sigmaAllow3TextBox";
+            sigmaAllow3TextBox.ReadOnly = true;
+            sigmaAllow3TextBox.Size = new System.Drawing.Size(46, 23);
+            sigmaAllow3TextBox.TabIndex = 128;
+            // 
+            // sigma3HandleCheckBox
+            // 
+            sigma3HandleCheckBox.AutoSize = true;
+            sigma3HandleCheckBox.Location = new System.Drawing.Point(294, 45);
+            sigma3HandleCheckBox.Name = "sigma3HandleCheckBox";
+            sigma3HandleCheckBox.Size = new System.Drawing.Size(75, 34);
+            sigma3HandleCheckBox.TabIndex = 134;
+            sigma3HandleCheckBox.Text = "Задать\r\nвручную";
+            sigma3HandleCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // Ellow3TextBox
+            // 
+            Ellow3TextBox.Enabled = false;
+            Ellow3TextBox.Location = new System.Drawing.Point(200, 80);
+            Ellow3TextBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            Ellow3TextBox.Name = "Ellow3TextBox";
+            Ellow3TextBox.ReadOnly = true;
+            Ellow3TextBox.Size = new System.Drawing.Size(46, 23);
+            Ellow3TextBox.TabIndex = 129;
+            // 
+            // label20
+            // 
+            label20.AutoSize = true;
+            label20.Location = new System.Drawing.Point(-1, 84);
+            label20.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label20.Name = "label20";
+            label20.Size = new System.Drawing.Size(195, 15);
+            label20.TabIndex = 133;
+            label20.Text = "Модуль продольной упругости, E:";
+            // 
+            // label38
+            // 
+            label38.AutoSize = true;
+            label38.Location = new System.Drawing.Point(16, 55);
+            label38.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label38.Name = "label38";
+            label38.Size = new System.Drawing.Size(176, 15);
+            label38.TabIndex = 132;
+            label38.Text = "Допускаемое напряжение, [σ]:";
+            // 
+            // label44
+            // 
+            label44.AutoSize = true;
+            label44.Location = new System.Drawing.Point(254, 55);
+            label44.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label44.Name = "label44";
+            label44.Size = new System.Drawing.Size(33, 15);
+            label44.TabIndex = 130;
+            label44.Text = "МПа";
+            // 
+            // label45
+            // 
+            label45.AutoSize = true;
+            label45.Location = new System.Drawing.Point(254, 84);
+            label45.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label45.Name = "label45";
+            label45.Size = new System.Drawing.Size(33, 15);
+            label45.TabIndex = 131;
+            label45.Text = "МПа";
+            // 
             // NozzleForm
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             CancelButton = cancel_btn;
-            ClientSize = new System.Drawing.Size(804, 884);
+            ClientSize = new System.Drawing.Size(841, 996);
+            Controls.Add(nozzleGgroupBox);
             Controls.Add(loadingConditionsListView);
-            Controls.Add(EHandle_cb);
-            Controls.Add(sigmaHandle_cb);
-            Controls.Add(label9);
-            Controls.Add(label8);
             Controls.Add(groupBox8);
             Controls.Add(in_gb);
             Controls.Add(ring_gb);
@@ -1154,11 +1355,7 @@ namespace CalculateVessels.Forms
             Controls.Add(label30);
             Controls.Add(oboz_tb);
             Controls.Add(label29);
-            Controls.Add(label26);
             Controls.Add(place_gb);
-            Controls.Add(label25);
-            Controls.Add(label24);
-            Controls.Add(label21);
             Controls.Add(cancel_btn);
             Controls.Add(calculate_btn);
             Controls.Add(preCalculate_btn);
@@ -1167,24 +1364,6 @@ namespace CalculateVessels.Forms
             Controls.Add(button3);
             Controls.Add(button2);
             Controls.Add(checkBox1);
-            Controls.Add(getE_b);
-            Controls.Add(label19);
-            Controls.Add(grtSigma_b);
-            Controls.Add(label18);
-            Controls.Add(label14);
-            Controls.Add(label13);
-            Controls.Add(label12);
-            Controls.Add(label11);
-            Controls.Add(label10);
-            Controls.Add(l1_tb);
-            Controls.Add(cs1_tb);
-            Controls.Add(cs_tb);
-            Controls.Add(s1_tb);
-            Controls.Add(d_tb);
-            Controls.Add(E1_tb);
-            Controls.Add(sigma_d1_tb);
-            Controls.Add(steel1_cb);
-            Controls.Add(label7);
             Controls.Add(Gost_cb);
             Controls.Add(label2);
             Controls.Add(name_tb);
@@ -1209,6 +1388,8 @@ namespace CalculateVessels.Forms
             in_gb.PerformLayout();
             groupBox8.ResumeLayout(false);
             groupBox8.PerformLayout();
+            nozzleGgroupBox.ResumeLayout(false);
+            nozzleGgroupBox.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -1232,9 +1413,7 @@ namespace CalculateVessels.Forms
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.CheckBox checkBox1;
-        private System.Windows.Forms.Button getE_b;
         private System.Windows.Forms.Label label19;
-        private System.Windows.Forms.Button grtSigma_b;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Label label15;
@@ -1260,8 +1439,8 @@ namespace CalculateVessels.Forms
         private System.Windows.Forms.Label label30;
         private System.Windows.Forms.TextBox nameEl_tb;
         private System.Windows.Forms.GroupBox vid_gb;
-        private System.Windows.Forms.TextBox E1_tb;
-        private System.Windows.Forms.TextBox sigma_d1_tb;
+        private System.Windows.Forms.TextBox Ellow1TextBox;
+        private System.Windows.Forms.TextBox sigmaAllow1TextBox;
         private System.Windows.Forms.RadioButton vid_rb8;
         private System.Windows.Forms.RadioButton vid_rb7;
         private System.Windows.Forms.RadioButton vid_rb6;
@@ -1303,8 +1482,8 @@ namespace CalculateVessels.Forms
         internal System.Windows.Forms.ComboBox steel3_cb;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.CheckBox EHandle_cb;
-        private System.Windows.Forms.CheckBox sigmaHandle_cb;
+        private System.Windows.Forms.CheckBox E1HandleCheckBox;
+        private System.Windows.Forms.CheckBox sigma1HandleCheckBox;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ListView loadingConditionsListView;
         private System.Windows.Forms.ColumnHeader pressureType_ch;
@@ -1312,5 +1491,22 @@ namespace CalculateVessels.Forms
         private System.Windows.Forms.ColumnHeader t_ch;
         private System.Windows.Forms.ColumnHeader sigmaAllow_ch;
         private System.Windows.Forms.ColumnHeader EAllow_ch;
+        private System.Windows.Forms.GroupBox nozzleGgroupBox;
+        private System.Windows.Forms.CheckBox E2HandleCheckBox;
+        private System.Windows.Forms.TextBox sigmaAllow2TextBox;
+        private System.Windows.Forms.CheckBox sigma2HandleCheckBox;
+        private System.Windows.Forms.TextBox Ellow2TextBox;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.CheckBox E3HandleCheckBox;
+        private System.Windows.Forms.TextBox sigmaAllow3TextBox;
+        private System.Windows.Forms.CheckBox sigma3HandleCheckBox;
+        private System.Windows.Forms.TextBox Ellow3TextBox;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.Label label38;
+        private System.Windows.Forms.Label label44;
+        private System.Windows.Forms.Label label45;
     }
 }

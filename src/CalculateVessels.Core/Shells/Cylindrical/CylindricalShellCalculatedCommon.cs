@@ -3,9 +3,6 @@ using System.Collections.Generic;
 
 namespace CalculateVessels.Core.Shells.Cylindrical;
 
-#pragma warning disable IDE1006
-// ReSharper disable InconsistentNaming
-
 public class CylindricalShellCalculatedCommon : ShellCalculatedCommonData
 {
     //public override string Type => nameof(CylindricalShellCalculatedCommon);

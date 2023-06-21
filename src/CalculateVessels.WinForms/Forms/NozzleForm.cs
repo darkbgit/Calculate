@@ -80,14 +80,14 @@ public partial class NozzleForm : NozzleFormMiddle
 
         if (InputData.SigmaAllow1 != 0)
         {
-            sigmaHandle_cb.Checked = true;
-            sigma_d1_tb.Text = InputData.SigmaAllow1.ToString(CultureInfo.CurrentCulture);
+            sigma1HandleCheckBox.Checked = true;
+            sigmaAllow1TextBox.Text = InputData.SigmaAllow1.ToString(CultureInfo.CurrentCulture);
         }
 
         if (InputData.E1 != 0)
         {
-            EHandle_cb.Checked = true;
-            E1_tb.Text = InputData.E1.ToString(CultureInfo.CurrentCulture);
+            E1HandleCheckBox.Checked = true;
+            Ellow1TextBox.Text = InputData.E1.ToString(CultureInfo.CurrentCulture);
         }
 
         //NozzleKind
@@ -278,11 +278,11 @@ public partial class NozzleForm : NozzleFormMiddle
             delta1 = Parameters.GetParam<double>(delta1_tb.Text, "delta1", dataInErr),
             delta2 = Parameters.GetParam<double>(delta2_tb.Text, "delta2", dataInErr),
 
-            SigmaAllow1 = sigmaHandle_cb.Checked
-                ? Parameters.GetParam<double>(sigma_d1_tb.Text, "[σ1]", dataInErr)
+            SigmaAllow1 = sigma1HandleCheckBox.Checked
+                ? Parameters.GetParam<double>(sigmaAllow1TextBox.Text, "[σ1]", dataInErr)
                 : default,
-            E1 = EHandle_cb.Checked
-                ? Parameters.GetParam<double>(E1_tb.Text, "E1", dataInErr)
+            E1 = E1HandleCheckBox.Checked
+                ? Parameters.GetParam<double>(Ellow1TextBox.Text, "E1", dataInErr)
                 : default
         };
 
@@ -1574,14 +1574,14 @@ public partial class NozzleForm : NozzleFormMiddle
     {
         if (sender is not CheckBox cb) return;
 
-        FormHelpers.EnabledIfCheck(sigma_d1_tb, cb.Checked);
+        FormHelpers.EnabledIfCheck(sigmaAllow1TextBox, cb.Checked);
     }
 
     private void EHandle_cb_CheckedChanged(object sender, EventArgs e)
     {
         if (sender is not CheckBox cb) return;
 
-        FormHelpers.EnabledIfCheck(E1_tb, cb.Checked);
+        FormHelpers.EnabledIfCheck(Ellow1TextBox, cb.Checked);
     }
 
     private static string Get_d0(ICalculatedElement element) => string

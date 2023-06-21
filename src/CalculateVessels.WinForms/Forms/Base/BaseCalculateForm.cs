@@ -103,13 +103,30 @@ public abstract class BaseCalculateForm<T> : Form
 
     protected void LoadSteelsToComboBox(ComboBox comboBox, SteelSource source)
     {
+        string[] preferredSteels = { "Ст3", "20", "12Х18Н10Т", "09Г2С" };
+
         comboBox.Items.Clear();
 
-        var steels = PhysicalDataService.GetSteels(source)
+        var steels = PhysicalDataService
+            .GetSteels(source)
+            .ToList();
+
+        var preferredSteelList = preferredSteels
+            .Intersect(steels)
+            .ToList();
+
+        var otherSteels = steels
+            .Except(preferredSteelList)
+            .ToList();
+
+        otherSteels.Sort();
+
+        var result = preferredSteelList
+            .Union(otherSteels)
             .Select(s => s as object)
             .ToArray();
 
-        comboBox.Items.AddRange(steels);
+        comboBox.Items.AddRange(result);
         comboBox.SelectedIndex = 0;
     }
 

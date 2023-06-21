@@ -1,4 +1,4 @@
-﻿using CalculateVessels.Elements;
+﻿using CalculateVessels.Controls;
 
 namespace CalculateVessels.Forms;
 
@@ -99,7 +99,7 @@ partial class CylindricalShellForm
         label30 = new System.Windows.Forms.Label();
         Q_tb = new System.Windows.Forms.TextBox();
         isNozzleCalculateCheckBox = new System.Windows.Forms.CheckBox();
-        loadingConditionGroupBox = new LoadingConditionGroupBox();
+        loadingConditionControl = new LoadingConditionControl();
         loadingConditionsControl = new LoadingConditionsControl();
         groupBox2.SuspendLayout();
         force_gb.SuspendLayout();
@@ -868,14 +868,13 @@ partial class CylindricalShellForm
         isNozzleCalculateCheckBox.Text = "Расчитать штуцер в обечайке";
         isNozzleCalculateCheckBox.UseVisualStyleBackColor = true;
         // 
-        // loadingConditionGroupBox
+        // loadingConditionControl
         // 
-        loadingConditionGroupBox.Location = new System.Drawing.Point(13, 99);
-        loadingConditionGroupBox.Name = "loadingConditionGroupBox";
-        loadingConditionGroupBox.Size = new System.Drawing.Size(351, 144);
-        loadingConditionGroupBox.TabIndex = 71;
-        loadingConditionGroupBox.TabStop = false;
-        loadingConditionGroupBox.Text = "Условия нагружения";
+        loadingConditionControl.Location = new System.Drawing.Point(13, 99);
+        loadingConditionControl.Name = "loadingConditionControl";
+        loadingConditionControl.Size = new System.Drawing.Size(354, 144);
+        loadingConditionControl.TabIndex = 71;
+        loadingConditionControl.TabStop = false;
         // 
         // loadingConditionsControl
         // 
@@ -893,7 +892,7 @@ partial class CylindricalShellForm
         CancelButton = cancel_b;
         ClientSize = new System.Drawing.Size(709, 716);
         Controls.Add(loadingConditionsControl);
-        Controls.Add(loadingConditionGroupBox);
+        Controls.Add(loadingConditionControl);
         Controls.Add(isNozzleCalculateCheckBox);
         Controls.Add(Q_gb);
         Controls.Add(M_gb);
@@ -1037,6 +1036,6 @@ partial class CylindricalShellForm
     private System.Windows.Forms.Label fq_l;
     private System.Windows.Forms.TextBox fq_tb;
     private System.Windows.Forms.CheckBox isNozzleCalculateCheckBox;
-    private Elements.LoadingConditionGroupBox loadingConditionGroupBox;
+    private LoadingConditionControl loadingConditionControl;
     private LoadingConditionsControl loadingConditionsControl;
 }

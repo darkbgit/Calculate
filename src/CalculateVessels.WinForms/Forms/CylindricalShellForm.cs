@@ -1,5 +1,5 @@
-﻿using CalculateVessels.Core.Interfaces;
-using CalculateVessels.Core.Shells.Base;
+﻿using CalculateVessels.Core.Base;
+using CalculateVessels.Core.Interfaces;
 using CalculateVessels.Core.Shells.Cylindrical;
 using CalculateVessels.Data.Enums;
 using CalculateVessels.Data.Interfaces;
@@ -41,7 +41,7 @@ public partial class CylindricalShellForm : CylindricalShellFormMiddle
 
         if (InputData.LoadingConditions.Count() == 1)
         {
-            loadingConditionGroupBox.SetLoadingCondition(InputData.LoadingConditions.First());
+            loadingConditionControl.SetLoadingCondition(InputData.LoadingConditions.First());
         }
         else
         {
@@ -131,7 +131,7 @@ public partial class CylindricalShellForm : CylindricalShellFormMiddle
             c3 = Parameters.GetParam<double>(c3_tb.Text, "c3", dataInErr),
         };
 
-        var loadingConditions = FormHelpers.ParseLoadingConditions(loadingConditionsControl, loadingConditionGroupBox).ToList();
+        var loadingConditions = FormHelpers.ParseLoadingConditions(loadingConditionsControl, loadingConditionControl).ToList();
 
         if (!loadingConditions.Any())
         {
@@ -174,7 +174,7 @@ public partial class CylindricalShellForm : CylindricalShellFormMiddle
 
         if (!loadingConditionsControl.Any())
         {
-            var loadingCondition = loadingConditionGroupBox.GetLoadingCondition();
+            var loadingCondition = loadingConditionControl.GetLoadingCondition();
 
             if (loadingCondition == null)
             {

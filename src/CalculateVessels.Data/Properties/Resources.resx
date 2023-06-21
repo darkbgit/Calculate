@@ -1006,16 +1006,16 @@
   <data name="SaddleNothingElem" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\pic\Saddle\SaddleNothingElem.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="SaddleRingInElem" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="SaddleRingIn0Elem" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\pic\Saddle\SaddleRingInElem.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="SaddleRingOutElem" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\pic\Saddle\SaddleRingOutElem.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="SaddleRingRib1Elem" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="SaddleRingIn1Elem" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\pic\Saddle\SaddleRingRib1Elem.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="SaddleRingRib3Elem" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="SaddleRingIn3Elem" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\pic\Saddle\SaddleRingRib3Elem.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="SaddleSheetElem" type="System.Resources.ResXFileRef, System.Windows.Forms">

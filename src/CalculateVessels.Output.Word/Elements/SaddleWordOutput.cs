@@ -1,6 +1,7 @@
 ﻿using CalculateVessels.Core.Enums;
 using CalculateVessels.Core.Interfaces;
 using CalculateVessels.Core.Supports.Saddle;
+using CalculateVessels.Data.Properties;
 using CalculateVessels.Output.Word.Core;
 using CalculateVessels.Output.Word.Enums;
 using CalculateVessels.Output.Word.Interfaces;
@@ -32,24 +33,18 @@ internal class SaddleWordOutput : IWordOutputElement<SaddleCalculated>
             .Heading(HeadingType.Heading1)
             .Alignment(AlignmentType.Center);
 
-        body.AddParagraph();
-
-        var imagePart = mainPart.AddImagePart(ImagePartType.Gif);
-
-        byte[]? bytes = dataIn.Type switch
+        var bytes = dataIn.SaddleType switch
         {
-            SaddleType.SaddleWithoutRingWithoutSheet =>
-                Data.Properties.Resources.SaddleNothingElem,
-            SaddleType.SaddleWithoutRingWithSheet =>
-                Data.Properties.Resources.SaddleSheetElem,
-            _ => null
+            SaddleType.SaddleWithoutRingWithoutSheet => Resources.SaddleNothingElem,
+            SaddleType.SaddleWithoutRingWithSheet => Resources.SaddleSheetElem,
+            SaddleType.SaddleWithRingInNoRibs => Resources.SaddleRingIn0Elem,
+            SaddleType.SaddleWithRingIn1Rib => Resources.SaddleRingIn1Elem,
+            SaddleType.SaddleWithRingIn3Rib => Resources.SaddleRingIn3Elem,
+            SaddleType.SaddleWithRingOutRib => Resources.SaddleRingOutElem,
+            _ => throw new InvalidOperationException()
         };
 
-        if (bytes != null)
-        {
-            imagePart.FeedData(new MemoryStream(bytes));
-            body.AddParagraph().AddImage(mainPart.GetIdOfPart(imagePart), bytes);
-        }
+        mainPart.InsertImage(bytes, ImagePartType.Gif);
 
         body.AddParagraph("Исходные данные").Alignment(AlignmentType.Center);
 
@@ -102,7 +97,7 @@ internal class SaddleWordOutput : IWordOutputElement<SaddleCalculated>
             table.AddRow()
                 .AddCell("Высота опоры, Н")
                 .AddCell($"{dataIn.H} мм");
-            if (dataIn.Type == SaddleType.SaddleWithoutRingWithSheet)
+            if (dataIn.SaddleType == SaddleType.SaddleWithoutRingWithSheet)
             {
                 table.AddRow()
                     .AddCell("Толщина подкладного листа, ")
@@ -202,7 +197,7 @@ internal class SaddleWordOutput : IWordOutputElement<SaddleCalculated>
             body.AddParagraph("где ")
                 .AppendEquation("K_9")
                 .AddRun(" - коэффициент, учитывающий частичное заполнение жидкостью");
-            body.AddParagraph("")
+            body.AddParagraph()
                 .AppendEquation("K_9=max{[1.6-0.20924∙(x-1)+0.028702∙x∙(x-1)+0.4795∙10^3∙y∙(x-1)-0.2391∙10^-6∙x∙y∙(x-1)-0.29936∙10^-2∙(x-1)∙x^2-0.85692∙10^-6∙(х-1)∙у^2+0.88174∙10^-6∙х^2∙(х-1)∙у-0.75955∙10^-8∙у^2∙(х-1)∙х+0.82748∙10^-4∙(х-1)∙х^3+0.48168∙10^-9∙(х-1)∙у^3];1}");
             body.AddParagraph("где ").AppendEquation("y=D/(s-c);x=L/D");
             body.AddParagraph()
@@ -230,10 +225,11 @@ internal class SaddleWordOutput : IWordOutputElement<SaddleCalculated>
                     .Color(System.Drawing.Color.Red);
             }
             body.AddParagraph("Условие устойчивости");
-            body.AddParagraph("").AppendEquation("|M_12|/[M]≤1");
+            body.AddParagraph()
+                .AppendEquation("|M_12|/[M]≤1");
 
             body.AddParagraph("где [M] - допускаемый изгибающий момент из условия устойчивости");
-            body.AddParagraph("")
+            body.AddParagraph()
                 .AppendEquation("[M]=(8.9∙10^-5∙E)/n_y∙D^3∙[(100∙(s-c))/D]^2.5" +
                                 $"=(8.9∙10^-5∙{data.E})/{data.ny}∙{dataIn.D}^3∙[(100∙({dataIn.s}-{dataIn.c}))/{dataIn.D}]^2.5={data.M_d:f2} Н∙мм");
             body.AddParagraph().AppendEquation($"|{data.M12:f2}|/{data.M_d:f2}={data.ConditionStability1:f2}≤1");
@@ -257,405 +253,403 @@ internal class SaddleWordOutput : IWordOutputElement<SaddleCalculated>
 
         body.AddParagraph();
 
-        switch (dataIn.Type)
+        switch (dataIn.SaddleType)
         {
             case SaddleType.SaddleWithoutRingWithoutSheet:
+
+                body.AddParagraph("Проверка несущей способности обечайки, не укрепленной кольцами жесткости в области опорного узла и без подкладного листа в месте опоры");
+                body.AddParagraph("Вспомогательные параметры и коэффициенты");
+                body.AddParagraph("Параметр, определяемый расстоянием от середины опоры до днища");
+                body.AddParagraph()
+                    .AppendEquation("γ=2.83∙a/D∙√((s-c)/D)" +
+                                    $"=2.83∙{dataIn.a}/{dataIn.D}∙√(({dataIn.s}-{dataIn.c})/{dataIn.D})={data.gamma:f2}");
+
+                body.AddParagraph("Параметр, определяемый шириной пояса опоры");
+                body.AddParagraph()
+                    .AppendEquation("β_1=0.91∙b/√(D∙(s-c))" +
+                                    $"=0.91∙{dataIn.b}/√({dataIn.D}∙({dataIn.s}-{dataIn.c}))={data.beta1:f2}");
+
+                body.AddParagraph("Коэффициенты, учитывающие влияние ширины пояса опоры");
+                body.AddParagraph()
+                    .AppendEquation("K_10=max{(exp(-β_1)∙sin(β_1))/β_1;0.25}" +
+                                    $"=max{{(exp(-{data.beta1:f2})∙sin({data.beta1:f2}))/{data.beta1:f2};0.25}}" +
+                                    $"=max({data.K10_1:f2};0.25)={data.K10:f2}");
+
+                body.AddParagraph()
+                    .AppendEquation("K_11=(1-exp(-β_1)∙cos(β_1))/β_1" +
+                                    $"=(1-exp(-{data.beta1:f2})∙cos({data.beta1:f2}))/{data.beta1:f2}={data.K11:f2}");
+
+                body.AddParagraph("Коэффициенты, учитывающие влияние угла охвата");
+                body.AddParagraph()
+                    .AppendEquation("K_12=(1.15-0.1432∙δ_1)/sin(0.5∙δ_1)" +
+                                    $"=(1.15-0.1432∙{DegToRad(dataIn.delta1):f2})/sin(0.5∙{DegToRad(dataIn.delta1):f2})={data.K12:f2}");
+
+                body.AddParagraph()
+                    .AppendEquation("K_13=(max{1.7-(2.1∙δ_1)/π;0})/sin(0.5∙δ_1)" +
+                                    $"=(max{{1.7 - (2.1∙{DegToRad(dataIn.delta1):f2})/π;0}})/sin(0.5∙{DegToRad(dataIn.delta1):f2})={data.K13:f2}");
+
+                body.AddParagraph()
+                    .AppendEquation("K_14=(1.45-0.43∙δ_1)/sin(0.5∙δ_1)" +
+                                    $"=(1.45-0.43∙{DegToRad(dataIn.delta1):f2})/sin(0.5∙{DegToRad(dataIn.delta1):f2})={data.K14:f2}");
+
+                body.AddParagraph("Коэффициенты, учитывающие влияние расстояния от середины опоры до днища и угла охвата");
+                body.AddParagraph()
+                    .AppendEquation("K_15=min{1.0;(0.8∙√γ+6∙γ)/δ_1}" +
+                                    $"min{{1.0;(0.8∙√{data.gamma:f2}+6∙{data.gamma:f2})/{DegToRad(dataIn.delta1):f2}}}=min{{1.0;{data.K15_2:f2}}}={data.K15:f2}");
+
+                body.AddParagraph()
+                    .AppendEquation("K_16=1-0.65/(1+(6∙γ)^2)∙√(π/(3∙δ_1))"
+                                    + $"=1-0.65/(1+(6∙{data.gamma:f2})^2)∙√(π/(3∙{DegToRad(dataIn.delta1):f2}))={data.K16:f2}");
+
+                body.AddParagraph("Коэффициенты, учитывающие влияние ширины пояса опоры и угла охвата");
+                body.AddParagraph()
+                    .AppendEquation("K_17=1/(1+0.6∙∛(D/(s-c))∙(b/D)∙δ_1)" +
+                                    $"=1/(1+0.6∙∛({dataIn.D}/({dataIn.s}-{dataIn.c}))∙({dataIn.b}/{dataIn.D})∙{DegToRad(dataIn.delta1):f2})={data.K17:f2}");
+
+                body.AddParagraph("Общее мембранное меридиональное напряжение изгиба от весовых нагрузок, действующее в области опорного узла");
+                body.AddParagraph()
+                    .AppendEquation("σ_mx=4∙M_i/(π∙D^2∙(s-c))" +
+                                    $"=4∙{data.M1:f2}/(π∙{dataIn.D}^2∙({dataIn.s}-{dataIn.c}))={data.sigma_mx:f2}");
+
+                body.AddParagraph("Условие прочности");
+                body.AddParagraph().AppendEquation("F_1≤min{[F]_2;[F]_3}");
+                body.AddParagraph("где ")
+                    .AppendEquation("[F]_2")
+                    .AddRun(" - допускаемое опорное усилие от нагружения в меридиональном направлении");
+                body.AddParagraph().AppendEquation("[F]_2=(0.7∙[σ_i]_2∙(s-c)∙√(D∙(s-c)))/(K_10∙K_12)");
+
+                body.AddParagraph("\t")
+                    .AppendEquation("[F]_3")
+                    .AddRun(" - допускаемое опорное усилие от нагружения в окружном направлении");
+
+                body.AddParagraph()
+                    .AppendEquation("[F]_3=(0.9∙[σ_i]_3∙(s-c)∙√(D∙(s-c)))/(K_14∙K_16∙K_17)");
+
+                body.AddParagraph("где ")
+                    .AppendEquation("[σ_i]_2, [σ_i]_2")
+                    .AddRun(" - предельные напряжения изгиба в меридиональном и окружном направлениях");
+
+                body.AddParagraph()
+                    .AppendEquation("[σ_i]=K_1∙K_2∙[σ]");
+
+                body.AddParagraph()
+                    .AppendEquation("K_1=(1-ϑ_2^2)/((1/3+ϑ_1∙ϑ_2)+√((1/3+ϑ_1∙ϑ_2)^2+(1-ϑ_2^2)∙ϑ_1^2))");
+
+                body.AddParagraph()
+                    .AppendEquation($"K_2={data.K2}")
+                    .AddRun(dataIn.IsAssembly
+                        ? " - для условий испытания и монтажа"
+                        : " - для рабочих условий");
+
+                body.AddParagraph("для ").AppendEquation("[σ_i]_2");
+                body.AddParagraph()
+                    .AppendEquation("ϑ_1=-(0,23∙K_13∙K_15)/(K_12∙K_10)" +
+                                    $"={data.v1_2:f2}");
+
+                body.AddParagraph()
+                    .AppendEquation("ϑ_(2,1)=- ̅σ_mx∙1/(K_2∙[σ])" +
+                                    $"={data.v21_2:f2}");
+                body.AddParagraph()
+                    .AppendEquation("ϑ_(2,2)=[(p∙D)/(4∙(s-c))- ̅σ_mx]∙1/(K_2∙[σ])" +
+                                    $"={data.v22_2:f2}");
+
+                body.AddParagraph("Для ")
+                    .AppendEquation("ϑ_2")
+                    .AddRun(" принимают одно из значений ")
+                    .AppendEquation("ϑ_(2,1)")
+                    .AddRun(" или ")
+                    .AppendEquation("ϑ_(2,2)")
+                    .AddRun(", для которого предельное напряжение изгиба будет наименьшим.");
+
+                body.AddParagraph()
+                    .AppendEquation(data.K1_2For_v21 < data.K1_2For_v22
+                        ? $"ϑ_2=ϑ_(2,1)={data.v21_2:f2}"
+                        : $"ϑ_2=ϑ_(2,2)={data.v22_2:f2}");
+
+                body.AddParagraph().AppendEquation($"K_1={data.K1_2:f2}");
+
+                body.AddParagraph()
+                    .AppendEquation($"[σ_i]_2={data.K1_2:f2}∙{data.K2:f2}∙{data.SigmaAllow}={data.sigmai2:f2}");
+
+                body.AddParagraph()
+                    .AppendEquation($"[F]_2=(0.7∙{data.sigmai2:f2}∙({dataIn.s}-{dataIn.c})∙√({dataIn.D}∙({dataIn.s}-{dataIn.c})))/({data.K10:f2}∙{data.K12:f2})={data.F_d2:f2}");
+
+                body.AddParagraph("для ").AppendEquation("[σ_i]_3");
+                body.AddParagraph()
+                    .AppendEquation("ϑ_1=-(0,53∙K_11)/(K_14∙K_16∙K_17∙sin(0.5∙δ_1))" +
+                                    $"={data.v1_3:f2}");
+
+                body.AddParagraph().AppendEquation("ϑ_(2,1)=0");
+
+                body.AddParagraph()
+                    .AppendEquation("ϑ_(2,2)=(p∙D)/(2∙(s-c))∙1/(K_2∙[σ])" + $"={data.v22_3:f2}");
+
+                body.AddParagraph("Для ")
+                    .AppendEquation("ϑ_2")
+                    .AddRun(" принимают одно из значений ")
+                    .AppendEquation("ϑ_(2,1)")
+                    .AddRun(" или ")
+                    .AppendEquation("ϑ_(2,2)")
+                    .AddRun(", для которого предельное напряжение изгиба будет наименьшим.");
+
+                body.AddParagraph().AppendEquation(data.K1_3For_v21 < data.K1_3For_v22
+                    ? $"ϑ_2=ϑ_(2,1)={data.v21_3:f2}"
+                    : $"ϑ_2=ϑ_(2,2)={data.v22_3:f2}");
+
+                body.AddParagraph().AppendEquation($"K_1={data.K1_3:f2}");
+
+                body.AddParagraph()
+                    .AppendEquation($"[σ_i]_3={data.K1_3:f2}∙{data.K2:f2}∙{data.SigmaAllow}={data.sigmai3:f2}");
+
+                body.AddParagraph()
+                    .AppendEquation($"[F]_3=(0.9∙{data.sigmai2:f2}∙({dataIn.s}-{dataIn.c})∙√({dataIn.D}∙({dataIn.s}-{dataIn.c})))/({data.K14:f2}∙{data.K16:f2}∙{data.K17:f2})={data.F_d3:f2}");
+
+                body.AddParagraph()
+                    .AppendEquation($"{data.F1:f2}≤min{{{data.F_d2:f2};{data.F_d3:f2}}}={data.ConditionStrength2:f2}");
+
+                if (data.F1 <= Math.Min(data.F_d2, data.F_d3))
                 {
-                    body.AddParagraph("Проверка несущей способности обечайки, не укрепленной кольцами жесткости в области опорного узла и без подкладного листа в месте опоры");
-                    body.AddParagraph("Вспомогательные параметры и коэффициенты");
-                    body.AddParagraph("Параметр, определяемый расстоянием от середины опоры до днища");
-                    body.AddParagraph()
-                        .AppendEquation("γ=2.83∙a/D∙√((s-c)/D)" +
-                                        $"=2.83∙{dataIn.a}/{dataIn.D}∙√(({dataIn.s}-{dataIn.c})/{dataIn.D})={data.gamma:f2}");
-
-                    body.AddParagraph("Параметр, определяемый шириной пояса опоры");
-                    body.AddParagraph()
-                        .AppendEquation("β_1=0.91∙b/√(D∙(s-c))" +
-                                        $"=0.91∙{dataIn.b}/√({dataIn.D}∙({dataIn.s}-{dataIn.c}))={data.beta1:f2}");
-
-                    body.AddParagraph("Коэффициенты, учитывающие влияние ширины пояса опоры");
-                    body.AddParagraph()
-                        .AppendEquation("K_10=max{(exp(-β_1)∙sin(β_1))/β_1;0.25}" +
-                                        $"=max{{(exp(-{data.beta1:f2})∙sin({data.beta1:f2}))/{data.beta1:f2};0.25}}" +
-                                        $"=max({data.K10_1:f2};0.25)={data.K10:f2}");
-
-                    body.AddParagraph()
-                        .AppendEquation("K_11=(1-exp(-β_1)∙cos(β_1))/β_1" +
-                                        $"=(1-exp(-{data.beta1:f2})∙cos({data.beta1:f2}))/{data.beta1:f2}={data.K11:f2}");
-
-                    body.AddParagraph("Коэффициенты, учитывающие влияние угла охвата");
-                    body.AddParagraph()
-                        .AppendEquation("K_12=(1.15-0.1432∙δ_1)/sin(0.5∙δ_1)" +
-                                        $"=(1.15-0.1432∙{DegToRad(dataIn.delta1):f2})/sin(0.5∙{DegToRad(dataIn.delta1):f2})={data.K12:f2}");
-
-                    body.AddParagraph()
-                        .AppendEquation("K_13=(max{1.7-(2.1∙δ_1)/π;0})/sin(0.5∙δ_1)" +
-                                        $"=(max{{1.7 - (2.1∙{DegToRad(dataIn.delta1):f2})/π;0}})/sin(0.5∙{DegToRad(dataIn.delta1):f2})={data.K13:f2}");
-
-                    body.AddParagraph()
-                        .AppendEquation("K_14=(1.45-0.43∙δ_1)/sin(0.5∙δ_1)" +
-                                        $"=(1.45-0.43∙{DegToRad(dataIn.delta1):f2})/sin(0.5∙{DegToRad(dataIn.delta1):f2})={data.K14:f2}");
-
-                    body.AddParagraph("Коэффициенты, учитывающие влияние расстояния от середины опоры до днища и угла охвата");
-                    body.AddParagraph()
-                        .AppendEquation("K_15=min{1.0;(0.8∙√γ+6∙γ)/δ_1}" +
-                                        $"min{{1.0;(0.8∙√{data.gamma:f2}+6∙{data.gamma:f2})/{DegToRad(dataIn.delta1):f2}}}=min{{1.0;{data.K15_2:f2}}}={data.K15:f2}");
-
-                    body.AddParagraph()
-                        .AppendEquation("K_16=1-0.65/(1+(6∙γ)^2)∙√(π/(3∙δ_1))"
-                                        + $"=1-0.65/(1+(6∙{data.gamma:f2})^2)∙√(π/(3∙{DegToRad(dataIn.delta1):f2}))={data.K16:f2}");
-
-                    body.AddParagraph("Коэффициенты, учитывающие влияние ширины пояса опоры и угла охвата");
-                    body.AddParagraph()
-                        .AppendEquation("K_17=1/(1+0.6∙∛(D/(s-c))∙(b/D)∙δ_1)" +
-                                        $"=1/(1+0.6∙∛({dataIn.D}/({dataIn.s}-{dataIn.c}))∙({dataIn.b}/{dataIn.D})∙{DegToRad(dataIn.delta1):f2})={data.K17:f2}");
-
-                    body.AddParagraph("Общее мембранное меридиональное напряжение изгиба от весовых нагрузок, действующее в области опорного узла");
-                    body.AddParagraph("")
-                        .AppendEquation("σ_mx=4∙M_i/(π∙D^2∙(s-c))" +
-                                        $"=4∙{data.M1:f2}/(π∙{dataIn.D}^2∙({dataIn.s}-{dataIn.c}))={data.sigma_mx:f2}");
-
-                    body.AddParagraph("Условие прочности");
-                    body.AddParagraph().AppendEquation("F_1≤min{[F]_2;[F]_3}");
-                    body.AddParagraph("где ")
-                        .AppendEquation("[F]_2")
-                        .AddRun(" - допускаемое опорное усилие от нагружения в меридиональном направлении");
-                    body.AddParagraph().AppendEquation("[F]_2=(0.7∙[σ_i]_2∙(s-c)∙√(D∙(s-c)))/(K_10∙K_12)");
-
-                    body.AddParagraph("\t")
-                        .AppendEquation("[F]_3")
-                        .AddRun(" - допускаемое опорное усилие от нагружения в окружном направлении");
-
-                    body.AddParagraph()
-                        .AppendEquation("[F]_3=(0.9∙[σ_i]_3∙(s-c)∙√(D∙(s-c)))/(K_14∙K_16∙K_17)");
-
-                    body.AddParagraph("где ")
-                        .AppendEquation("[σ_i]_2, [σ_i]_2")
-                        .AddRun(" - предельные напряжения изгиба в меридиональном и окружном направлениях");
-
-                    body.AddParagraph()
-                        .AppendEquation("[σ_i]=K_1∙K_2∙[σ]");
-
-                    body.AddParagraph()
-                        .AppendEquation("K_1=(1-ϑ_2^2)/((1/3+ϑ_1∙ϑ_2)+√((1/3+ϑ_1∙ϑ_2)^2+(1-ϑ_2^2)∙ϑ_1^2))");
-
-                    body.AddParagraph()
-                        .AppendEquation($"K_2={data.K2}")
-                        .AddRun(dataIn.IsAssembly
-                            ? " - для условий испытания и монтажа"
-                            : " - для рабочих условий");
-
-                    body.AddParagraph("для ").AppendEquation("[σ_i]_2");
-                    body.AddParagraph()
-                        .AppendEquation("ϑ_1=-(0,23∙K_13∙K_15)/(K_12∙K_10)" +
-                                        $"={data.v1_2:f2}");
-
-                    body.AddParagraph()
-                        .AppendEquation("ϑ_(2,1)=- ̅σ_mx∙1/(K_2∙[σ])" +
-                                        $"={data.v21_2:f2}");
-                    body.AddParagraph()
-                        .AppendEquation("ϑ_(2,2)=[(p∙D)/(4∙(s-c))- ̅σ_mx]∙1/(K_2∙[σ])" +
-                                        $"={data.v22_2:f2}");
-
-                    body.AddParagraph("Для ")
-                        .AppendEquation("ϑ_2")
-                        .AddRun(" принимают одно из значений ")
-                        .AppendEquation("ϑ_(2,1)")
-                        .AddRun(" или ")
-                        .AppendEquation("ϑ_(2,2)")
-                        .AddRun(", для которого предельное напряжение изгиба будет наименьшим.");
-
-                    body.AddParagraph()
-                        .AppendEquation(data.K1_2For_v21 < data.K1_2For_v22
-                            ? $"ϑ_2=ϑ_(2,1)={data.v21_2:f2}"
-                            : $"ϑ_2=ϑ_(2,2)={data.v22_2:f2}");
-
-                    body.AddParagraph().AppendEquation($"K_1={data.K1_2:f2}");
-
-                    body.AddParagraph()
-                        .AppendEquation($"[σ_i]_2={data.K1_2:f2}∙{data.K2:f2}∙{data.SigmaAllow}={data.sigmai2:f2}");
-
-                    body.AddParagraph()
-                        .AppendEquation($"[F]_2=(0.7∙{data.sigmai2:f2}∙({dataIn.s}-{dataIn.c})∙√({dataIn.D}∙({dataIn.s}-{dataIn.c})))/({data.K10:f2}∙{data.K12:f2})={data.F_d2:f2}");
-
-                    body.AddParagraph("для ").AppendEquation("[σ_i]_3");
-                    body.AddParagraph()
-                        .AppendEquation("ϑ_1=-(0,53∙K_11)/(K_14∙K_16∙K_17∙sin(0.5∙δ_1))" +
-                                        $"={data.v1_3:f2}");
-
-                    body.AddParagraph().AppendEquation("ϑ_(2,1)=0");
-
-                    body.AddParagraph()
-                        .AppendEquation("ϑ_(2,2)=(p∙D)/(2∙(s-c))∙1/(K_2∙[σ])" + $"={data.v22_3:f2}");
-
-                    body.AddParagraph("Для ")
-                        .AppendEquation("ϑ_2")
-                        .AddRun(" принимают одно из значений ")
-                        .AppendEquation("ϑ_(2,1)")
-                        .AddRun(" или ")
-                        .AppendEquation("ϑ_(2,2)")
-                        .AddRun(", для которого предельное напряжение изгиба будет наименьшим.");
-
-                    body.AddParagraph().AppendEquation(data.K1_3For_v21 < data.K1_3For_v22
-                        ? $"ϑ_2=ϑ_(2,1)={data.v21_3:f2}"
-                        : $"ϑ_2=ϑ_(2,2)={data.v22_3:f2}");
-
-                    body.AddParagraph().AppendEquation($"K_1={data.K1_3:f2}");
-
-                    body.AddParagraph()
-                        .AppendEquation($"[σ_i]_3={data.K1_3:f2}∙{data.K2:f2}∙{data.SigmaAllow}={data.sigmai3:f2}");
-
-                    body.AddParagraph()
-                        .AppendEquation($"[F]_3=(0.9∙{data.sigmai2:f2}∙({dataIn.s}-{dataIn.c})∙√({dataIn.D}∙({dataIn.s}-{dataIn.c})))/({data.K14:f2}∙{data.K16:f2}∙{data.K17:f2})={data.F_d3:f2}");
-
-                    body.AddParagraph()
-                        .AppendEquation($"{data.F1:f2}≤min{{{data.F_d2:f2};{data.F_d3:f2}}}={data.ConditionStrength2:f2}");
-
-                    if (data.F1 <= Math.Min(data.F_d2, data.F_d3))
-                    {
-                        body.AddParagraph("Условие прочности выполняется")
-                            .Bold();
-                    }
-                    else
-                    {
-                        body.AddParagraph("Условие прочности не выполняется")
-                            .Bold()
-                            .Color(System.Drawing.Color.Red);
-                    }
-
-                    body.AddParagraph();
-
-                    body.AddParagraph("Условие устойчивости");
-
-                    body.AddParagraph().AppendEquation("|p|/[p]+|M_i|/[M]+|F_e|/[F]+(Q_i/[Q])^2≤1");
-
-                    body.AddParagraph("где p - расчетное наружное давление (для сосудов, работающих под внутренним избыточным давлением, р=0");
-
-                    body.AddParagraph("где ")
-                        .AppendEquation("F_e")
-                        .AddRun(" - эффективное осевое усилие от местных мембранных напряжений, действующих в области опоры");
-
-                    body.AddParagraph()
-                        .AppendEquation("F_e=F_i∙π/4∙K_13∙K_15∙√(D/(s-c))" +
-                                        $"={data.F1:f2}∙π/4∙{data.K13:f2}∙{data.K15:f2}∙√({dataIn.D}/({dataIn.s}-{dataIn.c}))={data.Fe:f2}");
-
-                    body.AddParagraph()
-                        .AppendEquation((dataIn.IsPressureIn ? "" : $"{dataIn.p}/{data.p_d}") +
-                                        $"+{data.M1:f2}/{data.M_d:f2}+{data.Fe:f2}/{data.F_d:f2}+({data.Q1:f2}/{data.Q_d:f2})^2={data.ConditionStability2:f2}≤1");
-
-                    if (data.ConditionStability2 <= 1)
-                    {
-                        body.AddParagraph("Условие устойчивости выполняется")
-                            .Bold();
-                    }
-                    else
-                    {
-                        body.AddParagraph("Условие устойчивости не выполняется")
-                            .Bold()
-                            .Color(System.Drawing.Color.Red);
-                    }
-                    break;
+                    body.AddParagraph("Условие прочности выполняется")
+                        .Bold();
                 }
+                else
+                {
+                    body.AddParagraph("Условие прочности не выполняется")
+                        .Bold()
+                        .Color(System.Drawing.Color.Red);
+                }
+
+                body.AddParagraph();
+
+                body.AddParagraph("Условие устойчивости");
+
+                body.AddParagraph().AppendEquation("|p|/[p]+|M_i|/[M]+|F_e|/[F]+(Q_i/[Q])^2≤1");
+
+                body.AddParagraph("где p - расчетное наружное давление (для сосудов, работающих под внутренним избыточным давлением, р=0");
+
+                body.AddParagraph("где ")
+                    .AppendEquation("F_e")
+                    .AddRun(" - эффективное осевое усилие от местных мембранных напряжений, действующих в области опоры");
+
+                body.AddParagraph()
+                    .AppendEquation("F_e=F_i∙π/4∙K_13∙K_15∙√(D/(s-c))" +
+                                    $"={data.F1:f2}∙π/4∙{data.K13:f2}∙{data.K15:f2}∙√({dataIn.D}/({dataIn.s}-{dataIn.c}))={data.Fe:f2}");
+
+                body.AddParagraph()
+                    .AppendEquation((dataIn.IsPressureIn ? "" : $"{dataIn.p}/{data.p_d}") +
+                                    $"+{data.M1:f2}/{data.M_d:f2}+{data.Fe:f2}/{data.F_d:f2}+({data.Q1:f2}/{data.Q_d:f2})^2={data.ConditionStability2:f2}≤1");
+
+                if (data.ConditionStability2 <= 1)
+                {
+                    body.AddParagraph("Условие устойчивости выполняется")
+                        .Bold();
+                }
+                else
+                {
+                    body.AddParagraph("Условие устойчивости не выполняется")
+                        .Bold()
+                        .Color(System.Drawing.Color.Red);
+                }
+                break;
             case SaddleType.SaddleWithoutRingWithSheet:
+
+                body.AddParagraph("Проверка несущей способности обечайки, не укрепленной кольцами жесткости в области опорного узла с подкладным листом в месте опоры");
+                body.AddParagraph("Вспомогательные параметры и коэффициенты");
+
+                body.AddParagraph()
+                    .AppendEquation("s_ef=(s-c)∙√(1+(s_2/(s-c))^2)" +
+                                    $"=({dataIn.s}-{dataIn.c})∙√(1+({dataIn.s2}/({dataIn.s}-{dataIn.c}))^2)={data.sef:f2}");
+
+                body.AddParagraph("Параметр, определяемый расстоянием от середины опоры до днища");
+                body.AddParagraph()
+                    .AppendEquation("γ=2.83∙a/D∙√(s_ef/D)" +
+                                    $"=2.83∙{dataIn.a}/{dataIn.D}∙√({data.sef:f2}/{dataIn.D})={data.gamma:f2}");
+
+                body.AddParagraph("Параметр, определяемый шириной пояса опоры");
+                body.AddParagraph()
+                    .AppendEquation("β_1=0.91∙b_2/√(D∙s_ef)" +
+                                    $"=0.91∙{dataIn.b}/√({dataIn.D}∙{data.sef:f2})={data.beta1:f2}");
+
+                body.AddParagraph("Коэффициенты, учитывающие влияние ширины пояса опоры");
+                body.AddParagraph()
+                    .AppendEquation("K_10=max{(exp(-β_1)∙sin(β_1))/β_1;0.25}" +
+                                    $"=max{{(exp(-{data.beta1:f2})∙sin({data.beta1:f2}))/{data.beta1:f2};0.25}}" +
+                                    $"=max({data.K10_1:f2};0.25)={data.K10:f2}");
+
+                body.AddParagraph()
+                    .AppendEquation("K_11=(1-exp(-β_1)∙cos(β_1))/β_1" +
+                                    $"=(1-exp(-{data.beta1:f2})∙cos({data.beta1:f2}))/{data.beta1:f2}={data.K11:f2}");
+
+                body.AddParagraph("Коэффициенты, учитывающие влияние угла охвата");
+                body.AddParagraph()
+                    .AppendEquation("K_12=(1.15-0.1432∙δ_2)/sin(0.5∙δ_2)" +
+                                    $"=(1.15-0.1432∙{DegToRad(dataIn.delta2):f2})/sin(0.5∙{DegToRad(dataIn.delta2):f2})={data.K12:f2}");
+
+                body.AddParagraph()
+                    .AppendEquation("K_13=(max{1.7-(2.1∙δ_2)/π;0})/sin(0.5∙δ_2)" +
+                                    $"=(max{{1.7 - (2.1∙{DegToRad(dataIn.delta2):f2})/π;0}})/sin(0.5∙{DegToRad(dataIn.delta2):f2})={data.K13:f2}");
+
+                body.AddParagraph()
+                    .AppendEquation("K_14=(1.45-0.43∙δ_2)/sin(0.5∙δ_2)" +
+                                    $"=(1.45-0.43∙{DegToRad(dataIn.delta2):f2})/sin(0.5∙{DegToRad(dataIn.delta2):f2})={data.K14:f2}");
+
+                body.AddParagraph("Коэффициенты, учитывающие влияние расстояния от середины опоры до днища и угла охвата");
+                body.AddParagraph()
+                    .AppendEquation("K_15=min{1.0;(0.8∙√γ+6∙γ)/δ_2}" +
+                                    $"min{{1.0;(0.8∙√{data.gamma:f2}+6∙{data.gamma:f2})/{DegToRad(dataIn.delta2):f2}}}=min{{1.0;{data.K15_2:f2}}}={data.K15:f2}");
+
+                body.AddParagraph()
+                    .AppendEquation("K_16=1-0.65/(1+(6∙γ)^2)∙√(π/(3∙δ_2))"
+                                    + $"=1-0.65/(1+(6∙{data.gamma:f2})^2)∙√(π/(3∙{DegToRad(dataIn.delta2):f2}))={data.K16:f2}");
+
+                body.AddParagraph("Коэффициенты, учитывающие влияние ширины пояса опоры и угла охвата");
+                body.AddParagraph()
+                    .AppendEquation("K_17=1/(1+0.6∙∛(D/s_ef)∙(b_2/D)∙δ_2)" +
+                                    $"=1/(1+0.6∙∛({dataIn.D}/{data.sef:f2})∙({dataIn.b2}/{dataIn.D})∙{DegToRad(dataIn.delta2):f2})={data.K17:f2}");
+
+                body.AddParagraph("Общее мембранное меридиональное напряжение изгиба от весовых нагрузок, действующее в области опорного узла");
+                body.AddParagraph()
+                    .AppendEquation("σ_mx=4∙M_i/(π∙D^2∙s_ef)" +
+                                    $"=4∙{data.M1:f2}/(π∙{dataIn.D}^2∙{data.sef:f2})={data.sigma_mx:f2}");
+
+                body.AddParagraph("Условие прочности");
+                body.AddParagraph().AppendEquation("F_1≤min{[F]_2;[F]_3}");
+                body.AddParagraph("где ")
+                    .AppendEquation("[F]_2")
+                    .AddRun(" - допускаемое опорное усилие от нагружения в меридиональном направлении");
+                body.AddParagraph().AppendEquation("[F]_2=(0.7∙[σ_i]_2∙s_ef∙√(D∙s_ef))/(K_10∙K_12)");
+
+                body.AddParagraph("\t")
+                    .AppendEquation("[F]_3")
+                    .AddRun(" - допускаемое опорное усилие от нагружения в окружном направлении");
+
+                body.AddParagraph()
+                    .AppendEquation("[F]_3=(0.9∙[σ_i]_3∙s_ef∙√(D∙s_ef))/(K_14∙K_16∙K_17)");
+
+                body.AddParagraph("где ")
+                    .AppendEquation("[σ_i]_2, [σ_i]_2")
+                    .AddRun(" - предельные напряжения изгиба в меридиональном и окружном направлениях");
+
+                body.AddParagraph()
+                    .AppendEquation("[σ_i]=K_1∙K_2∙[σ]");
+
+                body.AddParagraph()
+                    .AppendEquation("K_1=(1-ϑ_2^2)/((1/3+ϑ_1∙ϑ_2)+√((1/3+ϑ_1∙ϑ_2)^2+(1-ϑ_2^2)∙ϑ_1^2))");
+
+                body.AddParagraph()
+                    .AppendEquation($"K_2={data.K2}")
+                    .AddRun(dataIn.IsAssembly
+                        ? " - для условий испытания и монтажа"
+                        : " - для рабочих условий");
+
+                body.AddParagraph("для ").AppendEquation("[σ_i]_2");
+                body.AddParagraph()
+                    .AppendEquation("ϑ_1=-(0,23∙K_13∙K_15)/(K_12∙K_10)" +
+                                    $"={data.v1_2:f2}");
+
+                body.AddParagraph()
+                    .AppendEquation("ϑ_(2,1)=-¯σ_mx∙1/(K_2∙[σ])" +
+                                    $"={data.v21_2:f2}");
+                body.AddParagraph()
+                    .AppendEquation("ϑ_(2,2)=[(p∙D)/(4∙s_ef)-¯σ_mx]∙1/(K_2∙[σ])" +
+                                    $"={data.v22_2:f2}");
+
+                body.AddParagraph("Для ")
+                    .AppendEquation("ϑ_2")
+                    .AddRun(" принимают одно из значений ")
+                    .AppendEquation("ϑ_(2,1)")
+                    .AddRun(" или ")
+                    .AppendEquation("ϑ_(2,2)")
+                    .AddRun(", для которого предельное напряжение изгиба будет наименьшим.");
+
+                body.AddParagraph()
+                    .AppendEquation(data.K1_2For_v21 < data.K1_2For_v22
+                        ? $"ϑ_2=ϑ_(2,1)={data.v21_2:f2}"
+                        : $"ϑ_2=ϑ_(2,2)={data.v22_2:f2}");
+
+                body.AddParagraph().AppendEquation($"K_1={data.K1_2:f2}");
+
+                body.AddParagraph()
+                    .AppendEquation($"[σ_i]_2={data.K1_2:f2}∙{data.K2:f2}∙{data.SigmaAllow}={data.sigmai2:f2}");
+
+                body.AddParagraph()
+                    .AppendEquation($"[F]_2=(0.7∙{data.sigmai2:f2}∙{data.sef:f2}∙√({dataIn.D}∙{data.sef:f2}))/({data.K10:f2}∙{data.K12:f2})={data.F_d2:f2}");
+
+                body.AddParagraph("для ").AppendEquation("[σ_i]_3");
+                body.AddParagraph()
+                    .AppendEquation("ϑ_1=-(0,53∙K_11)/(K_14∙K_16∙K_17∙sin(0.5∙δ_2))" +
+                                    $"={data.v1_3:f2}");
+
+                body.AddParagraph().AppendEquation("ϑ_(2,1)=0");
+
+                body.AddParagraph()
+                    .AppendEquation("ϑ_(2,2)=(p∙D)/(2∙s_ef)∙1/(K_2∙[σ])" + $"={data.v22_3:f2}");
+
+                body.AddParagraph("Для ")
+                    .AppendEquation("ϑ_2")
+                    .AddRun(" принимают одно из значений ")
+                    .AppendEquation("ϑ_(2,1)")
+                    .AddRun(" или ")
+                    .AppendEquation("ϑ_(2,2)")
+                    .AddRun(", для которого предельное напряжение изгиба будет наименьшим.");
+
+                body.AddParagraph().AppendEquation(data.K1_3For_v21 < data.K1_3For_v22
+                    ? $"ϑ_2=ϑ_(2,1)={data.v21_3:f2}"
+                    : $"ϑ_2=ϑ_(2,2)={data.v22_3:f2}");
+
+                body.AddParagraph().AppendEquation($"K_1={data.K1_3:f2}");
+
+                body.AddParagraph()
+                    .AppendEquation($"[σ_i]_3={data.K1_3:f2}∙{data.K2:f2}∙{data.SigmaAllow}={data.sigmai3:f2}");
+
+                body.AddParagraph()
+                    .AppendEquation($"[F]_3=(0.9∙{data.sigmai2:f2}∙{data.sef:f2}∙√({dataIn.D}∙{data.sef:f2}))/({data.K14:f2}∙{data.K16:f2}∙{data.K17:f2})={data.F_d3:f2}");
+
+                body.AddParagraph()
+                    .AppendEquation($"{data.F1:f2}≤min{{{data.F_d2:f2};{data.F_d3:f2}}}={data.ConditionStrength2:f2}");
+
+                if (data.F1 <= Math.Min(data.F_d2, data.F_d3))
                 {
-                    body.AddParagraph("Проверка несущей способности обечайки, не укрепленной кольцами жесткости в области опорного узла с подкладным листом в месте опоры");
-                    body.AddParagraph("Вспомогательные параметры и коэффициенты");
-
-                    body.AddParagraph()
-                        .AppendEquation("s_ef=(s-c)∙√(1+(s_2/(s-c))^2)" +
-                                        $"=({dataIn.s}-{dataIn.c})∙√(1+({dataIn.s2}/({dataIn.s}-{dataIn.c}))^2)={data.sef:f2}");
-
-                    body.AddParagraph("Параметр, определяемый расстоянием от середины опоры до днища");
-                    body.AddParagraph()
-                        .AppendEquation("γ=2.83∙a/D∙√(s_ef/D)" +
-                                        $"=2.83∙{dataIn.a}/{dataIn.D}∙√({data.sef:f2}/{dataIn.D})={data.gamma:f2}");
-
-                    body.AddParagraph("Параметр, определяемый шириной пояса опоры");
-                    body.AddParagraph()
-                        .AppendEquation("β_1=0.91∙b_2/√(D∙s_ef)" +
-                                        $"=0.91∙{dataIn.b}/√({dataIn.D}∙{data.sef:f2})={data.beta1:f2}");
-
-                    body.AddParagraph("Коэффициенты, учитывающие влияние ширины пояса опоры");
-                    body.AddParagraph()
-                        .AppendEquation("K_10=max{(exp(-β_1)∙sin(β_1))/β_1;0.25}" +
-                                        $"=max{{(exp(-{data.beta1:f2})∙sin({data.beta1:f2}))/{data.beta1:f2};0.25}}" +
-                                        $"=max({data.K10_1:f2};0.25)={data.K10:f2}");
-
-                    body.AddParagraph()
-                        .AppendEquation("K_11=(1-exp(-β_1)∙cos(β_1))/β_1" +
-                                        $"=(1-exp(-{data.beta1:f2})∙cos({data.beta1:f2}))/{data.beta1:f2}={data.K11:f2}");
-
-                    body.AddParagraph("Коэффициенты, учитывающие влияние угла охвата");
-                    body.AddParagraph()
-                        .AppendEquation("K_12=(1.15-0.1432∙δ_2)/sin(0.5∙δ_2)" +
-                                        $"=(1.15-0.1432∙{DegToRad(dataIn.delta2):f2})/sin(0.5∙{DegToRad(dataIn.delta2):f2})={data.K12:f2}");
-
-                    body.AddParagraph()
-                        .AppendEquation("K_13=(max{1.7-(2.1∙δ_2)/π;0})/sin(0.5∙δ_2)" +
-                                        $"=(max{{1.7 - (2.1∙{DegToRad(dataIn.delta2):f2})/π;0}})/sin(0.5∙{DegToRad(dataIn.delta2):f2})={data.K13:f2}");
-
-                    body.AddParagraph()
-                        .AppendEquation("K_14=(1.45-0.43∙δ_2)/sin(0.5∙δ_2)" +
-                                        $"=(1.45-0.43∙{DegToRad(dataIn.delta2):f2})/sin(0.5∙{DegToRad(dataIn.delta2):f2})={data.K14:f2}");
-
-                    body.AddParagraph("Коэффициенты, учитывающие влияние расстояния от середины опоры до днища и угла охвата");
-                    body.AddParagraph()
-                        .AppendEquation("K_15=min{1.0;(0.8∙√γ+6∙γ)/δ_2}" +
-                                        $"min{{1.0;(0.8∙√{data.gamma:f2}+6∙{data.gamma:f2})/{DegToRad(dataIn.delta2):f2}}}=min{{1.0;{data.K15_2:f2}}}={data.K15:f2}");
-
-                    body.AddParagraph()
-                        .AppendEquation("K_16=1-0.65/(1+(6∙γ)^2)∙√(π/(3∙δ_2))"
-                                        + $"=1-0.65/(1+(6∙{data.gamma:f2})^2)∙√(π/(3∙{DegToRad(dataIn.delta2):f2}))={data.K16:f2}");
-
-                    body.AddParagraph("Коэффициенты, учитывающие влияние ширины пояса опоры и угла охвата");
-                    body.AddParagraph()
-                        .AppendEquation("K_17=1/(1+0.6∙∛(D/s_ef)∙(b_2/D)∙δ_2)" +
-                                        $"=1/(1+0.6∙∛({dataIn.D}/{data.sef:f2})∙({dataIn.b2}/{dataIn.D})∙{DegToRad(dataIn.delta2):f2})={data.K17:f2}");
-
-                    body.AddParagraph("Общее мембранное меридиональное напряжение изгиба от весовых нагрузок, действующее в области опорного узла");
-                    body.AddParagraph()
-                        .AppendEquation("σ_mx=4∙M_i/(π∙D^2∙s_ef)" +
-                                        $"=4∙{data.M1:f2}/(π∙{dataIn.D}^2∙{data.sef:f2})={data.sigma_mx:f2}");
-
-                    body.AddParagraph("Условие прочности");
-                    body.AddParagraph().AppendEquation("F_1≤min{[F]_2;[F]_3}");
-                    body.AddParagraph("где ")
-                        .AppendEquation("[F]_2")
-                        .AddRun(" - допускаемое опорное усилие от нагружения в меридиональном направлении");
-                    body.AddParagraph().AppendEquation("[F]_2=(0.7∙[σ_i]_2∙s_ef∙√(D∙s_ef))/(K_10∙K_12)");
-
-                    body.AddParagraph("\t")
-                        .AppendEquation("[F]_3")
-                        .AddRun(" - допускаемое опорное усилие от нагружения в окружном направлении");
-
-                    body.AddParagraph()
-                        .AppendEquation("[F]_3=(0.9∙[σ_i]_3∙s_ef∙√(D∙s_ef))/(K_14∙K_16∙K_17)");
-
-                    body.AddParagraph("где ")
-                        .AppendEquation("[σ_i]_2, [σ_i]_2")
-                        .AddRun(" - предельные напряжения изгиба в меридиональном и окружном направлениях");
-
-                    body.AddParagraph()
-                        .AppendEquation("[σ_i]=K_1∙K_2∙[σ]");
-
-                    body.AddParagraph()
-                        .AppendEquation("K_1=(1-ϑ_2^2)/((1/3+ϑ_1∙ϑ_2)+√((1/3+ϑ_1∙ϑ_2)^2+(1-ϑ_2^2)∙ϑ_1^2))");
-
-                    body.AddParagraph()
-                        .AppendEquation($"K_2={data.K2}")
-                        .AddRun(dataIn.IsAssembly
-                            ? " - для условий испытания и монтажа"
-                            : " - для рабочих условий");
-
-                    body.AddParagraph("для ").AppendEquation("[σ_i]_2");
-                    body.AddParagraph()
-                        .AppendEquation("ϑ_1=-(0,23∙K_13∙K_15)/(K_12∙K_10)" +
-                                        $"={data.v1_2:f2}");
-
-                    body.AddParagraph()
-                        .AppendEquation("ϑ_(2,1)=-¯σ_mx∙1/(K_2∙[σ])" +
-                                        $"={data.v21_2:f2}");
-                    body.AddParagraph()
-                        .AppendEquation("ϑ_(2,2)=[(p∙D)/(4∙s_ef)-¯σ_mx]∙1/(K_2∙[σ])" +
-                                        $"={data.v22_2:f2}");
-
-                    body.AddParagraph("Для ")
-                        .AppendEquation("ϑ_2")
-                        .AddRun(" принимают одно из значений ")
-                        .AppendEquation("ϑ_(2,1)")
-                        .AddRun(" или ")
-                        .AppendEquation("ϑ_(2,2)")
-                        .AddRun(", для которого предельное напряжение изгиба будет наименьшим.");
-
-                    body.AddParagraph()
-                        .AppendEquation(data.K1_2For_v21 < data.K1_2For_v22
-                            ? $"ϑ_2=ϑ_(2,1)={data.v21_2:f2}"
-                            : $"ϑ_2=ϑ_(2,2)={data.v22_2:f2}");
-
-                    body.AddParagraph().AppendEquation($"K_1={data.K1_2:f2}");
-
-                    body.AddParagraph()
-                        .AppendEquation($"[σ_i]_2={data.K1_2:f2}∙{data.K2:f2}∙{data.SigmaAllow}={data.sigmai2:f2}");
-
-                    body.AddParagraph()
-                        .AppendEquation($"[F]_2=(0.7∙{data.sigmai2:f2}∙{data.sef:f2}∙√({dataIn.D}∙{data.sef:f2}))/({data.K10:f2}∙{data.K12:f2})={data.F_d2:f2}");
-
-                    body.AddParagraph("для ").AppendEquation("[σ_i]_3");
-                    body.AddParagraph()
-                        .AppendEquation("ϑ_1=-(0,53∙K_11)/(K_14∙K_16∙K_17∙sin(0.5∙δ_2))" +
-                                        $"={data.v1_3:f2}");
-
-                    body.AddParagraph().AppendEquation("ϑ_(2,1)=0");
-
-                    body.AddParagraph()
-                        .AppendEquation("ϑ_(2,2)=(p∙D)/(2∙s_ef)∙1/(K_2∙[σ])" + $"={data.v22_3:f2}");
-
-                    body.AddParagraph("Для ")
-                        .AppendEquation("ϑ_2")
-                        .AddRun(" принимают одно из значений ")
-                        .AppendEquation("ϑ_(2,1)")
-                        .AddRun(" или ")
-                        .AppendEquation("ϑ_(2,2)")
-                        .AddRun(", для которого предельное напряжение изгиба будет наименьшим.");
-
-                    body.AddParagraph().AppendEquation(data.K1_3For_v21 < data.K1_3For_v22
-                        ? $"ϑ_2=ϑ_(2,1)={data.v21_3:f2}"
-                        : $"ϑ_2=ϑ_(2,2)={data.v22_3:f2}");
-
-                    body.AddParagraph().AppendEquation($"K_1={data.K1_3:f2}");
-
-                    body.AddParagraph()
-                        .AppendEquation($"[σ_i]_3={data.K1_3:f2}∙{data.K2:f2}∙{data.SigmaAllow}={data.sigmai3:f2}");
-
-                    body.AddParagraph()
-                        .AppendEquation($"[F]_3=(0.9∙{data.sigmai2:f2}∙{data.sef:f2}∙√({dataIn.D}∙{data.sef:f2}))/({data.K14:f2}∙{data.K16:f2}∙{data.K17:f2})={data.F_d3:f2}");
-
-                    body.AddParagraph()
-                        .AppendEquation($"{data.F1:f2}≤min{{{data.F_d2:f2};{data.F_d3:f2}}}={data.ConditionStrength2:f2}");
-
-                    if (data.F1 <= Math.Min(data.F_d2, data.F_d3))
-                    {
-                        body.AddParagraph("Условие прочности выполняется")
-                            .Bold();
-                    }
-                    else
-                    {
-                        body.AddParagraph("Условие прочности не выполняется")
-                            .Bold()
-                            .Color(System.Drawing.Color.Red);
-                    }
-
-                    body.AddParagraph("Условие устойчивости");
-
-                    body.AddParagraph().AppendEquation("|p|/[p]+|M_i|/[M]+|F_e|/[F]+(Q_i/[Q])^2≤1");
-
-                    body.AddParagraph("где p - расчетное наружное давление (для сосудов, работающих под внутренним избыточным давлением, р=0");
-
-                    body.AddParagraph("где ")
-                        .AppendEquation("F_e")
-                        .AddRun(" - эффективное осевое усилие от местных мембранных напряжений, действующих в области опоры");
-
-                    body.AddParagraph()
-                        .AppendEquation("F_e=F_i∙π/4∙K_13∙K_15∙√(D/s_ef)" +
-                                        $"={data.F1:f2}∙π/4∙{data.K13:f2}∙{data.K15:f2}∙√({dataIn.D}/{data.sef:f2})={data.Fe:f2}");
-
-                    body.AddParagraph()
-                        .AppendEquation((dataIn.IsPressureIn ? "" : $"{dataIn.p}/{data.p_d}") +
-                                        $"+{data.M1:f2}/{data.M_d:f2}+{data.Fe:f2}/{data.F_d:f2}+({data.Q1:f2}/{data.Q_d:f2})^2={data.ConditionStability2:f2}≤1");
-
-                    if (data.ConditionStability2 <= 1)
-                    {
-                        body.AddParagraph("Условие устойчивости выполняется")
-                            .Bold();
-                    }
-                    else
-                    {
-                        body.AddParagraph("Условие устойчивости не выполняется")
-                            .Bold()
-                            .Color(System.Drawing.Color.Red);
-                    }
-                    break;
+                    body.AddParagraph("Условие прочности выполняется")
+                        .Bold();
                 }
+                else
+                {
+                    body.AddParagraph("Условие прочности не выполняется")
+                        .Bold()
+                        .Color(System.Drawing.Color.Red);
+                }
+
+                body.AddParagraph("Условие устойчивости");
+
+                body.AddParagraph().AppendEquation("|p|/[p]+|M_i|/[M]+|F_e|/[F]+(Q_i/[Q])^2≤1");
+
+                body.AddParagraph("где p - расчетное наружное давление (для сосудов, работающих под внутренним избыточным давлением, р=0");
+
+                body.AddParagraph("где ")
+                    .AppendEquation("F_e")
+                    .AddRun(" - эффективное осевое усилие от местных мембранных напряжений, действующих в области опоры");
+
+                body.AddParagraph()
+                    .AppendEquation("F_e=F_i∙π/4∙K_13∙K_15∙√(D/s_ef)" +
+                                    $"={data.F1:f2}∙π/4∙{data.K13:f2}∙{data.K15:f2}∙√({dataIn.D}/{data.sef:f2})={data.Fe:f2}");
+
+                body.AddParagraph()
+                    .AppendEquation((dataIn.IsPressureIn ? "" : $"{dataIn.p}/{data.p_d}") +
+                                    $"+{data.M1:f2}/{data.M_d:f2}+{data.Fe:f2}/{data.F_d:f2}+({data.Q1:f2}/{data.Q_d:f2})^2={data.ConditionStability2:f2}≤1");
+
+                if (data.ConditionStability2 <= 1)
+                {
+                    body.AddParagraph("Условие устойчивости выполняется")
+                        .Bold();
+                }
+                else
+                {
+                    body.AddParagraph("Условие устойчивости не выполняется")
+                        .Bold()
+                        .Color(System.Drawing.Color.Red);
+                }
+                break;
         }
 
         body.AddParagraph("Условия применения расчетных формул ");
@@ -673,7 +667,7 @@ internal class SaddleWordOutput : IWordOutputElement<SaddleCalculated>
         body.AddParagraph()
             .AppendEquation($"(s-c)/D=({dataIn.s}-{dataIn.c})/{dataIn.D}={(dataIn.s - dataIn.c) / dataIn.D:f2}≤0.05");
 
-        switch (dataIn.Type)
+        switch (dataIn.SaddleType)
         {
             case SaddleType.SaddleWithoutRingWithSheet:
                 body.AddParagraph().AppendEquation("s_2≥s");
@@ -683,7 +677,10 @@ internal class SaddleWordOutput : IWordOutputElement<SaddleCalculated>
                     .AppendEquation(
                         $"{dataIn.delta2}°≥{dataIn.delta1}°+20°={dataIn.delta1 + 20}°");
                 break;
-            case SaddleType.SaddleWithRing:
+            case SaddleType.SaddleWithRingInNoRibs:
+            case SaddleType.SaddleWithRingIn1Rib:
+            case SaddleType.SaddleWithRingIn3Rib:
+            case SaddleType.SaddleWithRingOutRib:
                 body.AddParagraph().AppendEquation("A_k≥(s-c)√(D∙(s-c))");
                 body.AddParagraph().AppendEquation($"{dataIn.Ak:f2}≥({dataIn.s}-{dataIn.c})√({dataIn.D}∙({dataIn.s}-{dataIn.c}))={data.Ak:f2}");
                 break;

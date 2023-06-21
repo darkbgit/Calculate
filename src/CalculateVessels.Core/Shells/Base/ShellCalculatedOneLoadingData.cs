@@ -1,4 +1,6 @@
-﻿namespace CalculateVessels.Core.Shells.Base;
+﻿using CalculateVessels.Core.Base;
+
+namespace CalculateVessels.Core.Shells.Base;
 
 #pragma warning disable IDE1006 // Naming Styles
 // ReSharper disable InconsistentNaming

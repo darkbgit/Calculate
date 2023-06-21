@@ -105,6 +105,9 @@ internal class SaddleCalculateService : ICalculateService<SaddleInput>
                                         (4 * (dataIn.s - dataIn.c)) +
                                         4 * data.M12 * data.K9 / (Math.PI * Math.Pow(dataIn.D, 2) * (dataIn.s - dataIn.c));
             // UNDONE: if phi<1 check condition
+            // Если расстояние между расчетным сечением и ближайшим кольцевым сварным швом более Sqr(D*s),
+            //то в формуле(41) принимают(р равным 1
+
             data.ConditionStrength1_2 = data.SigmaAllow * dataIn.fi;
             if (data.ConditionStrength1_1 > data.ConditionStrength1_2)
             {
@@ -118,169 +121,167 @@ internal class SaddleCalculateService : ICalculateService<SaddleInput>
                 data.ErrorList.Add("Несущая способность обечайки в сечении между опорами. Условие устойчивости не выполняется");
             }
         }
-        switch (dataIn.Type)
+        switch (dataIn.SaddleType)
         {
             case SaddleType.SaddleWithoutRingWithoutSheet:
+                data.gamma = 2.83 * (dataIn.a / dataIn.D) *
+                             Math.Sqrt((dataIn.s - dataIn.c) / dataIn.D);
+                data.beta1 = 0.91 * dataIn.b /
+                             Math.Sqrt(dataIn.D * (dataIn.s - dataIn.c));
+                data.K10_1 = Math.Exp(-data.beta1) * Math.Sin(data.beta1) / data.beta1;
+                data.K10 = Math.Max(data.K10_1, 0.25);
+                data.K11 = (1.0 - Math.Exp(-data.beta1) * Math.Cos(data.beta1)) / data.beta1;
+                data.K12 = (1.15 - 0.1432 * MathHelper.DegreeToRadian(dataIn.delta1)) /
+                           Math.Sin(0.5 * MathHelper.DegreeToRadian(dataIn.delta1));
+                data.K13 = Math.Max(1.7 - 2.1 * MathHelper.DegreeToRadian(dataIn.delta1) / Math.PI, 0) /
+                           Math.Sin(0.5 * MathHelper.DegreeToRadian(dataIn.delta1));
+                data.K14 = (1.45 - 0.43 * MathHelper.DegreeToRadian(dataIn.delta1)) /
+                           Math.Sin(0.5 * MathHelper.DegreeToRadian(dataIn.delta1));
+                data.K15_2 = (0.8 * Math.Sqrt(data.gamma) + 6 * data.gamma) / MathHelper.DegreeToRadian(dataIn.delta1);
+                data.K15 = Math.Min(1, data.K15_2);
+                data.K16 = 1.0 - 0.65 / (1 + Math.Pow(6 * data.gamma, 2)) *
+                    Math.Sqrt(Math.PI / (3.0 * MathHelper.DegreeToRadian(dataIn.delta1)));
+                data.K17 = 1.0 / (1.0 + 0.6 *
+                    Math.Pow(dataIn.D / (dataIn.s - dataIn.c), 1.0 / 3.0) *
+                    (dataIn.b / dataIn.D) * MathHelper.DegreeToRadian(dataIn.delta1));
+                data.sigma_mx = 4 * data.M1 /
+                                (Math.PI * Math.Pow(dataIn.D, 2) * (dataIn.s - dataIn.c));
+
+                data.v1_2 = -0.23 * data.K13 * data.K15 / (data.K12 * data.K10);
+                data.v1_3 = -0.53 * data.K11 /
+                            (data.K14 * data.K16 * data.K17 * Math.Sin(0.5 * MathHelper.DegreeToRadian(dataIn.delta1)));
+
+                data.K2 = dataIn.IsAssembly ? 1.05 : 1.25;
+
+                data.v21_2 = -data.sigma_mx / (data.K2 * data.SigmaAllow);
+                data.v21_3 = 0;
+
+                data.v22_2 = (dataIn.p * dataIn.D /
+                              (4 * (dataIn.s - dataIn.c)) -
+                              data.sigma_mx) / (data.K2 * data.SigmaAllow);
+                data.v22_3 = (dataIn.p * dataIn.D /
+                              (2 * (dataIn.s - dataIn.c))) /
+                             (data.K2 * data.SigmaAllow);
+
+                data.K1_2For_v21 = K1(data.v1_2, data.v21_2);
+                data.K1_2For_v22 = K1(data.v1_2, data.v22_2);
+                data.K1_2 = Math.Min(data.K1_2For_v21, data.K1_2For_v22);
+
+                data.K1_3For_v21 = K1(data.v1_3, data.v21_3);
+                data.K1_3For_v22 = K1(data.v1_3, data.v22_3);
+                data.K1_3 = Math.Min(data.K1_3For_v21, data.K1_3For_v22);
+
+                data.sigmai2_1 = data.K1_2For_v21 * data.K2 * data.SigmaAllow;
+                data.sigmai2_2 = data.K1_2For_v22 * data.K2 * data.SigmaAllow;
+                data.sigmai2 = Math.Min(data.sigmai2_1, data.sigmai2_2);
+
+                data.sigmai3_1 = data.K1_3For_v21 * data.K2 * data.SigmaAllow;
+                data.sigmai3_2 = data.K1_3For_v22 * data.K2 * data.SigmaAllow;
+                data.sigmai3 = Math.Min(data.sigmai3_1, data.sigmai3_2);
+
+                data.F_d2 = 0.7 * data.sigmai2 * (dataIn.s - dataIn.c) *
+                    Math.Sqrt(dataIn.D * (dataIn.s - dataIn.c)) / (data.K10 * data.K12);
+                data.F_d3 = 0.9 * data.sigmai3 * (dataIn.s - dataIn.c) *
+                    Math.Sqrt(dataIn.D * (dataIn.s - dataIn.c)) / (data.K14 * data.K16 * data.K17);
+
+                data.ConditionStrength2 = Math.Min(data.F_d2, data.F_d3);
+
+                if (data.F1 > data.ConditionStrength2)
                 {
-                    data.gamma = 2.83 * (dataIn.a / dataIn.D) *
-                                 Math.Sqrt((dataIn.s - dataIn.c) / dataIn.D);
-                    data.beta1 = 0.91 * dataIn.b /
-                                 Math.Sqrt(dataIn.D * (dataIn.s - dataIn.c));
-                    data.K10_1 = Math.Exp(-data.beta1) * Math.Sin(data.beta1) / data.beta1;
-                    data.K10 = Math.Max(data.K10_1, 0.25);
-                    data.K11 = (1.0 - Math.Exp(-data.beta1) * Math.Cos(data.beta1)) / data.beta1;
-                    data.K12 = (1.15 - 0.1432 * MathHelper.DegreeToRadian(dataIn.delta1)) /
-                               Math.Sin(0.5 * MathHelper.DegreeToRadian(dataIn.delta1));
-                    data.K13 = Math.Max(1.7 - 2.1 * MathHelper.DegreeToRadian(dataIn.delta1) / Math.PI, 0) /
-                               Math.Sin(0.5 * MathHelper.DegreeToRadian(dataIn.delta1));
-                    data.K14 = (1.45 - 0.43 * MathHelper.DegreeToRadian(dataIn.delta1)) /
-                               Math.Sin(0.5 * MathHelper.DegreeToRadian(dataIn.delta1));
-                    data.K15_2 = (0.8 * Math.Sqrt(data.gamma) + 6 * data.gamma) / MathHelper.DegreeToRadian(dataIn.delta1);
-                    data.K15 = Math.Min(1, data.K15_2);
-                    data.K16 = 1.0 - 0.65 / (1 + Math.Pow(6 * data.gamma, 2)) *
-                        Math.Sqrt(Math.PI / (3.0 * MathHelper.DegreeToRadian(dataIn.delta1)));
-                    data.K17 = 1.0 / (1.0 + 0.6 *
-                        Math.Pow(dataIn.D / (dataIn.s - dataIn.c), 1.0 / 3.0) *
-                        (dataIn.b / dataIn.D) * MathHelper.DegreeToRadian(dataIn.delta1));
-                    data.sigma_mx = 4 * data.M1 /
-                                    (Math.PI * Math.Pow(dataIn.D, 2) * (dataIn.s - dataIn.c));
-
-                    data.v1_2 = -0.23 * data.K13 * data.K15 / (data.K12 * data.K10);
-                    data.v1_3 = -0.53 * data.K11 /
-                                (data.K14 * data.K16 * data.K17 * Math.Sin(0.5 * MathHelper.DegreeToRadian(dataIn.delta1)));
-
-                    data.K2 = dataIn.IsAssembly ? 1.05 : 1.25;
-
-                    data.v21_2 = -data.sigma_mx / (data.K2 * data.SigmaAllow);
-                    data.v21_3 = 0;
-
-                    data.v22_2 = (dataIn.p * dataIn.D /
-                                  (4 * (dataIn.s - dataIn.c)) -
-                                  data.sigma_mx) / (data.K2 * data.SigmaAllow);
-                    data.v22_3 = (dataIn.p * dataIn.D /
-                                  (2 * (dataIn.s - dataIn.c))) /
-                                 (data.K2 * data.SigmaAllow);
-
-                    data.K1_2For_v21 = K1(data.v1_2, data.v21_2);
-                    data.K1_2For_v22 = K1(data.v1_2, data.v22_2);
-                    data.K1_2 = Math.Min(data.K1_2For_v21, data.K1_2For_v22);
-
-                    data.K1_3For_v21 = K1(data.v1_3, data.v21_3);
-                    data.K1_3For_v22 = K1(data.v1_3, data.v22_3);
-                    data.K1_3 = Math.Min(data.K1_3For_v21, data.K1_3For_v22);
-
-                    data.sigmai2_1 = data.K1_2For_v21 * data.K2 * data.SigmaAllow;
-                    data.sigmai2_2 = data.K1_2For_v22 * data.K2 * data.SigmaAllow;
-                    data.sigmai2 = Math.Min(data.sigmai2_1, data.sigmai2_2);
-
-                    data.sigmai3_1 = data.K1_3For_v21 * data.K2 * data.SigmaAllow;
-                    data.sigmai3_2 = data.K1_3For_v22 * data.K2 * data.SigmaAllow;
-                    data.sigmai3 = Math.Min(data.sigmai3_1, data.sigmai3_2);
-
-                    data.F_d2 = 0.7 * data.sigmai2 * (dataIn.s - dataIn.c) *
-                        Math.Sqrt(dataIn.D * (dataIn.s - dataIn.c)) / (data.K10 * data.K12);
-                    data.F_d3 = 0.9 * data.sigmai3 * (dataIn.s - dataIn.c) *
-                        Math.Sqrt(dataIn.D * (dataIn.s - dataIn.c)) / (data.K14 * data.K16 * data.K17);
-
-                    data.ConditionStrength2 = Math.Min(data.F_d2, data.F_d3);
-
-                    if (data.F1 > data.ConditionStrength2)
-                    {
-                        data.ErrorList.Add("Несущая способность обечайки, не укрепленной кольцами жесткости в области опорного узла. Условие прочности не выполняется");
-                    }
-
-
-                    data.Fe = data.F1 * (Math.PI / 4.0) * data.K13 * data.K15 *
-                              Math.Sqrt(dataIn.D / (dataIn.s - dataIn.c));
-
-                    data.ConditionStability2 = dataIn.IsPressureIn
-                        ? Math.Abs(data.M1) / data.M_d + data.Fe / data.F_d + Math.Pow(data.Q1 / data.Q_d, 2)
-                        : dataIn.p / data.p_d + Math.Abs(data.M1) / data.M_d + data.Fe / data.F_d + Math.Pow(data.Q1 / data.Q_d, 2);
-                    if (data.ConditionStability2 > 1)
-                    {
-                        data.ErrorList.Add("Несущая способность обечайки, не укрепленной кольцами жесткости в области опорного узла. Условие устойчивости не выполняется");
-                    }
-                    break;
+                    data.ErrorList.Add("Несущая способность обечайки, не укрепленной кольцами жесткости в области опорного узла. Условие прочности не выполняется");
                 }
+
+
+                data.Fe = data.F1 * (Math.PI / 4.0) * data.K13 * data.K15 *
+                          Math.Sqrt(dataIn.D / (dataIn.s - dataIn.c));
+
+                data.ConditionStability2 = dataIn.IsPressureIn
+                    ? Math.Abs(data.M1) / data.M_d + data.Fe / data.F_d + Math.Pow(data.Q1 / data.Q_d, 2)
+                    : dataIn.p / data.p_d + Math.Abs(data.M1) / data.M_d + data.Fe / data.F_d + Math.Pow(data.Q1 / data.Q_d, 2);
+                if (data.ConditionStability2 > 1)
+                {
+                    data.ErrorList.Add("Несущая способность обечайки, не укрепленной кольцами жесткости в области опорного узла. Условие устойчивости не выполняется");
+                }
+                break;
             case SaddleType.SaddleWithoutRingWithSheet:
+
+                data.sef = (dataIn.s - dataIn.c) *
+                           Math.Sqrt(1 + Math.Pow(dataIn.s2 / (dataIn.s - dataIn.c), 2));
+                data.gamma = 2.83 * (dataIn.a / dataIn.D) *
+                             Math.Sqrt(data.sef / dataIn.D);
+                data.beta1 = 0.91 * dataIn.b2 / Math.Sqrt(dataIn.D * data.sef);
+                data.K10_1 = Math.Exp(-data.beta1) * Math.Sin(data.beta1) / data.beta1;
+                data.K10 = Math.Max(data.K10_1, 0.25);
+                data.K11 = (1 - Math.Exp(-data.beta1) * Math.Cos(data.beta1)) / data.beta1;
+                data.K12 = (1.15 - 0.1432 * MathHelper.DegreeToRadian(dataIn.delta2)) /
+                           Math.Sin(0.5 * MathHelper.DegreeToRadian(dataIn.delta2));
+                data.K13 = Math.Max(1.7 - 2.1 * MathHelper.DegreeToRadian(dataIn.delta2) / Math.PI, 0) /
+                           Math.Sin(0.5 * MathHelper.DegreeToRadian(dataIn.delta2));
+                data.K14 = (1.45 - 0.43 * MathHelper.DegreeToRadian(dataIn.delta2)) /
+                           Math.Sin(0.5 * MathHelper.DegreeToRadian(dataIn.delta2));
+                data.K15_2 = (0.8 * Math.Sqrt(data.gamma) + 6 * data.gamma) / MathHelper.DegreeToRadian(dataIn.delta2);
+                data.K15 = Math.Min(1, data.K15_2);
+                data.K16 = 1 - 0.65 / (1 + Math.Pow(6 * data.gamma, 2)) *
+                    Math.Sqrt(Math.PI / (3 * MathHelper.DegreeToRadian(dataIn.delta2)));
+                data.K17 = 1.0 / (1.0 + 0.6 * Math.Pow(dataIn.D / data.sef, 1.0 / 3.0) *
+                    (dataIn.b2 / dataIn.D) * MathHelper.DegreeToRadian(dataIn.delta2));
+                data.sigma_mx = 4 * data.M1 / (Math.PI * Math.Pow(dataIn.D, 2) * data.sef);
+
+                data.v1_2 = -0.23 * data.K13 * data.K15 / (data.K12 * data.K10);
+                data.v1_3 = -0.53 * data.K11 / (data.K14 * data.K16 * data.K17 * Math.Sin(0.5 * MathHelper.DegreeToRadian(dataIn.delta2)));
+
+                data.K2 = dataIn.IsAssembly ? 1.05 : 1.25;
+
+                data.v21_2 = -data.sigma_mx / (data.K2 * data.SigmaAllow);
+                data.v21_3 = 0;
+
+                data.v22_2 = (dataIn.p * dataIn.D / (4 * data.sef) - data.sigma_mx) /
+                             (data.K2 * data.SigmaAllow);
+                data.v22_3 = (dataIn.p * dataIn.D / (2 * data.sef)) /
+                             (data.K2 * data.SigmaAllow);
+
+                data.K1_2For_v21 = K1(data.v1_2, data.v21_2);
+                data.K1_2For_v22 = K1(data.v1_2, data.v22_2);
+                data.K1_2 = Math.Min(data.K1_2For_v21, data.K1_2For_v22);
+
+                data.K1_3For_v21 = K1(data.v1_3, data.v21_3);
+                data.K1_3For_v22 = K1(data.v1_3, data.v22_3);
+                data.K1_3 = Math.Min(data.K1_3For_v21, data.K1_3For_v22);
+
+                data.sigmai2_1 = data.K1_2For_v21 * data.K2 * data.SigmaAllow;
+                data.sigmai2_2 = data.K1_2For_v22 * data.K2 * data.SigmaAllow;
+                data.sigmai2 = Math.Min(data.sigmai2_1, data.sigmai2_2);
+
+                data.sigmai3_1 = data.K1_3For_v21 * data.K2 * data.SigmaAllow;
+                data.sigmai3_2 = data.K1_3For_v22 * data.K2 * data.SigmaAllow;
+                data.sigmai3 = Math.Min(data.sigmai3_1, data.sigmai3_2);
+
+                data.F_d2 = 0.7 * data.sigmai2 * data.sef * Math.Sqrt(dataIn.D * data.sef) / (data.K10 * data.K12);
+                data.F_d3 = 0.9 * data.sigmai3 * data.sef * Math.Sqrt(dataIn.D * data.sef) / (data.K14 * data.K16 * data.K17);
+
+                data.ConditionStrength2 = Math.Min(data.F_d2, data.F_d3);
+
+                if (data.F1 > data.ConditionStrength2)
                 {
-                    data.sef = (dataIn.s - dataIn.c) *
-                               Math.Sqrt(1 + Math.Pow(dataIn.s2 / (dataIn.s - dataIn.c), 2));
-                    data.gamma = 2.83 * (dataIn.a / dataIn.D) *
-                                 Math.Sqrt(data.sef / dataIn.D);
-                    data.beta1 = 0.91 * dataIn.b2 / Math.Sqrt(dataIn.D * data.sef);
-                    data.K10_1 = Math.Exp(-data.beta1) * Math.Sin(data.beta1) / data.beta1;
-                    data.K10 = Math.Max(data.K10_1, 0.25);
-                    data.K11 = (1 - Math.Exp(-data.beta1) * Math.Cos(data.beta1)) / data.beta1;
-                    data.K12 = (1.15 - 0.1432 * MathHelper.DegreeToRadian(dataIn.delta2)) /
-                               Math.Sin(0.5 * MathHelper.DegreeToRadian(dataIn.delta2));
-                    data.K13 = Math.Max(1.7 - 2.1 * MathHelper.DegreeToRadian(dataIn.delta2) / Math.PI, 0) /
-                               Math.Sin(0.5 * MathHelper.DegreeToRadian(dataIn.delta2));
-                    data.K14 = (1.45 - 0.43 * MathHelper.DegreeToRadian(dataIn.delta2)) /
-                               Math.Sin(0.5 * MathHelper.DegreeToRadian(dataIn.delta2));
-                    data.K15_2 = (0.8 * Math.Sqrt(data.gamma) + 6 * data.gamma) / MathHelper.DegreeToRadian(dataIn.delta2);
-                    data.K15 = Math.Min(1, data.K15_2);
-                    data.K16 = 1 - 0.65 / (1 + Math.Pow(6 * data.gamma, 2)) *
-                        Math.Sqrt(Math.PI / (3 * MathHelper.DegreeToRadian(dataIn.delta2)));
-                    data.K17 = 1.0 / (1.0 + 0.6 * Math.Pow(dataIn.D / data.sef, 1.0 / 3.0) *
-                        (dataIn.b2 / dataIn.D) * MathHelper.DegreeToRadian(dataIn.delta2));
-                    data.sigma_mx = 4 * data.M1 / (Math.PI * Math.Pow(dataIn.D, 2) * data.sef);
-
-                    data.v1_2 = -0.23 * data.K13 * data.K15 / (data.K12 * data.K10);
-                    data.v1_3 = -0.53 * data.K11 / (data.K14 * data.K16 * data.K17 * Math.Sin(0.5 * MathHelper.DegreeToRadian(dataIn.delta2)));
-
-                    data.K2 = dataIn.IsAssembly ? 1.05 : 1.25;
-
-                    data.v21_2 = -data.sigma_mx / (data.K2 * data.SigmaAllow);
-                    data.v21_3 = 0;
-
-                    data.v22_2 = (dataIn.p * dataIn.D / (4 * data.sef) - data.sigma_mx) /
-                                 (data.K2 * data.SigmaAllow);
-                    data.v22_3 = (dataIn.p * dataIn.D / (2 * data.sef)) /
-                                 (data.K2 * data.SigmaAllow);
-
-                    data.K1_2For_v21 = K1(data.v1_2, data.v21_2);
-                    data.K1_2For_v22 = K1(data.v1_2, data.v22_2);
-                    data.K1_2 = Math.Min(data.K1_2For_v21, data.K1_2For_v22);
-
-                    data.K1_3For_v21 = K1(data.v1_3, data.v21_3);
-                    data.K1_3For_v22 = K1(data.v1_3, data.v22_3);
-                    data.K1_3 = Math.Min(data.K1_3For_v21, data.K1_3For_v22);
-
-                    data.sigmai2_1 = data.K1_2For_v21 * data.K2 * data.SigmaAllow;
-                    data.sigmai2_2 = data.K1_2For_v22 * data.K2 * data.SigmaAllow;
-                    data.sigmai2 = Math.Min(data.sigmai2_1, data.sigmai2_2);
-
-                    data.sigmai3_1 = data.K1_3For_v21 * data.K2 * data.SigmaAllow;
-                    data.sigmai3_2 = data.K1_3For_v22 * data.K2 * data.SigmaAllow;
-                    data.sigmai3 = Math.Min(data.sigmai3_1, data.sigmai3_2);
-
-                    data.F_d2 = 0.7 * data.sigmai2 * data.sef * Math.Sqrt(dataIn.D * data.sef) / (data.K10 * data.K12);
-                    data.F_d3 = 0.9 * data.sigmai3 * data.sef * Math.Sqrt(dataIn.D * data.sef) / (data.K14 * data.K16 * data.K17);
-
-                    data.ConditionStrength2 = Math.Min(data.F_d2, data.F_d3);
-
-                    if (data.F1 > data.ConditionStrength2)
-                    {
-                        data.ErrorList.Add("Несущая способность обечайки, не укрепленной кольцами жесткости в области опорного узла. Условие прочности не выполняется.");
-                    }
-
-                    data.Fe = data.F1 * (Math.PI / 4.0) * data.K13 * data.K15 * Math.Sqrt(dataIn.D / data.sef);
-
-                    data.ConditionStability2 = dataIn.IsPressureIn
-                        ? Math.Abs(data.M1) / data.M_d + data.Fe / data.F_d + Math.Pow(data.Q1 / data.Q_d, 2)
-                        : dataIn.p / data.p_d + Math.Abs(data.M1) / data.M_d + data.Fe / data.F_d + Math.Pow(data.Q1 / data.Q_d, 2);
-                    if (data.ConditionStability2 > 1)
-                    {
-                        data.ErrorList.Add("Несущая способность обечайки, не укрепленной кольцами жесткости в области опорного узла с подкладным листом. Условие устойчивости не выполняется.");
-                    }
-                    break;
+                    data.ErrorList.Add("Несущая способность обечайки, не укрепленной кольцами жесткости в области опорного узла. Условие прочности не выполняется.");
                 }
-            case SaddleType.SaddleWithRing:
+
+                data.Fe = data.F1 * (Math.PI / 4.0) * data.K13 * data.K15 * Math.Sqrt(dataIn.D / data.sef);
+
+                data.ConditionStability2 = dataIn.IsPressureIn
+                    ? Math.Abs(data.M1) / data.M_d + data.Fe / data.F_d + Math.Pow(data.Q1 / data.Q_d, 2)
+                    : dataIn.p / data.p_d + Math.Abs(data.M1) / data.M_d + data.Fe / data.F_d + Math.Pow(data.Q1 / data.Q_d, 2);
+                if (data.ConditionStability2 > 1)
                 {
-                    //TODO: опора с укрепляющим кольцом
-                    break;
+                    data.ErrorList.Add("Несущая способность обечайки, не укрепленной кольцами жесткости в области опорного узла с подкладным листом. Условие устойчивости не выполняется.");
                 }
+                break;
+            case SaddleType.SaddleWithRingInNoRibs:
+            case SaddleType.SaddleWithRingIn1Rib:
+            case SaddleType.SaddleWithRingIn3Rib:
+            case SaddleType.SaddleWithRingOutRib:
+                //TODO: опора с укрепляющим кольцом
+                break;
         }
 
         data.IsConditionUseFormulas = true;
@@ -296,7 +297,7 @@ internal class SaddleCalculateService : ICalculateService<SaddleInput>
             data.ErrorList.Add("Условие применения формул не выполняется.");
         }
 
-        switch (dataIn.Type)
+        switch (dataIn.SaddleType)
         {
             case SaddleType.SaddleWithoutRingWithSheet:
                 if (dataIn.delta2 < dataIn.delta1 + 20)
@@ -312,7 +313,10 @@ internal class SaddleCalculateService : ICalculateService<SaddleInput>
                 }
 
                 break;
-            case SaddleType.SaddleWithRing:
+            case SaddleType.SaddleWithRingInNoRibs:
+            case SaddleType.SaddleWithRingIn1Rib:
+            case SaddleType.SaddleWithRingIn3Rib:
+            case SaddleType.SaddleWithRingOutRib:
                 data.Ak = (dataIn.s - dataIn.c) * Math.Sqrt(dataIn.D * (dataIn.s - dataIn.c));
                 if (dataIn.Ak < data.Ak)
                 {

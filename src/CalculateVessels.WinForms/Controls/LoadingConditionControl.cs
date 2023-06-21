@@ -1,4 +1,4 @@
-﻿using CalculateVessels.Core.Shells.Base;
+﻿using CalculateVessels.Core.Base;
 using CalculateVessels.Helpers;
 using System;
 using System.Collections.Generic;
@@ -8,12 +8,12 @@ using System.Linq;
 using System.Windows.Forms;
 using System.Windows.Forms.Design;
 
-namespace CalculateVessels.Elements;
+namespace CalculateVessels.Controls;
 
 [Designer(typeof(ControlDesigner))]
-public sealed partial class LoadingConditionGroupBox : GroupBox
+public partial class LoadingConditionControl : UserControl
 {
-    public LoadingConditionGroupBox()
+    public LoadingConditionControl()
     {
         InitializeComponent();
     }

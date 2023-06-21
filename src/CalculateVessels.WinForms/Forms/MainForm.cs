@@ -5,6 +5,7 @@ using CalculateVessels.Core.Shells.Conical;
 using CalculateVessels.Core.Shells.Cylindrical;
 using CalculateVessels.Core.Shells.Elliptical;
 using CalculateVessels.Core.Shells.Nozzle;
+using CalculateVessels.Core.Supports.Saddle;
 using CalculateVessels.Helpers;
 using CalculateVessels.Output;
 using System;
@@ -274,7 +275,10 @@ public partial class MainForm : Form
         return CylindricalForm != null ||
                ConicalForm != null ||
                EllipticalForm != null ||
-               NozzleForm != null;
+               NozzleForm != null ||
+               SaddleForm != null ||
+               FlatBottomForm != null ||
+               FlatBottomWithAdditionalMomentForm != null;
     }
 
     private void AboutToolStripMenuItem_Click(object sender, EventArgs e)
@@ -358,6 +362,10 @@ public partial class MainForm : Form
             case nameof(NozzleCalculated):
                 CheckAndCreateForm(ref NozzleForm);
                 NozzleForm?.Show((NozzleInput)((NozzleCalculated)element).InputData, elementIndex);
+                break;
+            case nameof(SaddleCalculated):
+                CheckAndCreateForm(ref SaddleForm);
+                SaddleForm?.Show((SaddleInput)((SaddleCalculated)element).InputData, elementIndex);
                 break;
             default:
                 throw new InvalidOperationException($"Couldn't create form for type {type}.");

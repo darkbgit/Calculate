@@ -18,6 +18,8 @@ public class SaddleCalculated : CalculatedElement, ICalculatedElement
         };
     }
 
+    public override string Type => nameof(SaddleCalculated);
+
     public bool IsConditionUseFormulas { get; set; }
     public double Ak { get; set; }
     public double B1 { get; set; }

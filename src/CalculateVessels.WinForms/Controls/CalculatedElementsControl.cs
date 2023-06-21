@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace CalculateVessels.Elements
+namespace CalculateVessels.Controls
 {
     public partial class CalculatedElementsControl : UserControl
     {
@@ -42,11 +42,6 @@ namespace CalculateVessels.Elements
             };
 
             elementsListView.Items[index] = item;
-        }
-
-        public void RemoveElement()
-        {
-
         }
 
         public IEnumerable<ICalculatedElement> GetElements()
@@ -123,7 +118,7 @@ namespace CalculateVessels.Elements
                 return;
             }
 
-            if ((Parent is not MainForm mf) || mf.IsAnyWindowOpen())
+            if (Parent is not MainForm mf || mf.IsAnyWindowOpen())
             {
                 MessageBox.Show("Закройте все окна с расчетами для изменения порядка рассчитанных элементов.");
                 return;
@@ -148,7 +143,21 @@ namespace CalculateVessels.Elements
         {
             var idx = elementsListView.SelectedItems[0].Index;
 
-            elementsListView.Items.RemoveAt(idx);
+            var element = GetElement(idx);
+
+            if (element == null) return;
+
+            var result = MessageBox.Show($"Are you shure to delete element {element}?", "Delete", MessageBoxButtons.YesNoCancel);
+
+            if (result == DialogResult.Yes)
+            {
+                elementsListView.Items.RemoveAt(idx);
+            }
+        }
+
+        private ICalculatedElement? GetElement(int index)
+        {
+            return elementsListView.Items[index].Tag as ICalculatedElement;
         }
 
         private void EditButton_Click(object sender, EventArgs e)

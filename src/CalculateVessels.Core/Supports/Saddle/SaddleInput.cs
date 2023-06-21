@@ -9,6 +9,7 @@ namespace CalculateVessels.Core.Supports.Saddle;
 
 public class SaddleInput : InputData, IInputData
 {
+    public override string Type => nameof(SaddleInput);
     public bool IsAssembly { get; set; }
     public bool IsPressureIn { get; set; }
     public double a { get; set; }
@@ -31,7 +32,7 @@ public class SaddleInput : InputData, IInputData
     public double SigmaAllow { get; set; }
     public double t { get; set; }
     public int N { get; set; }
-    public SaddleType Type { get; set; }
+    public SaddleType SaddleType { get; set; }
     public string NameShell { get; set; } = string.Empty;
     public string Steel { get; set; } = string.Empty;
 }

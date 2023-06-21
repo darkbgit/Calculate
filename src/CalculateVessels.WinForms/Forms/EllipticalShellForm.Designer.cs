@@ -1,4 +1,6 @@
 ﻿
+using CalculateVessels.Controls;
+
 namespace CalculateVessels.Forms;
 
 partial class EllipticalShellForm
@@ -78,8 +80,8 @@ partial class EllipticalShellForm
         hemispherical_rb = new System.Windows.Forms.RadioButton();
         ell_rb = new System.Windows.Forms.RadioButton();
         isNozzleCalculateCheckBox = new System.Windows.Forms.CheckBox();
-        loadingConditionGroupBox = new Elements.LoadingConditionGroupBox();
-        loadingConditionsControl = new Elements.LoadingConditionsControl();
+        loadingConditionControl = new LoadingConditionControl();
+        loadingConditionsControl = new LoadingConditionsControl();
         groupBox4.SuspendLayout();
         ((System.ComponentModel.ISupportInitialize)pictureBox).BeginInit();
         groupBox1.SuspendLayout();
@@ -585,14 +587,13 @@ partial class EllipticalShellForm
         isNozzleCalculateCheckBox.Text = "Расчитать штуцер в обечайке";
         isNozzleCalculateCheckBox.UseVisualStyleBackColor = true;
         // 
-        // loadingConditionGroupBox
+        // loadingConditionControl
         // 
-        loadingConditionGroupBox.Location = new System.Drawing.Point(3, 102);
-        loadingConditionGroupBox.Name = "loadingConditionGroupBox";
-        loadingConditionGroupBox.Size = new System.Drawing.Size(351, 144);
-        loadingConditionGroupBox.TabIndex = 125;
-        loadingConditionGroupBox.TabStop = false;
-        loadingConditionGroupBox.Text = "Условия нагружения";
+        loadingConditionControl.Location = new System.Drawing.Point(3, 102);
+        loadingConditionControl.Name = "loadingConditionControl";
+        loadingConditionControl.Size = new System.Drawing.Size(354, 144);
+        loadingConditionControl.TabIndex = 125;
+        loadingConditionControl.TabStop = false;
         // 
         // loadingConditionsControl
         // 
@@ -607,7 +608,7 @@ partial class EllipticalShellForm
         AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
         ClientSize = new System.Drawing.Size(664, 704);
         Controls.Add(loadingConditionsControl);
-        Controls.Add(loadingConditionGroupBox);
+        Controls.Add(loadingConditionControl);
         Controls.Add(isNozzleCalculateCheckBox);
         Controls.Add(groupBox1);
         Controls.Add(label29);
@@ -715,6 +716,6 @@ partial class EllipticalShellForm
     private System.Windows.Forms.RadioButton hemispherical_rb;
     private System.Windows.Forms.RadioButton ell_rb;
     private System.Windows.Forms.CheckBox isNozzleCalculateCheckBox;
-    private Elements.LoadingConditionGroupBox loadingConditionGroupBox;
-    private Elements.LoadingConditionsControl loadingConditionsControl;
+    private LoadingConditionControl loadingConditionControl;
+    private LoadingConditionsControl loadingConditionsControl;
 }

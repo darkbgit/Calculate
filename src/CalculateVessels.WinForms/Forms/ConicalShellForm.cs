@@ -42,7 +42,7 @@ public sealed partial class ConicalShellForm : ConicalShellFormMiddle
 
         if (InputData.LoadingConditions.Count() == 1)
         {
-            loadingConditionGroupBox.SetLoadingCondition(InputData.LoadingConditions.First());
+            loadingConditionControl.SetLoadingCondition(InputData.LoadingConditions.First());
         }
         else
         {
@@ -184,7 +184,7 @@ public sealed partial class ConicalShellForm : ConicalShellFormMiddle
             s = Parameters.GetParam<double>(s_tb.Text, "s", dataInErr)
         };
 
-        var loadingConditions = FormHelpers.ParseLoadingConditions(loadingConditionsControl, loadingConditionGroupBox).ToList();
+        var loadingConditions = FormHelpers.ParseLoadingConditions(loadingConditionsControl, loadingConditionControl).ToList();
 
         if (!loadingConditions.Any())
         {

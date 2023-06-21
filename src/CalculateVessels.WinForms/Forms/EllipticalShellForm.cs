@@ -51,7 +51,7 @@ public sealed partial class EllipticalShellForm : EllipticalShellFormMiddle
 
         if (InputData.LoadingConditions.Count() == 1)
         {
-            loadingConditionGroupBox.SetLoadingCondition(InputData.LoadingConditions.First());
+            loadingConditionControl.SetLoadingCondition(InputData.LoadingConditions.First());
         }
         else
         {
@@ -103,7 +103,7 @@ public sealed partial class EllipticalShellForm : EllipticalShellFormMiddle
                 ell_rb.Checked ? EllipticalBottomType.Elliptical : EllipticalBottomType.Hemispherical
         };
 
-        var loadingConditions = FormHelpers.ParseLoadingConditions(loadingConditionsControl, loadingConditionGroupBox).ToList();
+        var loadingConditions = FormHelpers.ParseLoadingConditions(loadingConditionsControl, loadingConditionControl).ToList();
 
         if (!loadingConditions.Any())
         {
@@ -142,7 +142,7 @@ public sealed partial class EllipticalShellForm : EllipticalShellFormMiddle
                 ell_rb.Checked ? EllipticalBottomType.Elliptical : EllipticalBottomType.Hemispherical
         };
 
-        var loadingConditions = FormHelpers.ParseLoadingConditions(loadingConditionsControl, loadingConditionGroupBox).ToList();
+        var loadingConditions = FormHelpers.ParseLoadingConditions(loadingConditionsControl, loadingConditionControl).ToList();
 
         if (!loadingConditions.Any())
         {

@@ -1,5 +1,5 @@
+using CalculateVessels.Core.Base;
 using CalculateVessels.Core.Interfaces;
-using CalculateVessels.Core.Shells.Base;
 using CalculateVessels.Core.Shells.Cylindrical;
 using CalculateVessels.Data.PhysicalData;
 using FluentAssertions;

@@ -1,4 +1,4 @@
-﻿using CalculateVessels.Core.Shells.Base;
+﻿using CalculateVessels.Core.Base;
 using CalculateVessels.Output.Word.Core;
 using DocumentFormat.OpenXml.Wordprocessing;
 

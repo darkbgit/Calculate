@@ -890,7 +890,7 @@ public partial class FlatBottomForm : Form
             c3 = Parameters.GetParam<double>(c3_tb.Text, "c3", dataInErr),
             s1 = Parameters.GetParam<double>(s1_tb.Text, "s1", dataInErr),
             Type = Parameters.GetParam<int>(type_gb.Controls.OfType<RadioButton>().FirstOrDefault(rb => rb.Checked)?.Text,
-                "Type", dataInErr),
+                "SaddleType", dataInErr),
             SigmaAllow = sigmaHandle_cb.Checked
                 ? Parameters.GetParam<double>(sigma_d_tb.Text, "[σ]", dataInErr)
                 : default
@@ -941,10 +941,10 @@ public partial class FlatBottomForm : Form
             case 13:
             case 14:
             case 15:
-                dataInErr.Add("Type 13, 14, 15 unsupported");
+                dataInErr.Add("SaddleType 13, 14, 15 unsupported");
                 break;
             default:
-                dataInErr.Add("Type error");
+                dataInErr.Add("SaddleType error");
                 break;
         }
 

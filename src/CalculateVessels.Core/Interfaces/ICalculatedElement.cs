@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using CalculateVessels.Core.Helpers.Json;
+using System.Collections.Generic;
 using System.Text.Json.Serialization;
-using CalculateVessels.Core.Helpers.Json;
 
 namespace CalculateVessels.Core.Interfaces;
 

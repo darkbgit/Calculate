@@ -1,4 +1,6 @@
 ﻿
+using CalculateVessels.Controls;
+
 namespace CalculateVessels.Forms;
 
 partial class MainForm
@@ -85,7 +87,7 @@ partial class MainForm
         button32 = new System.Windows.Forms.Button();
         openFileDialog = new System.Windows.Forms.OpenFileDialog();
         saveFileDialogRst = new System.Windows.Forms.SaveFileDialog();
-        calculatedElementsControl = new Elements.CalculatedElementsControl();
+        calculatedElementsControl = new CalculatedElementsControl();
         label1 = new System.Windows.Forms.Label();
         label2 = new System.Windows.Forms.Label();
         chooseFileNimeButton = new System.Windows.Forms.Button();
@@ -153,7 +155,7 @@ partial class MainForm
         // 
         // Cil_b
         // 
-        Cil_b.Image = Properties.Resources.Icon1000;
+        Cil_b.Image = Properties.Resources.IconCyllindricalShell;
         Cil_b.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
         Cil_b.Location = new System.Drawing.Point(14, 31);
         Cil_b.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -202,6 +204,8 @@ partial class MainForm
         // 
         // Kon_b
         // 
+        Kon_b.Image = Properties.Resources.IconConicalShell;
+        Kon_b.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
         Kon_b.Location = new System.Drawing.Point(14, 85);
         Kon_b.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
         Kon_b.Name = "Kon_b";
@@ -340,6 +344,7 @@ partial class MainForm
         // 
         // Saddle_b
         // 
+        Saddle_b.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
         Saddle_b.Location = new System.Drawing.Point(207, 31);
         Saddle_b.Name = "Saddle_b";
         Saddle_b.Size = new System.Drawing.Size(186, 27);
@@ -360,6 +365,8 @@ partial class MainForm
         // 
         // bracketVertical_b
         // 
+        bracketVertical_b.Image = Properties.Resources.IconBracketVertical;
+        bracketVertical_b.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
         bracketVertical_b.Location = new System.Drawing.Point(207, 64);
         bracketVertical_b.Name = "bracketVertical_b";
         bracketVertical_b.Size = new System.Drawing.Size(186, 27);
@@ -401,7 +408,7 @@ partial class MainForm
         // heatExchengerWithFixedTubePlate_b
         // 
         heatExchengerWithFixedTubePlate_b.Enabled = false;
-        heatExchengerWithFixedTubePlate_b.Image = Properties.Resources.Icon41000;
+        heatExchengerWithFixedTubePlate_b.Image = Properties.Resources.IconHeatExchanger;
         heatExchengerWithFixedTubePlate_b.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
         heatExchengerWithFixedTubePlate_b.Location = new System.Drawing.Point(207, 196);
         heatExchengerWithFixedTubePlate_b.Name = "heatExchengerWithFixedTubePlate_b";
@@ -749,7 +756,7 @@ partial class MainForm
     private System.Windows.Forms.ToolStripMenuItem ToolsStripMenuItem;
     private System.Windows.Forms.OpenFileDialog openFileDialog;
     private System.Windows.Forms.SaveFileDialog saveFileDialogRst;
-    internal Elements.CalculatedElementsControl calculatedElementsControl;
+    internal CalculatedElementsControl calculatedElementsControl;
     private System.Windows.Forms.Label label1;
     private System.Windows.Forms.Label label2;
     private System.Windows.Forms.Button chooseFileNimeButton;

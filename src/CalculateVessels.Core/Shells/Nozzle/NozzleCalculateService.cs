@@ -1,4 +1,5 @@
-﻿using CalculateVessels.Core.Exceptions;
+﻿using CalculateVessels.Core.Base;
+using CalculateVessels.Core.Exceptions;
 using CalculateVessels.Core.Helpers;
 using CalculateVessels.Core.Interfaces;
 using CalculateVessels.Core.Shells.Base;

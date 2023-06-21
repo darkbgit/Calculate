@@ -31,8 +31,4 @@
     <ProjectReference Include="..\CalculateVessels.Data\CalculateVessels.Data.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Base\" />
-  </ItemGroup>
-
 </Project>

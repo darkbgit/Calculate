@@ -3271,9 +3271,29 @@ namespace CalculateVessels.Data.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        public static byte[] SaddleRingInElem {
+        public static byte[] SaddleRingIn0Elem {
             get {
-                object obj = ResourceManager.GetObject("SaddleRingInElem", resourceCulture);
+                object obj = ResourceManager.GetObject("SaddleRingIn0Elem", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] SaddleRingIn1Elem {
+            get {
+                object obj = ResourceManager.GetObject("SaddleRingIn1Elem", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] SaddleRingIn3Elem {
+            get {
+                object obj = ResourceManager.GetObject("SaddleRingIn3Elem", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -3284,26 +3304,6 @@ namespace CalculateVessels.Data.Properties {
         public static byte[] SaddleRingOutElem {
             get {
                 object obj = ResourceManager.GetObject("SaddleRingOutElem", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        public static byte[] SaddleRingRib1Elem {
-            get {
-                object obj = ResourceManager.GetObject("SaddleRingRib1Elem", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        public static byte[] SaddleRingRib3Elem {
-            get {
-                object obj = ResourceManager.GetObject("SaddleRingRib3Elem", resourceCulture);
                 return ((byte[])(obj));
             }
         }

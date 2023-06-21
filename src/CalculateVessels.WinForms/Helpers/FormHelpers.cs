@@ -1,5 +1,5 @@
-﻿using CalculateVessels.Core.Shells.Base;
-using CalculateVessels.Elements;
+﻿using CalculateVessels.Controls;
+using CalculateVessels.Core.Base;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -175,10 +175,10 @@ internal static class FormHelpers
     }
 
     /// <summary>
-    /// Parse <see cref="IEnumerable{LoadingCondition}"/> from form with <seealso cref="LoadingConditionsControl"/> and <see cref="LoadingConditionGroupBox"/>.
+    /// Parse <see cref="IEnumerable{LoadingCondition}"/> from form with <seealso cref="LoadingConditionsControl"/> and <see cref="LoadingConditionControl"/>.
     /// </summary>
     /// <returns><see cref="IEnumerable{LoadingCondition}"/> if data parsed correctly. Else returns <see cref="Enumerable.Empty{LoadingCondition}"/> and shows MessageBox with errors.</returns>
-    public static IEnumerable<LoadingCondition> ParseLoadingConditions(LoadingConditionsControl loadingConditionsControl, LoadingConditionGroupBox loadingConditionGroupBox)
+    public static IEnumerable<LoadingCondition> ParseLoadingConditions(LoadingConditionsControl loadingConditionsControl, LoadingConditionControl loadingConditionGroupBox)
     {
         if (!loadingConditionsControl.Any())
         {

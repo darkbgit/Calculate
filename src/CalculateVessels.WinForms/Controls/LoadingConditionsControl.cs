@@ -1,4 +1,4 @@
-﻿using CalculateVessels.Core.Shells.Base;
+﻿using CalculateVessels.Core.Base;
 using CalculateVessels.Helpers;
 using System;
 using System.Collections.Generic;
@@ -6,7 +6,7 @@ using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace CalculateVessels.Elements;
+namespace CalculateVessels.Controls;
 
 public partial class LoadingConditionsControl : UserControl
 {
@@ -57,7 +57,7 @@ public partial class LoadingConditionsControl : UserControl
     private void AddLoadingCondition_btn_Click(object sender, EventArgs e)
     {
         var loadingCondition = ParentForm?.Controls
-                                   .OfType<LoadingConditionGroupBox>()
+                                   .OfType<LoadingConditionControl>()
                                    .FirstOrDefault()
                                    ?.GetLoadingCondition()
             ?? throw new Exception("LoadingConditionGroupBox didn't found.");
@@ -115,7 +115,10 @@ public partial class LoadingConditionsControl : UserControl
 
         int firstOrdinalNumber = 1;
 
-        loadingConditionsListView.Items.Cast<ListViewItem>().ToList().ForEach(i =>
+        loadingConditionsListView.Items
+            .Cast<ListViewItem>()
+            .ToList()
+            .ForEach(i =>
         {
             i.SubItems[ordinalNumber_ch.Index].Text = firstOrdinalNumber.ToString();
             firstOrdinalNumber++;

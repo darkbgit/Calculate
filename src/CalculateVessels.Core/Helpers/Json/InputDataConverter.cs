@@ -6,31 +6,6 @@ using System.Text.Json.Serialization;
 
 namespace CalculateVessels.Core.Helpers.Json;
 
-//public class InputDataConverter<T, TI> : JsonConverter<TI>
-//    where T : class, TI
-//{
-//    public override TI? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-//    {
-//        return JsonSerializer.Deserialize<T>(ref reader, options);
-//    }
-
-//    public override void Write(Utf8JsonWriter writer, TI value, JsonSerializerOptions options)
-//    {
-//        switch (value)
-//        {
-//            case null:
-//                JsonSerializer.Serialize(writer, null, options);
-//                break;
-//            default:
-//                {
-//                    var type = value.GetType();
-//                    JsonSerializer.Serialize(writer, value, type, options);
-//                    break;
-//                }
-//        }
-//    }
-//}
-
 public class CustomJsonConverter<T> : JsonConverter<T>
     where T : class
 {
@@ -42,7 +17,7 @@ public class CustomJsonConverter<T> : JsonConverter<T>
         var type = typeof(T);
         _types = AppDomain.CurrentDomain.GetAssemblies()
             .SelectMany(s => s.GetTypes())
-            .Where(p => type.IsAssignableFrom(p) && p.IsClass && !p.IsAbstract)
+            .Where(p => type.IsAssignableFrom(p) && p is { IsClass: true, IsAbstract: false })
             .ToList();
     }
 
@@ -53,25 +28,19 @@ public class CustomJsonConverter<T> : JsonConverter<T>
             throw new JsonException();
         }
 
-        using (var jsonDocument = JsonDocument.ParseValue(ref reader))
+        using var jsonDocument = JsonDocument.ParseValue(ref reader);
+        if (!jsonDocument.RootElement.TryGetProperty("Type", out var typeProperty))
         {
-            if (!jsonDocument.RootElement.TryGetProperty("Type", out var typeProperty))
-            {
-                throw new JsonException();
-            }
-
-            var type = _types.FirstOrDefault(x => x.Name ==
-                                                  typeProperty.GetString());
-            if (type == null)
-            {
-                throw new JsonException();
-            }
-
-            var jsonObject = jsonDocument.RootElement.GetRawText();
-            var result = (T)JsonSerializer.Deserialize(jsonObject, type, options);
-
-            return result;
+            throw new JsonException();
         }
+
+        var type = _types.FirstOrDefault(x => x.Name == typeProperty.GetString())
+                   ?? throw new JsonException();
+        var jsonObject = jsonDocument.RootElement.GetRawText();
+        var result = (T?)JsonSerializer.Deserialize(jsonObject, type, options)
+            ?? throw new JsonException();
+
+        return result;
     }
 
     public override void Write(Utf8JsonWriter writer, T value, JsonSerializerOptions options)
@@ -82,11 +51,9 @@ public class CustomJsonConverter<T> : JsonConverter<T>
                 JsonSerializer.Serialize(writer, null, options);
                 break;
             default:
-                {
-                    var type = value.GetType();
-                    JsonSerializer.Serialize(writer, value, type, options);
-                    break;
-                }
+                var type = value.GetType();
+                JsonSerializer.Serialize(writer, value, type, options);
+                break;
         }
     }
 }

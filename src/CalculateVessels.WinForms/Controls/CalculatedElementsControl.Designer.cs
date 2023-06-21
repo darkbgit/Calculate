@@ -1,4 +1,4 @@
-﻿namespace CalculateVessels.Elements
+﻿namespace CalculateVessels.Controls
 {
     partial class CalculatedElementsControl
     {

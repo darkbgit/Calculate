@@ -1,5 +1,5 @@
-﻿using CalculateVessels.Core.Interfaces;
-using CalculateVessels.Core.Shells.Base;
+﻿using CalculateVessels.Core.Base;
+using CalculateVessels.Core.Interfaces;
 using CalculateVessels.Core.Shells.Conical;
 using CalculateVessels.Core.Shells.Enums;
 using CalculateVessels.Data.PhysicalData;

@@ -1,4 +1,6 @@
-﻿namespace CalculateVessels.Forms
+﻿using CalculateVessels.Controls;
+
+namespace CalculateVessels.Forms
 {
     partial class ConicalShellForm
     {
@@ -156,8 +158,8 @@
             littleConnectionSimple_rb = new System.Windows.Forms.RadioButton();
             littleConnection_pb = new System.Windows.Forms.PictureBox();
             toolTip1 = new System.Windows.Forms.ToolTip(components);
-            loadingConditionGroupBox = new Elements.LoadingConditionGroupBox();
-            loadingConditionsControl = new Elements.LoadingConditionsControl();
+            loadingConditionControl = new LoadingConditionControl();
+            loadingConditionsControl = new LoadingConditionsControl();
             Q_gb.SuspendLayout();
             M_gb.SuspendLayout();
             groupBox4.SuspendLayout();
@@ -1529,14 +1531,13 @@
             littleConnection_pb.TabIndex = 0;
             littleConnection_pb.TabStop = false;
             // 
-            // loadingConditionGroupBox
+            // loadingConditionControl
             // 
-            loadingConditionGroupBox.Location = new System.Drawing.Point(13, 93);
-            loadingConditionGroupBox.Name = "loadingConditionGroupBox";
-            loadingConditionGroupBox.Size = new System.Drawing.Size(351, 144);
-            loadingConditionGroupBox.TabIndex = 137;
-            loadingConditionGroupBox.TabStop = false;
-            loadingConditionGroupBox.Text = "Условия нагружения";
+            loadingConditionControl.Location = new System.Drawing.Point(13, 93);
+            loadingConditionControl.Name = "loadingConditionControl";
+            loadingConditionControl.Size = new System.Drawing.Size(354, 144);
+            loadingConditionControl.TabIndex = 137;
+            loadingConditionControl.TabStop = false;
             // 
             // loadingConditionsControl
             // 
@@ -1551,7 +1552,7 @@
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             ClientSize = new System.Drawing.Size(1076, 725);
             Controls.Add(loadingConditionsControl);
-            Controls.Add(loadingConditionGroupBox);
+            Controls.Add(loadingConditionControl);
             Controls.Add(littleConnection_cb);
             Controls.Add(littleConnection_gb);
             Controls.Add(bigConnection_cb);
@@ -1780,7 +1781,7 @@
         private System.Windows.Forms.Panel phi_kPanel;
         private System.Windows.Forms.TextBox phi_k_tb;
         private System.Windows.Forms.Label label55;
-        private Elements.LoadingConditionGroupBox loadingConditionGroupBox;
-        private Elements.LoadingConditionsControl loadingConditionsControl;
+        private LoadingConditionControl loadingConditionControl;
+        private LoadingConditionsControl loadingConditionsControl;
     }
 }

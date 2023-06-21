@@ -50,7 +50,7 @@ public class SaddleTestData
             t = 150,
             N = 1000,
             G = 54000,
-            Type = SaddleType.SaddleWithoutRingWithoutSheet,
+            SaddleType = SaddleType.SaddleWithoutRingWithoutSheet,
             b = 180,
             delta1 = 112,
             H = 204,

@@ -4,5 +4,8 @@ public enum SaddleType
 {
     SaddleWithoutRingWithoutSheet,
     SaddleWithoutRingWithSheet,
-    SaddleWithRing
+    SaddleWithRingInNoRibs,
+    SaddleWithRingIn1Rib,
+    SaddleWithRingIn3Rib,
+    SaddleWithRingOutRib,
 }
