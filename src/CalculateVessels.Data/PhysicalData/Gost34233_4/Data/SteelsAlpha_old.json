@@ -1,0 +1,89 @@
+﻿[
+	{
+		"Name": [ "10", "20", "25", "30", "35" ],
+		"Values": [
+			{
+				"Temperature": 100,
+				"AlphaValue": 0.0000111
+			},
+			{
+				"Temperature": 200,
+				"AlphaValue": 0.0000119
+			},
+			{
+				"Temperature": 400,
+				"AlphaValue": 0.0000134
+			}
+		]
+	},
+	{
+		"Name": [ "40" ],
+		"Values": [
+			{
+				"Temperature": 100,
+				"AlphaValue": 0.0000111
+			},
+			{
+				"Temperature": 200,
+				"AlphaValue": 0.0000119
+			},
+			{
+				"Temperature": 300,
+				"AlphaValue": 0.0000133
+			},
+			{
+				"Temperature": 400,
+				"AlphaValue": 0.0000133
+			}
+		]
+	},
+	{
+		"Name": [ "20Х13" ],
+		"Values": [
+			{
+				"Temperature": 100,
+				"AlphaValue": 0.0000104
+			},
+			{
+				"Temperature": 200,
+				"AlphaValue": 0.0000109
+			},
+			{
+				"Temperature": 300,
+				"AlphaValue": 0.0000114
+			},
+			{
+				"Temperature": 400,
+				"AlphaValue": 0.0000118
+			}
+		]
+	},
+  {
+    "Name": [ "14Х17Н2" ],
+		"Values": [
+			{
+				"Temperature": 100,
+				"AlphaValue": 0.0000106
+			},
+			{
+				"Temperature": 200,
+				"AlphaValue": 0.0000108
+			},
+			{
+				"Temperature": 300,
+				"AlphaValue": 0.000011
+			},
+			{
+				"Temperature": 400,
+				"AlphaValue": 0.0000111
+			},
+			{
+				"Temperature": 500,
+				"AlphaValue": 0.0000113
+      }
+		]
+  }
+]
+
+	
+
