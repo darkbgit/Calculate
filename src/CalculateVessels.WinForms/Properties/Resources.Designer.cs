@@ -193,39 +193,9 @@ namespace CalculateVessels.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Icon22000 {
-            get {
-                object obj = ResourceManager.GetObject("Icon22000", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap Icon22100 {
             get {
                 object obj = ResourceManager.GetObject("Icon22100", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Icon22200 {
-            get {
-                object obj = ResourceManager.GetObject("Icon22200", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Icon23000 {
-            get {
-                object obj = ResourceManager.GetObject("Icon23000", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -343,39 +313,9 @@ namespace CalculateVessels.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Icon37500 {
-            get {
-                object obj = ResourceManager.GetObject("Icon37500", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap Icon38000 {
             get {
                 object obj = ResourceManager.GetObject("Icon38000", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Icon38500 {
-            get {
-                object obj = ResourceManager.GetObject("Icon38500", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Icon38600 {
-            get {
-                object obj = ResourceManager.GetObject("Icon38600", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -673,16 +613,6 @@ namespace CalculateVessels.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Icon9000 {
-            get {
-                object obj = ResourceManager.GetObject("Icon9000", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap Icon92000 {
             get {
                 object obj = ResourceManager.GetObject("Icon92000", resourceCulture);
@@ -746,6 +676,16 @@ namespace CalculateVessels.Properties {
         internal static System.Drawing.Bitmap IconHeatExchanger {
             get {
                 object obj = ResourceManager.GetObject("IconHeatExchanger", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap IconSaddle {
+            get {
+                object obj = ResourceManager.GetObject("IconSaddle", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

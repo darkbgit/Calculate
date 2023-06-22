@@ -1,6 +1,7 @@
 ﻿using CalculateVessels.Core.DI;
 using CalculateVessels.Data.DI;
 using CalculateVessels.Forms;
+using CalculateVessels.Helpers;
 using CalculateVessels.Output.DI;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -8,7 +9,6 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
-using CalculateVessels.Helpers;
 
 namespace CalculateVessels;
 

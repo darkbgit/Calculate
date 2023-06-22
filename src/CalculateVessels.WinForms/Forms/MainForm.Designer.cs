@@ -344,6 +344,7 @@ partial class MainForm
         // 
         // Saddle_b
         // 
+        Saddle_b.Image = Properties.Resources.IconSaddle;
         Saddle_b.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
         Saddle_b.Location = new System.Drawing.Point(207, 31);
         Saddle_b.Name = "Saddle_b";
