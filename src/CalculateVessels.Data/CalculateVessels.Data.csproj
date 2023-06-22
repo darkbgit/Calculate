@@ -82,19 +82,22 @@
     <None Update="PhysicalData\Gost34233_4\Data\Steels.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="PhysicalData\Gost34233_7\Table1.json">
+    <None Update="PhysicalData\Gost34233_7\Data\Table1.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="PhysicalData\Gost34233_7\Table2.json">
+    <None Update="PhysicalData\Gost34233_7\Data\Table2.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="PhysicalData\Gost34233_7\TableB1.json">
+    <None Update="PhysicalData\Gost34233_7\Data\TableB1.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="PhysicalData\Gost34233_7\TableG1.json">
+    <None Update="PhysicalData\Gost34233_7\Data\TableG1 - Copy.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="PhysicalData\Gost34233_7\TableG23.json">
+    <None Update="PhysicalData\Gost34233_7\Data\TableG1.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="PhysicalData\Gost34233_7\Data\TableG23.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="PhysicalData\Gost6533\Data\EllipticalBottom_old.json">

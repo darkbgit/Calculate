@@ -24,10 +24,16 @@ public interface IPhysicalDataService
     double GetAlpha(string steelName, double temperature, AlphaSource source);
 
     /// <exception cref="PhysicalDataException"></exception>
+    double GetRm(string steelName, double temperature, RmSource source);
+
+    /// <exception cref="PhysicalDataException"></exception>
     IEnumerable<string> GetSteels(SteelSource source);
 
     /// <exception cref="PhysicalDataException"></exception>
     EllipsesParameters GetEllipsesParameters();
+
+    /// <exception cref="PhysicalDataException"></exception>
+    SteelType Gost34233D1GetSteelType(string steelName);
 
     /// <exception cref="PhysicalDataException"></exception>
     double Gost34233D4Get_fb(int screwD, bool isScrewWithGroove);
@@ -41,4 +47,15 @@ public interface IPhysicalDataService
     /// <exception cref="PhysicalDataException"></exception>
     IEnumerable<string> Gost34233D4GetScrewDs();
 
+    /// <exception cref="PhysicalDataException"></exception>
+    (double phi1, double phi2, double phi3) Gost34233D7GetPhi1Phi2Phi3(double omega);
+
+    /// <exception cref="PhysicalDataException"></exception>
+    double Gost34233D7GetA(double omega, double mA);
+
+    /// <exception cref="PhysicalDataException"></exception>
+    double Gost34233D7GetB(double omega, double nB);
+
+    /// <exception cref="PhysicalDataException"></exception>
+    double Gost34233D7GetWd(double D);
 }

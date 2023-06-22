@@ -284,7 +284,6 @@ public sealed partial class SaddleForm : SaddleFormMiddle
                                     ?? throw new InvalidOperationException());
     }
 
-
     private void PreCalc_btn_Click(object sender, EventArgs e)
     {
         if (!CollectDataForPreliminarilyCalculation()) return;
@@ -296,7 +295,6 @@ public sealed partial class SaddleForm : SaddleFormMiddle
         calc_btn.Enabled = true;
         MessageBox.Show(Resources.CalcComplete);
     }
-
     private void Calc_btn_Click(object sender, EventArgs e)
     {
         if (!CollectDataForFinishCalculation()) return;

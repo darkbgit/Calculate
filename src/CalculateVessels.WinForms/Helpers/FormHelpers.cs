@@ -1,7 +1,9 @@
 ﻿using CalculateVessels.Controls;
 using CalculateVessels.Core.Base;
+using CalculateVessels.Data.Properties;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
@@ -192,5 +194,18 @@ internal static class FormHelpers
             .ToList();
 
         return loadingConditions;
+    }
+
+    public static Bitmap GetBitmapFromResource(string resourceName)
+    {
+        return (Bitmap)(new ImageConverter().ConvertFrom(Resources.ResourceManager.GetObject(resourceName)
+        ?? throw new InvalidOperationException())
+            ?? throw new InvalidOperationException());
+    }
+
+    public static Bitmap GetBitmapFromBytes(byte[] bytes)
+    {
+        return (Bitmap)(new ImageConverter().ConvertFrom(bytes)
+                        ?? throw new InvalidOperationException());
     }
 }

@@ -408,7 +408,6 @@ partial class MainForm
         // 
         // heatExchengerWithFixedTubePlate_b
         // 
-        heatExchengerWithFixedTubePlate_b.Enabled = false;
         heatExchengerWithFixedTubePlate_b.Image = Properties.Resources.IconHeatExchanger;
         heatExchengerWithFixedTubePlate_b.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
         heatExchengerWithFixedTubePlate_b.Location = new System.Drawing.Point(207, 196);

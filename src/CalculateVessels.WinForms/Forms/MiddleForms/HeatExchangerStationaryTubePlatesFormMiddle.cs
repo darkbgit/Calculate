@@ -1,21 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using CalculateVessels.Core.HeatExchangers.HeatExchangerStationaryTubePlates;
 using CalculateVessels.Core.Interfaces;
-using CalculateVessels.Core.Supports.BracketVertical;
 using CalculateVessels.Data.Interfaces;
 using CalculateVessels.Forms.Base;
+using System.Collections.Generic;
+using System;
 
 namespace CalculateVessels.Forms.MiddleForms;
 
-public class BracketVerticalFormMiddle : BaseCalculateForm<BracketVerticalInput>
+public class HeatExchangerStationaryTubePlatesFormMiddle : BaseCalculateForm<HeatExchangerStationaryTubePlatesInput>
 {
-    protected BracketVerticalFormMiddle(IEnumerable<ICalculateService<BracketVerticalInput>> calculateServices,
+    protected HeatExchangerStationaryTubePlatesFormMiddle(IEnumerable<ICalculateService<HeatExchangerStationaryTubePlatesInput>> calculateServices,
         IPhysicalDataService physicalDataService)
         : base(calculateServices, physicalDataService)
     {
     }
 
-    public BracketVerticalFormMiddle()
+    public HeatExchangerStationaryTubePlatesFormMiddle()
         : this(null, null)
     {
 

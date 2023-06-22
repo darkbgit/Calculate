@@ -8,7 +8,7 @@ public abstract class CalculatedElement
 {
     private readonly List<string> _errorList = new();
 
-    public virtual string Type { get; } = string.Empty;
+    public virtual string Type => string.Empty;
 
     public IEnumerable<string> Bibliography { get; init; } = Enumerable.Empty<string>();
 

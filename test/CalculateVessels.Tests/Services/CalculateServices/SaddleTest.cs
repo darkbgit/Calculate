@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
-using CalculateVessels.Core.Enums;
+﻿using CalculateVessels.Core.Enums;
 using CalculateVessels.Core.Interfaces;
-using CalculateVessels.Data.PhysicalData;
 using CalculateVessels.Core.Supports.Saddle;
+using CalculateVessels.Data.PhysicalData;
 using FluentAssertions;
+using System.Collections.Generic;
 using Xunit;
 
 namespace CalculateVessels.UnitTests.Services.CalculateServices;
@@ -25,7 +25,7 @@ public class SaddleTest
         var result = _calculateService.Calculate(inputData) as SaddleCalculated;
 
         //Assert
-        var precision = 0.001;
+        const double precision = 0.001;
         result.Should().BeEquivalentTo(calculatedData, options => options
             .Using<double>(ctx => ctx.Subject.Should().BeApproximately(ctx.Expectation, precision))
             .WhenTypeIs<double>());
@@ -38,7 +38,13 @@ public class SaddleTestData
 {
     public static IEnumerable<object[]> GetData()
     {
-        var inputData1 = new SaddleInput
+        var (inputData1, calculatedData1) = GetData1();
+        yield return new object[] { inputData1, calculatedData1 };
+    }
+
+    private static (SaddleInput inputData, SaddleCalculated calculatedData) GetData1()
+    {
+        var inputData = new SaddleInput
         {
             IsPressureIn = true,
             D = 600,
@@ -59,9 +65,9 @@ public class SaddleTestData
             e = 1632
         };
 
-        var calculatedData1 = new SaddleCalculated
+        var calculatedData = new SaddleCalculated
         {
-            InputData = inputData1,
+            InputData = inputData,
             IsConditionUseFormulas = true,
             beta1 = 2.932,
             ConditionStability2 = 0.131,
@@ -121,8 +127,7 @@ public class SaddleTestData
             v22_3 = 0.83
         };
 
-        yield return new object[] { inputData1, calculatedData1 };
-
+        return (inputData, calculatedData);
     }
 }
 

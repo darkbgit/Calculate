@@ -5,13 +5,13 @@ using CalculateVessels.Data.PhysicalData.Common;
 using CalculateVessels.Data.PhysicalData.Gost34233_1;
 using CalculateVessels.Data.PhysicalData.Gost34233_4;
 using CalculateVessels.Data.PhysicalData.Gost34233_4.Models;
-using CalculateVessels.Data.PhysicalData.Gost34233_7;
 using CalculateVessels.Data.PhysicalData.Gost6533.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
+using CalculateVessels.Data.PhysicalData.Gost34233_7;
 
 namespace CalculateVessels.Data.PhysicalData;
 
@@ -52,6 +52,15 @@ internal class PhysicalDataService : IPhysicalDataService
         };
     }
 
+    public double GetRm(string steelName, double temperature, RmSource source)
+    {
+        return source switch
+        {
+            RmSource.G34233D1 => Gost34233D1.GetRm(steelName, temperature),
+            _ => throw new PhysicalDataException($"{source} isn't supported.")
+        };
+    }
+
     public IEnumerable<string> GetSteels(SteelSource source)
     {
         return source switch
@@ -66,6 +75,11 @@ internal class PhysicalDataService : IPhysicalDataService
     public EllipsesParameters GetEllipsesParameters()
     {
         return Gost6533.Gost6533.GetEllipsesParameters();
+    }
+
+    public SteelType Gost34233D1GetSteelType(string steelName)
+    {
+        return Gost34233D1.GetSteelType(steelName);
     }
 
     public double Gost34233D4Get_fb(int screwD, bool isScrewWithGroove)
@@ -88,275 +102,26 @@ internal class PhysicalDataService : IPhysicalDataService
         return Gost34233D4.GetScrewDs();
     }
 
-
-    public static class Gost34233_7
+    public (double phi1, double phi2, double phi3) Gost34233D7GetPhi1Phi2Phi3(double omega)
     {
-        private const string TABLE_1 = "PhysicalData/Gost34233_7/Table1.json";
-        private const string TABLE_2 = "PhysicalData/Gost34233_7/Table2.json";
-        private const string TABLE_B1 = "PhysicalData/Gost34233_7/TableB1.json";
-        private const string TABLE_G1 = "PhysicalData/Gost34233_7/TableG1.json";
-        private const string TABLE_G23 = "PhysicalData/Gost34233_7/TableG23.json";
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="etaT"></param>
-        /// <returns></returns>
-        /// <exception cref="PhysicalDataException"></exception>
-        public static double Getpsi0(double etaT)
-        {
-            List<PhysicalData.Gost34233_7.Psi> psiList;
-
-            try
-            {
-                using StreamReader file = new(TABLE_B1);
-                var json = file.ReadToEnd();
-                file.Close();
-                psiList = JsonSerializer.Deserialize<List<PhysicalData.Gost34233_7.Psi>>(json)
-                          ?? throw new InvalidOperationException();
-            }
-            catch
-            {
-                throw new PhysicalDataException($"Error open file {TABLE_B1} for psi0");
-            }
-
-            var etaTRound = Math.Round(etaT * 20) / 20;
-
-            var result = psiList?.FirstOrDefault(p => Math.Abs(p.etaT - etaTRound) < 0.00001) ??
-                         throw new PhysicalDataException($"Couldn't find value of psi0 for etaT={etaT}");
-
-            return result.psi0;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="D"></param>
-        /// <returns></returns>
-        /// <exception cref="PhysicalDataException"></exception>
-        public static double GetpW_d(double D)
-        {
-            List<PhysicalData.Gost34233_7.W> Ws;
-
-            try
-            {
-                using StreamReader file = new(TABLE_2);
-                var json = file.ReadToEnd();
-                file.Close();
-                Ws = JsonSerializer.Deserialize<List<PhysicalData.Gost34233_7.W>>(json) ?? throw new InvalidOperationException();
-            }
-            catch
-            {
-                throw new PhysicalDataException($"Error open table {TABLE_2} for [W]");
-            }
-
-            var result = Ws?.LastOrDefault(w => w.D <= D) ??
-                         throw new PhysicalDataException($"Couldn't find value of [W] for D={D}");
-
-            return result.W_d;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="omega"></param>
-        /// <param name="mn"></param>
-        /// <returns></returns>
-        /// <exception cref="PhysicalDataException"></exception>
-        public static (double T1, double T2, double T3) TryGetT1T2T3(double omega, double mn)
-        {
-            if (omega is < 0 or > 10)
-            {
-                throw new PhysicalDataException($"Error input value for omega {omega} value must be in range 0-10");
-            }
-
-            if (mn is < 1 or > 1.54)
-            {
-                throw new PhysicalDataException($"Error input value for mn {mn} value must be in range 1.0-1.5");
-            }
-
-            var omegaRound = omega <= 4
-                    ? Math.Round(omega * 2.0) / 2.0
-                    : Math.Round(omega);
-            var mnRound = Math.Round(mn * 10.0) / 10.0;
-
-            List<OmegaForT1T2T3> omegaList;
-
-            try
-            {
-                using StreamReader file = new(TABLE_G1);
-                var json = file.ReadToEnd();
-                file.Close();
-                omegaList = JsonSerializer.Deserialize<List<PhysicalData.Gost34233_7.OmegaForT1T2T3>>(json) ?? throw new InvalidOperationException();
-            }
-            catch
-            {
-                throw new PhysicalDataException("Error open file for T1, T2, T3");
-            }
-
-
-            var result = omegaList
-                ?.FirstOrDefault(o => Math.Abs(o.Omega - omegaRound) < 0.00001)
-                ?.MnList
-                .FirstOrDefault(m => Math.Abs(m.mn - mnRound) < 0.00001) ??
-                         throw new PhysicalDataException($"Couldn't find value of T1, T2, T3 for omega={omega} and mn={mn}");
-            return (result.T1, result.T2, result.T3);
-        }
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="omega"></param>
-        /// <returns></returns>
-        /// <exception cref="PhysicalDataException"></exception>
-        public static (double Phi1, double Phi2, double Phi3) TryGetPhi1Phi2Phi3(double omega)
-        {
-            if (omega is < 0 or > 11.5)
-            {
-                throw new PhysicalDataException($"Error input value for omega {omega} value must be in range 0-11");
-            }
-
-            var omegaRound = omega <= 4
-                ? Math.Round(omega * 2.0) / 2.0
-                : Math.Round(omega);
-
-            if (omegaRound == 11)
-            {
-                return (Math.Sqrt(2) * omega, omega, Math.Sqrt(2) * omega);
-            }
-
-            List<PhysicalData.Gost34233_7.OmegaForPhi1Phi2Phi3> omegaList;
-
-            try
-            {
-                using StreamReader file = new(TABLE_1);
-                var json = file.ReadToEnd();
-                file.Close();
-                omegaList = JsonSerializer.Deserialize<List<PhysicalData.Gost34233_7.OmegaForPhi1Phi2Phi3>>(json) ?? throw new InvalidOperationException();
-            }
-            catch
-            {
-                throw new PhysicalDataException("Error open file for Phi1, Phi2, Phi3");
-            }
-
-
-            var result = omegaList
-                ?.FirstOrDefault(o => Math.Abs(o.Omega - omegaRound) < 0.00001) ??
-                         throw new PhysicalDataException($"Couldn't find value of Phi1, Phi2, Phi3 for omega={omega}");
-
-            return (result.Phi1, result.Phi2, result.Phi3);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="omega"></param>
-        /// <param name="mA"></param>
-        /// <returns></returns>
-        /// <exception cref="PhysicalDataException"></exception>
-        public static double GetA(double omega, double mA)
-        {
-            if (omega is < 0 or > 10)
-            {
-                throw new PhysicalDataException($"Error input value for omega {omega} value must be in range 0-10");
-            }
-
-            double omegaRound;
-            if (omega <= 2)
-            {
-                omegaRound = Math.Round(omega * 2.0) / 2.0;
-            }
-            else if (omega <= 5)
-            {
-                omegaRound = Math.Round(omega);
-            }
-            else
-            {
-                omegaRound = omega < 7.5 ? 5 : 10;
-            }
-
-            var mARound = Math.Round(mA * 10) / 10.0;
-
-            List<OmegaForAB> omegaList;
-
-            try
-            {
-                using StreamReader file = new(TABLE_G23);
-                var json = file.ReadToEnd();
-                file.Close();
-                omegaList = JsonSerializer.Deserialize<List<PhysicalData.Gost34233_7.OmegaForAB>>(json) ?? throw new InvalidOperationException();
-            }
-            catch
-            {
-                throw new PhysicalDataException("Error open file for A");
-            }
-
-
-            var result = omegaList
-                ?.FirstOrDefault(o => Math.Abs(o.Omega - omegaRound) < 0.00001)
-                ?.mAnBList
-                .FirstOrDefault(m => Math.Abs(m.Value - mARound) < 0.00001) ??
-                         throw new PhysicalDataException($"Couldn't find value of A for omega={omega} and mA={mA}");
-            return result.A;
-        }
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="omega"></param>
-        /// <param name="nB"></param>
-        /// <returns></returns>
-        /// <exception cref="PhysicalDataException"></exception>
-        public static double GetB(double omega, double nB)
-        {
-            if (omega is < 0 or > 10)
-            {
-                throw new PhysicalDataException($"Error input value for omega {omega} value must be in range 0-10");
-            }
-
-            double omegaRound;
-            if (omega <= 2)
-            {
-                omegaRound = Math.Round(omega * 2.0) / 2.0;
-            }
-            else if (omega <= 5)
-            {
-                omegaRound = Math.Round(omega);
-            }
-            else
-            {
-                omegaRound = omega < 7.5 ? 5 : 10;
-            }
-
-            var nBRound = Math.Round(nB * 10) / 10.0;
-
-            List<OmegaForAB> omegaList;
-
-            try
-            {
-                using StreamReader file = new(TABLE_G23);
-                var json = file.ReadToEnd();
-                file.Close();
-                omegaList = JsonSerializer.Deserialize<List<PhysicalData.Gost34233_7.OmegaForAB>>(json) ?? throw new InvalidOperationException();
-            }
-            catch
-            {
-                throw new PhysicalDataException("Error open file for B");
-            }
-
-
-            var result = omegaList
-                ?.FirstOrDefault(o => Math.Abs(o.Omega - omegaRound) < 0.00001)
-                ?.mAnBList
-                .FirstOrDefault(n => Math.Abs(n.Value - nBRound) < 0.00001) ??
-                         throw new PhysicalDataException($"Couldn't find value of B for omega={omega} and nB={nB}");
-
-            return result.B;
-        }
-
+        return Gost34233D7.GetPhi1Phi2Phi3(omega);
     }
+
+    public double Gost34233D7GetA(double omega, double mA)
+    {
+        return Gost34233D7.GetA(omega, mA);
+    }
+
+    public double Gost34233D7GetB(double omega, double nB)
+    {
+        return Gost34233D7.GetB(omega, nB);
+    }
+
+    public double Gost34233D7GetWd(double D)
+    {
+        return Gost34233D7.GetWd(D);
+    }
+
 
     /// <summary>
     /// 

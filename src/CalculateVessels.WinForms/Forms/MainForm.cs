@@ -40,7 +40,7 @@ public partial class MainForm : Form
     public FlatBottomForm? FlatBottomForm;
     public SaddleForm? SaddleForm;
     public BracketVerticalForm? BracketVerticalForm;
-    // public HeatExchangerWithFixedTubePlatesForm heatExchangerWithFixedTubePlatesForm = null;
+    public HeatExchangerStationaryTubePlatesForm? HeatExchangerStationaryTubePlatesForm;
 
 
     // TODO: KonForm 
@@ -253,16 +253,7 @@ public partial class MainForm : Form
 
     private void HeatExchangerWithFixedTubePlate_b_Click(object sender, EventArgs e)
     {
-        //     if (heatExchangerWithFixedTubePlatesForm == null)
-        //     {
-        //         heatExchangerWithFixedTubePlatesForm = new HeatExchangerWithFixedTubePlatesForm { Owner = this };
-        //         heatExchangerWithFixedTubePlatesForm.Show();
-        //     }
-        //     else
-        //     {
-        //         heatExchangerWithFixedTubePlatesForm.Owner = this;
-        //         heatExchangerWithFixedTubePlatesForm.Show();
-        //     }
+        OpenForm(ref HeatExchangerStationaryTubePlatesForm);
     }
 
     private void BracketVertical_b_Click(object sender, EventArgs e)
@@ -278,7 +269,8 @@ public partial class MainForm : Form
                NozzleForm != null ||
                SaddleForm != null ||
                FlatBottomForm != null ||
-               FlatBottomWithAdditionalMomentForm != null;
+               FlatBottomWithAdditionalMomentForm != null ||
+               HeatExchangerStationaryTubePlatesForm != null;
     }
 
     private void AboutToolStripMenuItem_Click(object sender, EventArgs e)

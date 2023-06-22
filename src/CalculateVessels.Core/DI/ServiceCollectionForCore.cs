@@ -1,5 +1,6 @@
 ﻿using CalculateVessels.Core.Bottoms.FlatBottom;
 using CalculateVessels.Core.Bottoms.FlatBottomWithAdditionalMoment;
+using CalculateVessels.Core.HeatExchangers.HeatExchangerStationaryTubePlates;
 using CalculateVessels.Core.Interfaces;
 using CalculateVessels.Core.Shells.Conical;
 using CalculateVessels.Core.Shells.Cylindrical;
@@ -26,6 +27,9 @@ public class ServiceCollectionForCore : IServiceCollectionForCore
                 FlatBottomWithAdditionalMomentCalculateService>();
         services.AddScoped<ICalculateService<SaddleInput>, SaddleCalculateService>();
         services.AddScoped<ICalculateService<BracketVerticalInput>, BracketVerticalCalculateService>();
+        services
+            .AddScoped<ICalculateService<HeatExchangerStationaryTubePlatesInput>,
+                HeatExchangerStationaryTubePlatesCalculateService>();
 
         services.AddSingleton<IPersistanceService, PersistanceServer>();
     }

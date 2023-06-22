@@ -1,3 +1,4 @@
+using CalculateVessels.Core.HeatExchangers.HeatExchangerStationaryTubePlates;
 using CalculateVessels.Core.Interfaces;
 using CalculateVessels.Core.Shells.Conical;
 using CalculateVessels.Core.Shells.Cylindrical;
@@ -40,15 +41,20 @@ internal class WordOutputService : IWordOutputService
             dynamic wordOutputService = element switch
             {
                 CylindricalShellCalculated => _wordOutputElementFactory.Create<CylindricalShellCalculated>()
-                                                        ?? throw new NullReferenceException(),
+                                              ?? throw new NullReferenceException(),
                 ConicalShellCalculated => _wordOutputElementFactory.Create<ConicalShellCalculated>()
-                                                        ?? throw new NullReferenceException(),
+                                          ?? throw new NullReferenceException(),
                 EllipticalShellCalculated => _wordOutputElementFactory.Create<EllipticalShellCalculated>()
-                                                        ?? throw new NullReferenceException(),
+                                             ?? throw new NullReferenceException(),
                 NozzleCalculated => _wordOutputElementFactory.Create<NozzleCalculated>()
-                                                        ?? throw new NullReferenceException(),
+                                    ?? throw new NullReferenceException(),
+                HeatExchangerStationaryTubePlatesCalculated => _wordOutputElementFactory
+                                                                   .Create<
+                                                                       HeatExchangerStationaryTubePlatesCalculated>()
+                                                               ?? throw new NullReferenceException(),
                 _ => throw new Exception($"Type {element.GetType()} isn't supported."),
             };
+
             bibliography = bibliography.Union(element.Bibliography).ToList();
 
             wordOutputService.MakeWord(outputName, element);

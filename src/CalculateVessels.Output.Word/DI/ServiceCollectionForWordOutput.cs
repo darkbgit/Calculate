@@ -1,5 +1,6 @@
 ﻿using CalculateVessels.Core.Bottoms.FlatBottom;
 using CalculateVessels.Core.Bottoms.FlatBottomWithAdditionalMoment;
+using CalculateVessels.Core.HeatExchangers.HeatExchangerStationaryTubePlates;
 using CalculateVessels.Core.Shells.Conical;
 using CalculateVessels.Core.Shells.Cylindrical;
 using CalculateVessels.Core.Shells.Elliptical;
@@ -34,5 +35,6 @@ public class ServiceCollectionForWordOutput : IServiceCollectionForWordOutput
                 FlatBottomWithAdditionalMomentWordOutput>();
         services.AddScoped<IWordOutputElement<SaddleCalculated>, SaddleWordOutput>();
         services.AddScoped<IWordOutputElement<BracketVerticalCalculated>, BracketVerticalWordOutput>();
+        services.AddScoped<IWordOutputElement<HeatExchangerStationaryTubePlatesCalculated>, HeatExchangerStationaryTubePlatesWordOutput>();
     }
 }

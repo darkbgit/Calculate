@@ -18,8 +18,8 @@ internal static class Gost34233D1
     private const string TableSigma = "SteelsSigma.json";
     private const string TableE = "SteelsE.json";
     private const string TableAlpha = "SteelsAlpha.json";
-    private const string TABLE_TYPE = "PhysicalData/Gost34233_1/SteelsType.json";
-    private const string TABLE_RM = "PhysicalData/Gost34233_1/SteelsRm.json";
+    private const string TableType = "SteelsType.json";
+    private const string TableRm = "SteelsRm.json";
 
     /// <summary>
     /// 
@@ -52,23 +52,24 @@ internal static class Gost34233D1
 
     public static SteelType GetSteelType(string steelName)
     {
-        List<SteelWithNameAndSteelType> steels;
+        var fileName = Path.Combine(Constants.DataFolder, GostFolder, TableType);
 
-        const string fileName = $"{Constants.DataFolder}/{GostFolder}/{TABLE_TYPE}";
+        List<SteelWithNameAndSteelType> steels;
 
         try
         {
             using StreamReader file = new(fileName);
             var json = file.ReadToEnd();
             file.Close();
-            steels = JsonSerializer.Deserialize<List<SteelWithNameAndSteelType>>(json);
+            steels = JsonSerializer.Deserialize<List<SteelWithNameAndSteelType>>(json)
+                ?? throw new NullReferenceException();
         }
         catch
         {
             throw new PhysicalDataException($"Error open file for SteelType of {steelName}");
         }
 
-        var steel = steels?.FirstOrDefault(s => s.Name.Contains(steelName)) ??
+        var steel = steels.FirstOrDefault(s => s.Name.Contains(steelName)) ??
                     throw new PhysicalDataException($"Error find steel {steelName}");
 
         return (SteelType)steel.SteelType;
@@ -85,21 +86,22 @@ internal static class Gost34233D1
             _ => true
         };
 
-        List<SteelWithListValuesAndThickness>? steels;
+        List<SteelWithListValuesAndThickness> steels;
 
         try
         {
             using StreamReader file = new(fileName);
             var json = file.ReadToEnd();
             file.Close();
-            steels = JsonSerializer.Deserialize<List<SteelWithListValuesAndThickness>>(json);
+            steels = JsonSerializer.Deserialize<List<SteelWithListValuesAndThickness>>(json)
+                ?? throw new InvalidOperationException();
         }
         catch
         {
             throw new PhysicalDataException($"{GostName}. Couldn't open file {fileName} for sigma.");
         }
 
-        var steel = steels?.FirstOrDefault(st => st.Name.Contains(steelName)) ??
+        var steel = steels.FirstOrDefault(st => st.Name.Contains(steelName)) ??
                     throw new PhysicalDataException($"{GostName}. Steel {steelName} wasn't found.");
 
         var isBigThickness = steel.IsCouldBigThickness && steel.BigThickness < s;
@@ -208,21 +210,24 @@ internal static class Gost34233D1
 
     public static double GetRm(string steelName, double temperature, double s = 0)
     {
+        var fileName = Path.Combine(Constants.DataFolder, GostFolder, TableRm);
+
         List<SteelWithListValuesAndThickness> steels;
 
         try
         {
-            using StreamReader file = new(TABLE_RM);
+            using StreamReader file = new(fileName);
             var json = file.ReadToEnd();
             file.Close();
-            steels = JsonSerializer.Deserialize<List<SteelWithListValuesAndThickness>>(json);
+            steels = JsonSerializer.Deserialize<List<SteelWithListValuesAndThickness>>(json)
+                ?? throw new InvalidOperationException();
         }
         catch
         {
             throw new PhysicalDataException($"Error open file for Rm {steelName}");
         }
 
-        var steel = steels?.FirstOrDefault(st => st.Name.Contains(steelName)) ??
+        var steel = steels.FirstOrDefault(st => st.Name.Contains(steelName)) ??
                     throw new PhysicalDataException($"Error find steel {steelName}");
 
         var accessIndex = steel.IsCouldBigThickness && steel.BigThickness < s ? 1 : 0;
