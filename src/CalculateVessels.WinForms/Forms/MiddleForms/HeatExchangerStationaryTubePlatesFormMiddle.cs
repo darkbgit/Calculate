@@ -1,9 +1,9 @@
-﻿using CalculateVessels.Core.HeatExchangers.HeatExchangerStationaryTubePlates;
-using CalculateVessels.Core.Interfaces;
+﻿using CalculateVessels.Core.Interfaces;
 using CalculateVessels.Data.Interfaces;
 using CalculateVessels.Forms.Base;
 using System.Collections.Generic;
 using System;
+using CalculateVessels.Core.Elements.HeatExchangers.HeatExchangerStationaryTubePlates;
 
 namespace CalculateVessels.Forms.MiddleForms;
 

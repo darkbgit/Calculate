@@ -1,4 +1,4 @@
-﻿using CalculateVessels.Core.Helpers.Json;
+﻿using CalculateVessels.Core.Persistance.Json;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 

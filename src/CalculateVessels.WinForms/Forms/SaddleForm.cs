@@ -1,7 +1,6 @@
-﻿using CalculateVessels.Core.Base;
+﻿using CalculateVessels.Core.Elements.Supports.Saddle;
 using CalculateVessels.Core.Enums;
 using CalculateVessels.Core.Interfaces;
-using CalculateVessels.Core.Supports.Saddle;
 using CalculateVessels.Data.Enums;
 using CalculateVessels.Data.Interfaces;
 using CalculateVessels.Data.Properties;
@@ -13,6 +12,7 @@ using System.Drawing;
 using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
+using CalculateVessels.Core.Elements.Base;
 
 namespace CalculateVessels.Forms;
 

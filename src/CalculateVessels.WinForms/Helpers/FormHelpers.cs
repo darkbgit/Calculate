@@ -1,5 +1,5 @@
 ﻿using CalculateVessels.Controls;
-using CalculateVessels.Core.Base;
+using CalculateVessels.Core.Elements.Base;
 using CalculateVessels.Data.Properties;
 using System;
 using System.Collections.Generic;

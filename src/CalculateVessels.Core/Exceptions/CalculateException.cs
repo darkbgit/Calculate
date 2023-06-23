@@ -1,5 +1,5 @@
 ﻿using System;
-using CalculateVessels.Core.Base;
+using CalculateVessels.Core.Elements.Base;
 
 namespace CalculateVessels.Core.Exceptions;
 

@@ -1,8 +1,8 @@
-﻿using CalculateVessels.Core.Base;
+﻿using CalculateVessels.Core.Elements.Base;
+using CalculateVessels.Core.Elements.Shells.Cylindrical;
+using CalculateVessels.Core.Elements.Shells.Nozzle;
+using CalculateVessels.Core.Elements.Shells.Nozzle.Enums;
 using CalculateVessels.Core.Interfaces;
-using CalculateVessels.Core.Shells.Cylindrical;
-using CalculateVessels.Core.Shells.Nozzle;
-using CalculateVessels.Core.Shells.Nozzle.Enums;
 using CalculateVessels.Data.PhysicalData;
 using FluentAssertions;
 using System.Collections.Generic;

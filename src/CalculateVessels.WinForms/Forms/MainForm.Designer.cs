@@ -40,34 +40,34 @@ partial class MainForm
         SpravkaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
         AboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
         ExitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-        Cil_b = new System.Windows.Forms.Button();
+        cylindrical_btn = new System.Windows.Forms.Button();
         data_contextMenu = new System.Windows.Forms.ContextMenuStrip(components);
         up_MenuItem = new System.Windows.Forms.ToolStripMenuItem();
         down_MenuItem = new System.Windows.Forms.ToolStripMenuItem();
         toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
         del_MenuItem = new System.Windows.Forms.ToolStripMenuItem();
         delall_MenuItem = new System.Windows.Forms.ToolStripMenuItem();
-        Kon_b = new System.Windows.Forms.Button();
-        Ell_b = new System.Windows.Forms.Button();
+        conical_btn = new System.Windows.Forms.Button();
+        elliptical_btn = new System.Windows.Forms.Button();
         MakeWord_b = new System.Windows.Forms.Button();
         filePathTextBox = new System.Windows.Forms.TextBox();
         proekt_tb = new System.Windows.Forms.TextBox();
         polysfer_b = new System.Windows.Forms.Button();
         torosfer_b = new System.Windows.Forms.Button();
-        flatBottom_b = new System.Windows.Forms.Button();
-        flatBottomWithAdditionalMoment_b = new System.Windows.Forms.Button();
+        flatBottom_btn = new System.Windows.Forms.Button();
+        flatBottomWithAdditionalMoment_btn = new System.Windows.Forms.Button();
         button4 = new System.Windows.Forms.Button();
         button5 = new System.Windows.Forms.Button();
         button6 = new System.Windows.Forms.Button();
         button7 = new System.Windows.Forms.Button();
         button8 = new System.Windows.Forms.Button();
-        Saddle_b = new System.Windows.Forms.Button();
+        saddle_btn = new System.Windows.Forms.Button();
         button10 = new System.Windows.Forms.Button();
-        bracketVertical_b = new System.Windows.Forms.Button();
+        bracketVertical_btn = new System.Windows.Forms.Button();
         button12 = new System.Windows.Forms.Button();
         button13 = new System.Windows.Forms.Button();
         button14 = new System.Windows.Forms.Button();
-        heatExchengerWithFixedTubePlate_b = new System.Windows.Forms.Button();
+        heatExchengerStationaryTubePlate_btn = new System.Windows.Forms.Button();
         button16 = new System.Windows.Forms.Button();
         button17 = new System.Windows.Forms.Button();
         button18 = new System.Windows.Forms.Button();
@@ -153,19 +153,19 @@ partial class MainForm
         ExitToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
         ExitToolStripMenuItem.Text = "Выход";
         // 
-        // Cil_b
+        // cylindrical_btn
         // 
-        Cil_b.Image = Properties.Resources.IconCyllindricalShell;
-        Cil_b.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-        Cil_b.Location = new System.Drawing.Point(14, 31);
-        Cil_b.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-        Cil_b.Name = "Cil_b";
-        Cil_b.Size = new System.Drawing.Size(186, 48);
-        Cil_b.TabIndex = 2;
-        Cil_b.Text = "Цилиндрическая \r\nобечайка";
-        Cil_b.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
-        Cil_b.UseVisualStyleBackColor = true;
-        Cil_b.Click += Cil_b_Click;
+        cylindrical_btn.Image = Properties.Resources.IconCyllindricalShell;
+        cylindrical_btn.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+        cylindrical_btn.Location = new System.Drawing.Point(14, 31);
+        cylindrical_btn.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+        cylindrical_btn.Name = "cylindrical_btn";
+        cylindrical_btn.Size = new System.Drawing.Size(186, 48);
+        cylindrical_btn.TabIndex = 2;
+        cylindrical_btn.Text = "Цилиндрическая \r\nобечайка";
+        cylindrical_btn.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+        cylindrical_btn.UseVisualStyleBackColor = true;
+        cylindrical_btn.Click += Cylindrical_btn_Click;
         // 
         // data_contextMenu
         // 
@@ -202,29 +202,29 @@ partial class MainForm
         delall_MenuItem.Size = new System.Drawing.Size(139, 22);
         delall_MenuItem.Text = "Удалить все";
         // 
-        // Kon_b
+        // conical_btn
         // 
-        Kon_b.Image = Properties.Resources.IconConicalShell;
-        Kon_b.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-        Kon_b.Location = new System.Drawing.Point(14, 85);
-        Kon_b.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-        Kon_b.Name = "Kon_b";
-        Kon_b.Size = new System.Drawing.Size(186, 27);
-        Kon_b.TabIndex = 4;
-        Kon_b.Text = "Конический переход";
-        Kon_b.UseVisualStyleBackColor = true;
-        Kon_b.Click += Kon_b_Click;
+        conical_btn.Image = Properties.Resources.IconConicalShell;
+        conical_btn.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+        conical_btn.Location = new System.Drawing.Point(14, 85);
+        conical_btn.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+        conical_btn.Name = "conical_btn";
+        conical_btn.Size = new System.Drawing.Size(186, 27);
+        conical_btn.TabIndex = 4;
+        conical_btn.Text = "Конический переход";
+        conical_btn.UseVisualStyleBackColor = true;
+        conical_btn.Click += Conical_btn_Click;
         // 
-        // Ell_b
+        // elliptical_btn
         // 
-        Ell_b.Location = new System.Drawing.Point(14, 118);
-        Ell_b.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-        Ell_b.Name = "Ell_b";
-        Ell_b.Size = new System.Drawing.Size(186, 27);
-        Ell_b.TabIndex = 5;
-        Ell_b.Text = "Эллиптическое днище";
-        Ell_b.UseVisualStyleBackColor = true;
-        Ell_b.Click += Ell_b_Click;
+        elliptical_btn.Location = new System.Drawing.Point(14, 118);
+        elliptical_btn.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+        elliptical_btn.Name = "elliptical_btn";
+        elliptical_btn.Size = new System.Drawing.Size(186, 27);
+        elliptical_btn.TabIndex = 5;
+        elliptical_btn.Text = "Эллиптическое днище";
+        elliptical_btn.UseVisualStyleBackColor = true;
+        elliptical_btn.Click += Elliptical_btn_Click;
         // 
         // MakeWord_b
         // 
@@ -272,25 +272,25 @@ partial class MainForm
         torosfer_b.Text = "Торосферическое днище";
         torosfer_b.UseVisualStyleBackColor = true;
         // 
-        // flatBottom_b
+        // flatBottom_btn
         // 
-        flatBottom_b.Location = new System.Drawing.Point(14, 217);
-        flatBottom_b.Name = "flatBottom_b";
-        flatBottom_b.Size = new System.Drawing.Size(186, 27);
-        flatBottom_b.TabIndex = 11;
-        flatBottom_b.Text = "Плоское днище";
-        flatBottom_b.UseVisualStyleBackColor = true;
-        flatBottom_b.Click += FlatBottom_b_Click;
+        flatBottom_btn.Location = new System.Drawing.Point(14, 217);
+        flatBottom_btn.Name = "flatBottom_btn";
+        flatBottom_btn.Size = new System.Drawing.Size(186, 27);
+        flatBottom_btn.TabIndex = 11;
+        flatBottom_btn.Text = "Плоское днище";
+        flatBottom_btn.UseVisualStyleBackColor = true;
+        flatBottom_btn.Click += FlatBottom_btn_Click;
         // 
-        // flatBottomWithAdditionalMoment_b
+        // flatBottomWithAdditionalMoment_btn
         // 
-        flatBottomWithAdditionalMoment_b.Location = new System.Drawing.Point(14, 250);
-        flatBottomWithAdditionalMoment_b.Name = "flatBottomWithAdditionalMoment_b";
-        flatBottomWithAdditionalMoment_b.Size = new System.Drawing.Size(186, 60);
-        flatBottomWithAdditionalMoment_b.TabIndex = 12;
-        flatBottomWithAdditionalMoment_b.Text = "Плоское днище с дополнительным краевым моментом";
-        flatBottomWithAdditionalMoment_b.UseVisualStyleBackColor = true;
-        flatBottomWithAdditionalMoment_b.Click += FlatBottomWithAdditionalMoment_b_Click;
+        flatBottomWithAdditionalMoment_btn.Location = new System.Drawing.Point(14, 250);
+        flatBottomWithAdditionalMoment_btn.Name = "flatBottomWithAdditionalMoment_btn";
+        flatBottomWithAdditionalMoment_btn.Size = new System.Drawing.Size(186, 60);
+        flatBottomWithAdditionalMoment_btn.TabIndex = 12;
+        flatBottomWithAdditionalMoment_btn.Text = "Плоское днище с дополнительным краевым моментом";
+        flatBottomWithAdditionalMoment_btn.UseVisualStyleBackColor = true;
+        flatBottomWithAdditionalMoment_btn.Click += FlatBottomWithAdditionalMoment_btn_Click;
         // 
         // button4
         // 
@@ -342,17 +342,17 @@ partial class MainForm
         button8.Text = "button8";
         button8.UseVisualStyleBackColor = true;
         // 
-        // Saddle_b
+        // saddle_btn
         // 
-        Saddle_b.Image = Properties.Resources.IconSaddle;
-        Saddle_b.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-        Saddle_b.Location = new System.Drawing.Point(207, 31);
-        Saddle_b.Name = "Saddle_b";
-        Saddle_b.Size = new System.Drawing.Size(186, 27);
-        Saddle_b.TabIndex = 19;
-        Saddle_b.Text = "Седловая опора";
-        Saddle_b.UseVisualStyleBackColor = true;
-        Saddle_b.Click += Saddle_b_Click;
+        saddle_btn.Image = Properties.Resources.IconSaddle;
+        saddle_btn.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+        saddle_btn.Location = new System.Drawing.Point(207, 31);
+        saddle_btn.Name = "saddle_btn";
+        saddle_btn.Size = new System.Drawing.Size(186, 27);
+        saddle_btn.TabIndex = 19;
+        saddle_btn.Text = "Седловая опора";
+        saddle_btn.UseVisualStyleBackColor = true;
+        saddle_btn.Click += Saddle_btn_Click;
         // 
         // button10
         // 
@@ -364,17 +364,17 @@ partial class MainForm
         button10.Text = "button10";
         button10.UseVisualStyleBackColor = true;
         // 
-        // bracketVertical_b
+        // bracketVertical_btn
         // 
-        bracketVertical_b.Image = Properties.Resources.IconBracketVertical;
-        bracketVertical_b.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-        bracketVertical_b.Location = new System.Drawing.Point(207, 64);
-        bracketVertical_b.Name = "bracketVertical_b";
-        bracketVertical_b.Size = new System.Drawing.Size(186, 27);
-        bracketVertical_b.TabIndex = 21;
-        bracketVertical_b.Text = "Опорные лапы";
-        bracketVertical_b.UseVisualStyleBackColor = true;
-        bracketVertical_b.Click += BracketVertical_b_Click;
+        bracketVertical_btn.Image = Properties.Resources.IconBracketVertical;
+        bracketVertical_btn.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+        bracketVertical_btn.Location = new System.Drawing.Point(207, 64);
+        bracketVertical_btn.Name = "bracketVertical_btn";
+        bracketVertical_btn.Size = new System.Drawing.Size(186, 27);
+        bracketVertical_btn.TabIndex = 21;
+        bracketVertical_btn.Text = "Опорные лапы";
+        bracketVertical_btn.UseVisualStyleBackColor = true;
+        bracketVertical_btn.Click += BracketVertical_btn_Click;
         // 
         // button12
         // 
@@ -406,18 +406,18 @@ partial class MainForm
         button14.Text = "button14";
         button14.UseVisualStyleBackColor = true;
         // 
-        // heatExchengerWithFixedTubePlate_b
+        // heatExchengerStationaryTubePlate_btn
         // 
-        heatExchengerWithFixedTubePlate_b.Image = Properties.Resources.IconHeatExchanger;
-        heatExchengerWithFixedTubePlate_b.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-        heatExchengerWithFixedTubePlate_b.Location = new System.Drawing.Point(207, 196);
-        heatExchengerWithFixedTubePlate_b.Name = "heatExchengerWithFixedTubePlate_b";
-        heatExchengerWithFixedTubePlate_b.Size = new System.Drawing.Size(186, 60);
-        heatExchengerWithFixedTubePlate_b.TabIndex = 25;
-        heatExchengerWithFixedTubePlate_b.Text = "Теплообменный аппарат\r\n с неподвижными\r\n трубными решетками";
-        heatExchengerWithFixedTubePlate_b.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
-        heatExchengerWithFixedTubePlate_b.UseVisualStyleBackColor = true;
-        heatExchengerWithFixedTubePlate_b.Click += HeatExchangerWithFixedTubePlate_b_Click;
+        heatExchengerStationaryTubePlate_btn.Image = Properties.Resources.IconHeatExchanger;
+        heatExchengerStationaryTubePlate_btn.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+        heatExchengerStationaryTubePlate_btn.Location = new System.Drawing.Point(207, 196);
+        heatExchengerStationaryTubePlate_btn.Name = "heatExchengerStationaryTubePlate_btn";
+        heatExchengerStationaryTubePlate_btn.Size = new System.Drawing.Size(186, 60);
+        heatExchengerStationaryTubePlate_btn.TabIndex = 25;
+        heatExchengerStationaryTubePlate_btn.Text = "Теплообменный аппарат\r\n с неподвижными\r\n трубными решетками";
+        heatExchengerStationaryTubePlate_btn.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+        heatExchengerStationaryTubePlate_btn.UseVisualStyleBackColor = true;
+        heatExchengerStationaryTubePlate_btn.Click += HeatExchangerStationaryTubePlates_btn_Click;
         // 
         // button16
         // 
@@ -664,28 +664,28 @@ partial class MainForm
         Controls.Add(button19);
         Controls.Add(button20);
         Controls.Add(button21);
-        Controls.Add(heatExchengerWithFixedTubePlate_b);
+        Controls.Add(heatExchengerStationaryTubePlate_btn);
         Controls.Add(button14);
         Controls.Add(button13);
         Controls.Add(button12);
-        Controls.Add(bracketVertical_b);
+        Controls.Add(bracketVertical_btn);
         Controls.Add(button10);
-        Controls.Add(Saddle_b);
+        Controls.Add(saddle_btn);
         Controls.Add(button8);
         Controls.Add(button7);
         Controls.Add(button6);
         Controls.Add(button5);
         Controls.Add(button4);
-        Controls.Add(flatBottomWithAdditionalMoment_b);
-        Controls.Add(flatBottom_b);
+        Controls.Add(flatBottomWithAdditionalMoment_btn);
+        Controls.Add(flatBottom_btn);
         Controls.Add(torosfer_b);
         Controls.Add(polysfer_b);
         Controls.Add(proekt_tb);
         Controls.Add(filePathTextBox);
         Controls.Add(MakeWord_b);
-        Controls.Add(Ell_b);
-        Controls.Add(Kon_b);
-        Controls.Add(Cil_b);
+        Controls.Add(elliptical_btn);
+        Controls.Add(conical_btn);
+        Controls.Add(cylindrical_btn);
         Controls.Add(menuUp);
         FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
         MainMenuStrip = menuUp;
@@ -702,15 +702,15 @@ partial class MainForm
 
     #endregion
     private System.Windows.Forms.MenuStrip menuUp;
-    private System.Windows.Forms.Button Cil_b;
+    private System.Windows.Forms.Button cylindrical_btn;
     private System.Windows.Forms.ToolStripMenuItem FileToolStripMenuItem;
     private System.Windows.Forms.ToolStripMenuItem OpenToolStripMenuItem1;
     private System.Windows.Forms.ToolStripMenuItem SaveToolStripMenuItem;
     private System.Windows.Forms.ToolStripMenuItem SpravkaToolStripMenuItem;
     private System.Windows.Forms.ToolStripMenuItem AboutToolStripMenuItem;
     private System.Windows.Forms.ToolStripMenuItem ExitToolStripMenuItem;
-    private System.Windows.Forms.Button Kon_b;
-    private System.Windows.Forms.Button Ell_b;
+    private System.Windows.Forms.Button conical_btn;
+    private System.Windows.Forms.Button elliptical_btn;
     private System.Windows.Forms.Button MakeWord_b;
     private System.Windows.Forms.TextBox filePathTextBox;
     private System.Windows.Forms.TextBox proekt_tb;
@@ -722,20 +722,20 @@ partial class MainForm
     private System.Windows.Forms.ToolStripMenuItem delall_MenuItem;
     private System.Windows.Forms.Button polysfer_b;
     private System.Windows.Forms.Button torosfer_b;
-    private System.Windows.Forms.Button flatBottom_b;
-    private System.Windows.Forms.Button flatBottomWithAdditionalMoment_b;
+    private System.Windows.Forms.Button flatBottom_btn;
+    private System.Windows.Forms.Button flatBottomWithAdditionalMoment_btn;
     private System.Windows.Forms.Button button4;
     private System.Windows.Forms.Button button5;
     private System.Windows.Forms.Button button6;
     private System.Windows.Forms.Button button7;
     private System.Windows.Forms.Button button8;
-    private System.Windows.Forms.Button Saddle_b;
+    private System.Windows.Forms.Button saddle_btn;
     private System.Windows.Forms.Button button10;
-    private System.Windows.Forms.Button bracketVertical_b;
+    private System.Windows.Forms.Button bracketVertical_btn;
     private System.Windows.Forms.Button button12;
     private System.Windows.Forms.Button button13;
     private System.Windows.Forms.Button button14;
-    private System.Windows.Forms.Button heatExchengerWithFixedTubePlate_b;
+    private System.Windows.Forms.Button heatExchengerStationaryTubePlate_btn;
     private System.Windows.Forms.Button button16;
     private System.Windows.Forms.Button button17;
     private System.Windows.Forms.Button button18;

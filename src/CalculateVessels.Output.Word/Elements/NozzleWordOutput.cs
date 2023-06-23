@@ -1,9 +1,9 @@
-﻿using CalculateVessels.Core.Interfaces;
-using CalculateVessels.Core.Shells.Base;
-using CalculateVessels.Core.Shells.Elliptical;
-using CalculateVessels.Core.Shells.Enums;
-using CalculateVessels.Core.Shells.Nozzle;
-using CalculateVessels.Core.Shells.Nozzle.Enums;
+﻿using CalculateVessels.Core.Elements.Shells.Base;
+using CalculateVessels.Core.Elements.Shells.Elliptical;
+using CalculateVessels.Core.Elements.Shells.Enums;
+using CalculateVessels.Core.Elements.Shells.Nozzle;
+using CalculateVessels.Core.Elements.Shells.Nozzle.Enums;
+using CalculateVessels.Core.Interfaces;
 using CalculateVessels.Output.Word.Core;
 using CalculateVessels.Output.Word.Enums;
 using CalculateVessels.Output.Word.Helpers;

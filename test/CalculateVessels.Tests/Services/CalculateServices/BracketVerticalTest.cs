@@ -3,8 +3,8 @@ using CalculateVessels.Data.PhysicalData;
 using FluentAssertions;
 using System.Collections.Generic;
 using CalculateVessels.Core.Enums;
-using CalculateVessels.Core.Supports.BracketVertical;
 using Xunit;
+using CalculateVessels.Core.Elements.Supports.BracketVertical;
 
 namespace CalculateVessels.UnitTests.Services.CalculateServices;
 

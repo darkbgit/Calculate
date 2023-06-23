@@ -1,7 +1,6 @@
 ﻿using CalculateVessels.Core.Interfaces;
 using CalculateVessels.Data.Interfaces;
 using System.Collections.Generic;
-using CalculateVessels.Core.Supports.BracketVertical;
 using CalculateVessels.Data.Enums;
 using System.Drawing;
 using System.Windows.Forms;
@@ -12,6 +11,7 @@ using System.Globalization;
 using CalculateVessels.Core.Enums;
 using CalculateVessels.Helpers;
 using CalculateVessels.Forms.MiddleForms;
+using CalculateVessels.Core.Elements.Supports.BracketVertical;
 
 namespace CalculateVessels.Forms;
 

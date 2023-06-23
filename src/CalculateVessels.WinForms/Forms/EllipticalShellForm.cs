@@ -1,6 +1,6 @@
-﻿using CalculateVessels.Core.Interfaces;
-using CalculateVessels.Core.Shells.Elliptical;
-using CalculateVessels.Core.Shells.Enums;
+﻿using CalculateVessels.Core.Elements.Shells.Elliptical;
+using CalculateVessels.Core.Elements.Shells.Enums;
+using CalculateVessels.Core.Interfaces;
 using CalculateVessels.Data.Enums;
 using CalculateVessels.Data.Interfaces;
 using CalculateVessels.Data.Properties;

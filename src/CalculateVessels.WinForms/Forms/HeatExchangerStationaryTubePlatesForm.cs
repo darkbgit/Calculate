@@ -1,6 +1,6 @@
-﻿using CalculateVessels.Core.Enums;
-using CalculateVessels.Core.HeatExchanger.Enums;
-using CalculateVessels.Core.HeatExchangers.HeatExchangerStationaryTubePlates;
+﻿using CalculateVessels.Core.Elements.HeatExchangers.Enums;
+using CalculateVessels.Core.Elements.HeatExchangers.HeatExchangerStationaryTubePlates;
+using CalculateVessels.Core.Enums;
 using CalculateVessels.Core.Interfaces;
 using CalculateVessels.Data.Enums;
 using CalculateVessels.Data.Interfaces;

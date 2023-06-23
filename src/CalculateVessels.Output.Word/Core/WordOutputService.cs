@@ -1,11 +1,11 @@
-using CalculateVessels.Core.HeatExchangers.HeatExchangerStationaryTubePlates;
+using CalculateVessels.Core.Elements.HeatExchangers.HeatExchangerStationaryTubePlates;
+using CalculateVessels.Core.Elements.Shells.Conical;
+using CalculateVessels.Core.Elements.Shells.Cylindrical;
+using CalculateVessels.Core.Elements.Shells.Elliptical;
+using CalculateVessels.Core.Elements.Shells.Nozzle;
 using CalculateVessels.Core.Interfaces;
-using CalculateVessels.Core.Shells.Conical;
-using CalculateVessels.Core.Shells.Cylindrical;
-using CalculateVessels.Core.Shells.Elliptical;
-using CalculateVessels.Core.Shells.Nozzle;
 using CalculateVessels.Output.Interfaces;
-using CalculateVessels.Output.Word.Helpers;
+using CalculateVessels.Output.Word.Interfaces;
 
 namespace CalculateVessels.Output.Word.Core;
 

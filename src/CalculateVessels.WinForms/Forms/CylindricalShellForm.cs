@@ -1,6 +1,6 @@
-﻿using CalculateVessels.Core.Base;
+﻿using CalculateVessels.Core.Elements.Base;
+using CalculateVessels.Core.Elements.Shells.Cylindrical;
 using CalculateVessels.Core.Interfaces;
-using CalculateVessels.Core.Shells.Cylindrical;
 using CalculateVessels.Data.Enums;
 using CalculateVessels.Data.Interfaces;
 using CalculateVessels.Data.Properties;

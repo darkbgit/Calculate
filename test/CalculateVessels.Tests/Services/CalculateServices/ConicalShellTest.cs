@@ -1,7 +1,7 @@
-﻿using CalculateVessels.Core.Base;
+﻿using CalculateVessels.Core.Elements.Base;
+using CalculateVessels.Core.Elements.Shells.Conical;
+using CalculateVessels.Core.Elements.Shells.Enums;
 using CalculateVessels.Core.Interfaces;
-using CalculateVessels.Core.Shells.Conical;
-using CalculateVessels.Core.Shells.Enums;
 using CalculateVessels.Data.PhysicalData;
 using FluentAssertions;
 using System.Collections.Generic;

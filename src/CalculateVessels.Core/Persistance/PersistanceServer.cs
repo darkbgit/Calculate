@@ -5,6 +5,7 @@ using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 using CalculateVessels.Core.Interfaces;
+using CalculateVessels.Core.Persistance.Enums;
 
 namespace CalculateVessels.Core;
 

@@ -1,6 +1,6 @@
-﻿using CalculateVessels.Core.Enums;
+﻿using CalculateVessels.Core.Elements.Supports.Saddle;
+using CalculateVessels.Core.Enums;
 using CalculateVessels.Core.Interfaces;
-using CalculateVessels.Core.Supports.Saddle;
 using CalculateVessels.Data.PhysicalData;
 using FluentAssertions;
 using System.Collections.Generic;

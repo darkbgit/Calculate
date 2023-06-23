@@ -1,5 +1,5 @@
-﻿using CalculateVessels.Core.Bottoms.Enums;
-using CalculateVessels.Core.Bottoms.FlatBottomWithAdditionalMoment;
+﻿using CalculateVessels.Core.Elements.Bottoms.Enums;
+using CalculateVessels.Core.Elements.Bottoms.FlatBottomWithAdditionalMoment;
 using CalculateVessels.Core.Enums;
 using CalculateVessels.Core.Interfaces;
 using CalculateVessels.Data.Properties;

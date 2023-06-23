@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
-using CalculateVessels.Core.Shells.Cylindrical;
+using CalculateVessels.Core.Elements.Shells.Cylindrical;
 using CalculateVessels.Forms;
 using Microsoft.Extensions.DependencyInjection;
 

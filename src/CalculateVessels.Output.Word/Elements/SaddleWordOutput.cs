@@ -1,6 +1,6 @@
-﻿using CalculateVessels.Core.Enums;
+﻿using CalculateVessels.Core.Elements.Supports.Saddle;
+using CalculateVessels.Core.Enums;
 using CalculateVessels.Core.Interfaces;
-using CalculateVessels.Core.Supports.Saddle;
 using CalculateVessels.Data.Properties;
 using CalculateVessels.Output.Word.Core;
 using CalculateVessels.Output.Word.Enums;

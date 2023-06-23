@@ -1,5 +1,5 @@
-﻿using CalculateVessels.Core.Interfaces;
-using CalculateVessels.Core.Shells.Nozzle;
+﻿using CalculateVessels.Core.Elements.Shells.Nozzle;
+using CalculateVessels.Core.Interfaces;
 using CalculateVessels.Data.Interfaces;
 using CalculateVessels.Forms.Base;
 using System;

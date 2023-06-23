@@ -1,13 +1,13 @@
-﻿using CalculateVessels.Core.Bottoms.FlatBottom;
-using CalculateVessels.Core.Bottoms.FlatBottomWithAdditionalMoment;
-using CalculateVessels.Core.HeatExchangers.HeatExchangerStationaryTubePlates;
+﻿using CalculateVessels.Core.Elements.Bottoms.FlatBottom;
+using CalculateVessels.Core.Elements.Bottoms.FlatBottomWithAdditionalMoment;
+using CalculateVessels.Core.Elements.HeatExchangers.HeatExchangerStationaryTubePlates;
+using CalculateVessels.Core.Elements.Shells.Conical;
+using CalculateVessels.Core.Elements.Shells.Cylindrical;
+using CalculateVessels.Core.Elements.Shells.Elliptical;
+using CalculateVessels.Core.Elements.Shells.Nozzle;
+using CalculateVessels.Core.Elements.Supports.BracketVertical;
+using CalculateVessels.Core.Elements.Supports.Saddle;
 using CalculateVessels.Core.Interfaces;
-using CalculateVessels.Core.Shells.Conical;
-using CalculateVessels.Core.Shells.Cylindrical;
-using CalculateVessels.Core.Shells.Elliptical;
-using CalculateVessels.Core.Shells.Nozzle;
-using CalculateVessels.Core.Supports.BracketVertical;
-using CalculateVessels.Core.Supports.Saddle;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace CalculateVessels.Core.DI;

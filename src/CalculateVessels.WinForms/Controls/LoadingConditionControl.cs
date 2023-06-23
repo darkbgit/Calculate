@@ -1,4 +1,4 @@
-﻿using CalculateVessels.Core.Base;
+﻿using CalculateVessels.Core.Elements.Base;
 using CalculateVessels.Helpers;
 using System;
 using System.Collections.Generic;

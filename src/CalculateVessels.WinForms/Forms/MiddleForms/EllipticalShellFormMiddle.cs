@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using CalculateVessels.Core.Elements.Shells.Elliptical;
 using CalculateVessels.Core.Interfaces;
-using CalculateVessels.Core.Shells.Elliptical;
 using CalculateVessels.Data.Interfaces;
 using CalculateVessels.Forms.Base;
 using CalculateVessels.Helpers;

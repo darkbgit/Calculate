@@ -1,5 +1,5 @@
-﻿using CalculateVessels.Core.Interfaces;
-using CalculateVessels.Core.Shells.Cylindrical;
+﻿using CalculateVessels.Core.Elements.Shells.Cylindrical;
+using CalculateVessels.Core.Interfaces;
 using CalculateVessels.Output.Word.Core;
 using CalculateVessels.Output.Word.Enums;
 using CalculateVessels.Output.Word.Helpers;

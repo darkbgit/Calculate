@@ -1,10 +1,10 @@
 ﻿using CalculateVessels.Core.Interfaces;
-using CalculateVessels.Core.Shells.Cylindrical;
 using CalculateVessels.Data.Interfaces;
 using CalculateVessels.Forms.Base;
 using System.Collections.Generic;
 using System;
 using CalculateVessels.Helpers;
+using CalculateVessels.Core.Elements.Shells.Cylindrical;
 
 namespace CalculateVessels.Forms.MiddleForms;
 

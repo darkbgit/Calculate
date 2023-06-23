@@ -1,5 +1,4 @@
-﻿using CalculateVessels.Core.Shells.Cylindrical;
-using CalculateVessels.Output.Word.DI;
+﻿using CalculateVessels.Output.Word.DI;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace CalculateVessels.Output.DI;
