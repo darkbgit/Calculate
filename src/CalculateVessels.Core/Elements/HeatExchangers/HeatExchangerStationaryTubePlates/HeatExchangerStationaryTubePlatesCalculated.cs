@@ -1,5 +1,6 @@
 ﻿using CalculateVessels.Core.Elements.Base;
 using CalculateVessels.Core.Interfaces;
+using CalculateVessels.Data.Properties;
 
 namespace CalculateVessels.Core.Elements.HeatExchangers.HeatExchangerStationaryTubePlates;
 
@@ -12,8 +13,9 @@ public class HeatExchangerStationaryTubePlatesCalculated : CalculatedElement, IC
     {
         Bibliography = new[]
         {
-            Data.Properties.Resources.GOST_34233_1,
-            Data.Properties.Resources.GOST_34233_9
+            Resources.GOST_34233_1,
+            Resources.GOST_34233_6,
+            Resources.GOST_34233_7
         };
     }
 

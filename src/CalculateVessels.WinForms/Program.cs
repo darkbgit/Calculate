@@ -3,6 +3,7 @@ using CalculateVessels.Data.DI;
 using CalculateVessels.Forms;
 using CalculateVessels.Helpers;
 using CalculateVessels.Output.DI;
+using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
@@ -19,6 +20,7 @@ internal static class Program
     [STAThread]
     static void Main()
     {
+        ValidatorOptions.Global.LanguageManager.Enabled = false;
         Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-US");
         Application.EnableVisualStyles();
         Application.SetCompatibleTextRenderingDefault(false);

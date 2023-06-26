@@ -17,8 +17,6 @@ internal class HeatExchangerStationaryTubePlatesCalculateService : CalculateServ
         Name = "GOST 34233.7-2017";
     }
 
-    public string Name { get; }
-
     public ICalculatedElement Calculate(HeatExchangerStationaryTubePlatesInput dataIn)
     {
 
@@ -486,13 +484,9 @@ internal class HeatExchangerStationaryTubePlatesCalculateService : CalculateServ
         }
 
         data.pp = Math.Max(dataIn.pM, Math.Max(dataIn.pT, Math.Abs(dataIn.pM - dataIn.pT)));
-        data.spp_5_5_1 = 0.5 * dataIn.DE * Math.Sqrt(data.pp / data.sigma_dp);
-        data.sp_5_5_1 = data.spp_5_5_1 + dataIn.FirstTubePlate.c;
 
-        if (data.sp_5_5_1 > dataIn.FirstTubePlate.sp)
-        {
-            data.ErrorList.Add("Толщина трубной решетки меньше расчетной.");
-        }
+        (data.spp_5_5_1, data.sp_5_5_1) = HeatExchangerAdditionalRequirementsCalculate
+            .CheckThicknessAccordingTo5_5_1(dataIn.DE, data.pp, data.sigma_dp, dataIn.FirstTubePlate.c, dataIn.FirstTubePlate.sp, data.ErrorList);
 
         if (dataIn is { IsOneGo: false, FirstTubePlate.IsWithGroove: true })
         {

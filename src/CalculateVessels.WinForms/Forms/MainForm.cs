@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Windows.Forms;
-using CalculateVessels.Core;
+﻿using CalculateVessels.Core;
 using CalculateVessels.Core.Elements.Base;
 using CalculateVessels.Core.Elements.Shells.Conical;
 using CalculateVessels.Core.Elements.Shells.Cylindrical;
@@ -43,7 +38,7 @@ public partial class MainForm : Form
     public SaddleForm? SaddleForm;
     public BracketVerticalForm? BracketVerticalForm;
     public HeatExchangerStationaryTubePlatesForm? HeatExchangerStationaryTubePlatesForm;
-
+    public HeatExchangerUTubesForm? HeatExchangerUTubesForm;
 
     private void MakeWord_b_Click(object sender, EventArgs e)
     {
@@ -180,6 +175,11 @@ public partial class MainForm : Form
     private void HeatExchangerStationaryTubePlates_btn_Click(object sender, EventArgs e)
     {
         OpenForm(ref HeatExchangerStationaryTubePlatesForm);
+    }
+
+    private void HeatExchangerUTubes_btn_Click(object sender, EventArgs e)
+    {
+        OpenForm(ref HeatExchangerUTubesForm);
     }
 
     private void BracketVertical_btn_Click(object sender, EventArgs e)

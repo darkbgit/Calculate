@@ -1,6 +1,7 @@
 ﻿using CalculateVessels.Core.Elements.Bottoms.FlatBottom;
 using CalculateVessels.Core.Elements.Bottoms.FlatBottomWithAdditionalMoment;
 using CalculateVessels.Core.Elements.HeatExchangers.HeatExchangerStationaryTubePlates;
+using CalculateVessels.Core.Elements.HeatExchangers.HeatExchangerUTube;
 using CalculateVessels.Core.Elements.Shells.Conical;
 using CalculateVessels.Core.Elements.Shells.Cylindrical;
 using CalculateVessels.Core.Elements.Shells.Elliptical;
@@ -48,6 +49,9 @@ public class ServiceCollectionForCore : IServiceCollectionForCore
                 HeatExchangerStationaryTubePlatesCalculateService>();
         services.AddScoped<IValidator<HeatExchangerStationaryTubePlatesInput>,
             HeatExchangerStationaryTubePlatesInputValidator>();
+
+        services.AddScoped<ICalculateService<HeatExchangerUTubeInput>, HeatExchangerUTubeCalculateService>();
+        services.AddScoped<IValidator<HeatExchangerUTubeInput>, HeatExchangerUTubeValidator>();
 
         services.AddSingleton<IPersistanceService, PersistanceServer>();
     }

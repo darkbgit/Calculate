@@ -73,7 +73,7 @@ partial class MainForm
         button18 = new System.Windows.Forms.Button();
         button19 = new System.Windows.Forms.Button();
         button20 = new System.Windows.Forms.Button();
-        button21 = new System.Windows.Forms.Button();
+        heatExchangerUtubesForm_btn = new System.Windows.Forms.Button();
         button22 = new System.Windows.Forms.Button();
         button23 = new System.Windows.Forms.Button();
         button24 = new System.Windows.Forms.Button();
@@ -155,13 +155,13 @@ partial class MainForm
         // 
         // cylindrical_btn
         // 
-        cylindrical_btn.Image = Properties.Resources.IconCyllindricalShell;
+        cylindrical_btn.Image = Properties.Resources.CyllindricalShellIcon;
         cylindrical_btn.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
         cylindrical_btn.Location = new System.Drawing.Point(14, 31);
         cylindrical_btn.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
         cylindrical_btn.Name = "cylindrical_btn";
         cylindrical_btn.Size = new System.Drawing.Size(186, 48);
-        cylindrical_btn.TabIndex = 2;
+        cylindrical_btn.TabIndex = 1;
         cylindrical_btn.Text = "Цилиндрическая \r\nобечайка";
         cylindrical_btn.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
         cylindrical_btn.UseVisualStyleBackColor = true;
@@ -204,13 +204,13 @@ partial class MainForm
         // 
         // conical_btn
         // 
-        conical_btn.Image = Properties.Resources.IconConicalShell;
+        conical_btn.Image = Properties.Resources.ConicalShellIcon;
         conical_btn.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
         conical_btn.Location = new System.Drawing.Point(14, 85);
         conical_btn.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
         conical_btn.Name = "conical_btn";
         conical_btn.Size = new System.Drawing.Size(186, 27);
-        conical_btn.TabIndex = 4;
+        conical_btn.TabIndex = 2;
         conical_btn.Text = "Конический переход";
         conical_btn.UseVisualStyleBackColor = true;
         conical_btn.Click += Conical_btn_Click;
@@ -221,7 +221,7 @@ partial class MainForm
         elliptical_btn.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
         elliptical_btn.Name = "elliptical_btn";
         elliptical_btn.Size = new System.Drawing.Size(186, 27);
-        elliptical_btn.TabIndex = 5;
+        elliptical_btn.TabIndex = 3;
         elliptical_btn.Text = "Эллиптическое днище";
         elliptical_btn.UseVisualStyleBackColor = true;
         elliptical_btn.Click += Elliptical_btn_Click;
@@ -232,7 +232,7 @@ partial class MainForm
         MakeWord_b.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
         MakeWord_b.Name = "MakeWord_b";
         MakeWord_b.Size = new System.Drawing.Size(114, 27);
-        MakeWord_b.TabIndex = 6;
+        MakeWord_b.TabIndex = 51;
         MakeWord_b.Text = "Вывести в Word";
         MakeWord_b.UseVisualStyleBackColor = true;
         MakeWord_b.Click += MakeWord_b_Click;
@@ -242,7 +242,7 @@ partial class MainForm
         filePathTextBox.Location = new System.Drawing.Point(702, 443);
         filePathTextBox.Name = "filePathTextBox";
         filePathTextBox.Size = new System.Drawing.Size(158, 23);
-        filePathTextBox.TabIndex = 7;
+        filePathTextBox.TabIndex = 45;
         filePathTextBox.Text = "C:\\Calculate\\";
         // 
         // proekt_tb
@@ -258,7 +258,7 @@ partial class MainForm
         polysfer_b.Location = new System.Drawing.Point(14, 151);
         polysfer_b.Name = "polysfer_b";
         polysfer_b.Size = new System.Drawing.Size(186, 27);
-        polysfer_b.TabIndex = 9;
+        polysfer_b.TabIndex = 4;
         polysfer_b.Text = "Полусферическое днище";
         polysfer_b.UseVisualStyleBackColor = true;
         // 
@@ -268,7 +268,7 @@ partial class MainForm
         torosfer_b.Location = new System.Drawing.Point(14, 184);
         torosfer_b.Name = "torosfer_b";
         torosfer_b.Size = new System.Drawing.Size(186, 27);
-        torosfer_b.TabIndex = 10;
+        torosfer_b.TabIndex = 5;
         torosfer_b.Text = "Торосферическое днище";
         torosfer_b.UseVisualStyleBackColor = true;
         // 
@@ -277,7 +277,7 @@ partial class MainForm
         flatBottom_btn.Location = new System.Drawing.Point(14, 217);
         flatBottom_btn.Name = "flatBottom_btn";
         flatBottom_btn.Size = new System.Drawing.Size(186, 27);
-        flatBottom_btn.TabIndex = 11;
+        flatBottom_btn.TabIndex = 6;
         flatBottom_btn.Text = "Плоское днище";
         flatBottom_btn.UseVisualStyleBackColor = true;
         flatBottom_btn.Click += FlatBottom_btn_Click;
@@ -287,7 +287,7 @@ partial class MainForm
         flatBottomWithAdditionalMoment_btn.Location = new System.Drawing.Point(14, 250);
         flatBottomWithAdditionalMoment_btn.Name = "flatBottomWithAdditionalMoment_btn";
         flatBottomWithAdditionalMoment_btn.Size = new System.Drawing.Size(186, 60);
-        flatBottomWithAdditionalMoment_btn.TabIndex = 12;
+        flatBottomWithAdditionalMoment_btn.TabIndex = 7;
         flatBottomWithAdditionalMoment_btn.Text = "Плоское днище с дополнительным краевым моментом";
         flatBottomWithAdditionalMoment_btn.UseVisualStyleBackColor = true;
         flatBottomWithAdditionalMoment_btn.Click += FlatBottomWithAdditionalMoment_btn_Click;
@@ -344,7 +344,7 @@ partial class MainForm
         // 
         // saddle_btn
         // 
-        saddle_btn.Image = Properties.Resources.IconSaddle;
+        saddle_btn.Image = Properties.Resources.SaddleIcon;
         saddle_btn.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
         saddle_btn.Location = new System.Drawing.Point(207, 31);
         saddle_btn.Name = "saddle_btn";
@@ -366,7 +366,7 @@ partial class MainForm
         // 
         // bracketVertical_btn
         // 
-        bracketVertical_btn.Image = Properties.Resources.IconBracketVertical;
+        bracketVertical_btn.Image = Properties.Resources.BracketVerticalIcon;
         bracketVertical_btn.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
         bracketVertical_btn.Location = new System.Drawing.Point(207, 64);
         bracketVertical_btn.Name = "bracketVertical_btn";
@@ -408,7 +408,7 @@ partial class MainForm
         // 
         // heatExchengerStationaryTubePlate_btn
         // 
-        heatExchengerStationaryTubePlate_btn.Image = Properties.Resources.IconHeatExchanger;
+        heatExchengerStationaryTubePlate_btn.Image = Properties.Resources.HeatExchangerStationaryTubePlatesIcon;
         heatExchengerStationaryTubePlate_btn.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
         heatExchengerStationaryTubePlate_btn.Location = new System.Drawing.Point(207, 196);
         heatExchengerStationaryTubePlate_btn.Name = "heatExchengerStationaryTubePlate_btn";
@@ -422,7 +422,7 @@ partial class MainForm
         // button16
         // 
         button16.Enabled = false;
-        button16.Location = new System.Drawing.Point(206, 427);
+        button16.Location = new System.Drawing.Point(398, 427);
         button16.Name = "button16";
         button16.Size = new System.Drawing.Size(186, 27);
         button16.TabIndex = 31;
@@ -432,7 +432,7 @@ partial class MainForm
         // button17
         // 
         button17.Enabled = false;
-        button17.Location = new System.Drawing.Point(206, 394);
+        button17.Location = new System.Drawing.Point(206, 427);
         button17.Name = "button17";
         button17.Size = new System.Drawing.Size(186, 27);
         button17.TabIndex = 30;
@@ -442,7 +442,7 @@ partial class MainForm
         // button18
         // 
         button18.Enabled = false;
-        button18.Location = new System.Drawing.Point(205, 361);
+        button18.Location = new System.Drawing.Point(205, 394);
         button18.Name = "button18";
         button18.Size = new System.Drawing.Size(186, 27);
         button18.TabIndex = 29;
@@ -452,7 +452,7 @@ partial class MainForm
         // button19
         // 
         button19.Enabled = false;
-        button19.Location = new System.Drawing.Point(206, 328);
+        button19.Location = new System.Drawing.Point(206, 361);
         button19.Name = "button19";
         button19.Size = new System.Drawing.Size(186, 27);
         button19.TabIndex = 28;
@@ -462,22 +462,24 @@ partial class MainForm
         // button20
         // 
         button20.Enabled = false;
-        button20.Location = new System.Drawing.Point(206, 295);
+        button20.Location = new System.Drawing.Point(206, 328);
         button20.Name = "button20";
         button20.Size = new System.Drawing.Size(186, 27);
         button20.TabIndex = 27;
         button20.Text = "button20";
         button20.UseVisualStyleBackColor = true;
         // 
-        // button21
+        // heatExchangerUtubesForm_btn
         // 
-        button21.Enabled = false;
-        button21.Location = new System.Drawing.Point(206, 262);
-        button21.Name = "button21";
-        button21.Size = new System.Drawing.Size(186, 27);
-        button21.TabIndex = 26;
-        button21.Text = "button21";
-        button21.UseVisualStyleBackColor = true;
+        heatExchangerUtubesForm_btn.Image = Properties.Resources.HeatExchangerUTubesIcon;
+        heatExchangerUtubesForm_btn.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+        heatExchangerUtubesForm_btn.Location = new System.Drawing.Point(206, 262);
+        heatExchangerUtubesForm_btn.Name = "heatExchangerUtubesForm_btn";
+        heatExchangerUtubesForm_btn.Size = new System.Drawing.Size(186, 60);
+        heatExchangerUtubesForm_btn.TabIndex = 26;
+        heatExchangerUtubesForm_btn.Text = "Теплообменный аппарат\r\nс U-образными трубами";
+        heatExchangerUtubesForm_btn.UseVisualStyleBackColor = true;
+        heatExchangerUtubesForm_btn.Click += HeatExchangerUTubes_btn_Click;
         // 
         // button22
         // 
@@ -663,7 +665,7 @@ partial class MainForm
         Controls.Add(button18);
         Controls.Add(button19);
         Controls.Add(button20);
-        Controls.Add(button21);
+        Controls.Add(heatExchangerUtubesForm_btn);
         Controls.Add(heatExchengerStationaryTubePlate_btn);
         Controls.Add(button14);
         Controls.Add(button13);
@@ -741,7 +743,7 @@ partial class MainForm
     private System.Windows.Forms.Button button18;
     private System.Windows.Forms.Button button19;
     private System.Windows.Forms.Button button20;
-    private System.Windows.Forms.Button button21;
+    private System.Windows.Forms.Button heatExchangerUtubesForm_btn;
     private System.Windows.Forms.Button button22;
     private System.Windows.Forms.Button button23;
     private System.Windows.Forms.Button button24;

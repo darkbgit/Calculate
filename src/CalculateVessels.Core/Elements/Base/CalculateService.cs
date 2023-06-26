@@ -10,4 +10,6 @@ public abstract class CalculateService
     {
         PhysicalData = physicalData;
     }
+
+    public string Name { get; protected init; } = string.Empty;
 }
