@@ -1,5 +1,6 @@
 ﻿using CalculateVessels.Core.Elements.Shells.Conical;
 using CalculateVessels.Core.Elements.Shells.Enums;
+using CalculateVessels.Core.Enums;
 using CalculateVessels.Core.Interfaces;
 using CalculateVessels.Data.Properties;
 using CalculateVessels.Output.Word.Core;
@@ -37,7 +38,7 @@ internal class ConicalShellWordOutput : IWordOutputElement<ConicalShellCalculate
 
         InsertLoadingConditionsDataCalculated(body, dataIn, data);
 
-        package.Close();
+        package.Dispose();
     }
 
     private static void InsertLoadingConditionsDataCalculated(Body body, ConicalShellInput dataIn, ConicalShellCalculated data)
@@ -359,7 +360,7 @@ internal class ConicalShellWordOutput : IWordOutputElement<ConicalShellCalculate
             .AppendEquation("s_k≥s_(k.p)+c");
         body.AddParagraph("где ").AppendEquation("s_(k.p)").AddRun(" - расчетная толщина стенки конической обечайки");
 
-        if (loadingCondition.IsPressureIn)
+        if (loadingCondition.PressureType == PressureType.Inside)
         {
             body.AddParagraph()
                 .AppendEquation("s_(k.p)=(p∙D_k)/(2∙φ_p∙[σ]-p)(1/cosα_1)" +
@@ -409,7 +410,7 @@ internal class ConicalShellWordOutput : IWordOutputElement<ConicalShellCalculate
 
         WordHelpers.CheckCalculatedThickness("s_k", dataIn.s, data.s_p, body);
 
-        if (loadingCondition.IsPressureIn)
+        if (loadingCondition.PressureType == PressureType.Inside)
         {
             body.AddParagraph("Допускаемое внутреннее избыточное давление вычисляют по формуле:");
             body.AddParagraph()
@@ -437,7 +438,7 @@ internal class ConicalShellWordOutput : IWordOutputElement<ConicalShellCalculate
 
         body.AddParagraph("Условия применения расчетных формул ");
 
-        if (!loadingCondition.IsPressureIn)
+        if (loadingCondition.PressureType == PressureType.Outside)
         {
             body.AddParagraph()
                 .AppendEquation($"α_1={RadiansToDegree(cdc.alpha1):f0}≤70");
@@ -502,7 +503,7 @@ internal class ConicalShellWordOutput : IWordOutputElement<ConicalShellCalculate
                     WordHelpers.CheckCalculatedThickness("s_1", dataIn.s1Big, data.s_1Big, body);
 
                     body.AddParagraph("Допускаемое " +
-                                      (loadingCondition.IsPressureIn ? "внутреннее избыточное" : "наружное") +
+                                      (loadingCondition.PressureType == PressureType.Inside ? "внутреннее избыточное" : "наружное") +
                                       "давление из условия прочности переходной части вычисляют по формуле");
                     body.AddParagraph()
                         .AppendEquation("[p]=(2∙[σ]_2∙φ_p∙(s_2-c))/(D∙β_1+(s_2-c))" +
@@ -534,7 +535,7 @@ internal class ConicalShellWordOutput : IWordOutputElement<ConicalShellCalculate
                     ReinforcementRingSquareCheck(dataIn, data, body);
 
                     body.AddParagraph("Допускаемое " +
-                                      (loadingCondition.IsPressureIn ? "внутреннее избыточное" : "наружное") +
+                                      (loadingCondition.PressureType == PressureType.Inside ? "внутреннее избыточное" : "наружное") +
                                       "давление из условия прочности переходной части вычисляют по формуле");
                     body.AddParagraph()
                         .AppendEquation("[p]=(2∙[σ]_2∙φ_p∙(s_2-c))/(D∙β_2+(s_2-c))");
@@ -573,7 +574,7 @@ internal class ConicalShellWordOutput : IWordOutputElement<ConicalShellCalculate
                     ReinforcementRingSquareCheck(dataIn, data, body);
 
                     body.AddParagraph("Допускаемое " +
-                                      (loadingCondition.IsPressureIn ? "внутреннее избыточное" : "наружное") +
+                                      (loadingCondition.PressureType == PressureType.Inside ? "внутреннее избыточное" : "наружное") +
                                       "давление из условия прочности переходной части вычисляют по формуле");
                     body.AddParagraph()
                         .AppendEquation("[p]=(8∙[σ]_K∙φ_K)/(D^2∙tgα_1)" +
@@ -617,7 +618,7 @@ internal class ConicalShellWordOutput : IWordOutputElement<ConicalShellCalculate
                     WordHelpers.CheckCalculatedThickness("s_T", dataIn.sT, data.s_t, body);
 
                     body.AddParagraph("Допускаемое " +
-                                      (loadingCondition.IsPressureIn ? "внутреннее избыточное" : "наружное") +
+                                      (loadingCondition.PressureType == PressureType.Inside ? "внутреннее избыточное" : "наружное") +
                                       "давление из условия прочности переходной части вычисляют по формуле");
                     body.AddParagraph()
                         .AppendEquation("[p]=(2∙[σ]∙φ_p∙(s_T-c))/(D∙β_3+(s_T-c))" +
@@ -732,7 +733,7 @@ internal class ConicalShellWordOutput : IWordOutputElement<ConicalShellCalculate
             WordHelpers.CheckCalculatedThickness("s_1", dataIn.s1Little, data.s_1Little, body);
 
             body.AddParagraph("Допускаемое " +
-                              (loadingCondition.IsPressureIn ? "внутреннее избыточное" : "наружное") +
+                              (loadingCondition.PressureType == PressureType.Inside ? "внутреннее избыточное" : "наружное") +
                               "давление из условия прочности переходной части вычисляют по формуле");
             body.AddParagraph()
                 .AppendEquation("[p]=(2∙[σ]_2∙φ_p∙(s_2-c))/(D_1∙β_4+(s_2-c))" +

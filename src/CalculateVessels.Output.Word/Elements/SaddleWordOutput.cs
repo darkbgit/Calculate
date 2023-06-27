@@ -130,7 +130,7 @@ internal class SaddleWordOutput : IWordOutputElement<SaddleCalculated>
 
             table.AddRow()
                 .AddCell("Расчетное " +
-                         (dataIn.IsPressureIn
+                         (dataIn.PressureType == PressureType.Inside
                              ? "внутреннее избыточное"
                              : "наружное") + " давление, p:")
                 .AddCell($"{dataIn.p} МПа");
@@ -139,7 +139,7 @@ internal class SaddleWordOutput : IWordOutputElement<SaddleCalculated>
                 .AddCell($"Допускаемое напряжение для материала {dataIn.Steel} при расчетной температуре, [σ]:")
                 .AddCell($"{data.SigmaAllow} МПа");
 
-            if (!dataIn.IsPressureIn)
+            if (dataIn.PressureType == PressureType.Outside)
             {
                 table.AddRow()
                     .AddCell("Модуль продольной упругости при расчетной температуре, E:")
@@ -436,7 +436,7 @@ internal class SaddleWordOutput : IWordOutputElement<SaddleCalculated>
                                     $"={data.F1:f2}∙π/4∙{data.K13:f2}∙{data.K15:f2}∙√({dataIn.D}/({dataIn.s}-{dataIn.c}))={data.Fe:f2}");
 
                 body.AddParagraph()
-                    .AppendEquation((dataIn.IsPressureIn ? "" : $"{dataIn.p}/{data.p_d}") +
+                    .AppendEquation((dataIn.PressureType == PressureType.Inside ? "" : $"{dataIn.p}/{data.p_d}") +
                                     $"+{data.M1:f2}/{data.M_d:f2}+{data.Fe:f2}/{data.F_d:f2}+({data.Q1:f2}/{data.Q_d:f2})^2={data.ConditionStability2:f2}≤1");
 
                 if (data.ConditionStability2 <= 1)
@@ -635,7 +635,7 @@ internal class SaddleWordOutput : IWordOutputElement<SaddleCalculated>
                                     $"={data.F1:f2}∙π/4∙{data.K13:f2}∙{data.K15:f2}∙√({dataIn.D}/{data.sef:f2})={data.Fe:f2}");
 
                 body.AddParagraph()
-                    .AppendEquation((dataIn.IsPressureIn ? "" : $"{dataIn.p}/{data.p_d}") +
+                    .AppendEquation((dataIn.PressureType == PressureType.Inside ? "" : $"{dataIn.p}/{data.p_d}") +
                                     $"+{data.M1:f2}/{data.M_d:f2}+{data.Fe:f2}/{data.F_d:f2}+({data.Q1:f2}/{data.Q_d:f2})^2={data.ConditionStability2:f2}≤1");
 
                 if (data.ConditionStability2 <= 1)
@@ -686,7 +686,7 @@ internal class SaddleWordOutput : IWordOutputElement<SaddleCalculated>
                 break;
         }
 
-        package.Close();
+        package.Dispose();
     }
 
     private static double DegToRad(double degree) => degree * Math.PI / 180;

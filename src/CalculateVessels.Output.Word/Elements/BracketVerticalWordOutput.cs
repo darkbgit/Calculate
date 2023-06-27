@@ -237,7 +237,7 @@ internal class BracketVerticalWordOutput : IWordOutputElement<BracketVerticalCal
                 .AddRun(" - вычисляют по формуле");
 
 
-            switch (dataIn.Type)
+            switch (dataIn.BracketVerticalType)
             {
                 case BracketVerticalType.A:
                 case BracketVerticalType.C:
@@ -260,7 +260,7 @@ internal class BracketVerticalWordOutput : IWordOutputElement<BracketVerticalCal
             body.AddParagraph()
                 .AppendEquation("x=ln(D_p/2∙(s-c))" + $"=ln({data.Dp}/2∙({dataIn.s}-{dataIn.c}))={data.x:f2}");
 
-            switch (dataIn.Type)
+            switch (dataIn.BracketVerticalType)
             {
                 case BracketVerticalType.A:
                 case BracketVerticalType.B:
@@ -301,7 +301,7 @@ internal class BracketVerticalWordOutput : IWordOutputElement<BracketVerticalCal
             body.AddParagraph()
                 .AppendEquation("ϑ_2=σ_m/(K_2∙[σ]∙φ)");
 
-            switch (dataIn.Type)
+            switch (dataIn.BracketVerticalType)
             {
                 case BracketVerticalType.A:
                 case BracketVerticalType.B:
@@ -452,6 +452,7 @@ internal class BracketVerticalWordOutput : IWordOutputElement<BracketVerticalCal
                 .AppendEquation($"s_2={dataIn.s2}≥s={dataIn.s}");
         }
 
-        package.Close();
+        //package.Close();
+        package.Dispose();
     }
 }

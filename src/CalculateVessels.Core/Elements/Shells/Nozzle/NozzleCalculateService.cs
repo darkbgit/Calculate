@@ -1,17 +1,18 @@
-﻿using CalculateVessels.Core.Elements.Base;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using CalculateVessels.Core.Elements.Base;
 using CalculateVessels.Core.Elements.Shells.Base;
 using CalculateVessels.Core.Elements.Shells.Conical;
 using CalculateVessels.Core.Elements.Shells.Cylindrical;
 using CalculateVessels.Core.Elements.Shells.Elliptical;
 using CalculateVessels.Core.Elements.Shells.Enums;
 using CalculateVessels.Core.Elements.Shells.Nozzle.Enums;
+using CalculateVessels.Core.Enums;
 using CalculateVessels.Core.Exceptions;
 using CalculateVessels.Core.Helpers;
 using CalculateVessels.Core.Interfaces;
 using CalculateVessels.Data.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace CalculateVessels.Core.Elements.Shells.Nozzle;
 
@@ -93,12 +94,12 @@ internal class NozzleCalculateService : ICalculateService<NozzleInput>
 
         data.SigmaAllowShell = shellResult.SigmaAllow;
 
-        if (!lc.IsPressureIn)
+        if (lc.PressureType == PressureType.Outside)
         {
             data.p_deShell = shellResult.p_de;
         }
 
-        if (shellDataIn is EllipticalShellInput { ShellType: ShellType.Elliptical } ellipticalDataIn && lc.IsPressureIn)
+        if (shellDataIn is EllipticalShellInput { ShellType: ShellType.Elliptical } ellipticalDataIn && lc.PressureType == PressureType.Inside)
         {
             data.sp = lc.p * cdc.Dp /
                       (4.0 * ellipticalDataIn.phi * data.SigmaAllowShell - lc.p);
@@ -161,18 +162,18 @@ internal class NozzleCalculateService : ICalculateService<NozzleInput>
         //        break;
         //}
 
-        if (lc.IsPressureIn)
+        switch (lc.PressureType)
         {
-            data.spn = data.sp;
-        }
-        else
-        {
-
-            //data.B1n = Math.Min(1, 9.45 * (shellDataIn.D / ddata.out.l) * Math.Sqrt(shellDataIn.D / (100 * (shellDataIn.s - data.c))));
-            //data.pen = 2.08 * 0.00001 * shellDataIn.E / (dataIn.ny * data.B1n) * (shellDataIn.D / ddata.out.l) * Math.Pow(100 * (shellDataIn.s - data.c) / shellDataIn.D, 2.5);
-            data.pen = data.p_deShell;
-            data.ppn = lc.p / Math.Sqrt(1.0 - Math.Pow(lc.p / data.pen, 2));
-            data.spn = data.ppn * cdc.Dp / (2.0 * cdc.K1 * data.SigmaAllowShell - data.ppn);
+            case PressureType.Inside:
+                data.spn = data.sp;
+                break;
+            case PressureType.Outside:
+                //data.B1n = Math.Min(1, 9.45 * (shellDataIn.D / ddata.out.l) * Math.Sqrt(shellDataIn.D / (100 * (shellDataIn.s - data.c))));
+                //data.pen = 2.08 * 0.00001 * shellDataIn.E / (dataIn.ny * data.B1n) * (shellDataIn.D / ddata.out.l) * Math.Pow(100 * (shellDataIn.s - data.c) / shellDataIn.D, 2.5);
+                data.pen = data.p_deShell;
+                data.ppn = lc.p / Math.Sqrt(1.0 - Math.Pow(lc.p / data.pen, 2));
+                data.spn = data.ppn * cdc.Dp / (2.0 * cdc.K1 * data.SigmaAllowShell - data.ppn);
+                break;
         }
 
 
@@ -196,17 +197,18 @@ internal class NozzleCalculateService : ICalculateService<NozzleInput>
                   (1.0 + 0.5 * (cdc.dp - cdc.d0p) / cdc.lp + cdc.K1 * (dataIn.d + 2 * dataIn.cs) / cdc.Dp * (dataIn.phi / dataIn.phi1) * (cdc.l1p / cdc.lp));
         data.V = Math.Min(data.V1, data.V2);
 
-        if (lc.IsPressureIn)
+        switch (lc.PressureType)
         {
-            data.p_d = 2 * cdc.K1 * dataIn.phi * data.SigmaAllowShell * (shellDataIn.s - cdc.c) * data.V /
-                       (cdc.Dp + (shellDataIn.s - cdc.c) * data.V);
-        }
-        else
-        {
-            data.p_dp = 2 * cdc.K1 * dataIn.phi * data.SigmaAllowShell * (shellDataIn.s - cdc.c) * data.V /
-                        (cdc.Dp + (shellDataIn.s - cdc.c) * data.V);
-            data.p_de = data.p_deShell;
-            data.p_d = data.p_dp / Math.Sqrt(1 + Math.Pow(data.p_dp / data.p_de, 2));
+            case PressureType.Inside:
+                data.p_d = 2 * cdc.K1 * dataIn.phi * data.SigmaAllowShell * (shellDataIn.s - cdc.c) * data.V /
+                           (cdc.Dp + (shellDataIn.s - cdc.c) * data.V);
+                break;
+            case PressureType.Outside:
+                data.p_dp = 2 * cdc.K1 * dataIn.phi * data.SigmaAllowShell * (shellDataIn.s - cdc.c) * data.V /
+                            (cdc.Dp + (shellDataIn.s - cdc.c) * data.V);
+                data.p_de = data.p_deShell;
+                data.p_d = data.p_dp / Math.Sqrt(1 + Math.Pow(data.p_dp / data.p_de, 2));
+                break;
         }
         if (data.p_d < lc.p)
         {

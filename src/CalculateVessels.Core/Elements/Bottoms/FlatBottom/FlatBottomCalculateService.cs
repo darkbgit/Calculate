@@ -1,9 +1,9 @@
-﻿using CalculateVessels.Core.Elements.Bottoms.Enums;
+﻿using System;
+using CalculateVessels.Core.Elements.Bottoms.Enums;
 using CalculateVessels.Core.Exceptions;
 using CalculateVessels.Core.Helpers;
 using CalculateVessels.Core.Interfaces;
 using CalculateVessels.Data.Interfaces;
-using System;
 
 namespace CalculateVessels.Core.Elements.Bottoms.FlatBottom;
 
@@ -27,7 +27,7 @@ public class FlatBottomCalculateService : ICalculateService<FlatBottomInput>
             c = dataIn.c1 + dataIn.c2 + dataIn.c3
         };
 
-        switch (dataIn.Type)
+        switch (dataIn.FlatBottomType)
         {
             case 1:
                 data.K = 0.53;
@@ -93,7 +93,7 @@ public class FlatBottomCalculateService : ICalculateService<FlatBottomInput>
                 goto case 4;
             case 11:
             case 12:
-                if (dataIn.Type == 11)
+                if (dataIn.FlatBottomType == 11)
                 {
                     data.K = 0.4;
                     data.Dp = dataIn.D3;

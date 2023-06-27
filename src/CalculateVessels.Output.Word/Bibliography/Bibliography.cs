@@ -31,7 +31,8 @@ internal static class Bibliography
             body.AddParagraph($"{i++}. {biblio}.");
         }
 
-        package.Close();
+        //package.Close();
+        package.Dispose();
     }
 
 }

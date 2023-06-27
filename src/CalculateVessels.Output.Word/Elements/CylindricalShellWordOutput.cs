@@ -1,4 +1,5 @@
 ﻿using CalculateVessels.Core.Elements.Shells.Cylindrical;
+using CalculateVessels.Core.Enums;
 using CalculateVessels.Core.Interfaces;
 using CalculateVessels.Output.Word.Core;
 using CalculateVessels.Output.Word.Enums;
@@ -37,7 +38,7 @@ internal class CylindricalShellWordOutput : IWordOutputElement<CylindricalShellC
 
         InsertCheckConditionsUseFormulas(body, dataIn, data.CommonData);
 
-        package.Close();
+        package.Dispose();
     }
 
     private static void InsertLoadingConditionsDataCalculated(Body body, CylindricalShellInput dataIn, CylindricalShellCalculated data)
@@ -88,7 +89,7 @@ internal class CylindricalShellWordOutput : IWordOutputElement<CylindricalShellC
             .AddCell("Внутренний диаметр обечайки, D:")
             .AddCell($"{dataIn.D} мм");
 
-        if (dataIn.LoadingConditions.Any(lc => !lc.IsPressureIn))
+        if (dataIn.LoadingConditions.Any(lc => lc.PressureType == PressureType.Outside))
         {
             table.AddRow()
                 .AddCell("Длина обечайки, l:")
@@ -148,7 +149,7 @@ internal class CylindricalShellWordOutput : IWordOutputElement<CylindricalShellC
         body.AddParagraph().AppendEquation("s≥s_p+c");
         body.AddParagraph("где ").AppendEquation("s_p").AddRun(" - расчетная толщина стенки обечайки");
 
-        if (loadingCondition.IsPressureIn)
+        if (loadingCondition.PressureType == PressureType.Outside)
         {
             body.AddParagraph()
                 .AppendEquation("s_p=(p∙D)/(2∙[σ]∙φ_p-p)" +
@@ -183,7 +184,7 @@ internal class CylindricalShellWordOutput : IWordOutputElement<CylindricalShellC
 
         WordHelpers.CheckCalculatedThickness("s", dataIn.s, data.s, body);
 
-        if (loadingCondition.IsPressureIn)
+        if (loadingCondition.PressureType == PressureType.Inside)
         {
             body.AddParagraph("Допускаемое внутреннее избыточное давление вычисляют по формуле:");
             body.AddParagraph()

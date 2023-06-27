@@ -1,9 +1,9 @@
-﻿using CalculateVessels.Core.Enums;
+﻿using System;
+using CalculateVessels.Core.Enums;
 using CalculateVessels.Core.Exceptions;
 using CalculateVessels.Core.Helpers;
 using CalculateVessels.Core.Interfaces;
 using CalculateVessels.Data.Interfaces;
-using System;
 
 namespace CalculateVessels.Core.Elements.Supports.BracketVertical;
 
@@ -53,7 +53,7 @@ internal class BracketVerticalCalculateService : ICalculateService<BracketVertic
         {
             data.z = Math.Log(dataIn.b4 / data.Dp);
 
-            switch (dataIn.Type)
+            switch (dataIn.BracketVerticalType)
             {
                 case BracketVerticalType.A:
                 case BracketVerticalType.C:
@@ -95,7 +95,7 @@ internal class BracketVerticalCalculateService : ICalculateService<BracketVertic
 
             data.v1 = 0.3;
 
-            switch (dataIn.Type)
+            switch (dataIn.BracketVerticalType)
             {
                 case BracketVerticalType.A:
                 case BracketVerticalType.B:

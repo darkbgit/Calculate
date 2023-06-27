@@ -4,31 +4,23 @@ using CalculateVessels.Core.Elements.Supports.Saddle;
 using CalculateVessels.Core.Interfaces;
 using CalculateVessels.Data.Interfaces;
 using CalculateVessels.Forms.Base;
+using FluentValidation;
 
 namespace CalculateVessels.Forms.MiddleForms;
 
 public class SaddleFormMiddle : BaseCalculateForm<SaddleInput>
 {
     protected SaddleFormMiddle(IEnumerable<ICalculateService<SaddleInput>> calculateServices,
-        IPhysicalDataService physicalDataService)
-        : base(calculateServices, physicalDataService)
+        IPhysicalDataService physicalDataService,
+        IValidator<SaddleInput> validator)
+        : base(calculateServices, physicalDataService, validator)
     {
     }
 
     public SaddleFormMiddle()
-        : this(null, null)
+        : this(null!, null!, null!)
     {
 
-    }
-
-    protected override bool CollectDataForPreliminarilyCalculation()
-    {
-        throw new NotImplementedException();
-    }
-
-    protected override bool CollectDataForFinishCalculation()
-    {
-        throw new NotImplementedException();
     }
 
     protected override string GetServiceName()
@@ -36,7 +28,12 @@ public class SaddleFormMiddle : BaseCalculateForm<SaddleInput>
         throw new NotImplementedException();
     }
 
-    protected override void LoadInputData()
+    protected override void LoadInputData(SaddleInput inputData)
+    {
+        throw new NotImplementedException();
+    }
+
+    protected override bool TryCollectInputData(out SaddleInput inputData)
     {
         throw new NotImplementedException();
     }

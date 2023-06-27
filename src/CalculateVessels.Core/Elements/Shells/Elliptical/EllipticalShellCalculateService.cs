@@ -1,11 +1,12 @@
-﻿using CalculateVessels.Core.Elements.Base;
+﻿using System;
+using System.Linq;
+using CalculateVessels.Core.Elements.Base;
 using CalculateVessels.Core.Elements.Shells.Enums;
+using CalculateVessels.Core.Enums;
 using CalculateVessels.Core.Exceptions;
 using CalculateVessels.Core.Helpers;
 using CalculateVessels.Core.Interfaces;
 using CalculateVessels.Data.Interfaces;
-using System;
-using System.Linq;
 
 namespace CalculateVessels.Core.Elements.Shells.Elliptical;
 
@@ -95,7 +96,7 @@ internal class EllipticalShellCalculateService : ICalculateService<EllipticalShe
             case EllipticalBottomType.Elliptical:
             case EllipticalBottomType.Hemispherical:
 
-                if (loadingCondition.IsPressureIn)
+                if (loadingCondition.PressureType == PressureType.Inside)
                 {
                     data.s_p = loadingCondition.p * cdc.EllipseR /
                                (2.0 * data.SigmaAllow * dataIn.phi - 0.5 * loadingCondition.p);

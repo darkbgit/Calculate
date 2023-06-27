@@ -1,4 +1,9 @@
-﻿using CalculateVessels.Core;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Windows.Forms;
+using CalculateVessels.Core;
 using CalculateVessels.Core.Elements.Base;
 using CalculateVessels.Core.Elements.Shells.Conical;
 using CalculateVessels.Core.Elements.Shells.Cylindrical;
@@ -9,11 +14,6 @@ using CalculateVessels.Core.Interfaces;
 using CalculateVessels.Core.Persistance.Enums;
 using CalculateVessels.Helpers;
 using CalculateVessels.Output;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Windows.Forms;
 
 namespace CalculateVessels.Forms;
 

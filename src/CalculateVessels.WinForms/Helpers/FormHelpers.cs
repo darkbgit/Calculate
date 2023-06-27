@@ -1,12 +1,13 @@
-﻿using CalculateVessels.Controls;
-using CalculateVessels.Core.Elements.Base;
-using CalculateVessels.Data.Properties;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
+using CalculateVessels.Controls;
+using CalculateVessels.Core.Elements.Base;
+using CalculateVessels.Core.Enums;
+using CalculateVessels.Data.Properties;
 
 namespace CalculateVessels.Helpers;
 
@@ -68,11 +69,11 @@ internal static class FormHelpers
 
         var loadingConditions = new string[]
         {
-            loadingCondition.IsPressureIn ? Properties.Resources.InsidePressure : Properties.Resources.OutsidePressure,
-            loadingCondition.p.ToString(),
-            loadingCondition.t.ToString(),
-            loadingCondition.SigmaAllow == 0 ? AutoStrengthParameters : loadingCondition.SigmaAllow.ToString(),
-            loadingCondition.EAllow == 0 ? AutoStrengthParameters : loadingCondition.EAllow.ToString()
+            loadingCondition.PressureType.ToString(),
+            loadingCondition.p.ToString(CultureInfo.CurrentCulture),
+            loadingCondition.t.ToString(CultureInfo.CurrentCulture),
+            loadingCondition.SigmaAllow == 0 ? AutoStrengthParameters : loadingCondition.SigmaAllow.ToString(CultureInfo.CurrentCulture),
+            loadingCondition.EAllow == 0 ? AutoStrengthParameters : loadingCondition.EAllow.ToString(CultureInfo.CurrentCulture)
         };
 
         if (listView.Items.Cast<ListViewItem>()
@@ -119,7 +120,7 @@ internal static class FormHelpers
             .ToList()
             .Select((i, j) => new LoadingCondition
             {
-                IsPressureIn = i.SubItems[pressureTypeIndex].Text == Properties.Resources.InsidePressure,
+                PressureType = Enum.Parse<PressureType>(i.SubItems[pressureTypeIndex].Text),
                 p = Parameters.GetParam<double>(i.SubItems[pressureIndex].Text, "p", dataInErr),
                 t = Parameters.GetParam<double>(i.SubItems[tIndex].Text, "t", dataInErr),
                 OrdinalNumber = j + 1,
@@ -138,7 +139,7 @@ internal static class FormHelpers
     {
         var loadingCondition = new LoadingCondition
         {
-            IsPressureIn = !isPressureOutside.Checked,
+            PressureType = isPressureOutside.Checked ? PressureType.Outside : PressureType.Inside,
             t = Parameters.GetParam<double>(t.Text, "t", dataInErr, NumberStyles.Integer),
             p = Parameters.GetParam<double>(p.Text, "p", dataInErr),
             OrdinalNumber = 1,
@@ -147,7 +148,7 @@ internal static class FormHelpers
                 : default
         };
 
-        if (loadingCondition.IsPressureIn)
+        if (loadingCondition.PressureType == PressureType.Inside)
             return loadingCondition;
 
         if (EHandle.Checked)

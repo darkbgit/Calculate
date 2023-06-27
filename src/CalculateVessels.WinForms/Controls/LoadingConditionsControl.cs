@@ -1,10 +1,11 @@
-﻿using CalculateVessels.Core.Elements.Base;
-using CalculateVessels.Helpers;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
+using CalculateVessels.Core.Elements.Base;
+using CalculateVessels.Core.Enums;
+using CalculateVessels.Helpers;
 
 namespace CalculateVessels.Controls;
 
@@ -29,7 +30,7 @@ public partial class LoadingConditionsControl : UserControl
             .Select(i => new LoadingCondition
             {
                 OrdinalNumber = Convert.ToInt32(i.SubItems[ordinalNumber_ch.Index].Text),
-                IsPressureIn = i.SubItems[pressureType_ch.Index].Text == Properties.Resources.InsidePressure,
+                PressureType = Enum.Parse<PressureType>(i.SubItems[pressureType_ch.Index].Text),
                 p = Parameters.GetParam<double>(i.SubItems[p_ch.Index].Text, "p", dataInErr),
                 t = Parameters.GetParam<double>(i.SubItems[t_ch.Index].Text, "t", dataInErr),
                 SigmaAllow = i.SubItems[sigmaAllow_ch.Index].Text == AutoStrengthParameters
@@ -77,7 +78,7 @@ public partial class LoadingConditionsControl : UserControl
 
         var loadingConditions = new string[]
         {
-            loadingCondition.IsPressureIn ? Properties.Resources.InsidePressure : Properties.Resources.OutsidePressure,
+            loadingCondition.PressureType.ToString(),
             loadingCondition.p.ToString(CultureInfo.CurrentCulture),
             loadingCondition.t.ToString(CultureInfo.CurrentCulture),
             loadingCondition.SigmaAllow == 0 ? AutoStrengthParameters : loadingCondition.SigmaAllow.ToString(CultureInfo.CurrentCulture),

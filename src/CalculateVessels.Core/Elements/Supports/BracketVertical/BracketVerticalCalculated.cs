@@ -1,6 +1,6 @@
-﻿using CalculateVessels.Core.Elements.Base;
+﻿using System.Text;
+using CalculateVessels.Core.Elements.Base;
 using CalculateVessels.Core.Interfaces;
-using System.Text;
 
 namespace CalculateVessels.Core.Elements.Supports.BracketVertical;
 
@@ -17,6 +17,9 @@ public class BracketVerticalCalculated : CalculatedElement, ICalculatedElement
             Data.Properties.Resources.GOST_34233_5
         };
     }
+
+    public override string Type => nameof(BracketVerticalCalculated);
+
     public bool IsConditionUseFormulas { get; internal set; }
     public double ConditionUseFormulas1 { get; internal set; }
     public double ConditionUseFormulas2 { get; internal set; }

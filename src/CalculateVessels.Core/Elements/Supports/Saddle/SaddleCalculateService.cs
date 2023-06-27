@@ -1,8 +1,8 @@
-﻿using CalculateVessels.Core.Enums;
+﻿using System;
+using CalculateVessels.Core.Enums;
 using CalculateVessels.Core.Helpers;
 using CalculateVessels.Core.Interfaces;
 using CalculateVessels.Data.Interfaces;
-using System;
 
 namespace CalculateVessels.Core.Elements.Supports.Saddle;
 
@@ -27,21 +27,22 @@ internal class SaddleCalculateService : ICalculateService<SaddleInput>
             ny = dataIn.IsAssembly ? 1.8 : 2.4
         };
 
-        if (dataIn.IsPressureIn)
+        switch (dataIn.PressureType)
         {
-            data.p_d = 2 * data.SigmaAllow * dataIn.fi * (dataIn.s - dataIn.c) /
-                       (dataIn.D + (dataIn.s - dataIn.c));
-        }
-        else
-        {
-            data.B1_2 = 9.45 * (dataIn.D / dataIn.L) *
-                        Math.Sqrt(dataIn.D / (100 * (dataIn.s - dataIn.c)));
-            data.B1 = Math.Min(1, data.B1_2);
-            var p_de = 0.0000208 * data.E / (data.ny * data.B1) * (dataIn.D / dataIn.L) *
-                       Math.Pow(100 * (dataIn.s - dataIn.c) / dataIn.D, 2.5);
-            var p_dp = 2 * data.SigmaAllow * (dataIn.s - dataIn.c) /
-                       (dataIn.D + (dataIn.s - dataIn.c));
-            data.p_d = p_dp / Math.Sqrt(1 + Math.Pow(p_dp / p_de, 2));
+            case PressureType.Inside:
+                data.p_d = 2 * data.SigmaAllow * dataIn.fi * (dataIn.s - dataIn.c) /
+                           (dataIn.D + (dataIn.s - dataIn.c));
+                break;
+            case PressureType.Outside:
+                data.B1_2 = 9.45 * (dataIn.D / dataIn.L) *
+                            Math.Sqrt(dataIn.D / (100 * (dataIn.s - dataIn.c)));
+                data.B1 = Math.Min(1, data.B1_2);
+                var p_de = 0.0000208 * data.E / (data.ny * data.B1) * (dataIn.D / dataIn.L) *
+                           Math.Pow(100 * (dataIn.s - dataIn.c) / dataIn.D, 2.5);
+                var p_dp = 2 * data.SigmaAllow * (dataIn.s - dataIn.c) /
+                           (dataIn.D + (dataIn.s - dataIn.c));
+                data.p_d = p_dp / Math.Sqrt(1 + Math.Pow(p_dp / p_de, 2));
+                break;
         }
 
         //UNDONE: проверить формулу для расчета [F]
@@ -114,7 +115,7 @@ internal class SaddleCalculateService : ICalculateService<SaddleInput>
                 data.ErrorList.Add("Несущая способность обечайки в сечении между опорами. Условие прочности не выполняется.");
             }
             data.ConditionStability1 =
-                dataIn.IsPressureIn ? Math.Abs(data.M12) / data.M_d :
+                dataIn.PressureType == PressureType.Inside ? Math.Abs(data.M12) / data.M_d :
                     dataIn.p / data.p_d + Math.Abs(data.M12) / data.M_d;
             if (data.ConditionStability1 > 1)
             {
@@ -195,7 +196,7 @@ internal class SaddleCalculateService : ICalculateService<SaddleInput>
                 data.Fe = data.F1 * (Math.PI / 4.0) * data.K13 * data.K15 *
                           Math.Sqrt(dataIn.D / (dataIn.s - dataIn.c));
 
-                data.ConditionStability2 = dataIn.IsPressureIn
+                data.ConditionStability2 = dataIn.PressureType == PressureType.Inside
                     ? Math.Abs(data.M1) / data.M_d + data.Fe / data.F_d + Math.Pow(data.Q1 / data.Q_d, 2)
                     : dataIn.p / data.p_d + Math.Abs(data.M1) / data.M_d + data.Fe / data.F_d + Math.Pow(data.Q1 / data.Q_d, 2);
                 if (data.ConditionStability2 > 1)
@@ -268,7 +269,7 @@ internal class SaddleCalculateService : ICalculateService<SaddleInput>
 
                 data.Fe = data.F1 * (Math.PI / 4.0) * data.K13 * data.K15 * Math.Sqrt(dataIn.D / data.sef);
 
-                data.ConditionStability2 = dataIn.IsPressureIn
+                data.ConditionStability2 = dataIn.PressureType == PressureType.Inside
                     ? Math.Abs(data.M1) / data.M_d + data.Fe / data.F_d + Math.Pow(data.Q1 / data.Q_d, 2)
                     : dataIn.p / data.p_d + Math.Abs(data.M1) / data.M_d + data.Fe / data.F_d + Math.Pow(data.Q1 / data.Q_d, 2);
                 if (data.ConditionStability2 > 1)

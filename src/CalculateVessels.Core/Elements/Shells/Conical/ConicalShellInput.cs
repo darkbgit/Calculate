@@ -1,7 +1,6 @@
 ﻿using CalculateVessels.Core.Elements.Shells.Base;
 using CalculateVessels.Core.Elements.Shells.Enums;
 using CalculateVessels.Core.Interfaces;
-using System.Linq;
 
 namespace CalculateVessels.Core.Elements.Shells.Conical;
 
@@ -15,7 +14,7 @@ public class ConicalShellInput : ShellInputData, IInputData
     {
 
     }
-    public override string Type => nameof(ConicalShellInput);
+    public string Type => nameof(ConicalShellInput);
     public double Ak { get; set; }
     public ConicalConnectionType ConnectionType { get; set; }
     public double D1 { get; set; }
@@ -43,17 +42,4 @@ public class ConicalShellInput : ShellInputData, IInputData
     public double s1Little { get; set; }
     public double s2Little { get; set; }
     public double sT { get; set; }
-
-    public override bool IsDataGood
-    {
-        get
-        {
-            if (D <= D1)
-            {
-                ErrorList.Add("D должно быть больше чем D1.");
-            }
-
-            return !ErrorList.Any();
-        }
-    }
 }

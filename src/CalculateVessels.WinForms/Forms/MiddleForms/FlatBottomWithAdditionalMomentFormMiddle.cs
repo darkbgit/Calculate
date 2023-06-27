@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using CalculateVessels.Core.Elements.Supports.BracketVertical;
+using CalculateVessels.Core.Elements.Bottoms.FlatBottomWithAdditionalMoment;
 using CalculateVessels.Core.Interfaces;
 using CalculateVessels.Data.Interfaces;
 using CalculateVessels.Forms.Base;
@@ -8,16 +8,17 @@ using FluentValidation;
 
 namespace CalculateVessels.Forms.MiddleForms;
 
-public class BracketVerticalFormMiddle : BaseCalculateForm<BracketVerticalInput>
+public class FlatBottomWithAdditionalMomentFormMiddle : BaseCalculateForm<FlatBottomWithAdditionalMomentInput>
 {
-    protected BracketVerticalFormMiddle(IEnumerable<ICalculateService<BracketVerticalInput>> calculateServices,
+    protected FlatBottomWithAdditionalMomentFormMiddle(IEnumerable<ICalculateService<FlatBottomWithAdditionalMomentInput>> calculateServices,
         IPhysicalDataService physicalDataService,
-        IValidator<BracketVerticalInput> validator)
+        IValidator<FlatBottomWithAdditionalMomentInput> validator)
         : base(calculateServices, physicalDataService, validator)
     {
+
     }
 
-    public BracketVerticalFormMiddle()
+    public FlatBottomWithAdditionalMomentFormMiddle()
         : this(null!, null!, null!)
     {
 
@@ -28,12 +29,12 @@ public class BracketVerticalFormMiddle : BaseCalculateForm<BracketVerticalInput>
         throw new NotImplementedException();
     }
 
-    protected override void LoadInputData(BracketVerticalInput inputData)
+    protected override void LoadInputData(FlatBottomWithAdditionalMomentInput inputData)
     {
         throw new NotImplementedException();
     }
 
-    protected override bool TryCollectInputData(out BracketVerticalInput inputData)
+    protected override bool TryCollectInputData(out FlatBottomWithAdditionalMomentInput inputData)
     {
         throw new NotImplementedException();
     }

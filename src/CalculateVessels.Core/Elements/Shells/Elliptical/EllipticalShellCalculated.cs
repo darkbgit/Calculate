@@ -1,8 +1,8 @@
-﻿using CalculateVessels.Core.Elements.Shells.Base;
-using CalculateVessels.Core.Interfaces;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using CalculateVessels.Core.Elements.Shells.Base;
+using CalculateVessels.Core.Interfaces;
 
 namespace CalculateVessels.Core.Elements.Shells.Elliptical;
 
@@ -38,7 +38,7 @@ public class EllipticalShellCalculated : ShellCalculated, ICalculatedElement
             .ForEach(lc =>
             {
                 builder.Append($" p={lc.p} MPa");
-                builder.Append(lc.IsPressureIn ? "(inside)" : "(outside)");
+                builder.Append(lc.PressureType.ToString());
                 builder.Append($" t={lc.t} C");
             });
 

@@ -1,25 +1,20 @@
-﻿using CalculateVessels.Core.Elements.Base;
-using CalculateVessels.Core.Elements.Shells.Nozzle.Enums;
+﻿using CalculateVessels.Core.Elements.Shells.Nozzle.Enums;
 using CalculateVessels.Core.Interfaces;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace CalculateVessels.Core.Elements.Shells.Nozzle;
 
 #pragma warning disable IDE1006 // Naming Styles
 // ReSharper disable InconsistentNaming
-public class NozzleInput : InputData, IInputData
+
+public class NozzleInput : IInputData
 {
-    private List<string> _errorList = new();
-
-    private readonly ICalculatedElement _shellCalculatedData;
-
     public NozzleInput(ICalculatedElement shellCalculatedData)
     {
-        _shellCalculatedData = shellCalculatedData;
+        ShellCalculatedData = shellCalculatedData;
     }
 
-    public override string Type => nameof(NozzleInput);
+    public string Type => nameof(NozzleInput);
+    public string Name { get; set; } = string.Empty;
     public double cs { get; set; }
     public double cs1 { get; set; }
     public double d { get; set; }
@@ -28,7 +23,6 @@ public class NozzleInput : InputData, IInputData
     public double delta { get; set; }
     public double delta1 { get; set; }
     public double delta2 { get; set; }
-    //public IEnumerable<string> ErrorList => _errorList;
     public double E1 { get; set; }
     public double E2 { get; set; }
     public double E3 { get; set; }
@@ -46,7 +40,7 @@ public class NozzleInput : InputData, IInputData
     public NozzleKind NozzleKind { get; set; }
     public double omega { get; set; }
     public double r { get; set; }
-    public ICalculatedElement ShellCalculatedData => _shellCalculatedData;
+    public ICalculatedElement ShellCalculatedData { get; }
     public double SigmaAllow1 { get; set; }
     public double SigmaAllow2 { get; set; }
     public double SigmaAllow3 { get; set; }
@@ -61,20 +55,4 @@ public class NozzleInput : InputData, IInputData
     public string steel4 { get; set; } = string.Empty;
     //public double t { get; set; }
     public double tTransversely { get; set; }
-
-    //public IElement Element { get; set; }
-    //public ShellDataIn ShellDataIn => (ShellDataIn) _shellCalculatedData.InputData;
-
-    public override bool IsDataGood
-    {
-        get
-        {
-            if (s3 > 0 && cs + cs1 > s3)
-            {
-                ErrorList.Add("cs+cs1 должно быть меньше s3.");
-            }
-
-            return !ErrorList.Any();
-        }
-    }
 }

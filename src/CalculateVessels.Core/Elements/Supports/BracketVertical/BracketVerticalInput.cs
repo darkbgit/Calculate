@@ -1,19 +1,20 @@
 ﻿using CalculateVessels.Core.Enums;
 using CalculateVessels.Core.Interfaces;
-using CalculateVessels.Core.Elements.Base;
 
 namespace CalculateVessels.Core.Elements.Supports.BracketVertical;
 
 #pragma warning disable IDE1006 // Naming Styles
 // ReSharper disable InconsistentNaming
 
-public class BracketVerticalInput : InputData, IInputData
+public class BracketVerticalInput : IInputData
 {
+    public string Type => nameof(BracketVerticalInput);
+    public string Name { get; set; } = string.Empty;
     public bool IsAssembly { get; set; }
-    public bool IsPressureIn { get; set; }
+    public PressureType PressureType { get; set; }
     public bool PreciseMontage { get; set; }
     public bool ReinforcingPad { get; set; }
-    public BracketVerticalType Type { get; set; }
+    public BracketVerticalType BracketVerticalType { get; set; }
     public double b2 { get; set; }
     public double b3 { get; set; }
     public double b4 { get; set; }

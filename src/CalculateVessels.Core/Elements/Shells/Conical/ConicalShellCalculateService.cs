@@ -1,11 +1,12 @@
-﻿using CalculateVessels.Core.Elements.Base;
+﻿using System;
+using System.Linq;
+using CalculateVessels.Core.Elements.Base;
 using CalculateVessels.Core.Elements.Shells.Enums;
+using CalculateVessels.Core.Enums;
 using CalculateVessels.Core.Exceptions;
 using CalculateVessels.Core.Helpers;
 using CalculateVessels.Core.Interfaces;
 using CalculateVessels.Data.Interfaces;
-using System;
-using System.Linq;
 
 namespace CalculateVessels.Core.Elements.Shells.Conical;
 
@@ -110,52 +111,55 @@ internal class ConicalShellCalculateService : ICalculateService<ConicalShellInpu
                 data.ErrorList.Add("Условие применения формул не выполняется.");
             }
 
-            if (loadingCondition.IsPressureIn)
+            switch (loadingCondition.PressureType)
             {
-                data.s_p = loadingCondition.p * cdc.Dk / (2 * data.SigmaAllow * dataIn.phi - loadingCondition.p)
-                           * (1 / Math.Cos(cdc.alpha1));
-                data.s = data.s_p + cdc.c;
+                case PressureType.Inside:
+                    data.s_p = loadingCondition.p * cdc.Dk / (2 * data.SigmaAllow * dataIn.phi - loadingCondition.p)
+                               * (1 / Math.Cos(cdc.alpha1));
+                    data.s = data.s_p + cdc.c;
 
-                if (dataIn.s != 0)
-                {
-                    if (data.s > dataIn.s)
-                        throw new CalculateException("Принятая толщина меньше расчетной.");
+                    if (dataIn.s != 0)
+                    {
+                        if (data.s > dataIn.s)
+                            throw new CalculateException("Принятая толщина меньше расчетной.");
 
-                    data.p_d = 2 * data.SigmaAllow * dataIn.phi * (dataIn.s - cdc.c)
-                               / (cdc.Dk / Math.Cos(cdc.alpha1) + (dataIn.s - cdc.c));
-                }
-            }
-            else
-            {
-                data.lE = (dataIn.D - dataIn.D1) / (2 * Math.Sin(cdc.alpha1));
-                data.DE_1 = (dataIn.D + dataIn.D1) / (2 * Math.Cos(cdc.alpha1));
-                data.DE_2 = dataIn.D / Math.Cos(cdc.alpha1) - 0.3 * (dataIn.D + dataIn.D1)
-                                                                   * Math.Sqrt((dataIn.D + dataIn.D1) *
-                                                                               Math.Tan(cdc.alpha1) /
-                                                                               ((dataIn.s - cdc.c) * 100));
-                data.DE = Math.Max(data.DE_1, data.DE_2);
-                data.B1_1 = 9.45 * data.DE / data.lE * Math.Sqrt(data.DE / (100 * (dataIn.s - cdc.c)));
-                data.B1 = Math.Min(1.0, data.B1_1);
+                        data.p_d = 2 * data.SigmaAllow * dataIn.phi * (dataIn.s - cdc.c)
+                                   / (cdc.Dk / Math.Cos(cdc.alpha1) + (dataIn.s - cdc.c));
+                    }
 
-                data.s_p_1 = 1.06 * (0.01 * data.DE / data.B1)
-                                  * Math.Pow(loadingCondition.p / (0.00001 * data.E) * (data.lE / data.DE), 0.4);
-                data.s_p_2 = 1.2 * loadingCondition.p * cdc.Dk /
-                             (2 * dataIn.phi * data.SigmaAllow - loadingCondition.p)
-                             * (1 / Math.Cos(cdc.alpha1));
-                data.s_p = Math.Max(data.s_p_1, data.s_p_2);
-                data.s = data.s_p + cdc.c;
+                    break;
+                case PressureType.Outside:
+                    data.lE = (dataIn.D - dataIn.D1) / (2 * Math.Sin(cdc.alpha1));
+                    data.DE_1 = (dataIn.D + dataIn.D1) / (2 * Math.Cos(cdc.alpha1));
+                    data.DE_2 = dataIn.D / Math.Cos(cdc.alpha1) - 0.3 * (dataIn.D + dataIn.D1)
+                                                                      * Math.Sqrt((dataIn.D + dataIn.D1) *
+                                                                          Math.Tan(cdc.alpha1) /
+                                                                          ((dataIn.s - cdc.c) * 100));
+                    data.DE = Math.Max(data.DE_1, data.DE_2);
+                    data.B1_1 = 9.45 * data.DE / data.lE * Math.Sqrt(data.DE / (100 * (dataIn.s - cdc.c)));
+                    data.B1 = Math.Min(1.0, data.B1_1);
 
-                if (dataIn.s != 0)
-                {
-                    if (data.s > dataIn.s)
-                        throw new CalculateException("Принятая толщина меньше расчетной.");
+                    data.s_p_1 = 1.06 * (0.01 * data.DE / data.B1)
+                                      * Math.Pow(loadingCondition.p / (0.00001 * data.E) * (data.lE / data.DE), 0.4);
+                    data.s_p_2 = 1.2 * loadingCondition.p * cdc.Dk /
+                                 (2 * dataIn.phi * data.SigmaAllow - loadingCondition.p)
+                                 * (1 / Math.Cos(cdc.alpha1));
+                    data.s_p = Math.Max(data.s_p_1, data.s_p_2);
+                    data.s = data.s_p + cdc.c;
 
-                    data.p_dp = 2 * data.SigmaAllow * (dataIn.s - cdc.c)
-                                / (cdc.Dk / Math.Cos(cdc.alpha1) + dataIn.s - cdc.c);
-                    data.p_de = 2.08 * 0.00001 * data.E / (dataIn.ny * data.B1) * (data.DE / data.lE)
-                        * Math.Pow(100 * (dataIn.s - cdc.c) / data.DE, 2.5);
-                    data.p_d = data.p_dp / Math.Sqrt(1 + Math.Pow(data.p_dp / data.p_de, 2));
-                }
+                    if (dataIn.s != 0)
+                    {
+                        if (data.s > dataIn.s)
+                            throw new CalculateException("Принятая толщина меньше расчетной.");
+
+                        data.p_dp = 2 * data.SigmaAllow * (dataIn.s - cdc.c)
+                                    / (cdc.Dk / Math.Cos(cdc.alpha1) + dataIn.s - cdc.c);
+                        data.p_de = 2.08 * 0.00001 * data.E / (dataIn.ny * data.B1) * (data.DE / data.lE)
+                            * Math.Pow(100 * (dataIn.s - cdc.c) / data.DE, 2.5);
+                        data.p_d = data.p_dp / Math.Sqrt(1 + Math.Pow(data.p_dp / data.p_de, 2));
+                    }
+
+                    break;
             }
 
             if (data.p_d < loadingCondition.p && dataIn.s != 0)

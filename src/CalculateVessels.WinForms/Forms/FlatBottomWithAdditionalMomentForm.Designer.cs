@@ -323,7 +323,7 @@ partial class FlatBottomWithAdditionalMomentForm
             this.calc_b.TabIndex = 141;
             this.calc_b.Text = "Расчет";
             this.calc_b.UseVisualStyleBackColor = true;
-            this.calc_b.Click += new System.EventHandler(this.Calc_b_Click);
+            this.calc_b.Click += new System.EventHandler(this.CalculateButton_Click);
             // 
             // predCalc_b
             // 
@@ -334,7 +334,7 @@ partial class FlatBottomWithAdditionalMomentForm
             this.predCalc_b.TabIndex = 139;
             this.predCalc_b.Text = "Предварительный\r\nрасчет";
             this.predCalc_b.UseVisualStyleBackColor = true;
-            this.predCalc_b.Click += new System.EventHandler(this.PreCalc_b_Click);
+            this.predCalc_b.Click += new System.EventHandler(this.PreCalculateButton_Click);
             // 
             // groupBox4
             // 

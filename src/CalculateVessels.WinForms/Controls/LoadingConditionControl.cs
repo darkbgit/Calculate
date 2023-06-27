@@ -1,12 +1,13 @@
-﻿using CalculateVessels.Core.Elements.Base;
-using CalculateVessels.Helpers;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
 using System.Windows.Forms.Design;
+using CalculateVessels.Core.Elements.Base;
+using CalculateVessels.Core.Enums;
+using CalculateVessels.Helpers;
 
 namespace CalculateVessels.Controls;
 
@@ -25,7 +26,7 @@ public partial class LoadingConditionControl : UserControl
         var loadingCondition = new LoadingCondition
         {
             OrdinalNumber = 1,
-            IsPressureIn = !isPressureOutsideCheckBox.Checked,
+            PressureType = isPressureOutsideCheckBox.Checked ? PressureType.Outside : PressureType.Inside,
             t = Parameters.GetParam<double>(temperatureTextBox.Text, "t", dataInErr, NumberStyles.Integer),
             p = Parameters.GetParam<double>(pressureTextBox.Text, "p", dataInErr),
             SigmaAllow = isSigmaAllowHandleCheckBox.Checked
@@ -48,7 +49,7 @@ public partial class LoadingConditionControl : UserControl
     public void SetLoadingCondition(LoadingCondition loadingCondition)
     {
 
-        isPressureOutsideCheckBox.Checked = !loadingCondition.IsPressureIn;
+        isPressureOutsideCheckBox.Checked = loadingCondition.PressureType == PressureType.Outside;
         temperatureTextBox.Text = loadingCondition.t.ToString(CultureInfo.CurrentCulture);
         pressureTextBox.Text = loadingCondition.p.ToString(CultureInfo.CurrentCulture);
         if (loadingCondition.SigmaAllow > 0)

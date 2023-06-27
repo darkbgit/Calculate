@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace CalculateVessels.Core.Elements.Base;
 
-public abstract class InputData
+public abstract class InputData1
 {
     public virtual string Type { get; } = string.Empty;
 

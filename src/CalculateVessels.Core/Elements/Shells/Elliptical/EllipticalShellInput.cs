@@ -17,33 +17,11 @@ public class EllipticalShellInput : ShellInputData, IInputData
     {
     }
 
-    public override string Type => nameof(EllipticalShellInput);
+    public string Type => nameof(EllipticalShellInput);
 
-    public double EllipseH
-    {
-        get => _ellipseH;
-        init
-        {
-            _ellipseH = value;
-            if (_ellipseH <= 0)
-            {
-                ErrorList.Add("H не задано.");
-            }
-        }
-    }
+    public double EllipseH { get; init; }
 
-    public double Ellipseh1
-    {
-        get => _h1;
-        init
-        {
-            _h1 = value;
-            if (_h1 <= 0)
-            {
-                ErrorList.Add("h1 не задано.");
-            }
-        }
-    }
+    public double Ellipseh1 { get; init; }
 
     public double ny { get; set; } = 2.4;
     public EllipticalBottomType EllipticalBottomType { get; init; }

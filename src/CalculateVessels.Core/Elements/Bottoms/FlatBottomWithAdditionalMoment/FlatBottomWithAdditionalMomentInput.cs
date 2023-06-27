@@ -1,15 +1,17 @@
-﻿using CalculateVessels.Core.Interfaces;
+﻿using CalculateVessels.Core.Elements.Bottoms.Enums;
 using CalculateVessels.Core.Enums;
-using CalculateVessels.Core.Elements.Base;
-using CalculateVessels.Core.Elements.Bottoms.Enums;
+using CalculateVessels.Core.Interfaces;
 
 namespace CalculateVessels.Core.Elements.Bottoms.FlatBottomWithAdditionalMoment;
 
 #pragma warning disable IDE1006 // Naming Styles
 // ReSharper disable InconsistentNaming
 
-public class FlatBottomWithAdditionalMomentInput : InputData, IInputData
+public class FlatBottomWithAdditionalMomentInput : IInputData
 {
+    public string Type => nameof(FlatBottomWithAdditionalMomentInput);
+    public string Name { get; set; } = string.Empty;
+
     //shell
     public double c1 { get; set; }
     public double c2 { get; set; }

@@ -1,4 +1,5 @@
 ﻿using CalculateVessels.Core.Elements.Base;
+using CalculateVessels.Core.Enums;
 using CalculateVessels.Output.Word.Core;
 using DocumentFormat.OpenXml.Wordprocessing;
 
@@ -94,7 +95,7 @@ internal static class WordHelpers
             .AddCell($"{loadingCondition.t} °С");
 
         table.AddRow()
-            .AddCell("Расчетное " + (loadingCondition.IsPressureIn ? "внутреннее избыточное" : "наружное")
+            .AddCell("Расчетное " + (loadingCondition.PressureType == PressureType.Inside ? "внутреннее избыточное" : "наружное")
                                   + " давление, p:")
             .AddCell($"{loadingCondition.p} МПа");
     }

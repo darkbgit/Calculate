@@ -35,7 +35,7 @@ internal class HeatExchangerStationaryTubePlatesWordOutput : IWordOutputElement<
 
         InsertDataCalculated(mainPart, body, dataIn, data);
 
-        package.Close();
+        package.Dispose();
     }
 
     private static void InsertDataCalculated(MainDocumentPart mainPart, Body body, HeatExchangerStationaryTubePlatesInput dataIn, HeatExchangerStationaryTubePlatesCalculated data)

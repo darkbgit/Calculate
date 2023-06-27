@@ -1,6 +1,6 @@
-﻿using CalculateVessels.Core.Persistance.Json;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Text.Json.Serialization;
+using CalculateVessels.Core.Persistance.Json;
 
 namespace CalculateVessels.Core.Interfaces;
 
@@ -10,6 +10,4 @@ public interface ICalculatedElement
     ICollection<string> ErrorList { get; }
     IInputData InputData { get; init; }
     IEnumerable<string> Bibliography { get; }
-
-    //Type GetElementType();
 }

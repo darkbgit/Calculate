@@ -1,6 +1,6 @@
-using CalculateVessels.Core.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
+using CalculateVessels.Core.Interfaces;
 
 namespace CalculateVessels.Core.Elements.Base;
 
@@ -22,5 +22,4 @@ public abstract class CalculatedElement
     {
         _errorList.AddRange(errors);
     }
-
 }

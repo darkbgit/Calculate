@@ -1,10 +1,11 @@
-﻿using CalculateVessels.Core.Elements.Base;
+﻿using System;
+using System.Linq;
+using CalculateVessels.Core.Elements.Base;
+using CalculateVessels.Core.Enums;
 using CalculateVessels.Core.Exceptions;
 using CalculateVessels.Core.Helpers;
 using CalculateVessels.Core.Interfaces;
 using CalculateVessels.Data.Interfaces;
-using System;
-using System.Linq;
 
 namespace CalculateVessels.Core.Elements.Shells.Cylindrical;
 
@@ -77,47 +78,48 @@ internal class CylindricalShellCalculateService : ICalculateService<CylindricalS
 
         if (loadingCondition.p > 0)
         {
-            if (loadingCondition.IsPressureIn)
+            switch (loadingCondition.PressureType)
             {
-                data.s_p = loadingCondition.p * dataIn.D / (2 * data.SigmaAllow * dataIn.phi - loadingCondition.p);
-                data.s = data.s_p + cdc.c;
+                case PressureType.Inside:
+                    data.s_p = loadingCondition.p * dataIn.D / (2 * data.SigmaAllow * dataIn.phi - loadingCondition.p);
+                    data.s = data.s_p + cdc.c;
 
-                if (dataIn.s != 0.0)
-                {
-                    if (data.s > dataIn.s)
-                        throw new CalculateException("Принятая толщина меньше расчетной.", loadingCondition);
+                    if (dataIn.s != 0.0)
+                    {
+                        if (data.s > dataIn.s)
+                            throw new CalculateException("Принятая толщина меньше расчетной.", loadingCondition);
 
-                    data.p_d = 2 * data.SigmaAllow * dataIn.phi * (dataIn.s - cdc.c) /
-                               (dataIn.D + dataIn.s - cdc.c);
-                }
-            }
-            else
-            {
-                data.l = dataIn.l + dataIn.l3;
-                data.b_2 = 0.47 * Math.Pow(loadingCondition.p / (0.00001 * data.E), 0.067) * Math.Pow(data.l / dataIn.D, 0.4);
-                data.b = Math.Max(1.0, data.b_2);
-                data.s_p_1 = 1.06 * (0.01 * dataIn.D / data.b) *
-                             Math.Pow(loadingCondition.p / (0.00001 * data.E) * (data.l / dataIn.D), 0.4);
-                data.s_p_2 = 1.2 * loadingCondition.p * dataIn.D / (2 * data.SigmaAllow - loadingCondition.p);
-                data.s_p = Math.Max(data.s_p_1, data.s_p_2);
-                data.s = data.s_p + cdc.c;
+                        data.p_d = 2 * data.SigmaAllow * dataIn.phi * (dataIn.s - cdc.c) /
+                                   (dataIn.D + dataIn.s - cdc.c);
+                    }
 
-                if (dataIn.s != 0.0)
-                {
-                    if (data.s > dataIn.s)
-                        throw new CalculateException("Принятая толщина меньше расчетной.", loadingCondition);
+                    break;
+                case PressureType.Outside:
+                    data.l = dataIn.l + dataIn.l3;
+                    data.b_2 = 0.47 * Math.Pow(loadingCondition.p / (0.00001 * data.E), 0.067) * Math.Pow(data.l / dataIn.D, 0.4);
+                    data.b = Math.Max(1.0, data.b_2);
+                    data.s_p_1 = 1.06 * (0.01 * dataIn.D / data.b) *
+                                 Math.Pow(loadingCondition.p / (0.00001 * data.E) * (data.l / dataIn.D), 0.4);
+                    data.s_p_2 = 1.2 * loadingCondition.p * dataIn.D / (2 * data.SigmaAllow - loadingCondition.p);
+                    data.s_p = Math.Max(data.s_p_1, data.s_p_2);
+                    data.s = data.s_p + cdc.c;
+
+                    if (dataIn.s != 0.0)
+                    {
+                        if (data.s > dataIn.s)
+                            throw new CalculateException("Принятая толщина меньше расчетной.", loadingCondition);
 
 
-                    data.p_dp = 2 * data.SigmaAllow * (dataIn.s - cdc.c) /
-                                (dataIn.D + dataIn.s - cdc.c);
-                    data.B1_2 = 9.45 * (dataIn.D / data.l) *
-                                Math.Sqrt(dataIn.D / (100 * (dataIn.s - cdc.c)));
-                    data.B1 = Math.Min(1.0, data.B1_2);
-                    data.p_de = 2.08 * 0.00001 * data.E / (dataIn.ny * data.B1) * (dataIn.D / data.l) *
-                                Math.Pow(100 * (dataIn.s - cdc.c) / dataIn.D, 2.5);
-                    data.p_d = data.p_dp / Math.Sqrt(1 + Math.Pow(data.p_dp / data.p_de, 2));
-
-                }
+                        data.p_dp = 2 * data.SigmaAllow * (dataIn.s - cdc.c) /
+                                    (dataIn.D + dataIn.s - cdc.c);
+                        data.B1_2 = 9.45 * (dataIn.D / data.l) *
+                                    Math.Sqrt(dataIn.D / (100 * (dataIn.s - cdc.c)));
+                        data.B1 = Math.Min(1.0, data.B1_2);
+                        data.p_de = 2.08 * 0.00001 * data.E / (dataIn.ny * data.B1) * (dataIn.D / data.l) *
+                                    Math.Pow(100 * (dataIn.s - cdc.c) / dataIn.D, 2.5);
+                        data.p_d = data.p_dp / Math.Sqrt(1 + Math.Pow(data.p_dp / data.p_de, 2));
+                    }
+                    break;
             }
 
             if (data.p_d < loadingCondition.p && dataIn.s != 0)
@@ -139,10 +141,8 @@ internal class CylindricalShellCalculateService : ICalculateService<CylindricalS
                 if (data.s_f > dataIn.s)
                     throw new CalculateException("Принятая толщина меньше расчетной от нагрузки осевым сжимающим усилием.", loadingCondition);
 
-
                 data.FAllow = Math.PI * (dataIn.D + dataIn.s - cdc.c) *
                               (dataIn.s - cdc.c) * data.SigmaAllow * dataIn.fi_t;
-
             }
             else
             {
@@ -150,8 +150,8 @@ internal class CylindricalShellCalculateService : ICalculateService<CylindricalS
                 data.F_de1 = 0.000031 * data.E / dataIn.ny * Math.Pow(dataIn.D, 2) *
                              Math.Pow(100 * (dataIn.s - cdc.c) / dataIn.D, 2.5);
 
-                const int L_MORE_THEN_D = 10;
-                bool isLMoreThenD = dataIn.l / dataIn.D > L_MORE_THEN_D;
+                const int lMoreThenD = 10;
+                bool isLMoreThenD = dataIn.l / dataIn.D > lMoreThenD;
 
                 if (isLMoreThenD || dataIn.ConditionForCalcF5341)
                 {

@@ -185,7 +185,7 @@ namespace CalculateVessels.Forms
             this.calc_btn.TabIndex = 83;
             this.calc_btn.Text = "Расчет";
             this.calc_btn.UseVisualStyleBackColor = true;
-            this.calc_btn.Click += new System.EventHandler(this.Calc_b_Click);
+            this.calc_btn.Click += new System.EventHandler(this.CalculateButton_Click);
             // 
             // preCalc_btn
             // 
@@ -196,7 +196,7 @@ namespace CalculateVessels.Forms
             this.preCalc_btn.TabIndex = 81;
             this.preCalc_btn.Text = "Предварительный\r\nрасчет";
             this.preCalc_btn.UseVisualStyleBackColor = true;
-            this.preCalc_btn.Click += new System.EventHandler(this.PreCalc_btn_Click);
+            this.preCalc_btn.Click += new System.EventHandler(this.PreCalculateButton_Click);
             // 
             // groupBox4
             // 

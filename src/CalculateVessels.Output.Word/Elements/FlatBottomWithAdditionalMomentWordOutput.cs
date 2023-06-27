@@ -615,6 +615,6 @@ internal class FlatBottomWithAdditionalMomentWordOutput : IWordOutputElement<Fla
                 .Color(System.Drawing.Color.Red);
         }
 
-        package.Close();
+        package.Dispose();
     }
 }

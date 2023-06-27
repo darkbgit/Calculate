@@ -1,10 +1,11 @@
-﻿using CalculateVessels.Core.Elements.Base;
+﻿using System.Collections.Generic;
+using CalculateVessels.Core.Elements.Base;
 using CalculateVessels.Core.Elements.Shells.Conical;
 using CalculateVessels.Core.Elements.Shells.Enums;
+using CalculateVessels.Core.Enums;
 using CalculateVessels.Core.Interfaces;
 using CalculateVessels.Data.PhysicalData;
 using FluentAssertions;
-using System.Collections.Generic;
 using Xunit;
 
 namespace CalculateVessels.UnitTests.Services.CalculateServices;
@@ -50,7 +51,7 @@ public class ConicalShellTestData
             OrdinalNumber = 1,
             p = 0.6,
             t = 120,
-            IsPressureIn = true
+            PressureType = PressureType.Inside
         };
 
         var inputData = new ConicalShellInput

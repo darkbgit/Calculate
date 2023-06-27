@@ -1,9 +1,9 @@
-﻿using CalculateVessels.Core.Elements.Supports.Saddle;
+﻿using System.Collections.Generic;
+using CalculateVessels.Core.Elements.Supports.Saddle;
 using CalculateVessels.Core.Enums;
 using CalculateVessels.Core.Interfaces;
 using CalculateVessels.Data.PhysicalData;
 using FluentAssertions;
-using System.Collections.Generic;
 using Xunit;
 
 namespace CalculateVessels.UnitTests.Services.CalculateServices;
@@ -46,7 +46,7 @@ public class SaddleTestData
     {
         var inputData = new SaddleInput
         {
-            IsPressureIn = true,
+            PressureType = PressureType.Inside,
             D = 600,
             s = 8,
             c = 2.8,

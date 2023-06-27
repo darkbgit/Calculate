@@ -29,6 +29,5 @@ public class CalculateException : Exception
     }
 
     private static string EnrichWithLoadingConditions(LoadingCondition loadingCondition) =>
-        (loadingCondition.IsPressureIn ? "inside " : "outside ") + loadingCondition.p + " MPa " + loadingCondition.t + " C. ";
-
+        loadingCondition.PressureType.ToString() + loadingCondition.p + " MPa " + loadingCondition.t + " C. ";
 }

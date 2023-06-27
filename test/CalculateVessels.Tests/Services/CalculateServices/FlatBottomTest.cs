@@ -1,9 +1,9 @@
-﻿using CalculateVessels.Core.Elements.Bottoms.Enums;
+﻿using System.Collections.Generic;
+using CalculateVessels.Core.Elements.Bottoms.Enums;
 using CalculateVessels.Core.Elements.Bottoms.FlatBottom;
 using CalculateVessels.Core.Interfaces;
 using CalculateVessels.Data.PhysicalData;
 using FluentAssertions;
-using System.Collections.Generic;
 using Xunit;
 
 namespace CalculateVessels.UnitTests.Services.CalculateServices;
@@ -63,7 +63,7 @@ public class FlatBottomTestData
             s = 8,
             s1 = 16,
             s2 = 0,
-            Type = 2,
+            FlatBottomType = 2,
             t = 50
         };
 

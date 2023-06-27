@@ -5,6 +5,7 @@ using CalculateVessels.Core.Interfaces;
 using CalculateVessels.Data.Interfaces;
 using CalculateVessels.Forms.Base;
 using CalculateVessels.Helpers;
+using FluentValidation;
 
 namespace CalculateVessels.Forms.MiddleForms;
 
@@ -12,26 +13,17 @@ public class EllipticalShellFormMiddle : CalculateFormWithFormFactory<Elliptical
 {
     protected EllipticalShellFormMiddle(IEnumerable<ICalculateService<EllipticalShellInput>> calculateServices,
         IPhysicalDataService physicalDataService,
+        IValidator<EllipticalShellInput> validator,
         IFormFactory formFactory)
-        : base(calculateServices, physicalDataService, formFactory)
+        : base(calculateServices, physicalDataService, validator, formFactory)
     {
 
     }
 
     public EllipticalShellFormMiddle()
-        : this(null, null, null)
+        : this(null!, null!, null!, null!)
     {
 
-    }
-
-    protected override bool CollectDataForPreliminarilyCalculation()
-    {
-        throw new NotImplementedException();
-    }
-
-    protected override bool CollectDataForFinishCalculation()
-    {
-        throw new NotImplementedException();
     }
 
     protected override string GetServiceName()
@@ -39,7 +31,12 @@ public class EllipticalShellFormMiddle : CalculateFormWithFormFactory<Elliptical
         throw new NotImplementedException();
     }
 
-    protected override void LoadInputData()
+    protected override void LoadInputData(EllipticalShellInput inputData)
+    {
+        throw new NotImplementedException();
+    }
+
+    protected override bool TryCollectInputData(out EllipticalShellInput inputData)
     {
         throw new NotImplementedException();
     }

@@ -1,7 +1,8 @@
-﻿using CalculateVessels.Core.Interfaces;
+﻿using System.Collections.Generic;
+using CalculateVessels.Core.Interfaces;
 using CalculateVessels.Data.Interfaces;
 using CalculateVessels.Helpers;
-using System.Collections.Generic;
+using FluentValidation;
 
 namespace CalculateVessels.Forms.Base;
 
@@ -10,8 +11,9 @@ public abstract class CalculateFormWithFormFactory<T> : BaseCalculateForm<T>
 {
     protected CalculateFormWithFormFactory(IEnumerable<ICalculateService<T>> calculateServices,
         IPhysicalDataService physicalDataService,
+        IValidator<T> validator,
         IFormFactory formFactory)
-    : base(calculateServices, physicalDataService)
+    : base(calculateServices, physicalDataService, validator)
     {
         FormFactory = formFactory;
     }

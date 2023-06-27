@@ -1,10 +1,10 @@
-﻿using CalculateVessels.Core.Interfaces;
+﻿using System.Collections.Generic;
+using CalculateVessels.Core.Elements.Supports.BracketVertical;
+using CalculateVessels.Core.Enums;
+using CalculateVessels.Core.Interfaces;
 using CalculateVessels.Data.PhysicalData;
 using FluentAssertions;
-using System.Collections.Generic;
-using CalculateVessels.Core.Enums;
 using Xunit;
-using CalculateVessels.Core.Elements.Supports.BracketVertical;
 
 namespace CalculateVessels.UnitTests.Services.CalculateServices;
 
@@ -41,10 +41,10 @@ public class BracketVerticalTestData
         var inputData1 = new BracketVerticalInput
         {
             IsAssembly = false,
-            IsPressureIn = false,
+            PressureType = PressureType.Outside,
             PreciseMontage = false,
             ReinforcingPad = false,
-            Type = BracketVerticalType.A,
+            BracketVerticalType = BracketVerticalType.A,
             b2 = 0,
             b3 = 0,
             b4 = 150,

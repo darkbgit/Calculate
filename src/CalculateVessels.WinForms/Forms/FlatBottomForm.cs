@@ -1,27 +1,23 @@
-﻿using CalculateVessels.Core.Elements.Bottoms.Enums;
-using CalculateVessels.Core.Elements.Bottoms.FlatBottom;
-using CalculateVessels.Core.Exceptions;
-using CalculateVessels.Core.Interfaces;
-using CalculateVessels.Data.Enums;
-using CalculateVessels.Data.Interfaces;
-using CalculateVessels.Data.Properties;
-using CalculateVessels.Helpers;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
+using CalculateVessels.Core.Elements.Bottoms.Enums;
+using CalculateVessels.Core.Elements.Bottoms.FlatBottom;
+using CalculateVessels.Core.Interfaces;
+using CalculateVessels.Data.Enums;
+using CalculateVessels.Data.Interfaces;
+using CalculateVessels.Data.Properties;
+using CalculateVessels.Forms.MiddleForms;
+using CalculateVessels.Helpers;
+using FluentValidation;
 
 namespace CalculateVessels.Forms;
 
-public partial class FlatBottomForm : Form
+public sealed partial class FlatBottomForm : FlatBottomFormMiddle
 {
-    private readonly IEnumerable<ICalculateService<FlatBottomInput>> _calculateServices;
-    private readonly IPhysicalDataService _physicalDataService;
-
-    private FlatBottomInput? _inputData;
-
     private TextBox? _DTextBox;
     private TextBox? _D2TextBox;
     private TextBox? _D3TextBox;
@@ -36,11 +32,45 @@ public partial class FlatBottomForm : Form
     private TextBox? _s4TextBox;
 
     public FlatBottomForm(IEnumerable<ICalculateService<FlatBottomInput>> calculateServices,
-        IPhysicalDataService physicalDataService)
+        IPhysicalDataService physicalDataService,
+        IValidator<FlatBottomInput> validator)
+    : base(calculateServices, physicalDataService, validator)
     {
         InitializeComponent();
-        _calculateServices = calculateServices;
-        _physicalDataService = physicalDataService;
+    }
+
+    protected override void LoadInputData(FlatBottomInput inputData)
+    {
+        throw new NotImplementedException();
+    }
+
+    protected override string GetServiceName()
+    {
+        return Gost_cb.Text;
+    }
+
+    private void FlatBottomForm_Load(object sender, EventArgs e)
+    {
+        LoadSteelsToComboBox(steel_cb, SteelSource.G34233D1);
+        LoadCalculateServicesNamesToComboBox(Gost_cb);
+
+        type_pb.Image = (Bitmap)(new ImageConverter().ConvertFrom(Resources.pldn1)
+                                 ?? throw new InvalidOperationException());
+        TypeDraw(rb1);
+    }
+
+    private void FlatBottomForm_FormClosing(object sender, FormClosingEventArgs e)
+    {
+        if (sender is not FlatBottomForm) return;
+
+        if (Owner is not MainForm { FlatBottomForm: not null } main) return;
+
+        main.FlatBottomForm = null;
+    }
+
+    private void Cancel_b_Click(object sender, EventArgs e)
+    {
+        Hide();
     }
 
     private void Rb_CheckedChanged(object sender, EventArgs e)
@@ -54,39 +84,103 @@ public partial class FlatBottomForm : Form
         TypeDraw(sender);
     }
 
-    private void FlatBottomForm_Load(object sender, EventArgs e)
+    protected override bool TryCollectInputData(out FlatBottomInput inputData)
     {
-        var steels = _physicalDataService.GetSteels(SteelSource.G34233D1)
-            .Select(s => s as object)
-            .ToArray();
+        var dataInErr = new List<string>();
 
-        steel_cb.Items.AddRange(steels);
-        steel_cb.SelectedIndex = 0;
-
-        var serviceNames = _calculateServices
-            .Select(s => s.Name as object)
-            .ToArray();
-        Gost_cb.Items.AddRange(serviceNames);
-        Gost_cb.SelectedIndex = 0;
-
-        type_pb.Image = (Bitmap)(new ImageConverter().ConvertFrom(Resources.pldn1)
-            ?? throw new InvalidOperationException());
-        TypeDraw(rb1);
-    }
-
-    private void FlatBottomForm_FormClosing(object sender, FormClosingEventArgs e)
-    {
-        if (sender is not FlatBottomForm) return;
-
-        if (Owner is MainForm { FlatBottomForm: { } } main)
+        inputData = new FlatBottomInput
         {
-            main.FlatBottomForm = null;
-        }
-    }
+            Name = name_tb.Text,
+            s1 = Parameters.GetParam<double>(s1_tb.Text, "s1", dataInErr),
+            t = Parameters.GetParam<double>(t_tb.Text, "t", dataInErr, NumberStyles.Integer),
+            Steel = steel_cb.Text,
+            p = Parameters.GetParam<double>(p_tb.Text, "p", dataInErr),
+            fi = Parameters.GetParam<double>(fi_tb.Text, "φ", dataInErr),
+            c1 = Parameters.GetParam<double>(c1_tb.Text, "c1", dataInErr),
+            c2 = Parameters.GetParam<double>(c2_tb.Text, "c2", dataInErr),
+            c3 = Parameters.GetParam<double>(c3_tb.Text, "c3", dataInErr),
+            FlatBottomType = Parameters.GetParam<int>(type_gb.Controls.OfType<RadioButton>().FirstOrDefault(rb => rb.Checked)?.Text,
+                "SaddleType", dataInErr),
+            SigmaAllow = sigmaHandle_cb.Checked
+                ? Parameters.GetParam<double>(sigma_d_tb.Text, "[σ]", dataInErr)
+                : default
+        };
 
-    private void Cancel_b_Click(object sender, EventArgs e)
-    {
-        Hide();
+        switch (inputData.FlatBottomType)
+        {
+            case 1:
+            case 2:
+                inputData.D = Parameters.GetParam<double>(_DTextBox?.Text, "D", dataInErr);
+                inputData.s = Parameters.GetParam<double>(_sTextBox?.Text, "s", dataInErr);
+                inputData.a = Parameters.GetParam<double>(_aTextBox?.Text, "a", dataInErr);
+                break;
+            case 3:
+            case 4:
+            case 5:
+                inputData.D = Parameters.GetParam<double>(_DTextBox?.Text, "D", dataInErr);
+                inputData.s = Parameters.GetParam<double>(_sTextBox?.Text, "s", dataInErr);
+                break;
+            case 6:
+                goto case 2;
+            case 7:
+            case 8:
+                goto case 5;
+            case 9:
+                inputData.D = Parameters.GetParam<double>(_DTextBox?.Text, "D", dataInErr);
+                inputData.s = Parameters.GetParam<double>(_sTextBox?.Text, "s", dataInErr);
+                inputData.r = Parameters.GetParam<double>(_rTextBox?.Text, "r", dataInErr);
+                inputData.h1 = Parameters.GetParam<double>(_h1TextBox?.Text, "h1", dataInErr);
+                break;
+            case 10:
+                inputData.D = Parameters.GetParam<double>(_DTextBox?.Text, "D", dataInErr);
+                inputData.s = Parameters.GetParam<double>(_sTextBox?.Text, "s", dataInErr);
+                inputData.r = Parameters.GetParam<double>(_rTextBox?.Text, "r", dataInErr);
+                inputData.gamma = Parameters.GetParam<double>(_gammaTextBox?.Text, "gamma", dataInErr);
+                inputData.s2 = Parameters.GetParam<double>(_s2TextBox?.Text, "s2", dataInErr);
+                break;
+            case 11:
+                inputData.D2 = Parameters.GetParam<double>(_D2TextBox?.Text, "D2", dataInErr);
+                inputData.D3 = Parameters.GetParam<double>(_D3TextBox?.Text, "D3", dataInErr);
+                inputData.s2 = Parameters.GetParam<double>(_s2TextBox?.Text, "s2", dataInErr);
+                break;
+            case 12:
+                inputData.D2 = Parameters.GetParam<double>(_D2TextBox?.Text, "D2", dataInErr);
+                inputData.Dcp = Parameters.GetParam<double>(_DcpTextBox?.Text, "Dcp", dataInErr);
+                inputData.s2 = Parameters.GetParam<double>(_s2TextBox?.Text, "s2", dataInErr);
+                break;
+            case 13:
+            case 14:
+            case 15:
+                dataInErr.Add("SaddleType 13, 14, 15 unsupported");
+                break;
+            default:
+                dataInErr.Add("SaddleType error");
+                break;
+        }
+
+        if (!hole_cb.Checked)
+        {
+            inputData.Hole = HoleInFlatBottom.WithoutHole;
+        }
+        else
+        {
+            var d = Parameters.GetParam<double>(holed_tb.Text, "d", dataInErr);
+            if (oneHole_rb.Checked)
+            {
+                inputData.Hole = HoleInFlatBottom.OneHole;
+                inputData.d = d;
+            }
+            else
+            {
+                inputData.Hole = HoleInFlatBottom.MoreThenOneHole;
+                inputData.di = d;
+            }
+        }
+
+        if (!dataInErr.Any()) return true;
+
+        MessageBox.Show(string.Join(Environment.NewLine, dataInErr));
+        return false;
     }
 
     private void Otv_cb_CheckedChanged(object sender, EventArgs e)
@@ -802,31 +896,15 @@ public partial class FlatBottomForm : Form
         }
     }
 
-    private void PreCalc_btn_Click(object sender, EventArgs e)
+    private void PreCalculateButton_Click(object sender, EventArgs e)
     {
         scalc_l.Text = string.Empty;
         p_d_l.Text = string.Empty;
         calc_btn.Enabled = false;
 
-        if (!CollectDataForPreliminarilyCalculation()) return;
+        if (!TryCalculate(out var bottom)) return;
 
-        ICalculatedElement bottom;
-
-        try
-        {
-            bottom = GetCalculateService().Calculate(_inputData
-                ?? throw new InvalidOperationException());
-        }
-        catch (CalculateException ex)
-        {
-            MessageBox.Show(ex.Message);
-            return;
-        }
-
-        if (bottom.ErrorList.Any())
-        {
-            MessageBox.Show(string.Join<string>(Environment.NewLine, bottom.ErrorList));
-        }
+        if (bottom == null) throw new NullReferenceException();
 
         calc_btn.Enabled = true;
         scalc_l.Text = $@"sp={((FlatBottomCalculated)bottom).s1:f3} мм";
@@ -835,171 +913,22 @@ public partial class FlatBottomForm : Form
         MessageBox.Show(Resources.CalcComplete);
     }
 
-    private void Calc_b_Click(object sender, EventArgs e)
+    private void CalculateButton_Click(object sender, EventArgs e)
     {
         scalc_l.Text = string.Empty;
 
-        if (!CollectDataForFinishCalculation()) return;
+        if (!TryCalculate(out var bottom)) return;
 
-        ICalculatedElement bottom;
+        if (bottom == null) throw new NullReferenceException();
 
-        try
-        {
-            bottom = GetCalculateService().Calculate(_inputData
-                ?? throw new InvalidOperationException());
-        }
-        catch (CalculateException ex)
-        {
-            MessageBox.Show(ex.Message);
-            return;
-        }
-
-        if (bottom.ErrorList.Any())
-        {
-            MessageBox.Show(string.Join<string>(Environment.NewLine, bottom.ErrorList));
-        }
 
         calc_btn.Enabled = true;
         scalc_l.Text = $@"sp={((FlatBottomCalculated)bottom).s1:f3} мм";
         p_d_l.Text = $@"pd={((FlatBottomCalculated)bottom).p_d:f2} МПа";
 
-        if (Owner is not MainForm main)
-        {
-            MessageBox.Show($"{nameof(MainForm)} error");
-            return;
-        }
-
-        main.calculatedElementsControl.AddElement(bottom);
+        SetCalculatedElementToStorage(Owner, bottom);
 
         MessageBox.Show(Resources.CalcComplete);
         Close();
-    }
-
-    private bool CollectDataForPreliminarilyCalculation()
-    {
-        var dataInErr = new List<string>();
-
-        _inputData = new FlatBottomInput
-        {
-            t = Parameters.GetParam<double>(t_tb.Text, "t", dataInErr, NumberStyles.Integer),
-            Steel = steel_cb.Text,
-            p = Parameters.GetParam<double>(p_tb.Text, "p", dataInErr),
-            fi = Parameters.GetParam<double>(fi_tb.Text, "φ", dataInErr),
-            c1 = Parameters.GetParam<double>(c1_tb.Text, "c1", dataInErr),
-            c2 = Parameters.GetParam<double>(c2_tb.Text, "c2", dataInErr),
-            c3 = Parameters.GetParam<double>(c3_tb.Text, "c3", dataInErr),
-            s1 = Parameters.GetParam<double>(s1_tb.Text, "s1", dataInErr),
-            Type = Parameters.GetParam<int>(type_gb.Controls.OfType<RadioButton>().FirstOrDefault(rb => rb.Checked)?.Text,
-                "SaddleType", dataInErr),
-            SigmaAllow = sigmaHandle_cb.Checked
-                ? Parameters.GetParam<double>(sigma_d_tb.Text, "[σ]", dataInErr)
-                : default
-        };
-
-        switch (_inputData.Type)
-        {
-            case 1:
-            case 2:
-                _inputData.D = Parameters.GetParam<double>(_DTextBox?.Text, "D", dataInErr);
-                _inputData.s = Parameters.GetParam<double>(_sTextBox?.Text, "s", dataInErr);
-                _inputData.a = Parameters.GetParam<double>(_aTextBox?.Text, "a", dataInErr);
-                break;
-            case 3:
-            case 4:
-            case 5:
-                _inputData.D = Parameters.GetParam<double>(_DTextBox?.Text, "D", dataInErr);
-                _inputData.s = Parameters.GetParam<double>(_sTextBox?.Text, "s", dataInErr);
-                break;
-            case 6:
-                goto case 2;
-            case 7:
-            case 8:
-                goto case 5;
-            case 9:
-                _inputData.D = Parameters.GetParam<double>(_DTextBox?.Text, "D", dataInErr);
-                _inputData.s = Parameters.GetParam<double>(_sTextBox?.Text, "s", dataInErr);
-                _inputData.r = Parameters.GetParam<double>(_rTextBox?.Text, "r", dataInErr);
-                _inputData.h1 = Parameters.GetParam<double>(_h1TextBox?.Text, "h1", dataInErr);
-                break;
-            case 10:
-                _inputData.D = Parameters.GetParam<double>(_DTextBox?.Text, "D", dataInErr);
-                _inputData.s = Parameters.GetParam<double>(_sTextBox?.Text, "s", dataInErr);
-                _inputData.r = Parameters.GetParam<double>(_rTextBox?.Text, "r", dataInErr);
-                _inputData.gamma = Parameters.GetParam<double>(_gammaTextBox?.Text, "gamma", dataInErr);
-                _inputData.s2 = Parameters.GetParam<double>(_s2TextBox?.Text, "s2", dataInErr);
-                break;
-            case 11:
-                _inputData.D2 = Parameters.GetParam<double>(_D2TextBox?.Text, "D2", dataInErr);
-                _inputData.D3 = Parameters.GetParam<double>(_D3TextBox?.Text, "D3", dataInErr);
-                _inputData.s2 = Parameters.GetParam<double>(_s2TextBox?.Text, "s2", dataInErr);
-                break;
-            case 12:
-                _inputData.D2 = Parameters.GetParam<double>(_D2TextBox?.Text, "D2", dataInErr);
-                _inputData.Dcp = Parameters.GetParam<double>(_DcpTextBox?.Text, "Dcp", dataInErr);
-                _inputData.s2 = Parameters.GetParam<double>(_s2TextBox?.Text, "s2", dataInErr);
-                break;
-            case 13:
-            case 14:
-            case 15:
-                dataInErr.Add("SaddleType 13, 14, 15 unsupported");
-                break;
-            default:
-                dataInErr.Add("SaddleType error");
-                break;
-        }
-
-        if (!hole_cb.Checked)
-        {
-            _inputData.Hole = HoleInFlatBottom.WithoutHole;
-        }
-        else
-        {
-            var d = Parameters.GetParam<double>(holed_tb.Text, "d", dataInErr);
-            if (oneHole_rb.Checked)
-            {
-                _inputData.Hole = HoleInFlatBottom.OneHole;
-                _inputData.d = d;
-            }
-            else
-            {
-                _inputData.Hole = HoleInFlatBottom.MoreThenOneHole;
-                _inputData.di = d;
-            }
-        }
-
-        var isNoError = !dataInErr.Any() && _inputData.IsDataGood;
-
-        if (!isNoError)
-        {
-            MessageBox.Show(string.Join<string>(Environment.NewLine, dataInErr.Union(_inputData.ErrorList)));
-        }
-
-        return isNoError;
-    }
-
-    private bool CollectDataForFinishCalculation()
-    {
-        if (_inputData == null) throw new InvalidOperationException();
-
-        var dataInErr = new List<string>();
-
-        _inputData.Name = name_tb.Text;
-        _inputData.s1 = Parameters.GetParam<double>(s1_tb.Text, "s1", dataInErr);
-
-        var isNoError = !dataInErr.Any() && _inputData.IsDataGood;
-
-        if (!isNoError)
-        {
-            MessageBox.Show(string.Join<string>(Environment.NewLine, dataInErr.Union(_inputData.ErrorList)));
-        }
-
-        return isNoError;
-    }
-
-    private ICalculateService<FlatBottomInput> GetCalculateService()
-    {
-        return _calculateServices
-                   .FirstOrDefault(s => s.Name == Gost_cb.Text)
-               ?? throw new InvalidOperationException("Service wasn't found.");
     }
 }

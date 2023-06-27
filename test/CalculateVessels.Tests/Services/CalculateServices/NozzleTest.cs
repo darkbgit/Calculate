@@ -1,11 +1,12 @@
-﻿using CalculateVessels.Core.Elements.Base;
+﻿using System.Collections.Generic;
+using CalculateVessels.Core.Elements.Base;
 using CalculateVessels.Core.Elements.Shells.Cylindrical;
 using CalculateVessels.Core.Elements.Shells.Nozzle;
 using CalculateVessels.Core.Elements.Shells.Nozzle.Enums;
+using CalculateVessels.Core.Enums;
 using CalculateVessels.Core.Interfaces;
 using CalculateVessels.Data.PhysicalData;
 using FluentAssertions;
-using System.Collections.Generic;
 using Xunit;
 
 namespace CalculateVessels.UnitTests.Services.CalculateServices;
@@ -51,7 +52,7 @@ public class NozzleTestData
             OrdinalNumber = 1,
             p = 0.6,
             t = 150,
-            IsPressureIn = true
+            PressureType = PressureType.Inside
         };
 
         var shellInput = new CylindricalShellInput

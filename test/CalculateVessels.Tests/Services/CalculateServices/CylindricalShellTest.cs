@@ -1,9 +1,10 @@
+using System.Collections.Generic;
 using CalculateVessels.Core.Elements.Base;
 using CalculateVessels.Core.Elements.Shells.Cylindrical;
+using CalculateVessels.Core.Enums;
 using CalculateVessels.Core.Interfaces;
 using CalculateVessels.Data.PhysicalData;
 using FluentAssertions;
-using System.Collections.Generic;
 using Xunit;
 
 namespace CalculateVessels.UnitTests.Services.CalculateServices;
@@ -60,7 +61,7 @@ public class CylindricalShellTestData
             OrdinalNumber = 1,
             p = 0.6,
             t = 120,
-            IsPressureIn = true
+            PressureType = PressureType.Inside
         };
 
         var inputData = new CylindricalShellInput
@@ -138,7 +139,7 @@ public class CylindricalShellTestData
             OrdinalNumber = 1,
             p = 0.6,
             t = 120,
-            IsPressureIn = false
+            PressureType = PressureType.Outside
         };
 
         var inputData = new CylindricalShellInput
@@ -218,7 +219,7 @@ public class CylindricalShellTestData
             OrdinalNumber = 1,
             p = 0.6,
             t = 120,
-            IsPressureIn = false,
+            PressureType = PressureType.Outside,
             EAllow = 189000,
             SigmaAllow = 140.5
         };
@@ -309,7 +310,7 @@ public class CylindricalShellTestData
             OrdinalNumber = 1,
             p = 0.6,
             t = 150,
-            IsPressureIn = true
+            PressureType = PressureType.Inside
         };
 
         var loadingCondition2 = new LoadingCondition
@@ -317,7 +318,7 @@ public class CylindricalShellTestData
             OrdinalNumber = 2,
             p = 0.8,
             t = 120,
-            IsPressureIn = false
+            PressureType = PressureType.Outside
         };
 
         var inputData = new CylindricalShellInput

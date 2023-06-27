@@ -3,6 +3,7 @@ using CalculateVessels.Core.Elements.Shells.Elliptical;
 using CalculateVessels.Core.Elements.Shells.Enums;
 using CalculateVessels.Core.Elements.Shells.Nozzle;
 using CalculateVessels.Core.Elements.Shells.Nozzle.Enums;
+using CalculateVessels.Core.Enums;
 using CalculateVessels.Core.Interfaces;
 using CalculateVessels.Output.Word.Core;
 using CalculateVessels.Output.Word.Enums;
@@ -571,7 +572,7 @@ internal class NozzleWordOutput : IWordOutputElement<NozzleCalculated>
 
         #endregion
 
-        package.Close();
+        package.Dispose();
     }
 
     private static void InsertConditionsUseFormulas(Body body, NozzleInput nozzleDataIn, NozzleCalculatedCommon cdc, ShellInputData shellDataIn)
@@ -634,7 +635,7 @@ internal class NozzleWordOutput : IWordOutputElement<NozzleCalculated>
         body.AddParagraph();
 
         body.AddParagraph("Расчетная толщина стенки укрепляемого элемента");
-        if (shellDataIn is { ShellType: ShellType.Elliptical } && loadingCondition.IsPressureIn)
+        if (shellDataIn is { ShellType: ShellType.Elliptical } && loadingCondition.PressureType == PressureType.Inside)
         {
             body.AddParagraph()
                 .AppendEquation("s_p=(p∙D_p)/(4∙φ∙[σ]-p)" +
@@ -724,7 +725,7 @@ internal class NozzleWordOutput : IWordOutputElement<NozzleCalculated>
                 }
         }
 
-        if (loadingCondition.IsPressureIn)
+        if (loadingCondition.PressureType == PressureType.Inside)
         {
             body.AddParagraph()
                 .AppendEquation($"s_pn=s_p={data.sp:f2} мм")
@@ -816,7 +817,7 @@ internal class NozzleWordOutput : IWordOutputElement<NozzleCalculated>
 
         body.AddParagraph();
 
-        if (loadingCondition.IsPressureIn)
+        if (loadingCondition.PressureType == PressureType.Inside)
         {
             body.AddParagraph(
                 "Допускаемое внутреннее избыточное давление элемента сосуда с учетом ослабления стенки отверстием вычисляют по формуле");
@@ -893,7 +894,7 @@ internal class NozzleWordOutput : IWordOutputElement<NozzleCalculated>
 
         body.AddParagraph().AppendEquation($"V=min({data.V1:f2};{data.V2:f2})={data.V:f2} ");
 
-        if (loadingCondition.IsPressureIn)
+        if (loadingCondition.PressureType == PressureType.Inside)
         {
             body.AddParagraph()
                 .AppendEquation(

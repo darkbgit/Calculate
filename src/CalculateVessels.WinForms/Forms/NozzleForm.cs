@@ -1,4 +1,10 @@
-﻿using CalculateVessels.Core.Elements.Shells.Base;
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Globalization;
+using System.Linq;
+using System.Windows.Forms;
+using CalculateVessels.Core.Elements.Shells.Base;
 using CalculateVessels.Core.Elements.Shells.Enums;
 using CalculateVessels.Core.Elements.Shells.Nozzle;
 using CalculateVessels.Core.Elements.Shells.Nozzle.Enums;
@@ -8,12 +14,7 @@ using CalculateVessels.Data.Interfaces;
 using CalculateVessels.Data.Properties;
 using CalculateVessels.Forms.MiddleForms;
 using CalculateVessels.Helpers;
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Globalization;
-using System.Linq;
-using System.Windows.Forms;
+using FluentValidation;
 
 namespace CalculateVessels.Forms;
 
@@ -48,67 +49,67 @@ public partial class NozzleForm : NozzleFormMiddle
     private ShellInputData _shellInputData;
     private ICalculatedElement _shellElement;
 
-    public NozzleForm(IPhysicalDataService physicalDataService,
-        IEnumerable<ICalculateService<NozzleInput>> calculateServices)
-    : base(calculateServices, physicalDataService)
+    public NozzleForm(IEnumerable<ICalculateService<NozzleInput>> calculateServices,
+        IPhysicalDataService physicalDataService,
+        IValidator<NozzleInput> validator)
+    : base(calculateServices, physicalDataService, validator)
     {
         InitializeComponent();
     }
 
-    protected override void LoadInputData()
+    protected override void LoadInputData(NozzleInput inputData)
     {
-        if (InputData == null) return;
+        _shellElement = inputData.ShellCalculatedData;
+        _shellInputData = _shellElement.InputData as ShellInputData
+            ?? throw new NullReferenceException();
 
-        _shellElement = InputData.ShellCalculatedData;
-        _shellInputData = (ShellInputData)_shellElement.InputData;
-
-        PlaceInitializeDraw(((ShellInputData)_shellElement.InputData).ShellType);
+        PlaceInitializeDraw(_shellInputData.ShellType);
 
         InitializeShellInputData();
 
-        steel1_cb.Text = InputData.steel1;
-        d_tb.Text = InputData.d.ToString(CultureInfo.CurrentCulture);
-        s1_tb.Text = InputData.s1.ToString(CultureInfo.CurrentCulture);
-        cs_tb.Text = InputData.cs.ToString(CultureInfo.CurrentCulture);
-        cs1_tb.Text = InputData.cs1.ToString(CultureInfo.CurrentCulture);
-        l1_tb.Text = InputData.l1.ToString(CultureInfo.CurrentUICulture);
-        fi_tb.Text = InputData.phi.ToString(CultureInfo.CurrentUICulture);
-        fi1_tb.Text = InputData.phi1.ToString(CultureInfo.CurrentCulture);
-        delta_tb.Text = InputData.delta.ToString(CultureInfo.CurrentCulture);
-        delta1_tb.Text = InputData.delta1.ToString(CultureInfo.CurrentCulture);
-        delta2_tb.Text = InputData.delta2.ToString(CultureInfo.CurrentCulture);
+        steel1_cb.Text = inputData.steel1;
+        d_tb.Text = inputData.d.ToString(CultureInfo.CurrentCulture);
+        s1_tb.Text = inputData.s1.ToString(CultureInfo.CurrentCulture);
+        cs_tb.Text = inputData.cs.ToString(CultureInfo.CurrentCulture);
+        cs1_tb.Text = inputData.cs1.ToString(CultureInfo.CurrentCulture);
+        l1_tb.Text = inputData.l1.ToString(CultureInfo.CurrentUICulture);
+        fi_tb.Text = inputData.phi.ToString(CultureInfo.CurrentUICulture);
+        fi1_tb.Text = inputData.phi1.ToString(CultureInfo.CurrentCulture);
+        delta_tb.Text = inputData.delta.ToString(CultureInfo.CurrentCulture);
+        delta1_tb.Text = inputData.delta1.ToString(CultureInfo.CurrentCulture);
+        delta2_tb.Text = inputData.delta2.ToString(CultureInfo.CurrentCulture);
 
-        if (InputData.SigmaAllow1 != 0)
+        if (inputData.SigmaAllow1 != 0)
         {
             sigma1HandleCheckBox.Checked = true;
-            sigmaAllow1TextBox.Text = InputData.SigmaAllow1.ToString(CultureInfo.CurrentCulture);
+            sigmaAllow1TextBox.Text = inputData.SigmaAllow1.ToString(CultureInfo.CurrentCulture);
         }
 
-        if (InputData.E1 != 0)
+        if (inputData.E1 != 0)
         {
             E1HandleCheckBox.Checked = true;
-            Ellow1TextBox.Text = InputData.E1.ToString(CultureInfo.CurrentCulture);
+            Ellow1TextBox.Text = inputData.E1.ToString(CultureInfo.CurrentCulture);
         }
 
         //NozzleKind
         vid_gb.Controls
                 .OfType<RadioButton>()
-                .First(rb => Convert.ToInt32(rb.Text.First().ToString()) == (int)InputData.NozzleKind)
+                .First(rb => Convert.ToInt32(rb.Text.First().ToString()) == (int)inputData.NozzleKind)
                 .Checked = true;
 
 
-        if (InputData.NozzleKind is NozzleKind.ImpassWithRing or NozzleKind.PassWithRing or NozzleKind.WithRingAndInPart)
+        if (inputData.NozzleKind is NozzleKind.ImpassWithRing or NozzleKind.PassWithRing or NozzleKind.WithRingAndInPart)
         {
-            steel2_cb.Text = InputData.steel2;
-            l2_tb.Text = InputData.l2.ToString(CultureInfo.CurrentCulture);
-            s2_tb.Text = InputData.s2.ToString(CultureInfo.CurrentCulture);
+            steel2_cb.Text = inputData.steel2;
+            l2_tb.Text = inputData.l2.ToString(CultureInfo.CurrentCulture);
+            s2_tb.Text = inputData.s2.ToString(CultureInfo.CurrentCulture);
         }
 
-        if (InputData.NozzleKind is NozzleKind.PassWithoutRing or NozzleKind.PassWithRing or NozzleKind.WithRingAndInPart)
+        if (inputData.NozzleKind is NozzleKind.PassWithoutRing or NozzleKind.PassWithRing or NozzleKind.WithRingAndInPart)
         {
-            steel3_cb.Text = InputData.steel3;
-            l3_tb.Text = InputData.l3.ToString(CultureInfo.CurrentCulture);
-            s3_tb.Text = InputData.s3.ToString(CultureInfo.CurrentCulture);
+            steel3_cb.Text = inputData.steel3;
+            l3_tb.Text = inputData.l3.ToString(CultureInfo.CurrentCulture);
+            s3_tb.Text = inputData.s3.ToString(CultureInfo.CurrentCulture);
         }
 
         var checkedPlaceButton = place_gb.Controls
@@ -212,8 +213,8 @@ public partial class NozzleForm : NozzleFormMiddle
     public void Show(ICalculatedElement shellElement)
     {
         _shellElement = shellElement;
-        _shellInputData = (ShellInputData)shellElement.InputData;
-
+        _shellInputData = shellElement.InputData as ShellInputData
+            ?? throw new NullReferenceException();
 
         ShowDialog();
     }
@@ -231,11 +232,9 @@ public partial class NozzleForm : NozzleFormMiddle
 
         LoadCalculateServicesNamesToComboBox(Gost_cb);
 
-        if (_shellElement?.InputData == null) return;
+        MessageBox.Show(_shellInputData.ShellType.ToString());
 
-        MessageBox.Show(((ShellInputData)_shellElement.InputData).ShellType.ToString());
-
-        PlaceInitializeDraw(((ShellInputData)_shellElement.InputData).ShellType);
+        PlaceInitializeDraw(_shellInputData.ShellType);
 
         InitializeShellInputData();
 
@@ -259,14 +258,14 @@ public partial class NozzleForm : NozzleFormMiddle
         Hide();
     }
 
-    protected override bool CollectDataForPreliminarilyCalculation()
+    protected override bool TryCollectInputData(out NozzleInput inputData)
     {
         List<string> dataInErr = new();
 
-        InputData = new NozzleInput(_shellElement)
+        inputData = new NozzleInput(_shellElement)
         {
             steel1 = steel1_cb.Text,
-
+            Name = name_tb.Text,
             d = Parameters.GetParam<double>(d_tb.Text, "d", dataInErr),
             s1 = Parameters.GetParam<double>(s1_tb.Text, "s1", dataInErr),
             cs = Parameters.GetParam<double>(cs_tb.Text, "cs", dataInErr),
@@ -293,25 +292,25 @@ public partial class NozzleForm : NozzleFormMiddle
                 .FirstOrDefault(rb => rb.Checked);
         if (checkedButton != null)
         {
-            InputData.NozzleKind = (NozzleKind)Convert.ToInt32(checkedButton.Text.First().ToString());
+            inputData.NozzleKind = (NozzleKind)Convert.ToInt32(checkedButton.Text.First().ToString());
         }
         else
         {
             dataInErr.Add("Невозможно определить тип штуцера");
         }
 
-        if (InputData.NozzleKind is NozzleKind.ImpassWithRing or NozzleKind.PassWithRing or NozzleKind.WithRingAndInPart)
+        if (inputData.NozzleKind is NozzleKind.ImpassWithRing or NozzleKind.PassWithRing or NozzleKind.WithRingAndInPart)
         {
-            InputData.steel2 = steel2_cb.Text;
-            InputData.l2 = Parameters.GetParam<double>(l2_tb.Text, "l2", dataInErr);
-            InputData.s2 = Parameters.GetParam<double>(s2_tb.Text, "s2", dataInErr);
+            inputData.steel2 = steel2_cb.Text;
+            inputData.l2 = Parameters.GetParam<double>(l2_tb.Text, "l2", dataInErr);
+            inputData.s2 = Parameters.GetParam<double>(s2_tb.Text, "s2", dataInErr);
         }
 
-        if (InputData.NozzleKind is NozzleKind.PassWithoutRing or NozzleKind.PassWithRing or NozzleKind.WithRingAndInPart)
+        if (inputData.NozzleKind is NozzleKind.PassWithoutRing or NozzleKind.PassWithRing or NozzleKind.WithRingAndInPart)
         {
-            InputData.steel3 = steel3_cb.Text;
-            InputData.l3 = Parameters.GetParam<double>(l3_tb.Text, "l3", dataInErr);
-            InputData.s3 = Parameters.GetParam<double>(s3_tb.Text, "s3", dataInErr);
+            inputData.steel3 = steel3_cb.Text;
+            inputData.l3 = Parameters.GetParam<double>(l3_tb.Text, "l3", dataInErr);
+            inputData.s3 = Parameters.GetParam<double>(s3_tb.Text, "s3", dataInErr);
         }
 
         var checkedPlaceButton = place_gb.Controls
@@ -324,49 +323,45 @@ public partial class NozzleForm : NozzleFormMiddle
         switch (checkedRadioButtonText)
         {
             case Perpendicular:
-                if (!InputData.IsOval)
+                if (!inputData.IsOval)
                 {
-                    if (InputData.NozzleKind is NozzleKind.ImpassWithoutRing or
-                        NozzleKind.ImpassWithRing or
-                        NozzleKind.PassWithoutRing or
-                        NozzleKind.PassWithRing or
-                        NozzleKind.WithRingAndInPart or
-                        NozzleKind.WithWealdedRing)
+                    inputData.Location = inputData.NozzleKind switch
                     {
-                        InputData.Location = NozzleLocation.LocationAccordingToParagraph_5_2_2_1;
-                    }
-                    else if (InputData.NozzleKind is NozzleKind.WithFlanging or NozzleKind.WithTorusshapedInsert)
-                    {
-                        InputData.Location = NozzleLocation.LocationAccordingToParagraph_5_2_2_7;
-                    }
+                        NozzleKind.ImpassWithoutRing or NozzleKind.ImpassWithRing or NozzleKind.PassWithoutRing
+                            or NozzleKind.PassWithRing or NozzleKind.WithRingAndInPart
+                            or NozzleKind.WithWealdedRing => NozzleLocation.LocationAccordingToParagraph_5_2_2_1,
+                        NozzleKind.WithFlanging or NozzleKind.WithTorusshapedInsert => NozzleLocation
+                            .LocationAccordingToParagraph_5_2_2_7,
+                        _ => inputData.Location
+                    };
                 }
                 else
                 {
-                    InputData.Location = NozzleLocation.LocationAccordingToParagraph_5_2_2_6;
+                    inputData.Location = NozzleLocation.LocationAccordingToParagraph_5_2_2_6;
                     if (_shellInputData.ShellType is ShellType.Elliptical or
                         ShellType.Spherical or ShellType.Torospherical)
                     {
-                        InputData.omega = 0;
+                        inputData.omega = 0;
                     }
                 }
                 break;
             case Transversely:
-                InputData.Location = NozzleLocation.LocationAccordingToParagraph_5_2_2_2;
+                inputData.Location = NozzleLocation.LocationAccordingToParagraph_5_2_2_2;
 
                 if (mainPanel?.Controls[TransverselyTextBoxName] is TextBox transverselyTextBox)
                 {
-                    InputData.tTransversely = Parameters.GetParam<double>(transverselyTextBox.Text, "tTransversely", dataInErr);
+                    inputData.tTransversely = Parameters.GetParam<double>(transverselyTextBox.Text, "tTransversely", dataInErr);
                 }
                 break;
             case Offset:
                 switch (_shellInputData.ShellType)
                 {
                     case ShellType.Elliptical:
-                        InputData.Location = NozzleLocation.LocationAccordingToParagraph_5_2_2_3;
+                        inputData.Location = NozzleLocation.LocationAccordingToParagraph_5_2_2_3;
 
                         if (mainPanel?.Controls[RNozzleTextBoxName] is TextBox rNozzleTextBox)
                         {
-                            InputData.ellx = Parameters.GetParam<double>(rNozzleTextBox.Text, "ellx", dataInErr);
+                            inputData.ellx = Parameters.GetParam<double>(rNozzleTextBox.Text, "ellx", dataInErr);
                         }
                         break;
                     case ShellType.Cylindrical:
@@ -380,12 +375,12 @@ public partial class NozzleForm : NozzleFormMiddle
                     case ShellType.Conical:
                         var omegaText = (mainPanel?.Controls[OmegaTextBoxName] as TextBox)?.Text;
 
-                        InputData.omega = Parameters.GetParam<double>(omegaText, "omega", dataInErr);
+                        inputData.omega = Parameters.GetParam<double>(omegaText, "omega", dataInErr);
 
                         var gammaTextElliptical = (mainPanel?.Controls[GammaTextBoxName] as TextBox)?.Text;
 
-                        InputData.gamma = Parameters.GetParam<double>(gammaTextElliptical, "gamma", dataInErr);
-                        InputData.Location = InputData.omega == 0
+                        inputData.gamma = Parameters.GetParam<double>(gammaTextElliptical, "gamma", dataInErr);
+                        inputData.Location = inputData.omega == 0
                             ? NozzleLocation.LocationAccordingToParagraph_5_2_2_5
                             : NozzleLocation.LocationAccordingToParagraph_5_2_2_4;
 
@@ -394,44 +389,21 @@ public partial class NozzleForm : NozzleFormMiddle
                     case ShellType.Spherical:
                     case ShellType.Torospherical:
 
-                        InputData.omega = 0;
+                        inputData.omega = 0;
                         var gammaTextSpherical = (mainPanel?.Controls[GammaTextBoxName] as TextBox)?.Text;
 
-                        InputData.gamma = Parameters.GetParam<double>(gammaTextSpherical, "gamma", dataInErr);
+                        inputData.gamma = Parameters.GetParam<double>(gammaTextSpherical, "gamma", dataInErr);
 
-                        InputData.Location = NozzleLocation.LocationAccordingToParagraph_5_2_2_5;
+                        inputData.Location = NozzleLocation.LocationAccordingToParagraph_5_2_2_5;
                         break;
                 }
                 break;
         }
 
-        var isNoError = !dataInErr.Any() && InputData.IsDataGood;
+        if (!dataInErr.Any()) return true;
 
-        if (!isNoError)
-        {
-            MessageBox.Show(string.Join<string>(Environment.NewLine, dataInErr.Union(InputData.ErrorList)));
-        }
-
-        return isNoError;
-    }
-
-    protected override bool CollectDataForFinishCalculation()
-    {
-        var dataInErr = new List<string>();
-
-        if (InputData == null)
-            throw new InvalidOperationException();
-
-        InputData.Name = name_tb.Text;
-
-        var isNoError = !dataInErr.Any() && InputData.IsDataGood;
-
-        if (!isNoError)
-        {
-            MessageBox.Show(string.Join<string>(Environment.NewLine, dataInErr.Union(InputData.ErrorList)));
-        }
-
-        return isNoError;
+        MessageBox.Show(string.Join(Environment.NewLine, dataInErr));
+        return false;
     }
 
     private void PreCalculate_btn_Click(object sender, EventArgs e)
@@ -440,11 +412,9 @@ public partial class NozzleForm : NozzleFormMiddle
         p_d_l.Text = string.Empty;
         b_l.Text = string.Empty;
 
-        if (!CollectDataForPreliminarilyCalculation()) return;
+        if (!TryCalculate(out var nozzle)) return;
 
-        var nozzle = Calculate();
-
-        if (nozzle == null) return;
+        if (nozzle == null) throw new NullReferenceException();
 
         d0_l.Text = Get_d0(nozzle);
         p_d_l.Text = Get_p(nozzle);
@@ -460,21 +430,13 @@ public partial class NozzleForm : NozzleFormMiddle
         p_d_l.Text = string.Empty;
         b_l.Text = string.Empty;
 
-        if (!CollectDataForFinishCalculation()) return;
+        if (!TryCalculate(out var nozzle)) return;
 
-        var nozzle = Calculate();
-
-        if (nozzle == null) return;
+        if (nozzle == null) throw new NullReferenceException();
 
         d0_l.Text = Get_d0(nozzle);
         p_d_l.Text = Get_p(nozzle);
         b_l.Text = Get_b(nozzle);
-
-        if (Owner is not MainForm main)
-        {
-            MessageBox.Show($"{nameof(MainForm)} error");
-            return;
-        }
 
         SetCalculatedElementToStorage(Owner, nozzle);
 
@@ -1562,7 +1524,7 @@ public partial class NozzleForm : NozzleFormMiddle
             .ForEach(lc =>
             {
                 FormHelpers.AddLoadingCondition(loadingConditionsListView,
-                    lc.IsPressureIn ? Properties.Resources.InsidePressure : Properties.Resources.OutsidePressure,
+                    lc.PressureType.ToString(),
                     lc.p.ToString(CultureInfo.CurrentCulture),
                     lc.t.ToString(CultureInfo.CurrentCulture),
                     lc.SigmaAllow != 0 ? lc.SigmaAllow.ToString(CultureInfo.CurrentCulture) : string.Empty,

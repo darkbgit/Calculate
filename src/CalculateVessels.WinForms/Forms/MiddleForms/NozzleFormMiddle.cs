@@ -1,35 +1,27 @@
-﻿using CalculateVessels.Core.Elements.Shells.Nozzle;
+﻿using System;
+using System.Collections.Generic;
+using CalculateVessels.Core.Elements.Shells.Nozzle;
 using CalculateVessels.Core.Interfaces;
 using CalculateVessels.Data.Interfaces;
 using CalculateVessels.Forms.Base;
-using System;
-using System.Collections.Generic;
+using FluentValidation;
 
 namespace CalculateVessels.Forms.MiddleForms;
 
 public class NozzleFormMiddle : BaseCalculateForm<NozzleInput>
 {
     protected NozzleFormMiddle(IEnumerable<ICalculateService<NozzleInput>> calculateServices,
-        IPhysicalDataService physicalDataService)
-        : base(calculateServices, physicalDataService)
+        IPhysicalDataService physicalDataService,
+        IValidator<NozzleInput> validator)
+        : base(calculateServices, physicalDataService, validator)
     {
 
     }
 
     public NozzleFormMiddle()
-        : this(null, null)
+        : this(null!, null!, null!)
     {
 
-    }
-
-    protected override bool CollectDataForPreliminarilyCalculation()
-    {
-        throw new NotImplementedException();
-    }
-
-    protected override bool CollectDataForFinishCalculation()
-    {
-        throw new NotImplementedException();
     }
 
     protected override string GetServiceName()
@@ -37,7 +29,12 @@ public class NozzleFormMiddle : BaseCalculateForm<NozzleInput>
         throw new NotImplementedException();
     }
 
-    protected override void LoadInputData()
+    protected override void LoadInputData(NozzleInput inputData)
+    {
+        throw new NotImplementedException();
+    }
+
+    protected override bool TryCollectInputData(out NozzleInput inputData)
     {
         throw new NotImplementedException();
     }

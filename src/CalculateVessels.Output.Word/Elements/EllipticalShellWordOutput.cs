@@ -1,5 +1,6 @@
 ﻿using CalculateVessels.Core.Elements.Shells.Elliptical;
 using CalculateVessels.Core.Elements.Shells.Enums;
+using CalculateVessels.Core.Enums;
 using CalculateVessels.Core.Interfaces;
 using CalculateVessels.Output.Word.Core;
 using CalculateVessels.Output.Word.Enums;
@@ -50,7 +51,7 @@ internal class EllipticalShellWordOutput : IWordOutputElement<EllipticalShellCal
 
         MakeCheckConditionsUseFormulas(body, dataIn.D, dataIn.s, dataIn.EllipseH, data.CommonData.c, data.CommonData.IsConditionUseFormulas);
 
-        package.Close();
+        package.Dispose();
     }
 
     private static void MakeCheckConditionsUseFormulas(Body body, double D, double s, double ellipseH, double c, bool isConditionUseFormulas)
@@ -88,7 +89,7 @@ internal class EllipticalShellWordOutput : IWordOutputElement<EllipticalShellCal
             .AddRun(" - расчетная толщина стенки днища");
 
         body.AddParagraph()
-            .AppendEquation(loadingCondition.IsPressureIn
+            .AppendEquation(loadingCondition.PressureType == PressureType.Inside
                 ? "s_1p=(p∙R)/(2∙[σ]∙φ-0.5∙p)"
                 : "s_1p=max{(K_Э∙R)/(161)∙√((n_y∙p)/(10^-5∙E));(1.2∙p∙R)/(2∙[σ])}");
         body.AddParagraph("где R - радиус кривизны в вершине днища");
@@ -111,7 +112,7 @@ internal class EllipticalShellWordOutput : IWordOutputElement<EllipticalShellCal
                 break;
         }
 
-        if (loadingCondition.IsPressureIn)
+        if (loadingCondition.PressureType == PressureType.Inside)
         {
             body.AddParagraph()
                 .AppendEquation($"s_p=({loadingCondition.p}∙{cdc.EllipseR:f2})/(2∙{data.SigmaAllow}∙{dataIn.phi}-0.5{loadingCondition.p})={data.s_p:f2} мм");
@@ -140,7 +141,7 @@ internal class EllipticalShellWordOutput : IWordOutputElement<EllipticalShellCal
 
         WordHelpers.CheckCalculatedThickness("s_1", dataIn.s, data.s, body);
 
-        if (loadingCondition.IsPressureIn)
+        if (loadingCondition.PressureType == PressureType.Inside)
         {
             body.AddParagraph("Допускаемое внутреннее избыточное давление вычисляют по формуле:");
             body.AddParagraph()

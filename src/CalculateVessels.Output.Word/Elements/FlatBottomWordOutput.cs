@@ -84,7 +84,7 @@ internal class FlatBottomWordOutput : IWordOutputElement<FlatBottomCalculated>
                 .AddCell("Тип конструкции по ГОСТ 34233.2-2017 табл.4:")
                 .AddCell($"{dataIn.Type}");
 
-            switch (dataIn.Type)
+            switch (dataIn.FlatBottomType)
             {
                 case 1:
                 case 2:
@@ -244,7 +244,7 @@ internal class FlatBottomWordOutput : IWordOutputElement<FlatBottomCalculated>
 
         body.AddParagraph("Коэффициент К в зависимости от конструкции днищ и крышек определяют по таблице 4 ГОСТ 34233.2-2017.");
 
-        switch (dataIn.Type)
+        switch (dataIn.FlatBottomType)
         {
             case 1:
             case 2:
@@ -341,13 +341,13 @@ internal class FlatBottomWordOutput : IWordOutputElement<FlatBottomCalculated>
                 .Color(System.Drawing.Color.Red);
         }
 
-        if (dataIn.Type is 10 or 11 or 12)
+        if (dataIn.FlatBottomType is 10 or 11 or 12)
         {
             body.AddParagraph()
                 .AppendEquation("s_2≥s_2p+c");
             body.AddParagraph("где ");
 
-            switch (dataIn.Type)
+            switch (dataIn.FlatBottomType)
             {
                 case 10:
                     body.AddParagraph()
@@ -430,11 +430,11 @@ internal class FlatBottomWordOutput : IWordOutputElement<FlatBottomCalculated>
                 .Color(System.Drawing.Color.Red);
         }
 
-        if (dataIn.Type is 1 or 2 or 6 or 9 or 10)
+        if (dataIn.FlatBottomType is 1 or 2 or 6 or 9 or 10)
         {
             body.AddParagraph("Условия закрепления");
 
-            switch (dataIn.Type)
+            switch (dataIn.FlatBottomType)
             {
                 case 1:
                     body.AddParagraph()
@@ -473,6 +473,6 @@ internal class FlatBottomWordOutput : IWordOutputElement<FlatBottomCalculated>
                 .Color(System.Drawing.Color.Red);
         }
 
-        package.Close();
+        package.Dispose();
     }
 }

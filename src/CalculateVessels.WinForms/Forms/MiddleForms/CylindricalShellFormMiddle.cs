@@ -1,10 +1,11 @@
-﻿using CalculateVessels.Core.Interfaces;
+﻿using System;
+using System.Collections.Generic;
+using CalculateVessels.Core.Elements.Shells.Cylindrical;
+using CalculateVessels.Core.Interfaces;
 using CalculateVessels.Data.Interfaces;
 using CalculateVessels.Forms.Base;
-using System.Collections.Generic;
-using System;
 using CalculateVessels.Helpers;
-using CalculateVessels.Core.Elements.Shells.Cylindrical;
+using FluentValidation;
 
 namespace CalculateVessels.Forms.MiddleForms;
 
@@ -12,26 +13,17 @@ public class CylindricalShellFormMiddle : CalculateFormWithFormFactory<Cylindric
 {
     protected CylindricalShellFormMiddle(IEnumerable<ICalculateService<CylindricalShellInput>> calculateServices,
         IPhysicalDataService physicalDataService,
+        IValidator<CylindricalShellInput> validator,
         IFormFactory formFactory)
-        : base(calculateServices, physicalDataService, formFactory)
+        : base(calculateServices, physicalDataService, validator, formFactory)
     {
 
     }
 
     public CylindricalShellFormMiddle()
-        : this(null, null, null)
+        : this(null!, null!, null!, null!)
     {
 
-    }
-
-    protected override bool CollectDataForPreliminarilyCalculation()
-    {
-        throw new NotImplementedException();
-    }
-
-    protected override bool CollectDataForFinishCalculation()
-    {
-        throw new NotImplementedException();
     }
 
     protected override string GetServiceName()
@@ -39,7 +31,12 @@ public class CylindricalShellFormMiddle : CalculateFormWithFormFactory<Cylindric
         throw new NotImplementedException();
     }
 
-    protected override void LoadInputData()
+    protected override void LoadInputData(CylindricalShellInput inputData)
+    {
+        throw new NotImplementedException();
+    }
+
+    protected override bool TryCollectInputData(out CylindricalShellInput inputData)
     {
         throw new NotImplementedException();
     }

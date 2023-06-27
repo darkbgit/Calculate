@@ -1,27 +1,72 @@
-﻿using CalculateVessels.Core.Interfaces;
-using CalculateVessels.Data.Interfaces;
+﻿using System;
 using System.Collections.Generic;
-using CalculateVessels.Data.Enums;
 using System.Drawing;
-using System.Windows.Forms;
-using System;
-using System.Linq;
-using CalculateVessels.Data.Properties;
 using System.Globalization;
-using CalculateVessels.Core.Enums;
-using CalculateVessels.Helpers;
-using CalculateVessels.Forms.MiddleForms;
+using System.Linq;
+using System.Windows.Forms;
 using CalculateVessels.Core.Elements.Supports.BracketVertical;
+using CalculateVessels.Core.Enums;
+using CalculateVessels.Core.Interfaces;
+using CalculateVessels.Data.Enums;
+using CalculateVessels.Data.Interfaces;
+using CalculateVessels.Data.Properties;
+using CalculateVessels.Forms.MiddleForms;
+using CalculateVessels.Helpers;
+using FluentValidation;
 
 namespace CalculateVessels.Forms;
 
 public sealed partial class BracketVerticalForm : BracketVerticalFormMiddle
 {
     public BracketVerticalForm(IEnumerable<ICalculateService<BracketVerticalInput>> calculateServices,
-        IPhysicalDataService physicalDataService)
-        : base(calculateServices, physicalDataService)
+        IPhysicalDataService physicalDataService,
+        IValidator<BracketVerticalInput> validator)
+        : base(calculateServices, physicalDataService, validator)
     {
         InitializeComponent();
+    }
+
+    protected override void LoadInputData(BracketVerticalInput inputData)
+    {
+        name_tb.Text = inputData.Name;
+        nameShell_tb.Text = inputData.NameShell;
+        steel_cb.Text = inputData.Steel;
+        isNotPressureIn_cb.Checked = inputData.PressureType == PressureType.Outside;
+        isAssembly_cb.Checked = inputData.IsAssembly;
+        preciseMontage_cb.Checked = inputData.PreciseMontage;
+        reinforcementPad_cb.Checked = inputData.ReinforcingPad;
+        b4_tb.Text = inputData.b4.ToString(CultureInfo.CurrentCulture);
+        c_tb.Text = inputData.c.ToString(CultureInfo.CurrentCulture);
+        D_tb.Text = inputData.D.ToString(CultureInfo.CurrentCulture);
+        e1_tb.Text = inputData.e1.ToString(CultureInfo.CurrentCulture);
+        g_tb.Text = inputData.g.ToString(CultureInfo.CurrentCulture);
+        GCapital_tb.Text = inputData.G.ToString(CultureInfo.CurrentCulture);
+        h_tb.Text = inputData.h.ToString(CultureInfo.CurrentCulture);
+        h1_tb.Text = inputData.h1.ToString(CultureInfo.CurrentCulture);
+        l1_tb.Text = inputData.l1.ToString(CultureInfo.CurrentCulture);
+        M_tb.Text = inputData.M.ToString(CultureInfo.CurrentCulture);
+        p_tb.Text = inputData.p.ToString(CultureInfo.CurrentCulture);
+        fi_tb.Text = inputData.phi.ToString(CultureInfo.CurrentCulture);
+        Q_tb.Text = inputData.Q.ToString(CultureInfo.CurrentCulture);
+        s_tb.Text = inputData.s.ToString(CultureInfo.CurrentCulture);
+
+        if (inputData.SigmaAllow > 0)
+        {
+            sigmaHandle_cb.Checked = true;
+            sigma_d_tb.Text = inputData.SigmaAllow.ToString(CultureInfo.CurrentCulture);
+        }
+        t_tb.Text = inputData.t.ToString(CultureInfo.CurrentCulture);
+        N_cb.Text = inputData.N.ToString(CultureInfo.CurrentCulture);
+
+        numberOfBracket_gb.Controls
+            .OfType<RadioButton>()
+            .First(rb => rb.Text == inputData.n.ToString())
+            .Checked = true;
+
+        bracketType_gb.Controls
+            .OfType<RadioButton>()
+            .First(rb => rb.Text == inputData.BracketVerticalType.ToString())
+            .Checked = true;
     }
 
     protected override string GetServiceName()
@@ -54,14 +99,16 @@ public sealed partial class BracketVerticalForm : BracketVerticalFormMiddle
         Hide();
     }
 
-    protected override bool CollectDataForPreliminarilyCalculation()
+    protected override bool TryCollectInputData(out BracketVerticalInput inputData)
     {
         var dataInErr = new List<string>();
 
-        InputData = new BracketVerticalInput()
+        inputData = new BracketVerticalInput()
         {
+            Name = name_tb.Text,
+            NameShell = nameShell_tb.Text,
             Steel = steel_cb.Text,
-            IsPressureIn = !isNotPressureIn_cb.Checked,
+            PressureType = isNotPressureIn_cb.Checked ? PressureType.Outside : PressureType.Inside,
             IsAssembly = isAssembly_cb.Checked,
             PreciseMontage = preciseMontage_cb.Checked,
             ReinforcingPad = reinforcementPad_cb.Checked,
@@ -91,42 +138,19 @@ public sealed partial class BracketVerticalForm : BracketVerticalFormMiddle
             .First(rb => rb.Checked)
             .Text;
 
-        InputData.n = Parameters.GetParam<int>(number, "n", dataInErr);
+        inputData.n = Parameters.GetParam<int>(number, "n", dataInErr);
 
         var type = bracketType_gb.Controls
             .OfType<RadioButton>()
             .First(rb => rb.Checked)
             .Text;
 
-        InputData.Type = Parameters.GetParam<BracketVerticalType>(type, "Bracket type", dataInErr);
+        inputData.BracketVerticalType = Parameters.GetParam<BracketVerticalType>(type, "Bracket type", dataInErr);
 
-        var isNoError = !dataInErr.Any() && InputData.IsDataGood;
+        if (!dataInErr.Any()) return true;
 
-        if (!isNoError)
-        {
-            MessageBox.Show(string.Join<string>(Environment.NewLine, dataInErr.Union(InputData.ErrorList)));
-        }
-
-        return isNoError;
-    }
-
-    protected override bool CollectDataForFinishCalculation()
-    {
-        if (InputData == null) throw new InvalidOperationException();
-
-        var dataInErr = new List<string>();
-
-        InputData.Name = name_tb.Text;
-        InputData.NameShell = nameShell_tb.Text;
-
-        var isNoError = !dataInErr.Any() && InputData.IsDataGood;
-
-        if (!isNoError)
-        {
-            MessageBox.Show(string.Join<string>(Environment.NewLine, dataInErr.Union(InputData.ErrorList)));
-        }
-
-        return isNoError;
+        MessageBox.Show(string.Join(Environment.NewLine, dataInErr));
+        return false;
     }
 
     private void Type_rb_CheckedChanged(object sender, EventArgs e)
@@ -154,11 +178,9 @@ public sealed partial class BracketVerticalForm : BracketVerticalFormMiddle
 
     private void PreCalculate_btn_Click(object sender, EventArgs e)
     {
-        if (!CollectDataForPreliminarilyCalculation()) return;
+        if (!TryCalculate(out var bracketVertical)) return;
 
-        var bracketVertical = Calculate();
-
-        if (bracketVertical == null) return;
+        if (bracketVertical == null) throw new NullReferenceException();
 
         calculate_btn.Enabled = true;
         MessageBox.Show(Resources.CalcComplete);
@@ -166,11 +188,9 @@ public sealed partial class BracketVerticalForm : BracketVerticalFormMiddle
 
     private void Calculate_btn_Click(object sender, EventArgs e)
     {
-        if (!CollectDataForFinishCalculation()) return;
+        if (!TryCalculate(out var bracketVertical)) return;
 
-        var bracketVertical = Calculate();
-
-        if (bracketVertical == null) return;
+        if (bracketVertical == null) throw new NullReferenceException();
 
         SetCalculatedElementToStorage(Owner, bracketVertical);
 

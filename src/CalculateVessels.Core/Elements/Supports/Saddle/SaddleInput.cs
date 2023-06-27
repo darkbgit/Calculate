@@ -1,5 +1,4 @@
-﻿using CalculateVessels.Core.Elements.Base;
-using CalculateVessels.Core.Enums;
+﻿using CalculateVessels.Core.Enums;
 using CalculateVessels.Core.Interfaces;
 
 namespace CalculateVessels.Core.Elements.Supports.Saddle;
@@ -7,11 +6,12 @@ namespace CalculateVessels.Core.Elements.Supports.Saddle;
 #pragma warning disable IDE1006 // Naming Styles
 // ReSharper disable InconsistentNaming
 
-public class SaddleInput : InputData, IInputData
+public class SaddleInput : IInputData
 {
-    public override string Type => nameof(SaddleInput);
+    public string Type => nameof(SaddleInput);
+    public string Name { get; set; } = string.Empty;
     public bool IsAssembly { get; set; }
-    public bool IsPressureIn { get; set; }
+    public PressureType PressureType { get; set; }
     public double a { get; set; }
     public double Ak { get; set; }
     public double b { get; set; }
