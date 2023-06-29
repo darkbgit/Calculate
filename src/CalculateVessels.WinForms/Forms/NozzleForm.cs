@@ -46,8 +46,8 @@ public partial class NozzleForm : NozzleFormMiddle
     private Label? coordinateLabel;
     private Panel? coordinatePanel;
 
-    private ShellInputData _shellInputData;
-    private ICalculatedElement _shellElement;
+    private ShellInputData? _shellInputData;
+    private ICalculatedElement? _shellElement;
 
     public NozzleForm(IEnumerable<ICalculateService<NozzleInput>> calculateServices,
         IPhysicalDataService physicalDataService,
@@ -57,15 +57,22 @@ public partial class NozzleForm : NozzleFormMiddle
         InitializeComponent();
     }
 
+    public void SetShellCalculatedData(ICalculatedElement shellCalculatedElement)
+    {
+        _shellElement = shellCalculatedElement;
+        _shellInputData = _shellElement.InputData as ShellInputData
+                          ?? throw new NullReferenceException();
+    }
+
     protected override void LoadInputData(NozzleInput inputData)
     {
         _shellElement = inputData.ShellCalculatedData;
         _shellInputData = _shellElement.InputData as ShellInputData
             ?? throw new NullReferenceException();
 
-        PlaceInitializeDraw(_shellInputData.ShellType);
+        LocationRadioButtonsDraw(_shellInputData.ShellType);
 
-        InitializeShellInputData();
+        InitializeShellInputData(_shellInputData);
 
         steel1_cb.Text = inputData.steel1;
         d_tb.Text = inputData.d.ToString(CultureInfo.CurrentCulture);
@@ -204,7 +211,7 @@ public partial class NozzleForm : NozzleFormMiddle
         //         break;
         // }
 
-        Place_Draw(place_gb.Controls
+        LocationTextBoxesDraw(place_gb.Controls
                        .OfType<RadioButton>()
                        .FirstOrDefault(rb => rb.Checked)
                    ?? throw new InvalidOperationException());
@@ -216,7 +223,7 @@ public partial class NozzleForm : NozzleFormMiddle
         _shellInputData = shellElement.InputData as ShellInputData
             ?? throw new NullReferenceException();
 
-        ShowDialog();
+        Show();
     }
 
     protected override string GetServiceName()
@@ -226,6 +233,9 @@ public partial class NozzleForm : NozzleFormMiddle
 
     private void NozzleForm_Load(object sender, EventArgs e)
     {
+        if (_shellInputData == null)
+            throw new NullReferenceException();
+
         LoadSteelsToComboBox(steel1_cb, SteelSource.G34233D1);
         LoadSteelsToComboBox(steel2_cb, SteelSource.G34233D1);
         LoadSteelsToComboBox(steel3_cb, SteelSource.G34233D1);
@@ -234,11 +244,11 @@ public partial class NozzleForm : NozzleFormMiddle
 
         MessageBox.Show(_shellInputData.ShellType.ToString());
 
-        PlaceInitializeDraw(_shellInputData.ShellType);
+        LocationRadioButtonsDraw(_shellInputData.ShellType);
 
-        InitializeShellInputData();
+        InitializeShellInputData(_shellInputData);
 
-        Place_Draw(place_gb.Controls
+        LocationTextBoxesDraw(place_gb.Controls
             .OfType<RadioButton>()
             .FirstOrDefault(rb => rb.Checked)
         ?? throw new InvalidOperationException());
@@ -260,6 +270,9 @@ public partial class NozzleForm : NozzleFormMiddle
 
     protected override bool TryCollectInputData(out NozzleInput inputData)
     {
+        if (_shellElement == null || _shellInputData == null)
+            throw new NullReferenceException();
+
         List<string> dataInErr = new();
 
         inputData = new NozzleInput(_shellElement)
@@ -475,7 +488,7 @@ public partial class NozzleForm : NozzleFormMiddle
 
     private void Place_rb_CheckedChanged(object? sender, EventArgs e)
     {
-        if (sender is not RadioButton { Checked: true } rb) return;
+        if (sender is not RadioButton { Checked: true } rb || _shellElement == null) return;
 
         switch (((ShellInputData)_shellElement.InputData).ShellType)
         {
@@ -496,7 +509,7 @@ public partial class NozzleForm : NozzleFormMiddle
                                         ?? throw new InvalidOperationException()),
                     _ => place_pb.Image
                 };
-                Place_Draw(sender);
+                LocationTextBoxesDraw(sender);
 
                 break;
             case ShellType.Elliptical:
@@ -543,7 +556,7 @@ public partial class NozzleForm : NozzleFormMiddle
                         //        break;
                         //    }
                 }
-                Place_Draw(sender);
+                LocationTextBoxesDraw(sender);
                 break;
         }
     }
@@ -556,7 +569,7 @@ public partial class NozzleForm : NozzleFormMiddle
         //    place_pb.Image = (Bitmap)calcNet.Properties.Resources.EllRadial;
         //}
 
-        Place_Draw(sender);
+        LocationTextBoxesDraw(sender);
     }
 
     private void EllipseRadialDraw()
@@ -941,9 +954,9 @@ public partial class NozzleForm : NozzleFormMiddle
         place_gb.Controls.Add(mainPanel);
     }
 
-    private void Place_Draw(object? sender)
+    private void LocationTextBoxesDraw(object? sender)
     {
-        if (sender is not RadioButton rb) return;
+        if (sender is not RadioButton rb || _shellElement == null) return;
 
         switch (((ShellInputData)_shellElement.InputData).ShellType)
         {
@@ -1338,7 +1351,7 @@ public partial class NozzleForm : NozzleFormMiddle
         }
     }
 
-    private void PlaceInitializeDraw(ShellType shellType)
+    private void LocationRadioButtonsDraw(ShellType shellType)
     {
         switch (shellType)
         {
@@ -1510,16 +1523,18 @@ public partial class NozzleForm : NozzleFormMiddle
         }
     }
 
-    private void InitializeShellInputData()
+    private void InitializeShellInputData(ShellInputData shellInputData)
     {
-        steel1_cb.SelectedItem = _shellInputData.Steel;
-        steel2_cb.Text = _shellInputData.Steel;
-        steel3_cb.Text = _shellInputData.Steel;
+        steel1_cb.SelectedItem = shellInputData.Steel;
+        steel2_cb.Text = shellInputData.Steel;
+        steel3_cb.Text = shellInputData.Steel;
 
 
-        nameEl_tb.Text = _shellInputData.Name;
+        nameEl_tb.Text = shellInputData.Name;
 
-        _shellInputData.LoadingConditions
+        loadingConditionsListView.Items.Clear();
+
+        shellInputData.LoadingConditions
             .ToList()
             .ForEach(lc =>
             {

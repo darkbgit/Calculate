@@ -5,6 +5,7 @@ using CalculateVessels.Core.Elements.Shells.Enums;
 using CalculateVessels.Core.Enums;
 using CalculateVessels.Core.Interfaces;
 using CalculateVessels.Data.PhysicalData;
+using CalculateVessels.UnitTests.Helpers;
 using FluentAssertions;
 using Xunit;
 
@@ -20,14 +21,14 @@ public class ConicalShellTest
     }
 
     [Theory]
-    [MemberData(nameof(ConicalShellTestData.GetData), MemberType = typeof(ConicalShellTestData))]
+    [MemberData(nameof(ElementsData.GetConicalInputAndCalculatedData), MemberType = typeof(ElementsData))]
     public void ConicalShell(ConicalShellInput inputData, ConicalShellCalculated calculatedData)
     {
         //Act
         var result = _calculateService.Calculate(inputData) as ConicalShellCalculated;
 
         //Assert
-        var precision = 0.001;
+        const double precision = 0.001;
         result.Should().BeEquivalentTo(calculatedData, options => options
             .Using<double>(ctx => ctx.Subject.Should().BeApproximately(ctx.Expectation, precision))
             .WhenTypeIs<double>());

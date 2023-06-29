@@ -65,11 +65,10 @@ public partial class CylindricalShellForm : CylindricalShellFormMiddle
 
         if (inputData.IsFTensile) return;
 
-        var radioButton = force_gb.Controls
+        force_gb.Controls
             .OfType<RadioButton>()
-            .FirstOrDefault(rb => rb.Text == inputData.FCalcSchema.ToString());
-
-        if (radioButton != null) radioButton.Checked = true;
+            .First(rb => rb.Text == inputData.FCalcSchema.ToString())
+            .Checked = true;
 
         switch (inputData.FCalcSchema)
         {
@@ -139,34 +138,6 @@ public partial class CylindricalShellForm : CylindricalShellFormMiddle
         }
 
         inputData.LoadingConditions = loadingConditions;
-
-        //if (!loadingConditionsControl.Any())
-        //{
-        //    var loadingCondition = loadingConditionControl.GetLoadingCondition();
-
-        //    if (loadingCondition == null)
-        //    {
-        //        return false;
-        //    }
-
-        //    inputData.LoadingConditions = new List<LoadingCondition>
-        //    {
-        //        loadingCondition
-        //    };
-        //}
-        //else
-        //{
-        //    var loadingConditions = loadingConditionsControl
-        //        .GetLoadingConditions()
-        //        .ToList();
-
-        //    if (!loadingConditions.Any())
-        //    {
-        //        return false;
-        //    }
-
-        //    inputData.LoadingConditions = loadingConditions;
-        //}
 
         if (inputData.LoadingConditions.Any(lc => lc.PressureType == PressureType.Outside))
         {

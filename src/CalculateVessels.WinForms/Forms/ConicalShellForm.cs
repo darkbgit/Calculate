@@ -29,6 +29,7 @@ public sealed partial class ConicalShellForm : ConicalShellFormMiddle
 
     protected override void LoadInputData(ConicalShellInput inputData)
     {
+        name_tb.Text = inputData.Name;
         steel_cb.Text = inputData.Steel;
         phip_tb.Text = inputData.phi.ToString(CultureInfo.CurrentCulture);
         phit_tb.Text = inputData.phi_t.ToString(CultureInfo.CurrentCulture);

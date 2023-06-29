@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text.Json;
 using System.IO;
 using System.Text;
+using System.Text.Json;
 using System.Text.RegularExpressions;
 using CalculateVessels.Core.Interfaces;
 using CalculateVessels.Core.Persistance.Enums;
 
-namespace CalculateVessels.Core;
+namespace CalculateVessels.Core.Persistance;
 
 internal class PersistanceServer : IPersistanceService
 {
@@ -36,12 +36,12 @@ internal class PersistanceServer : IPersistanceService
 
     private static IEnumerable<ICalculatedElement> ReadFromJson(string filePath)
     {
-        string json = string.Empty;
+        string fileText;
 
         try
         {
             using var reader = new StreamReader(filePath);
-            json = reader.ReadToEnd();
+            fileText = reader.ReadToEnd();
         }
         catch (Exception ex)
         {
@@ -51,7 +51,7 @@ internal class PersistanceServer : IPersistanceService
 
         try
         {
-            var result = JsonSerializer.Deserialize<List<ICalculatedElement>>(json,
+            var result = JsonSerializer.Deserialize<List<ICalculatedElement>>(fileText,
                 new JsonSerializerOptions { WriteIndented = true }) ??
                      throw new NullReferenceException();
 

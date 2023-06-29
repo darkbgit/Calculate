@@ -151,7 +151,7 @@ internal class CylindricalShellCalculateService : ICalculateService<CylindricalS
                              Math.Pow(100 * (dataIn.s - cdc.c) / dataIn.D, 2.5);
 
                 const int lMoreThenD = 10;
-                bool isLMoreThenD = dataIn.l / dataIn.D > lMoreThenD;
+                var isLMoreThenD = dataIn.l / dataIn.D > lMoreThenD;
 
                 if (isLMoreThenD || dataIn.ConditionForCalcF5341)
                 {

@@ -10,7 +10,7 @@ using FluentValidation;
 
 namespace CalculateVessels.Forms.Base;
 
-public abstract class BaseCalculateForm<T> : Form
+public abstract class BaseCalculateForm<T> : Form, IBaseForm
     where T : class, IInputData
 {
     private const int NewCalculatedElementIndex = -1;
@@ -36,13 +36,20 @@ public abstract class BaseCalculateForm<T> : Form
 
     protected IPhysicalDataService PhysicalDataService => _physicalDataService;
 
-
-
     public void Show(T inputData, int calculatedElementIndex)
     {
         if (!IsValidInputData(inputData))
         {
             MessageBox.Show("Couldn't load initialize data.");
+
+            if (Owner == null) return;
+
+            Owner.GetType()
+                .GetFields()
+                .FirstOrDefault(f => f.FieldType.IsSubclassOf(typeof(BaseCalculateForm<T>)))
+                ?.SetValue(Owner, null);
+
+            Close();
             return;
         }
 
@@ -185,7 +192,7 @@ public abstract class BaseCalculateForm<T> : Form
         return false;
     }
 
-    private bool IsValidInputData(T inputData)
+    public bool IsValidInputData(T inputData)
     {
         var validateResult = _validator.Validate(inputData);
 

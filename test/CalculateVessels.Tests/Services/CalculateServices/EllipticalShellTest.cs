@@ -5,6 +5,7 @@ using CalculateVessels.Core.Elements.Shells.Enums;
 using CalculateVessels.Core.Enums;
 using CalculateVessels.Core.Interfaces;
 using CalculateVessels.Data.PhysicalData;
+using CalculateVessels.UnitTests.Helpers;
 using FluentAssertions;
 using Xunit;
 
@@ -20,7 +21,7 @@ public class EllipticalShellTest
     }
 
     [Theory]
-    [MemberData(nameof(EllipticalShellTestData.GetData), MemberType = typeof(EllipticalShellTestData))]
+    [MemberData(nameof(ElementsData.GetEllipticalInputAndCalculatedData), MemberType = typeof(ElementsData))]
     public void EllipticalShell(EllipticalShellInput inputData, EllipticalShellCalculated calculatedData)
     {
         //Act

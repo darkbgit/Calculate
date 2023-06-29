@@ -12,6 +12,7 @@ using CalculateVessels.Core.Elements.Shells.Nozzle;
 using CalculateVessels.Core.Elements.Supports.Saddle;
 using CalculateVessels.Core.Interfaces;
 using CalculateVessels.Core.Persistance.Enums;
+using CalculateVessels.Forms.Base;
 using CalculateVessels.Helpers;
 using CalculateVessels.Output;
 
@@ -188,14 +189,11 @@ public partial class MainForm : Form
 
     internal bool IsAnyWindowOpen()
     {
-        return CylindricalForm != null ||
-               ConicalForm != null ||
-               EllipticalForm != null ||
-               NozzleForm != null ||
-               SaddleForm != null ||
-               FlatBottomForm != null ||
-               FlatBottomWithAdditionalMomentForm != null ||
-               HeatExchangerStationaryTubePlatesForm != null;
+        var result = GetType()
+            .GetFields()
+            .Any(p => p.GetValue(this) is IBaseForm);
+
+        return result;
     }
 
     private void AboutToolStripMenuItem_Click(object sender, EventArgs e)
@@ -265,24 +263,35 @@ public partial class MainForm : Form
         switch (type)
         {
             case nameof(CylindricalShellCalculated):
-                CheckAndCreateForm(ref CylindricalForm);
-                CylindricalForm?.Show((CylindricalShellInput)((CylindricalShellCalculated)element).InputData, elementIndex);
+                if (CheckAndCreateForm(ref CylindricalForm))
+                {
+                    CylindricalForm?.Show((CylindricalShellInput)((CylindricalShellCalculated)element).InputData, elementIndex);
+                }
                 break;
             case nameof(ConicalShellCalculated):
-                CheckAndCreateForm(ref ConicalForm);
-                ConicalForm?.Show((ConicalShellInput)((ConicalShellCalculated)element).InputData, elementIndex);
+                if (CheckAndCreateForm(ref ConicalForm))
+                {
+                    ConicalForm?.Show((ConicalShellInput)((ConicalShellCalculated)element).InputData, elementIndex);
+                }
                 break;
             case nameof(EllipticalShellCalculated):
-                CheckAndCreateForm(ref EllipticalForm);
-                EllipticalForm?.Show((EllipticalShellInput)((EllipticalShellCalculated)element).InputData, elementIndex);
+                if (CheckAndCreateForm(ref EllipticalForm))
+                {
+                    EllipticalForm?.Show((EllipticalShellInput)((EllipticalShellCalculated)element).InputData, elementIndex);
+                }
                 break;
             case nameof(NozzleCalculated):
-                CheckAndCreateForm(ref NozzleForm);
-                NozzleForm?.Show((NozzleInput)((NozzleCalculated)element).InputData, elementIndex);
+                if (CheckAndCreateForm(ref NozzleForm))
+                {
+                    NozzleForm?.SetShellCalculatedData(((NozzleInput)((NozzleCalculated)element).InputData).ShellCalculatedData);
+                    NozzleForm?.Show((NozzleInput)((NozzleCalculated)element).InputData, elementIndex);
+                }
                 break;
             case nameof(SaddleCalculated):
-                CheckAndCreateForm(ref SaddleForm);
-                SaddleForm?.Show((SaddleInput)((SaddleCalculated)element).InputData, elementIndex);
+                if (CheckAndCreateForm(ref SaddleForm))
+                {
+                    SaddleForm?.Show((SaddleInput)((SaddleCalculated)element).InputData, elementIndex);
+                }
                 break;
             default:
                 throw new InvalidOperationException($"Couldn't create form for type {type}.");
@@ -299,16 +308,18 @@ public partial class MainForm : Form
         filePathTextBox.Text = saveFileDialogDocx.FileName;
     }
 
-    private void CheckAndCreateForm<T>(ref T? form)
+    private bool CheckAndCreateForm<T>(ref T? form)
         where T : Form
     {
         if (form != null)
         {
             MessageBox.Show($"Other {form.Text} is opened.");
+            return false;
         }
 
         form = _formFactory.Create<T>()
             ?? throw new NullReferenceException("Unable to create form.");
         form.Owner = this;
+        return true;
     }
 }
