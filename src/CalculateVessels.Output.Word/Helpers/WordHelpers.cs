@@ -59,7 +59,7 @@ internal static class WordHelpers
     /// <summary>
     /// S
     /// </summary>
-    /// <param name="results">IEnumerable of { OrdinalNumber, SigmaAllow, E }.</param>
+    /// <param name="results">IEnumerable of { Id, SigmaAllow, E }.</param>
     public static void AddMaterialCharacteristicsInTableForShell(string steel, IEnumerable<dynamic> results, IEnumerable<LoadingCondition> loadingConditions, Table table)
     {
         table.AddRowWithOneCell($"Характеристики материала {steel}");
@@ -70,7 +70,7 @@ internal static class WordHelpers
 
         loadingConditionsWithUniqTemperatures
             .ForEach(lc => AddMaterialCharacteristic(table, lc, results
-                .First(r => r.OrdinalNumber == lc.OrdinalNumber)));
+                .First(r => r.LoadingConditionId == lc.Id)));
     }
 
     public static string CheckFilePath(string filePath)
@@ -88,7 +88,7 @@ internal static class WordHelpers
     /// <param name="loadingCondition"></param>
     private static void AddLoadingConditionInputData(Table table, LoadingCondition loadingCondition)
     {
-        table.AddRowWithOneCell($"Условия нагружения #{loadingCondition.OrdinalNumber}");
+        table.AddRowWithOneCell($"Условия нагружения #{loadingCondition.Id}");
 
         table.AddRow()
             .AddCell("Расчетная температура, Т:")

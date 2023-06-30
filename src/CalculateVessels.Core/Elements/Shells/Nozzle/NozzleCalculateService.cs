@@ -66,7 +66,7 @@ internal class NozzleCalculateService : ICalculateService<NozzleInput>
     {
         var data = new NozzleCalculatedOneLoading
         {
-            LoadingCondition = lc,
+            LoadingConditionId = lc.Id,
             SigmaAllow1 = PhysicalHelper.GetSigmaIfZero(dataIn.SigmaAllow1, dataIn.steel1, lc.t, _physicalData),
             E1 = PhysicalHelper.GetEIfZero(dataIn.E1, dataIn.steel1, lc.t, _physicalData)
         };
@@ -90,7 +90,7 @@ internal class NozzleCalculateService : ICalculateService<NozzleInput>
 
 
         var shellResult = ((ShellCalculated)dataIn.ShellCalculatedData).Results
-            .First(r => r.LoadingCondition.OrdinalNumber == lc.OrdinalNumber);
+            .First(r => r.LoadingConditionId == lc.Id);
 
         data.SigmaAllowShell = shellResult.SigmaAllow;
 

@@ -22,7 +22,7 @@ public partial class LoadingConditionSaddleControl : UserControl
 
         var loadingCondition = new LoadingConditionSaddle
         {
-            OrdinalNumber = 1,
+            Id = 1,
             PressureType = isPressureOutsideCheckBox.Checked ? PressureType.Outside : PressureType.Inside,
             t = Parameters.GetParam<double>(temperatureTextBox.Text, "t", dataInErr, NumberStyles.Integer),
             p = Parameters.GetParam<double>(pressureTextBox.Text, "p", dataInErr),

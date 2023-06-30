@@ -20,6 +20,13 @@ internal class CylindricalShellInputValidator : AbstractValidator<CylindricalShe
         RuleFor(d => d.LoadingConditions)
             .NotEmpty();
 
+        RuleFor(d => d.LoadingConditions)
+            .Must(lc =>
+            {
+                var loadingConditions = lc.ToList();
+                return loadingConditions.Count == loadingConditions.DistinctBy(c => c.Id).Count();
+            });
+
         RuleForEach(d => d.LoadingConditions)
             .SetValidator(new LoadingConditionValidator());
 

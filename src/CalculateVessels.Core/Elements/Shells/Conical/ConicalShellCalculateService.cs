@@ -52,7 +52,7 @@ internal class ConicalShellCalculateService : ICalculateService<ConicalShellInpu
     {
         var data = new ConicalShellCalculatedOneLoading
         {
-            LoadingCondition = loadingCondition,
+            LoadingConditionId = loadingCondition.Id,
             SigmaAllow =
                 PhysicalHelper.GetSigmaIfZero(dataIn.SigmaAllow, dataIn.Steel, loadingCondition.t, _physicalData),
             E = PhysicalHelper.GetEIfZero(loadingCondition.EAllow, dataIn.Steel, loadingCondition.t, _physicalData),

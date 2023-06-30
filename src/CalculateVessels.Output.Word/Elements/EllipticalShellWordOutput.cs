@@ -45,7 +45,7 @@ internal class EllipticalShellWordOutput : IWordOutputElement<EllipticalShellCal
             .ToList()
             .ForEach(lc => MakeCalculateResult(body,
                 data.Results
-                    .First(r => r.LoadingCondition.OrdinalNumber == lc.OrdinalNumber),
+                    .First(r => r.LoadingConditionId == lc.Id),
                 data.CommonData,
                 dataIn));
 
@@ -75,10 +75,10 @@ internal class EllipticalShellWordOutput : IWordOutputElement<EllipticalShellCal
 
     private static void MakeCalculateResult(Body body, EllipticalShellCalculatedOneLoading data, EllipticalShellCalculatedCommon cdc, EllipticalShellInput dataIn)
     {
-        var loadingCondition = data.LoadingCondition;
+        var loadingCondition = dataIn.LoadingConditions.First(lc => lc.Id == data.LoadingConditionId);
 
         body.AddParagraph();
-        body.AddParagraph($"Результаты расчета #{loadingCondition.OrdinalNumber}")
+        body.AddParagraph($"Результаты расчета #{loadingCondition.Id}")
             .Alignment(AlignmentType.Center);
         body.AddParagraph();
         body.AddParagraph("Толщину стенки вычисляют по формуле:");
@@ -237,7 +237,7 @@ internal class EllipticalShellWordOutput : IWordOutputElement<EllipticalShellCal
         WordHelpers.AddMaterialCharacteristicsInTableForShell(dataIn.Steel,
             data.Results.Select(r => new
             {
-                r.LoadingCondition.OrdinalNumber,
+                r.LoadingConditionId,
                 r.SigmaAllow,
                 r.E
             }).ToList(),

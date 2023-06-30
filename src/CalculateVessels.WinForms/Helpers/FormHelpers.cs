@@ -123,7 +123,7 @@ internal static class FormHelpers
                 PressureType = Enum.Parse<PressureType>(i.SubItems[pressureTypeIndex].Text),
                 p = Parameters.GetParam<double>(i.SubItems[pressureIndex].Text, "p", dataInErr),
                 t = Parameters.GetParam<double>(i.SubItems[tIndex].Text, "t", dataInErr),
-                OrdinalNumber = j + 1,
+                Id = j + 1,
                 SigmaAllow = i.SubItems[sigmaAllowIndex].Text == AutoStrengthParameters ? default :
                     Parameters.GetParam<double>(i.SubItems[sigmaAllowIndex].Text, "[σ]", dataInErr),
                 EAllow = i.SubItems[EAllowIndex].Text == AutoStrengthParameters ? default :
@@ -142,7 +142,7 @@ internal static class FormHelpers
             PressureType = isPressureOutside.Checked ? PressureType.Outside : PressureType.Inside,
             t = Parameters.GetParam<double>(t.Text, "t", dataInErr, NumberStyles.Integer),
             p = Parameters.GetParam<double>(p.Text, "p", dataInErr),
-            OrdinalNumber = 1,
+            Id = 1,
             SigmaAllow = sigmaHandle.Checked
                 ? Parameters.GetParam<double>(sigmaAllow.Text, "[σ]", dataInErr)
                 : default

@@ -620,7 +620,7 @@ internal class NozzleWordOutput : IWordOutputElement<NozzleCalculated>
             .ForEach(lc =>
             {
                 var result = data.Results
-                    .First(r => r.LoadingCondition.OrdinalNumber == lc.OrdinalNumber);
+                    .First(r => r.LoadingConditionId == lc.Id);
 
                 InsertOneLoadingConditionDataCalculated(body, nozzleDataIn, result, data.CommonData, shellDataIn);
             });
@@ -628,10 +628,11 @@ internal class NozzleWordOutput : IWordOutputElement<NozzleCalculated>
 
     private static void InsertOneLoadingConditionDataCalculated(Body body, NozzleInput nozzleDataIn, NozzleCalculatedOneLoading data, NozzleCalculatedCommon cdc, ShellInputData shellDataIn)
     {
-        var loadingCondition = data.LoadingCondition;
+        var loadingCondition = shellDataIn.LoadingConditions
+            .First(lc => lc.Id == data.LoadingConditionId);
 
         body.AddParagraph();
-        body.AddParagraph($"Результаты расчета #{loadingCondition.OrdinalNumber}").Alignment(AlignmentType.Center);
+        body.AddParagraph($"Результаты расчета #{loadingCondition.Id}").Alignment(AlignmentType.Center);
         body.AddParagraph();
 
         body.AddParagraph("Расчетная толщина стенки укрепляемого элемента");
@@ -1326,7 +1327,7 @@ internal class NozzleWordOutput : IWordOutputElement<NozzleCalculated>
             .ForEach(lc =>
             {
                 const int index = 1;
-                var result = data.Results.First(r => r.LoadingCondition.OrdinalNumber == lc.OrdinalNumber);
+                var result = data.Results.First(r => r.LoadingConditionId == lc.Id);
                 AddMaterialCharacteristic(table, result.SigmaAllow1, result.E1, lc.t, index);
             });
 
@@ -1339,7 +1340,7 @@ internal class NozzleWordOutput : IWordOutputElement<NozzleCalculated>
                 .ForEach(lc =>
                 {
                     const int index = 2;
-                    var result = data.Results.First(r => r.LoadingCondition.OrdinalNumber == lc.OrdinalNumber);
+                    var result = data.Results.First(r => r.LoadingConditionId == lc.Id);
                     AddMaterialCharacteristic(table, result.SigmaAllow2, result.E2, lc.t, index);
                 });
         }
@@ -1352,7 +1353,7 @@ internal class NozzleWordOutput : IWordOutputElement<NozzleCalculated>
                 .ForEach(lc =>
                 {
                     const int index = 3;
-                    var result = data.Results.First(r => r.LoadingCondition.OrdinalNumber == lc.OrdinalNumber);
+                    var result = data.Results.First(r => r.LoadingConditionId == lc.Id);
                     AddMaterialCharacteristic(table, result.SigmaAllow3, result.E3, lc.t, index);
                 });
         }
@@ -1365,7 +1366,7 @@ internal class NozzleWordOutput : IWordOutputElement<NozzleCalculated>
                 .ForEach(lc =>
                 {
                     const int index = 4;
-                    var result = data.Results.First(r => r.LoadingCondition.OrdinalNumber == lc.OrdinalNumber);
+                    var result = data.Results.First(r => r.LoadingConditionId == lc.Id);
                     AddMaterialCharacteristic(table, result.SigmaAllow4, result.E4, lc.t, index);
                 });
         }

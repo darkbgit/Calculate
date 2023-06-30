@@ -1,5 +1,4 @@
-﻿using CalculateVessels.Core.Elements.Base;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace CalculateVessels.Core.Elements.Shells.Nozzle;
 
@@ -8,7 +7,7 @@ namespace CalculateVessels.Core.Elements.Shells.Nozzle;
 
 public class NozzleCalculatedOneLoading
 {
-    public required LoadingCondition LoadingCondition { get; init; }
+    public required int LoadingConditionId { get; init; }
     //private double _B1n;
     public double ConditionStrengthening1 { get; set; }
     public double ConditionStrengthening2 { get; set; }

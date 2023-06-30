@@ -29,7 +29,7 @@ public partial class LoadingConditionsControl : UserControl
             .ToList()
             .Select(i => new LoadingCondition
             {
-                OrdinalNumber = Convert.ToInt32(i.SubItems[ordinalNumber_ch.Index].Text),
+                Id = Convert.ToInt32(i.SubItems[ordinalNumber_ch.Index].Text),
                 PressureType = Enum.Parse<PressureType>(i.SubItems[pressureType_ch.Index].Text),
                 p = Parameters.GetParam<double>(i.SubItems[p_ch.Index].Text, "p", dataInErr),
                 t = Parameters.GetParam<double>(i.SubItems[t_ch.Index].Text, "t", dataInErr),

@@ -46,7 +46,7 @@ internal class CylindricalShellWordOutput : IWordOutputElement<CylindricalShellC
         dataIn.LoadingConditions
             .ToList()
             .ForEach(lc => MakeCalculateResult(body, data.Results
-                    .First(r => r.LoadingCondition.OrdinalNumber == lc.OrdinalNumber),
+                    .First(r => r.LoadingConditionId == lc.Id),
                 data.CommonData,
                 dataIn));
     }
@@ -129,7 +129,7 @@ internal class CylindricalShellWordOutput : IWordOutputElement<CylindricalShellC
         WordHelpers.AddMaterialCharacteristicsInTableForShell(dataIn.Steel,
             data.Results.Select(r => new
             {
-                r.LoadingCondition.OrdinalNumber,
+                r.LoadingConditionId,
                 r.SigmaAllow,
                 r.E
             }).ToList(),
@@ -140,84 +140,83 @@ internal class CylindricalShellWordOutput : IWordOutputElement<CylindricalShellC
 
     private static void MakeCalculateResult(Body body, CylindricalShellCalculatedOneLoading data, CylindricalShellCalculatedCommon cdc, CylindricalShellInput dataIn)
     {
-        var loadingCondition = data.LoadingCondition;
+        var loadingCondition = dataIn.LoadingConditions
+            .First(lc => lc.Id == data.LoadingConditionId);
 
         body.AddParagraph();
-        body.AddParagraph($"Результаты расчета (для условий нагружения #{loadingCondition.OrdinalNumber})").Alignment(AlignmentType.Center);
+        body.AddParagraph($"Результаты расчета (для условий нагружения #{loadingCondition.Id})").Alignment(AlignmentType.Center);
         body.AddParagraph();
         body.AddParagraph("Толщину стенки вычисляют по формуле:");
         body.AddParagraph().AppendEquation("s≥s_p+c");
         body.AddParagraph("где ").AppendEquation("s_p").AddRun(" - расчетная толщина стенки обечайки");
 
-        if (loadingCondition.PressureType == PressureType.Outside)
+        switch (loadingCondition.PressureType)
         {
-            body.AddParagraph()
-                .AppendEquation("s_p=(p∙D)/(2∙[σ]∙φ_p-p)" +
-                                $"=({loadingCondition.p}∙{dataIn.D})/(2∙{data.SigmaAllow}∙{dataIn.phi}-{loadingCondition.p})=" +
-                                $"{data.s_p:f2} мм");
+            case PressureType.Inside:
+                body.AddParagraph()
+                    .AppendEquation("s_p=(p∙D)/(2∙[σ]∙φ_p-p)" +
+                                    $"=({loadingCondition.p}∙{dataIn.D})/(2∙{data.SigmaAllow}∙{dataIn.phi}-{loadingCondition.p})=" +
+                                    $"{data.s_p:f2} мм");
+                break;
+            case PressureType.Outside:
+                body.AddParagraph()
+                    .AppendEquation("s_p=max{1.06∙(10^-2∙D)/(B)∙(p/(10^-5∙E)∙l/D)^0.4;(1.2∙p∙D)/(2∙[σ]-p)}");
+                body.AddParagraph("Коэффициент B вычисляют по формуле:");
+                body.AddParagraph()
+                    .AppendEquation("B=max{1;0.47∙(p/(10^-5∙E))^0.067∙(l/D)^0.4}");
+                body.AddParagraph()
+                    .AppendEquation($"0.47∙({loadingCondition.p}/(10^-5∙{data.E}))^0.067∙({data.l}/{dataIn.D})^0.4={data.b_2:f2}");
+                body.AddParagraph()
+                    .AppendEquation($"B=max(1;{data.b_2:f2})={data.b:f2}");
+                body.AddParagraph()
+                    .AppendEquation($"1.06∙(10^-2∙{dataIn.D})/({data.b:f2})∙({loadingCondition.p}/(10^-5∙{data.E})∙{data.l}/{dataIn.D})^0.4={data.s_p_1:f2}");
+                body.AddParagraph()
+                    .AppendEquation($"(1.2∙{loadingCondition.p}∙{dataIn.D})/(2∙{data.SigmaAllow}-{loadingCondition.p})={data.s_p_2:f2}");
+                body.AddParagraph()
+                    .AppendEquation($"s_p=max({data.s_p_1:f2};{data.s_p_2:f2})={data.s_p:f2} мм");
+                break;
         }
-        else
-        {
-            body.AddParagraph()
-                .AppendEquation("s_p=max{1.06∙(10^-2∙D)/(B)∙(p/(10^-5∙E)∙l/D)^0.4;(1.2∙p∙D)/(2∙[σ]-p)}");
-            body.AddParagraph("Коэффициент B вычисляют по формуле:");
-            body.AddParagraph()
-                .AppendEquation("B=max{1;0.47∙(p/(10^-5∙E))^0.067∙(l/D)^0.4}");
-            body.AddParagraph()
-                .AppendEquation($"0.47∙({loadingCondition.p}/(10^-5∙{data.E}))^0.067∙({data.l}/{dataIn.D})^0.4={data.b_2:f2}");
-            body.AddParagraph()
-                .AppendEquation($"B=max(1;{data.b_2:f2})={data.b:f2}");
-            body.AddParagraph()
-                .AppendEquation($"1.06∙(10^-2∙{dataIn.D})/({data.b:f2})∙({loadingCondition.p}/(10^-5∙{data.E})∙{data.l}/{dataIn.D})^0.4={data.s_p_1:f2}");
-            body.AddParagraph()
-                .AppendEquation($"(1.2∙{loadingCondition.p}∙{dataIn.D})/(2∙{data.SigmaAllow}-{loadingCondition.p})={data.s_p_2:f2}");
-            body.AddParagraph()
-                .AppendEquation($"s_p=max({data.s_p_1:f2};{data.s_p_2:f2})={data.s_p:f2} мм");
-        }
-
-        //body.AddParagraph("c - сумма прибавок к расчетной толщине");
-        //body.AddParagraph()
-        //    .AppendEquation($"c=c_1+c_2+c_3={dataIn.c1}+{dataIn.c2}+{dataIn.c3}={cdc.c:f2} мм");
 
         body.AddParagraph()
             .AppendEquation($"s={data.s_p:f2}+{cdc.c:f2}={data.s:f2} мм");
 
         WordHelpers.CheckCalculatedThickness("s", dataIn.s, data.s, body);
 
-        if (loadingCondition.PressureType == PressureType.Inside)
+        switch (loadingCondition.PressureType)
         {
-            body.AddParagraph("Допускаемое внутреннее избыточное давление вычисляют по формуле:");
-            body.AddParagraph()
-                .AppendEquation("[p]=(2∙[σ]∙φ_p∙(s-c))/(D+s-c)"
-                                + $"=(2∙{data.SigmaAllow}∙{dataIn.phi}∙({dataIn.s}-{cdc.c:f2}))/"
-                                + $"({dataIn.D}+{dataIn.s}-{cdc.c:f2})={data.p_d:f2} МПа");
-        }
-        else
-        {
-            body.AddParagraph("Допускаемое наружное давление вычисляют по формуле:");
-            body.AddParagraph()
-                .AppendEquation("[p]=[p]_П/√(1+([p]_П/[p]_E)^2)");
-            body.AddParagraph("допускаемое давление из условия прочности вычисляют по формуле:");
-            body.AddParagraph()
-                .AppendEquation("[p]_П=(2∙[σ]∙(s-c))/(D+s-c)" +
-                                                 $"=(2∙{data.SigmaAllow}∙({dataIn.s}-{cdc.c:f2}))/({dataIn.D}+{dataIn.s}-{cdc.c:f2})={data.p_dp:f2} МПа");
-            body.AddParagraph("допускаемое давление из условия устойчивости в пределах упругости вычисляют по формуле:");
-            body.AddParagraph()
-                .AppendEquation("[p]_E=(2.08∙10^-5∙E)/(n_y∙B_1)∙D/l∙[(100∙(s-c))/D]^2.5");
-            body.AddParagraph("коэффициент ")
-                .AppendEquation("B_1")
-                .AddRun(" вычисляют по формуле");
-            body.AddParagraph()
-                .AppendEquation("B_1=min{1;9.45∙D/l∙√(D/(100∙(s-c)))}");
-            body.AddParagraph()
-                .AppendEquation($"9.45∙{dataIn.D}/{data.l}∙√({dataIn.D}/(100∙({dataIn.s}-{cdc.c:f2})))={data.B1_2:f2}");
-            body.AddParagraph()
-                .AppendEquation($"B_1=min(1;{data.B1_2:f2})={data.B1:f1}");
-            body.AddParagraph()
-                .AppendEquation($"[p]_E=(2.08∙10^-5∙{data.E})/({dataIn.ny}∙{data.B1:f2})∙{dataIn.D}/" +
-                                $"{data.l}∙[(100∙({dataIn.s}-{cdc.c:f2}))/{dataIn.D}]^2.5={data.p_de:f2} МПа");
-            body.AddParagraph()
-                .AppendEquation($"[p]={data.p_dp:f2}/√(1+({data.p_dp:f2}/{data.p_de:f2})^2)={data.p_d:f2} МПа");
+            case PressureType.Inside:
+                body.AddParagraph("Допускаемое внутреннее избыточное давление вычисляют по формуле:");
+                body.AddParagraph()
+                    .AppendEquation("[p]=(2∙[σ]∙φ_p∙(s-c))/(D+s-c)"
+                                    + $"=(2∙{data.SigmaAllow}∙{dataIn.phi}∙({dataIn.s}-{cdc.c:f2}))/"
+                                    + $"({dataIn.D}+{dataIn.s}-{cdc.c:f2})={data.p_d:f2} МПа");
+                break;
+            case PressureType.Outside:
+                body.AddParagraph("Допускаемое наружное давление вычисляют по формуле:");
+                body.AddParagraph()
+                    .AppendEquation("[p]=[p]_П/√(1+([p]_П/[p]_E)^2)");
+                body.AddParagraph("допускаемое давление из условия прочности вычисляют по формуле:");
+                body.AddParagraph()
+                    .AppendEquation("[p]_П=(2∙[σ]∙(s-c))/(D+s-c)" +
+                                    $"=(2∙{data.SigmaAllow}∙({dataIn.s}-{cdc.c:f2}))/({dataIn.D}+{dataIn.s}-{cdc.c:f2})={data.p_dp:f2} МПа");
+                body.AddParagraph("допускаемое давление из условия устойчивости в пределах упругости вычисляют по формуле:");
+                body.AddParagraph()
+                    .AppendEquation("[p]_E=(2.08∙10^-5∙E)/(n_y∙B_1)∙D/l∙[(100∙(s-c))/D]^2.5");
+                body.AddParagraph("коэффициент ")
+                    .AppendEquation("B_1")
+                    .AddRun(" вычисляют по формуле");
+                body.AddParagraph()
+                    .AppendEquation("B_1=min{1;9.45∙D/l∙√(D/(100∙(s-c)))}");
+                body.AddParagraph()
+                    .AppendEquation($"9.45∙{dataIn.D}/{data.l}∙√({dataIn.D}/(100∙({dataIn.s}-{cdc.c:f2})))={data.B1_2:f2}");
+                body.AddParagraph()
+                    .AppendEquation($"B_1=min(1;{data.B1_2:f2})={data.B1:f1}");
+                body.AddParagraph()
+                    .AppendEquation($"[p]_E=(2.08∙10^-5∙{data.E})/({dataIn.ny}∙{data.B1:f2})∙{dataIn.D}/" +
+                                    $"{data.l}∙[(100∙({dataIn.s}-{cdc.c:f2}))/{dataIn.D}]^2.5={data.p_de:f2} МПа");
+                body.AddParagraph()
+                    .AppendEquation($"[p]={data.p_dp:f2}/√(1+({data.p_dp:f2}/{data.p_de:f2})^2)={data.p_d:f2} МПа");
+                break;
         }
 
         WordHelpers.CheckCalculatedPressure(loadingCondition.p, data.p_d, body);

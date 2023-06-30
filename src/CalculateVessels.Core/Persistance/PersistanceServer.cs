@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
 using CalculateVessels.Core.Interfaces;
 using CalculateVessels.Core.Persistance.Enums;
@@ -65,7 +66,7 @@ internal class PersistanceServer : IPersistanceService
 
     private static void WriteToJsonFile(string filePath, object objectToWrite, bool append = false)
     {
-        var json = JsonSerializer.Serialize(objectToWrite, new JsonSerializerOptions { WriteIndented = true });
+        var json = JsonSerializer.Serialize(objectToWrite, new JsonSerializerOptions { WriteIndented = true, DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault });
 
         try
         {

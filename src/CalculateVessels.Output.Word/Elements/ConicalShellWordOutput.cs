@@ -46,7 +46,7 @@ internal class ConicalShellWordOutput : IWordOutputElement<ConicalShellCalculate
         dataIn.LoadingConditions
             .ToList()
             .ForEach(lc => InsertOneLoadingConditionCalculated(body, data.Results
-                    .First(r => r.LoadingCondition.OrdinalNumber == lc.OrdinalNumber),
+                    .First(r => r.LoadingConditionId == lc.Id),
                 data.CommonData,
                 dataIn));
     }
@@ -338,7 +338,7 @@ internal class ConicalShellWordOutput : IWordOutputElement<ConicalShellCalculate
         WordHelpers.AddMaterialCharacteristicsInTableForShell(dataIn.Steel,
             data.Results.Select(r => new
             {
-                r.LoadingCondition.OrdinalNumber,
+                r.LoadingConditionId,
                 r.SigmaAllow,
                 r.E
             }).ToList(),
@@ -349,10 +349,11 @@ internal class ConicalShellWordOutput : IWordOutputElement<ConicalShellCalculate
 
     private static void InsertOneLoadingConditionCalculated(Body body, ConicalShellCalculatedOneLoading data, ConicalShellCalculatedCommon cdc, ConicalShellInput dataIn)
     {
-        var loadingCondition = data.LoadingCondition;
+        var loadingCondition = dataIn.LoadingConditions.First(lc => lc.Id == data.LoadingConditionId);
 
         body.AddParagraph();
-        body.AddParagraph($"Результаты расчета (для условий нагружения #{loadingCondition.OrdinalNumber})").Alignment(AlignmentType.Center);
+        body.AddParagraph($"Результаты расчета (для условий нагружения #{loadingCondition.Id})")
+            .Alignment(AlignmentType.Center);
 
 
         body.AddParagraph("Толщину стенки гладкой конической обечайки вычисляют по формуле:");
@@ -402,11 +403,8 @@ internal class ConicalShellWordOutput : IWordOutputElement<ConicalShellCalculate
                 .AppendEquation($"s_p=max{{{data.s_p_1:f2};{data.s_p_2:f2}}}={data.s_p:f2} мм");
         }
 
-        //body.AddParagraph("c - сумма прибавок к расчетной толщине");
-        //body.AddParagraph()
-        //    .AppendEquation($"c=c_1+c_2+c_3={dataIn.c1}+{dataIn.c2}+{dataIn.c3}={cdc.c:f2} мм");
-
-        body.AddParagraph().AppendEquation($"s_k={data.s_p:f2}+{cdc.c:f2}={data.s:f2} мм");
+        body.AddParagraph()
+            .AppendEquation($"s_k={data.s_p:f2}+{cdc.c:f2}={data.s:f2} мм");
 
         WordHelpers.CheckCalculatedThickness("s_k", dataIn.s, data.s_p, body);
 

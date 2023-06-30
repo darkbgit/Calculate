@@ -1,11 +1,11 @@
-﻿using CalculateVessels.Core.Elements.Base;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using CalculateVessels.Core.Elements.Base;
 
 namespace CalculateVessels.Core.Elements.Shells.Base;
 
 public abstract class ShellCalculated : CalculatedElement
 {
-    public virtual ShellCalculatedCommonData CommonData { get; }
+    public abstract ShellCalculatedCommonData CommonData { get; }
 
-    public virtual IEnumerable<ShellCalculatedOneLoadingData> Results { get; }
+    public abstract IEnumerable<ShellCalculatedOneLoadingData> Results { get; }
 }
