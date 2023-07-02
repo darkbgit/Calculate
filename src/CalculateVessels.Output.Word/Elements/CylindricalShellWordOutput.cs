@@ -43,12 +43,15 @@ internal class CylindricalShellWordOutput : IWordOutputElement<CylindricalShellC
 
     private static void InsertLoadingConditionsDataCalculated(Body body, CylindricalShellInput dataIn, CylindricalShellCalculated data)
     {
+        var moreThanOneLoadingCondition = dataIn.LoadingConditions.Count() > 1;
+
         dataIn.LoadingConditions
             .ToList()
-            .ForEach(lc => MakeCalculateResult(body, data.Results
+            .ForEach(lc => InsertOneCalculatedResult(body, data.Results
                     .First(r => r.LoadingConditionId == lc.Id),
                 data.CommonData,
-                dataIn));
+                dataIn,
+                moreThanOneLoadingCondition));
     }
 
     private static void InsertCommonDataCalculated(Body body, CylindricalShellInput dataIn, CylindricalShellCalculatedCommon cdc)
@@ -138,13 +141,14 @@ internal class CylindricalShellWordOutput : IWordOutputElement<CylindricalShellC
         body.InsertTable(table);
     }
 
-    private static void MakeCalculateResult(Body body, CylindricalShellCalculatedOneLoading data, CylindricalShellCalculatedCommon cdc, CylindricalShellInput dataIn)
+    private static void InsertOneCalculatedResult(Body body, CylindricalShellCalculatedOneLoading data, CylindricalShellCalculatedCommon cdc, CylindricalShellInput dataIn, bool withNumber = true)
     {
         var loadingCondition = dataIn.LoadingConditions
             .First(lc => lc.Id == data.LoadingConditionId);
 
         body.AddParagraph();
-        body.AddParagraph($"Результаты расчета (для условий нагружения #{loadingCondition.Id})").Alignment(AlignmentType.Center);
+        body.AddParagraph("Результаты расчета" + (withNumber ? $" для условий нагружения #{loadingCondition.Id})" : ""))
+            .Alignment(AlignmentType.Center);
         body.AddParagraph();
         body.AddParagraph("Толщину стенки вычисляют по формуле:");
         body.AddParagraph().AppendEquation("s≥s_p+c");

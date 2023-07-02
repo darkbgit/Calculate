@@ -51,9 +51,13 @@ internal static class WordHelpers
 
     public static void AddLoadingConditionsInTableForShells(IEnumerable<LoadingCondition> loadingConditions, Table table)
     {
-        loadingConditions
-            .ToList()
-            .ForEach(lc => AddLoadingConditionInputData(table, lc));
+        var loadingConditionsList = loadingConditions
+            .ToList();
+
+        var moreThanOneLoadingCondition = loadingConditionsList.Count > 1;
+
+        loadingConditionsList
+            .ForEach(lc => AddLoadingConditionInputData(table, lc, moreThanOneLoadingCondition));
     }
 
     /// <summary>
@@ -86,9 +90,9 @@ internal static class WordHelpers
     /// </summary>
     /// <param name="table"></param>
     /// <param name="loadingCondition"></param>
-    private static void AddLoadingConditionInputData(Table table, LoadingCondition loadingCondition)
+    private static void AddLoadingConditionInputData(Table table, LoadingCondition loadingCondition, bool withNumber = false)
     {
-        table.AddRowWithOneCell($"Условия нагружения #{loadingCondition.Id}");
+        table.AddRowWithOneCell($"Условия нагружения{(withNumber ? $" #{loadingCondition.Id}" : "")}");
 
         table.AddRow()
             .AddCell("Расчетная температура, Т:")

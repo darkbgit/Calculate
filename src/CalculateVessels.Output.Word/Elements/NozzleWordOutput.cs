@@ -615,6 +615,9 @@ internal class NozzleWordOutput : IWordOutputElement<NozzleCalculated>
 
     private static void InsertLoadingConditionsDataCalculated(Body body, NozzleInput nozzleDataIn, NozzleCalculated data, ShellInputData shellDataIn)
     {
+
+        var moreThanOneLoadingCondition = shellDataIn.LoadingConditions.Count() > 1;
+
         shellDataIn.LoadingConditions
             .ToList()
             .ForEach(lc =>
@@ -622,17 +625,18 @@ internal class NozzleWordOutput : IWordOutputElement<NozzleCalculated>
                 var result = data.Results
                     .First(r => r.LoadingConditionId == lc.Id);
 
-                InsertOneLoadingConditionDataCalculated(body, nozzleDataIn, result, data.CommonData, shellDataIn);
+                InsertOneLoadingConditionDataCalculated(body, nozzleDataIn, result, data.CommonData, shellDataIn, moreThanOneLoadingCondition);
             });
     }
 
-    private static void InsertOneLoadingConditionDataCalculated(Body body, NozzleInput nozzleDataIn, NozzleCalculatedOneLoading data, NozzleCalculatedCommon cdc, ShellInputData shellDataIn)
+    private static void InsertOneLoadingConditionDataCalculated(Body body, NozzleInput nozzleDataIn, NozzleCalculatedOneLoading data, NozzleCalculatedCommon cdc, ShellInputData shellDataIn, bool withNumber = false)
     {
         var loadingCondition = shellDataIn.LoadingConditions
             .First(lc => lc.Id == data.LoadingConditionId);
 
         body.AddParagraph();
-        body.AddParagraph($"Результаты расчета #{loadingCondition.Id}").Alignment(AlignmentType.Center);
+        body.AddParagraph("Результаты расчета" + (withNumber ? $" для условий нагружения #{loadingCondition.Id})" : ""))
+            .Alignment(AlignmentType.Center);
         body.AddParagraph();
 
         body.AddParagraph("Расчетная толщина стенки укрепляемого элемента");
@@ -653,7 +657,7 @@ internal class NozzleWordOutput : IWordOutputElement<NozzleCalculated>
             .AppendEquation("s_1p=(p(d+2∙c_s))/(2∙φ_1∙[σ]_1-p)" +
                             $"=({loadingCondition.p}({nozzleDataIn.d}+2∙{nozzleDataIn.cs}))/(2∙{nozzleDataIn.phi1}∙{nozzleDataIn.SigmaAllow1}-{loadingCondition.p})={data.s1p:f2} мм");
 
-        if ((data.psi1 is not (1 or 0)) | (data.psi2 is not (1 or 0)) | (data.psi3 is not (1 or 0)) | (data.psi4 is not (1 or 0)))
+        if (data.psi1 is not (1 or 0) || data.psi2 is not (1 or 0) || data.psi3 is not (1 or 0) || data.psi4 is not (1 or 0))
         {
             body.AddParagraph("Учет применения различного материального исполнения");
         }

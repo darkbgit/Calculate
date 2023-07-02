@@ -43,19 +43,22 @@ internal class ConicalShellWordOutput : IWordOutputElement<ConicalShellCalculate
 
     private static void InsertLoadingConditionsDataCalculated(Body body, ConicalShellInput dataIn, ConicalShellCalculated data)
     {
+        var moreThanOneLoadingCondition = dataIn.LoadingConditions.Count() > 1;
+
         dataIn.LoadingConditions
             .ToList()
             .ForEach(lc => InsertOneLoadingConditionCalculated(body, data.Results
                     .First(r => r.LoadingConditionId == lc.Id),
                 data.CommonData,
-                dataIn));
+                dataIn,
+                moreThanOneLoadingCondition));
     }
 
     private static void InsertHeader(Body body, ConicalShellInput dataIn)
     {
         body.AddParagraph($"Расчет на прочность конической обечайки {dataIn.Name}")
             .Heading(HeadingType.Heading1)
-            .Alignment(AlignmentType.Center); ;
+            .Alignment(AlignmentType.Center);
     }
 
     private static void InsertCommonDataCalculated(Body body, ConicalShellInput dataIn, ConicalShellCalculatedCommon data)
@@ -347,12 +350,12 @@ internal class ConicalShellWordOutput : IWordOutputElement<ConicalShellCalculate
         body.InsertTable(table);
     }
 
-    private static void InsertOneLoadingConditionCalculated(Body body, ConicalShellCalculatedOneLoading data, ConicalShellCalculatedCommon cdc, ConicalShellInput dataIn)
+    private static void InsertOneLoadingConditionCalculated(Body body, ConicalShellCalculatedOneLoading data, ConicalShellCalculatedCommon cdc, ConicalShellInput dataIn, bool withNumber = true)
     {
         var loadingCondition = dataIn.LoadingConditions.First(lc => lc.Id == data.LoadingConditionId);
 
         body.AddParagraph();
-        body.AddParagraph($"Результаты расчета (для условий нагружения #{loadingCondition.Id})")
+        body.AddParagraph("Результаты расчета" + (withNumber ? $" для условий нагружения #{loadingCondition.Id})" : ""))
             .Alignment(AlignmentType.Center);
 
 
