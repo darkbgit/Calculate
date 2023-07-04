@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
+﻿using System.Globalization;
 using CalculateVessels.Core.Enums;
 
 namespace CalculateVessels.Helpers;
 
 internal static class Parameters
 {
-    public static T GetParam<T>(string? paramValue, string paramName, List<string> errorList, NumberStyles numberStyles = NumberStyles.AllowDecimalPoint)
+    public static T GetParam<T>(string? paramValue, string paramName, List<string> errorList, NumberStyles numberStyles = NumberStyles.Float)
         where T : struct
     {
         if (string.IsNullOrEmpty(paramValue))
@@ -15,28 +13,30 @@ internal static class Parameters
             return default;
         }
 
+        var paramValueWithDot = paramValue.Replace(',', '.');
+
+
         switch (typeof(T))
         {
             case var value when value == typeof(double):
-                if (double.TryParse(paramValue, numberStyles,
+                if (double.TryParse(paramValueWithDot, numberStyles,
                         CultureInfo.InvariantCulture, out var paramDoubleValue))
                 {
                     return (T)(object)paramDoubleValue;
                 }
                 break;
             case var value when value == typeof(int):
-                if (int.TryParse(paramValue, numberStyles, CultureInfo.InvariantCulture, out var paramIntValue))
+                if (int.TryParse(paramValueWithDot, numberStyles, CultureInfo.InvariantCulture, out var paramIntValue))
                 {
                     return (T)(object)paramIntValue;
                 }
                 break;
             case var value when value == typeof(BracketVerticalType):
-                if (Enum.TryParse(paramValue, out BracketVerticalType paramBracketVerticalType))
+                if (Enum.TryParse(paramValueWithDot, out BracketVerticalType paramBracketVerticalType))
                 {
                     return (T)(object)paramBracketVerticalType;
                 }
                 break;
-
         }
 
         errorList.Add($"{paramName} неверный ввод");

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Globalization;
-using System.Linq;
-using System.Windows.Forms;
+﻿using System.Globalization;
 using CalculateVessels.Controls;
 using CalculateVessels.Core.Elements.Base;
 using CalculateVessels.Core.Enums;
@@ -140,8 +135,8 @@ internal static class FormHelpers
         var loadingCondition = new LoadingCondition
         {
             PressureType = isPressureOutside.Checked ? PressureType.Outside : PressureType.Inside,
-            t = Parameters.GetParam<double>(t.Text, "t", dataInErr, NumberStyles.Integer),
-            p = Parameters.GetParam<double>(p.Text, "p", dataInErr),
+            t = Parameters.GetParam<double>(t.Text, nameof(t), dataInErr, NumberStyles.Integer),
+            p = Parameters.GetParam<double>(p.Text, nameof(p), dataInErr),
             Id = 1,
             SigmaAllow = sigmaHandle.Checked
                 ? Parameters.GetParam<double>(sigmaAllow.Text, "[σ]", dataInErr)

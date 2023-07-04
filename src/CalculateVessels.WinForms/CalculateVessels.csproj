@@ -18,6 +18,7 @@
 	<AnalysisLevel>latest</AnalysisLevel>
 	<Deterministic>false</Deterministic>
 	<Description>Calculate vassel parts acording to ГОСТ 34233.1-2017-ГОСТ 34233.12-2017</Description>
+	<ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
 	<ItemGroup>

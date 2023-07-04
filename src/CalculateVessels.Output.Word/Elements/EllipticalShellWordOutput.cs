@@ -44,7 +44,7 @@ internal class EllipticalShellWordOutput : IWordOutputElement<EllipticalShellCal
         package.Dispose();
     }
 
-    private void InsertLoadingConditionsDataCalculated(Body body, EllipticalShellInput dataIn, EllipticalShellCalculated data)
+    private static void InsertLoadingConditionsDataCalculated(Body body, EllipticalShellInput dataIn, EllipticalShellCalculated data)
     {
         var moreThanOneLoadingCondition = dataIn.LoadingConditions.Count() > 1;
 

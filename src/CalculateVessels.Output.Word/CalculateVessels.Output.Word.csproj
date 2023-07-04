@@ -24,4 +24,8 @@
     <Folder Include="DI\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <EditorConfigFiles Remove="C:\Prog\C#\calcNet\src\CalculateVessels.Output.Word\.editorconfig" />
+  </ItemGroup>
+
 </Project>
