@@ -86,7 +86,7 @@ internal class ConicalShellWordOutput : IWordOutputElement<ConicalShellCalculate
                     body.AddParagraph("- для конических и цилиндрических обечаек");
                     body.AddParagraph()
                         .AppendEquation("a_1p=0.7√(D/cosα_1∙(s_1-c))" +
-                                        $"=0.7√({dataIn.D}/cos{RadiansToDegree(data.alpha1):f0}∙({dataIn.s1Big}-{data.c:f2}))={data.a1p:f2}");
+                                        $"=0.7√({dataIn.D}/cos{MathHelper.RadiansToDegree(data.alpha1):f0}∙({dataIn.s1Big}-{data.c:f2}))={data.a1p:f2}");
                     body.AddParagraph()
                         .AppendEquation("a_2p=0.7√(D∙(s_2-c))" +
                                         $"=0.7√({dataIn.D}∙({dataIn.s2Big}-{data.c:f2}))={data.a2p:f2}");
@@ -97,7 +97,7 @@ internal class ConicalShellWordOutput : IWordOutputElement<ConicalShellCalculate
                     body.AddParagraph("- для конических и цилиндрических обечаек");
                     body.AddParagraph()
                         .AppendEquation("a_1p=0.7√(D/cosα_1∙(s_T-c))" +
-                                        $"=0.7√({dataIn.D}/cos{RadiansToDegree(data.alpha1):f0}∙({dataIn.sT}-{data.c:f2}))={data.a1p:f2}");
+                                        $"=0.7√({dataIn.D}/cos{MathHelper.RadiansToDegree(data.alpha1):f0}∙({dataIn.sT}-{data.c:f2}))={data.a1p:f2}");
                     body.AddParagraph()
                         .AppendEquation("a_2p=0.5√(D∙(s_T-c))" +
                                         $"=0.5√({dataIn.D}∙({dataIn.sT}-{data.c:f2}))={data.a2p:f2}");
@@ -112,7 +112,7 @@ internal class ConicalShellWordOutput : IWordOutputElement<ConicalShellCalculate
 
             body.AddParagraph()
             .AppendEquation("a_1p=√(D_1/cosα_1∙(s_1-c))" +
-                            $"=√({dataIn.D1}/cos{RadiansToDegree(data.alpha1):f0}∙({dataIn.s1Little}-{data.c:f2}))={data.a1p_l:f2}");
+                            $"=√({dataIn.D1}/cos{MathHelper.RadiansToDegree(data.alpha1):f0}∙({dataIn.s1Little}-{data.c:f2}))={data.a1p_l:f2}");
             body.AddParagraph()
                 .AppendEquation("a_2p=1.25√(D_1∙(s_2-c))" +
                                 $"=1.25√({dataIn.D1}∙({dataIn.s2Little}-{data.c:f2}))={data.a2p_l:f2}");
@@ -125,7 +125,7 @@ internal class ConicalShellWordOutput : IWordOutputElement<ConicalShellCalculate
                 .AddRun(" без тороидального перехода");
             body.AddParagraph()
                 .AppendEquation("D_k=D-1.4∙a_1p∙sinα_1" +
-                                $"={dataIn.D}-1.4∙{data.a1p:f2}∙sin{RadiansToDegree(data.alpha1):f0}={data.Dk:f2} мм");
+                                $"={dataIn.D}-1.4∙{data.a1p:f2}∙sin{MathHelper.RadiansToDegree(data.alpha1):f0}={data.Dk:f2} мм");
         }
         else
         {
@@ -133,7 +133,7 @@ internal class ConicalShellWordOutput : IWordOutputElement<ConicalShellCalculate
                 .AddRun(" с тороидальным переходом");
             body.AddParagraph()
                 .AppendEquation("D_k=D-2[r(1-cosα_1)+0.7∙a_1p∙sinα_1]" +
-                                $"={dataIn.D}-2[{dataIn.r}(1-cos{RadiansToDegree(data.alpha1):f0})+0.7∙{data.a1p:f2}∙sin{RadiansToDegree(data.alpha1)}]={data.Dk:f2} мм");
+                                $"={dataIn.D}-2[{dataIn.r}(1-cos{MathHelper.RadiansToDegree(data.alpha1):f0})+0.7∙{data.a1p:f2}∙sin{MathHelper.RadiansToDegree(data.alpha1)}]={data.Dk:f2} мм");
         }
 
         body.AddParagraph("Сумма прибавок к расчетной толщине");
@@ -194,7 +194,7 @@ internal class ConicalShellWordOutput : IWordOutputElement<ConicalShellCalculate
             .AddCell("Половина угла раствора при вершине конической обечайки, ")
             .AppendEquation("α_1")
             .AppendText(":")
-            .AddCell($"{data.CommonData.alpha1:f0} град");
+            .AddCell($"{MathHelper.RadiansToDegree(data.CommonData.alpha1):f0} град");
 
         table.AddRow()
             .AddCell("Прибавка на коррозию, ")
@@ -368,7 +368,7 @@ internal class ConicalShellWordOutput : IWordOutputElement<ConicalShellCalculate
         {
             body.AddParagraph()
                 .AppendEquation("s_(k.p)=(p∙D_k)/(2∙φ_p∙[σ]-p)(1/cosα_1)" +
-                                $"=({loadingCondition.p}∙{cdc.Dk:f2})/(2∙{dataIn.phi}∙{data.SigmaAllow}-{loadingCondition.p})(1/cos{RadiansToDegree(cdc.alpha1):f0})={data.s_p:f2} мм");
+                                $"=({loadingCondition.p}∙{cdc.Dk:f2})/(2∙{dataIn.phi}∙{data.SigmaAllow}-{loadingCondition.p})(1/cos{MathHelper.RadiansToDegree(cdc.alpha1):f0})={data.s_p:f2} мм");
         }
         else
         {
@@ -378,14 +378,14 @@ internal class ConicalShellWordOutput : IWordOutputElement<ConicalShellCalculate
                 .AppendEquation($"s_k={dataIn.s} мм")
                 .AddRun("):");
             body.AddParagraph()
-                .AppendEquation("l_E=(D-D_1)/(2∙sinα_1)" + $"=({dataIn.D}-{dataIn.D1})/(2∙sin{RadiansToDegree(cdc.alpha1):f0})={data.lE:f2} мм");
+                .AppendEquation("l_E=(D-D_1)/(2∙sinα_1)" + $"=({dataIn.D}-{dataIn.D1})/(2∙sin{MathHelper.RadiansToDegree(cdc.alpha1):f0})={data.lE:f2} мм");
             body.AddParagraph()
                 .AppendEquation("D_E=max{(D+D_1)/(2∙cosα_1);D/cosα_1-0.3∙(D+D_1)∙√((D+D_1)/((s_k-c)∙100))∙tgα_1}");
             body.AddParagraph()
-                .AppendEquation("(D+D_1)/(2∙cosα_1)" + $"=({dataIn.D}+{dataIn.D1})/(2∙cos{RadiansToDegree(cdc.alpha1):f0})={data.DE_1:f2}");
+                .AppendEquation("(D+D_1)/(2∙cosα_1)" + $"=({dataIn.D}+{dataIn.D1})/(2∙cos{MathHelper.RadiansToDegree(cdc.alpha1):f0})={data.DE_1:f2}");
             body.AddParagraph()
                 .AppendEquation("D/cosα_1-0.3∙(D+D_1)∙√((D+D_1)/((s_k-c)∙100))∙tgα_1" +
-                                $"={dataIn.D}/cos{RadiansToDegree(cdc.alpha1):f0}-0.3∙({dataIn.D}+{dataIn.D1})∙√(({dataIn.D}+{dataIn.D1})/(({dataIn.s}-{cdc.c:f2})∙100))∙tg{RadiansToDegree(cdc.alpha1):f0}={data.DE_2:f2}");
+                                $"={dataIn.D}/cos{MathHelper.RadiansToDegree(cdc.alpha1):f0}-0.3∙({dataIn.D}+{dataIn.D1})∙√(({dataIn.D}+{dataIn.D1})/(({dataIn.s}-{cdc.c:f2})∙100))∙tg{MathHelper.RadiansToDegree(cdc.alpha1):f0}={data.DE_2:f2}");
             body.AddParagraph()
                 .AppendEquation($"D_E=max{{{data.DE_1:f2};{data.DE_2:f2}}}={data.DE:f2} мм");
             body.AddParagraph("Коэффициент ")
@@ -401,7 +401,7 @@ internal class ConicalShellWordOutput : IWordOutputElement<ConicalShellCalculate
             body.AddParagraph()
                 .AppendEquation($"1.06∙(10^-2∙{data.DE:f2})/{data.B1:f2}∙({loadingCondition.p}/(10^-5∙{loadingCondition.EAllow})∙{data.lE:f2}/{data.DE:f2})^0.4={data.s_p_1:f2}");
             body.AddParagraph()
-                .AppendEquation($"(1.2∙{loadingCondition.p}∙{cdc.Dk:f2})/(2∙{dataIn.phi}∙{data.SigmaAllow}-{loadingCondition.p})(1/cos{RadiansToDegree(cdc.alpha1):f0})={data.s_p_2:f2}");
+                .AppendEquation($"(1.2∙{loadingCondition.p}∙{cdc.Dk:f2})/(2∙{dataIn.phi}∙{data.SigmaAllow}-{loadingCondition.p})(1/cos{MathHelper.RadiansToDegree(cdc.alpha1):f0})={data.s_p_2:f2}");
             body.AddParagraph()
                 .AppendEquation($"s_p=max{{{data.s_p_1:f2};{data.s_p_2:f2}}}={data.s_p:f2} мм");
         }
@@ -416,7 +416,7 @@ internal class ConicalShellWordOutput : IWordOutputElement<ConicalShellCalculate
             body.AddParagraph("Допускаемое внутреннее избыточное давление вычисляют по формуле:");
             body.AddParagraph()
                 .AppendEquation("[p]=(2∙[σ]∙φ_p∙(s_k-c))/(D_k/cosα_1+(s_k-c))"
-                                + $"=(2∙{data.SigmaAllow}∙{dataIn.phi}∙({dataIn.s}-{cdc.c:f2}))/({cdc.Dk:f2}/cos{RadiansToDegree(cdc.alpha1):f0}+({dataIn.s}-{cdc.c:f2}))={data.p_d:f2} МПа");
+                                + $"=(2∙{data.SigmaAllow}∙{dataIn.phi}∙({dataIn.s}-{cdc.c:f2}))/({cdc.Dk:f2}/cos{MathHelper.RadiansToDegree(cdc.alpha1):f0}+({dataIn.s}-{cdc.c:f2}))={data.p_d:f2} МПа");
         }
         else
         {
@@ -426,7 +426,7 @@ internal class ConicalShellWordOutput : IWordOutputElement<ConicalShellCalculate
             body.AddParagraph("допускаемое давление из условия прочности вычисляют по формуле:");
             body.AddParagraph()
                 .AppendEquation("[p]_П=(2∙[σ]∙φ_p∙(s_k-c))/(D_k/cosα_1+(s_k-c))" +
-                                $"=(2∙{data.SigmaAllow}∙{dataIn.phi}∙({dataIn.s}-{cdc.c:f2}))/({cdc.Dk:f2}/cos{RadiansToDegree(cdc.alpha1):f0}+({dataIn.s}-{cdc.c:f2}))={data.p_dp:f2} МПа");
+                                $"=(2∙{data.SigmaAllow}∙{dataIn.phi}∙({dataIn.s}-{cdc.c:f2}))/({cdc.Dk:f2}/cos{MathHelper.RadiansToDegree(cdc.alpha1):f0}+({dataIn.s}-{cdc.c:f2}))={data.p_dp:f2} МПа");
             body.AddParagraph("допускаемое давление из условия устойчивости в пределах упругости вычисляют по формуле:");
             body.AddParagraph()
                 .AppendEquation("[p]_E=(2.08∙10^-5∙E)/(n_y∙B_1)∙D_E/l_E∙[(100∙(s_k-c))/D_E]^2.5" +
@@ -442,12 +442,12 @@ internal class ConicalShellWordOutput : IWordOutputElement<ConicalShellCalculate
         if (loadingCondition.PressureType == PressureType.Outside)
         {
             body.AddParagraph()
-                .AppendEquation($"α_1={RadiansToDegree(cdc.alpha1):f0}≤70");
+                .AppendEquation($"α_1={MathHelper.RadiansToDegree(cdc.alpha1):f0}≤70");
         }
 
         body.AddParagraph()
             .AppendEquation(
-                $"0.001≤(s∙cosα_1)/D=({dataIn.s}∙cos{RadiansToDegree(cdc.alpha1):f0})/{dataIn.D}={data.ConditionUseFormulas:f3}≤0.05");
+                $"0.001≤(s∙cosα_1)/D=({dataIn.s}∙cos{MathHelper.RadiansToDegree(cdc.alpha1):f0})/{dataIn.D}={data.ConditionUseFormulas:f3}≤0.05");
 
         if (!data.IsConditionUseFormulas)
         {
@@ -485,7 +485,7 @@ internal class ConicalShellWordOutput : IWordOutputElement<ConicalShellCalculate
                                         $"={data.SigmaAllow1Big}/{data.SigmaAllow2Big}={data.chi_1Big:f2}");
                     body.AddParagraph()
                         .AppendEquation(
-                            $"β=0.4√({dataIn.D}/({dataIn.s2Big}-{cdc.c:f2}))∙tg{RadiansToDegree(cdc.alpha1):f0}/(1+√((1+{data.chi_1Big:f2} (({dataIn.s1Big}-{cdc.c:f2})/({dataIn.s2Big}-{cdc.c:f2}))^2)/(2∙cos{RadiansToDegree(cdc.alpha1):f0}){data.chi_1Big:f2}({dataIn.s1Big}-{cdc.c:f2})/({dataIn.s2Big}-{cdc.c:f2})))-0.25={data.beta:f2}");
+                            $"β=0.4√({dataIn.D}/({dataIn.s2Big}-{cdc.c:f2}))∙tg{MathHelper.RadiansToDegree(cdc.alpha1):f0}/(1+√((1+{data.chi_1Big:f2} (({dataIn.s1Big}-{cdc.c:f2})/({dataIn.s2Big}-{cdc.c:f2}))^2)/(2∙cos{MathHelper.RadiansToDegree(cdc.alpha1):f0}){data.chi_1Big:f2}({dataIn.s1Big}-{cdc.c:f2})/({dataIn.s2Big}-{cdc.c:f2})))-0.25={data.beta:f2}");
                     body.AddParagraph()
                         .AppendEquation($"β_1=max{{0.5;{data.beta:f2}}}={data.beta_1:f2}");
                     body.AddParagraph()
@@ -528,10 +528,10 @@ internal class ConicalShellWordOutput : IWordOutputElement<ConicalShellCalculate
                                         $"={data.SigmaAllow1Big}/{data.SigmaAllow2Big}={data.chi_1Big:f2}");
                     body.AddParagraph()
                         .AppendEquation(
-                            $"β=0.4√({dataIn.D}/({dataIn.s2Big}-{cdc.c:f2}))∙tg{RadiansToDegree(cdc.alpha1):f0}/(1+√((1+{data.chi_1Big:f2} (({dataIn.s1Big}-{cdc.c:f2})/({dataIn.s2Big}-{cdc.c:f2}))^2)/(2∙cos{RadiansToDegree(cdc.alpha1)}){data.chi_1Big:f2}({dataIn.s1Big}-{cdc.c:f2})/({dataIn.s2Big}-{cdc.c:f2})))-0.25={data.beta:f2}");
+                            $"β=0.4√({dataIn.D}/({dataIn.s2Big}-{cdc.c:f2}))∙tg{MathHelper.RadiansToDegree(cdc.alpha1):f0}/(1+√((1+{data.chi_1Big:f2} (({dataIn.s1Big}-{cdc.c:f2})/({dataIn.s2Big}-{cdc.c:f2}))^2)/(2∙cos{MathHelper.RadiansToDegree(cdc.alpha1)}){data.chi_1Big:f2}({dataIn.s1Big}-{cdc.c:f2})/({dataIn.s2Big}-{cdc.c:f2})))-0.25={data.beta:f2}");
 
                     body.AddParagraph()
-                        .AppendEquation($"A_K=({loadingCondition.p}∙{dataIn.D}^2∙tg{RadiansToDegree(cdc.alpha1):f0})/(8∙{data.SigmaAllowC}∙{dataIn.phi_k})∙(1-({data.beta_a:f2}+0.25)/({data.beta:f2}+0.25))={data.Ak:f2} мм^2");
+                        .AppendEquation($"A_K=({loadingCondition.p}∙{dataIn.D}^2∙tg{MathHelper.RadiansToDegree(cdc.alpha1):f0})/(8∙{data.SigmaAllowC}∙{dataIn.phi_k})∙(1-({data.beta_a:f2}+0.25)/({data.beta:f2}+0.25))={data.Ak:f2} мм^2");
 
                     ReinforcementRingSquareCheck(dataIn, data, body);
 
@@ -554,8 +554,8 @@ internal class ConicalShellWordOutput : IWordOutputElement<ConicalShellCalculate
 
                     body.AddParagraph()
                         .AppendEquation(
-                            $"β_0=(0.4√({dataIn.D}/({dataIn.s2Big}-{cdc.c}))∙tg{RadiansToDegree(cdc.alpha1):f0}-{data.B3}[1+√((1+{data.chi_1Big}(({dataIn.s1Big}-{cdc.c})/({dataIn.s2Big}-{cdc.c}))^2)/(2∙cos{RadiansToDegree(cdc.alpha1):f0}){data.chi_1Big}({dataIn.s1Big}-{cdc.c})/({dataIn.s2Big}-{cdc.c}))])/" +
-                            $"({data.B2:f2}+[1+√((1+{data.chi_1Big}(({dataIn.s1Big}-{cdc.c})/({dataIn.s2Big}-{cdc.c}))^2)/(2∙cos{RadiansToDegree(cdc.alpha1):f0}){data.chi_1Big}({dataIn.s1Big}-{cdc.c})/({dataIn.s2Big}-{cdc.c}))])={data.beta_0:f2}");
+                            $"β_0=(0.4√({dataIn.D}/({dataIn.s2Big}-{cdc.c}))∙tg{MathHelper.RadiansToDegree(cdc.alpha1):f0}-{data.B3}[1+√((1+{data.chi_1Big}(({dataIn.s1Big}-{cdc.c})/({dataIn.s2Big}-{cdc.c}))^2)/(2∙cos{MathHelper.RadiansToDegree(cdc.alpha1):f0}){data.chi_1Big}({dataIn.s1Big}-{cdc.c})/({dataIn.s2Big}-{cdc.c}))])/" +
+                            $"({data.B2:f2}+[1+√((1+{data.chi_1Big}(({dataIn.s1Big}-{cdc.c})/({dataIn.s2Big}-{cdc.c}))^2)/(2∙cos{MathHelper.RadiansToDegree(cdc.alpha1):f0}){data.chi_1Big}({dataIn.s1Big}-{cdc.c})/({dataIn.s2Big}-{cdc.c}))])={data.beta_0:f2}");
 
                     body.AddParagraph()
                         .AppendEquation($"β_2=max{{0.5;{data.beta_0:f2}}}={data.beta_2:f2}");
@@ -570,7 +570,7 @@ internal class ConicalShellWordOutput : IWordOutputElement<ConicalShellCalculate
                     body.AddParagraph("Площадь поперечного сечения укрепляющего кольца вычисляют по формуле");
                     body.AddParagraph()
                         .AppendEquation("A_K=(p∙D^2∙tgα_1)/(8∙[σ]_K∙φ_K)=" +
-                                        $"({loadingCondition.p}∙{dataIn.D}^2∙tg{RadiansToDegree(cdc.alpha1):f0})/(8∙{data.SigmaAllowC}∙{dataIn.phi_k})={data.Ak:f2} мм^2");
+                                        $"({loadingCondition.p}∙{dataIn.D}^2∙tg{MathHelper.RadiansToDegree(cdc.alpha1):f0})/(8∙{data.SigmaAllowC}∙{dataIn.phi_k})={data.Ak:f2} мм^2");
 
                     ReinforcementRingSquareCheck(dataIn, data, body);
 
@@ -579,7 +579,7 @@ internal class ConicalShellWordOutput : IWordOutputElement<ConicalShellCalculate
                                       "давление из условия прочности переходной части вычисляют по формуле");
                     body.AddParagraph()
                         .AppendEquation("[p]=(8∙[σ]_K∙φ_K)/(D^2∙tgα_1)" +
-                                        $"(8∙{data.SigmaAllowC}∙{dataIn.phi_k})/({dataIn.D}^2∙tg{RadiansToDegree(cdc.alpha1):f0})={data.p_dBig:f2} МПа");
+                                        $"(8∙{data.SigmaAllowC}∙{dataIn.phi_k})/({dataIn.D}^2∙tg{MathHelper.RadiansToDegree(cdc.alpha1):f0})={data.p_dBig:f2} МПа");
                     break;
                 case ConicalConnectionType.Toroidal:
                     body.AddParagraph("Соединение обечаек с тороидальным переходом")
@@ -603,11 +603,11 @@ internal class ConicalShellWordOutput : IWordOutputElement<ConicalShellCalculate
                                         $"={data.SigmaAllow1Big}/{data.SigmaAllow2Big}={data.chi_1Big:f2}");
                     body.AddParagraph()
                         .AppendEquation(
-                            $"β=0.4√({dataIn.D}/({dataIn.s2Big}-{cdc.c:f2}))∙tg{RadiansToDegree(cdc.alpha1):f0}/(1+√((1+{data.chi_1Big:f2} (({dataIn.s1Big}-{cdc.c:f2})/({dataIn.s2Big}-{cdc.c:f2}))^2)/(2∙cos{RadiansToDegree(cdc.alpha1)}){data.chi_1Big:f2}({dataIn.s1Big}-{cdc.c:f2})/({dataIn.s2Big}-{cdc.c:f2})))-0.25={data.beta:f2}");
+                            $"β=0.4√({dataIn.D}/({dataIn.s2Big}-{cdc.c:f2}))∙tg{MathHelper.RadiansToDegree(cdc.alpha1):f0}/(1+√((1+{data.chi_1Big:f2} (({dataIn.s1Big}-{cdc.c:f2})/({dataIn.s2Big}-{cdc.c:f2}))^2)/(2∙cos{MathHelper.RadiansToDegree(cdc.alpha1)}){data.chi_1Big:f2}({dataIn.s1Big}-{cdc.c:f2})/({dataIn.s2Big}-{cdc.c:f2})))-0.25={data.beta:f2}");
                     body.AddParagraph()
                         .AppendEquation(
                             "β_T=1/(1+(0.028∙α_1∙r/D∙√(D/(s_T-c)))/(1/√cosα_1+1" +
-                            $"=1/(1+(0.028∙{RadiansToDegree(cdc.alpha1):f0}∙{dataIn.r}/{dataIn.D}∙√({dataIn.D}/({dataIn.sT}-{cdc.c})))/(1/√cos{RadiansToDegree(cdc.alpha1):f0}+1={data.beta_t:f2}");
+                            $"=1/(1+(0.028∙{MathHelper.RadiansToDegree(cdc.alpha1):f0}∙{dataIn.r}/{dataIn.D}∙√({dataIn.D}/({dataIn.sT}-{cdc.c})))/(1/√cos{MathHelper.RadiansToDegree(cdc.alpha1):f0}+1={data.beta_t:f2}");
                     body.AddParagraph()
                         .AppendEquation($"β_3=max{{0.5;{data.beta:f2}∙{data.beta_t:f2}}}=max{{0.5;{data.beta_3_2:f2}}}={data.beta_3:f2}");
                     body.AddParagraph()
@@ -636,7 +636,7 @@ internal class ConicalShellWordOutput : IWordOutputElement<ConicalShellCalculate
             body.AddParagraph("Условия применения расчетных формул");
 
             body.AddParagraph()
-                .AppendEquation($"α_1={RadiansToDegree(cdc.alpha1):f0}≤70");
+                .AppendEquation($"α_1={MathHelper.RadiansToDegree(cdc.alpha1):f0}≤70");
 
             switch (dataIn.ConnectionType)
             {
@@ -694,7 +694,7 @@ internal class ConicalShellWordOutput : IWordOutputElement<ConicalShellCalculate
 
                 body.AddParagraph()
                     .AppendEquation(
-                        $"β=0.4√({dataIn.D1}/({dataIn.s2Little}-{cdc.c:f2}))∙tg{RadiansToDegree(cdc.alpha1):f0}/(1+√((1+{data.chi_1Little:f2} (({dataIn.s1Little}-{cdc.c:f2})/({dataIn.s2Little}-{cdc.c:f2}))^2)/(2∙cos{RadiansToDegree(cdc.alpha1):f0}){data.chi_1Little:f2}({dataIn.s1Little}-{cdc.c:f2})/({dataIn.s2Little}-{cdc.c:f2})))-0.25={data.betaLittle:f2}");
+                        $"β=0.4√({dataIn.D1}/({dataIn.s2Little}-{cdc.c:f2}))∙tg{MathHelper.RadiansToDegree(cdc.alpha1):f0}/(1+√((1+{data.chi_1Little:f2} (({dataIn.s1Little}-{cdc.c:f2})/({dataIn.s2Little}-{cdc.c:f2}))^2)/(2∙cos{MathHelper.RadiansToDegree(cdc.alpha1):f0}){data.chi_1Little:f2}({dataIn.s1Little}-{cdc.c:f2})/({dataIn.s2Little}-{cdc.c:f2})))-0.25={data.betaLittle:f2}");
 
                 body.AddParagraph()
                     .AppendEquation($"β_H={data.betaLittle:f2}+0.75={data.beta_H:f2}");
@@ -711,7 +711,7 @@ internal class ConicalShellWordOutput : IWordOutputElement<ConicalShellCalculate
 
                 body.AddParagraph()
                     .AppendEquation(
-                        $"β_H=0.4√({dataIn.D1}/({dataIn.s2Little}-{cdc.c:f2}))∙tg{RadiansToDegree(cdc.alpha1):f0}/({data.chi_1Little}({dataIn.s1Little}-{cdc.c})/({dataIn.s2Little}-{cdc.c})∙√(({dataIn.s1Little}-{cdc.c})/(({dataIn.s2Little}-{cdc.c})∙cos{RadiansToDegree(cdc.alpha1):f0}))+√((1+{data.chi_1Little:f2}(({dataIn.s1Little}-{cdc.c:f2})/({dataIn.s2Little}-{cdc.c:f2}))^2)/2)+0.5={data.beta_H:f2}");
+                        $"β_H=0.4√({dataIn.D1}/({dataIn.s2Little}-{cdc.c:f2}))∙tg{MathHelper.RadiansToDegree(cdc.alpha1):f0}/({data.chi_1Little}({dataIn.s1Little}-{cdc.c})/({dataIn.s2Little}-{cdc.c})∙√(({dataIn.s1Little}-{cdc.c})/(({dataIn.s2Little}-{cdc.c})∙cos{MathHelper.RadiansToDegree(cdc.alpha1):f0}))+√((1+{data.chi_1Little:f2}(({dataIn.s1Little}-{cdc.c:f2})/({dataIn.s2Little}-{cdc.c:f2}))^2)/2)+0.5={data.beta_H:f2}");
 
                 body.AddParagraph()
                     .AppendEquation($"β_H={data.betaLittle:f2}+0.75={data.beta_H:f2}");
@@ -746,7 +746,7 @@ internal class ConicalShellWordOutput : IWordOutputElement<ConicalShellCalculate
             body.AddParagraph("Условия применения расчетных формул");
 
             body.AddParagraph()
-                .AppendEquation($"α_1={RadiansToDegree(cdc.alpha1):f0}≤70");
+                .AppendEquation($"α_1={MathHelper.RadiansToDegree(cdc.alpha1):f0}≤70");
 
             if (!data.IsConditionUseFormulasLittleConnection)
             {
@@ -783,6 +783,4 @@ internal class ConicalShellWordOutput : IWordOutputElement<ConicalShellCalculate
             }
         }
     }
-
-    private static double RadiansToDegree(double radians) => radians * 180 / Math.PI;
 }

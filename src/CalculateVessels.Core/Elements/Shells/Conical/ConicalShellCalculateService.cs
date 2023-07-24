@@ -104,7 +104,7 @@ internal class ConicalShellCalculateService : ICalculateService<ConicalShellInpu
 
             data.IsConditionUseFormulas =
                 data.ConditionUseFormulas is >= conditionUseFormulasFrom and <= conditionUseFormulasTo &&
-                MathHelper.RadianToDegree(cdc.alpha1) <= angleCondition;
+                MathHelper.RadiansToDegree(cdc.alpha1) <= angleCondition;
 
             if (!data.IsConditionUseFormulas)
             {
@@ -174,7 +174,7 @@ internal class ConicalShellCalculateService : ICalculateService<ConicalShellInpu
                     break;
                 case ConicalConnectionType.Simply:
                     data.IsConditionUseFormulasBigConnection = dataIn.s1Big - cdc.c >= dataIn.s2Big - cdc.c &&
-                                                               MathHelper.RadianToDegree(cdc.alpha1) <= 70;
+                                                               MathHelper.RadiansToDegree(cdc.alpha1) <= 70;
                     if (!data.IsConditionUseFormulasBigConnection)
                     {
                         data.ErrorList.Add(
@@ -214,7 +214,7 @@ internal class ConicalShellCalculateService : ICalculateService<ConicalShellInpu
 
                 case ConicalConnectionType.WithRingPicture25b:
                     data.IsConditionUseFormulasBigConnection = dataIn.s1Big - cdc.c >= dataIn.s2Big - cdc.c &&
-                                                               MathHelper.RadianToDegree(cdc.alpha1) <= 70;
+                                                               MathHelper.RadiansToDegree(cdc.alpha1) <= 70;
                     if (!data.IsConditionUseFormulasBigConnection)
                     {
                         data.ErrorList.Add(
@@ -258,7 +258,7 @@ internal class ConicalShellCalculateService : ICalculateService<ConicalShellInpu
 
                     break;
                 case ConicalConnectionType.WithRingPicture29:
-                    data.IsConditionUseFormulasBigConnection = MathHelper.RadianToDegree(cdc.alpha1) <= 70;
+                    data.IsConditionUseFormulasBigConnection = MathHelper.RadiansToDegree(cdc.alpha1) <= 70;
                     if (!data.IsConditionUseFormulasBigConnection)
                     {
                         data.ErrorList.Add(
@@ -282,7 +282,7 @@ internal class ConicalShellCalculateService : ICalculateService<ConicalShellInpu
                 case ConicalConnectionType.Toroidal:
                     data.ConditionUseFormulasToroidal = dataIn.r / dataIn.D;
                     data.IsConditionUseFormulasBigConnection = data.ConditionUseFormulasToroidal is >= 0.0 and < 0.3 &&
-                                                               MathHelper.RadianToDegree(cdc.alpha1) <= 70;
+                                                               MathHelper.RadiansToDegree(cdc.alpha1) <= 70;
                     if (!data.IsConditionUseFormulasBigConnection)
                     {
                         data.ErrorList.Add(
@@ -291,7 +291,7 @@ internal class ConicalShellCalculateService : ICalculateService<ConicalShellInpu
 
                     data.beta = 0.4 * Math.Sqrt(dataIn.D / (dataIn.s2Big - cdc.c)) * Math.Tan(cdc.alpha1)
                         / (1 + Math.Sqrt(1 / Math.Cos(cdc.alpha1))) - 0.25;
-                    data.beta_t = 1 / (1 + 0.028 * MathHelper.RadianToDegree(cdc.alpha1) * dataIn.r / dataIn.D *
+                    data.beta_t = 1 / (1 + 0.028 * MathHelper.RadiansToDegree(cdc.alpha1) * dataIn.r / dataIn.D *
                                             Math.Sqrt(dataIn.D / (dataIn.sT - cdc.c)) /
                         (1 / Math.Sqrt(Math.Cos(cdc.alpha1)) + 1));
                     //TODO: Check alpha1 in beta_t in degree or in radians
@@ -323,7 +323,7 @@ internal class ConicalShellCalculateService : ICalculateService<ConicalShellInpu
             //little connection
             if (dataIn.IsConnectionWithLittle)
             {
-                data.IsConditionUseFormulasLittleConnection = MathHelper.RadianToDegree(cdc.alpha1) <= 70;
+                data.IsConditionUseFormulasLittleConnection = MathHelper.RadiansToDegree(cdc.alpha1) <= 70;
                 if (!data.IsConditionUseFormulasLittleConnection)
                 {
                     data.ErrorList.Add(

@@ -655,7 +655,7 @@ internal class NozzleWordOutput : IWordOutputElement<NozzleCalculated>
         body.AddParagraph("Расчетная толщина стенки штуцера с круглым поперечным сечением");
         body.AddParagraph()
             .AppendEquation("s_1p=(p(d+2∙c_s))/(2∙φ_1∙[σ]_1-p)" +
-                            $"=({loadingCondition.p}({nozzleDataIn.d}+2∙{nozzleDataIn.cs}))/(2∙{nozzleDataIn.phi1}∙{nozzleDataIn.SigmaAllow1}-{loadingCondition.p})={data.s1p:f2} мм");
+                            $"=({loadingCondition.p}({nozzleDataIn.d}+2∙{nozzleDataIn.cs}))/(2∙{nozzleDataIn.phi1}∙{data.SigmaAllow1}-{loadingCondition.p})={data.s1p:f2} мм");
 
         if (data.psi1 is not (1 or 0) || data.psi2 is not (1 or 0) || data.psi3 is not (1 or 0) || data.psi4 is not (1 or 0))
         {
@@ -664,30 +664,30 @@ internal class NozzleWordOutput : IWordOutputElement<NozzleCalculated>
 
         if (!string.IsNullOrEmpty(nozzleDataIn.steel1) && shellDataIn.Steel != nozzleDataIn.steel1)
         {
-            body.AddParagraph("- для внешней части штуцера")
+            body.AddParagraph("- для внешней части штуцера ")
                 .AppendEquation(
-                    $"χ_1=min(1;[σ]_1/[σ])=min(1;{nozzleDataIn.SigmaAllow1}/{data.SigmaAllowShell})={data.psi1:f2}");
+                    $"χ_1=min(1;[σ]_1/[σ])=min(1;{data.SigmaAllow1}/{data.SigmaAllowShell})={data.psi1:f2}");
         }
 
         if (!string.IsNullOrEmpty(nozzleDataIn.steel2) && shellDataIn.Steel != nozzleDataIn.steel2)
         {
-            body.AddParagraph("- для накладного кольца")
+            body.AddParagraph("- для накладного кольца ")
                 .AppendEquation(
-                    $"χ_2=min(1;[σ]_2/[σ])=min(1;{nozzleDataIn.SigmaAllow2}/{data.SigmaAllowShell})={data.psi2:f2}");
+                    $"χ_2=min(1;[σ]_2/[σ])=min(1;{data.SigmaAllow2}/{data.SigmaAllowShell})={data.psi2:f2}");
         }
 
         if (!string.IsNullOrEmpty(nozzleDataIn.steel3) && shellDataIn.Steel != nozzleDataIn.steel3)
         {
-            body.AddParagraph("- для внутренней части штуцера")
+            body.AddParagraph("- для внутренней части штуцера ")
                 .AppendEquation(
-                    $"χ_3=min(1;[σ]_3/[σ])=min(1;{nozzleDataIn.SigmaAllow3}/{data.SigmaAllowShell})={data.psi3:f2}");
+                    $"χ_3=min(1;[σ]_3/[σ])=min(1;{data.SigmaAllow3}/{data.SigmaAllowShell})={data.psi3:f2}");
         }
 
         if (!string.IsNullOrEmpty(nozzleDataIn.steel4) && shellDataIn.Steel != nozzleDataIn.steel4)
         {
-            body.AddParagraph("- для торообразной вставки или вварного кольца")
+            body.AddParagraph("- для торообразной вставки или вварного кольца ")
                 .AppendEquation(
-                    $"χ_4=min(1;[σ]_4/[σ])=min(1;{nozzleDataIn.SigmaAllow4}/{data.SigmaAllowShell})={data.psi4:f2}");
+                    $"χ_4=min(1;[σ]_4/[σ])=min(1;{data.SigmaAllow4}/{data.SigmaAllowShell})={data.psi4:f2}");
         }
 
         body.AddParagraph("Проверка условия необходимости проведения расчета укрепления отверстий");

@@ -259,7 +259,7 @@ internal class NozzleCalculateService : ICalculateService<NozzleInput>
             case ShellType.Conical:
                 data.c = ((ConicalShellCalculated)dataIn.ShellCalculatedData).CommonData.c;
                 data.Dk = ((ConicalShellCalculated)dataIn.ShellCalculatedData).CommonData.Dk;
-                data.alpha1 = MathHelper.RadianToDegree(((ConicalShellCalculated)dataIn.ShellCalculatedData).CommonData.alpha1);
+                data.alpha1 = MathHelper.RadiansToDegree(((ConicalShellCalculated)dataIn.ShellCalculatedData).CommonData.alpha1);
                 break;
             case ShellType.Elliptical:
                 data.c = ((EllipticalShellCalculated)dataIn.ShellCalculatedData).CommonData.c;

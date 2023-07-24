@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace CalculateVessels.Core.Helpers;
+﻿namespace CalculateVessels.Output.Word.Helpers;
 
 internal static class MathHelper
 {

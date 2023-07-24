@@ -139,7 +139,7 @@ internal class EllipticalShellWordOutput : IWordOutputElement<EllipticalShellCal
         {
             case PressureType.Inside:
                 body.AddParagraph()
-                    .AppendEquation($"s_p=({loadingCondition.p}∙{cdc.EllipseR:f2})/(2∙{data.SigmaAllow}∙{dataIn.phi}-0.5{loadingCondition.p})={data.s_p:f2} мм");
+                    .AppendEquation($"s_p=({loadingCondition.p}∙{cdc.EllipseR:f2})/(2∙{data.SigmaAllow}∙{dataIn.phi}-0.5∙{loadingCondition.p})={data.s_p:f2} мм");
                 break;
             case PressureType.Outside:
                 body.AddParagraph("Для предварительного расчета ")

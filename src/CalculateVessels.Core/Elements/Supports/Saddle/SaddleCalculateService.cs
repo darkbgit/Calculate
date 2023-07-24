@@ -132,25 +132,25 @@ internal class SaddleCalculateService : ICalculateService<SaddleInput>
                 data.K10_1 = Math.Exp(-data.beta1) * Math.Sin(data.beta1) / data.beta1;
                 data.K10 = Math.Max(data.K10_1, 0.25);
                 data.K11 = (1.0 - Math.Exp(-data.beta1) * Math.Cos(data.beta1)) / data.beta1;
-                data.K12 = (1.15 - 0.1432 * MathHelper.DegreeToRadian(dataIn.delta1)) /
-                           Math.Sin(0.5 * MathHelper.DegreeToRadian(dataIn.delta1));
-                data.K13 = Math.Max(1.7 - 2.1 * MathHelper.DegreeToRadian(dataIn.delta1) / Math.PI, 0) /
-                           Math.Sin(0.5 * MathHelper.DegreeToRadian(dataIn.delta1));
-                data.K14 = (1.45 - 0.43 * MathHelper.DegreeToRadian(dataIn.delta1)) /
-                           Math.Sin(0.5 * MathHelper.DegreeToRadian(dataIn.delta1));
-                data.K15_2 = (0.8 * Math.Sqrt(data.gamma) + 6 * data.gamma) / MathHelper.DegreeToRadian(dataIn.delta1);
+                data.K12 = (1.15 - 0.1432 * MathHelper.DegreeToRadians(dataIn.delta1)) /
+                           Math.Sin(0.5 * MathHelper.DegreeToRadians(dataIn.delta1));
+                data.K13 = Math.Max(1.7 - 2.1 * MathHelper.DegreeToRadians(dataIn.delta1) / Math.PI, 0) /
+                           Math.Sin(0.5 * MathHelper.DegreeToRadians(dataIn.delta1));
+                data.K14 = (1.45 - 0.43 * MathHelper.DegreeToRadians(dataIn.delta1)) /
+                           Math.Sin(0.5 * MathHelper.DegreeToRadians(dataIn.delta1));
+                data.K15_2 = (0.8 * Math.Sqrt(data.gamma) + 6 * data.gamma) / MathHelper.DegreeToRadians(dataIn.delta1);
                 data.K15 = Math.Min(1, data.K15_2);
                 data.K16 = 1.0 - 0.65 / (1 + Math.Pow(6 * data.gamma, 2)) *
-                    Math.Sqrt(Math.PI / (3.0 * MathHelper.DegreeToRadian(dataIn.delta1)));
+                    Math.Sqrt(Math.PI / (3.0 * MathHelper.DegreeToRadians(dataIn.delta1)));
                 data.K17 = 1.0 / (1.0 + 0.6 *
                     Math.Pow(dataIn.D / (dataIn.s - dataIn.c), 1.0 / 3.0) *
-                    (dataIn.b / dataIn.D) * MathHelper.DegreeToRadian(dataIn.delta1));
+                    (dataIn.b / dataIn.D) * MathHelper.DegreeToRadians(dataIn.delta1));
                 data.sigma_mx = 4 * data.M1 /
                                 (Math.PI * Math.Pow(dataIn.D, 2) * (dataIn.s - dataIn.c));
 
                 data.v1_2 = -0.23 * data.K13 * data.K15 / (data.K12 * data.K10);
                 data.v1_3 = -0.53 * data.K11 /
-                            (data.K14 * data.K16 * data.K17 * Math.Sin(0.5 * MathHelper.DegreeToRadian(dataIn.delta1)));
+                            (data.K14 * data.K16 * data.K17 * Math.Sin(0.5 * MathHelper.DegreeToRadians(dataIn.delta1)));
 
                 data.K2 = dataIn.IsAssembly ? 1.05 : 1.25;
 
@@ -214,22 +214,22 @@ internal class SaddleCalculateService : ICalculateService<SaddleInput>
                 data.K10_1 = Math.Exp(-data.beta1) * Math.Sin(data.beta1) / data.beta1;
                 data.K10 = Math.Max(data.K10_1, 0.25);
                 data.K11 = (1 - Math.Exp(-data.beta1) * Math.Cos(data.beta1)) / data.beta1;
-                data.K12 = (1.15 - 0.1432 * MathHelper.DegreeToRadian(dataIn.delta2)) /
-                           Math.Sin(0.5 * MathHelper.DegreeToRadian(dataIn.delta2));
-                data.K13 = Math.Max(1.7 - 2.1 * MathHelper.DegreeToRadian(dataIn.delta2) / Math.PI, 0) /
-                           Math.Sin(0.5 * MathHelper.DegreeToRadian(dataIn.delta2));
-                data.K14 = (1.45 - 0.43 * MathHelper.DegreeToRadian(dataIn.delta2)) /
-                           Math.Sin(0.5 * MathHelper.DegreeToRadian(dataIn.delta2));
-                data.K15_2 = (0.8 * Math.Sqrt(data.gamma) + 6 * data.gamma) / MathHelper.DegreeToRadian(dataIn.delta2);
+                data.K12 = (1.15 - 0.1432 * MathHelper.DegreeToRadians(dataIn.delta2)) /
+                           Math.Sin(0.5 * MathHelper.DegreeToRadians(dataIn.delta2));
+                data.K13 = Math.Max(1.7 - 2.1 * MathHelper.DegreeToRadians(dataIn.delta2) / Math.PI, 0) /
+                           Math.Sin(0.5 * MathHelper.DegreeToRadians(dataIn.delta2));
+                data.K14 = (1.45 - 0.43 * MathHelper.DegreeToRadians(dataIn.delta2)) /
+                           Math.Sin(0.5 * MathHelper.DegreeToRadians(dataIn.delta2));
+                data.K15_2 = (0.8 * Math.Sqrt(data.gamma) + 6 * data.gamma) / MathHelper.DegreeToRadians(dataIn.delta2);
                 data.K15 = Math.Min(1, data.K15_2);
                 data.K16 = 1 - 0.65 / (1 + Math.Pow(6 * data.gamma, 2)) *
-                    Math.Sqrt(Math.PI / (3 * MathHelper.DegreeToRadian(dataIn.delta2)));
+                    Math.Sqrt(Math.PI / (3 * MathHelper.DegreeToRadians(dataIn.delta2)));
                 data.K17 = 1.0 / (1.0 + 0.6 * Math.Pow(dataIn.D / data.sef, 1.0 / 3.0) *
-                    (dataIn.b2 / dataIn.D) * MathHelper.DegreeToRadian(dataIn.delta2));
+                    (dataIn.b2 / dataIn.D) * MathHelper.DegreeToRadians(dataIn.delta2));
                 data.sigma_mx = 4 * data.M1 / (Math.PI * Math.Pow(dataIn.D, 2) * data.sef);
 
                 data.v1_2 = -0.23 * data.K13 * data.K15 / (data.K12 * data.K10);
-                data.v1_3 = -0.53 * data.K11 / (data.K14 * data.K16 * data.K17 * Math.Sin(0.5 * MathHelper.DegreeToRadian(dataIn.delta2)));
+                data.v1_3 = -0.53 * data.K11 / (data.K14 * data.K16 * data.K17 * Math.Sin(0.5 * MathHelper.DegreeToRadians(dataIn.delta2)));
 
                 data.K2 = dataIn.IsAssembly ? 1.05 : 1.25;
 

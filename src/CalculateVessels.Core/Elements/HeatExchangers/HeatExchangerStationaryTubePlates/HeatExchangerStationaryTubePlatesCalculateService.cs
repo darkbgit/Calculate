@@ -163,19 +163,19 @@ internal class HeatExchangerStationaryTubePlatesCalculateService : CalculateServ
                 else if (dataIn.beta0 is >= 15 and <= 60)
                 {
                     data.Ap1 = 2 /
-                               (Math.Sin(MathHelper.DegreeToRadian(dataIn.beta0)) * Math.Pow(Math.Cos(MathHelper.DegreeToRadian(dataIn.beta0)), 2)) *
+                               (Math.Sin(MathHelper.DegreeToRadians(dataIn.beta0)) * Math.Pow(Math.Cos(MathHelper.DegreeToRadians(dataIn.beta0)), 2)) *
                                Math.Log(1.0 / data.betap);
-                    data.Ap2 = 1.82 * Math.Pow(Math.Sin(MathHelper.DegreeToRadian(dataIn.beta0)), 2) *
-                        (1 + Math.Sqrt(data.betap)) / Math.Pow(Math.Cos(MathHelper.DegreeToRadian(dataIn.beta0)), 3.0 / 2.0);
+                    data.Ap2 = 1.82 * Math.Pow(Math.Sin(MathHelper.DegreeToRadians(dataIn.beta0)), 2) *
+                        (1 + Math.Sqrt(data.betap)) / Math.Pow(Math.Cos(MathHelper.DegreeToRadians(dataIn.beta0)), 3.0 / 2.0);
                     data.Bp1 = -1.06 /
-                               (Math.Sin(MathHelper.DegreeToRadian(dataIn.beta0)) * Math.Pow(Math.Cos(MathHelper.DegreeToRadian(dataIn.beta0)), 2)) *
+                               (Math.Sin(MathHelper.DegreeToRadians(dataIn.beta0)) * Math.Pow(Math.Cos(MathHelper.DegreeToRadians(dataIn.beta0)), 2)) *
                                (Math.Log(1 / data.betap) + (1.0 / Math.Pow(data.betap, 2) - 1) *
-                                   (0.3 * Math.Pow(Math.Cos(MathHelper.DegreeToRadian(dataIn.beta0)), 4) +
-                                    1.5 * Math.Pow(Math.Sin(MathHelper.DegreeToRadian(dataIn.beta0)), 2) -
-                                    0.5 * Math.Pow(Math.Cos(MathHelper.DegreeToRadian(dataIn.beta0)), 2) +
-                                    Math.Pow(Math.Sin(MathHelper.DegreeToRadian(dataIn.beta0)), 4)));
-                    data.Bp2 = 0.965 * Math.Pow(Math.Sin(MathHelper.DegreeToRadian(dataIn.beta0)), 2) /
-                               Math.Pow(Math.Cos(MathHelper.DegreeToRadian(dataIn.beta0)), 3.0 / 2.0 *
+                                   (0.3 * Math.Pow(Math.Cos(MathHelper.DegreeToRadians(dataIn.beta0)), 4) +
+                                    1.5 * Math.Pow(Math.Sin(MathHelper.DegreeToRadians(dataIn.beta0)), 2) -
+                                    0.5 * Math.Pow(Math.Cos(MathHelper.DegreeToRadians(dataIn.beta0)), 2) +
+                                    Math.Pow(Math.Sin(MathHelper.DegreeToRadians(dataIn.beta0)), 4)));
+                    data.Bp2 = 0.965 * Math.Pow(Math.Sin(MathHelper.DegreeToRadians(dataIn.beta0)), 2) /
+                               Math.Pow(Math.Cos(MathHelper.DegreeToRadians(dataIn.beta0)), 3.0 / 2.0 *
                                                                           (1.0 / Math.Pow(data.betap, 2) - 1));
                     data.Kqz = (data.a * (data.Ap1 + data.Ap2 * Math.Sqrt(dataIn.D1 / dataIn.sK)) -
                                 0.5 * (1 - data.betap) * dataIn.Lpac) / dataIn.l;
