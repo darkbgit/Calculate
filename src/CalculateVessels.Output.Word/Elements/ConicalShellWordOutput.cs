@@ -355,7 +355,7 @@ internal class ConicalShellWordOutput : IWordOutputElement<ConicalShellCalculate
         var loadingCondition = dataIn.LoadingConditions.First(lc => lc.Id == data.LoadingConditionId);
 
         body.AddParagraph();
-        body.AddParagraph("Результаты расчета" + (withNumber ? $" для условий нагружения #{loadingCondition.Id})" : ""))
+        body.AddParagraph("Результаты расчета" + (withNumber ? $" для условий нагружения #{loadingCondition.Id}" : ""))
             .Alignment(AlignmentType.Center);
 
 
@@ -537,7 +537,7 @@ internal class ConicalShellWordOutput : IWordOutputElement<ConicalShellCalculate
 
                     body.AddParagraph("Допускаемое " +
                                       (loadingCondition.PressureType == PressureType.Inside ? "внутреннее избыточное" : "наружное") +
-                                      "давление из условия прочности переходной части вычисляют по формуле");
+                                      " давление из условия прочности переходной части вычисляют по формуле");
                     body.AddParagraph()
                         .AppendEquation("[p]=(2∙[σ]_2∙φ_p∙(s_2-c))/(D∙β_2+(s_2-c))");
                     body.AddParagraph("Общий коэффициент формы для переходной части равен:");
@@ -576,7 +576,7 @@ internal class ConicalShellWordOutput : IWordOutputElement<ConicalShellCalculate
 
                     body.AddParagraph("Допускаемое " +
                                       (loadingCondition.PressureType == PressureType.Inside ? "внутреннее избыточное" : "наружное") +
-                                      "давление из условия прочности переходной части вычисляют по формуле");
+                                      " давление из условия прочности переходной части вычисляют по формуле");
                     body.AddParagraph()
                         .AppendEquation("[p]=(8∙[σ]_K∙φ_K)/(D^2∙tgα_1)" +
                                         $"(8∙{data.SigmaAllowC}∙{dataIn.phi_k})/({dataIn.D}^2∙tg{MathHelper.RadiansToDegree(cdc.alpha1):f0})={data.p_dBig:f2} МПа");
@@ -620,7 +620,7 @@ internal class ConicalShellWordOutput : IWordOutputElement<ConicalShellCalculate
 
                     body.AddParagraph("Допускаемое " +
                                       (loadingCondition.PressureType == PressureType.Inside ? "внутреннее избыточное" : "наружное") +
-                                      "давление из условия прочности переходной части вычисляют по формуле");
+                                      " давление из условия прочности переходной части вычисляют по формуле");
                     body.AddParagraph()
                         .AppendEquation("[p]=(2∙[σ]∙φ_p∙(s_T-c))/(D∙β_3+(s_T-c))" +
                                         $"=(2∙{data.SigmaAllowT}∙{dataIn.phi}∙({dataIn.sT}-{cdc.c:f2}))/({dataIn.D}∙{data.beta_3:f2}+({dataIn.sT}-{cdc.c:f2}))={data.p_dBig:f2} МПа");

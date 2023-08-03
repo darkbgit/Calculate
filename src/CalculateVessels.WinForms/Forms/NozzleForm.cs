@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Globalization;
-using System.Linq;
-using System.Windows.Forms;
+﻿using System.Globalization;
 using CalculateVessels.Core.Elements.Shells.Base;
 using CalculateVessels.Core.Elements.Shells.Enums;
 using CalculateVessels.Core.Elements.Shells.Nozzle;
@@ -74,6 +69,7 @@ public partial class NozzleForm : NozzleFormMiddle
 
         InitializeShellInputData(_shellInputData);
 
+        name_tb.Text = inputData.Name;
         steel1_cb.Text = inputData.steel1;
         d_tb.Text = inputData.d.ToString(CultureInfo.CurrentCulture);
         s1_tb.Text = inputData.s1.ToString(CultureInfo.CurrentCulture);
