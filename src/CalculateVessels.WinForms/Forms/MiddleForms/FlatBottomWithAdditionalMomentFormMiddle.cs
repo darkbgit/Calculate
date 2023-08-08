@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using CalculateVessels.Core.Elements.Bottoms.FlatBottomWithAdditionalMoment;
+﻿using CalculateVessels.Core.Elements.Bottoms.FlatBottomWithAdditionalMoment;
 using CalculateVessels.Core.Interfaces;
-using CalculateVessels.Data.Interfaces;
+using CalculateVessels.Data.Public.Interfaces;
 using CalculateVessels.Forms.Base;
 using FluentValidation;
 

@@ -114,4 +114,8 @@
 		</AssemblyAttribute>
 	</ItemGroup>
 
+	<ItemGroup>
+	  <ProjectReference Include="..\CalculateVessels.Data.Public\CalculateVessels.Data.Public.csproj" />
+	</ItemGroup>
+
 </Project>

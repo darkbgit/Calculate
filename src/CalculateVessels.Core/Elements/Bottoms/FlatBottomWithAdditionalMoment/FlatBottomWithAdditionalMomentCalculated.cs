@@ -1,7 +1,7 @@
-﻿using CalculateVessels.Core.Elements.Base;
+﻿using System.Text;
+using CalculateVessels.Core.Elements.Base;
 using CalculateVessels.Core.Interfaces;
-using CalculateVessels.Data.PhysicalData.Gost34233_4.Models;
-using System.Text;
+using CalculateVessels.Data.Public.Gost34233_4.Models;
 
 namespace CalculateVessels.Core.Elements.Bottoms.FlatBottomWithAdditionalMoment;
 

@@ -1,11 +1,11 @@
-﻿using CalculateVessels.Core.Elements.Bottoms.Enums;
+﻿using System.Collections.Generic;
+using CalculateVessels.Core.Elements.Bottoms.Enums;
 using CalculateVessels.Core.Elements.Bottoms.FlatBottomWithAdditionalMoment;
 using CalculateVessels.Core.Enums;
 using CalculateVessels.Core.Interfaces;
 using CalculateVessels.Data.PhysicalData;
-using CalculateVessels.Data.PhysicalData.Gost34233_4.Models;
+using CalculateVessels.Data.Public.Gost34233_4.Models;
 using FluentAssertions;
-using System.Collections.Generic;
 using Xunit;
 
 namespace CalculateVessels.UnitTests.Services.CalculateServices;

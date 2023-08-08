@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Globalization;
-using System.Linq;
-using System.Windows.Forms;
+﻿using System.Globalization;
 using CalculateVessels.Core.Elements.Shells.Elliptical;
 using CalculateVessels.Core.Elements.Shells.Enums;
 using CalculateVessels.Core.Interfaces;
-using CalculateVessels.Data.Enums;
-using CalculateVessels.Data.Interfaces;
+
 using CalculateVessels.Data.Properties;
+using CalculateVessels.Data.Public.Enums;
+using CalculateVessels.Data.Public.Interfaces;
 using CalculateVessels.Forms.MiddleForms;
 using CalculateVessels.Helpers;
 using FluentValidation;

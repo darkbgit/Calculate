@@ -1,7 +1,8 @@
 ﻿using CalculateVessels.Core.Exceptions;
-using CalculateVessels.Data.Enums;
-using CalculateVessels.Data.Exceptions;
-using CalculateVessels.Data.Interfaces;
+using CalculateVessels.Data.Public.Enums;
+using CalculateVessels.Data.Public.Exceptions;
+using CalculateVessels.Data.Public.Interfaces;
+
 
 namespace CalculateVessels.Core.Helpers;
 

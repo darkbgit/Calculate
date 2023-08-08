@@ -1,6 +1,5 @@
-﻿using System.Collections.Generic;
-using CalculateVessels.Core.Interfaces;
-using CalculateVessels.Data.Interfaces;
+﻿using CalculateVessels.Core.Interfaces;
+using CalculateVessels.Data.Public.Interfaces;
 using CalculateVessels.Helpers;
 using FluentValidation;
 

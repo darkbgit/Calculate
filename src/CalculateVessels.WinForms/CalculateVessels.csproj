@@ -23,6 +23,7 @@
 
 	<ItemGroup>
     <ProjectReference Include="..\CalculateVessels.Core\CalculateVessels.Core.csproj" />
+    <ProjectReference Include="..\CalculateVessels.Data.Database\CalculateVessels.Data.Database.csproj" />
     <ProjectReference Include="..\CalculateVessels.Data\CalculateVessels.Data.csproj" />
     <ProjectReference Include="..\CalculateVessels.Output\CalculateVessels.Output.csproj" />
   </ItemGroup>
@@ -55,6 +56,9 @@
   </ItemGroup>
 
   <ItemGroup>
+	  <None Update="appsettings.json">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
 	  <None Update="Templates\temp.docx">
           <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>

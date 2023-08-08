@@ -1,4 +1,6 @@
-﻿using CalculateVessels.Data.Interfaces;
+﻿
+
+using CalculateVessels.Data.Public.Interfaces;
 
 namespace CalculateVessels.Core.Elements.Base;
 

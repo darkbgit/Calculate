@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Windows.Forms;
-using CalculateVessels.Core;
+﻿using CalculateVessels.Core;
 using CalculateVessels.Core.Elements.Base;
 using CalculateVessels.Core.Elements.Shells.Conical;
 using CalculateVessels.Core.Elements.Shells.Cylindrical;
@@ -12,6 +7,8 @@ using CalculateVessels.Core.Elements.Shells.Nozzle;
 using CalculateVessels.Core.Elements.Supports.Saddle;
 using CalculateVessels.Core.Interfaces;
 using CalculateVessels.Core.Persistance.Enums;
+using CalculateVessels.Data.Public.Enums;
+using CalculateVessels.Data.Public.Interfaces;
 using CalculateVessels.Forms.Base;
 using CalculateVessels.Helpers;
 using CalculateVessels.Output;
@@ -23,15 +20,18 @@ public partial class MainForm : Form
     private readonly IFormFactory _formFactory;
     private readonly IOutputService _outputService;
     private readonly IPersistanceService _persistanceService;
+    private readonly IPhysicalDataService _physicalDataService;
 
     public MainForm(IFormFactory formFactory,
      IOutputService outputService,
-     IPersistanceService persistanceService)
+     IPersistanceService persistanceService,
+     IPhysicalDataService physicalDataService)
     {
         InitializeComponent();
         _outputService = outputService;
         _formFactory = formFactory;
         _persistanceService = persistanceService;
+        _physicalDataService = physicalDataService;
     }
 
     public CylindricalShellForm? CylindricalForm;
@@ -306,6 +306,25 @@ public partial class MainForm : Form
             return;
 
         filePathTextBox.Text = saveFileDialogDocx.FileName;
+    }
+
+    private void testButton_Click(object sender, EventArgs e)
+    {
+        //string message;
+
+        //try
+        //{
+        //    message = _physicalDataService.GetSigma("Ст3", 320, SigmaSource.G34233D1, 0, DesignResourceType.Standard).ToString();
+        //}
+        //catch (PhysicalDataException ex)
+        //{
+        //    message = ex.Message;
+        //}
+
+        //MessageBox.Show(message);
+
+        var steels = _physicalDataService.GetSteels(SteelSource.G34233D1);
+        MessageBox.Show(string.Join(Environment.NewLine, steels));
     }
 
     private bool CheckAndCreateForm<T>(ref T? form)

@@ -1,7 +1,7 @@
 ﻿using CalculateVessels.Core.Exceptions;
 using CalculateVessels.Core.Interfaces;
-using CalculateVessels.Data.Enums;
-using CalculateVessels.Data.Interfaces;
+using CalculateVessels.Data.Public.Enums;
+using CalculateVessels.Data.Public.Interfaces;
 using FluentValidation;
 
 namespace CalculateVessels.Forms.Base;
@@ -134,7 +134,7 @@ public abstract class BaseCalculateForm<T> : Form, IBaseForm
 
     protected void LoadSteelsToComboBox(ComboBox comboBox, SteelSource source)
     {
-        string[] preferredSteels = { "Ст3", "20", "12Х18Н10Т", "09Г2С" };
+        string[] preferredSteelsNames = { "Ст3", "20", "12Х18Н10Т", "09Г2С" };
 
         comboBox.Items.Clear();
 
@@ -142,20 +142,20 @@ public abstract class BaseCalculateForm<T> : Form, IBaseForm
             .GetSteels(source)
             .ToList();
 
-        var preferredSteelList = preferredSteels
-            .Intersect(steels)
+        var preferredSteelList = steels
+            .Where(s => preferredSteelsNames.Contains(s.Name))
             .ToList();
 
         var otherSteels = steels
             .Except(preferredSteelList)
+            .OrderBy(s => s.Name)
             .ToList();
-
-        otherSteels.Sort();
 
         var result = preferredSteelList
             .Union(otherSteels)
             .Select(s => s as object)
             .ToArray();
+
 
         comboBox.Items.AddRange(result);
         comboBox.SelectedIndex = 0;

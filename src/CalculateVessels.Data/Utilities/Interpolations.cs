@@ -1,8 +1,8 @@
-using CalculateVessels.Data.Enums;
-using CalculateVessels.Data.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using CalculateVessels.Data.Public.Enums;
+using CalculateVessels.Data.Public.Exceptions;
 
 namespace CalculateVessels.Data.Utilities;
 

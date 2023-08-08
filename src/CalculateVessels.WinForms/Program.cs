@@ -1,14 +1,11 @@
 ﻿using CalculateVessels.Core.DI;
-using CalculateVessels.Data.DI;
+using CalculateVessels.Data.Database.DI;
 using CalculateVessels.Forms;
 using CalculateVessels.Helpers;
 using CalculateVessels.Output.DI;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Linq;
-using System.Threading;
-using System.Windows.Forms;
 
 namespace CalculateVessels;
 
@@ -31,9 +28,16 @@ internal static class Program
 
     private static IHostBuilder CreateHostBuilder()
     {
+
         return Host.CreateDefaultBuilder()
             .ConfigureServices((context, services) =>
             {
+                context.Configuration = new ConfigurationManager()
+                    .AddJsonFile("appsettings.json")
+                    .AddEnvironmentVariables()
+                    .Build();
+
+
                 services.AddSingleton<IFormFactory, FormFactory>();
 
                 var forms = typeof(Program).Assembly
@@ -49,8 +53,11 @@ internal static class Program
                     services.AddTransient(form);
                 });
 
-                var serviceCollectionForData = new ServiceCollectionForData();
-                serviceCollectionForData.RegisterDependencies(services);
+                //var serviceCollectionForData = new ServiceCollectionForData();
+                //serviceCollectionForData.RegisterDependencies(services);
+
+                var serviceCollectionForDataDb = new ServiceCollectionForDataDb();
+                serviceCollectionForDataDb.RegisterDependencies(context.Configuration, services);
 
                 var serviceCollectionForCore = new ServiceCollectionForCore();
                 serviceCollectionForCore.RegisterDependencies(services);

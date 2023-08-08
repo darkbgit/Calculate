@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
-using CalculateVessels.Data.Exceptions;
 using CalculateVessels.Data.PhysicalData.Gost34233_7.Models;
+using CalculateVessels.Data.Public.Exceptions;
 using CalculateVessels.Data.Utilities;
 
 namespace CalculateVessels.Data.PhysicalData.Gost34233_7;

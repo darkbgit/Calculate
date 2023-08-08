@@ -1,11 +1,12 @@
-﻿using CalculateVessels.Core.Elements.Bottoms.Enums;
+﻿using System;
+using CalculateVessels.Core.Elements.Bottoms.Enums;
 using CalculateVessels.Core.Exceptions;
 using CalculateVessels.Core.Helpers;
 using CalculateVessels.Core.Interfaces;
-using CalculateVessels.Data.Enums;
-using CalculateVessels.Data.Exceptions;
-using CalculateVessels.Data.Interfaces;
-using System;
+using CalculateVessels.Data.Public.Enums;
+using CalculateVessels.Data.Public.Exceptions;
+using CalculateVessels.Data.Public.Interfaces;
+
 
 namespace CalculateVessels.Core.Elements.Bottoms.FlatBottomWithAdditionalMoment;
 

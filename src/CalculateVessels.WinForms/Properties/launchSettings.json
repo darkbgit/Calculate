@@ -1,0 +1,16 @@
+{
+  "profiles": {
+    "WorkPC": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "ConnectionStrings:DefaultConnection": "Server=DESKTOP-HMKK3D0;Database=CalculateVessels.Database;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True"
+      }
+    },
+    "HomePC": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "ConnectionStrings:DefaultConnection": "Server=HOMEPC;Database=CalculateVessels.Database;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True"
+      }
+    }
+  }
+}

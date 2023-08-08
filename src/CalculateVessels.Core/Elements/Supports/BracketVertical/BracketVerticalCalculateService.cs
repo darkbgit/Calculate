@@ -3,7 +3,8 @@ using CalculateVessels.Core.Enums;
 using CalculateVessels.Core.Exceptions;
 using CalculateVessels.Core.Helpers;
 using CalculateVessels.Core.Interfaces;
-using CalculateVessels.Data.Interfaces;
+using CalculateVessels.Data.Public.Interfaces;
+
 
 namespace CalculateVessels.Core.Elements.Supports.BracketVertical;
 

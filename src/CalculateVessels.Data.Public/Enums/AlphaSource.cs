@@ -1,4 +1,4 @@
-﻿namespace CalculateVessels.Data.Enums;
+﻿namespace CalculateVessels.Data.Public.Enums;
 
 public enum AlphaSource
 {

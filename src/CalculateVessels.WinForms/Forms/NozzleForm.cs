@@ -4,9 +4,10 @@ using CalculateVessels.Core.Elements.Shells.Enums;
 using CalculateVessels.Core.Elements.Shells.Nozzle;
 using CalculateVessels.Core.Elements.Shells.Nozzle.Enums;
 using CalculateVessels.Core.Interfaces;
-using CalculateVessels.Data.Enums;
-using CalculateVessels.Data.Interfaces;
+
 using CalculateVessels.Data.Properties;
+using CalculateVessels.Data.Public.Enums;
+using CalculateVessels.Data.Public.Interfaces;
 using CalculateVessels.Forms.MiddleForms;
 using CalculateVessels.Helpers;
 using FluentValidation;

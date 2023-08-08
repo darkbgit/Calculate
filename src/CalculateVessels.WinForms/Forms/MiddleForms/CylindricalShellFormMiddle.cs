@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using CalculateVessels.Core.Elements.Shells.Cylindrical;
+﻿using CalculateVessels.Core.Elements.Shells.Cylindrical;
 using CalculateVessels.Core.Interfaces;
-using CalculateVessels.Data.Interfaces;
+using CalculateVessels.Data.Public.Interfaces;
 using CalculateVessels.Forms.Base;
 using CalculateVessels.Helpers;
 using FluentValidation;
