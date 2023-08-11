@@ -26,10 +26,6 @@ public abstract class BaseCalculateForm<T> : Form, IBaseForm
         _validator = validator;
     }
 
-    //protected T? InputData { get; set; }
-
-    //protected IEnumerable<ICalculateService<T>> CalculateServices { get; }
-
     protected IPhysicalDataService PhysicalDataService => _physicalDataService;
 
     public void Show(T inputData, int calculatedElementIndex)
@@ -89,29 +85,6 @@ public abstract class BaseCalculateForm<T> : Form, IBaseForm
 
         return true;
     }
-
-    //protected ICalculatedElement? Calculate()
-    //{
-    //    ICalculatedElement element;
-
-    //    try
-    //    {
-    //        element = GetCalculateService(GetServiceName()).Calculate(InputData
-    //            ?? throw new InvalidOperationException());
-    //    }
-    //    catch (CalculateException ex)
-    //    {
-    //        MessageBox.Show(ex.Message);
-    //        return null;
-    //    }
-
-    //    if (element.ErrorList.Any())
-    //    {
-    //        MessageBox.Show(string.Join<string>(Environment.NewLine, element.ErrorList));
-    //    }
-
-    //    return element;
-    //}
 
     protected void SetCalculatedElementToStorage(Form? form, ICalculatedElement element)
     {

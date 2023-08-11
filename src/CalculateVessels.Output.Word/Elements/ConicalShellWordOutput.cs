@@ -174,7 +174,7 @@ internal class ConicalShellWordOutput : IWordOutputElement<ConicalShellCalculate
         //int i = 0;
         table.AddRow()
             .AddCell("Материал обечайки")
-            .AddCell($"{dataIn.Steel}");
+            .AddCell($"{dataIn.Steel.SteelName}");
 
         table.AddRow()
             .AddCell("Больший диаметр конуса, D:")
@@ -338,7 +338,7 @@ internal class ConicalShellWordOutput : IWordOutputElement<ConicalShellCalculate
 
         WordHelpers.AddLoadingConditionsInTableForShells(dataIn.LoadingConditions, table);
 
-        WordHelpers.AddMaterialCharacteristicsInTableForShell(dataIn.Steel,
+        WordHelpers.AddMaterialCharacteristicsInTableForShell(dataIn.Steel.SteelName,
             data.Results.Select(r => new
             {
                 r.LoadingConditionId,

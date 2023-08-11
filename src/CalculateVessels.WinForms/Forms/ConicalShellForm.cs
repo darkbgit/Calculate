@@ -25,7 +25,8 @@ public sealed partial class ConicalShellForm : ConicalShellFormMiddle
     protected override void LoadInputData(ConicalShellInput inputData)
     {
         name_tb.Text = inputData.Name;
-        steel_cb.Text = inputData.Steel;
+        //steel_cb.Text = inputData.Steel.SteelName;
+        oneStringSteelControl.SelectSteel(inputData.Steel);
         phip_tb.Text = inputData.phi.ToString(CultureInfo.CurrentCulture);
         phit_tb.Text = inputData.phi_t.ToString(CultureInfo.CurrentCulture);
         D_tb.Text = inputData.D.ToString(CultureInfo.CurrentCulture);
@@ -51,10 +52,12 @@ public sealed partial class ConicalShellForm : ConicalShellFormMiddle
             littleConnectionSimple_1_rb.Checked = true;
 
             s1Little_tb.Text = inputData.s1Little.ToString(CultureInfo.CurrentCulture);
-            steel1Little_cb.Text = inputData.Steel1Little;
+            //steel1Little_cb.Text = inputData.Steel1Little;
+            oneStringSteelControl1Little.SelectSteel(inputData.Steel1Little);
 
             s2Little_tb.Text = inputData.s2Little.ToString(CultureInfo.CurrentCulture);
-            steel2Little_cb.Text = inputData.Steel2Little;
+            //steel2Little_cb.Text = inputData.Steel2Little;
+            oneStringSteelControl2Little.SelectSteel(inputData.Steel2Little);
         }
 
         if (inputData.ConnectionType != ConicalConnectionType.WithoutConnection)
@@ -66,42 +69,51 @@ public sealed partial class ConicalShellForm : ConicalShellFormMiddle
                     bigConnectionSimple_1_rb.Checked = true;
 
                     s1Big_tb.Text = inputData.s1Big.ToString(CultureInfo.CurrentCulture);
-                    steel1Big_cb.Text = inputData.Steel1Big;
+                    //steel1Big_cb.Text = inputData.Steel1Big;
+                    oneStringSteelControl1Big.SelectSteel(inputData.Steel1Big);
 
                     s2Big_tb.Text = inputData.s2Big.ToString(CultureInfo.CurrentCulture);
-                    steel2Big_cb.Text = inputData.Steel2Big;
+                    //steel2Big_cb.Text = inputData.Steel2Big;
+                    oneStringSteelControl2Big.SelectSteel(inputData.Steel2Big);
                     break;
                 case ConicalConnectionType.WithRingPicture25b:
                     bigConnectionWithRing_rb.Checked = true;
 
                     s1Big_tb.Text = inputData.s1Big.ToString(CultureInfo.CurrentCulture);
-                    steel1Big_cb.Text = inputData.Steel1Big;
+                    //steel1Big_cb.Text = inputData.Steel1Big;
+                    oneStringSteelControl1Big.SelectSteel(inputData.Steel1Big);
 
                     s2Big_tb.Text = inputData.s2Big.ToString(CultureInfo.CurrentCulture);
-                    steel2Big_cb.Text = inputData.Steel2Big;
+                    //steel2Big_cb.Text = inputData.Steel2Big;
+                    oneStringSteelControl2Big.SelectSteel(inputData.Steel2Big);
 
                     AkBig_tb.Text = inputData.Ak.ToString(CultureInfo.CurrentCulture);
-                    steelC_cb.Text = inputData.SteelC;
+                    //steelC_cb.Text = inputData.SteelC;
+                    oneStringSteelControlC.SelectSteel(inputData.SteelC);
                     phi_k_tb.Text = inputData.phi_k.ToString(CultureInfo.CurrentCulture);
                     break;
                 case ConicalConnectionType.WithRingPicture29:
                     bigConnectionWithRingPicture29_rb.Checked = true;
 
                     s1Big_tb.Text = inputData.s1Big.ToString(CultureInfo.CurrentCulture);
-                    steel1Big_cb.Text = inputData.Steel1Big;
+                    //steel1Big_cb.Text = inputData.Steel1Big;
+                    oneStringSteelControl1Big.SelectSteel(inputData.Steel1Big);
 
                     s2Big_tb.Text = inputData.s2Big.ToString(CultureInfo.CurrentCulture);
-                    steel2Big_cb.Text = inputData.Steel2Big;
+                    //steel2Big_cb.Text = inputData.Steel2Big;
+                    oneStringSteelControl2Big.SelectSteel(inputData.Steel2Big);
 
                     AkBig_tb.Text = inputData.Ak.ToString(CultureInfo.CurrentCulture);
-                    steelC_cb.Text = inputData.SteelC;
+                    //steelC_cb.Text = inputData.SteelC;
+                    oneStringSteelControlC.SelectSteel(inputData.SteelC);
                     phi_k_tb.Text = inputData.phi_k.ToString(CultureInfo.CurrentCulture);
                     break;
                 case ConicalConnectionType.Toroidal:
                     bigConnectionToroidal_rb.Checked = true;
 
                     sT_tb.Text = inputData.sT.ToString(CultureInfo.CurrentCulture);
-                    steelT_cb.Text = inputData.SteelT;
+                    //steelT_cb.Text = inputData.SteelT;
+                    oneStringSteelControlT.SelectSteel(inputData.SteelT);
 
                     r_tb.Text = inputData.r.ToString(CultureInfo.CurrentCulture);
                     break;
@@ -116,14 +128,29 @@ public sealed partial class ConicalShellForm : ConicalShellFormMiddle
 
     private void ConicalShellForm_Load(object sender, EventArgs e)
     {
-        LoadSteelsToComboBox(steel_cb, SteelSource.G34233D1);
-        LoadSteelsToComboBox(steel1Big_cb, SteelSource.G34233D1);
-        LoadSteelsToComboBox(steel2Big_cb, SteelSource.G34233D1);
-        LoadSteelsToComboBox(steel1Little_cb, SteelSource.G34233D1);
-        LoadSteelsToComboBox(steel2Little_cb, SteelSource.G34233D1);
-        LoadSteelsToComboBox(steelC_cb, SteelSource.G34233D1);
-        LoadSteelsToComboBox(steelCLittle_cb, SteelSource.G34233D1);
-        LoadSteelsToComboBox(steelT_cb, SteelSource.G34233D1);
+        //LoadSteelsToComboBox(steel_cb, SteelSource.G34233D1);
+        oneStringSteelControl.SetSteels(PhysicalDataService.GetSteels(SteelSource.G34233D1));
+
+        //LoadSteelsToComboBox(steel1Big_cb, SteelSource.G34233D1);
+        oneStringSteelControl1Big.SetSteels(PhysicalDataService.GetSteels(SteelSource.G34233D1));
+
+        //LoadSteelsToComboBox(steel2Big_cb, SteelSource.G34233D1);
+        oneStringSteelControl2Big.SetSteels(PhysicalDataService.GetSteels(SteelSource.G34233D1));
+
+        //LoadSteelsToComboBox(steel1Little_cb, SteelSource.G34233D1);
+        oneStringSteelControl1Little.SetSteels(PhysicalDataService.GetSteels(SteelSource.G34233D1));
+
+        //LoadSteelsToComboBox(steel2Little_cb, SteelSource.G34233D1);
+        oneStringSteelControl2Little.SetSteels(PhysicalDataService.GetSteels(SteelSource.G34233D1));
+
+        //LoadSteelsToComboBox(steelC_cb, SteelSource.G34233D1);
+        oneStringSteelControlC.SetSteels(PhysicalDataService.GetSteels(SteelSource.G34233D1));
+
+        //LoadSteelsToComboBox(steelCLittle_cb, SteelSource.G34233D1);
+        oneStringSteelControlCLittle.SetSteels(PhysicalDataService.GetSteels(SteelSource.G34233D1));
+
+        //LoadSteelsToComboBox(steelT_cb, SteelSource.G34233D1);
+        oneStringSteelControlT.SetSteels(PhysicalDataService.GetSteels(SteelSource.G34233D1));
 
         LoadCalculateServicesNamesToComboBox(Gost_cb);
 
@@ -156,7 +183,8 @@ public sealed partial class ConicalShellForm : ConicalShellFormMiddle
 
         inputData = new ConicalShellInput
         {
-            Steel = steel_cb.Text,
+            //Steel = steel_cb.Text,
+            Steel = oneStringSteelControl.GetSteel(),
             IsConnectionWithLittle = littleConnection_cb.Checked,
             Name = name_tb.Text,
             //public double ny { get; set; } = 2.4;
@@ -201,41 +229,52 @@ public sealed partial class ConicalShellForm : ConicalShellFormMiddle
                 case nameof(bigConnectionSimple_rb):
                     inputData.ConnectionType = ConicalConnectionType.Simply;
                     inputData.s1Big = Parameters.GetParam<double>(s_tb.Text, "s1Big", dataInErr);
-                    inputData.Steel1Big = steel_cb.Text;
+                    //inputData.Steel1Big = steel_cb.Text;
+                    inputData.Steel1Big = oneStringSteelControl1Big.GetSteel();
                     inputData.s2Big = Parameters.GetParam<double>(s2Big_tb.Text, "s2Big", dataInErr);
-                    inputData.Steel2Big = steel2Big_cb.Text;
+                    //inputData.Steel2Big = steel2Big_cb.Text;
+                    inputData.Steel2Big = oneStringSteelControl2Big.GetSteel();
                     break;
                 case nameof(bigConnectionSimple_1_rb):
                     inputData.ConnectionType = ConicalConnectionType.Simply;
                     inputData.s1Big = Parameters.GetParam<double>(s1Big_tb.Text, "s1Big", dataInErr);
-                    inputData.Steel1Big = steel1Big_cb.Text;
+                    //inputData.Steel1Big = steel1Big_cb.Text;
+                    inputData.Steel1Big = oneStringSteelControl1Big.GetSteel();
                     inputData.s2Big = Parameters.GetParam<double>(s2Big_tb.Text, "s2Big", dataInErr);
-                    inputData.Steel2Big = steel2Big_cb.Text;
+                    //inputData.Steel2Big = steel2Big_cb.Text;
+                    inputData.Steel2Big = oneStringSteelControl2Big.GetSteel();
                     break;
                 case nameof(bigConnectionWithRing_rb):
                     inputData.ConnectionType = ConicalConnectionType.WithRingPicture25b;
                     inputData.s1Big = Parameters.GetParam<double>(s1Big_tb.Text, "s1Big", dataInErr);
-                    inputData.Steel1Big = steel1Big_cb.Text;
+                    //inputData.Steel1Big = steel1Big_cb.Text;
+                    inputData.Steel1Big = oneStringSteelControl1Big.GetSteel();
                     inputData.s2Big = Parameters.GetParam<double>(s2Big_tb.Text, "s2Big", dataInErr);
-                    inputData.Steel2Big = steel2Big_cb.Text;
+                    //inputData.Steel2Big = steel2Big_cb.Text;
+                    inputData.Steel2Big = oneStringSteelControl2Big.GetSteel();
                     inputData.Ak = Parameters.GetParam<double>(AkBig_tb.Text, "Ak", dataInErr);
-                    inputData.SteelC = steelC_cb.Text;
+                    //inputData.SteelC = steelC_cb.Text;
+                    inputData.SteelC = oneStringSteelControlC.GetSteel();
                     inputData.phi_k = Parameters.GetParam<double>(phi_k_tb.Text, "φk", dataInErr);
                     break;
                 case nameof(bigConnectionWithRingPicture29_rb):
                     inputData.ConnectionType = ConicalConnectionType.WithRingPicture29;
                     inputData.s1Big = Parameters.GetParam<double>(s1Big_tb.Text, "s1Big", dataInErr);
-                    inputData.Steel1Big = steel1Big_cb.Text;
+                    //inputData.Steel1Big = steel1Big_cb.Text;
+                    inputData.Steel1Big = oneStringSteelControl1Big.GetSteel();
                     inputData.s2Big = Parameters.GetParam<double>(s2Big_tb.Text, "s2Big", dataInErr);
-                    inputData.Steel2Big = steel2Big_cb.Text;
+                    //inputData.Steel2Big = steel2Big_cb.Text;
+                    inputData.Steel2Big = oneStringSteelControl2Big.GetSteel();
                     inputData.Ak = Parameters.GetParam<double>(AkBig_tb.Text, "Ak", dataInErr);
-                    inputData.SteelC = steelC_cb.Text;
+                    //inputData.SteelC = steelC_cb.Text;
+                    inputData.SteelC = oneStringSteelControlC.GetSteel();
                     inputData.phi_k = Parameters.GetParam<double>(phi_k_tb.Text, "φk", dataInErr);
                     break;
                 case nameof(bigConnectionToroidal_rb):
                     inputData.ConnectionType = ConicalConnectionType.Toroidal;
                     inputData.sT = Parameters.GetParam<double>(sT_tb.Text, "sT", dataInErr);
-                    inputData.SteelT = steelT_cb.Text;
+                    //inputData.SteelT = steelT_cb.Text;
+                    inputData.SteelT = oneStringSteelControlT.GetSteel();
                     inputData.r = Parameters.GetParam<double>(r_tb.Text, "r", dataInErr);
                     break;
                 default:
@@ -259,21 +298,27 @@ public sealed partial class ConicalShellForm : ConicalShellFormMiddle
             {
                 case nameof(littleConnectionSimple_rb):
                     inputData.s1Little = Parameters.GetParam<double>(s_tb.Text, "s1Little", dataInErr);
-                    inputData.Steel1Little = steel_cb.Text;
+                    //inputData.Steel1Little = steel_cb.Text;
+                    inputData.Steel1Little = oneStringSteelControl.GetSteel();
                     inputData.s2Little = Parameters.GetParam<double>(s2Little_tb.Text, "s2Little", dataInErr);
-                    inputData.Steel2Little = steel2Little_cb.Text;
+                    //inputData.Steel2Little = steel2Little_cb.Text;
+                    inputData.Steel2Little = oneStringSteelControl2Little.GetSteel();
                     break;
                 case nameof(littleConnectionSimple_1_rb):
                     inputData.s1Little = Parameters.GetParam<double>(s1Little_tb.Text, "s1Little", dataInErr);
-                    inputData.Steel1Little = steel1Little_cb.Text;
+                    //inputData.Steel1Little = steel1Little_cb.Text;
+                    inputData.Steel1Little = oneStringSteelControl1Little.GetSteel();
                     inputData.s2Little = Parameters.GetParam<double>(s2Little_tb.Text, "s2Little", dataInErr);
-                    inputData.Steel2Little = steel2Little_cb.Text;
+                    //inputData.Steel2Little = steel2Little_cb.Text;
+                    inputData.Steel2Little = oneStringSteelControl2Little.GetSteel();
                     break;
                 case nameof(littleConnectionWithRingPicture29_rb):
                     inputData.s1Little = Parameters.GetParam<double>(s1Little_tb.Text, "s1Little", dataInErr);
-                    inputData.Steel1Little = steel1Little_cb.Text;
+                    //inputData.Steel1Little = steel1Little_cb.Text;
+                    inputData.Steel1Little = oneStringSteelControl1Little.GetSteel();
                     inputData.s2Little = Parameters.GetParam<double>(s2Little_tb.Text, "s2Little", dataInErr);
-                    inputData.Steel2Little = steel2Little_cb.Text;
+                    //inputData.Steel2Little = steel2Little_cb.Text;
+                    inputData.Steel2Little = oneStringSteelControl2Little.GetSteel();
                     //inputData.AkLittle = Parameters.GetParam<double>(AkLittle_tb.Text, "AkLittle", ref dataInErr);
                     //inputData.SteelCLittle = steelCLittle_cb.Text;
                     break;

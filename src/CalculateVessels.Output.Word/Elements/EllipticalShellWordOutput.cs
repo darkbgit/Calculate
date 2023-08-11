@@ -211,7 +211,7 @@ internal class EllipticalShellWordOutput : IWordOutputElement<EllipticalShellCal
 
         table.AddRow()
             .AddCell("Материал днища")
-            .AddCell($"{dataIn.Steel}");
+            .AddCell($"{dataIn.Steel.SteelName}");
 
         table.AddRow()
             .AddCell("Внутренний диаметр днища, D:")
@@ -256,7 +256,7 @@ internal class EllipticalShellWordOutput : IWordOutputElement<EllipticalShellCal
 
         WordHelpers.AddLoadingConditionsInTableForShells(dataIn.LoadingConditions, table);
 
-        WordHelpers.AddMaterialCharacteristicsInTableForShell(dataIn.Steel,
+        WordHelpers.AddMaterialCharacteristicsInTableForShell(dataIn.Steel.SteelName,
             data.Results.Select(r => new
             {
                 r.LoadingConditionId,

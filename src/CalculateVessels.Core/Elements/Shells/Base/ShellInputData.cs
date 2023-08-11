@@ -1,7 +1,8 @@
-﻿using CalculateVessels.Core.Elements.Base;
-using CalculateVessels.Core.Elements.Shells.Enums;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using CalculateVessels.Core.Elements.Base;
+using CalculateVessels.Core.Elements.Shells.Enums;
+using CalculateVessels.Data.Public.Models;
 
 namespace CalculateVessels.Core.Elements.Shells.Base;
 
@@ -25,5 +26,5 @@ public abstract class ShellInputData //: InputData
     public double phi { get; set; }
     public double s { get; set; }
     public ShellType ShellType { get; }
-    public string Steel { get; set; } = string.Empty;
+    public SteelWithIdsDto Steel { get; set; }
 }

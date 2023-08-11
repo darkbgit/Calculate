@@ -1,6 +1,7 @@
 ﻿using CalculateVessels.Core.Elements.Shells.Base;
 using CalculateVessels.Core.Elements.Shells.Enums;
 using CalculateVessels.Core.Interfaces;
+using CalculateVessels.Data.Public.Models;
 
 namespace CalculateVessels.Core.Elements.Shells.Conical;
 
@@ -31,12 +32,18 @@ public class ConicalShellInput : ShellInputData, IInputData
     public double SigmaAllow2Big { get; set; }
     public double SigmaAllowC { get; set; }
     public double SigmaAllowT { get; set; }
-    public string Steel1Little { get; set; } = string.Empty;
-    public string Steel1Big { get; set; } = string.Empty;
-    public string Steel2Little { get; set; } = string.Empty;
-    public string Steel2Big { get; set; } = string.Empty;
-    public string SteelC { get; set; } = string.Empty;
-    public string SteelT { get; set; } = string.Empty;
+    //public string Steel1Little { get; set; } = string.Empty;
+    //public string Steel1Big { get; set; } = string.Empty;
+    //public string Steel2Little { get; set; } = string.Empty;
+    //public string Steel2Big { get; set; } = string.Empty;
+    //public string SteelC { get; set; } = string.Empty;
+    //public string SteelT { get; set; } = string.Empty;
+    public SteelWithIdsDto Steel1Little { get; set; }
+    public SteelWithIdsDto Steel1Big { get; set; }
+    public SteelWithIdsDto Steel2Little { get; set; }
+    public SteelWithIdsDto Steel2Big { get; set; }
+    public SteelWithIdsDto SteelC { get; set; }
+    public SteelWithIdsDto SteelT { get; set; }
     public double s1Big { get; set; }
     public double s2Big { get; set; }
     public double s1Little { get; set; }

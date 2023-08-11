@@ -71,7 +71,8 @@ public partial class NozzleForm : NozzleFormMiddle
         InitializeShellInputData(_shellInputData);
 
         name_tb.Text = inputData.Name;
-        steel1_cb.Text = inputData.steel1;
+        //steel1_cb.Text = inputData.steel1;
+        oneStringSteelControl1.SelectSteel(inputData.steel1);
         d_tb.Text = inputData.d.ToString(CultureInfo.CurrentCulture);
         s1_tb.Text = inputData.s1.ToString(CultureInfo.CurrentCulture);
         cs_tb.Text = inputData.cs.ToString(CultureInfo.CurrentCulture);
@@ -104,14 +105,16 @@ public partial class NozzleForm : NozzleFormMiddle
 
         if (inputData.NozzleKind is NozzleKind.ImpassWithRing or NozzleKind.PassWithRing or NozzleKind.WithRingAndInPart)
         {
-            steel2_cb.Text = inputData.steel2;
+            //steel2_cb.Text = inputData.steel2;
+            oneStringSteelControl2.SelectSteel(inputData.steel2);
             l2_tb.Text = inputData.l2.ToString(CultureInfo.CurrentCulture);
             s2_tb.Text = inputData.s2.ToString(CultureInfo.CurrentCulture);
         }
 
         if (inputData.NozzleKind is NozzleKind.PassWithoutRing or NozzleKind.PassWithRing or NozzleKind.WithRingAndInPart)
         {
-            steel3_cb.Text = inputData.steel3;
+            //steel3_cb.Text = inputData.steel3;
+            oneStringSteelControl3.SelectSteel(inputData.steel3);
             l3_tb.Text = inputData.l3.ToString(CultureInfo.CurrentCulture);
             s3_tb.Text = inputData.s3.ToString(CultureInfo.CurrentCulture);
         }
@@ -233,9 +236,12 @@ public partial class NozzleForm : NozzleFormMiddle
         if (_shellInputData == null)
             throw new NullReferenceException();
 
-        LoadSteelsToComboBox(steel1_cb, SteelSource.G34233D1);
-        LoadSteelsToComboBox(steel2_cb, SteelSource.G34233D1);
-        LoadSteelsToComboBox(steel3_cb, SteelSource.G34233D1);
+        //LoadSteelsToComboBox(steel1_cb, SteelSource.G34233D1);
+        oneStringSteelControl1.SetSteels(PhysicalDataService.GetSteels(SteelSource.G34233D1));
+        //LoadSteelsToComboBox(steel2_cb, SteelSource.G34233D1);
+        oneStringSteelControl2.SetSteels(PhysicalDataService.GetSteels(SteelSource.G34233D1));
+        //LoadSteelsToComboBox(steel3_cb, SteelSource.G34233D1);
+        oneStringSteelControl3.SetSteels(PhysicalDataService.GetSteels(SteelSource.G34233D1));
 
         LoadCalculateServicesNamesToComboBox(Gost_cb);
 
@@ -274,7 +280,7 @@ public partial class NozzleForm : NozzleFormMiddle
 
         inputData = new NozzleInput(_shellElement)
         {
-            steel1 = steel1_cb.Text,
+            //steel1 = steel1_cb.Text,
             Name = name_tb.Text,
             d = Parameters.GetParam<double>(d_tb.Text, "d", dataInErr),
             s1 = Parameters.GetParam<double>(s1_tb.Text, "s1", dataInErr),
@@ -311,14 +317,14 @@ public partial class NozzleForm : NozzleFormMiddle
 
         if (inputData.NozzleKind is NozzleKind.ImpassWithRing or NozzleKind.PassWithRing or NozzleKind.WithRingAndInPart)
         {
-            inputData.steel2 = steel2_cb.Text;
+            //inputData.steel2 = steel2_cb.Text;
             inputData.l2 = Parameters.GetParam<double>(l2_tb.Text, "l2", dataInErr);
             inputData.s2 = Parameters.GetParam<double>(s2_tb.Text, "s2", dataInErr);
         }
 
         if (inputData.NozzleKind is NozzleKind.PassWithoutRing or NozzleKind.PassWithRing or NozzleKind.WithRingAndInPart)
         {
-            inputData.steel3 = steel3_cb.Text;
+            //inputData.steel3 = steel3_cb.Text;
             inputData.l3 = Parameters.GetParam<double>(l3_tb.Text, "l3", dataInErr);
             inputData.s3 = Parameters.GetParam<double>(s3_tb.Text, "s3", dataInErr);
         }
@@ -1522,9 +1528,12 @@ public partial class NozzleForm : NozzleFormMiddle
 
     private void InitializeShellInputData(ShellInputData shellInputData)
     {
-        steel1_cb.SelectedItem = shellInputData.Steel;
-        steel2_cb.Text = shellInputData.Steel;
-        steel3_cb.Text = shellInputData.Steel;
+        //steel1_cb.SelectedItem = shellInputData.Steel;
+        //steel2_cb.Text = shellInputData.Steel;
+        //steel3_cb.Text = shellInputData.Steel;
+        oneStringSteelControl1.SelectSteel(shellInputData.Steel);
+        oneStringSteelControl2.SelectSteel(shellInputData.Steel);
+        oneStringSteelControl3.SelectSteel(shellInputData.Steel);
 
 
         nameEl_tb.Text = shellInputData.Name;

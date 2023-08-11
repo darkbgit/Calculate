@@ -19,9 +19,6 @@ internal class ConicalShellInputValidator : AbstractValidator<ConicalShellInput>
         RuleFor(d => d)
             .NotNull();
 
-        RuleFor(d => d.Steel)
-            .NotEmpty();
-
         RuleFor(d => d.D)
             .GreaterThan(d => d.D1)
             .WithMessage("{PropertyName} must be greater then {ComparisonProperty}={ComparisonValue}.");

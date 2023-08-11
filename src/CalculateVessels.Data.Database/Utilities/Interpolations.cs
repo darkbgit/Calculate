@@ -1,6 +1,6 @@
 using CalculateVessels.Data.Public.Enums;
 using CalculateVessels.Data.Public.Exceptions;
-using CalculateVessels.DataAccess.EF.PhysicalData.Entities;
+using CalculateVessels.Data.Public.Models;
 
 namespace CalculateVessels.Data.Database.Utilities;
 
@@ -68,9 +68,9 @@ internal static class Interpolations
         return result;
     }
 
-    public static double Interpolate(Sigma34233D1 smaller, Sigma34233D1 bigger, double temperature, RoundType round)
+    public static double Interpolate(TemperatureWithValue smaller, TemperatureWithValue bigger, double temperature, RoundType round)
     {
-        return Interpolation((smaller.T, smaller.SigmaAllow), (bigger.T, bigger.SigmaAllow), temperature, round);
+        return Interpolation((smaller.Temperature, smaller.Value), (bigger.Temperature, bigger.Value), temperature, round);
     }
 
     private static double Interpolation((double x, double y) first, (double x, double y) second, double interpolateFor, RoundType round)

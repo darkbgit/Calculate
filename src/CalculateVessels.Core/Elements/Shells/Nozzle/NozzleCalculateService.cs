@@ -68,21 +68,21 @@ internal class NozzleCalculateService : ICalculateService<NozzleInput>
         var data = new NozzleCalculatedOneLoading
         {
             LoadingConditionId = lc.Id,
-            SigmaAllow1 = PhysicalHelper.GetSigmaIfZero(dataIn.SigmaAllow1, dataIn.steel1, lc.t, _physicalData),
-            E1 = PhysicalHelper.GetEIfZero(dataIn.E1, dataIn.steel1, lc.t, _physicalData)
+            SigmaAllow1 = PhysicalHelper.GetSigmaIfZeroAsync(dataIn.SigmaAllow1, dataIn.steel1, lc.t, _physicalData),
+            E1 = PhysicalHelper.GetEIfZero(dataIn.E1, dataIn.steel1.SteelName, lc.t, _physicalData)
         };
 
         if (dataIn.NozzleKind is NozzleKind.ImpassWithRing or NozzleKind.PassWithRing
             or NozzleKind.WithRingAndInPart)
         {
-            data.SigmaAllow2 = PhysicalHelper.GetSigmaIfZero(dataIn.SigmaAllow2, dataIn.steel2, lc.t, _physicalData);
-            data.E2 = PhysicalHelper.GetEIfZero(dataIn.E2, dataIn.steel2, lc.t, _physicalData);
+            data.SigmaAllow2 = PhysicalHelper.GetSigmaIfZeroAsync(dataIn.SigmaAllow2, dataIn.steel2, lc.t, _physicalData);
+            data.E2 = PhysicalHelper.GetEIfZero(dataIn.E2, dataIn.steel2.SteelName, lc.t, _physicalData);
         }
 
         if (dataIn.NozzleKind is NozzleKind.PassWithoutRing or NozzleKind.PassWithRing or NozzleKind.WithRingAndInPart)
         {
-            data.SigmaAllow3 = PhysicalHelper.GetSigmaIfZero(dataIn.SigmaAllow3, dataIn.steel3, lc.t, _physicalData);
-            data.E3 = PhysicalHelper.GetEIfZero(dataIn.E3, dataIn.steel3, lc.t, _physicalData);
+            data.SigmaAllow3 = PhysicalHelper.GetSigmaIfZeroAsync(dataIn.SigmaAllow3, dataIn.steel3, lc.t, _physicalData);
+            data.E3 = PhysicalHelper.GetEIfZero(dataIn.E3, dataIn.steel3.SteelName, lc.t, _physicalData);
         }
 
         //TODO: steel4

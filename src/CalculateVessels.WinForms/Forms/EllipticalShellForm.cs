@@ -2,7 +2,6 @@
 using CalculateVessels.Core.Elements.Shells.Elliptical;
 using CalculateVessels.Core.Elements.Shells.Enums;
 using CalculateVessels.Core.Interfaces;
-
 using CalculateVessels.Data.Properties;
 using CalculateVessels.Data.Public.Enums;
 using CalculateVessels.Data.Public.Interfaces;
@@ -26,7 +25,7 @@ public sealed partial class EllipticalShellForm : EllipticalShellFormMiddle
     protected override void LoadInputData(EllipticalShellInput inputData)
     {
         name_tb.Text = inputData.Name;
-        steel_cb.Text = inputData.Steel;
+        steelControl.SelectSteel(inputData.Steel);
         fi_tb.Text = inputData.phi.ToString(CultureInfo.CurrentCulture);
         D_tb.Text = inputData.D.ToString(CultureInfo.CurrentCulture);
         c1_tb.Text = inputData.c1.ToString(CultureInfo.CurrentCulture);
@@ -62,7 +61,7 @@ public sealed partial class EllipticalShellForm : EllipticalShellFormMiddle
 
     private void EllipticalShellForm_Load(object sender, EventArgs e)
     {
-        LoadSteelsToComboBox(steel_cb, SteelSource.G34233D1);
+        steelControl.SetSteels(PhysicalDataService.GetSteels(SteelSource.G34233D1));
 
         LoadCalculateServicesNamesToComboBox(Gost_cb);
     }
@@ -89,7 +88,7 @@ public sealed partial class EllipticalShellForm : EllipticalShellFormMiddle
         {
             Name = name_tb.Text,
             s = Parameters.GetParam<double>(s_tb.Text, "s", dataInErr),
-            Steel = steel_cb.Text,
+            Steel = steelControl.GetSteel(),
             phi = Parameters.GetParam<double>(fi_tb.Text, "φ", dataInErr),
             D = Parameters.GetParam<double>(D_tb.Text, "D", dataInErr),
             EllipseH = Parameters.GetParam<double>(H_tb.Text, "H", dataInErr),

@@ -73,8 +73,10 @@ internal class CylindricalShellCalculateService : ICalculateService<CylindricalS
         var data = new CylindricalShellCalculatedOneLoading
         {
             LoadingConditionId = loadingCondition.Id,
-            SigmaAllow = PhysicalHelper.GetSigmaIfZero(loadingCondition.SigmaAllow, dataIn.Steel, loadingCondition.t, _physicalData),
-            E = PhysicalHelper.GetEIfZero(loadingCondition.EAllow, dataIn.Steel, loadingCondition.t, _physicalData),
+            //SigmaAllow = PhysicalHelper.GetSigmaIfZero(loadingCondition.SigmaAllow, dataIn.Steel, loadingCondition.t, _physicalData),
+            //E = PhysicalHelper.GetEIfZero(loadingCondition.EAllow, dataIn.Steel.SteelName, loadingCondition.t, _physicalData),
+            SigmaAllow = PhysicalHelper.GetSigmaIfZeroAsync(loadingCondition.SigmaAllow, dataIn.Steel, loadingCondition.t, _physicalData),
+            E = PhysicalHelper.GetEIfZeroAsync(loadingCondition.EAllow, dataIn.Steel.SteelName, loadingCondition.t, _physicalData)
         };
 
         if (loadingCondition.p > 0)

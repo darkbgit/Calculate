@@ -21,4 +21,32 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="MinMaxThicknessId" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="ad9fede1-5aa0-4958-8c0c-1667b5d0d0c0" ChangeDateTime="08/19/2023 15:27:24">
+    <Property Name="ElementName" Value="[dbo].[E34233D1].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[E34233D1]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="SteelTypeId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="1241f6de-847b-4b61-978f-3a81165dd1a8" ChangeDateTime="08/19/2023 15:28:12">
+    <Property Name="ElementName" Value="[dbo].[E34233D1].[Temperature]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[E34233D1]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="T" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="fea475d7-fcc5-4483-88c3-0d0f2d4f0f0d" ChangeDateTime="08/20/2023 16:31:55">
+    <Property Name="ElementName" Value="[dbo].[EllipticalBottom6533].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[EllipticalBottom6533]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="EllipticalBottom6533TypeId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="e4025df4-952e-4e3b-a922-ce68eb2e5ffa" ChangeDateTime="08/20/2023 16:56:26">
+    <Property Name="ElementName" Value="[dbo].[EllipticalBottom6533].[s]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[EllipticalBottom6533]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="h1" />
+  </Operation>
 </Operations>

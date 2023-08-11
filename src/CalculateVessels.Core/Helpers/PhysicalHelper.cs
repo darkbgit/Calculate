@@ -1,8 +1,9 @@
-﻿using CalculateVessels.Core.Exceptions;
+﻿using System.Threading.Tasks;
+using CalculateVessels.Core.Exceptions;
 using CalculateVessels.Data.Public.Enums;
 using CalculateVessels.Data.Public.Exceptions;
 using CalculateVessels.Data.Public.Interfaces;
-
+using CalculateVessels.Data.Public.Models;
 
 namespace CalculateVessels.Core.Helpers;
 
@@ -20,9 +21,26 @@ internal static class PhysicalHelper
         }
     }
 
+    public static async Task<double> GetSigmaAsync(SteelWithIdsDto steel, double temperature, IPhysicalDataService service, SigmaSource source = SigmaSource.G34233D1)
+    {
+        try
+        {
+            return await service.GetSigmaAsync(steel, temperature, source);
+        }
+        catch (PhysicalDataException e)
+        {
+            throw new CalculateException($"Couldn't get sigma. {e.Message}", e);
+        }
+    }
+
     public static double GetSigmaIfZero(double sigmaAllow, string steel, double temperature, IPhysicalDataService service, SigmaSource source = SigmaSource.G34233D1)
     {
         return sigmaAllow != 0 ? sigmaAllow : GetSigma(steel, temperature, service, source);
+    }
+
+    public static double GetSigmaIfZeroAsync(double sigmaAllow, SteelWithIdsDto steel, double temperature, IPhysicalDataService service, SigmaSource source = SigmaSource.G34233D1)
+    {
+        return sigmaAllow != 0 ? sigmaAllow : Task.Run(() => GetSigmaAsync(steel, temperature, service, source)).Result;
     }
 
     public static double GetE(string steel, double temperature, IPhysicalDataService service, ESource source = ESource.G34233D1)
@@ -37,9 +55,26 @@ internal static class PhysicalHelper
         }
     }
 
+    public static async Task<double> GetEAsync(string steel, double temperature, IPhysicalDataService service, ESource source = ESource.G34233D1)
+    {
+        try
+        {
+            return await service.GetEAsync(steel, temperature, source);
+        }
+        catch (PhysicalDataException e)
+        {
+            throw new CalculateException($"Couldn't get E. {e.Message}", e);
+        }
+    }
+
     public static double GetEIfZero(double E, string steel, double temperature, IPhysicalDataService service, ESource source = ESource.G34233D1)
     {
         return E != 0 ? E : GetE(steel, temperature, service, source);
+    }
+
+    public static double GetEIfZeroAsync(double E, string steel, double temperature, IPhysicalDataService service, ESource source = ESource.G34233D1)
+    {
+        return E != 0 ? E : Task.Run(() => GetEAsync(steel, temperature, service, source)).Result;
     }
 
     public static double GetAlpha(string steel, double temperature, IPhysicalDataService service, AlphaSource source = AlphaSource.G34233D1)

@@ -662,28 +662,28 @@ internal class NozzleWordOutput : IWordOutputElement<NozzleCalculated>
             body.AddParagraph("Учет применения различного материального исполнения");
         }
 
-        if (!string.IsNullOrEmpty(nozzleDataIn.steel1) && shellDataIn.Steel != nozzleDataIn.steel1)
+        if (nozzleDataIn.steel1 != null && shellDataIn.Steel != nozzleDataIn.steel1)
         {
             body.AddParagraph("- для внешней части штуцера ")
                 .AppendEquation(
                     $"χ_1=min(1;[σ]_1/[σ])=min(1;{data.SigmaAllow1}/{data.SigmaAllowShell})={data.psi1:f2}");
         }
 
-        if (!string.IsNullOrEmpty(nozzleDataIn.steel2) && shellDataIn.Steel != nozzleDataIn.steel2)
+        if (nozzleDataIn.steel2 != null && shellDataIn.Steel != nozzleDataIn.steel2)
         {
             body.AddParagraph("- для накладного кольца ")
                 .AppendEquation(
                     $"χ_2=min(1;[σ]_2/[σ])=min(1;{data.SigmaAllow2}/{data.SigmaAllowShell})={data.psi2:f2}");
         }
 
-        if (!string.IsNullOrEmpty(nozzleDataIn.steel3) && shellDataIn.Steel != nozzleDataIn.steel3)
+        if (nozzleDataIn.steel3 != null && shellDataIn.Steel != nozzleDataIn.steel3)
         {
             body.AddParagraph("- для внутренней части штуцера ")
                 .AppendEquation(
                     $"χ_3=min(1;[σ]_3/[σ])=min(1;{data.SigmaAllow3}/{data.SigmaAllowShell})={data.psi3:f2}");
         }
 
-        if (!string.IsNullOrEmpty(nozzleDataIn.steel4) && shellDataIn.Steel != nozzleDataIn.steel4)
+        if (nozzleDataIn.steel4 != null && shellDataIn.Steel != nozzleDataIn.steel4)
         {
             body.AddParagraph("- для торообразной вставки или вварного кольца ")
                 .AppendEquation(
@@ -1336,7 +1336,7 @@ internal class NozzleWordOutput : IWordOutputElement<NozzleCalculated>
             });
 
 
-        if (!string.IsNullOrEmpty(nozzleDataIn.steel2) && nozzleDataIn.steel1 != nozzleDataIn.steel2)
+        if (nozzleDataIn.steel2 != null && nozzleDataIn.steel1 != nozzleDataIn.steel2)
         {
             table.AddRowWithOneCell($"Характеристики материала {nozzleDataIn.steel2}");
 
@@ -1349,7 +1349,7 @@ internal class NozzleWordOutput : IWordOutputElement<NozzleCalculated>
                 });
         }
 
-        if (!string.IsNullOrEmpty(nozzleDataIn.steel3) && nozzleDataIn.steel1 != nozzleDataIn.steel3)
+        if (nozzleDataIn.steel3 != null && nozzleDataIn.steel1 != nozzleDataIn.steel3)
         {
             table.AddRowWithOneCell($"Характеристики материала {nozzleDataIn.steel3}");
 
@@ -1362,7 +1362,7 @@ internal class NozzleWordOutput : IWordOutputElement<NozzleCalculated>
                 });
         }
 
-        if (!string.IsNullOrEmpty(nozzleDataIn.steel4) && nozzleDataIn.steel1 != nozzleDataIn.steel4)
+        if (nozzleDataIn.steel4 != null && nozzleDataIn.steel1 != nozzleDataIn.steel4)
         {
             table.AddRowWithOneCell($"Характеристики материала {nozzleDataIn.steel4}");
 

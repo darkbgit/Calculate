@@ -1,5 +1,6 @@
 ﻿using CalculateVessels.Core.Elements.Shells.Nozzle.Enums;
 using CalculateVessels.Core.Interfaces;
+using CalculateVessels.Data.Public.Models;
 
 namespace CalculateVessels.Core.Elements.Shells.Nozzle;
 
@@ -49,10 +50,10 @@ public class NozzleInput : IInputData
     public double s1 { get; set; }
     public double s2 { get; set; }
     public double s3 { get; set; }
-    public string steel1 { get; set; } = string.Empty;
-    public string steel2 { get; set; } = string.Empty;
-    public string steel3 { get; set; } = string.Empty;
-    public string steel4 { get; set; } = string.Empty;
+    public SteelWithIdsDto steel1 { get; set; }
+    public SteelWithIdsDto? steel2 { get; set; }
+    public SteelWithIdsDto? steel3 { get; set; }
+    public SteelWithIdsDto? steel4 { get; set; }
     //public double t { get; set; }
     public double tTransversely { get; set; }
 }

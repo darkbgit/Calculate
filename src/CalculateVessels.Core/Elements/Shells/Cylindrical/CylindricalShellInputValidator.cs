@@ -14,9 +14,6 @@ internal class CylindricalShellInputValidator : AbstractValidator<CylindricalShe
         RuleFor(d => d)
             .NotNull();
 
-        RuleFor(d => d.Steel)
-            .NotEmpty();
-
         RuleFor(d => d.LoadingConditions)
             .NotEmpty();
 

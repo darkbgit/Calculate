@@ -488,6 +488,7 @@ partial class MainForm
         button22.TabIndex = 42;
         button22.Text = "button22";
         button22.UseVisualStyleBackColor = true;
+        button22.Click += button22_Click;
         // 
         // button23
         // 

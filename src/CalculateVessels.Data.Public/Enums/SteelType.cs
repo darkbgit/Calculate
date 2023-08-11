@@ -2,8 +2,7 @@
 
 public enum SteelType
 {
-    Carbon,
+    Carbon = 1,
     Alloyed,
     Austenitic,
-    Undefined
 }

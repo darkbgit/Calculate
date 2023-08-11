@@ -26,7 +26,7 @@ public partial class CylindricalShellForm : CylindricalShellFormMiddle
     protected override void LoadInputData(CylindricalShellInput inputData)
     {
         Name_tb.Text = inputData.Name;
-        steel_cb.Text = inputData.Steel;
+        steelControl.SelectSteel(inputData.Steel);
         fi_tb.Text = inputData.phi.ToString(CultureInfo.CurrentCulture);
         D_tb.Text = inputData.D.ToString(CultureInfo.CurrentCulture);
         c1_tb.Text = inputData.c1.ToString(CultureInfo.CurrentCulture);
@@ -84,7 +84,7 @@ public partial class CylindricalShellForm : CylindricalShellFormMiddle
 
     private void CylindricalShellForm_Load(object sender, EventArgs e)
     {
-        LoadSteelsToComboBox(steel_cb, SteelSource.G34233D1);
+        steelControl.SetSteels(PhysicalDataService.GetSteels(SteelSource.G34233D1));
 
         LoadCalculateServicesNamesToComboBox(Gost_cb);
 
@@ -116,7 +116,7 @@ public partial class CylindricalShellForm : CylindricalShellFormMiddle
         {
             Name = Name_tb.Text,
             s = Parameters.GetParam<double>(s_tb.Text, "s", dataInErr),
-            Steel = steel_cb.Text,
+            Steel = steelControl.GetSteel(),
             phi = Parameters.GetParam<double>(fi_tb.Text, "φ", dataInErr),
             D = Parameters.GetParam<double>(D_tb.Text, "D", dataInErr),
             c1 = Parameters.GetParam<double>(c1_tb.Text, "c1", dataInErr),

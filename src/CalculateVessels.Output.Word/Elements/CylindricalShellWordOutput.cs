@@ -86,7 +86,7 @@ internal class CylindricalShellWordOutput : IWordOutputElement<CylindricalShellC
         //table.SetWidths(new float[] { 300, 100 });
         table.AddRow()
             .AddCell("Материал обечайки")
-            .AddCell($"{dataIn.Steel}");
+            .AddCell($"{dataIn.Steel.SteelName}");
 
         table.AddRow()
             .AddCell("Внутренний диаметр обечайки, D:")
@@ -129,7 +129,7 @@ internal class CylindricalShellWordOutput : IWordOutputElement<CylindricalShellC
 
         WordHelpers.AddLoadingConditionsInTableForShells(dataIn.LoadingConditions, table);
 
-        WordHelpers.AddMaterialCharacteristicsInTableForShell(dataIn.Steel,
+        WordHelpers.AddMaterialCharacteristicsInTableForShell(dataIn.Steel.SteelName,
             data.Results.Select(r => new
             {
                 r.LoadingConditionId,

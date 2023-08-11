@@ -325,6 +325,14 @@ public partial class MainForm : Form
 
         var steels = _physicalDataService.GetSteels(SteelSource.G34233D1);
         MessageBox.Show(string.Join(Environment.NewLine, steels));
+
+        var sigma = _physicalDataService.GetSigma("03Х18Н11", 80, SigmaSource.G34233D1, 0, DesignResourceType.Standard);
+        MessageBox.Show(sigma.ToString());
+    }
+
+    private void button22_Click(object sender, EventArgs e)
+    {
+
     }
 
     private bool CheckAndCreateForm<T>(ref T? form)

@@ -1,21 +1,17 @@
-﻿using CalculateVessels.Data.Interfaces;
-using CalculateVessels.Data.PhysicalData.Gost6533.Models;
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Windows.Forms;
+﻿using System.Globalization;
+using CalculateVessels.Data.Public.Enums;
+using CalculateVessels.Data.Public.Interfaces;
 
 namespace CalculateVessels.Forms;
 
 public partial class EllipticalParametersForm : Form
 {
-    private readonly EllipsesParameters _ellipses;
+    private readonly IPhysicalDataService _physicalDataService;
 
     public EllipticalParametersForm(IPhysicalDataService physicalDataService)
     {
+        _physicalDataService = physicalDataService;
         InitializeComponent();
-        _ellipses = physicalDataService.GetEllipsesParameters();
     }
 
     private void Cancel_b_Click(object sender, EventArgs e)
@@ -25,6 +21,14 @@ public partial class EllipticalParametersForm : Form
 
     private void GostEllForm_Load(object sender, EventArgs e)
     {
+        var types = Task.Run(() => _physicalDataService.GetEllipsesTypes6533Async()).Result
+            .ToList()
+            .Select(el => el.ToString())
+            .ToArray<object>();
+
+        type_cb.Items.Clear();
+        type_cb.Items.AddRange(types);
+
         type_cb.SelectedIndex = 0;
     }
 
@@ -37,18 +41,13 @@ public partial class EllipticalParametersForm : Form
         H_tb.Text = string.Empty;
         h1_tb.Text = string.Empty;
 
-        var diameters = type_cb.SelectedIndex switch
-        {
-            0 => _ellipses.EllipticalBottomInsideDiameter025.Keys
-                .Select(eb => eb.ToString(CultureInfo.CurrentCulture))
-                .ToArray<object>(),
-            1 => _ellipses.EllipticalBottomInsideDiameter02.Keys
-                .Select(eb => eb.ToString(CultureInfo.CurrentCulture))
-                .ToArray<object>(),
-            _ => null
-        };
+        var type = Enum.Parse<EllipticalBottom6533Type>(type_cb.Text);
 
-        if (diameters == null)
+        var diameters = Task.Run(() => _physicalDataService.GetEllipsesDiameters6533Async(type)).Result
+            .Select(d => d as object)
+            .ToArray();
+
+        if (!diameters.Any())
         {
             MessageBox.Show("Error");
             return;
@@ -71,11 +70,13 @@ public partial class EllipticalParametersForm : Form
             return;
         }
 
-        var sParametersList = GetEllipseSParametersByDiameter(diameter);
-        var sList = sParametersList?.Select(s => s.s.ToString(CultureInfo.CurrentCulture))
-            .ToArray<object>(); ;
+        var type = Enum.Parse<EllipticalBottom6533Type>(type_cb.Text);
 
-        if (sList == null)
+        var sList = Task.Run(() => _physicalDataService.GetEllipsesThickness6533Async(type, diameter)).Result
+                .Select(s => s as object)
+                .ToArray();
+
+        if (!sList.Any())
         {
             MessageBox.Show("Error");
             return;
@@ -101,9 +102,10 @@ public partial class EllipticalParametersForm : Form
             MessageBox.Show("Error");
             return;
         }
+        var type = Enum.Parse<EllipticalBottom6533Type>(type_cb.Text);
 
-        var sParameters = GetEllipseSParametersByDiameter(diameter)
-            ?.FirstOrDefault(p => p.s.Equals(s));
+        var sParameters = Task.Run((() => _physicalDataService.GetEllipsesParameters6533Async(type, diameter, s)))
+            .Result;
 
         if (sParameters == null)
         {
@@ -124,24 +126,9 @@ public partial class EllipticalParametersForm : Form
             ef.h1_tb.Text = h1_tb.Text;
             ef.s_tb.Text = s_cb.Text;
             ef.c3_tb.Text = CalculateC3(Convert.ToInt32(s_cb.Text)).ToString(CultureInfo.InvariantCulture);
+            ef.name_tb.Text = $@"Днище {D_cb.Text}-{h1_tb.Text}-{H_tb.Text} ГОСТ 6533-78";
         }
         Close();
-    }
-
-    private IEnumerable<EllipseSValueParameters>? GetEllipseSParametersByDiameter(double diameter)
-    {
-        List<EllipseSValueParameters>? result = null;
-
-        _ = type_cb.SelectedIndex switch
-        {
-            0 => _ellipses.EllipticalBottomInsideDiameter025
-                .TryGetValue(diameter, out result),
-            1 => _ellipses.EllipticalBottomInsideDiameter02
-                .TryGetValue(diameter, out result),
-            _ => false
-        };
-
-        return result;
     }
 
     private static double CalculateC3(double s) => s * 0.15;

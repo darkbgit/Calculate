@@ -1,8 +1,8 @@
 ﻿namespace CalculateVessels.Data.Public.Enums;
 
-public enum EllipticalBottomGostType
+public enum EllipticalBottom6533Type
 {
+    EllipticalBottomOutsideDiameter025 = 1,
     EllipticalBottomInsideDiameter025,
-    EllipticalBottomOutsideDiameter025,
     EllipticalBottomInsideDiameter020
 }

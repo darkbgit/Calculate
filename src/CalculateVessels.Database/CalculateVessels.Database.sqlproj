@@ -59,6 +59,7 @@
     <Folder Include="Tables" />
     <Folder Include="Post" />
     <Folder Include="ForignKeys" />
+    <Folder Include="InitData" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Post\Script.PostDeployment.sql" />
@@ -68,8 +69,17 @@
     <Build Include="Tables\Sigmas34233D1.sql" />
     <Build Include="Tables\DesignResources.sql" />
     <Build Include="Tables\SteelsMinMaxThickness.sql" />
+    <Build Include="Tables\SteelTypes.sql" />
+    <Build Include="Tables\E34233D1.sql" />
+    <Build Include="Tables\EllipticalBottom6533Type.sql" />
+    <Build Include="Tables\EllipticalBottom6533.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="CalculateVessels.Database.refactorlog" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="InitData\DesignResources.sql" />
+    <None Include="InitData\EllipticalBottom6533Type.sql" />
+    <None Include="InitData\EllipticalBottom6533.sql" />
   </ItemGroup>
 </Project>
