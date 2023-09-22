@@ -119,7 +119,11 @@ internal class PhysicalDataService : IPhysicalDataService
         {
             case SigmaSource.G34233D1:
                 var query = from sigmaTable in _context.Sigmas34233D1
-                         .Where(s => s.SteelId == steel.SteelId && s.DesignResourceId == steel.DesignResourceId && s.MinMaxThicknessId == steel.MinMaxThicknessId)
+                         .Where(s => s.SteelId == steel.SteelId)
+                                //.Where(s => (s.DesignResourceId == null && steel.DesignResourceId == null) || s.DesignResourceId == steel.DesignResourceId)
+                                //.Where(s => s.MinMaxThicknessId == steel.MinMaxThicknessId)
+                                //&& s.DesignResourceId == steel.DesignResourceId
+                                //&& s.MinMaxThicknessId == steel.MinMaxThicknessId)
                             group sigmaTable by new
                             {
                                 sigmaTable.SteelId,
@@ -144,8 +148,9 @@ internal class PhysicalDataService : IPhysicalDataService
                             join t in _context.SteelsMinMaxThickness on sigmaGroup.MinMaxThicknessId.Value equals t.Id into tList
                             from t in tList.DefaultIfEmpty()
 
-                            //where t == null || (t.Min <= thickness && t.Max > thickness)
-                            //where dr == null || dr.Id == (int)designResource
+                            where dr == null || dr.Id == steel.DesignResourceId
+                            where t == null || t.Id == steel.MinMaxThicknessId
+
                             select new TemperatureWithValue
                             {
                                 Temperature = sigmaGroup.T,

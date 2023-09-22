@@ -38,7 +38,8 @@ public sealed partial class SaddleForm : SaddleFormMiddle
         });
 
 
-        steel_cb.Text = inputData.Steel;
+        //steel_cb.Text = inputData.Steel;
+        oneStringSteelControlShell.SelectSteel(inputData.Steel);
         name_tb.Text = inputData.Name;
         D_tb.Text = inputData.D.ToString(CultureInfo.CurrentCulture);
         s_tb.Text = inputData.s.ToString(CultureInfo.CurrentCulture);
@@ -90,7 +91,9 @@ public sealed partial class SaddleForm : SaddleFormMiddle
 
     private void SaddleForm_Load(object sender, EventArgs e)
     {
-        LoadSteelsToComboBox(steel_cb, SteelSource.G34233D1);
+        //LoadSteelsToComboBox(steel_cb, SteelSource.G34233D1);
+        oneStringSteelControlShell.SetSteels(PhysicalDataService.GetSteels(SteelSource.G34233D1));
+        oneStringSteelControlSheet.SetSteels(PhysicalDataService.GetSteels(SteelSource.G34233D1));
         LoadCalculateServicesNamesToComboBox(Gost_cb);
 
         saddle_pb.Image = (Bitmap)(new ImageConverter().ConvertFrom(Resources.SaddleNothingElem)
@@ -119,7 +122,8 @@ public sealed partial class SaddleForm : SaddleFormMiddle
         {
             Name = name_tb.Text,
             NameShell = nameShell_tb.Text,
-            Steel = steel_cb.Text,
+            //Steel = steel_cb.Text,
+            Steel = oneStringSteelControlShell.GetSteel(),
             D = Parameters.GetParam<double>(D_tb.Text, "D", dataInErr),
             s = Parameters.GetParam<double>(s_tb.Text, "s", dataInErr),
             c = Parameters.GetParam<double>(c_tb.Text, "c", dataInErr),
@@ -279,7 +283,7 @@ public sealed partial class SaddleForm : SaddleFormMiddle
 
     private void SpacerRibRadioButton_CheckedChanged(object sender, EventArgs e)
     {
-        if (sender is not RadioButton { Checked: true } rb) return;
+        if (sender is not RadioButton { Checked: true }) return;
 
         saddle_pb.Image = (Bitmap)(new ImageConverter().ConvertFrom(
                                        Resources.ResourceManager.GetObject("SaddleRingIn" + GetNumberOfSpacerRibs() + "Elem")

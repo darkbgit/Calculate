@@ -1,5 +1,6 @@
 ﻿using CalculateVessels.Core;
 using CalculateVessels.Core.Elements.Base;
+using CalculateVessels.Core.Elements.Bottoms.FlatBottom;
 using CalculateVessels.Core.Elements.Shells.Conical;
 using CalculateVessels.Core.Elements.Shells.Cylindrical;
 using CalculateVessels.Core.Elements.Shells.Elliptical;
@@ -291,6 +292,12 @@ public partial class MainForm : Form
                 if (CheckAndCreateForm(ref SaddleForm))
                 {
                     SaddleForm?.Show((SaddleInput)((SaddleCalculated)element).InputData, elementIndex);
+                }
+                break;
+            case nameof(FlatBottomCalculated):
+                if (CheckAndCreateForm(ref FlatBottomForm))
+                {
+                    FlatBottomForm?.Show((FlatBottomInput)((FlatBottomCalculated)element).InputData, elementIndex);
                 }
                 break;
             default:

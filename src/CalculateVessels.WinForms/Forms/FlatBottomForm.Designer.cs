@@ -29,1048 +29,792 @@ namespace CalculateVessels.Forms
         /// </summary>
         private void InitializeComponent()
         {
-            this.label28 = new System.Windows.Forms.Label();
-            this.label27 = new System.Windows.Forms.Label();
-            this.label25 = new System.Windows.Forms.Label();
-            this.label24 = new System.Windows.Forms.Label();
-            this.label23 = new System.Windows.Forms.Label();
-            this.cancel_btn = new System.Windows.Forms.Button();
-            this.calc_btn = new System.Windows.Forms.Button();
-            this.preCalc_btn = new System.Windows.Forms.Button();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.p_d_l = new System.Windows.Forms.Label();
-            this.scalc_l = new System.Windows.Forms.Label();
-            this.type_gb = new System.Windows.Forms.GroupBox();
-            this.rb15 = new System.Windows.Forms.RadioButton();
-            this.rb14 = new System.Windows.Forms.RadioButton();
-            this.rb13 = new System.Windows.Forms.RadioButton();
-            this.rb12 = new System.Windows.Forms.RadioButton();
-            this.rb11 = new System.Windows.Forms.RadioButton();
-            this.rb10 = new System.Windows.Forms.RadioButton();
-            this.rb9 = new System.Windows.Forms.RadioButton();
-            this.rb8 = new System.Windows.Forms.RadioButton();
-            this.rb7 = new System.Windows.Forms.RadioButton();
-            this.rb6 = new System.Windows.Forms.RadioButton();
-            this.rb5 = new System.Windows.Forms.RadioButton();
-            this.rb4 = new System.Windows.Forms.RadioButton();
-            this.rb3 = new System.Windows.Forms.RadioButton();
-            this.rb2 = new System.Windows.Forms.RadioButton();
-            this.rb1 = new System.Windows.Forms.RadioButton();
-            this.type_pb = new System.Windows.Forms.PictureBox();
-            this.button4 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.getFi_b = new System.Windows.Forms.Button();
-            this.getE_b = new System.Windows.Forms.Button();
-            this.label19 = new System.Windows.Forms.Label();
-            this.grtSigma_b = new System.Windows.Forms.Button();
-            this.label18 = new System.Windows.Forms.Label();
-            this.s1_tb = new System.Windows.Forms.TextBox();
-            this.label17 = new System.Windows.Forms.Label();
-            this.label15 = new System.Windows.Forms.Label();
-            this.label14 = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.c3_tb = new System.Windows.Forms.TextBox();
-            this.c2_tb = new System.Windows.Forms.TextBox();
-            this.c1_tb = new System.Windows.Forms.TextBox();
-            this.fi_tb = new System.Windows.Forms.TextBox();
-            this.E_tb = new System.Windows.Forms.TextBox();
-            this.sigma_d_tb = new System.Windows.Forms.TextBox();
-            this.steel_cb = new System.Windows.Forms.ComboBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.dav_gb = new System.Windows.Forms.GroupBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.nar_rb = new System.Windows.Forms.RadioButton();
-            this.p_tb = new System.Windows.Forms.TextBox();
-            this.vn_rb = new System.Windows.Forms.RadioButton();
-            this.label4 = new System.Windows.Forms.Label();
-            this.t_tb = new System.Windows.Forms.TextBox();
-            this.Gost_cb = new System.Windows.Forms.ComboBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.name_tb = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.otv_gb = new System.Windows.Forms.GroupBox();
-            this.manyHole_rb = new System.Windows.Forms.RadioButton();
-            this.oneHole_rb = new System.Windows.Forms.RadioButton();
-            this.label30 = new System.Windows.Forms.Label();
-            this.holed_tb = new System.Windows.Forms.TextBox();
-            this.hole_cb = new System.Windows.Forms.CheckBox();
-            this.typePanel = new System.Windows.Forms.Panel();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.EHandle_cb = new System.Windows.Forms.CheckBox();
-            this.sigmaHandle_cb = new System.Windows.Forms.CheckBox();
-            this.groupBox4.SuspendLayout();
-            this.type_gb.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.type_pb)).BeginInit();
-            this.dav_gb.SuspendLayout();
-            this.otv_gb.SuspendLayout();
-            this.SuspendLayout();
+            label28 = new Label();
+            label27 = new Label();
+            label25 = new Label();
+            label24 = new Label();
+            label23 = new Label();
+            cancel_btn = new Button();
+            calc_btn = new Button();
+            preCalc_btn = new Button();
+            groupBox4 = new GroupBox();
+            p_d_l = new Label();
+            scalc_l = new Label();
+            type_gb = new GroupBox();
+            rb15 = new RadioButton();
+            rb14 = new RadioButton();
+            rb13 = new RadioButton();
+            rb12 = new RadioButton();
+            rb11 = new RadioButton();
+            rb10 = new RadioButton();
+            rb9 = new RadioButton();
+            rb8 = new RadioButton();
+            rb7 = new RadioButton();
+            rb6 = new RadioButton();
+            rb5 = new RadioButton();
+            rb4 = new RadioButton();
+            rb3 = new RadioButton();
+            rb2 = new RadioButton();
+            rb1 = new RadioButton();
+            type_pb = new PictureBox();
+            button4 = new Button();
+            button3 = new Button();
+            button2 = new Button();
+            checkBox1 = new CheckBox();
+            getFi_b = new Button();
+            s1_tb = new TextBox();
+            label17 = new Label();
+            label15 = new Label();
+            label14 = new Label();
+            label13 = new Label();
+            label10 = new Label();
+            c3_tb = new TextBox();
+            c2_tb = new TextBox();
+            c1_tb = new TextBox();
+            phi_tb = new TextBox();
+            Gost_cb = new ComboBox();
+            label2 = new Label();
+            name_tb = new TextBox();
+            label1 = new Label();
+            otv_gb = new GroupBox();
+            manyHole_rb = new RadioButton();
+            oneHole_rb = new RadioButton();
+            label30 = new Label();
+            holed_tb = new TextBox();
+            hole_cb = new CheckBox();
+            typePanel = new Panel();
+            loadingConditionControl = new Controls.LoadingConditionControl();
+            steelControl = new Controls.SteelControl();
+            groupBox4.SuspendLayout();
+            type_gb.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)type_pb).BeginInit();
+            otv_gb.SuspendLayout();
+            SuspendLayout();
             // 
             // label28
             // 
-            this.label28.AutoSize = true;
-            this.label28.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.label28.Location = new System.Drawing.Point(0, 409);
-            this.label28.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label28.MaximumSize = new System.Drawing.Size(0, 1);
-            this.label28.MinimumSize = new System.Drawing.Size(350, 0);
-            this.label28.Name = "label28";
-            this.label28.Size = new System.Drawing.Size(350, 1);
-            this.label28.TabIndex = 115;
-            this.label28.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            label28.AutoSize = true;
+            label28.BorderStyle = BorderStyle.Fixed3D;
+            label28.Location = new Point(1, 422);
+            label28.Margin = new Padding(4, 0, 4, 0);
+            label28.MaximumSize = new Size(0, 1);
+            label28.MinimumSize = new Size(350, 0);
+            label28.Name = "label28";
+            label28.Size = new Size(350, 1);
+            label28.TabIndex = 115;
+            label28.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // label27
             // 
-            this.label27.AutoSize = true;
-            this.label27.Location = new System.Drawing.Point(278, 417);
-            this.label27.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(25, 15);
-            this.label27.TabIndex = 114;
-            this.label27.Text = "мм";
+            label27.AutoSize = true;
+            label27.Location = new Point(279, 430);
+            label27.Margin = new Padding(4, 0, 4, 0);
+            label27.Name = "label27";
+            label27.Size = new Size(25, 15);
+            label27.TabIndex = 114;
+            label27.Text = "мм";
             // 
             // label25
             // 
-            this.label25.AutoSize = true;
-            this.label25.Location = new System.Drawing.Point(278, 329);
-            this.label25.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(25, 15);
-            this.label25.TabIndex = 112;
-            this.label25.Text = "мм";
+            label25.AutoSize = true;
+            label25.Location = new Point(279, 342);
+            label25.Margin = new Padding(4, 0, 4, 0);
+            label25.Name = "label25";
+            label25.Size = new Size(25, 15);
+            label25.TabIndex = 112;
+            label25.Text = "мм";
             // 
             // label24
             // 
-            this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(278, 359);
-            this.label24.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(25, 15);
-            this.label24.TabIndex = 111;
-            this.label24.Text = "мм";
+            label24.AutoSize = true;
+            label24.Location = new Point(279, 372);
+            label24.Margin = new Padding(4, 0, 4, 0);
+            label24.Name = "label24";
+            label24.Size = new Size(25, 15);
+            label24.TabIndex = 111;
+            label24.Text = "мм";
             // 
             // label23
             // 
-            this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(278, 389);
-            this.label23.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(25, 15);
-            this.label23.TabIndex = 110;
-            this.label23.Text = "мм";
+            label23.AutoSize = true;
+            label23.Location = new Point(279, 402);
+            label23.Margin = new Padding(4, 0, 4, 0);
+            label23.Name = "label23";
+            label23.Size = new Size(25, 15);
+            label23.TabIndex = 110;
+            label23.Text = "мм";
             // 
             // cancel_btn
             // 
-            this.cancel_btn.Location = new System.Drawing.Point(247, 586);
-            this.cancel_btn.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cancel_btn.Name = "cancel_btn";
-            this.cancel_btn.Size = new System.Drawing.Size(88, 27);
-            this.cancel_btn.TabIndex = 84;
-            this.cancel_btn.Text = "Cancel";
-            this.cancel_btn.UseVisualStyleBackColor = true;
-            this.cancel_btn.Click += new System.EventHandler(this.Cancel_b_Click);
+            cancel_btn.Location = new Point(247, 586);
+            cancel_btn.Margin = new Padding(4, 3, 4, 3);
+            cancel_btn.Name = "cancel_btn";
+            cancel_btn.Size = new Size(88, 27);
+            cancel_btn.TabIndex = 84;
+            cancel_btn.Text = "Cancel";
+            cancel_btn.UseVisualStyleBackColor = true;
+            cancel_btn.Click += Cancel_b_Click;
             // 
             // calc_btn
             // 
-            this.calc_btn.Enabled = false;
-            this.calc_btn.Location = new System.Drawing.Point(152, 586);
-            this.calc_btn.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.calc_btn.Name = "calc_btn";
-            this.calc_btn.Size = new System.Drawing.Size(88, 27);
-            this.calc_btn.TabIndex = 83;
-            this.calc_btn.Text = "Расчет";
-            this.calc_btn.UseVisualStyleBackColor = true;
-            this.calc_btn.Click += new System.EventHandler(this.CalculateButton_Click);
+            calc_btn.Enabled = false;
+            calc_btn.Location = new Point(152, 586);
+            calc_btn.Margin = new Padding(4, 3, 4, 3);
+            calc_btn.Name = "calc_btn";
+            calc_btn.Size = new Size(88, 27);
+            calc_btn.TabIndex = 83;
+            calc_btn.Text = "Расчет";
+            calc_btn.UseVisualStyleBackColor = true;
+            calc_btn.Click += CalculateButton_Click;
             // 
             // preCalc_btn
             // 
-            this.preCalc_btn.Location = new System.Drawing.Point(14, 578);
-            this.preCalc_btn.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.preCalc_btn.Name = "preCalc_btn";
-            this.preCalc_btn.Size = new System.Drawing.Size(130, 42);
-            this.preCalc_btn.TabIndex = 81;
-            this.preCalc_btn.Text = "Предварительный\r\nрасчет";
-            this.preCalc_btn.UseVisualStyleBackColor = true;
-            this.preCalc_btn.Click += new System.EventHandler(this.PreCalculateButton_Click);
+            preCalc_btn.Location = new Point(14, 578);
+            preCalc_btn.Margin = new Padding(4, 3, 4, 3);
+            preCalc_btn.Name = "preCalc_btn";
+            preCalc_btn.Size = new Size(130, 42);
+            preCalc_btn.TabIndex = 81;
+            preCalc_btn.Text = "Предварительный\r\nрасчет";
+            preCalc_btn.UseVisualStyleBackColor = true;
+            preCalc_btn.Click += PreCalculateButton_Click;
             // 
             // groupBox4
             // 
-            this.groupBox4.Controls.Add(this.p_d_l);
-            this.groupBox4.Controls.Add(this.scalc_l);
-            this.groupBox4.Location = new System.Drawing.Point(427, 570);
-            this.groupBox4.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.groupBox4.Size = new System.Drawing.Size(270, 58);
-            this.groupBox4.TabIndex = 107;
-            this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "Результаты расчета";
+            groupBox4.Controls.Add(p_d_l);
+            groupBox4.Controls.Add(scalc_l);
+            groupBox4.Location = new Point(427, 570);
+            groupBox4.Margin = new Padding(4, 3, 4, 3);
+            groupBox4.Name = "groupBox4";
+            groupBox4.Padding = new Padding(4, 3, 4, 3);
+            groupBox4.Size = new Size(270, 58);
+            groupBox4.TabIndex = 107;
+            groupBox4.TabStop = false;
+            groupBox4.Text = "Результаты расчета";
             // 
             // p_d_l
             // 
-            this.p_d_l.AutoSize = true;
-            this.p_d_l.Location = new System.Drawing.Point(126, 18);
-            this.p_d_l.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.p_d_l.Name = "p_d_l";
-            this.p_d_l.Size = new System.Drawing.Size(22, 15);
-            this.p_d_l.TabIndex = 1;
-            this.p_d_l.Text = "[p]";
+            p_d_l.AutoSize = true;
+            p_d_l.Location = new Point(126, 18);
+            p_d_l.Margin = new Padding(4, 0, 4, 0);
+            p_d_l.Name = "p_d_l";
+            p_d_l.Size = new Size(22, 15);
+            p_d_l.TabIndex = 1;
+            p_d_l.Text = "[p]";
             // 
             // scalc_l
             // 
-            this.scalc_l.AutoSize = true;
-            this.scalc_l.Location = new System.Drawing.Point(8, 18);
-            this.scalc_l.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.scalc_l.Name = "scalc_l";
-            this.scalc_l.Size = new System.Drawing.Size(12, 15);
-            this.scalc_l.TabIndex = 0;
-            this.scalc_l.Text = "s";
+            scalc_l.AutoSize = true;
+            scalc_l.Location = new Point(8, 18);
+            scalc_l.Margin = new Padding(4, 0, 4, 0);
+            scalc_l.Name = "scalc_l";
+            scalc_l.Size = new Size(12, 15);
+            scalc_l.TabIndex = 0;
+            scalc_l.Text = "s";
             // 
             // type_gb
             // 
-            this.type_gb.Controls.Add(this.rb15);
-            this.type_gb.Controls.Add(this.rb14);
-            this.type_gb.Controls.Add(this.rb13);
-            this.type_gb.Controls.Add(this.rb12);
-            this.type_gb.Controls.Add(this.rb11);
-            this.type_gb.Controls.Add(this.rb10);
-            this.type_gb.Controls.Add(this.rb9);
-            this.type_gb.Controls.Add(this.rb8);
-            this.type_gb.Controls.Add(this.rb7);
-            this.type_gb.Controls.Add(this.rb6);
-            this.type_gb.Controls.Add(this.rb5);
-            this.type_gb.Controls.Add(this.rb4);
-            this.type_gb.Controls.Add(this.rb3);
-            this.type_gb.Controls.Add(this.rb2);
-            this.type_gb.Controls.Add(this.rb1);
-            this.type_gb.Controls.Add(this.type_pb);
-            this.type_gb.Location = new System.Drawing.Point(372, 12);
-            this.type_gb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.type_gb.Name = "type_gb";
-            this.type_gb.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.type_gb.Size = new System.Drawing.Size(367, 244);
-            this.type_gb.TabIndex = 106;
-            this.type_gb.TabStop = false;
-            this.type_gb.Text = "Конструкция днищ и крышек";
+            type_gb.Controls.Add(rb15);
+            type_gb.Controls.Add(rb14);
+            type_gb.Controls.Add(rb13);
+            type_gb.Controls.Add(rb12);
+            type_gb.Controls.Add(rb11);
+            type_gb.Controls.Add(rb10);
+            type_gb.Controls.Add(rb9);
+            type_gb.Controls.Add(rb8);
+            type_gb.Controls.Add(rb7);
+            type_gb.Controls.Add(rb6);
+            type_gb.Controls.Add(rb5);
+            type_gb.Controls.Add(rb4);
+            type_gb.Controls.Add(rb3);
+            type_gb.Controls.Add(rb2);
+            type_gb.Controls.Add(rb1);
+            type_gb.Controls.Add(type_pb);
+            type_gb.Location = new Point(372, 12);
+            type_gb.Margin = new Padding(4, 3, 4, 3);
+            type_gb.Name = "type_gb";
+            type_gb.Padding = new Padding(4, 3, 4, 3);
+            type_gb.Size = new Size(367, 244);
+            type_gb.TabIndex = 106;
+            type_gb.TabStop = false;
+            type_gb.Text = "Конструкция днищ и крышек";
             // 
             // rb15
             // 
-            this.rb15.AutoSize = true;
-            this.rb15.Location = new System.Drawing.Point(321, 211);
-            this.rb15.Name = "rb15";
-            this.rb15.Size = new System.Drawing.Size(37, 19);
-            this.rb15.TabIndex = 16;
-            this.rb15.TabStop = true;
-            this.rb15.Text = "15";
-            this.rb15.UseVisualStyleBackColor = true;
-            this.rb15.CheckedChanged += new System.EventHandler(this.Rb_CheckedChanged);
+            rb15.AutoSize = true;
+            rb15.Location = new Point(321, 211);
+            rb15.Name = "rb15";
+            rb15.Size = new Size(37, 19);
+            rb15.TabIndex = 16;
+            rb15.TabStop = true;
+            rb15.Text = "15";
+            rb15.UseVisualStyleBackColor = true;
+            rb15.CheckedChanged += Rb_CheckedChanged;
             // 
             // rb14
             // 
-            this.rb14.AutoSize = true;
-            this.rb14.Location = new System.Drawing.Point(321, 185);
-            this.rb14.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.rb14.Name = "rb14";
-            this.rb14.Size = new System.Drawing.Size(37, 19);
-            this.rb14.TabIndex = 15;
-            this.rb14.Text = "14";
-            this.rb14.UseVisualStyleBackColor = true;
-            this.rb14.CheckedChanged += new System.EventHandler(this.Rb_CheckedChanged);
+            rb14.AutoSize = true;
+            rb14.Location = new Point(321, 185);
+            rb14.Margin = new Padding(4, 3, 4, 3);
+            rb14.Name = "rb14";
+            rb14.Size = new Size(37, 19);
+            rb14.TabIndex = 15;
+            rb14.Text = "14";
+            rb14.UseVisualStyleBackColor = true;
+            rb14.CheckedChanged += Rb_CheckedChanged;
             // 
             // rb13
             // 
-            this.rb13.AutoSize = true;
-            this.rb13.Location = new System.Drawing.Point(321, 157);
-            this.rb13.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.rb13.Name = "rb13";
-            this.rb13.Size = new System.Drawing.Size(37, 19);
-            this.rb13.TabIndex = 14;
-            this.rb13.Text = "13";
-            this.rb13.UseVisualStyleBackColor = true;
-            this.rb13.CheckedChanged += new System.EventHandler(this.Rb_CheckedChanged);
+            rb13.AutoSize = true;
+            rb13.Location = new Point(321, 157);
+            rb13.Margin = new Padding(4, 3, 4, 3);
+            rb13.Name = "rb13";
+            rb13.Size = new Size(37, 19);
+            rb13.TabIndex = 14;
+            rb13.Text = "13";
+            rb13.UseVisualStyleBackColor = true;
+            rb13.CheckedChanged += Rb_CheckedChanged;
             // 
             // rb12
             // 
-            this.rb12.AutoSize = true;
-            this.rb12.Location = new System.Drawing.Point(320, 130);
-            this.rb12.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.rb12.Name = "rb12";
-            this.rb12.Size = new System.Drawing.Size(37, 19);
-            this.rb12.TabIndex = 13;
-            this.rb12.Text = "12";
-            this.rb12.UseVisualStyleBackColor = true;
-            this.rb12.CheckedChanged += new System.EventHandler(this.Rb_CheckedChanged);
+            rb12.AutoSize = true;
+            rb12.Location = new Point(320, 130);
+            rb12.Margin = new Padding(4, 3, 4, 3);
+            rb12.Name = "rb12";
+            rb12.Size = new Size(37, 19);
+            rb12.TabIndex = 13;
+            rb12.Text = "12";
+            rb12.UseVisualStyleBackColor = true;
+            rb12.CheckedChanged += Rb_CheckedChanged;
             // 
             // rb11
             // 
-            this.rb11.AutoSize = true;
-            this.rb11.Location = new System.Drawing.Point(320, 105);
-            this.rb11.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.rb11.Name = "rb11";
-            this.rb11.Size = new System.Drawing.Size(37, 19);
-            this.rb11.TabIndex = 12;
-            this.rb11.Text = "11";
-            this.rb11.UseVisualStyleBackColor = true;
-            this.rb11.CheckedChanged += new System.EventHandler(this.Rb_CheckedChanged);
+            rb11.AutoSize = true;
+            rb11.Location = new Point(320, 105);
+            rb11.Margin = new Padding(4, 3, 4, 3);
+            rb11.Name = "rb11";
+            rb11.Size = new Size(37, 19);
+            rb11.TabIndex = 12;
+            rb11.Text = "11";
+            rb11.UseVisualStyleBackColor = true;
+            rb11.CheckedChanged += Rb_CheckedChanged;
             // 
             // rb10
             // 
-            this.rb10.AutoSize = true;
-            this.rb10.Location = new System.Drawing.Point(320, 77);
-            this.rb10.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.rb10.Name = "rb10";
-            this.rb10.Size = new System.Drawing.Size(37, 19);
-            this.rb10.TabIndex = 11;
-            this.rb10.Text = "10";
-            this.rb10.UseVisualStyleBackColor = true;
-            this.rb10.CheckedChanged += new System.EventHandler(this.Rb_CheckedChanged);
+            rb10.AutoSize = true;
+            rb10.Location = new Point(320, 77);
+            rb10.Margin = new Padding(4, 3, 4, 3);
+            rb10.Name = "rb10";
+            rb10.Size = new Size(37, 19);
+            rb10.TabIndex = 11;
+            rb10.Text = "10";
+            rb10.UseVisualStyleBackColor = true;
+            rb10.CheckedChanged += Rb_CheckedChanged;
             // 
             // rb9
             // 
-            this.rb9.AutoSize = true;
-            this.rb9.Location = new System.Drawing.Point(320, 49);
-            this.rb9.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.rb9.Name = "rb9";
-            this.rb9.Size = new System.Drawing.Size(31, 19);
-            this.rb9.TabIndex = 10;
-            this.rb9.Text = "9";
-            this.rb9.UseVisualStyleBackColor = true;
-            this.rb9.CheckedChanged += new System.EventHandler(this.Rb_CheckedChanged);
+            rb9.AutoSize = true;
+            rb9.Location = new Point(320, 49);
+            rb9.Margin = new Padding(4, 3, 4, 3);
+            rb9.Name = "rb9";
+            rb9.Size = new Size(31, 19);
+            rb9.TabIndex = 10;
+            rb9.Text = "9";
+            rb9.UseVisualStyleBackColor = true;
+            rb9.CheckedChanged += Rb_CheckedChanged;
             // 
             // rb8
             // 
-            this.rb8.AutoSize = true;
-            this.rb8.Location = new System.Drawing.Point(319, 22);
-            this.rb8.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.rb8.Name = "rb8";
-            this.rb8.Size = new System.Drawing.Size(31, 19);
-            this.rb8.TabIndex = 9;
-            this.rb8.Text = "8";
-            this.rb8.UseVisualStyleBackColor = true;
-            this.rb8.CheckedChanged += new System.EventHandler(this.Rb_CheckedChanged);
+            rb8.AutoSize = true;
+            rb8.Location = new Point(319, 22);
+            rb8.Margin = new Padding(4, 3, 4, 3);
+            rb8.Name = "rb8";
+            rb8.Size = new Size(31, 19);
+            rb8.TabIndex = 9;
+            rb8.Text = "8";
+            rb8.UseVisualStyleBackColor = true;
+            rb8.CheckedChanged += Rb_CheckedChanged;
             // 
             // rb7
             // 
-            this.rb7.AutoSize = true;
-            this.rb7.Location = new System.Drawing.Point(282, 185);
-            this.rb7.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.rb7.Name = "rb7";
-            this.rb7.Size = new System.Drawing.Size(31, 19);
-            this.rb7.TabIndex = 8;
-            this.rb7.Text = "7";
-            this.rb7.UseVisualStyleBackColor = true;
-            this.rb7.CheckedChanged += new System.EventHandler(this.Rb_CheckedChanged);
+            rb7.AutoSize = true;
+            rb7.Location = new Point(282, 185);
+            rb7.Margin = new Padding(4, 3, 4, 3);
+            rb7.Name = "rb7";
+            rb7.Size = new Size(31, 19);
+            rb7.TabIndex = 8;
+            rb7.Text = "7";
+            rb7.UseVisualStyleBackColor = true;
+            rb7.CheckedChanged += Rb_CheckedChanged;
             // 
             // rb6
             // 
-            this.rb6.AutoSize = true;
-            this.rb6.Location = new System.Drawing.Point(282, 157);
-            this.rb6.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.rb6.Name = "rb6";
-            this.rb6.Size = new System.Drawing.Size(31, 19);
-            this.rb6.TabIndex = 7;
-            this.rb6.Text = "6";
-            this.rb6.UseVisualStyleBackColor = true;
-            this.rb6.CheckedChanged += new System.EventHandler(this.Rb_CheckedChanged);
+            rb6.AutoSize = true;
+            rb6.Location = new Point(282, 157);
+            rb6.Margin = new Padding(4, 3, 4, 3);
+            rb6.Name = "rb6";
+            rb6.Size = new Size(31, 19);
+            rb6.TabIndex = 7;
+            rb6.Text = "6";
+            rb6.UseVisualStyleBackColor = true;
+            rb6.CheckedChanged += Rb_CheckedChanged;
             // 
             // rb5
             // 
-            this.rb5.AutoSize = true;
-            this.rb5.Location = new System.Drawing.Point(281, 130);
-            this.rb5.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.rb5.Name = "rb5";
-            this.rb5.Size = new System.Drawing.Size(31, 19);
-            this.rb5.TabIndex = 6;
-            this.rb5.Text = "5";
-            this.rb5.UseVisualStyleBackColor = true;
-            this.rb5.CheckedChanged += new System.EventHandler(this.Rb_CheckedChanged);
+            rb5.AutoSize = true;
+            rb5.Location = new Point(281, 130);
+            rb5.Margin = new Padding(4, 3, 4, 3);
+            rb5.Name = "rb5";
+            rb5.Size = new Size(31, 19);
+            rb5.TabIndex = 6;
+            rb5.Text = "5";
+            rb5.UseVisualStyleBackColor = true;
+            rb5.CheckedChanged += Rb_CheckedChanged;
             // 
             // rb4
             // 
-            this.rb4.AutoSize = true;
-            this.rb4.Location = new System.Drawing.Point(281, 105);
-            this.rb4.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.rb4.Name = "rb4";
-            this.rb4.Size = new System.Drawing.Size(31, 19);
-            this.rb4.TabIndex = 5;
-            this.rb4.Text = "4";
-            this.rb4.UseVisualStyleBackColor = true;
-            this.rb4.CheckedChanged += new System.EventHandler(this.Rb_CheckedChanged);
+            rb4.AutoSize = true;
+            rb4.Location = new Point(281, 105);
+            rb4.Margin = new Padding(4, 3, 4, 3);
+            rb4.Name = "rb4";
+            rb4.Size = new Size(31, 19);
+            rb4.TabIndex = 5;
+            rb4.Text = "4";
+            rb4.UseVisualStyleBackColor = true;
+            rb4.CheckedChanged += Rb_CheckedChanged;
             // 
             // rb3
             // 
-            this.rb3.AutoSize = true;
-            this.rb3.Location = new System.Drawing.Point(281, 77);
-            this.rb3.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.rb3.Name = "rb3";
-            this.rb3.Size = new System.Drawing.Size(31, 19);
-            this.rb3.TabIndex = 4;
-            this.rb3.Text = "3";
-            this.rb3.UseVisualStyleBackColor = true;
-            this.rb3.CheckedChanged += new System.EventHandler(this.Rb_CheckedChanged);
+            rb3.AutoSize = true;
+            rb3.Location = new Point(281, 77);
+            rb3.Margin = new Padding(4, 3, 4, 3);
+            rb3.Name = "rb3";
+            rb3.Size = new Size(31, 19);
+            rb3.TabIndex = 4;
+            rb3.Text = "3";
+            rb3.UseVisualStyleBackColor = true;
+            rb3.CheckedChanged += Rb_CheckedChanged;
             // 
             // rb2
             // 
-            this.rb2.AutoSize = true;
-            this.rb2.Location = new System.Drawing.Point(281, 49);
-            this.rb2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.rb2.Name = "rb2";
-            this.rb2.Size = new System.Drawing.Size(31, 19);
-            this.rb2.TabIndex = 3;
-            this.rb2.Text = "2";
-            this.rb2.UseVisualStyleBackColor = true;
-            this.rb2.CheckedChanged += new System.EventHandler(this.Rb_CheckedChanged);
+            rb2.AutoSize = true;
+            rb2.Location = new Point(281, 49);
+            rb2.Margin = new Padding(4, 3, 4, 3);
+            rb2.Name = "rb2";
+            rb2.Size = new Size(31, 19);
+            rb2.TabIndex = 3;
+            rb2.Text = "2";
+            rb2.UseVisualStyleBackColor = true;
+            rb2.CheckedChanged += Rb_CheckedChanged;
             // 
             // rb1
             // 
-            this.rb1.AutoSize = true;
-            this.rb1.Checked = true;
-            this.rb1.Location = new System.Drawing.Point(280, 22);
-            this.rb1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.rb1.Name = "rb1";
-            this.rb1.Size = new System.Drawing.Size(31, 19);
-            this.rb1.TabIndex = 2;
-            this.rb1.TabStop = true;
-            this.rb1.Text = "1";
-            this.rb1.UseVisualStyleBackColor = true;
-            this.rb1.CheckedChanged += new System.EventHandler(this.Rb_CheckedChanged);
+            rb1.AutoSize = true;
+            rb1.Checked = true;
+            rb1.Location = new Point(280, 22);
+            rb1.Margin = new Padding(4, 3, 4, 3);
+            rb1.Name = "rb1";
+            rb1.Size = new Size(31, 19);
+            rb1.TabIndex = 2;
+            rb1.TabStop = true;
+            rb1.Text = "1";
+            rb1.UseVisualStyleBackColor = true;
+            rb1.CheckedChanged += Rb_CheckedChanged;
             // 
             // type_pb
             // 
-            this.type_pb.InitialImage = null;
-            this.type_pb.Location = new System.Drawing.Point(8, 22);
-            this.type_pb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.type_pb.Name = "type_pb";
-            this.type_pb.Size = new System.Drawing.Size(255, 200);
-            this.type_pb.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.type_pb.TabIndex = 1;
-            this.type_pb.TabStop = false;
+            type_pb.InitialImage = null;
+            type_pb.Location = new Point(8, 22);
+            type_pb.Margin = new Padding(4, 3, 4, 3);
+            type_pb.Name = "type_pb";
+            type_pb.Size = new Size(255, 200);
+            type_pb.SizeMode = PictureBoxSizeMode.AutoSize;
+            type_pb.TabIndex = 1;
+            type_pb.TabStop = false;
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(192, 520);
-            this.button4.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(170, 27);
-            this.button4.TabIndex = 104;
-            this.button4.Text = "Малоцикловая прочность >>";
-            this.button4.UseVisualStyleBackColor = true;
+            button4.Location = new Point(192, 520);
+            button4.Margin = new Padding(4, 3, 4, 3);
+            button4.Name = "button4";
+            button4.Size = new Size(170, 27);
+            button4.TabIndex = 104;
+            button4.Text = "Малоцикловая прочность >>";
+            button4.UseVisualStyleBackColor = true;
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(14, 520);
-            this.button3.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(170, 27);
-            this.button3.TabIndex = 103;
-            this.button3.Text = "Изоляция и футеровка >>";
-            this.button3.UseVisualStyleBackColor = true;
+            button3.Location = new Point(14, 520);
+            button3.Margin = new Padding(4, 3, 4, 3);
+            button3.Name = "button3";
+            button3.Size = new Size(170, 27);
+            button3.TabIndex = 103;
+            button3.Text = "Изоляция и футеровка >>";
+            button3.UseVisualStyleBackColor = true;
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(252, 487);
-            this.button2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(35, 27);
-            this.button2.TabIndex = 102;
-            this.button2.Text = ">>";
-            this.button2.UseVisualStyleBackColor = true;
+            button2.Location = new Point(252, 487);
+            button2.Margin = new Padding(4, 3, 4, 3);
+            button2.Name = "button2";
+            button2.Size = new Size(35, 27);
+            button2.TabIndex = 102;
+            button2.Text = ">>";
+            button2.UseVisualStyleBackColor = true;
             // 
             // checkBox1
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(18, 492);
-            this.checkBox1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(201, 19);
-            this.checkBox1.TabIndex = 101;
-            this.checkBox1.Text = "Дефекты по ГОСТ 34233.11-2017";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            checkBox1.AutoSize = true;
+            checkBox1.Location = new Point(18, 492);
+            checkBox1.Margin = new Padding(4, 3, 4, 3);
+            checkBox1.Name = "checkBox1";
+            checkBox1.Size = new Size(201, 19);
+            checkBox1.TabIndex = 101;
+            checkBox1.Text = "Дефекты по ГОСТ 34233.11-2017";
+            checkBox1.UseVisualStyleBackColor = true;
             // 
             // getFi_b
             // 
-            this.getFi_b.Location = new System.Drawing.Point(321, 296);
-            this.getFi_b.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.getFi_b.Name = "getFi_b";
-            this.getFi_b.Size = new System.Drawing.Size(43, 23);
-            this.getFi_b.TabIndex = 99;
-            this.getFi_b.Text = ">>";
-            this.getFi_b.UseVisualStyleBackColor = true;
-            // 
-            // getE_b
-            // 
-            this.getE_b.Enabled = false;
-            this.getE_b.Location = new System.Drawing.Point(321, 262);
-            this.getE_b.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.getE_b.Name = "getE_b";
-            this.getE_b.Size = new System.Drawing.Size(43, 23);
-            this.getE_b.TabIndex = 98;
-            this.getE_b.Text = ">>";
-            this.getE_b.UseVisualStyleBackColor = true;
-            // 
-            // label19
-            // 
-            this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(196, 266);
-            this.label19.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(33, 15);
-            this.label19.TabIndex = 97;
-            this.label19.Text = "МПа";
-            // 
-            // grtSigma_b
-            // 
-            this.grtSigma_b.Location = new System.Drawing.Point(321, 224);
-            this.grtSigma_b.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.grtSigma_b.Name = "grtSigma_b";
-            this.grtSigma_b.Size = new System.Drawing.Size(43, 23);
-            this.grtSigma_b.TabIndex = 96;
-            this.grtSigma_b.Text = ">>";
-            this.grtSigma_b.UseVisualStyleBackColor = true;
-            // 
-            // label18
-            // 
-            this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(197, 228);
-            this.label18.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(33, 15);
-            this.label18.TabIndex = 95;
-            this.label18.Text = "МПа";
+            getFi_b.Location = new Point(322, 309);
+            getFi_b.Margin = new Padding(4, 3, 4, 3);
+            getFi_b.Name = "getFi_b";
+            getFi_b.Size = new Size(43, 23);
+            getFi_b.TabIndex = 99;
+            getFi_b.Text = ">>";
+            getFi_b.UseVisualStyleBackColor = true;
             // 
             // s1_tb
             // 
-            this.s1_tb.Location = new System.Drawing.Point(224, 414);
-            this.s1_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.s1_tb.Name = "s1_tb";
-            this.s1_tb.Size = new System.Drawing.Size(46, 23);
-            this.s1_tb.TabIndex = 79;
-            this.s1_tb.Text = "6";
+            s1_tb.Location = new Point(225, 427);
+            s1_tb.Margin = new Padding(4, 3, 4, 3);
+            s1_tb.Name = "s1_tb";
+            s1_tb.Size = new Size(46, 23);
+            s1_tb.TabIndex = 79;
+            s1_tb.Text = "6";
             // 
             // label17
             // 
-            this.label17.AutoSize = true;
-            this.label17.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.label17.Location = new System.Drawing.Point(38, 417);
-            this.label17.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(180, 15);
-            this.label17.TabIndex = 94;
-            this.label17.Text = "Принятая толщина днища, s1:";
+            label17.AutoSize = true;
+            label17.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            label17.Location = new Point(39, 430);
+            label17.Margin = new Padding(4, 0, 4, 0);
+            label17.Name = "label17";
+            label17.Size = new Size(180, 15);
+            label17.TabIndex = 94;
+            label17.Text = "Принятая толщина днища, s1:";
             // 
             // label15
             // 
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(40, 389);
-            this.label15.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(178, 15);
-            this.label15.TabIndex = 92;
-            this.label15.Text = "Технологическая прибавка, c3:";
+            label15.AutoSize = true;
+            label15.Location = new Point(41, 402);
+            label15.Margin = new Padding(4, 0, 4, 0);
+            label15.Name = "label15";
+            label15.Size = new Size(178, 15);
+            label15.TabIndex = 92;
+            label15.Text = "Технологическая прибавка, c3:";
             // 
             // label14
             // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(85, 359);
-            this.label14.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(133, 15);
-            this.label14.TabIndex = 91;
-            this.label14.Text = "Минусовой допуск, c2:";
+            label14.AutoSize = true;
+            label14.Location = new Point(86, 372);
+            label14.Margin = new Padding(4, 0, 4, 0);
+            label14.Name = "label14";
+            label14.Size = new Size(133, 15);
+            label14.TabIndex = 91;
+            label14.Text = "Минусовой допуск, c2:";
             // 
             // label13
             // 
-            this.label13.AutoSize = true;
-            this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label13.Location = new System.Drawing.Point(72, 329);
-            this.label13.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(146, 13);
-            this.label13.TabIndex = 90;
-            this.label13.Text = "Прибавка на коррозию, c1:";
+            label13.AutoSize = true;
+            label13.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
+            label13.Location = new Point(73, 342);
+            label13.Margin = new Padding(4, 0, 4, 0);
+            label13.Name = "label13";
+            label13.Size = new Size(146, 13);
+            label13.TabIndex = 90;
+            label13.Text = "Прибавка на коррозию, c1:";
             // 
             // label10
             // 
-            this.label10.AutoSize = true;
-            this.label10.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.label10.Location = new System.Drawing.Point(26, 300);
-            this.label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(192, 15);
-            this.label10.TabIndex = 87;
-            this.label10.Text = "К-т прочности сварного шва, φp:";
+            label10.AutoSize = true;
+            label10.ImageAlign = ContentAlignment.MiddleRight;
+            label10.Location = new Point(27, 313);
+            label10.Margin = new Padding(4, 0, 4, 0);
+            label10.Name = "label10";
+            label10.Size = new Size(192, 15);
+            label10.TabIndex = 87;
+            label10.Text = "К-т прочности сварного шва, φp:";
             // 
             // c3_tb
             // 
-            this.c3_tb.Location = new System.Drawing.Point(224, 385);
-            this.c3_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.c3_tb.Name = "c3_tb";
-            this.c3_tb.Size = new System.Drawing.Size(46, 23);
-            this.c3_tb.TabIndex = 76;
+            c3_tb.Location = new Point(225, 398);
+            c3_tb.Margin = new Padding(4, 3, 4, 3);
+            c3_tb.Name = "c3_tb";
+            c3_tb.Size = new Size(46, 23);
+            c3_tb.TabIndex = 76;
             // 
             // c2_tb
             // 
-            this.c2_tb.Location = new System.Drawing.Point(224, 355);
-            this.c2_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.c2_tb.Name = "c2_tb";
-            this.c2_tb.Size = new System.Drawing.Size(46, 23);
-            this.c2_tb.TabIndex = 75;
-            this.c2_tb.Text = "1";
+            c2_tb.Location = new Point(225, 368);
+            c2_tb.Margin = new Padding(4, 3, 4, 3);
+            c2_tb.Name = "c2_tb";
+            c2_tb.Size = new Size(46, 23);
+            c2_tb.TabIndex = 75;
+            c2_tb.Text = "1";
             // 
             // c1_tb
             // 
-            this.c1_tb.Location = new System.Drawing.Point(224, 325);
-            this.c1_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.c1_tb.Name = "c1_tb";
-            this.c1_tb.Size = new System.Drawing.Size(46, 23);
-            this.c1_tb.TabIndex = 74;
-            this.c1_tb.Text = "1";
+            c1_tb.Location = new Point(225, 338);
+            c1_tb.Margin = new Padding(4, 3, 4, 3);
+            c1_tb.Name = "c1_tb";
+            c1_tb.Size = new Size(46, 23);
+            c1_tb.TabIndex = 74;
+            c1_tb.Text = "1";
             // 
-            // fi_tb
+            // phi_tb
             // 
-            this.fi_tb.Location = new System.Drawing.Point(224, 296);
-            this.fi_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.fi_tb.Name = "fi_tb";
-            this.fi_tb.Size = new System.Drawing.Size(46, 23);
-            this.fi_tb.TabIndex = 71;
-            this.fi_tb.Text = "1";
-            // 
-            // E_tb
-            // 
-            this.E_tb.Location = new System.Drawing.Point(142, 262);
-            this.E_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.E_tb.Name = "E_tb";
-            this.E_tb.ReadOnly = true;
-            this.E_tb.Size = new System.Drawing.Size(46, 23);
-            this.E_tb.TabIndex = 85;
-            // 
-            // sigma_d_tb
-            // 
-            this.sigma_d_tb.Location = new System.Drawing.Point(142, 224);
-            this.sigma_d_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.sigma_d_tb.Name = "sigma_d_tb";
-            this.sigma_d_tb.ReadOnly = true;
-            this.sigma_d_tb.Size = new System.Drawing.Size(46, 23);
-            this.sigma_d_tb.TabIndex = 82;
-            // 
-            // steel_cb
-            // 
-            this.steel_cb.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.steel_cb.FormattingEnabled = true;
-            this.steel_cb.Location = new System.Drawing.Point(224, 189);
-            this.steel_cb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.steel_cb.Name = "steel_cb";
-            this.steel_cb.Size = new System.Drawing.Size(139, 23);
-            this.steel_cb.TabIndex = 69;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(110, 192);
-            this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(108, 15);
-            this.label7.TabIndex = 77;
-            this.label7.Text = "Марка материала:";
-            // 
-            // dav_gb
-            // 
-            this.dav_gb.Controls.Add(this.label6);
-            this.dav_gb.Controls.Add(this.label5);
-            this.dav_gb.Controls.Add(this.nar_rb);
-            this.dav_gb.Controls.Add(this.p_tb);
-            this.dav_gb.Controls.Add(this.vn_rb);
-            this.dav_gb.Location = new System.Drawing.Point(14, 104);
-            this.dav_gb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.dav_gb.Name = "dav_gb";
-            this.dav_gb.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.dav_gb.Size = new System.Drawing.Size(350, 77);
-            this.dav_gb.TabIndex = 67;
-            this.dav_gb.TabStop = false;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(265, 18);
-            this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(33, 15);
-            this.label6.TabIndex = 13;
-            this.label6.Text = "МПа";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(71, 19);
-            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(134, 15);
-            this.label5.TabIndex = 9;
-            this.label5.Text = "Расчетное давление, p:";
-            // 
-            // nar_rb
-            // 
-            this.nar_rb.AutoSize = true;
-            this.nar_rb.Location = new System.Drawing.Point(184, 45);
-            this.nar_rb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.nar_rb.Name = "nar_rb";
-            this.nar_rb.Size = new System.Drawing.Size(80, 19);
-            this.nar_rb.TabIndex = 6;
-            this.nar_rb.Text = "наружное";
-            this.nar_rb.UseVisualStyleBackColor = true;
-            // 
-            // p_tb
-            // 
-            this.p_tb.Location = new System.Drawing.Point(210, 15);
-            this.p_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.p_tb.Name = "p_tb";
-            this.p_tb.Size = new System.Drawing.Size(46, 23);
-            this.p_tb.TabIndex = 4;
-            this.p_tb.Text = "1";
-            // 
-            // vn_rb
-            // 
-            this.vn_rb.AutoSize = true;
-            this.vn_rb.Checked = true;
-            this.vn_rb.Location = new System.Drawing.Point(80, 45);
-            this.vn_rb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.vn_rb.Name = "vn_rb";
-            this.vn_rb.Size = new System.Drawing.Size(88, 19);
-            this.vn_rb.TabIndex = 5;
-            this.vn_rb.TabStop = true;
-            this.vn_rb.Text = "внутреннее";
-            this.vn_rb.UseVisualStyleBackColor = true;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(274, 78);
-            this.label4.Margin = new System.Windows.Forms.Padding(0, 0, 4, 0);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(20, 15);
-            this.label4.TabIndex = 70;
-            this.label4.Text = "°C";
-            // 
-            // t_tb
-            // 
-            this.t_tb.Location = new System.Drawing.Point(224, 75);
-            this.t_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.t_tb.Name = "t_tb";
-            this.t_tb.Size = new System.Drawing.Size(46, 23);
-            this.t_tb.TabIndex = 65;
-            this.t_tb.Text = "50";
+            phi_tb.Location = new Point(225, 309);
+            phi_tb.Margin = new Padding(4, 3, 4, 3);
+            phi_tb.Name = "phi_tb";
+            phi_tb.Size = new Size(46, 23);
+            phi_tb.TabIndex = 71;
+            phi_tb.Text = "1";
             // 
             // Gost_cb
             // 
-            this.Gost_cb.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.Gost_cb.FormattingEnabled = true;
-            this.Gost_cb.Location = new System.Drawing.Point(225, 43);
-            this.Gost_cb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.Gost_cb.Name = "Gost_cb";
-            this.Gost_cb.Size = new System.Drawing.Size(139, 23);
-            this.Gost_cb.TabIndex = 63;
-            this.Gost_cb.Tag = "";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(69, 78);
-            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(149, 15);
-            this.label3.TabIndex = 66;
-            this.label3.Text = "Расчетная температура, t:";
+            Gost_cb.DropDownStyle = ComboBoxStyle.DropDownList;
+            Gost_cb.FormattingEnabled = true;
+            Gost_cb.Location = new Point(225, 43);
+            Gost_cb.Margin = new Padding(4, 3, 4, 3);
+            Gost_cb.Name = "Gost_cb";
+            Gost_cb.Size = new Size(139, 23);
+            Gost_cb.TabIndex = 63;
+            Gost_cb.Tag = "";
             // 
             // label2
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(74, 46);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(144, 15);
-            this.label2.TabIndex = 64;
-            this.label2.Text = "Нормативный документ:";
+            label2.AutoSize = true;
+            label2.Location = new Point(74, 46);
+            label2.Margin = new Padding(4, 0, 4, 0);
+            label2.Name = "label2";
+            label2.Size = new Size(144, 15);
+            label2.TabIndex = 64;
+            label2.Text = "Нормативный документ:";
             // 
             // name_tb
             // 
-            this.name_tb.Location = new System.Drawing.Point(224, 12);
-            this.name_tb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.name_tb.Name = "name_tb";
-            this.name_tb.Size = new System.Drawing.Size(139, 23);
-            this.name_tb.TabIndex = 61;
+            name_tb.Location = new Point(224, 12);
+            name_tb.Margin = new Padding(4, 3, 4, 3);
+            name_tb.Name = "name_tb";
+            name_tb.Size = new Size(139, 23);
+            name_tb.TabIndex = 61;
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(101, 15);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(117, 15);
-            this.label1.TabIndex = 60;
-            this.label1.Text = "Название элемента:";
+            label1.AutoSize = true;
+            label1.Location = new Point(101, 15);
+            label1.Margin = new Padding(4, 0, 4, 0);
+            label1.Name = "label1";
+            label1.Size = new Size(117, 15);
+            label1.TabIndex = 60;
+            label1.Text = "Название элемента:";
             // 
             // otv_gb
             // 
-            this.otv_gb.Controls.Add(this.manyHole_rb);
-            this.otv_gb.Controls.Add(this.oneHole_rb);
-            this.otv_gb.Controls.Add(this.label30);
-            this.otv_gb.Controls.Add(this.holed_tb);
-            this.otv_gb.Enabled = false;
-            this.otv_gb.Location = new System.Drawing.Point(372, 263);
-            this.otv_gb.Name = "otv_gb";
-            this.otv_gb.Size = new System.Drawing.Size(370, 98);
-            this.otv_gb.TabIndex = 119;
-            this.otv_gb.TabStop = false;
+            otv_gb.Controls.Add(manyHole_rb);
+            otv_gb.Controls.Add(oneHole_rb);
+            otv_gb.Controls.Add(label30);
+            otv_gb.Controls.Add(holed_tb);
+            otv_gb.Enabled = false;
+            otv_gb.Location = new Point(372, 263);
+            otv_gb.Name = "otv_gb";
+            otv_gb.Size = new Size(370, 98);
+            otv_gb.TabIndex = 119;
+            otv_gb.TabStop = false;
             // 
             // manyHole_rb
             // 
-            this.manyHole_rb.AutoSize = true;
-            this.manyHole_rb.Location = new System.Drawing.Point(181, 25);
-            this.manyHole_rb.Name = "manyHole_rb";
-            this.manyHole_rb.Size = new System.Drawing.Size(144, 19);
-            this.manyHole_rb.TabIndex = 4;
-            this.manyHole_rb.Text = "Несколько отверстий";
-            this.manyHole_rb.UseVisualStyleBackColor = true;
+            manyHole_rb.AutoSize = true;
+            manyHole_rb.Location = new Point(181, 25);
+            manyHole_rb.Name = "manyHole_rb";
+            manyHole_rb.Size = new Size(144, 19);
+            manyHole_rb.TabIndex = 4;
+            manyHole_rb.Text = "Несколько отверстий";
+            manyHole_rb.UseVisualStyleBackColor = true;
             // 
             // oneHole_rb
             // 
-            this.oneHole_rb.AutoSize = true;
-            this.oneHole_rb.Checked = true;
-            this.oneHole_rb.Location = new System.Drawing.Point(13, 25);
-            this.oneHole_rb.Name = "oneHole_rb";
-            this.oneHole_rb.Size = new System.Drawing.Size(112, 19);
-            this.oneHole_rb.TabIndex = 3;
-            this.oneHole_rb.TabStop = true;
-            this.oneHole_rb.Text = "Одно отверстие";
-            this.oneHole_rb.UseVisualStyleBackColor = true;
+            oneHole_rb.AutoSize = true;
+            oneHole_rb.Checked = true;
+            oneHole_rb.Location = new Point(13, 25);
+            oneHole_rb.Name = "oneHole_rb";
+            oneHole_rb.Size = new Size(112, 19);
+            oneHole_rb.TabIndex = 3;
+            oneHole_rb.TabStop = true;
+            oneHole_rb.Text = "Одно отверстие";
+            oneHole_rb.UseVisualStyleBackColor = true;
             // 
             // label30
             // 
-            this.label30.AutoSize = true;
-            this.label30.Location = new System.Drawing.Point(13, 52);
-            this.label30.Name = "label30";
-            this.label30.Size = new System.Drawing.Size(150, 30);
-            this.label30.TabIndex = 2;
-            this.label30.Text = "Диаметр отверстия\r\nили сумма длин хорд, мм";
+            label30.AutoSize = true;
+            label30.Location = new Point(13, 52);
+            label30.Name = "label30";
+            label30.Size = new Size(150, 30);
+            label30.TabIndex = 2;
+            label30.Text = "Диаметр отверстия\r\nили сумма длин хорд, мм";
             // 
             // holed_tb
             // 
-            this.holed_tb.Location = new System.Drawing.Point(169, 56);
-            this.holed_tb.Name = "holed_tb";
-            this.holed_tb.Size = new System.Drawing.Size(100, 23);
-            this.holed_tb.TabIndex = 1;
+            holed_tb.Location = new Point(169, 56);
+            holed_tb.Name = "holed_tb";
+            holed_tb.Size = new Size(100, 23);
+            holed_tb.TabIndex = 1;
             // 
             // hole_cb
             // 
-            this.hole_cb.AutoSize = true;
-            this.hole_cb.Location = new System.Drawing.Point(385, 262);
-            this.hole_cb.Name = "hole_cb";
-            this.hole_cb.Size = new System.Drawing.Size(83, 19);
-            this.hole_cb.TabIndex = 0;
-            this.hole_cb.Text = "Отверстия";
-            this.hole_cb.UseVisualStyleBackColor = true;
-            this.hole_cb.CheckedChanged += new System.EventHandler(this.Otv_cb_CheckedChanged);
+            hole_cb.AutoSize = true;
+            hole_cb.Location = new Point(385, 262);
+            hole_cb.Name = "hole_cb";
+            hole_cb.Size = new Size(83, 19);
+            hole_cb.TabIndex = 0;
+            hole_cb.Text = "Отверстия";
+            hole_cb.UseVisualStyleBackColor = true;
+            hole_cb.CheckedChanged += Otv_cb_CheckedChanged;
             // 
             // typePanel
             // 
-            this.typePanel.Location = new System.Drawing.Point(372, 368);
-            this.typePanel.Name = "typePanel";
-            this.typePanel.Size = new System.Drawing.Size(369, 196);
-            this.typePanel.TabIndex = 120;
+            typePanel.Location = new Point(372, 368);
+            typePanel.Name = "typePanel";
+            typePanel.Size = new Size(369, 196);
+            typePanel.TabIndex = 120;
             // 
-            // label9
+            // loadingConditionControl
             // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(13, 258);
-            this.label9.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(121, 30);
-            this.label9.TabIndex = 122;
-            this.label9.Text = "Модуль продольной\r\n упругости, E:";
+            loadingConditionControl.Location = new Point(18, 158);
+            loadingConditionControl.Name = "loadingConditionControl";
+            loadingConditionControl.Size = new Size(355, 145);
+            loadingConditionControl.TabIndex = 126;
             // 
-            // label8
+            // steelControl
             // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(32, 220);
-            this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(102, 30);
-            this.label8.TabIndex = 121;
-            this.label8.Text = "Допускаемое\r\n напряжение, [σ]:";
-            // 
-            // EHandle_cb
-            // 
-            this.EHandle_cb.AutoSize = true;
-            this.EHandle_cb.Location = new System.Drawing.Point(237, 256);
-            this.EHandle_cb.Name = "EHandle_cb";
-            this.EHandle_cb.Size = new System.Drawing.Size(75, 34);
-            this.EHandle_cb.TabIndex = 124;
-            this.EHandle_cb.Text = "Задать\r\nвручную";
-            this.EHandle_cb.UseVisualStyleBackColor = true;
-            // 
-            // sigmaHandle_cb
-            // 
-            this.sigmaHandle_cb.AutoSize = true;
-            this.sigmaHandle_cb.Location = new System.Drawing.Point(237, 218);
-            this.sigmaHandle_cb.Name = "sigmaHandle_cb";
-            this.sigmaHandle_cb.Size = new System.Drawing.Size(75, 34);
-            this.sigmaHandle_cb.TabIndex = 123;
-            this.sigmaHandle_cb.Text = "Задать\r\nвручную";
-            this.sigmaHandle_cb.UseVisualStyleBackColor = true;
+            steelControl.Location = new Point(98, 72);
+            steelControl.MaximumSize = new Size(265, 80);
+            steelControl.MinimumSize = new Size(265, 80);
+            steelControl.Name = "steelControl";
+            steelControl.Size = new Size(265, 80);
+            steelControl.TabIndex = 127;
             // 
             // FlatBottomForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(754, 636);
-            this.Controls.Add(this.EHandle_cb);
-            this.Controls.Add(this.sigmaHandle_cb);
-            this.Controls.Add(this.label9);
-            this.Controls.Add(this.label8);
-            this.Controls.Add(this.typePanel);
-            this.Controls.Add(this.hole_cb);
-            this.Controls.Add(this.otv_gb);
-            this.Controls.Add(this.label28);
-            this.Controls.Add(this.label27);
-            this.Controls.Add(this.label25);
-            this.Controls.Add(this.label24);
-            this.Controls.Add(this.label23);
-            this.Controls.Add(this.cancel_btn);
-            this.Controls.Add(this.calc_btn);
-            this.Controls.Add(this.preCalc_btn);
-            this.Controls.Add(this.groupBox4);
-            this.Controls.Add(this.type_gb);
-            this.Controls.Add(this.button4);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.checkBox1);
-            this.Controls.Add(this.getFi_b);
-            this.Controls.Add(this.getE_b);
-            this.Controls.Add(this.label19);
-            this.Controls.Add(this.grtSigma_b);
-            this.Controls.Add(this.label18);
-            this.Controls.Add(this.s1_tb);
-            this.Controls.Add(this.label17);
-            this.Controls.Add(this.label15);
-            this.Controls.Add(this.label14);
-            this.Controls.Add(this.label13);
-            this.Controls.Add(this.label10);
-            this.Controls.Add(this.c3_tb);
-            this.Controls.Add(this.c2_tb);
-            this.Controls.Add(this.c1_tb);
-            this.Controls.Add(this.fi_tb);
-            this.Controls.Add(this.E_tb);
-            this.Controls.Add(this.sigma_d_tb);
-            this.Controls.Add(this.steel_cb);
-            this.Controls.Add(this.label7);
-            this.Controls.Add(this.dav_gb);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.t_tb);
-            this.Controls.Add(this.Gost_cb);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.name_tb);
-            this.Controls.Add(this.label1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Name = "FlatBottomForm";
-            this.Text = "Pldn";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FlatBottomForm_FormClosing);
-            this.Load += new System.EventHandler(this.FlatBottomForm_Load);
-            this.groupBox4.ResumeLayout(false);
-            this.groupBox4.PerformLayout();
-            this.type_gb.ResumeLayout(false);
-            this.type_gb.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.type_pb)).EndInit();
-            this.dav_gb.ResumeLayout(false);
-            this.dav_gb.PerformLayout();
-            this.otv_gb.ResumeLayout(false);
-            this.otv_gb.PerformLayout();
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(754, 634);
+            Controls.Add(steelControl);
+            Controls.Add(loadingConditionControl);
+            Controls.Add(typePanel);
+            Controls.Add(hole_cb);
+            Controls.Add(otv_gb);
+            Controls.Add(label28);
+            Controls.Add(label27);
+            Controls.Add(label25);
+            Controls.Add(label24);
+            Controls.Add(label23);
+            Controls.Add(cancel_btn);
+            Controls.Add(calc_btn);
+            Controls.Add(preCalc_btn);
+            Controls.Add(groupBox4);
+            Controls.Add(type_gb);
+            Controls.Add(button4);
+            Controls.Add(button3);
+            Controls.Add(button2);
+            Controls.Add(checkBox1);
+            Controls.Add(getFi_b);
+            Controls.Add(s1_tb);
+            Controls.Add(label17);
+            Controls.Add(label15);
+            Controls.Add(label14);
+            Controls.Add(label13);
+            Controls.Add(label10);
+            Controls.Add(c3_tb);
+            Controls.Add(c2_tb);
+            Controls.Add(c1_tb);
+            Controls.Add(phi_tb);
+            Controls.Add(Gost_cb);
+            Controls.Add(label2);
+            Controls.Add(name_tb);
+            Controls.Add(label1);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
+            Name = "FlatBottomForm";
+            Text = "Pldn";
+            FormClosing += FlatBottomForm_FormClosing;
+            Load += FlatBottomForm_Load;
+            groupBox4.ResumeLayout(false);
+            groupBox4.PerformLayout();
+            type_gb.ResumeLayout(false);
+            type_gb.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)type_pb).EndInit();
+            otv_gb.ResumeLayout(false);
+            otv_gb.PerformLayout();
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
 
-        private System.Windows.Forms.Label label28;
-        private System.Windows.Forms.Label label27;
-        private System.Windows.Forms.Label label25;
-        private System.Windows.Forms.Label label24;
-        private System.Windows.Forms.Label label23;
-        private System.Windows.Forms.Button cancel_btn;
-        private System.Windows.Forms.Button calc_btn;
-        private System.Windows.Forms.Button preCalc_btn;
-        private System.Windows.Forms.GroupBox groupBox4;
-        private System.Windows.Forms.Label p_d_l;
-        private System.Windows.Forms.Label scalc_l;
-        private System.Windows.Forms.GroupBox type_gb;
-        private System.Windows.Forms.RadioButton rb7;
-        private System.Windows.Forms.RadioButton rb6;
-        private System.Windows.Forms.RadioButton rb5;
-        private System.Windows.Forms.RadioButton rb4;
-        private System.Windows.Forms.RadioButton rb3;
-        private System.Windows.Forms.RadioButton rb2;
-        private System.Windows.Forms.RadioButton rb1;
-        private System.Windows.Forms.PictureBox type_pb;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.CheckBox checkBox1;
-        private System.Windows.Forms.Button getFi_b;
-        private System.Windows.Forms.Button getE_b;
-        private System.Windows.Forms.Label label19;
-        private System.Windows.Forms.Button grtSigma_b;
-        private System.Windows.Forms.Label label18;
-        private System.Windows.Forms.TextBox s1_tb;
-        private System.Windows.Forms.Label label17;
-        private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.TextBox c3_tb;
-        private System.Windows.Forms.TextBox c2_tb;
-        private System.Windows.Forms.TextBox c1_tb;
-        internal System.Windows.Forms.TextBox fi_tb;
-        private System.Windows.Forms.TextBox E_tb;
-        private System.Windows.Forms.TextBox sigma_d_tb;
-        private System.Windows.Forms.ComboBox steel_cb;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.GroupBox dav_gb;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.RadioButton nar_rb;
-        private System.Windows.Forms.TextBox p_tb;
-        private System.Windows.Forms.RadioButton vn_rb;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox t_tb;
-        private System.Windows.Forms.ComboBox Gost_cb;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox name_tb;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.RadioButton rb14;
-        private System.Windows.Forms.RadioButton rb13;
-        private System.Windows.Forms.RadioButton rb12;
-        private System.Windows.Forms.RadioButton rb11;
-        private System.Windows.Forms.RadioButton rb10;
-        private System.Windows.Forms.RadioButton rb9;
-        private System.Windows.Forms.RadioButton rb8;
-        private System.Windows.Forms.RadioButton rb15;
-        private System.Windows.Forms.GroupBox otv_gb;
-        private System.Windows.Forms.CheckBox hole_cb;
-        private System.Windows.Forms.Label label30;
-        private System.Windows.Forms.TextBox holed_tb;
-        private System.Windows.Forms.RadioButton manyHole_rb;
-        private System.Windows.Forms.RadioButton oneHole_rb;
-        private System.Windows.Forms.Panel typePanel;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.CheckBox EHandle_cb;
-        private System.Windows.Forms.CheckBox sigmaHandle_cb;
+        private Label label28;
+        private Label label27;
+        private Label label25;
+        private Label label24;
+        private Label label23;
+        private Button cancel_btn;
+        private Button calc_btn;
+        private Button preCalc_btn;
+        private GroupBox groupBox4;
+        private Label p_d_l;
+        private Label scalc_l;
+        private GroupBox type_gb;
+        private RadioButton rb7;
+        private RadioButton rb6;
+        private RadioButton rb5;
+        private RadioButton rb4;
+        private RadioButton rb3;
+        private RadioButton rb2;
+        private RadioButton rb1;
+        private PictureBox type_pb;
+        private Button button4;
+        private Button button3;
+        private Button button2;
+        private CheckBox checkBox1;
+        private Button getFi_b;
+        private TextBox s1_tb;
+        private Label label17;
+        private Label label15;
+        private Label label14;
+        private Label label13;
+        private Label label10;
+        private TextBox c3_tb;
+        private TextBox c2_tb;
+        private TextBox c1_tb;
+        internal TextBox phi_tb;
+        private ComboBox Gost_cb;
+        private Label label2;
+        private TextBox name_tb;
+        private Label label1;
+        private RadioButton rb14;
+        private RadioButton rb13;
+        private RadioButton rb12;
+        private RadioButton rb11;
+        private RadioButton rb10;
+        private RadioButton rb9;
+        private RadioButton rb8;
+        private RadioButton rb15;
+        private GroupBox otv_gb;
+        private CheckBox hole_cb;
+        private Label label30;
+        private TextBox holed_tb;
+        private RadioButton manyHole_rb;
+        private RadioButton oneHole_rb;
+        private Panel typePanel;
+        private Controls.LoadingConditionControl loadingConditionControl;
+        private Controls.SteelControl steelControl;
     }
 }

@@ -53,7 +53,7 @@ public class FlatBottomTestData
             d = 0,
             di = 0,
             E = 0,
-            fi = 1,
+            phi = 1,
             gamma = 0,
             Hole = HoleInFlatBottom.WithoutHole,
             h1 = 0,

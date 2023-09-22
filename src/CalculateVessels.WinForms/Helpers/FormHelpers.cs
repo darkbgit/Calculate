@@ -10,6 +10,14 @@ internal static class FormHelpers
 {
     private const string AutoStrengthParameters = "auto";
 
+    public static void SetTextToTextBox(TextBox? textBox, double text)
+    {
+        if (textBox == null)
+            throw new NullReferenceException();
+
+        textBox.Text = text.ToString(CultureInfo.CurrentCulture);
+    }
+
     public static void EnabledIfCheck(Control control, bool value)
     {
         control.Enabled = value;

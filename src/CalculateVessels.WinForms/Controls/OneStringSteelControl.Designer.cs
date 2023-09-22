@@ -86,6 +86,7 @@
             Controls.Add(thicknessComboBox);
             Controls.Add(steelComboBox);
             Controls.Add(label7);
+            Margin = new Padding(0);
             MaximumSize = new Size(305, 29);
             MinimumSize = new Size(305, 29);
             Name = "OneStringSteelControl";

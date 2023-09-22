@@ -24,7 +24,7 @@ public class FlatBottomCalculateService : ICalculateService<FlatBottomInput>
         var data = new FlatBottomCalculated
         {
             InputData = dataIn,
-            SigmaAllow = PhysicalHelper.GetSigmaIfZero(dataIn.SigmaAllow, dataIn.Steel, dataIn.t, _physicalData),
+            SigmaAllow = PhysicalHelper.GetSigmaIfZeroAsync(dataIn.SigmaAllow, dataIn.Steel, dataIn.LoadingCondition.t, _physicalData),
             c = dataIn.c1 + dataIn.c2 + dataIn.c3
         };
 
@@ -66,7 +66,7 @@ public class FlatBottomCalculateService : ICalculateService<FlatBottomInput>
             case 9:
                 data.Dp = dataIn.D - 2 * dataIn.r;
                 if (dataIn.h1 < dataIn.r ||
-                    dataIn.r < Math.Max(dataIn.s, 025 * dataIn.s1) ||
+                    Math.Abs(Math.Max(dataIn.s, 0.25 * dataIn.s1) - dataIn.r) > 0.00001 ||
                     dataIn.r > Math.Min(dataIn.s1, 0.1 * dataIn.D))
                 {
                     data.IsConditionFixed = false;
@@ -135,7 +135,7 @@ public class FlatBottomCalculateService : ICalculateService<FlatBottomInput>
                 break;
         }
 
-        data.s1p = data.K * data.K0 * data.Dp * Math.Sqrt(dataIn.p / (dataIn.fi * data.SigmaAllow));
+        data.s1p = data.K * data.K0 * data.Dp * Math.Sqrt(dataIn.LoadingCondition.p / (dataIn.phi * data.SigmaAllow));
         data.s1 = data.s1p + data.c;
 
         if (dataIn.s1 != 0.0)
@@ -148,8 +148,8 @@ public class FlatBottomCalculateService : ICalculateService<FlatBottomInput>
                     ? 1
                     : 2.2 / (1 + Math.Sqrt(1 + Math.Pow(6 * (dataIn.s1 - data.c) / data.Dp, 2)));
 
-                data.p_d = Math.Pow((dataIn.s1 - data.c) / (data.K * data.K0 * data.Dp), 2) * data.SigmaAllow * dataIn.fi;
-                if (data.Kp * data.p_d < dataIn.p)
+                data.p_d = Math.Pow((dataIn.s1 - data.c) / (data.K * data.K0 * data.Dp), 2) * data.SigmaAllow * dataIn.phi;
+                if (data.Kp * data.p_d < dataIn.LoadingCondition.p)
                 {
                     data.ErrorList.Add("Допускаемое давление меньше расчетного");
                 }

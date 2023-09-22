@@ -2,7 +2,6 @@
 using CalculateVessels.Core.Elements.Bottoms.Enums;
 using CalculateVessels.Core.Elements.Bottoms.FlatBottom;
 using CalculateVessels.Core.Interfaces;
-
 using CalculateVessels.Data.Properties;
 using CalculateVessels.Data.Public.Enums;
 using CalculateVessels.Data.Public.Interfaces;
@@ -37,8 +36,94 @@ public sealed partial class FlatBottomForm : FlatBottomFormMiddle
 
     protected override void LoadInputData(FlatBottomInput inputData)
     {
-        throw new NotImplementedException();
+        name_tb.Text = inputData.Name;
+        s1_tb.Text = inputData.s1.ToString(CultureInfo.CurrentCulture);
+        phi_tb.Text = inputData.phi.ToString(CultureInfo.CurrentCulture);
+        steelControl.SelectSteel(inputData.Steel);
+        c1_tb.Text = inputData.c1.ToString(CultureInfo.CurrentCulture);
+        c2_tb.Text = inputData.c2.ToString(CultureInfo.CurrentCulture);
+        c3_tb.Text = inputData.c3.ToString(CultureInfo.CurrentCulture);
+
+        loadingConditionControl.SetLoadingCondition(inputData.LoadingCondition);
+
+        type_gb.Controls.OfType<RadioButton>()
+            .First(rb => rb.Text == inputData.FlatBottomType.ToString())
+            .Checked = true;
+
+        //            t = Parameters.GetParam<double>(t_tb.Text, "t", dataInErr, NumberStyles.Integer),
+
+        //            p = Parameters.GetParam<double>(p_tb.Text, "p", dataInErr),
+        //            SigmaAllow = sigmaHandle_cb.Checked
+        //                ? Parameters.GetParam<double>(sigma_d_tb.Text, "[σ]", dataInErr)
+        //                : default
+
+
+        //            FlatBottomType = Parameters.GetParam<int>(type_gb.Controls.OfType<RadioButton>().FirstOrDefault(rb => rb.Checked)?.Text,
+        //                "SaddleType", dataInErr)
+
+
+        switch (inputData.FlatBottomType)
+        {
+            case 1:
+            case 2:
+                FormHelpers.SetTextToTextBox(_DTextBox, inputData.D);
+                FormHelpers.SetTextToTextBox(_sTextBox, inputData.s);
+                FormHelpers.SetTextToTextBox(_aTextBox, inputData.a);
+                break;
+            case 3:
+            case 4:
+            case 5:
+                FormHelpers.SetTextToTextBox(_DTextBox, inputData.D);
+                FormHelpers.SetTextToTextBox(_sTextBox, inputData.s);
+                break;
+            case 6:
+                goto case 2;
+            case 7:
+            case 8:
+                goto case 5;
+            case 9:
+                FormHelpers.SetTextToTextBox(_DTextBox, inputData.D);
+                FormHelpers.SetTextToTextBox(_sTextBox, inputData.s);
+                FormHelpers.SetTextToTextBox(_rTextBox, inputData.r);
+                FormHelpers.SetTextToTextBox(_h1TextBox, inputData.h1);
+                break;
+            case 10:
+                FormHelpers.SetTextToTextBox(_DTextBox, inputData.D);
+                FormHelpers.SetTextToTextBox(_sTextBox, inputData.s);
+                FormHelpers.SetTextToTextBox(_rTextBox, inputData.r);
+                FormHelpers.SetTextToTextBox(_gammaTextBox, inputData.gamma);
+                FormHelpers.SetTextToTextBox(_s2TextBox, inputData.s2);
+                break;
+            case 11:
+                FormHelpers.SetTextToTextBox(_D2TextBox, inputData.D2);
+                FormHelpers.SetTextToTextBox(_D3TextBox, inputData.D3);
+                FormHelpers.SetTextToTextBox(_s2TextBox, inputData.s2);
+                break;
+            case 12:
+                FormHelpers.SetTextToTextBox(_D2TextBox, inputData.D2);
+                FormHelpers.SetTextToTextBox(_DcpTextBox, inputData.Dcp);
+                FormHelpers.SetTextToTextBox(_s2TextBox, inputData.s2);
+                break;
+            case 13:
+            case 14:
+            case 15:
+            default:
+                throw new NotImplementedException();
+        }
+
+        switch (inputData.Hole)
+        {
+            case HoleInFlatBottom.OneHole:
+                hole_cb.Checked = true;
+                FormHelpers.SetTextToTextBox(holed_tb, inputData.d);
+                break;
+            case HoleInFlatBottom.MoreThenOneHole:
+                hole_cb.Checked = true;
+                FormHelpers.SetTextToTextBox(holed_tb, inputData.di);
+                break;
+        }
     }
+
 
     protected override string GetServiceName()
     {
@@ -47,7 +132,8 @@ public sealed partial class FlatBottomForm : FlatBottomFormMiddle
 
     private void FlatBottomForm_Load(object sender, EventArgs e)
     {
-        LoadSteelsToComboBox(steel_cb, SteelSource.G34233D1);
+        //LoadSteelsToComboBox(steel_cb, SteelSource.G34233D1);
+        steelControl.SetSteels(PhysicalDataService.GetSteels(SteelSource.G34233D1));
         LoadCalculateServicesNamesToComboBox(Gost_cb);
 
         type_pb.Image = (Bitmap)(new ImageConverter().ConvertFrom(Resources.pldn1)
@@ -88,19 +174,18 @@ public sealed partial class FlatBottomForm : FlatBottomFormMiddle
         {
             Name = name_tb.Text,
             s1 = Parameters.GetParam<double>(s1_tb.Text, "s1", dataInErr),
-            t = Parameters.GetParam<double>(t_tb.Text, "t", dataInErr, NumberStyles.Integer),
-            Steel = steel_cb.Text,
-            p = Parameters.GetParam<double>(p_tb.Text, "p", dataInErr),
-            fi = Parameters.GetParam<double>(fi_tb.Text, "φ", dataInErr),
+            //Steel = steel_cb.Text,
+            Steel = steelControl.GetSteel(),
+            phi = Parameters.GetParam<double>(phi_tb.Text, "φ", dataInErr),
             c1 = Parameters.GetParam<double>(c1_tb.Text, "c1", dataInErr),
             c2 = Parameters.GetParam<double>(c2_tb.Text, "c2", dataInErr),
             c3 = Parameters.GetParam<double>(c3_tb.Text, "c3", dataInErr),
             FlatBottomType = Parameters.GetParam<int>(type_gb.Controls.OfType<RadioButton>().FirstOrDefault(rb => rb.Checked)?.Text,
                 "SaddleType", dataInErr),
-            SigmaAllow = sigmaHandle_cb.Checked
-                ? Parameters.GetParam<double>(sigma_d_tb.Text, "[σ]", dataInErr)
-                : default
         };
+
+
+        inputData.LoadingCondition = loadingConditionControl.GetLoadingCondition();
 
         switch (inputData.FlatBottomType)
         {

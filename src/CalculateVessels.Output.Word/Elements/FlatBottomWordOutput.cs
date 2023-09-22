@@ -35,14 +35,10 @@ internal class FlatBottomWordOutput : IWordOutputElement<FlatBottomCalculated>
         body.AddParagraph();
 
         {
-            var imagePart = mainPart.AddImagePart(ImagePartType.Gif);
-
-            byte[] bytes = (byte[])(Data.Properties.Resources.ResourceManager.GetObject("pldn" + dataIn.Type)
+            byte[] bytes = (byte[])(Data.Properties.Resources.ResourceManager.GetObject("pldn" + dataIn.FlatBottomType)
                                     ?? throw new InvalidOperationException());
 
-            imagePart.FeedData(new MemoryStream(bytes));
-
-            body.AddParagraph().AddImage(mainPart.GetIdOfPart(imagePart), bytes);
+            mainPart.InsertImage(bytes, ImagePartType.Gif);
         }
 
         body.AddParagraph("Исходные данные").Alignment(AlignmentType.Center);
@@ -53,11 +49,11 @@ internal class FlatBottomWordOutput : IWordOutputElement<FlatBottomCalculated>
 
             table.AddRow()
                 .AddCell("Марка стали")
-                .AddCell($"{dataIn.Steel}");
+                .AddCell($"{dataIn.Steel.SteelName}");
 
             table.AddRow()
                 .AddCell("Коэффициент прочности сварного шва, φ:")
-                .AddCell($"{dataIn.fi}");
+                .AddCell($"{dataIn.phi}");
 
             table.AddRow()
                 .AddCell("Прибавка на коррозию, ")
@@ -82,7 +78,7 @@ internal class FlatBottomWordOutput : IWordOutputElement<FlatBottomCalculated>
 
             table.AddRow()
                 .AddCell("Тип конструкции по ГОСТ 34233.2-2017 табл.4:")
-                .AddCell($"{dataIn.Type}");
+                .AddCell($"{dataIn.FlatBottomType}");
 
             switch (dataIn.FlatBottomType)
             {
@@ -213,15 +209,33 @@ internal class FlatBottomWordOutput : IWordOutputElement<FlatBottomCalculated>
                     break;
             }
 
+            switch (dataIn.Hole)
+            {
+                case HoleInFlatBottom.OneHole:
+                    table.AddRow()
+                        .AddCell(
+                            "Длина хорды отверстия в наиболее ослабленном диаметральном сечении днища, d:")
+                        .AddCell($"{dataIn.d} мм");
+                    break;
+                case HoleInFlatBottom.MoreThenOneHole:
+                    table.AddRow()
+                        .AddCell(
+                            "Максимальную сумма длин хорд отверстий в наиболее ослабленном диаметральном сечении днища, ")
+                        .AppendEquation("d_i")
+                        .AppendText(":")
+                        .AddCell($"{dataIn.di} мм");
+                    break;
+            }
+
             table.AddRowWithOneCell("Условия нагружения");
 
             table.AddRow()
                 .AddCell("Расчетная температура, Т:")
-                .AddCell($"{dataIn.t} °С");
+                .AddCell($"{dataIn.LoadingCondition.t} °С");
 
             table.AddRow()
                 .AddCell("Расчетное давление, p:")
-                .AddCell($"{dataIn.p} МПа");
+                .AddCell($"{dataIn.LoadingCondition.p} МПа");
 
             table.AddRowWithOneCell("Характеристики материалов");
 
@@ -276,7 +290,7 @@ internal class FlatBottomWordOutput : IWordOutputElement<FlatBottomCalculated>
                 body.AddParagraph()
                     .AppendEquation($"D_p=D-2∙r={data.Dp} мм");
                 body.AddParagraph()
-                    .AppendEquation($"K=max[0.41∙(1-0.23∙(s-c)/(s_1-c));0.35]={data.K}");
+                    .AppendEquation($"K=max[0.41∙(1-0.23∙(s-c)/(s_1-c));0.35]={data.K:f2}");
                 break;
             case 10:
                 goto case 4;
@@ -318,7 +332,7 @@ internal class FlatBottomWordOutput : IWordOutputElement<FlatBottomCalculated>
 
 
         body.AddParagraph()
-            .AppendEquation($"s_1p={data.K:f2}∙{data.K0:f2}∙{data.Dp:f2}∙√({dataIn.p}/({dataIn.fi}∙{data.SigmaAllow}))={data.s1p:f2} мм");
+            .AppendEquation($"s_1p={data.K:f2}∙{data.K0:f2}∙{data.Dp:f2}∙√({dataIn.LoadingCondition.p}/({dataIn.phi}∙{data.SigmaAllow}))={data.s1p:f2} мм");
 
         body.AddParagraph("c - сумма прибавок к расчетной толщине");
         body.AddParagraph()
@@ -379,7 +393,7 @@ internal class FlatBottomWordOutput : IWordOutputElement<FlatBottomCalculated>
             }
             else
             {
-                body.AddParagraph($"Принятая толщина ")
+                body.AddParagraph("Принятая толщина ")
                     .AppendEquation($"s_2={dataIn.s2} мм")
                     .Bold()
                     .Color(System.Drawing.Color.Red);
@@ -389,7 +403,7 @@ internal class FlatBottomWordOutput : IWordOutputElement<FlatBottomCalculated>
         body.AddParagraph("Допускаемое давление вычисляют по формуле:");
         body.AddParagraph()
             .AppendEquation("[p]=((s_1-c)/(K∙K_0∙D_p))^2∙[σ]∙φ"
-                            + $"=(({dataIn.s1}-{data.c:f2})/({data.K}∙{data.K0:f2}∙{data.Dp:f2}))^2∙{data.SigmaAllow}∙{dataIn.fi}"
+                            + $"=(({dataIn.s1}-{data.c:f2})/({data.K:f2}∙{data.K0:f2}∙{data.Dp:f2}))^2∙{data.SigmaAllow}∙{dataIn.phi}"
                             + $"={data.p_d:f2} МПа");
 
         body.AddParagraph("Условия применения расчетных формул ");
@@ -401,7 +415,7 @@ internal class FlatBottomWordOutput : IWordOutputElement<FlatBottomCalculated>
             body.AddParagraph()
                 .AppendEquation("[p]≥p");
             body.AddParagraph()
-                .AppendEquation($"{data.p_d:f2}≥{dataIn.p}");
+                .AppendEquation($"{data.p_d:f2}≥{dataIn.LoadingCondition.p}");
         }
         else
         {
@@ -416,9 +430,9 @@ internal class FlatBottomWordOutput : IWordOutputElement<FlatBottomCalculated>
                                 $"=2.2/(1+√(1+(6∙({dataIn.s1}-{data.c:f2})/{data.Dp:f2})^2))={data.Kp:f2}");
 
             body.AddParagraph()
-                .AppendEquation($"{data.Kp:f2}∙{data.p_d:f2}={data.Kp * data.p_d:f2}≥{dataIn.p}");
+                .AppendEquation($"{data.Kp:f2}∙{data.p_d:f2}={data.Kp * data.p_d:f2}≥{dataIn.LoadingCondition.p}");
         }
-        if (data.p_d * data.Kp > dataIn.p)
+        if (data.p_d * data.Kp > dataIn.LoadingCondition.p)
         {
             body.AddParagraph("Условие прочности выполняется")
                 .Bold();

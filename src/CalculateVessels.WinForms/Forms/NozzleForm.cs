@@ -293,6 +293,7 @@ public partial class NozzleForm : NozzleFormMiddle
             delta1 = Parameters.GetParam<double>(delta1_tb.Text, "delta1", dataInErr),
             delta2 = Parameters.GetParam<double>(delta2_tb.Text, "delta2", dataInErr),
 
+            steel1 = oneStringSteelControl1.GetSteel(),
             SigmaAllow1 = sigma1HandleCheckBox.Checked
                 ? Parameters.GetParam<double>(sigmaAllow1TextBox.Text, "[σ1]", dataInErr)
                 : default,
@@ -318,6 +319,7 @@ public partial class NozzleForm : NozzleFormMiddle
         if (inputData.NozzleKind is NozzleKind.ImpassWithRing or NozzleKind.PassWithRing or NozzleKind.WithRingAndInPart)
         {
             //inputData.steel2 = steel2_cb.Text;
+            inputData.steel2 = oneStringSteelControl2.GetSteel();
             inputData.l2 = Parameters.GetParam<double>(l2_tb.Text, "l2", dataInErr);
             inputData.s2 = Parameters.GetParam<double>(s2_tb.Text, "s2", dataInErr);
         }
@@ -325,6 +327,7 @@ public partial class NozzleForm : NozzleFormMiddle
         if (inputData.NozzleKind is NozzleKind.PassWithoutRing or NozzleKind.PassWithRing or NozzleKind.WithRingAndInPart)
         {
             //inputData.steel3 = steel3_cb.Text;
+            inputData.steel3 = oneStringSteelControl3.GetSteel();
             inputData.l3 = Parameters.GetParam<double>(l3_tb.Text, "l3", dataInErr);
             inputData.s3 = Parameters.GetParam<double>(s3_tb.Text, "s3", dataInErr);
         }

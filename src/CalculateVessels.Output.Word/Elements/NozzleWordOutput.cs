@@ -797,9 +797,9 @@ internal class NozzleWordOutput : IWordOutputElement<NozzleCalculated>
                 "В случае укрепления отверстия утолщением стенки сосуда или штуцера, или накладным кольцом, или вварным кольцом, или торообразной вставкой, или отбортовкой должно выполняться условие");
             body.AddParagraph()
                 .AppendEquation(
-                    "l_1p∙(s_1-s_1p-c_s)∙χ_1+l_2p∙s_2∙χ_2+l_3p∙(s_3-c_s-c_s1)∙χ_3+l1p∙(s-s_p-c)∙χ_4≥0.5∙(d_p-d_0p)∙s_p");
+                    "l_1p∙(s_1-s_1p-c_s)∙χ_1+l_2p∙s_2∙χ_2+l_3p∙(s_3-c_s-c_s1)∙χ_3+l_1p∙(s-s_p-c)∙χ_4≥0.5∙(d_p-d_0p)∙s_p");
             body.AddParagraph()
-                .AppendEquation("l_1p∙(s_1-s_1p-c_s)∙χ_1+l_2p∙s_2∙χ_2+l_3p∙(s_3-c_s-c_s1)∙χ_3+l1p∙(s-s_p-c)∙χ_4=");
+                .AppendEquation("l_1p∙(s_1-s_1p-c_s)∙χ_1+l_2p∙s_2∙χ_2+l_3p∙(s_3-c_s-c_s1)∙χ_3+l_1p∙(s-s_p-c)∙χ_4=");
             body.AddParagraph()
                 .AppendEquation(
                     $"{cdc.l1p:f2}∙({nozzleDataIn.s1}-{data.s1p:f2}-{nozzleDataIn.cs})∙{data.psi1:f2}+{cdc.l2p:f2}∙{nozzleDataIn.s2}∙{data.psi2:f2}+{cdc.l3p:f2}∙({nozzleDataIn.s3}-{nozzleDataIn.cs}-{nozzleDataIn.cs1})∙{data.psi3:f2}+{cdc.lp:f2}∙({shellDataIn.s}-{data.sp:f2}-{cdc.c:f2})∙{data.psi4:f2}={data.ConditionStrengthening1:f2}");
@@ -1158,7 +1158,7 @@ internal class NozzleWordOutput : IWordOutputElement<NozzleCalculated>
 
         table.AddRow()
             .AddCell("Материал несущего элемента:")
-            .AddCell($"{shellDataIn.Steel}");
+            .AddCell($"{shellDataIn.Steel.SteelName}");
 
         table.AddRow()
             .AddCell("Толщина стенки несущего элемента, s:")
@@ -1170,21 +1170,21 @@ internal class NozzleWordOutput : IWordOutputElement<NozzleCalculated>
 
         table.AddRow()
             .AddCell("Материал штуцера")
-            .AddCell($"{nozzleDataIn.steel1}");
+            .AddCell($"{nozzleDataIn.steel1.SteelName}");
 
         if (nozzleDataIn.NozzleKind is NozzleKind.ImpassWithRing or NozzleKind.PassWithRing
             or NozzleKind.WithRingAndInPart)
         {
             table.AddRow()
                 .AddCell("Материал кольца")
-                .AddCell($"{nozzleDataIn.steel2}");
+                .AddCell($"{nozzleDataIn.steel2.SteelName}");
         }
 
         if (nozzleDataIn.NozzleKind == NozzleKind.WithRingAndInPart)
         {
             table.AddRow()
                 .AddCell("Материал внутренней части")
-                .AddCell($"{nozzleDataIn.steel3}");
+                .AddCell($"{nozzleDataIn.steel3.SteelName}");
         }
 
         table.AddRow()
@@ -1325,7 +1325,7 @@ internal class NozzleWordOutput : IWordOutputElement<NozzleCalculated>
             .DistinctBy(lc => lc.t)
             .ToList();
 
-        table.AddRowWithOneCell($"Характеристики материала {nozzleDataIn.steel1}");
+        table.AddRowWithOneCell($"Характеристики материала {nozzleDataIn.steel1.SteelName}");
 
         loadingConditionsWithUniqTemperatures
             .ForEach(lc =>
@@ -1336,9 +1336,9 @@ internal class NozzleWordOutput : IWordOutputElement<NozzleCalculated>
             });
 
 
-        if (nozzleDataIn.steel2 != null && nozzleDataIn.steel1 != nozzleDataIn.steel2)
+        if (nozzleDataIn.steel2 != null && nozzleDataIn.steel1.SteelId != nozzleDataIn.steel2.SteelId)
         {
-            table.AddRowWithOneCell($"Характеристики материала {nozzleDataIn.steel2}");
+            table.AddRowWithOneCell($"Характеристики материала {nozzleDataIn.steel2.SteelName}");
 
             loadingConditionsWithUniqTemperatures
                 .ForEach(lc =>
@@ -1349,9 +1349,9 @@ internal class NozzleWordOutput : IWordOutputElement<NozzleCalculated>
                 });
         }
 
-        if (nozzleDataIn.steel3 != null && nozzleDataIn.steel1 != nozzleDataIn.steel3)
+        if (nozzleDataIn.steel3 != null && nozzleDataIn.steel1.SteelId != nozzleDataIn.steel3.SteelId)
         {
-            table.AddRowWithOneCell($"Характеристики материала {nozzleDataIn.steel3}");
+            table.AddRowWithOneCell($"Характеристики материала {nozzleDataIn.steel3.SteelName}");
 
             loadingConditionsWithUniqTemperatures
                 .ForEach(lc =>
@@ -1362,9 +1362,9 @@ internal class NozzleWordOutput : IWordOutputElement<NozzleCalculated>
                 });
         }
 
-        if (nozzleDataIn.steel4 != null && nozzleDataIn.steel1 != nozzleDataIn.steel4)
+        if (nozzleDataIn.steel4 != null && nozzleDataIn.steel1.SteelId != nozzleDataIn.steel4.SteelId)
         {
-            table.AddRowWithOneCell($"Характеристики материала {nozzleDataIn.steel4}");
+            table.AddRowWithOneCell($"Характеристики материала {nozzleDataIn.steel4.SteelName}");
 
             loadingConditionsWithUniqTemperatures
                 .ForEach(lc =>

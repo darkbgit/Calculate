@@ -1,3 +1,4 @@
+using CalculateVessels.Core.Elements.Bottoms.FlatBottom;
 using CalculateVessels.Core.Elements.HeatExchangers.HeatExchangerStationaryTubePlates;
 using CalculateVessels.Core.Elements.Shells.Conical;
 using CalculateVessels.Core.Elements.Shells.Cylindrical;
@@ -38,22 +39,22 @@ internal class WordOutputService : IWordOutputService
             //                        ?? throw new NullReferenceException();
 
 
-            dynamic wordOutputService = element switch
+            dynamic? wordOutputService = element switch
             {
-                CylindricalShellCalculated => _wordOutputElementFactory.Create<CylindricalShellCalculated>()
-                                              ?? throw new NullReferenceException(),
-                ConicalShellCalculated => _wordOutputElementFactory.Create<ConicalShellCalculated>()
-                                          ?? throw new NullReferenceException(),
-                EllipticalShellCalculated => _wordOutputElementFactory.Create<EllipticalShellCalculated>()
-                                             ?? throw new NullReferenceException(),
-                NozzleCalculated => _wordOutputElementFactory.Create<NozzleCalculated>()
-                                    ?? throw new NullReferenceException(),
+                CylindricalShellCalculated => _wordOutputElementFactory.Create<CylindricalShellCalculated>(),
+                ConicalShellCalculated => _wordOutputElementFactory.Create<ConicalShellCalculated>(),
+                EllipticalShellCalculated => _wordOutputElementFactory.Create<EllipticalShellCalculated>(),
+                NozzleCalculated => _wordOutputElementFactory.Create<NozzleCalculated>(),
                 HeatExchangerStationaryTubePlatesCalculated => _wordOutputElementFactory
-                                                                   .Create<
-                                                                       HeatExchangerStationaryTubePlatesCalculated>()
-                                                               ?? throw new NullReferenceException(),
+                                                                   .Create<HeatExchangerStationaryTubePlatesCalculated>(),
+                FlatBottomCalculated => _wordOutputElementFactory.Create<FlatBottomCalculated>(),
                 _ => throw new Exception($"Type {element.GetType()} isn't supported."),
             };
+
+            if (wordOutputService == null)
+            {
+                throw new NullReferenceException();
+            }
 
             bibliography = bibliography.Union(element.Bibliography).ToList();
 

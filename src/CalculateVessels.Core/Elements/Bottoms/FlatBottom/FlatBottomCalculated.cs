@@ -1,6 +1,6 @@
-﻿using CalculateVessels.Core.Elements.Base;
+﻿using System.Text;
+using CalculateVessels.Core.Elements.Base;
 using CalculateVessels.Core.Interfaces;
-using System.Text;
 
 namespace CalculateVessels.Core.Elements.Bottoms.FlatBottom;
 
@@ -18,10 +18,12 @@ public class FlatBottomCalculated : CalculatedElement, ICalculatedElement
         };
     }
 
+    public override string Type => nameof(FlatBottomCalculated);
+
     public double ConditionUseFormulas { get; set; }
     public double c { get; set; }
     public double Dp { get; set; }
-    public bool IsConditionFixed { get; set; }
+    public bool IsConditionFixed { get; set; } = true;
     public bool IsConditionUseFormulas { get; set; }
     public double K { get; set; }
     public double K0 { get; set; }
@@ -42,7 +44,8 @@ public class FlatBottomCalculated : CalculatedElement, ICalculatedElement
 
         var builder = new StringBuilder();
         builder.Append("Flat bottom - ");
-        builder.Append($" pressure {inputData.p} MPa");
+        builder.Append($" pressure {inputData.LoadingCondition.p} MPa");
+        builder.Append($" t={inputData.LoadingCondition.t} C");
         builder.Append($" D - {inputData.D} mm");
 
         return builder.ToString();

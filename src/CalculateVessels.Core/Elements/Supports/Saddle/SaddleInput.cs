@@ -1,5 +1,6 @@
 ﻿using CalculateVessels.Core.Enums;
 using CalculateVessels.Core.Interfaces;
+using CalculateVessels.Data.Public.Models;
 
 namespace CalculateVessels.Core.Elements.Supports.Saddle;
 
@@ -34,5 +35,5 @@ public class SaddleInput : IInputData
     public int N { get; set; }
     public SaddleType SaddleType { get; set; }
     public string NameShell { get; set; } = string.Empty;
-    public string Steel { get; set; } = string.Empty;
+    public SteelWithIdsDto Steel { get; set; }
 }

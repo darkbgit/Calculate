@@ -23,8 +23,8 @@ internal class SaddleCalculateService : ICalculateService<SaddleInput>
         var data = new SaddleCalculated
         {
             InputData = dataIn,
-            SigmaAllow = PhysicalHelper.GetSigmaIfZero(dataIn.SigmaAllow, dataIn.Steel, dataIn.t, _physicalData),
-            E = PhysicalHelper.GetEIfZero(dataIn.E, dataIn.Steel, dataIn.t, _physicalData),
+            SigmaAllow = PhysicalHelper.GetSigmaIfZeroAsync(dataIn.SigmaAllow, dataIn.Steel, dataIn.t, _physicalData),
+            E = PhysicalHelper.GetEIfZeroAsync(dataIn.E, dataIn.Steel.SteelName, dataIn.t, _physicalData),
             ny = dataIn.IsAssembly ? 1.8 : 2.4
         };
 

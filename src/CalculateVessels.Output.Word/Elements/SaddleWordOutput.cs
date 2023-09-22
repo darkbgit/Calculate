@@ -74,7 +74,7 @@ internal class SaddleWordOutput : IWordOutputElement<SaddleCalculated>
 
             table.AddRow()
                 .AddCell("Марка стали")
-                .AddCell($"{dataIn.Steel}");
+                .AddCell($"{dataIn.Steel.SteelName}");
 
             table.AddRow()
                 .AddCell("Ширина опоры, b:")
