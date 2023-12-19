@@ -15,8 +15,8 @@ public class CustomJsonConverter<T> : JsonConverter<T>
     public CustomJsonConverter()
     {
         var type = typeof(T);
-        _types = AppDomain.CurrentDomain.GetAssemblies()
-            .SelectMany(s => s.GetTypes())
+        _types = type.Assembly
+            .GetTypes()
             .Where(p => type.IsAssignableFrom(p) && p is { IsClass: true, IsAbstract: false })
             .ToList();
     }
