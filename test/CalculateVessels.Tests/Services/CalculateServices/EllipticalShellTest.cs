@@ -7,13 +7,13 @@ using Xunit;
 
 namespace CalculateVessels.UnitTests.Services.CalculateServices;
 
-public class EllipticalShellTest
+public class EllipticalShellTest : CalculateServicesBaseTest
 {
     private readonly ICalculateService<EllipticalShellInput> _calculateService;
 
     public EllipticalShellTest()
     {
-        _calculateService = new EllipticalShellCalculateService(new PhysicalDataService());
+        _calculateService = new EllipticalShellCalculateService(PhysicalDataService);
     }
 
     [Theory]

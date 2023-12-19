@@ -8,13 +8,13 @@ using Xunit;
 
 namespace CalculateVessels.UnitTests.Services.CalculateServices;
 
-public class BracketVerticalTest
+public class BracketVerticalTest : CalculateServicesBaseTest
 {
     private readonly ICalculateService<BracketVerticalInput> _calculateService;
 
     public BracketVerticalTest()
     {
-        _calculateService = new BracketVerticalCalculateService(new PhysicalDataService());
+        _calculateService = new BracketVerticalCalculateService(PhysicalDataService);
     }
 
     [Theory]

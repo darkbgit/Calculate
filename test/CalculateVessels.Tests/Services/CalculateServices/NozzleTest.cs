@@ -7,13 +7,13 @@ using Xunit;
 
 namespace CalculateVessels.UnitTests.Services.CalculateServices;
 
-public class NozzleTest
+public class NozzleTest : CalculateServicesBaseTest
 {
     private readonly ICalculateService<NozzleInput> _calculateService;
 
     public NozzleTest()
     {
-        _calculateService = new NozzleCalculateService(new PhysicalDataService());
+        _calculateService = new NozzleCalculateService(PhysicalDataService);
     }
 
     [Theory]

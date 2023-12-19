@@ -251,7 +251,7 @@ internal class FlatBottomWordOutput : IWordOutputElement<FlatBottomCalculated>
         body.AddParagraph("Результаты расчета").Alignment(AlignmentType.Center);
         body.AddParagraph();
 
-        body.AddParagraph("Толщину плоской круглой крышки аппарата, работающего под внутренним избыточным давлением вычисляют по формуле");
+        body.AddParagraph("Толщину плоской круглой крышки аппарата, работающего под внутренним избыточным давлением, вычисляют по формуле");
         body.AddParagraph().AppendEquation("s_1≥s_1p+c");
         body.AddParagraph("где ");
         body.AddParagraph().AppendEquation("s_1p=K∙K_0∙D_p∙√(p/(φ∙[σ]))");
@@ -315,7 +315,7 @@ internal class FlatBottomWordOutput : IWordOutputElement<FlatBottomCalculated>
             case HoleInFlatBottom.OneHole:
                 body.AddParagraph("Коэффициент ")
                     .AppendEquation("K_0")
-                    .AddRun(" - для крышек, имеющих одно отверстие, вычисляют по формул");
+                    .AddRun(" - для крышек, имеющих одно отверстие, вычисляют по формуле");
                 body.AddParagraph()
                     .AppendEquation("K_0=√(1+d/D_p+(d/D_p)^2)" +
                                     $"=√(1+{dataIn.d}/{data.Dp:f2}+({dataIn.d}/{data.Dp:f2})^2)={data.K0:f2}");
@@ -323,7 +323,7 @@ internal class FlatBottomWordOutput : IWordOutputElement<FlatBottomCalculated>
             case HoleInFlatBottom.MoreThenOneHole:
                 body.AddParagraph("Коэффициент ")
                     .AppendEquation("K_0")
-                    .AddRun(" - для крышек, имеющих несколько отверстий, вычисляют по формул");
+                    .AddRun(" - для крышек, имеющих несколько отверстий, вычисляют по формуле");
                 body.AddParagraph()
                     .AppendEquation("K_0=√((1-(Σd_i/D_p)^3)/(1-(Σd_i/D_p)))" +
                                     $"=√((1-({dataIn.di}/{data.Dp:f2})^3)/(1-({dataIn.di}/{data.Dp:f2})))={data.K0:f2}");

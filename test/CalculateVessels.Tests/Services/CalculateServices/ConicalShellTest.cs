@@ -7,13 +7,13 @@ using Xunit;
 
 namespace CalculateVessels.UnitTests.Services.CalculateServices;
 
-public class ConicalShellTest
+public class ConicalShellTest : CalculateServicesBaseTest
 {
     private readonly ICalculateService<ConicalShellInput> _calculateService;
 
     public ConicalShellTest()
     {
-        _calculateService = new ConicalShellCalculateService(new PhysicalDataService());
+        _calculateService = new ConicalShellCalculateService(PhysicalDataService);
     }
 
     [Theory]

@@ -10,16 +10,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CalculateVessels.Data.Database;
 
-internal class PhysicalDataService : IPhysicalDataService
+internal class PhysicalDataService(CalculateVesselsPhysicalDataContext context) : IPhysicalDataService
 {
-    private readonly CalculateVesselsPhysicalDataContext _context;
+    private readonly CalculateVesselsPhysicalDataContext _context = context;
 
     private const int MinTemperature = 20;
-
-    public PhysicalDataService(CalculateVesselsPhysicalDataContext context)
-    {
-        _context = context;
-    }
 
     public double GetSigma(string steelName, double temperature, SigmaSource source, double thickness = 0, DesignResourceType designResource = DesignResourceType.Standard)
     {
@@ -356,7 +351,6 @@ internal class PhysicalDataService : IPhysicalDataService
                 throw new NotImplementedException();
             case SteelSource.G34233D4Screw:
                 throw new NotImplementedException();
-                break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(source), source, null);
         }
@@ -404,7 +398,7 @@ internal class PhysicalDataService : IPhysicalDataService
             .FirstOrDefaultAsync();
     }
 
-    public Public.Enums.SteelType Gost34233D1GetSteelType(string steelName)
+    public SteelType Gost34233D1GetSteelType(string steelName)
     {
         throw new NotImplementedException();
     }
@@ -454,7 +448,7 @@ internal class PhysicalDataService : IPhysicalDataService
         throw new NotImplementedException();
     }
 
-    Public.Enums.SteelType IPhysicalDataService.Gost34233D1GetSteelType(string steelName)
+    SteelType IPhysicalDataService.Gost34233D1GetSteelType(string steelName)
     {
         throw new NotImplementedException();
     }

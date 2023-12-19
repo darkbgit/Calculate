@@ -1,19 +1,18 @@
 using CalculateVessels.Core.Elements.Shells.Cylindrical;
 using CalculateVessels.Core.Interfaces;
-using CalculateVessels.Data.PhysicalData;
 using CalculateVessels.UnitTests.Helpers;
 using FluentAssertions;
 using Xunit;
 
 namespace CalculateVessels.UnitTests.Services.CalculateServices;
 
-public class CylindricalShellTest
+public class CylindricalShellTest : CalculateServicesBaseTest
 {
     private readonly ICalculateService<CylindricalShellInput> _calculateService;
 
     public CylindricalShellTest()
     {
-        _calculateService = new CylindricalShellCalculateService(new PhysicalDataService());
+        _calculateService = new CylindricalShellCalculateService(PhysicalDataService);
     }
 
 
